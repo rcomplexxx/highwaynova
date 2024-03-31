@@ -35,7 +35,7 @@
     transition: transform 0.3s ease;
    overflow: hidden;
     border-radius: 12px;
-
+    background-color: var(--customer-review-bg);
     /* animation: spawnFullScreenReview 0.3s ease forwards; */
     
     

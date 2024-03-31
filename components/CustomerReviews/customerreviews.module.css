@@ -8,6 +8,7 @@
     flex-direction: column;
     align-items: center;
     margin-top: var(--size-10);
+  
    
 }
 
@@ -27,13 +28,7 @@
 
 
 
-.reviewImage{
-  position: relative;
-  width: 100%;
-  height:max-content;
- 
-   
-}
+
 
 @media (hover:hover) {
   .reviewImage{
@@ -103,27 +98,18 @@
    margin-bottom: var(--size-5);
    break-inside: avoid;
    cursor: pointer;
-
+   box-shadow: var(--customer-review-box-shadow);
 }
 
 
 
-/* .reviewDiv{
+.reviewImage{
+  position: relative;
   width: 100%;
-   max-height: max-content;
-   box-sizing: border-box;
-   padding: 0 var(--size-3);
-   margin-bottom: var(--size-7);
-   break-inside: avoid;
-} */
-
-
-
-  /* .reviewDivImage{
-    width: 100%; 
-    height: auto;
-    margin-bottom: 5px;
-  } */
+  height:max-content;
+ 
+   
+}
 
   .starDiv{
     margin-bottom: 0;

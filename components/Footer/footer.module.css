@@ -129,7 +129,7 @@
   }
 
   .subscribeButton:hover{
-    color: var(--action-button-txt-color);
+    color: var(--action-button-hover-footer-txt-color);
     background-color: var(--action-button-bg-color-hover);
   }
   
