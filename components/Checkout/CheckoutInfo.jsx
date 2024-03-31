@@ -346,14 +346,3 @@ export default function CheckoutInfo({ products,  setCartProducts }) {
   );
 }
 
-
-
-{/* <div className={styles.paymentMethodWrapper}>
-<PayPalButton checkFields={checkFields} organizeUserData={organizeUserData} method="paypal" setCartProducts={setCartProducts } setErrors={setErrors}/>
-</div>
-<div className={styles.paymentMethodWrapper}>
-<StripeWrapper setCartProducts={setCartProducts} products={products} organizeUserData={organizeUserData} checkFields={checkFields} />
-</div> */}
-
-{/* <OrderDetails products={products} discount={discount} setDiscount={setDiscount} isUpperSummery={false}/> */}
-

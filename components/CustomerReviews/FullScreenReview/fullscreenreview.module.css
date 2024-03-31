@@ -14,6 +14,7 @@
     justify-content: center;
     align-items: center;
 
+
     
     z-index: 200;
 }
@@ -21,7 +22,7 @@
 
 .mainDiv{
     position: relative;
-    background-color: var(--write-review-main-bg);
+   
     height: 100%;
     width: 100%;
     max-height: var(--size-15-5);
@@ -32,7 +33,8 @@
     border-radius: 12px;
     transform: scale(0);
     transition: transform 0.3s ease;
-   
+   overflow: hidden;
+    border-radius: 12px;
 
     /* animation: spawnFullScreenReview 0.3s ease forwards; */
     
@@ -76,7 +78,7 @@
 .reviewImageDiv{
     height: auto;
     width: var(--size-14-5);
-     background-color: var(--gray-9-elegant);
+     background-color: var(--customer-review-bg);
      overflow: hidden;
     display: flex;
     justify-content: center;
@@ -94,7 +96,7 @@
 }
 
 .reviewDiv{
-    background-color: var(--write-review-main-bg);
+    background-color: var(--customer-review-bg);
     height: 100%;
     width: var(--size-14);
     
@@ -156,6 +158,8 @@
         height: auto;
        
         transform: scale(1) translatey(100%);
+
+        border-radius: 0;
      
     }
 

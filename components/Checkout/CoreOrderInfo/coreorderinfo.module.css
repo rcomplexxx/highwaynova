@@ -58,7 +58,7 @@
           border-radius: 2px;
           align-self: center;
           box-sizing: border-box;
-          border: solid 1px var(--checkout-input-border-color);
+          outline: solid 1px var( --input-outline-color);
         
           font-size: var(--font-size-2);
       }

@@ -9,7 +9,7 @@
 
 .logoDiv{
     position: relative;
-    background-color: var(--gray-9-elegant);
+   
     height: var(--size-10);
     max-width: var(--size-18);
     width: calc(100% - var(--size-11));

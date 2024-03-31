@@ -7,7 +7,7 @@
     opacity: 0;
     /* box-shadow: 0 0 4px #749ac2; */
     border-radius: 2px;
-    border: solid 1px var(--checkout-input-border-color);
+    outline: solid 1px var( --input-outline-color);
     box-sizing: border-box;
     appearance: none; /* Remove default arrow in some browsers */
     -webkit-appearance: none; /* For Safari */
@@ -46,7 +46,7 @@
     width: 100%;
     border-radius: 2px;
     background-color: var(--input-color);
-    border: solid 1px var(--checkout-input-border-color);
+    outline: solid 1px var( --input-outline-color);
     margin-left: var(--size-3);
     margin-right: var(--size-3);
       flex-grow: 1;

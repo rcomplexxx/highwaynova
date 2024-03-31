@@ -90,8 +90,8 @@
 
 
 .reviewDiv{
-  color: white;
-  background-color: var(--write-review-main-bg);
+  color: var(--customer-review-color);
+  background-color: var(--customer-review-bg);
 
    max-height: max-content;
    box-sizing: border-box;

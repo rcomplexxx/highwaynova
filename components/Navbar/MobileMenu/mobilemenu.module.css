@@ -12,7 +12,7 @@
     height: 100%;
     max-width: var(--size-13);
     width:var(--size-13);
-    background-color: var(--gray-9-elegant);
+    background-color: var(--navbar-bg);
     border-top-right-radius: var(--size-3);
     border-bottom-right-radius: var(--size-3);
     display: flex;

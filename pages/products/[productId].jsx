@@ -183,7 +183,7 @@ export default function ProductPage({ product, images, startReviews, ratingData 
                     state,
                     city,
                     phone,
-                    discountCode: "",
+                    couponCode: "",
                     tip: 0,
                     items:items ,
                   },

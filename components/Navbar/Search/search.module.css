@@ -31,15 +31,16 @@
     border-radius: 2px;
     align-self: center;
     box-sizing: border-box;
-    border: solid 1px var(--checkout-input-border-color);
+    border: none;
+    outline: solid 1px var( --input-outline-color);
     font-size: var(--font-size-2);
   }
 
   /* //autofill zadrzi boju */
 
   .customSearchBarInput:focus{
-    border-color: var(--input-box-shadow-color);;
-    outline: none;
+   
+    outline: solid 1px var(--input-box-shadow-color);
   }
 
 
@@ -74,9 +75,9 @@
     max-height: var(--size-14);
     width: var(--size-12);
     position: absolute;
-    top: 100%;
+    top: calc(100% + 1px);
     left: 0;
-    background-color: var(--gray-9-elegant);
+    background-color: var(--navbar-bg);
    
     user-select: none;
     z-index: 99;
@@ -105,7 +106,7 @@
 }
 
 .resultItem:hover{
-    background-color: var(--search-bg)#0f1316;
+    background-color: var(--nav-select-search-link-color);
 }
 
 .resultProductsLabel{

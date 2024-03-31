@@ -25,15 +25,15 @@
     border-radius: 2px;
     align-self: center;
     box-sizing: border-box;
-    border: solid 1px var(--checkout-input-border-color);
+    outline: solid 1px var(--input-outline-color);
+    border: none;
     font-size: var(--font-size-2);
     
   }
 
 
   .input_field:focus { 
-    outline: none !important;
-    border-color: var(--input-box-shadow-color);
+    outline: solid 1px var(--input-box-shadow-color);
     box-shadow: 0 0 6px var(--input-box-shadow-color);
     
 }

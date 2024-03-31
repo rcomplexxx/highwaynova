@@ -58,11 +58,12 @@
 }
 
 .product_price_span{
+  color: var(--weak-txt-color);
   font-size: var(--font-size-4);
   margin-right: var(--size-4);
   text-decoration: line-through;
   font-weight: 300;
-  opacity: 0.6;
+
 }
 
 
@@ -84,9 +85,9 @@
   }
 
   .product_rating_reviews_number{
-    color: white;
+    color: var(--weak-txt-color);
     margin-left: var(--size-2);
-    opacity: 0.6;
+  
     font-size: var(--font-size-2);
     font-weight: 300;
   }

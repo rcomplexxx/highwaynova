@@ -253,6 +253,7 @@ Cormorant+Garamond */
 
   --high-contrast-light-txt-color: var(--neutral-10);
   --light-txt-color: var(--neutral-9);
+  --weak-txt-color: var(--neutral-8);
   --bg-color: 	var(--neutral-1); /*hsl(81, 7%, 92%)*/
   /*#e5e5e6*/
 
@@ -276,22 +277,25 @@ Cormorant+Garamond */
   --error-box-shadow-color: rgb(158, 49, 6);
 
   --border-color-weak: rgb(72, 69, 85);
-  --border-color-mid: rgba(128, 128, 128, 0.503);
-  --border-color-strong: gray;
+  --border-color-mid: var(--neutral-4);
+  --border-color-strong: var(--neutral-5);
 
 
 
 
   /*~ Navbar ~*/
 
-  --nav-site-title-color: var(--blue-2);
+  --nav-site-title-color: var(--blue-4);
   --nav-txt-color: var(--light-txt-color);
-  --navbar-bg: var(--blue-9);
-  --search-bg: #0f1316;
-  --nav-links-color: var(--lion-1);
-  --navbar-current-link-color: var(--blue-3);
-  --nav-select-search-link-color:rgb(13, 24, 27);
-  --cart-button-items-number-bg: rgb(97, 26, 97);
+  --navbar-bg: var(--lion-1);
+  --nav-bottom-border-color: transparent;
+
+
+  --search-bg: var(--blue-1);
+  --nav-links-color: var(--lion-7);
+  --navbar-current-link-color: var(--blue-5);
+  --nav-select-search-link-color:var(--blue-0);
+  --cart-button-items-number-bg: var(--lion-5);
 
 
 
@@ -310,9 +314,11 @@ Cormorant+Garamond */
 
 
  --shop-now-hero-button-bg: var(--blue-9);
-  --home-review-color: var(--neutral-4);
+ --hero-image-border-bottom-color: transparent;
+
+  --home-review-color: var(--neutral-3);
    /*#081522*/
-  --home-review-box-shadow: 0px 4px 8px var(--neutral-3), 0px 2px 4px var(--neutral-3);
+  --home-review-box-shadow: 0px 4px 8px var(--neutral-5), 0px 2px 4px var(--neutral-5);
   /*  0px 2px 6px #1b1e22;*/
   --star-home-review-color: #f7df48;
 
@@ -322,7 +328,7 @@ Cormorant+Garamond */
    /*Product list ~ Products ~ Collections */
 
    --arrow-bg: rgb(44, 95, 93);
-   --collection-info-bg: rgb(18, 25, 39);
+   --collection-info-bg: var(--lion-2);
    --product-on-sale-bg: rgb(18, 14, 56);
 
 
@@ -370,9 +376,9 @@ Cormorant+Garamond */
 --star-hover-color: orange;
 
 
- --customer-reviews-bg: red;
- --customer-reviews-color: red;
- --customer-reviews-author-color: red;
+ --customer-review-bg: var(--neutral-2);
+ --customer-review-color: var(--high-contrast-light-txt-color);
+
 
 
 
@@ -422,17 +428,16 @@ Cormorant+Garamond */
   /*~ Checkout ~*/
 
 
-  --checkout-high-contrast-color: white;
+  --checkout-high-contrast-color: var(--high-contrast-light-txt-color);
   --checkout-color: var(--light-txt-color);
-  --checkout-bg: var(--gray-9-elegant);
+  --checkout-bg: var(--bg-color);
 
-  --input-color:#151921;
+  --input-color: transparent;
      /* rgb(191, 209, 208); rgb(74, 85, 187) #202020; rgba(53, 60, 110, 0.459); rgb(134, 110, 114); var(--input-autofill-color);*/
  
-  --input-border-color: rgba(134, 110, 114, 0.425);
-  --input-box-shadow-color: #7daee2;
-  --checkout-input-placeholder: #979797;
-  --checkout-input-border-color: rgba(134, 110, 114, 0.425);
+  --input-outline-color: var(--neutral-3);
+  --input-box-shadow-color: var(--neutral-3);
+  --checkout-input-placeholder: var(--neutral-8);
   --input-autofill-color: #0f1316;
  
   --express-checkout-button-bg: #151921;
@@ -457,15 +462,15 @@ Cormorant+Garamond */
               /*Order summery*/
   
   --summery-color: #DA0226;
-  --summery-light-color: white;
-  --checkout-order-summery-bg-mobile: #0a1d2f;
+  --summery-light-color: var(--high-contrast-light-txt-color);
+  --checkout-order-summery-bg-mobile: var(--blue-3);
   /* #0e2438*/
-  --checkout-order-summery-bg: #091a29;
-  --checkout-order-summery-bg-light: #0c2133;
+  --checkout-order-summery-bg: var(--blue-2);
+  --checkout-order-summery-bg-light: var(--blue-2);
 
  
-  --apply-coupon-color: #1e374d;
-  --apply-coupon-hover-color: #254766;
+  --apply-coupon-color: var(--lion-4);
+  --apply-coupon-hover-color: var(--lion-5);
   --coupon-code-bg: rgb(36, 48, 58);
 
                   /*Tip*/

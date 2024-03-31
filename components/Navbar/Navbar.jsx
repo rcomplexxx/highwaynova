@@ -166,7 +166,7 @@ const NavBar = ({ totalItems, newProduct, setNewProduct }) => {
                       <Link
                       key={index}
                         href={linkUrl}
-                        className={`${styles.menuItemDiv} ${ pathname ===linkUrl && styles.currentLinkMobile }`}
+                        className={`${styles.subMenuLink} ${ pathname ===linkUrl && styles.currentLinkMobile }`}
                         onClick={() => {
                           setSubMenu(0);
                         }}
@@ -206,7 +206,7 @@ const NavBar = ({ totalItems, newProduct, setNewProduct }) => {
                 >
                   <Link
                     href="/our-story"
-                    className={`${styles.menuItemDiv} ${
+                    className={`${styles.subMenuLink} ${
                       pathname === "/our-story" && styles.currentLinkMobile
                     }`}
                     onClick={() => {
@@ -218,7 +218,7 @@ const NavBar = ({ totalItems, newProduct, setNewProduct }) => {
 
                   <Link
                     href="/faq"
-                    className={`${styles.menuItemDiv} ${
+                    className={`${styles.subMenuLink} ${
                       pathname === "/faq" && styles.currentLinkMobile
                     }`}
                     onClick={() => {
@@ -230,7 +230,7 @@ const NavBar = ({ totalItems, newProduct, setNewProduct }) => {
 
                   <Link
                     href="/terms-of-service"
-                    className={`${styles.menuItemDiv} ${
+                    className={`${styles.subMenuLink} ${
                       pathname === "/terms-of-service" &&
                       styles.currentLinkMobile
                     }`}
@@ -242,7 +242,7 @@ const NavBar = ({ totalItems, newProduct, setNewProduct }) => {
                   </Link>
                   <Link
                     href="/privacy-policy"
-                    className={`${styles.menuItemDiv} ${
+                    className={`${styles.subMenuLink} ${
                       pathname === "/privacy-policy" && styles.currentLinkMobile
                     }`}
                     onClick={() => {
@@ -253,7 +253,7 @@ const NavBar = ({ totalItems, newProduct, setNewProduct }) => {
                   </Link>
                   <Link
                     href="/shipping-policy"
-                    className={`${styles.menuItemDiv} ${
+                    className={`${styles.subMenuLink} ${
                       pathname === "/shipping-policy" &&
                       styles.currentLinkMobile
                     }`}
@@ -265,7 +265,7 @@ const NavBar = ({ totalItems, newProduct, setNewProduct }) => {
                   </Link>
                   <Link
                     href="/refund-policy"
-                    className={`${styles.menuItemDiv} ${ pathname === "/refund-policy" && styles.currentLinkMobile }`}
+                    className={`${styles.subMenuLink} ${ pathname === "/refund-policy" && styles.currentLinkMobile }`}
                     onClick={() => {
                       setSubMenu(0);
                     }}

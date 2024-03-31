@@ -99,7 +99,7 @@
       align-self: center;
       box-sizing: border-box;
       padding-left: var(--size-3);
-      border: solid 1px var(--checkout-input-border-color);
+      outline: solid 1px var( --input-outline-color);
       font-size: var(--font-size-2);
       overflow: hidden;
       cursor: text;
