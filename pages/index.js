@@ -35,13 +35,13 @@ const HomePage = ({ products }) => {
    
 
       <picture className={styles.heroWindow}>
-    <source media="(min-width: 720px)" srcSet="/images/gameGirl2Zoomed.png" />
-    <source media="(max-width: 720px)" srcSet="/images/gameGirl2.png" />        
+    <source media="(min-width: 720px)" srcSet="/images/gamerGirl2Pcv2.jpg" />
+    <source media="(max-width: 720px)" srcSet="/images/gamerGirl2.jpg" />        
    
         <Image
           height={0}
           width={0}
-         src={`/images/gameGirl2.png`} // Path to your image from the `public` directory
+         src={`/images/gamerGirl2Pc.jpg`} // Path to your image from the `public` directory
           alt="Hero Discount Image"
           priority={true}
           sizes="100vw"

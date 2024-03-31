@@ -157,6 +157,12 @@ Adore+Modern+Serif
 Playfair+Display
 Cormorant+Garamond */
 
+/*2b59c3
+#B49A67
+#CEB3AB
+*/
+
+--my-col: #829ee0;
   /* --hand-writing-font: var(--font-eb_garamond); */
   --hand-writing-font: "Times New Roman", serif;
   /* --font-neutral: 'Roboto', sans-serif; */
@@ -174,18 +180,47 @@ Cormorant+Garamond */
   --font-size-10: 60px;
   --font-size-11: 72px;
 
-  /* Main colors */
+  /* Main colors
+  #E3DFFF #090909 #4B5043
+  */
 
   --test: #171425;
-  --blue-1: #c0b5db;
-  --blue-2: rgb(105, 154, 182);
-  --blue-3: #4285B0;
-  --blue-4: #1976d2;
-  --blue-5: #1565C0;
-  --blue-6: #193563;
-  --blue-7: #0A2249;
-  --blue-8: #06133D;
-  --blue-9: #040F2E;
+  --blue-0: #EEF2FB;
+  --blue-1: #DEE5F8;
+  --blue-2: #BCCCF0;
+  --blue-3: #8AA5E5;
+  --blue-4: #587FDA;
+  --blue-5: #2b59c3;
+  --blue-6: #214497;
+  --blue-7: #162E64;
+  --blue-8: #0B1732;
+  --blue-9: #040811;
+
+
+  --lion-1: #DDD2BB;
+  --lion-2: #D0C09F;
+  --lion-3: #C2AE84;
+  --lion-4: #B49A67;
+  --lion-5: #897243;
+  --lion-6: #604F2F;
+  --lion-7: #372D1B;
+
+
+  --neutral-0: #EBECE9; /*#F5F6F4;*/
+  --neutral-1: #D7DAD3;  
+  --neutral-2: #B9BEB1;
+  --neutral-3: #A5AB9B;
+  --neutral-4: #919985;
+  --neutral-5: #7D856F;
+  --neutral-6: #5E6454;
+  --neutral-7: #4B5043;
+  --neutral-8: #34382E;
+  --neutral-9: #1F211C;
+  --neutral-10: #0A0B09;
+
+
+
+
   --red-1: #daaba8;
   --red-2: #B87F65;
   --red-3: #A75631;
@@ -216,20 +251,20 @@ Cormorant+Garamond */
 
   /* General */
 
-  --high-contrast-light-txt-color: rgb(255, 255, 255);
-  --light-txt-color: #e5e5e6;
-  --bg-color: var(--gray-9-elegant);
+  --high-contrast-light-txt-color: var(--neutral-10);
+  --light-txt-color: var(--neutral-9);
+  --bg-color: 	var(--neutral-1); /*hsl(81, 7%, 92%)*/
   /*#e5e5e6*/
 
-  --main-button-color: var(--blue-4);
-  --main-button-hover-color: var(--blue-5);
+  --main-button-color: var(--blue-5);
+  --main-button-hover-color: var(--blue-4);
   --main-light-color: #989898;
   --main-dark-color: #323232;
 
 
  
   --action-button-txt-color: rgba(255, 255, 255, 0.9);
-  --action-button-bg-color: var(--red-5);
+  --action-button-bg-color: var(--lion-5);
   --action-button-bg-color-hover:var(--red-6);
   /* txt-Alt:white; bg-Alt #202020 */
 
@@ -251,10 +286,10 @@ Cormorant+Garamond */
 
   --nav-site-title-color: var(--blue-2);
   --nav-txt-color: var(--light-txt-color);
-  --navbar-bg: var(--gray-9-elegant);
+  --navbar-bg: var(--blue-9);
   --search-bg: #0f1316;
-  --nav-links-color: var(--red-2);
-  --navbar-current-link-color: var(--blue-1);
+  --nav-links-color: var(--lion-1);
+  --navbar-current-link-color: var(--blue-3);
   --nav-select-search-link-color:rgb(13, 24, 27);
   --cart-button-items-number-bg: rgb(97, 26, 97);
 
@@ -262,24 +297,24 @@ Cormorant+Garamond */
 
    /*~ Footer ~*/
 
-   --footer-bg: var(--gray-9-elegant);
-   --footer-title-color: white;
-  --footer-txt-color: rgba(255, 255, 255, 0.65);
-  --footer-link-active-color: #ccc;
-  --footer-email-placeholder-color: #7a857a;
-  --subscribe-input-border: rgba(128, 128, 128, 0.804);
-  --action-button-footer-txt-color: rgba(255, 255, 255, 0.8);
+   --footer-bg: var(--blue-9);
+   --footer-title-color: var(--neutral-0);
+  --footer-txt-color: var(--neutral-2);
+  --footer-link-active-color: var(--neutral-2);
+  --footer-email-placeholder-color: var(--neutral-5);
+  --subscribe-input-border: var(--lion-5);
+  --action-button-footer-txt-color: var(--blue-9);
 
  /*~ Home page ~*/
 
 
 
- --shop-now-hero-button-bg: #060f18ef;
-  --home-review-color: #081522;
+ --shop-now-hero-button-bg: var(--blue-9);
+  --home-review-color: var(--neutral-4);
    /*#081522*/
-  --home-review-box-shadow: 0px -1px 0px #091a27,  0px 1px 0px #07121e;
+  --home-review-box-shadow: 0px 4px 8px var(--neutral-3), 0px 2px 4px var(--neutral-3);
   /*  0px 2px 6px #1b1e22;*/
-  --star-home-review-color: #daaf2e;
+  --star-home-review-color: #f7df48;
 
 
 
@@ -298,35 +333,35 @@ Cormorant+Garamond */
 
 
 
- --selected-product-image-border:rgb(204, 67, 101);
+ --selected-product-image-border:var(--blue-8);
  --mini-slider-arrow-bg:rgb(19, 23, 57);
- --quantity-input-bg: #172247;
- --quantity-button-border: rgb(80, 77, 90);
- --quantity-button-hover: rgb(20, 22, 41);
+ --quantity-input-bg: var(--blue-3);
+ --quantity-button-border: var(--neutral-6);
+ --quantity-button-hover: var(--lion-2);
 
  --paypal-bg:#FFC439;
 
- --buy-now-border: rgb(159, 160, 92);
- --buy-now-hover-box-shadow-border: rgb(182, 184, 100);
+ --buy-now-border: var(--lion-6);
+ --buy-now-hover-box-shadow-border: var(--lion-6);
 
  --dropcard-title-color: var(--high-contrast-light-txt-color);
 
- --faq-add-to-cart-bg: var(--blue-6);
+ --faq-add-to-cart-bg: var(--blue-5);
  --faq-add-to-cart-hover-bg: var(--blue-4);
  
           /*~ Fullscreen product~*/
 
 
- --toast-message-bg: #323232;
- --fullscreen-nav-bg: rgba(45, 95, 145, 0.604);
- --fullscreen-arrow-bg:rgba(27, 60, 73, 0.501);
- --fullscreen-arrow-hover-bg:rgba(48, 62, 68, 0.501);
- --fullscreen-arrow-active-bg: rgba(113, 154, 170, 0.526);
+ --toast-message-bg: var(--neutral-4);
+ --fullscreen-nav-bg: var(--blue-8);
+ --fullscreen-arrow-bg:var(--blue-8);
+ --fullscreen-arrow-hover-bg:var(--blue-7);
+ --fullscreen-arrow-active-bg: var(--blue-7);
 
 
             /*~ Customer reviews ~*/
 
- --rating-info-bg: rgb(16, 22, 22);
+ --rating-info-bg: var(--neutral-9);
  --rating-info-percent-bar-empty:rgb(30, 51, 59);
  --rating-info-percent-bar-fill: rgb(116, 145, 147);
 
@@ -347,7 +382,7 @@ Cormorant+Garamond */
               /*~ Writing review ~*/
 
 
-  --write-review-main-bg: rgb(16, 22, 22);
+  --write-review-main-bg: var(--neutral-9);
   /* #1b191a */
   --writing-accent-color: gray;
   --writing-empty-progress-bar: rgb(55, 55, 62);
@@ -366,16 +401,18 @@ Cormorant+Garamond */
 
 
 /*~ Cart ~*/
-  --free-shipping-slider-empty-color: rgb(107, 101, 101);
-  --free-shipping-slider-fill-color: brown;
+  --free-shipping-slider-empty-color: var(--neutral-9);
+  --free-shipping-slider-fill-color: var(--lion-5);
   --best-sellers-addtocart-border: rgb(64, 73, 65);
 
   
   
 
  /*~ Contact us ~*/
- --contact-input-color: var(--input-color);
- /*#0c212b*/
+ --contact-input-color: transparent;
+ --contact-input-outline: var(--neutral-3);
+ --contact-input-outline-focused: var(--neutral-8); 
+ /*#0c212b --input-color*/
 
 
 

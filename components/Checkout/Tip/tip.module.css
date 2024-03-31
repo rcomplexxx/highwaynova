@@ -122,7 +122,7 @@
 
 .selectedPercent{
 
-    border: 1px solid var(--blue-4);
+    border: 1px solid var(--blue-5);
 }
 
 .selectedPercentCenter{
@@ -131,7 +131,7 @@
   left: -1px;
   height: 100%;
   width: 100%;
-    border: 1px solid var(--blue-4);
+    border: 1px solid var(--blue-5);
     z-index: 999;
 }
 

@@ -104,7 +104,7 @@
     box-sizing: border-box;
       padding: var(--size-4) var(--size-3);
       padding-bottom: 0;
-    outline: none;
+      outline: 1px solid var(--contact-input-outline);
     font-size: var(--font-size-3);
     font-family: var(--font-neutral);
    
@@ -115,7 +115,7 @@
 
 
 .contactInput:focus{
-    border: 1px solid var(--border-color-strong);
+    outline: 1px solid var(--contact-input-outline-focus);
 }
 
 
@@ -230,7 +230,7 @@ font-size: var(--font-size-1);
     box-sizing: border-box;
     padding: 0 var(--size-3);
     padding-top: var(--size-6);
-    outline: none;
+    outline: 1px solid var(--contact-input-outline);
 }
 
 .messageTextArea::placeholder{
@@ -238,7 +238,7 @@ font-size: var(--font-size-1);
 }
 
 .messageTextArea:focus{
-    border: 1px solid var(--border-color-strong);
+    outline: 1px solid var(--contact-input-outline-focus);
 }
 
 
