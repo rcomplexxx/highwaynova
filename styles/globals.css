@@ -355,6 +355,10 @@ Cormorant+Garamond */
 
  --faq-add-to-cart-bg: var(--blue-5);
  --faq-add-to-cart-hover-bg: var(--blue-4);
+
+ --fixed-add-to-cart-color: var(--high-contrast-light-txt-color);
+ --fixed-add-to-cart-bg: var(--lion-5);
+ --fixed-add-to-cart-border-top: var(--blue-8);
  
           /*~ Fullscreen product~*/
 

@@ -294,7 +294,7 @@ const NavBar = ({ totalItems, newProduct, setNewProduct }) => {
                   height={0}
                   width={0}
                   sizes="48px"
-                  src="/images/bagBlue.png"
+                  src="/images/bagBlue2.png"
                   className={styles.bagImg}
                   alt="cart"
                 />

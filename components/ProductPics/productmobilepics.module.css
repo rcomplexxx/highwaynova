@@ -341,7 +341,9 @@
     .fixedAddToCartDiv{
       position: fixed;
       bottom: 0;
-      background-color: var(--gray-9-elegant);
+      
+      color: var(--fixed-add-to-cart-color);
+      background-color: var(--fixed-add-to-cart-bg);
       height: var(--size-8);
       width: 100%;
      
@@ -350,8 +352,9 @@
       justify-content: center;
       align-items: center;
       transition: opacity 0.3s ease, transform 0.3s ease;
-      border-top: 1px solid var(--border-color-strong);
-      font-size: var(--font-size-1);
+      border-top: 1px solid var(--fixed-add-to-cart-border-top);
+      font-size: var(--font-size-3);
+      font-weight: 600;
       animation: spawnAddToCart 0.3s ease;
       cursor: pointer;
     z-index: 10;
