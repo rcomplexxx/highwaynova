@@ -98,7 +98,7 @@ const handleCouponApply = () => {
                     <div className={styles.mobileTitle}>
                       Order summery
                       <Image
-                        src={"/images/greaterLessx.png"}
+                        src={"/images/greaterLess3Dark.png"}
                         height={8}
                         width={8}
                         alt="arrow"

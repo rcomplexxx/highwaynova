@@ -132,7 +132,7 @@ const handlePopCartLinkClick=(event, nextLinkHref)=>{
     
     </Link>
 
-    <Link href='/checkout' className={styles.buyNowButton} 
+    <Link href='/checkout' className={styles.checkoutButton} 
      onClick={(event)=>{
       handlePopCartLinkClick(event, '/checkout')
     }}

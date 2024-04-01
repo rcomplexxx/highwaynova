@@ -42,15 +42,15 @@ export default function BenefitSwiper() {
    >
       <div className={styles.benefitSlideInsideWrapper}> 
      <div className={styles.benefitDiv}>
-     <Image onClick={()=>{swiper.slidePrev();   pauseSwiperAutoPlay();}} className={styles.arrowLeft} src='/images/greaterLess3.png' width={0} height={0}/>
+     <Image onClick={()=>{swiper.slidePrev();   pauseSwiperAutoPlay();}} className={styles.arrowLeft} src='/images/greaterLess3Dark.png' width={0} height={0}/>
 
       <div className={styles.internalBenefitDiv}>
   <Image className={styles.benefitImg} src='/images/truckIcon8.svg' width={0} height={0}/>
-  <span className={styles.benefitText} src='/images/greaterLess3.png'>Free shipping</span>
+  <span className={styles.benefitText} src='/images/greaterLess3Dark.png'>Free shipping</span>
   </div>
 
   <Image onClick={()=>{swiper.slideNext();    pauseSwiperAutoPlay();}} 
-  className={`${styles.arrowLeft} ${styles.arrowRight}`} src='/images/greaterLess3.png' width={0} height={0}/>
+  className={`${styles.arrowLeft} ${styles.arrowRight}`} src='/images/greaterLess3Dark.png' width={0} height={0}/>
 
   </div>
   </div>
@@ -60,17 +60,17 @@ export default function BenefitSwiper() {
      <div className={styles.benefitSlideInsideWrapper}> 
      <div className={styles.benefitDiv}>
      
-     <Image onClick={()=>{swiper.slidePrev();   pauseSwiperAutoPlay();}} className={styles.arrowLeft} src='/images/greaterLess3.png' width={0} height={0}/>
+     <Image onClick={()=>{swiper.slidePrev();   pauseSwiperAutoPlay();}} className={styles.arrowLeft} src='/images/greaterLess3Dark.png' width={0} height={0}/>
 
 
      <div className={styles.internalBenefitDiv}>
   <Image className={styles.benefitImg} src='/images/shippingReturnIcon2.png' width={0} height={0}/>
-  <span className={styles.benefitText} src='/images/greaterLess3.png'>Free returns</span>
+  <span className={styles.benefitText} src='/images/greaterLess3Dark.png'>Free returns</span>
   </div>
 
 
   <Image onClick={()=>{swiper.slideNext();    pauseSwiperAutoPlay();}} 
-  className={`${styles.arrowLeft} ${styles.arrowRight}`} src='/images/greaterLess3.png' width={0} height={0}/>
+  className={`${styles.arrowLeft} ${styles.arrowRight}`} src='/images/greaterLess3Dark.png' width={0} height={0}/>
 </div>
 
   </div>
@@ -82,14 +82,14 @@ export default function BenefitSwiper() {
      <div className={styles.benefitDiv}>
 
 
-     <Image onClick={()=>{swiper.slidePrev();   pauseSwiperAutoPlay();}} className={styles.arrowLeft} src='/images/greaterLess3.png' width={0} height={0}/>
+     <Image onClick={()=>{swiper.slidePrev();   pauseSwiperAutoPlay();}} className={styles.arrowLeft} src='/images/greaterLess3Dark.png' width={0} height={0}/>
 
      <div className={styles.internalBenefitDiv}>
   <Image className={styles.benefitImg} src='/images/guarantee3.png' width={0} height={0}/>
-  <span className={styles.benefitText} src='/images/greaterLess3.png'>30-days Money back guarantee</span>
+  <span className={styles.benefitText} src='/images/greaterLess3Dark.png'>30-days Money back guarantee</span>
   </div>
   <Image onClick={()=>{swiper.slideNext();    pauseSwiperAutoPlay();}} 
-  className={`${styles.arrowLeft} ${styles.arrowRight}`} src='/images/greaterLess3.png' width={0} height={0}/>
+  className={`${styles.arrowLeft} ${styles.arrowRight}`} src='/images/greaterLess3Dark.png' width={0} height={0}/>
 </div>
   
   </div>

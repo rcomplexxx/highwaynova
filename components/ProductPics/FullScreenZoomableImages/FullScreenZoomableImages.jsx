@@ -469,7 +469,7 @@ const FullScreenZoomableImage = ({
           <Image
             height={12}
             width={12}
-            src="/images/greaterLess3.png"
+            src="/images/greaterLess3Dark.png"
             onClick={() => {
               swiper.slidePrev();
             }}
@@ -478,7 +478,7 @@ const FullScreenZoomableImage = ({
           <Image
             height={12}
             width={12}
-            src="/images/greaterLess3.png"
+            src="/images/greaterLess3Dark.png"
             onClick={() => {
               swiper.slideNext();
             }}

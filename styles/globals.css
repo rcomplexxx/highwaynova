@@ -277,7 +277,7 @@ Cormorant+Garamond */
   --error-color: red;
   --error-box-shadow-color: rgb(158, 49, 6);
 
-  --border-color-weak: rgb(72, 69, 85);
+  --border-color-weak: var(--neutral-2);
   --border-color-mid: var(--neutral-4);
   --border-color-strong: var(--neutral-5);
 
@@ -296,7 +296,10 @@ Cormorant+Garamond */
   --nav-links-color: var(--lion-7);
   --navbar-current-link-color: var(--blue-5);
   --nav-select-search-link-color:var(--blue-0);
+
+  --popcart-bg: var(--navbar-bg);
   --cart-button-items-number-bg: var(--lion-5);
+  --checkout-button-border: rgb(159, 160, 92);
 
 
 
