@@ -24,7 +24,7 @@ function Question(props) {
       <button className={styles.question_div} onClick={summonAnswer}>
         {props.question}
         <Image
-        src='/images/greaterLess3.png'
+        src='/images/greaterLess3Dark.png'
         height={12} width={12}
           className={`${styles.plusStyle} ${
             showAnswer ? styles.plusStyleRotate : ""

@@ -222,7 +222,7 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
                 <Image 
                 height={12}
                 width={12}
-                src='/images/greaterLess3.png'
+                src='/images/greaterLess3Dark.png'
                
                 alt='Prev'
                 />
@@ -234,7 +234,7 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
                height={12}
                width={12}
              
-                src='/images/greaterLess3.png'
+                src='/images/greaterLess3Dark.png'
                 alt='Next'
                 />
             </div>

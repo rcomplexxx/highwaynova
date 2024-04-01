@@ -66,8 +66,10 @@ const FullScreenZoomableImage = ({
 
     //prebaciti u complete
 
-    const rgbValues =
-      getComputedStyle(fixedZoomDiv).backgroundColor.match(/\d+/g);
+    const bgColor = getComputedStyle(document.documentElement).getPropertyValue('--bg-color');
+   
+
+    const rgbValues = `rgba(${parseInt(bgColor.slice(1, 3), 16)}, ${parseInt(bgColor.slice(3, 5), 16)}, ${parseInt(bgColor.slice(5, 7), 16)}, 1)`;
 
     const transitionEnded = () => {
       mainImg.style.opacity = "1";
@@ -78,7 +80,7 @@ const FullScreenZoomableImage = ({
     fixedZoomDiv.addEventListener("transitionend", transitionEnded);
 
     fixedZoomDiv.style.transition = "background-color 0.2s 0.01s ease";
-    fixedZoomDiv.style.backgroundColor = `rgba(${rgbValues[0]}, ${rgbValues[1]}, ${rgbValues[2]}, 1)`;
+    fixedZoomDiv.style.backgroundColor = rgbValues;
 
  
 
@@ -171,8 +173,11 @@ const FullScreenZoomableImage = ({
 
   useEffect(() => {
     const fixedZoomDiv = fixedZoomDivRef.current;
-    const rgbValues =
-      getComputedStyle(fixedZoomDiv).backgroundColor.match(/\d+/g);
+    const bgColor = getComputedStyle(document.documentElement).getPropertyValue('--bg-color');
+   
+    const baseRgb=`${parseInt(bgColor.slice(1, 3), 16)}, ${parseInt(bgColor.slice(3, 5), 16)}, ${parseInt(bgColor.slice(5, 7), 16)},`
+    const getRgbValues = (opacity) =>{ return `rgba(${baseRgb} ${opacity})`};
+
 
     let timeoutId;
     let swipeYLock = false;
@@ -219,7 +224,7 @@ const FullScreenZoomableImage = ({
         startingTouchCoordinates.y;
       if (currY > -16 && currY < 16) {
         imgDiv.style.transform = `translateY(${0}px)`;
-        fixedZoomDiv.style.backgroundColor = `rgba(${rgbValues[0]}, ${rgbValues[1]}, ${rgbValues[2]}, 1`;
+        fixedZoomDiv.style.backgroundColor = getRgbValues(1);
 
         currX =
           event.changedTouches[event.changedTouches.length - 1].clientX -
@@ -233,15 +238,11 @@ const FullScreenZoomableImage = ({
         //Pomeri sliku na dole, i smanji opacity pozadine
       imgDiv.style.transform = `translateY(${currY}px)`;
 
-      fixedZoomDiv.style.backgroundColor = `rgba(${rgbValues[0]}, ${
-        rgbValues[1]
-      }, ${rgbValues[2]}, ${
-        1 -
+      fixedZoomDiv.style.backgroundColor = getRgbValues( 1 -
         Math.abs(
           (imgDiv.getBoundingClientRect().top - 48) / window.innerHeight
         ) *
-          2
-      })`;
+          2) ;
     }
     };
 
@@ -264,7 +265,7 @@ const FullScreenZoomableImage = ({
                 "transform 0.3s ease, background-color 0.3s ease";
               imgDiv.style.transform = `translateY(${0}px)`;
 
-              fixedZoomDiv.style.backgroundColor = `rgba(${rgbValues[0]}, ${rgbValues[1]}, ${rgbValues[2]}, 1`;
+              fixedZoomDiv.style.backgroundColor = getRgbValues(1);
             }
           }
         }

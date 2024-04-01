@@ -103,7 +103,7 @@ export default function WriteReviewVisible({ratingData}) {
           </span>
 
           <Image
-        src={'/images/greaterLess3.png'}
+        src={'/images/greaterLess3Dark.png'}
         loading={'lazy'} alt='Show'
         height={0}
         width={0}

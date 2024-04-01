@@ -49,7 +49,7 @@ export default function LinkCard({title, children}) {
     <div className={styles.footerLinksWrapper}>
         <div onClick={handleCardExpend} className={styles.linksCard}>
         <span className={styles.title}>{title}</span>
-        <Image loading={'lazy'} alt='Show' className={`${styles.dropMenuSign} ${cardOpen && styles.dropMenuOpen}`} src='/images/greaterLess3.png' height={8} width={8}/>
+        <Image loading={'lazy'} alt='Show' className={`${styles.dropMenuSign} ${cardOpen && styles.dropMenuOpen}`} src='/images/greaterLess3Dark.png' height={8} width={8}/>
         </div>
         <div ref={cardContentRef} className={styles.linksContent}>
             {children}

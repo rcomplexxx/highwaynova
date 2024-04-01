@@ -362,7 +362,7 @@ Cormorant+Garamond */
  
           /*~ Fullscreen product~*/
 
-
+  --fullscreen-bg: var(--bg-color);
  --toast-message-bg: var(--neutral-4);
  --fullscreen-nav-bg: var(--blue-8);
  --fullscreen-arrow-bg:var(--blue-8);
