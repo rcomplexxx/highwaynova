@@ -6,7 +6,6 @@
     width: 100%;
     height: 100%;
     
-    background-color: rgba(var(--gray-9-elegant), 0);
  
     display: flex;
     justify-content: center;
@@ -195,10 +194,7 @@
    
   }
   
-  .productImgPositionFixed{
-    transition: transform 0.3s ease, background-color 0.3s ease;
-    transform : translateY(0) !important;
-  }
+
 
   
 
