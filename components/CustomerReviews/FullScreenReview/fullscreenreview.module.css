@@ -83,7 +83,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
- 
+    background-color: var(--fullscreen-customer-image-bg);
 }
 
 .reviewImage{

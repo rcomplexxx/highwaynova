@@ -29,17 +29,12 @@
   .productImagesWrapper{
     position: -webkit-sticky;
     position: sticky;
-    top: var(--size-7);
+    top: var(--size-2);
     bottom: 100%;
   }
   
 
-  .productPicsFixed{
-    
-    width: var(--size-16);
-    position: fixed;
-    top: var(--size-7);
-  }
+
 
   .productPicsBot{
    width:100%;

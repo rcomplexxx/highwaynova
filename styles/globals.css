@@ -385,6 +385,7 @@ Cormorant+Garamond */
  --customer-review-color: var(--high-contrast-light-txt-color);
  --customer-review-box-shadow: 0px 2px 2px var(--neutral-5), 0px 2px 8px var(--neutral-4);
 
+ --fullscreen-customer-image-bg: var(--blue-9);
 
 
 

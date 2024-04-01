@@ -88,7 +88,7 @@ const NavBar = ({ totalItems, newProduct, setNewProduct }) => {
                 height={0}
                 width={0}
                 sizes="32px"
-                src="/images/menuIcon2.png"
+                src="/images/menuIcon2Dark.png"
                 onClick={handleMobileMenuOpen}
                 className={styles.smallMenuImage}
                 alt="Mobile menu"
