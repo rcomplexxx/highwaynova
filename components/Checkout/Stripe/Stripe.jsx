@@ -1,8 +1,8 @@
-import React, { useContext, useRef, useState } from 'react';
+import React, { useCallback, useContext, useRef, useState } from 'react';
 
 import styles from './stripe.module.css'
 import { useStripe,  CardNumberElement, CardCvcElement, CardExpiryElement} from "@stripe/react-stripe-js"
-import CCInput from './CCInput/CCInput';
+
 import FloatingBadge from '../FloatingBadge/FloatingBadge';
 import { Elements, useElements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
@@ -11,6 +11,7 @@ import Image from 'next/image';
 import BillingInfo from './BillingInfo/BillingInfo';
 import swapCountryCode from '@/utils/countryList';
 import { CheckoutContext } from '@/contexts/CheckoutContext';
+import InputField from '../Input/InputField';
                
 
 const Stripe = ({organizeUserData, checkFields}) => {
@@ -43,6 +44,15 @@ const Stripe = ({organizeUserData, checkFields}) => {
         setErrors(newErrors);
       }
     };
+
+    const getInputColor =  useCallback(()=>{
+      return getComputedStyle(document.documentElement).getPropertyValue('--high-contrast-light-txt-color');
+    },[])
+
+
+    const getInputBgColor = useCallback(()=>{
+      return getComputedStyle(document.documentElement).getPropertyValue('--input-color');
+    },[])
  
   
    
@@ -305,14 +315,14 @@ const handleCCBlur= ()=>{
       }}
     options={{placeholder:'',  style: {
       base: {
-        color: 'white',
-        backgroundColor:'#151921',
+        color: getInputColor(),
+        backgroundColor:getInputBgColor(),
         lineHeight:"52px",
       },
     
      
       invalid: {
-        color: 'white'
+        color: getInputColor()
       }
     }}}
         className={`${styles.input_field} ${errors.cardNumber && styles.input_error} ${focusedField==='cardNumber' && styles.stripeFieldFocused}`}
@@ -340,12 +350,12 @@ const handleCCBlur= ()=>{
  onChange={handleCCChange}
       options={{placeholder:'',  style: {
         base: {
-          color: 'white',
-          backgroundColor:'#151921',
+          color: getInputColor(),
+          backgroundColor:getInputBgColor(),
           lineHeight:"52px",
         },
         invalid: {
-          color: 'white'
+          color: getInputColor()
         }
       }}}
       className={`${styles.input_field} ${errors.expiryDate && styles.input_error} ${focusedField==='expiryDate' && styles.stripeFieldFocused}`}
@@ -365,12 +375,12 @@ const handleCCBlur= ()=>{
   }}
    options={{placeholder:'',  style: {
     base: {
-      color: 'white',
-      backgroundColor:'#151921',
+      color: getInputColor(),
+      backgroundColor: getInputBgColor(),
       lineHeight:"52px",
     },
     invalid: {
-      color: 'white'
+      color: getInputColor()
     }
   }}}
   className={`${styles.input_field} ${errors.cvv && styles.input_error} ${focusedField==='cvv' && styles.stripeFieldFocused}`}/>
@@ -384,8 +394,8 @@ const handleCCBlur= ()=>{
 
 </div>
        
-<div className={styles.ccInputRow}>
-<CCInput
+<div className={`${styles.ccInputRow} ${styles.lastCcInputRow}`}>
+<InputField
        id="cardHolderName"
        placeHolder='Name on card'
           type="text"

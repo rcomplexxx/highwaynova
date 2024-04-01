@@ -255,10 +255,11 @@ Cormorant+Garamond */
   --light-txt-color: var(--neutral-9);
   --weak-txt-color: var(--neutral-8);
   --bg-color: 	var(--neutral-0); /*hsl(81, 7%, 92%)*/
+  --dim-bg: rgba(0, 0, 0, 0.5);
   /*#e5e5e6*/
 
-  --main-button-color: var(--blue-5);
-  --main-button-hover-color: var(--blue-4);
+  --main-button-color: var(--blue-4);
+  --main-button-hover-color: var(--blue-5);
   --main-light-color: #989898;
   --main-dark-color: #323232;
 
@@ -357,14 +358,14 @@ Cormorant+Garamond */
  --faq-add-to-cart-hover-bg: var(--blue-4);
 
  --fixed-add-to-cart-color: var(--high-contrast-light-txt-color);
- --fixed-add-to-cart-bg: var(--lion-5);
+ --fixed-add-to-cart-bg: var(--neutral-4);
  --fixed-add-to-cart-border-top: var(--blue-8);
  
           /*~ Fullscreen product~*/
 
   --fullscreen-bg: var(--bg-color);
  --toast-message-bg: var(--neutral-4);
- --fullscreen-nav-bg: var(--blue-8);
+ --fullscreen-nav-bg: var(--blue-2);
  --fullscreen-arrow-bg:var(--blue-8);
  --fullscreen-arrow-hover-bg:var(--blue-7);
  --fullscreen-arrow-active-bg: var(--blue-7);
@@ -372,7 +373,7 @@ Cormorant+Garamond */
 
             /*~ Customer reviews ~*/
 
- --rating-info-bg: var(--neutral-9);
+ --rating-info-bg: var(--neutral-2);
  --rating-info-percent-bar-empty:rgb(30, 51, 59);
  --rating-info-percent-bar-fill: rgb(116, 145, 147);
 
@@ -394,7 +395,7 @@ Cormorant+Garamond */
               /*~ Writing review ~*/
 
 
-  --write-review-main-bg: var(--neutral-9);
+  --write-review-main-bg: var(--bg-color);
   /* #1b191a */
   --writing-accent-color: gray;
   --writing-empty-progress-bar: rgb(55, 55, 62);
@@ -444,7 +445,7 @@ Cormorant+Garamond */
   --input-outline-color: var(--neutral-3);
   --input-box-shadow-color: var(--neutral-3);
   --checkout-input-placeholder: var(--neutral-8);
-  --input-autofill-color: #0f1316;
+  --input-autofill-color: var(--bg-color);
  
   --express-checkout-button-bg: #151921;
   --paypal-wrapper-border: #41855b;
@@ -453,7 +454,10 @@ Cormorant+Garamond */
   --select-payment-circle-ring-color: aqua;
   --select-payment-circle-color: gray;
 
-  --payment-div-bg: rgb(11, 18, 24);
+  --payment-div-bg: var(--blue-0);
+
+  --paynow-stripe-button: var(--main-button-color);
+  --paynow-stripe-button-hover: var(--main-button-hover-color);
  
 
   --more-cards-card-bg: rgb(195, 229, 251);  

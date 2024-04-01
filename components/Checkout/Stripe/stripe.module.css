@@ -20,6 +20,10 @@
   
 }
 
+.lastCcInputRow{
+  margin-bottom: var(--size-5);
+}
+
 .ccInputRow > :first-child{
   margin-left: var(--size-3);
 }
@@ -32,7 +36,7 @@
    
     height: var(--size-8);
     width: calc(100% -  var(--size-5));
-    background-color: var(--blue-7);
+    background-color: var(--paynow-stripe-button);
     color: var(--high-contrast-light-txt-color);
     margin-top: var(--size-6) ;
     margin-bottom: var(--size-5);
@@ -45,7 +49,7 @@
 }
 
 .payNowButton:hover{
-    background-color: var(--blue-8);
+    background-color: var(--paynow-stripe-button-hover);
    
 }
 
@@ -99,10 +103,13 @@
       align-self: center;
       box-sizing: border-box;
       padding-left: var(--size-3);
-      outline: solid 1px var( --input-outline-color);
+      border: none;
+      outline: solid 1px var(--input-outline-color);
+     
       font-size: var(--font-size-2);
       overflow: hidden;
       cursor: text;
+
     }
 
 
@@ -121,8 +128,8 @@
     /* var(--input-autofill-color); */
 
     .stripeFieldFocused { 
-      outline: none !important;
-      border-color: var(--input-box-shadow-color) !important;
+
+     
       box-shadow: 0 0 6px var(--input-box-shadow-color) !important;
   }
   
