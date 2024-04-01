@@ -451,16 +451,16 @@ Cormorant+Garamond */
   --paypal-wrapper-border: #41855b;
   --google-pay-border-color: rgb(64, 73, 65);
 
-  --select-payment-circle-ring-color: aqua;
-  --select-payment-circle-color: gray;
+  --select-payment-circle-ring-color: var(--blue-2);
+  --select-payment-circle-color: var(--neutral-5);
 
-  --payment-div-bg: var(--blue-0);
+  --payment-div-bg: var(--neutral-1);
 
   --paynow-stripe-button: var(--main-button-color);
   --paynow-stripe-button-hover: var(--main-button-hover-color);
  
 
-  --more-cards-card-bg: rgb(195, 229, 251);  
+  --more-cards-card-bg: var(--lion-2);  
 --more-cards-card-border: rgba(0, 0, 0, 0.08);
 
 --floating-badge-color: gray;
@@ -485,6 +485,8 @@ Cormorant+Garamond */
 
                   /*Tip*/
 
+
+  --tip-selected: var(--blue-5);
   --add-tip-button-disabled-txt-color: rgb(152, 152, 152);
   --add-tip-button-disabled: rgb(24, 24, 34);
   

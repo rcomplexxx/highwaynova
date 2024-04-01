@@ -229,7 +229,6 @@
 
   .moreCards{
     position: relative;
-    color: black;
     background-color: var(--more-cards-card-bg);  
     height:39px; 
     width: 69px;
