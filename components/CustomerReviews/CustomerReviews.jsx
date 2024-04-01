@@ -14,7 +14,8 @@ function Review({ product_id,  name, text,  stars, imageNames, setFullScreenRevi
  
   return (
     <div onClick={()=>{setFullScreenReview({authorName:name, text:text, stars:stars, 
-    imageSrc:(imageNames && JSON.parse(imageNames).length!==0) && `/images/review_images/productId_${product_id}/${JSON.parse(imageNames)[0]}`
+    imageSrc:(imageNames && JSON.parse(imageNames).length!==0) && 
+    `/images/review_images/productId_${product_id}/${JSON.parse(imageNames)[0]}`
   
   })}} 
     

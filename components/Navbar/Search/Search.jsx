@@ -218,7 +218,7 @@ export default function Search({searchOpen, setSearchOpen}){
          
           </div>
           {searchOpen && <Image height={0} width={0}
-          src="/images/cancelWhite.png"
+          src="/images/cancelDark.png"
           sizes='32px'
           onClick={()=>{  
             

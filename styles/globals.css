@@ -256,7 +256,9 @@ Cormorant+Garamond */
   --weak-txt-color: var(--neutral-8);
   --bg-color: 	var(--neutral-0); /*hsl(81, 7%, 92%)*/
   --dim-bg: rgba(0, 0, 0, 0.5);
-  /*#e5e5e6*/
+  --surround-cancel-bg: var(--lion-4);
+  --surround-cancel-bg-hover: var(--lion-3);
+  /*#e5e5e6   rgba(50, 50, 50, 0.7)*/
 
   --main-button-color: var(--blue-4);
   --main-button-hover-color: var(--blue-5);
@@ -357,8 +359,8 @@ Cormorant+Garamond */
 
  --dropcard-title-color: var(--high-contrast-light-txt-color);
 
- --faq-add-to-cart-bg: var(--blue-5);
- --faq-add-to-cart-hover-bg: var(--blue-4);
+ --faq-add-to-cart-bg: var(--blue-4);
+ --faq-add-to-cart-hover-bg: var(--blue-5);
 
  --fixed-add-to-cart-color: var(--high-contrast-light-txt-color);
  --fixed-add-to-cart-bg: var(--neutral-4);
@@ -409,7 +411,7 @@ Cormorant+Garamond */
   --writing-next-button-hover-bg: #364658;
   --writing-next-button-disabled-txt-color: rgb(15, 16, 26);
  
- 
+  --cancel-image-button-bg: var(--surround-cancel-bg)
 
   
 

@@ -108,13 +108,12 @@
 
  
       padding: var(--size-4);
-     
       cursor: pointer;
   }
 
   @media (hover: hover) {
   .closeButton:hover{
-    background-color: var(--writing-next-button-hover-bg);
+    background-color: var(--surround-cancel-bg-hover);
     
   }
 }
@@ -402,7 +401,7 @@
     align-items: center;
     border: 2px solid var(--writing-accent-color);
 
-    background-color: black;
+    background-color: var(--cancel-image-button-bg);
     border-radius: 100%;
     
     cursor: pointer;

@@ -455,7 +455,7 @@ const FullScreenZoomableImage = ({
                 height={0}
                 width={0}
                 sizes="24px"
-                src="/images/cancelWhite.png"
+                src="/images/cancelDark.png"
                 alt="cancel"
                 onClick={(event) => {
                   event.stopPropagation();

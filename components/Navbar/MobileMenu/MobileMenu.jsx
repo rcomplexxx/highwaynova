@@ -211,7 +211,7 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
     >
     
    
-      <Image loading={'lazy'} alt='Cancel' height={16} width={16} src='/images/cancelWhite.png' 
+      <Image loading={'lazy'} alt='Cancel' height={16} width={16} src='/images/cancelDark.png' 
       onClick={()=>{
         whiteButtonCancelRef.current= true
          history.back();

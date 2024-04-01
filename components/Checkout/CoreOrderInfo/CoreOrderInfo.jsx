@@ -118,7 +118,7 @@ export default function CoreOrderInfo(discount, setDiscount, products){
       <div className={styles.mainCouponCode}> 
           <Image src='/images/discount7.png' className={styles.mainDiscountImg} height={16} width={16}/>
           <span>{couponValidCode}</span>
-          <Image src='/images/cancelWhite.png' onClick={(()=>{setCouponValidCode(undefined);setDiscount({code: '', discount: 0});})}
+          <Image src='/images/cancelDark.png' onClick={(()=>{setCouponValidCode(undefined);setDiscount({code: '', discount: 0});})}
            className={styles.discountCancelImage} height={16} width={16}/>
           </div>
 }

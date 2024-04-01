@@ -83,7 +83,7 @@ const CartItem = ({ item }) => {
       <div className={styles.edgeDiv}>
 
       <Image
-          src='/images/bin.png'
+          src='/images/binDark.png'
             className={styles.removeButton}
             onClick={() => handleRemoveFromCart(item.id, item.variant)}
             height={0} width={0}

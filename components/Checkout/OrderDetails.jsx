@@ -174,7 +174,7 @@ const handleCouponApply = () => {
                   <div className={styles.mainCouponCode}> 
                       <Image src='/images/discount7.png' className={styles.mainDiscountImg} height={16} width={16}/>
                       <span>{couponCode}</span>
-                      <Image src='/images/cancelWhite.png' onClick={(()=>{setAndValidateCouponCode("");})}
+                      <Image src='/images/cancelDark.png' onClick={(()=>{setAndValidateCouponCode("");})}
                        className={styles.discountCancelImage} height={16} width={16}/>
                       </div>
                    }

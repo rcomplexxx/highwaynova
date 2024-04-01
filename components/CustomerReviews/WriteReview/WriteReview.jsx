@@ -176,7 +176,7 @@ export default function WriteReview({ setInfoDivOpen }) {
                     <div className={styles.userImagesDivWrapper}><div className={styles.userImagesDiv}>
                       {images.map((image, i) => {
                        return <div key={i} className={styles.userImageDiv}>
-                          <img height={0} width={0} src='/images/cancelWhite.png' className={styles.cancelImage} onClick={()=>{
+                          <img height={0} width={0} src='/images/cancelDark.png' className={styles.cancelImage} onClick={()=>{
                             let newImages= images.filter(img=>{return img!=image});
                             setImages(newImages);
                           }}>
@@ -325,7 +325,7 @@ export default function WriteReview({ setInfoDivOpen }) {
             </div>
 
             {ratingPage == 0 || ratingPage == 4 ? (
-               <Image height={24} width={24} src='/images/cancelWhite.png'
+               <Image height={24} width={24} src='/images/cancelDark.png'
                 onClick={() => {
                   setInfoDivOpen(false);
                

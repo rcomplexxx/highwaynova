@@ -117,7 +117,7 @@ useEffect(()=>{
 <div ref={mainReviewDiv} onClick={(event)=>{event.stopPropagation()}} className={`${styles.mainDiv} 
 ${(imageSrc?imageLoaded:true) && styles.spawnFullScreenReview}`}>
 
-    <Image src='/images/cancelWhite.png' height={0} width={0} sizes='32px' onClick={()=>{history.back();}} 
+    <Image src='/images/cancelDark.png' height={0} width={0} sizes='32px' onClick={()=>{history.back();}} 
     className={`${styles.closeFullScreen} ${!imageSrc && styles.closeFullScreenNoImg}`}/>
 
    {imageSrc && <div className={styles.reviewImageDiv}>

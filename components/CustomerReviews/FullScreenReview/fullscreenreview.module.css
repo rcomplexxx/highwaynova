@@ -51,13 +51,13 @@
     position: absolute;
     top: 24px;
     left: 24px;
-    height: 32px;
-    width: 32px;
+    height: 40px;
+    width: 40px;
   
     box-sizing: border-box;
     padding: var(--size-2);
  
-    background-color: rgba(50, 50, 50, 0.7);
+    background-color: var(--surround-cancel-bg);
     
     border-radius: 6px;
     cursor: pointer;
@@ -66,7 +66,7 @@
 
 .closeFullScreen:hover{
     opacity: 1;
-    background-color: var(--toast-message-bg);
+    background-color: var(--surround-cancel-bg-hover);
 }
 
 .closeFullScreenNoImg{
