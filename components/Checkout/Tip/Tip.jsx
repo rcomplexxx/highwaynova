@@ -74,7 +74,7 @@ export default function Tip({products}){
 
 <div className={styles.tipShowCheckboxDiv}  onClick={()=>{ setTipShow(!tipShow)}}>
       <div  className={styles.tipShowChecker}>
-        {tipShow && <Image src='/images/correctDark.svg' height={10} width={10}/>}
+        {tipShow && <Image src='/images/correctDark3.svg' height={10} width={10}/>}
       </div>
      
   
@@ -94,11 +94,11 @@ export default function Tip({products}){
             <span className={styles.roundTipSpan}>${(fullProductCost*5/100).toFixed(2)}</span>
            
             </div>
-            <div className={`${styles.roundPercent} ${styles.centerRoundPercent}`}
+            <div className={`${styles.roundPercent} ${selectedField==10 && styles.selectedPercent}`}
              onClick={()=>{setTipError();setTipInputValue(""); setApplyDisabled(true); setSelectedField(10); setTip(parseFloat(fullProductCost*10/100, 2));}}>
             <span className={styles.roundPercentSpan}>10%</span>
             <span className={styles.roundTipSpan}>${(fullProductCost*10/100).toFixed(2)}</span>
-              {selectedField==10 && <div className={styles.selectedPercentCenter}/>}
+        
             </div>
             <div className={`${styles.roundPercent} ${styles.lastRoundPercent} ${selectedField==15 && styles.selectedPercent}`} 
             onClick={()=>{setTipError();setTipInputValue(""); setApplyDisabled(true); setSelectedField(15); setTip(parseFloat(fullProductCost*15/100, 2));}}>
