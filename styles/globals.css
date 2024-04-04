@@ -339,6 +339,7 @@ Cormorant+Garamond */
 
    --arrow-bg: rgb(44, 95, 93);
    --collection-info-bg: var(--lion-2);
+   --product-card-bg: var(--bg-color);
    --product-on-sale-bg: rgb(18, 14, 56);
 
 

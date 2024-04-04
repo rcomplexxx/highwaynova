@@ -1,15 +1,17 @@
 .root {
     /* maxWidth: 345, original width style */
    
-    background-color: var(--neutral-1);
+    background-color: var(--product-card-bg);
     color: var(--light-txt-color);
     box-sizing: border-box;
     margin-bottom:  var(--size-8);
+    padding: var(--size-4);
+    padding-bottom: 0;
     
     overflow: clip;
-    border-radius: 12px;
+    border-radius: 4px;
 
-  box-shadow: 0 2px 8px var(--neutral-5);
+  box-shadow: 0 2px 4px 0px var(--neutral-4);
   }
 
 
@@ -20,6 +22,7 @@
     aspect-ratio: 1;
     transition: scale 0.005s ease-in;
     overflow: clip;
+    border-radius: 4px;
     cursor: pointer;
   }
  
@@ -54,7 +57,7 @@
     flex-direction: column;
     justify-content: space-between;
     
-    padding: var(--size-5) var(--size-3);
+    padding: var(--size-5) var(--size-1);
   }
 
   .cardContentText{
