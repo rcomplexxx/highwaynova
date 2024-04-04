@@ -11,7 +11,7 @@
     overflow: clip;
     border-radius: 4px;
 
-  box-shadow: 0 2px 4px 0px var(--neutral-4);
+  box-shadow: 0 2px 8px -4px var(--neutral-2);
   }
 
 
@@ -57,7 +57,8 @@
     flex-direction: column;
     justify-content: space-between;
     
-    padding: var(--size-5) var(--size-1);
+    padding: var(--size-3) var(--size-1);
+    padding-bottom: var(--size-5);
   }
 
   .cardContentText{
