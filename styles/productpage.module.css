@@ -191,11 +191,14 @@
     width:100%;
     display: inline-block;
    
+   
+    color: var(--high-contrast-light-txt-color);
+    background-color: var(--buy-now-bg);
+    border: 1px solid var(--buy-now-border);
+
     margin-top: var(--size-2);
     margin-bottom: var(--size-3);
-    background-color: transparent;
-    border: 1px solid var(--buy-now-border);
-    color: var(--high-contrast-light-txt-color);
+   
     font-size: var(--font-size-3);
     font-weight: 600;
     cursor: pointer;

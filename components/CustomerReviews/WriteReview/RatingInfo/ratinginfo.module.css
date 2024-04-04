@@ -92,6 +92,7 @@
   }
 
   .rateNumber{
+    color: var(--high-contrast-light-txt-color);
     width: var(--size-7);
   }
 

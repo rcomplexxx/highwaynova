@@ -341,7 +341,7 @@ font-size: var(--font-size-1);
     
     .sendButton{
         align-self: center;
-        width: calc(100% - var(--size-2));
+        width: calc(100% - var(--size-1));
       
         margin-top: var(--size-6);
        

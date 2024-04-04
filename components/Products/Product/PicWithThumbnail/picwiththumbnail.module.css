@@ -23,8 +23,8 @@
     color: var(--high-contrast-light-txt-color);
     padding: var(--size-2) var(--size-4);
     border-radius: 16px;
-    font-size: var(--font-size-1);
-    font-weight: 400;
+    font-size: var(--font-size-2);
+    font-weight: 600;
    
     z-index: 7;
   }

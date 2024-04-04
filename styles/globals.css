@@ -304,7 +304,7 @@ Cormorant+Garamond */
 
   --popcart-bg: var(--navbar-bg);
   --cart-button-items-number-bg: var(--lion-5);
-  --checkout-button-border: rgb(159, 160, 92);
+  --checkout-button-border: var(--lion-5);
 
 
 
@@ -337,10 +337,10 @@ Cormorant+Garamond */
 
    /*Product list ~ Products ~ Collections */
 
-   --arrow-bg: rgb(44, 95, 93);
+   --arrow-bg: var(--neutral-7);
    --collection-info-bg: var(--lion-2);
    --product-card-bg: var(--bg-color);
-   --product-on-sale-bg: rgb(18, 14, 56);
+   --product-on-sale-bg: var(--lion-2);
 
 
 
@@ -351,13 +351,14 @@ Cormorant+Garamond */
 
 
  --selected-product-image-border:var(--blue-8);
- --mini-slider-arrow-bg:rgb(19, 23, 57);
+ --mini-slider-arrow-bg:var(--neutral-5);
  --quantity-input-bg: var(--blue-3);
  --quantity-button-border: var(--neutral-6);
  --quantity-button-hover: var(--lion-2);
 
  --paypal-bg:#FFC439;
 
+ --buy-now-bg: var(--lion-1);
  --buy-now-border: var(--lion-6);
  --buy-now-hover-box-shadow-border: var(--lion-6);
 
@@ -375,19 +376,19 @@ Cormorant+Garamond */
   --fullscreen-bg: var(--bg-color);
  --toast-message-bg: var(--neutral-4);
  --fullscreen-nav-bg: var(--blue-2);
- --fullscreen-arrow-bg:var(--blue-8);
- --fullscreen-arrow-hover-bg:var(--blue-7);
- --fullscreen-arrow-active-bg: var(--blue-7);
+ --fullscreen-arrow-bg:var(--fullscreen-nav-bg);
+ --fullscreen-arrow-hover-bg:var(--blue-4);
+ --fullscreen-arrow-active-bg: var(--blue-5);
 
 
             /*~ Customer reviews ~*/
 
- --rating-info-bg: var(--neutral-2);
- --rating-info-percent-bar-empty:rgb(30, 51, 59);
- --rating-info-percent-bar-fill: rgb(116, 145, 147);
+ --rating-info-bg: var(--neutral-6);
+ --rating-info-percent-bar-empty: var(--star-empty-color);
+ --rating-info-percent-bar-fill: var(--lion-3);
 
  --star-color:#e9b335;
---star-empty-color: #103939;
+--star-empty-color: var(--neutral-8);
 --star-hover-color: orange;
 
 
@@ -425,7 +426,7 @@ Cormorant+Garamond */
 /*~ Cart ~*/
   --free-shipping-slider-empty-color: var(--neutral-9);
   --free-shipping-slider-fill-color: var(--lion-5);
-  --best-sellers-addtocart-border: rgb(64, 73, 65);
+  --best-sellers-addtocart-border: var(--lion-6);
 
   
   
