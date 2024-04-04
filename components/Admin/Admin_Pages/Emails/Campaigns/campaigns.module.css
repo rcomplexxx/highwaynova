@@ -36,7 +36,7 @@
 .currentId span{
     font-size: var(--font-size-7);
     opacity: 0.18;
-    color: var(--high-contrast-light-txt-color);
+    color: var(--admin-txt-color);
 }
 
 

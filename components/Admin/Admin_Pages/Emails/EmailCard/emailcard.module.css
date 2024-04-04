@@ -26,7 +26,7 @@
 .currentIdText{
     font-size: var(--font-size-7);
     opacity: 0.18;
-    color: var(--high-contrast-light-txt-color);
+    color: var(--admin-txt-color);
 }
 
 
@@ -86,7 +86,7 @@
 .previewButton{
     margin: var(--size-4) var(--size-5);
     margin-top: var(--size-7);
-    color: var(--high-contrast-light-txt-color);
+    color: var(--admin-txt-color);
     background-color: transparent;
     padding: var(--size-3) var(--size-6);
     border-radius: 2px;

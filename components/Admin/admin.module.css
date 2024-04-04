@@ -4,11 +4,18 @@
 
 .adminMainDiv{
     
+    min-height: 100vh;
     height: auto;
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    color: var(--admin-txt-color);
+    background-color: var(--gray-9-elegant);
+}
+
+.adminMainDiv h1{
+    color: rgb(236, 236, 246);
 }
 
 

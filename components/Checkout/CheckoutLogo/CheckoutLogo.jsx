@@ -28,8 +28,3 @@ export default function CheckoutLogo() {
 }
 
 
-{/* <div className={styles.bagImgWrapper}>
-      <div className={styles.bagImgWrapper2}>
-      <img className={styles.bagBlue} src="/images/bagBlue.png" />
-</div>
-      </div> */}

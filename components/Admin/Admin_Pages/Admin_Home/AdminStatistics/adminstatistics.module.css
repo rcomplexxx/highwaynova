@@ -78,7 +78,7 @@
 }
 
 .dateInput{
-    color: var(--high-contrast-light-txt-color);
+    color: var(--admin-txt-color);
     background-color: black ;
     padding: var(--size-2);
     margin: var(--size-3) 0;

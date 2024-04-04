@@ -86,6 +86,9 @@
     "babel-plugin-styled-components": "^2.1.4",
     "eslint-config-next": "13.4.3",
     "purgecss-webpack-plugin": "^5.0.0",
+    "sass": "^1.74.1",
+    "stylus": "^0.63.0",
+    "stylus-loader": "^8.1.0",
     "terser-webpack-plugin": "^5.3.10",
     "webpack-bundle-analyzer": "^4.10.1",
     "webpack-cli": "^5.1.4"

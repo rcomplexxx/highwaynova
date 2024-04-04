@@ -2,7 +2,7 @@ import React, { useState, useEffect,  useMemo } from "react";
 import { useRouter } from "next/router";
 
 
-import "../styles/globals.css";
+import "../styles/globals.scss";
 import Navbar from "../components/Navbar/Navbar.jsx";
 import AppContext from "@/contexts/AppContext";
 import Footer from "@/components/Footer/Footer";
