@@ -1,6 +1,7 @@
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const purgecss = require('@fullhuman/postcss-purgecss')
+const withLess = require('next-with-less');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -24,7 +25,10 @@ const nextConfig = {
         experimental: {
           optimizeCss: true,
         },
-      }
+      },
+      sassOptions: {
+        includePaths: [path.join(__dirname, 'styles')],
+      },
 
 }
 

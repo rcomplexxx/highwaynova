@@ -1,5 +1,8 @@
 
 
+
+
+
 .hronika{
  
     position: relative;
@@ -121,6 +124,19 @@
   
   
   :root {
+
+
+    @function hexToRgba($color, $opacity) {
+        $red:   red($color);
+        $green: green($color);
+        $blue:  blue($color);
+        
+        // Calculate RGBA values
+        $rgba: rgba($red, $green, $blue, $opacity);
+        
+        @return $rgba;
+      }
+    
   
     --size-1: 2px;
     --size-2: 4px;
@@ -469,9 +485,9 @@
   --more-cards-card-border: rgba(0, 0, 0, 0.08);
   
   --floating-badge-color: gray;
-  --badge-popup-message-bg: rgba(var(--blue-3), 0.7);
+  --badge-popup-message-bg: #{hexToRgba(var(--blue-3), 0.23)};
   
-  
+//   var(--blue-3)
   
   
   

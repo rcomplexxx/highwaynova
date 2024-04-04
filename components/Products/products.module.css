@@ -7,7 +7,7 @@
     border-radius: var(--size-2);
     margin-top: var(--size-9);
     margin-bottom: var(--size-9);
-    contain: content;
+    contain: layout;
   
   }
 
@@ -27,11 +27,12 @@
   
   .mainGridStyle {
     flex-wrap: wrap;
-    background-color: transparent;
     width:100%;
     display: flex;
     justify-content: flex-start;
-    
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 items per column by default */
+    column-gap: var(--size-7);
  
     
   }
@@ -64,11 +65,23 @@
     
   }
 
+  @media(max-width: 900px){
+    .mainGridStyle{
+      grid-template-columns: repeat(2, 1fr);
+      column-gap: var(--size-6);
+    }
+  }
+
  
   
   @media (max-width: 600px)  {
     .toolbar{
       width: calc(100% - var(--size-8));
+    }
+
+    .mainGridStyle{
+      grid-template-columns: repeat(1, 1fr);
+      column-gap: var(--size-5);
     }
   
   }

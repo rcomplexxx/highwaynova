@@ -1,14 +1,15 @@
 .root {
     /* maxWidth: 345, original width style */
-    width: 33.33% ;
-    background-color: transparent;
+   
+    background-color: var(--neutral-1);
     color: var(--light-txt-color);
     box-sizing: border-box;
-    margin-bottom:  var(--size-7);
-    padding-left: var(--size-7);
-    padding-right: var(--size-7);
-    border-radius: var(--size-2);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom:  var(--size-8);
+    
+    overflow: clip;
+    border-radius: 12px;
+
+  box-shadow: 0 2px 8px var(--neutral-5);
   }
 
 
@@ -17,9 +18,8 @@
     position: relative;
     width: 100%;
     aspect-ratio: 1;
-    transition: all 0.005s ease-in;
+    transition: scale 0.005s ease-in;
     overflow: clip;
-    border-radius:  var(--size-2);
     cursor: pointer;
   }
  
@@ -54,7 +54,7 @@
     flex-direction: column;
     justify-content: space-between;
     
-    padding: var(--size-3) 0;
+    padding: var(--size-5) var(--size-3);
   }
 
   .cardContentText{
@@ -80,20 +80,8 @@
 
 
 
-  @media(max-width: 1680px){
-    .root{
-      padding-left: var(--size-6);
-    padding-right: var(--size-6);
-    }
-
-    
-  }
-
   @media(max-width: 1220px){
-    .root{
-      padding-left: var(--size-5);
-      padding-right: var(--size-5);
-    }
+
 
     .addToCartImg{
       
@@ -109,11 +97,7 @@
   }
 
   @media(max-width: 900px){
-    .root{
-      width: 50%;
-      padding-left: var(--size-6);
-      padding-right: var(--size-6);
-    }
+
 
     .addToCartImg{
       
@@ -135,12 +119,8 @@
  
 
   @media(max-width: 600px){
-    .root{
-      width: 100%;
-      padding-left: var(--size-5);
-      padding-right: var(--size-5);
-    }
 
+   
     .addToCartImg{
     
       height: var(--size-6);
