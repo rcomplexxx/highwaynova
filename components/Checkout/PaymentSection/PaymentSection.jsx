@@ -181,7 +181,7 @@ export default function PaymentSection({ checkFields, organizeUserData, setError
 
         <div id='paypalFields' ref={paypalPaymentFieldsRef} className={`${styles.paymentFields} ${styles.paypalField} ${paymentMethod=="paypal" && styles.selectedField}`}>
        
-        <div className={styles.paypalFieldWrapper}>
+        <div className={styles.paymentFieldsSpaceAdjuster}>
           <PayPalButton
             checkFields={checkFields}
             organizeUserData={organizeUserData}
