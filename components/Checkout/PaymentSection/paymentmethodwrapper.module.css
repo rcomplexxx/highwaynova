@@ -221,6 +221,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    
   
     transition: max-height 0.6s ease;
    

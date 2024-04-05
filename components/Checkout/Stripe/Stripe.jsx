@@ -315,8 +315,8 @@ const handleCCBlur= ()=>{
       }}
     options={{placeholder:'',  style: {
       base: {
-        color: getInputColor(),
-        backgroundColor:getInputBgColor(),
+        color: 'getInputColor()',
+        backgroundColor: 'transparent',
         lineHeight:"52px",
       },
     
@@ -351,7 +351,7 @@ const handleCCBlur= ()=>{
       options={{placeholder:'',  style: {
         base: {
           color: getInputColor(),
-          backgroundColor:getInputBgColor(),
+          backgroundColor:'transparent',
           lineHeight:"52px",
         },
         invalid: {
@@ -376,7 +376,7 @@ const handleCCBlur= ()=>{
    options={{placeholder:'',  style: {
     base: {
       color: getInputColor(),
-      backgroundColor: getInputBgColor(),
+      backgroundColor: 'transparent',
       lineHeight:"52px",
     },
     invalid: {
