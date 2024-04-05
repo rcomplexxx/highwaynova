@@ -45,14 +45,14 @@ const Stripe = ({organizeUserData, checkFields}) => {
       }
     };
 
-    const getInputColor =  () => {
-      return getComputedStyle(document.documentElement).getPropertyValue('--high-contrast-light-txt-color');
-    }
+    const getInputColor =  useCallback(()=>{
+      return '#0A0B09';
+    },[])
 
 
-    const getInputBgColor = () => {
-      return getComputedStyle(document.documentElement).getPropertyValue('--input-color');
-    }
+    const getInputBgColor = useCallback(()=>{
+      return 'transparent';
+    },[])
  
   
    
