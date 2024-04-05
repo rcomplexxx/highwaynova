@@ -426,7 +426,7 @@ Cormorant+Garamond */
 /*~ Cart ~*/
   --free-shipping-slider-empty-color: var(--neutral-9);
   --free-shipping-slider-fill-color: var(--lion-5);
-  --best-sellers-addtocart-border: var(--lion-6);
+  --best-sellers-addtocart-border: var(--lion-5);
 
   
   
@@ -458,8 +458,8 @@ Cormorant+Garamond */
   --input-autofill-color: var(--bg-color);
  
   --express-checkout-button-bg: #151921;
-  --paypal-wrapper-border: #41855b;
-  --google-pay-border-color: rgb(64, 73, 65);
+  --paypal-wrapper-border: var(--lion-5);
+  --google-pay-border-color: transparent;
 
   --select-payment-circle-ring-color: var(--blue-2);
   --select-payment-circle-color: var(--neutral-5);
@@ -474,7 +474,7 @@ Cormorant+Garamond */
 --more-cards-card-border: rgba(0, 0, 0, 0.08);
 
 --floating-badge-border-color: var(--neutral-7);
---badge-popup-message-bg: rgba(165, 171, 155, 0.7);
+--badge-popup-message-bg: rgba(165, 171, 155, 0.7);/*neutral neki - iz hex u rgb i dodato a*/
 
 
 
@@ -493,7 +493,7 @@ Cormorant+Garamond */
  
   --apply-coupon-color: var(--lion-4);
   --apply-coupon-hover-color: var(--lion-5);
-  --coupon-code-bg: rgb(36, 48, 58);
+  --coupon-code-bg: var(--neutral-5);
 
                   /*Tip*/
 

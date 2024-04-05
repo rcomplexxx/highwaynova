@@ -3,11 +3,12 @@
 
 .gpayButton{
    
-    height: calc(var(--size-8) - 1px);
-    width: calc(100% - 1px);
+    height: var(--size-8);
+    width: 100% ;
     border-radius: 4px;
     background-color: black;
-    border: 0.5px solid var(--google-pay-border-color);
+    box-sizing: border-box;
+    outline: 1px solid var(--google-pay-border-color);
    
     
 }
