@@ -21,8 +21,8 @@
     flex-direction: column;
     align-items: center;
     box-sizing: border-box;
-    
-    border-radius: 4px;
+    box-shadow: 0 0 0 1px var(--neutral-4);
+    border-radius: 8px;
     
 }
 
@@ -48,7 +48,7 @@
   }
 
   .paymentContent{
-    z-index: 2;
+    z-index: 3;
   }
 
 
@@ -71,8 +71,8 @@
 }
 
 .selectedOption{
-    box-sizing: border-box;
-    border: 1px solid var(--blue-5);
+   
+    box-shadow: 0 0 0 1px var(--blue-5);
     z-index: 3;
 }
 
@@ -108,25 +108,20 @@
 }
 
 .CCSolutions{
+    height: fit-content;
     width: max-content;
    
     display: flex;
     justify-content: flex-end;
-    align-items: stretch;
+    align-items: center;
+    flex-wrap: wrap;
     flex: 1;
-   
+    margin-left: var(--size-3);
+    margin-right: 3px !important;
    
 }
 
-.CCWrapper{
-        height: fit-content;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    flex-wrap: wrap;
-    margin-left: var(--size-3);
-    margin-right: 3px !important;
-}
+
 
 
 
@@ -134,7 +129,7 @@
     margin-left: var(--size-1);
     margin-right:  var(--size-1);
     border-radius: 2px;
-    overflow: hidden;
+
 }
 
 .moreCards{
@@ -226,9 +221,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-height: 0;
+  
     transition: max-height 0.6s ease;
-    overflow: hidden;
+   
 }
 
 .creditCardField{
@@ -236,8 +231,9 @@
 }
 
 .paypalField{
-    border-bottom-left-radius: var(--size-3);
-    border-bottom-right-radius: var(--size-3);
+   
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
 }
 
 
@@ -250,7 +246,9 @@
 }
 
 .paypalFieldWrapper{
-    margin: var(--size-5) var(--size-3);
+    width: 100%;
+    box-sizing: border-box;
+    padding: var(--size-5) var(--size-6);
 }
 
 @media(max-width: 980px){
@@ -286,13 +284,17 @@
     transform:  translateX(-40px);
 }
 
-
 .paymentFieldsSpaceAdjuster{
    
     margin:  var(--size-1) 0;
 }
 
+
+
 .paypalFieldWrapper{
-    margin: var(--size-5) 0;
+   
+    padding: var(--size-5) var(--size-5);
 }
+
+
 }

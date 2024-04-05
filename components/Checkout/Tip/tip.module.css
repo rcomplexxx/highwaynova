@@ -292,14 +292,14 @@
   }
 
   .addTipDisabled{
-    /* color: var(--add-tip-button-disabled-txt-color);
-    background-color: var(--add-tip-button-disabled); */
+    color: var(--add-tip-button-disabled-txt-color);
+    background-color: var(--add-tip-button-disabled);
     cursor:auto;
   }
 
   .addTipDisabled:hover{
-    background-color: var(--action-button-bg-color);
-    /* background-color: var(--add-tip-button-disabled); */
+    /* background-color: var(--action-button-bg-color); */
+    background-color: var(--add-tip-button-disabled);
 
   }
   
@@ -314,6 +314,7 @@
 
 
 .thankYouMessage{
+  color: var(--tip-thank-you-txt-color);
   margin-top: var(--size-5);
   margin-bottom:  var(--size-5);
     margin-left: var(--size-1);

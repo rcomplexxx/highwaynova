@@ -458,7 +458,7 @@ Cormorant+Garamond */
   --checkout-input-placeholder: var(--neutral-8);
   --input-autofill-color: var(--bg-color);
  
-  --express-checkout-button-bg: #151921;
+  --express-checkout-button-bg: var(--blue-9);
   --paypal-wrapper-border: var(--lion-5);
   --google-pay-border-color: transparent;
 
@@ -500,8 +500,9 @@ Cormorant+Garamond */
 
 
   --tip-selected: var(--blue-5);
-  --add-tip-button-disabled-txt-color: rgb(152, 152, 152);
-  --add-tip-button-disabled: rgb(24, 24, 34);
+  --add-tip-button-disabled-txt-color: var(--neutral-9);
+  --add-tip-button-disabled: var(--neutral-3);
+  --tip-thank-you-txt-color: var(--high-contrast-light-txt-color);
   
 
 

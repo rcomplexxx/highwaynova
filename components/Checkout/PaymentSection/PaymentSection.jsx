@@ -129,7 +129,6 @@ export default function PaymentSection({ checkFields, organizeUserData, setError
             <span className={styles.optionSpan}>Credit Card</span>
            </div>
            <div className={styles.CCSolutions}>
-            <div className={styles.CCWrapper}>
             <Image src='/images/cardVisa2.svg' className={styles.creditCardLogo} height={28} width={48}/>
             <Image src='/images/cardMasterCard5.svg' className={styles.creditCardLogo} height={28} width={48}/>
             {!showOnlyTwoCards && <Image src='/images/cardAmex2.svg' className={styles.creditCardLogo} height={28} width={48}/>}
@@ -150,7 +149,7 @@ export default function PaymentSection({ checkFields, organizeUserData, setError
             </div>
             
             </div>
-            </div>
+            
            </div>
         </div>
 
@@ -181,7 +180,7 @@ export default function PaymentSection({ checkFields, organizeUserData, setError
         </div>
 
         <div id='paypalFields' ref={paypalPaymentFieldsRef} className={`${styles.paymentFields} ${styles.paypalField} ${paymentMethod=="paypal" && styles.selectedField}`}>
-        <div className={styles.paymentFieldsSpaceAdjuster}> 
+       
         <div className={styles.paypalFieldWrapper}>
           <PayPalButton
             checkFields={checkFields}
@@ -190,11 +189,11 @@ export default function PaymentSection({ checkFields, organizeUserData, setError
             setCartProducts={setCartProducts}
             setErrors={setErrors}
           />
-          </div>
+         
         </div>  </div>
 
 
-        <div className={styles.innerBorder}/>
+        {/* <div className={styles.innerBorder}/> */}
 
       </div>
     </>

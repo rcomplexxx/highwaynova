@@ -8,7 +8,7 @@
     padding-top: var(--size-8);
     box-sizing: border-box;
     flex: 1 1 auto;
-    contain:content;
+    contain: layout;
  
  }
 
