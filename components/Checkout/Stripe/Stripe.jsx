@@ -51,7 +51,7 @@ const Stripe = ({organizeUserData, checkFields}) => {
 
 
     const getInputBgColor = useCallback(()=>{
-      return '#00000000';
+      return '#EBECE9';
     },[])
  
   
@@ -316,7 +316,7 @@ const handleCCBlur= ()=>{
     options={{placeholder:'',  style: {
       base: {
         color: getInputColor(),
-        backgroundColor:getInputBgColor(),
+        backgroundColor:'#EBECE9',
         lineHeight:"52px",
       },
     
@@ -351,7 +351,7 @@ const handleCCBlur= ()=>{
       options={{placeholder:'',  style: {
         base: {
           color: getInputColor(),
-          backgroundColor:getInputBgColor(),
+          backgroundColor:'#EBECE9',
           lineHeight:"52px",
         },
         invalid: {
@@ -376,7 +376,7 @@ const handleCCBlur= ()=>{
    options={{placeholder:'',  style: {
     base: {
       color: getInputColor(),
-      backgroundColor: getInputBgColor(),
+      backgroundColor: '#EBECE9',
       lineHeight:"52px",
     },
     invalid: {
