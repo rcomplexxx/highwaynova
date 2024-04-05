@@ -51,7 +51,7 @@ const Stripe = ({organizeUserData, checkFields}) => {
 
 
     const getInputBgColor = useCallback(()=>{
-      return 'transparent';
+      return '#00000000';
     },[])
  
   
