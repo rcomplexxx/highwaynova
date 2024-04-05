@@ -46,12 +46,12 @@ const Stripe = ({organizeUserData, checkFields}) => {
     };
 
     const getInputColor =  useCallback(()=>{
-      return '#0A0B09';
+      return '#0a0b09';
     },[])
 
 
     const getInputBgColor = useCallback(()=>{
-      return '#EBECE9';
+      return '#ebece9';
     },[])
  
   
@@ -315,14 +315,14 @@ const handleCCBlur= ()=>{
       }}
     options={{placeholder:'',  style: {
       base: {
-        color: getInputColor(),
-        backgroundColor:'#EBECE9',
+        color: '#0a0b09',
+        backgroundColor:'#ebece9',
         lineHeight:"52px",
       },
     
      
       invalid: {
-        color: getInputColor()
+        color: '#0a0b09'
       }
     }}}
         className={`${styles.input_field} ${errors.cardNumber && styles.input_error} ${focusedField==='cardNumber' && styles.stripeFieldFocused}`}
@@ -350,12 +350,12 @@ const handleCCBlur= ()=>{
  onChange={handleCCChange}
       options={{placeholder:'',  style: {
         base: {
-          color: getInputColor(),
-          backgroundColor:'#EBECE9',
+          color: '#0a0b09',
+          backgroundColor:'#ebece9',
           lineHeight:"52px",
         },
         invalid: {
-          color: getInputColor()
+          color: '#0a0b09'
         }
       }}}
       className={`${styles.input_field} ${errors.expiryDate && styles.input_error} ${focusedField==='expiryDate' && styles.stripeFieldFocused}`}
@@ -375,12 +375,12 @@ const handleCCBlur= ()=>{
   }}
    options={{placeholder:'',  style: {
     base: {
-      color: getInputColor(),
-      backgroundColor: '#EBECE9',
+      color: '#0a0b09',
+      backgroundColor: '#ebece9',
       lineHeight:"52px",
     },
     invalid: {
-      color: getInputColor()
+      color: '#0a0b09'
     }
   }}}
   className={`${styles.input_field} ${errors.cvv && styles.input_error} ${focusedField==='cvv' && styles.stripeFieldFocused}`}/>
