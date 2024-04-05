@@ -313,22 +313,16 @@ const handleCCBlur= ()=>{
       setFloatingLabels({...floatingLabelsHelper.current, cardNumber:true});
     
       }}
-    options={{placeholder:'',  style: {
+    options={{placeholder:' ',  style: {
       base: {
-        color: getInputColor(),
-        backgroundColor:getInputBgColor(),
+        color: '#f5f5f5',
+        backgroundColor: '#f5f5f5',
         lineHeight:"52px",
-        ':-webkit-autofill': {
-          color: getInputColor(),
-        },
-        '::placeholder': {
-          color: getInputColor(),
-        },
       },
     
      
       invalid: {
-        color: getInputColor()
+        color: '#f5f5f5'
       }
     }}}
         className={`${styles.input_field} ${errors.cardNumber && styles.input_error} ${focusedField==='cardNumber' && styles.stripeFieldFocused}`}
@@ -354,20 +348,14 @@ const handleCCBlur= ()=>{
   setFloatingLabels({...floatingLabelsHelper.current, expiryDate:true});
   }}
  onChange={handleCCChange}
-      options={{placeholder:'',  style: {
+      options={{placeholder:' ',  style: {
         base: {
-          color: getInputColor(),
-          backgroundColor:getInputBgColor(),
+          color: '#f5f5f5',
+          backgroundColor: '#f5f5f5',
           lineHeight:"52px",
-          ':-webkit-autofill': {
-            color: getInputColor(),
-          },
-          '::placeholder': {
-            color: getInputColor(),
-          },
         },
         invalid: {
-          color: getInputColor()
+          color: '#f5f5f5'
         }
       }}}
       className={`${styles.input_field} ${errors.expiryDate && styles.input_error} ${focusedField==='expiryDate' && styles.stripeFieldFocused}`}
@@ -385,20 +373,14 @@ const handleCCBlur= ()=>{
     setFocusedField('cvv');
   setFloatingLabels({...floatingLabelsHelper.current, cvv:true});
   }}
-   options={{placeholder:'',  style: {
+   options={{placeholder:' ',  style: {
     base: {
-      color: getInputColor(),
-      backgroundColor: getInputBgColor(),
+      color:  '#f5f5f5',
+      backgroundColor: '#f5f5f5',
       lineHeight:"52px",
-      ':-webkit-autofill': {
-        color: getInputColor(),
-      },
-      '::placeholder': {
-        color: getInputColor(),
-      },
     },
     invalid: {
-      color: getInputColor()
+      color: '#f5f5f5'
     }
   }}}
   className={`${styles.input_field} ${errors.cvv && styles.input_error} ${focusedField==='cvv' && styles.stripeFieldFocused}`}/>
