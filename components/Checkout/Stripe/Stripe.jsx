@@ -45,14 +45,14 @@ const Stripe = ({organizeUserData, checkFields}) => {
       }
     };
 
-    const getInputColor =  useCallback(()=>{
+    const getInputColor =  () => {
       return getComputedStyle(document.documentElement).getPropertyValue('--high-contrast-light-txt-color');
-    },[])
+    }
 
 
-    const getInputBgColor = useCallback(()=>{
+    const getInputBgColor = () => {
       return getComputedStyle(document.documentElement).getPropertyValue('--input-color');
-    },[])
+    }
  
   
    
@@ -315,8 +315,8 @@ const handleCCBlur= ()=>{
       }}
     options={{placeholder:'',  style: {
       base: {
-        color: 'getInputColor()',
-        backgroundColor: 'transparent',
+        color: getInputColor(),
+        backgroundColor:getInputBgColor(),
         lineHeight:"52px",
       },
     
@@ -351,7 +351,7 @@ const handleCCBlur= ()=>{
       options={{placeholder:'',  style: {
         base: {
           color: getInputColor(),
-          backgroundColor:'transparent',
+          backgroundColor:getInputBgColor(),
           lineHeight:"52px",
         },
         invalid: {
@@ -376,7 +376,7 @@ const handleCCBlur= ()=>{
    options={{placeholder:'',  style: {
     base: {
       color: getInputColor(),
-      backgroundColor: 'transparent',
+      backgroundColor: getInputBgColor(),
       lineHeight:"52px",
     },
     invalid: {
