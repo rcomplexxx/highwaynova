@@ -6,7 +6,7 @@
   flex-direction: column;
   align-items: center;
   background-color: var(--rating-info-bg);
-
+  box-shadow: var(--rating-info-box-shadow);
   border-radius: 4px;
  
   opacity: 0;

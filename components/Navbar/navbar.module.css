@@ -156,6 +156,7 @@
     text-decoration: none;
     transition: transform 0.08s ease-in;
     font-size: var(--font-size-3);
+    font-weight: 600;
     padding-left: var(--size-4);
     padding-right: var(--size-4);
   }
@@ -224,7 +225,7 @@
     display: flex;
     justify-content: flex-start;
   
-    padding-left: 4px;
+   
     cursor: pointer;
 
     color: var(--nav-links-color);
@@ -232,9 +233,11 @@
 
 
     padding: var(--size-4);
+    font-weight: 600;
 
     text-decoration: none;
     font-size: var(--font-size-2);
+    
   }
 
   .subMenuLink:hover{
