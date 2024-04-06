@@ -335,7 +335,7 @@ fixedZoomDiv.style.backgroundColor = getRgbValues(1);
 
   const killFullScreen = useCallback((currY = 0) => {
   
-   
+    // if (zoomed) swiper.zoom.toggle();
 
     
     if( !global.toastMessageNotShowable ){
@@ -384,12 +384,12 @@ fixedZoomDiv.style.backgroundColor = getRgbValues(1);
             (fullImg.getBoundingClientRect().width -
               fullImg.getBoundingClientRect().width * scaleRatio) /
               2
-          : (mainImg.getBoundingClientRect().left -
+          : mainImg.getBoundingClientRect().left -
             (window.innerWidth -
               (fullImg.getBoundingClientRect().height / fullImg.naturalHeight) *
                 fullImg.naturalWidth *
                 scaleRatio) /
-              2)/zoomScaleRef.current;
+              2;
         const YTr = biggerWidth
           ? mainImg.getBoundingClientRect().top -
             48 -
@@ -400,7 +400,7 @@ fixedZoomDiv.style.backgroundColor = getRgbValues(1);
               2) *
               scaleRatio -
             currY
-          : distanceYDifference/zoomScaleRef.current;
+          : distanceYDifference;
 
 
 
@@ -412,7 +412,7 @@ fixedZoomDiv.style.backgroundColor = getRgbValues(1);
 
         fullImg.style.transformOrigin = "top center";
         fullImg.style.transition = "transform 0.3s ease";
-        fullImg.style.transform = `translateX(${XTr}px) translateY(${YTr}px) scale(${scaleRatio})`;
+        fullImg.style.transform = `translateX(${XTr/ zoomScaleRef.current}px) translateY(${YTr/ zoomScaleRef.current}px) scale(${scaleRatio / zoomScaleRef.current})`;
 
         fixedZoomDivRef.current.style.backgroundColor = `rgba(0, 0, 0, 0)`;
 
