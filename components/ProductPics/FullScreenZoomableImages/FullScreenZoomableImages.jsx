@@ -173,27 +173,16 @@ const FullScreenZoomableImage = ({
 
   useEffect(() => {
     const fixedZoomDiv = fixedZoomDivRef.current;
-    const imgDiv = document.getElementById("zoomDiv" + imageIndex);
-    
     const bgColor = getComputedStyle(document.documentElement).getPropertyValue('--bg-color');
    
-    const baseRgb=`${parseInt(bgColor.slice(1, 3), 16)}, ${parseInt(bgColor.slice(3, 5), 16)}, ${parseInt(bgColor.slice(5, 7), 16)}`
-    const getRgbValues = (opacity) =>{ return `rgba(${baseRgb}, ${opacity})`};
-
-    const rebootStyle = ()=>{
-      
-      imgDiv.style.transition = "transform 0.3s ease, background-color 0.3s ease";
-    imgDiv.style.transform = `translateY(${0}px)`;
-
-    fixedZoomDiv.style.backgroundColor = getRgbValues(1);
-
-    }
+    const baseRgb=`${parseInt(bgColor.slice(1, 3), 16)}, ${parseInt(bgColor.slice(3, 5), 16)}, ${parseInt(bgColor.slice(5, 7), 16)},`
+    const getRgbValues = (opacity) =>{ return `rgba(${baseRgb} ${opacity})`};
 
 
     let timeoutId;
     let swipeYLock = false;
     let startingTouchCoordinates = { x: 0, y: 0 };
-   
+    const imgDiv = document.getElementById("zoomDiv" + imageIndex);
 
     let currX = 0;
     let currY = 0;
@@ -209,11 +198,9 @@ const FullScreenZoomableImage = ({
       }, 3000);
     };
 
-    let multiTouchDetected=false;
-
     const handleTouchStart = (event) => {
       if (event.touches.length > 1) {
-        multiTouchDetected=true;
+        return;
       }
 
      
@@ -227,11 +214,9 @@ const FullScreenZoomableImage = ({
     };
 
     const handleTouchYMove = (event) => {
-      if (swipeYLock || zoomed || multiTouchDetected) return;
+      if (swipeYLock || zoomed) return;
       if (event.touches.length > 1) {
-        multiTouchDetected=true;
-        rebootStyle();
-      return;
+        return;
       }
       console.log('new touch start')
       currY =
@@ -263,17 +248,13 @@ const FullScreenZoomableImage = ({
 
     const handleTouchEnd = (event) => {
       swipeYLock = false;
-   
-      if(multiTouchDetected){
-
-        rebootStyle();
-        multiTouchDetected=false;
+      if (event.touches.length > 1) {
         return;
-  
       }
+     
 
         const lastTouch = event.changedTouches[0];
-        if ((currY < -128 || currY > 128)) {
+        if (currY < -128 || currY > 128) {
         
           killFullScreen(currY);
         } else {
@@ -516,7 +497,7 @@ const FullScreenZoomableImage = ({
             zoom={{
               enabled: true,
               maxRatio: 2,
-              // toggle: !matchMedia("(pointer:fine)").matches,
+              toggle: !matchMedia("(pointer:fine)").matches,
             }}
             onZoomChange={() => {
               setZoomed(!zoomed);
