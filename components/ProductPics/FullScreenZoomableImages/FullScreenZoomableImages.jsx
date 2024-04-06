@@ -25,6 +25,7 @@ const FullScreenZoomableImage = ({
 
   const [showToastMessage, setShowToastMessage] = useState(0);
   const [zoomed, setZoomed] = useState(false);
+  const [zoomedScale, setZoomedScale] = useState(1);
   const [swiper, setSwiper] = useState();
   const [imageLoaded, setImageLoaded] = useState(false);
  
@@ -511,9 +512,11 @@ const FullScreenZoomableImage = ({
               enabled: true,
               maxRatio: 2,
               toggle: !matchMedia("(pointer:fine)").matches,
+              scale: zoomedScale
             }}
             onZoomChange={(swiper,scale, imageEl, slideEl) => {
-              setZoomed(scale!=1);
+              setZoomed(scale);
+              setZoomedScale(scale)
             }}
             onSlideChange={(swiper) => {
               if (zoomed) {swiper.zoom.out();
