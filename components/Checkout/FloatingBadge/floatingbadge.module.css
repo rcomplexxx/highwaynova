@@ -1,12 +1,12 @@
 
 
 .badgeWrapper{
-    
     position:absolute;
-    top: calc(50% - 9px);
-    right: var(--size-3);
-    padding: var(--size-1);
+    top: 50%;
+    right: var(--size-1);
+    padding: var(--size-3);
     border-radius: 100%;
+    transform: translateY(calc(-50% + 1px));
     z-index: 15;
    
 }
@@ -48,7 +48,7 @@
 
     position:absolute;
     bottom: calc(50% + 11px);
-    right: -77.5px;
+    right: -72px;
     transform: scale(0.6) translateY(var(--size-3));
     opacity: 0;
     transition: opacity 0.2s ease, transform 0.2s ease,margin-right 0.2s ease;
@@ -96,7 +96,7 @@
 @media (max-width: 980px){
     .explainWrapper{
         align-items: flex-end;
-     right: -22px;
+     right: -18px;
      margin-right: var(--size-4);
      transform-origin: bottom right;
     }

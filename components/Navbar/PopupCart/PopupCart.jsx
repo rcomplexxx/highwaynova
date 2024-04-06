@@ -109,8 +109,8 @@ const handlePopCartLinkClick=(event, nextLinkHref)=>{
     return <div id='popCart' ref={popCartRef} className={`${styles.cartPopup}`} >
   
   <div className={`${styles.cartPopupTitle} ${styles .firstPopupTitle}`}>
-     <Image height={12} width={12} src='/images/smallCorrect.png' className={styles.smallCorrect}/>
-     <h3>Item added to your cart</h3>
+     <Image height={12} width={12} src='/images/correctDark.svg' className={styles.smallCorrect}/>
+     <h3 className={styles.popCartMainTitle}>Item added to your cart</h3>
       </div>
  <div className={styles.cartPopupTitle}> 
  <Image height={64} width={64} src={`/images/${newProduct.image}`} className={styles.productImage}/> 

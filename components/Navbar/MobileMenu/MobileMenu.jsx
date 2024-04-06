@@ -276,7 +276,7 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
 
       <div
        
-        className={`${styles.subMenuPortal} ${styles.linkStyle}`}
+        className={`${styles.linkStyle} ${styles.subMenuPortal} `}
         onClick={() => {
           setSubMenu(2);
        
@@ -289,7 +289,7 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
     
       <div
        
-        className={`${styles.subMenuPortal} ${styles.linkStyle}`}
+        className={`${styles.linkStyle} ${styles.subMenuPortal} `}
         onClick={() => {
           setSubMenu(1);
           

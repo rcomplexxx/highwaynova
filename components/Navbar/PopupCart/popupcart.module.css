@@ -38,7 +38,10 @@
 
 
   .firstPopupTitle{
-    margin-top:  var(--size-5);
+    margin-top:  var(--size-4);
+  }
+  .popCartMainTitle{
+    font-size: var(--font-size-4);
   }
  
 
