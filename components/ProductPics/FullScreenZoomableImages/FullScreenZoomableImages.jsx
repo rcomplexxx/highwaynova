@@ -510,6 +510,7 @@ const FullScreenZoomableImage = ({
             
             zoom={{
               enabled: true,
+              minRatio: 1,
               maxRatio: 2,
               toggle: !matchMedia("(pointer:fine)").matches,
               scale: zoomedScale
