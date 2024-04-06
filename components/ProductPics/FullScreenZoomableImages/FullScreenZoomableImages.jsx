@@ -187,7 +187,7 @@ const FullScreenZoomableImage = ({
     let currX = 0;
     let currY = 0;
 
-
+    let multiTouchDetected=false;
 
 
     const handleUserInteraction = () => {
@@ -214,10 +214,9 @@ const FullScreenZoomableImage = ({
     };
 
     const handleTouchYMove = (event) => {
-      if (swipeYLock || zoomed) return;
-      if (event.touches.length > 1) {
-        return;
-      }
+      if (swipeYLock || zoomed || multiTouchDetected || event.touches.length > 1) return;
+   
+      
       console.log('new touch start')
       currY =
         event.changedTouches[event.changedTouches.length - 1].clientY -
@@ -252,7 +251,8 @@ const FullScreenZoomableImage = ({
         fixedZoomDiv.style.backgroundColor = getRgbValues(1);
         return;
       }
-      if (event.touches.length > 0 || startingTouchCoordinates.x===0 || startingTouchCoordinates.y===0) {
+      if (event.touches.length > 0) {
+        multiTouchDetected=true;
         imgDiv.style.transform = `translateY(${0}px)`;
 fixedZoomDiv.style.backgroundColor = getRgbValues(1);
         return;
@@ -508,7 +508,7 @@ fixedZoomDiv.style.backgroundColor = getRgbValues(1);
               toggle: !matchMedia("(pointer:fine)").matches,
             }}
             onZoomChange={(swiper, scale) => {
-              setZoomed(scale!=1);
+              setZoomed(scale<=1);
             }}
 
            
