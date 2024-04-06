@@ -12,7 +12,6 @@ export default function Tip({products}){
     const [selectedField, setSelectedField] =useState();
     
     const [tipInputValue, setTipInputValue]= useState("");
-    const [tipInputFocused, setTipInputFocused] = useState(false);
     const [applyDisabled, setApplyDisabled] = useState(true);
     const [tipError, setTipError] = useState();
 
@@ -43,7 +42,7 @@ export default function Tip({products}){
             tipDiv.style.maxHeight=`${ tipDiv.scrollHeight}px`;
           expendHeightTimeout.current=setTimeout(()=>{
            
-             tipDiv.style.maxHeight=`999px`;
+             tipDiv.style.maxHeight=`none`;
            }, 600)
           }
           else{
@@ -134,8 +133,7 @@ export default function Tip({products}){
             
         
         }}
-        onFocus={()=>{setTipInputFocused(true)}}
-        onBlur={()=>{setTipInputFocused(false)}}
+      
         placeholder=" "
         className={`${styles.customTipInput}`}
       />

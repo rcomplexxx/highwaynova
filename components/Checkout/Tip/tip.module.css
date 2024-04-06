@@ -315,9 +315,8 @@
 
 .thankYouMessage{
   color: var(--tip-thank-you-txt-color);
-  margin-top: var(--size-5);
-  margin-bottom:  var(--size-5);
-    margin-left: var(--size-1);
+  padding: var(--size-5) var(--size-1);
+  
     font-size: var(--font-size-3);
     font-family: var(--hand-writing-font);
     opacity: 0.9;

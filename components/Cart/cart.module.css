@@ -142,6 +142,7 @@ height : 100vh;
     justify-content: center;
     margin-top: var(--size-5);
     text-decoration: none;
+   
   }
 
   .shopNow{
@@ -157,7 +158,7 @@ height : 100vh;
       font-size: var(--font-size-3);   
       transition: background-color 0.3s ease;
       cursor: pointer;
-
+      font-weight: 600;
   }
 
 .shopNow:hover{

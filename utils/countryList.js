@@ -241,6 +241,10 @@ export default function swapCountryCode(country) {
       country: "United Kingdom of Great Britain and Northern Ireland (the)",
       code: "GB",
     },
+    {
+      country: "United Kingdom",
+      code: "UK",
+    },
     { country: "United States Minor Outlying Islands (the)", code: "UM" },
     { country: "United States", code: "US" },
     { country: "Uruguay", code: "UY" },
