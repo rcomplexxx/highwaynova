@@ -198,9 +198,11 @@ const FullScreenZoomableImage = ({
       }, 3000);
     };
 
+    let multiTouchDetected=false;
+
     const handleTouchStart = (event) => {
       if (event.touches.length > 1) {
-        return;
+        multiTouchDetected=true;
       }
 
      
@@ -214,9 +216,9 @@ const FullScreenZoomableImage = ({
     };
 
     const handleTouchYMove = (event) => {
-      if (swipeYLock || zoomed) return;
+      if (swipeYLock || zoomed || multiTouchDetected) return;
       if (event.touches.length > 1) {
-        return;
+        multiTouchDetected=true;
       }
       console.log('new touch start')
       currY =
@@ -248,13 +250,11 @@ const FullScreenZoomableImage = ({
 
     const handleTouchEnd = (event) => {
       swipeYLock = false;
-      if (event.touches.length > 1) {
-        return;
-      }
+   
      
 
         const lastTouch = event.changedTouches[0];
-        if (currY < -128 || currY > 128) {
+        if (!multiTouchDetected && (currY < -128 || currY > 128)) {
         
           killFullScreen(currY);
         } else {
