@@ -257,7 +257,7 @@ const FullScreenZoomableImage = ({
 fixedZoomDiv.style.backgroundColor = getRgbValues(1);
         return;
       }
-
+      multiTouchDetected=false;
       swipeYLock = false;
 
         const lastTouch = event.changedTouches[0];
