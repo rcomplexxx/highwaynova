@@ -173,16 +173,27 @@ const FullScreenZoomableImage = ({
 
   useEffect(() => {
     const fixedZoomDiv = fixedZoomDivRef.current;
+    const imgDiv = document.getElementById("zoomDiv" + imageIndex);
+    
     const bgColor = getComputedStyle(document.documentElement).getPropertyValue('--bg-color');
    
     const baseRgb=`${parseInt(bgColor.slice(1, 3), 16)}, ${parseInt(bgColor.slice(3, 5), 16)}, ${parseInt(bgColor.slice(5, 7), 16)}`
     const getRgbValues = (opacity) =>{ return `rgba(${baseRgb}, ${opacity})`};
 
+    const rebootStyle = ()=>{
+      
+      imgDiv.style.transition = "transform 0.3s ease, background-color 0.3s ease";
+    imgDiv.style.transform = `translateY(${0}px)`;
+
+    fixedZoomDiv.style.backgroundColor = getRgbValues(1);
+
+    }
+
 
     let timeoutId;
     let swipeYLock = false;
     let startingTouchCoordinates = { x: 0, y: 0 };
-    const imgDiv = document.getElementById("zoomDiv" + imageIndex);
+   
 
     let currX = 0;
     let currY = 0;
@@ -219,10 +230,7 @@ const FullScreenZoomableImage = ({
       if (swipeYLock || zoomed || multiTouchDetected) return;
       if (event.touches.length > 1) {
         multiTouchDetected=true;
-        imgDiv.style.transition = "transform 0.3s ease, background-color 0.3s ease";
-      imgDiv.style.transform = `translateY(${0}px)`;
-
-      fixedZoomDiv.style.backgroundColor = getRgbValues(1);
+        rebootStyle();
       return;
       }
       console.log('new touch start')
@@ -258,10 +266,7 @@ const FullScreenZoomableImage = ({
    
       if(multiTouchDetected){
 
-        imgDiv.style.transition = "transform 0.3s ease, background-color 0.3s ease";
-      imgDiv.style.transform = `translateY(${0}px)`;
-
-      fixedZoomDiv.style.backgroundColor = getRgbValues(1);
+        rebootStyle();
         multiTouchDetected=false;
         return;
   
@@ -511,7 +516,7 @@ const FullScreenZoomableImage = ({
             zoom={{
               enabled: true,
               maxRatio: 2,
-              toggle: !matchMedia("(pointer:fine)").matches,
+              // toggle: !matchMedia("(pointer:fine)").matches,
             }}
             onZoomChange={() => {
               setZoomed(!zoomed);
