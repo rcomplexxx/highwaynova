@@ -224,6 +224,7 @@ const FullScreenZoomableImage = ({
       imgDiv.style.transform = `translateY(${0}px)`;
 
       fixedZoomDiv.style.backgroundColor = getRgbValues(1);
+      return;
       }
       console.log('new touch start')
       currY =
