@@ -256,8 +256,9 @@ const FullScreenZoomableImage = ({
     };
 
     const handleTouchEnd = (event) => {
+      if(event.touches.length > 0 ) return;
       swipeYLock = false;
-      if (event.touches.length > 1 || multiTouchDetectedRef.current) {
+      if (multiTouchDetectedRef.current) {
         multiTouchDetectedRef.current=false;
         imgDiv.style.transition =
                 "transform 0.3s ease, background-color 0.3s ease";
