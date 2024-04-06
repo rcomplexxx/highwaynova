@@ -222,6 +222,7 @@ const FullScreenZoomableImage = ({
         multiTouchDetectedRef.current = true;
       }
       if(multiTouchDetectedRef.current){
+        imgDiv.style.transform = `translateY(${0}px)`;
         fixedZoomDiv.style.backgroundColor = getRgbValues(1);
         return;
       }
