@@ -500,7 +500,7 @@ fixedZoomDiv.style.backgroundColor = getRgbValues(1);
             preventClicks={false}
         preventClicksPropagation={false}
         touchStartPreventDefault={false}
-            
+        touchAngle={20}
             zoom={{
               enabled: true,
               minRatio: 1,
@@ -510,6 +510,7 @@ fixedZoomDiv.style.backgroundColor = getRgbValues(1);
             onZoomChange={(swiper, scale) => {
               setZoomed(scale>1);
               swiper.allowTouchMove= scale<=1;
+        
               
             }}
 
