@@ -248,9 +248,8 @@ const FullScreenZoomableImage = ({
 
     const handleTouchEnd = (event) => {
       swipeYLock = false;
-      if (event.touches.length > 0 || startingTouchCoordinates.x===0 || startingTouchCoordinates.y===0) {
+      if (event.touches.length > 0 || zoomed || startingTouchCoordinates.x===0 || startingTouchCoordinates.y===0) {
     
-      imgDiv.style.transform = `translateY(${0}px)`;
 fixedZoomDiv.style.backgroundColor = getRgbValues(1);
         return;
       }
