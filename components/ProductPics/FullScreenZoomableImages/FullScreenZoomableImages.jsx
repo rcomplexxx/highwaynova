@@ -328,7 +328,7 @@ const FullScreenZoomableImage = ({
       window.removeEventListener("touchmove", handleTouchYMove, true);
       window.removeEventListener("touchend", handleTouchEnd);
     };
-  }, [imageIndex,zoomed]);
+  }, [imageIndex,zoomed,multiTouchDetectedRef]);
 
 
 
