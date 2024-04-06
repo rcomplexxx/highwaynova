@@ -24,7 +24,6 @@ const FullScreenZoomableImage = ({
   
 
   const [showToastMessage, setShowToastMessage] = useState(0);
-  const [zoomed, setZoomed] = useState(false);
   const [zoomedScale, setZoomedScale] = useState(1);
   const [swiper, setSwiper] = useState();
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -170,7 +169,7 @@ const FullScreenZoomableImage = ({
    return ()=>{
     window?.removeEventListener("popstate", handlePopState);
    }
-  },[imageIndex,zoomed])
+  },[imageIndex,zoomedScale])
 
   useEffect(() => {
     const fixedZoomDiv = fixedZoomDivRef.current;
@@ -225,7 +224,7 @@ const FullScreenZoomableImage = ({
         fixedZoomDiv.style.backgroundColor = getRgbValues(1);
         return;
       }
-      if (swipeYLock || zoomed) return;
+      if (swipeYLock ||  zoomedScale!==1) return;
       
       console.log('new touch start')
       currY =
@@ -274,7 +273,7 @@ const FullScreenZoomableImage = ({
         } else {
           if (currY > 16 || currY < -16) {//
           
-            if (!zoomed) {
+            if ( zoomedScale===1) {
               imgDiv.style.transition =
                 "transform 0.3s ease, background-color 0.3s ease";
               imgDiv.style.transform = `translateY(${0}px)`;
@@ -328,7 +327,7 @@ const FullScreenZoomableImage = ({
       window.removeEventListener("touchmove", handleTouchYMove, true);
       window.removeEventListener("touchend", handleTouchEnd);
     };
-  }, [imageIndex,zoomed]);
+  }, [imageIndex,zoomedScale]);
 
 
 
@@ -339,7 +338,7 @@ const FullScreenZoomableImage = ({
 
   const killFullScreen = useCallback((currY = 0) => {
   
-    if (zoomed) swiper.zoom.toggle();
+    if ( zoomedScale!==1) swiper.zoom.toggle();
 
     
     if( !global.toastMessageNotShowable ){
@@ -426,9 +425,9 @@ const FullScreenZoomableImage = ({
 
        
       },
-      zoomed ? 300 : 0
+      zoomedScale!==1 ? 300 : 0
     );
-  },[zoomed, imageIndex]);
+  },[zoomedScale, imageIndex]);
 
 
  
@@ -454,7 +453,7 @@ const FullScreenZoomableImage = ({
                 width={0}
                 sizes="24px"
                 src={
-                  zoomed //zoomedChange
+                  zoomedScale!==1 //zoomedChange
                     ? "/images/zoomOutIconAw.png"
                     : "/images/zoomIconAw.png"
                 }
@@ -515,12 +514,11 @@ const FullScreenZoomableImage = ({
               scale: zoomedScale
             }}
             onZoomChange={(swiper,scale, imageEl, slideEl) => {
-              setZoomed(scale!=1);
+             
               setZoomedScale(scale)
             }}
             onSlideChange={(swiper) => {
-              if (zoomed) {swiper.zoom.out();
-              setZoomed(false);
+             setZoomedScale(1)
               }
               changeImageIndex(swiper.activeIndex);
             }}
@@ -540,7 +538,7 @@ const FullScreenZoomableImage = ({
                   <div
                     id={"zoomDiv" + index}
                     className={`${styles.productImageDiv} ${
-                      zoomed && styles.productImageDivZoomed //zoomedChange
+                      zoomedScale!==1 && styles.productImageDivZoomed //zoomedChange
                     } swiper-zoom-target`}
                     onMouseDown={(event) => {
                  
