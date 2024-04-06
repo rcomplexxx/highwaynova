@@ -508,7 +508,7 @@ fixedZoomDiv.style.backgroundColor = getRgbValues(1);
               toggle: !matchMedia("(pointer:fine)").matches,
             }}
             onZoomChange={(swiper, scale) => {
-              setZoomed(scale<=1);
+              setZoomed(scale>1);
             }}
 
            
