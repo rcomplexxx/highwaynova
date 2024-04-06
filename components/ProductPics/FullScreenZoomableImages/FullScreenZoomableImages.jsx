@@ -198,11 +198,11 @@ const FullScreenZoomableImage = ({
       }, 3000);
     };
 
-    global.multiTouchDetected=false;
+    let multiTouchDetected=false;
 
     const handleTouchStart = (event) => {
       if (event.touches.length > 1) {
-        global.multiTouchDetected=true;
+         multiTouchDetected=true;
       }
 
      
@@ -218,9 +218,9 @@ const FullScreenZoomableImage = ({
     const handleTouchYMove = (event) => {
 
       if (event.touches.length > 1) {
-        global.multiTouchDetected = true;
+        multiTouchDetected = true;
       }
-      if(event.touches.length > 1 || global.multiTouchDetected){
+      if(multiTouchDetected){
         fixedZoomDiv.style.backgroundColor = getRgbValues(1);
         return;
       }
@@ -256,8 +256,8 @@ const FullScreenZoomableImage = ({
 
     const handleTouchEnd = (event) => {
       swipeYLock = false;
-      if (event.touches.length > 1 || global.multiTouchDetected) {
-        global.multiTouchDetected=false;
+      if (event.touches.length > 1 || multiTouchDetected) {
+        multiTouchDetected=false;
         imgDiv.style.transition =
                 "transform 0.3s ease, background-color 0.3s ease";
               imgDiv.style.transform = `translateY(${0}px)`;
@@ -512,8 +512,8 @@ const FullScreenZoomableImage = ({
               maxRatio: 2,
               toggle: !matchMedia("(pointer:fine)").matches,
             }}
-            onZoomChange={() => {
-              setZoomed(!zoomed);
+            onZoomChange={(swiper,scale, imageEl, slideEl) => {
+              setZoomed(scale!=1);
             }}
             onSlideChange={(swiper) => {
               if (zoomed) {swiper.zoom.out();
