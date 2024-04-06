@@ -258,6 +258,9 @@ const FullScreenZoomableImage = ({
       swipeYLock = false;
       if (event.touches.length > 1 || multiTouchDetected) {
         multiTouchDetected=false;
+        imgDiv.style.transition =
+                "transform 0.3s ease, background-color 0.3s ease";
+              imgDiv.style.transform = `translateY(${0}px)`;
         fixedZoomDiv.style.backgroundColor = getRgbValues(1);
         return;
       }
