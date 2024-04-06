@@ -258,13 +258,13 @@ const FullScreenZoomableImage = ({
    
       if(multiTouchDetected){
 
-        imgDiv.style.transition =
-        "transform 0.3s ease, background-color 0.3s ease";
+        imgDiv.style.transition =  "transform 0.3s ease, background-color 0.3s ease";
       imgDiv.style.transform = `translateY(${0}px)`;
 
       fixedZoomDiv.style.backgroundColor = getRgbValues(1);
         multiTouchDetected=false;
         return;
+  
       }
 
         const lastTouch = event.changedTouches[0];
