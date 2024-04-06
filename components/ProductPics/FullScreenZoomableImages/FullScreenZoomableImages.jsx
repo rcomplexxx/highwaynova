@@ -519,7 +519,7 @@ const FullScreenZoomableImage = ({
             }}
             onSlideChange={(swiper) => {
              setZoomedScale(1)
-              }
+              
               changeImageIndex(swiper.activeIndex);
             }}
             onSwiper={setSwiper}
