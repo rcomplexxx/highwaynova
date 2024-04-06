@@ -374,24 +374,29 @@ fixedZoomDiv.style.backgroundColor = getRgbValues(1);
           mainImg.getBoundingClientRect().left -
           fullImg.getBoundingClientRect().left;
 
-             const distanceYDifference =
-          mainImg.getBoundingClientRect().top -
-          fullImg.getBoundingClientRect().top;
+            
 
 
         const XTr = biggerWidth
-          ? distanceXDifference -
+          ? (distanceXDifference -
             (fullImg.getBoundingClientRect().width -
               fullImg.getBoundingClientRect().width * scaleRatio) /
-              2
-          : mainImg.getBoundingClientRect().left -
+              2)/ zoomScaleRef.current
+          : (mainImg.getBoundingClientRect().left -
             (window.innerWidth -
               (fullImg.getBoundingClientRect().height / fullImg.naturalHeight) *
                 fullImg.naturalWidth *
                 scaleRatio) /
-              2;
+              2) / zoomScaleRef.current;
+
+
+
+              const distanceYDifference =
+              mainImg.getBoundingClientRect().top -
+              fullImg.getBoundingClientRect().top;
+
         const YTr = biggerWidth
-          ? mainImg.getBoundingClientRect().top -
+          ? (mainImg.getBoundingClientRect().top -
             48 -
             ((window.innerHeight -
               48 -
@@ -399,8 +404,8 @@ fixedZoomDiv.style.backgroundColor = getRgbValues(1);
                 fullImg.naturalWidth) /
               2) *
               scaleRatio -
-            currY
-          : distanceYDifference;
+            currY)/ zoomScaleRef.current
+          : distanceYDifference / zoomScaleRef.current;
 
 
 
