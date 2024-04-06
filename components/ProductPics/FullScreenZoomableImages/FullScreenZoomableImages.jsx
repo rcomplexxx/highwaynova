@@ -33,7 +33,6 @@ const FullScreenZoomableImage = ({
 
   const fixedZoomDivRef= useRef();
   const fullImageRef= useRef();
-  const multiTouchDetectedRef= useRef(false);
 
  
 
@@ -199,11 +198,11 @@ const FullScreenZoomableImage = ({
       }, 3000);
     };
 
-    
+    global.multiTouchDetected=false;
 
     const handleTouchStart = (event) => {
       if (event.touches.length > 1) {
-        multiTouchDetectedRef.current=true;
+        global.multiTouchDetected=true;
       }
 
      
@@ -219,9 +218,9 @@ const FullScreenZoomableImage = ({
     const handleTouchYMove = (event) => {
 
       if (event.touches.length > 1) {
-        multiTouchDetectedRef.current = true;
+        global.multiTouchDetected = true;
       }
-      if(event.touches.length > 1 || multiTouchDetectedRef.current){
+      if(event.touches.length > 1 || global.multiTouchDetected){
         fixedZoomDiv.style.backgroundColor = getRgbValues(1);
         return;
       }
@@ -257,8 +256,8 @@ const FullScreenZoomableImage = ({
 
     const handleTouchEnd = (event) => {
       swipeYLock = false;
-      if (event.touches.length > 1 || multiTouchDetectedRef.current) {
-        multiTouchDetectedRef.current=false;
+      if (event.touches.length > 1 || global.multiTouchDetected) {
+        global.multiTouchDetected=false;
         imgDiv.style.transition =
                 "transform 0.3s ease, background-color 0.3s ease";
               imgDiv.style.transform = `translateY(${0}px)`;
@@ -328,7 +327,7 @@ const FullScreenZoomableImage = ({
       window.removeEventListener("touchmove", handleTouchYMove, true);
       window.removeEventListener("touchend", handleTouchEnd);
     };
-  }, [imageIndex,zoomed,multiTouchDetectedRef]);
+  }, [imageIndex,zoomed]);
 
 
 
