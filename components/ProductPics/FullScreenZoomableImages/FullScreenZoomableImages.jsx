@@ -25,14 +25,17 @@ const FullScreenZoomableImage = ({
 
   const [showToastMessage, setShowToastMessage] = useState(0);
   const [zoomed, setZoomed] = useState(false);
+
   const [swiper, setSwiper] = useState();
   const [imageLoaded, setImageLoaded] = useState(false);
  
-
+ const zoomScaleRef= useRef(1);
  const mouseStartingPointRef=useRef({x:0, y:0})
+
 
   const fixedZoomDivRef= useRef();
   const fullImageRef= useRef();
+
 
  
 
@@ -332,7 +335,7 @@ fixedZoomDiv.style.backgroundColor = getRgbValues(1);
 
   const killFullScreen = useCallback((currY = 0) => {
   
-    if (zoomed) swiper.zoom.toggle();
+   
 
     
     if( !global.toastMessageNotShowable ){
@@ -360,27 +363,33 @@ fixedZoomDiv.style.backgroundColor = getRgbValues(1);
         // fullImg.getBoundingClientRect().height / fullImg.offsetHeight;
         const scaleRatio = biggerWidth
           ? (window.innerWidth - 40) / window.innerWidth
-          : mainImg.getBoundingClientRect().height / (window.innerHeight - 48);
+
+          : mainImg.getBoundingClientRect().height / fullImageRef.current.getBoundingClientRect().height;
 
         // mainImg.getBoundingClientRect().width /window.innerWidth:
 
-        const distanceDifference =
-          mainImg.getBoundingClientRect().top -
-          fullImg.getBoundingClientRect().top;
+     
+
         const distanceXDifference =
           mainImg.getBoundingClientRect().left -
           fullImg.getBoundingClientRect().left;
+
+             const distanceYDifference =
+          mainImg.getBoundingClientRect().top -
+          fullImg.getBoundingClientRect().top;
+
+
         const XTr = biggerWidth
           ? distanceXDifference -
             (fullImg.getBoundingClientRect().width -
               fullImg.getBoundingClientRect().width * scaleRatio) /
               2
-          : mainImg.getBoundingClientRect().left -
+          : (mainImg.getBoundingClientRect().left -
             (window.innerWidth -
               (fullImg.getBoundingClientRect().height / fullImg.naturalHeight) *
                 fullImg.naturalWidth *
                 scaleRatio) /
-              2;
+              2)/zoomScaleRef.current;
         const YTr = biggerWidth
           ? mainImg.getBoundingClientRect().top -
             48 -
@@ -391,7 +400,7 @@ fixedZoomDiv.style.backgroundColor = getRgbValues(1);
               2) *
               scaleRatio -
             currY
-          : distanceDifference;
+          : distanceYDifference/zoomScaleRef.current;
 
 
 
@@ -500,7 +509,7 @@ fixedZoomDiv.style.backgroundColor = getRgbValues(1);
             preventClicks={false}
         preventClicksPropagation={false}
         touchStartPreventDefault={false}
-        touchAngle={20}
+        touchAngle={35}
             zoom={{
               enabled: true,
               minRatio: 1,
@@ -509,6 +518,8 @@ fixedZoomDiv.style.backgroundColor = getRgbValues(1);
             }}
             onZoomChange={(swiper, scale) => {
               setZoomed(scale>1);
+             
+              zoomScaleRef.current = scale;
               swiper.allowTouchMove= scale<=1;
         
               
