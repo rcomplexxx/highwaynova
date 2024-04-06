@@ -31,6 +31,7 @@ const FullScreenZoomableImage = ({
 
  const mouseStartingPointRef=useRef({x:0, y:0})
 
+ const multiTouchDetectedRef = useRef(false);
   const fixedZoomDivRef= useRef();
   const fullImageRef= useRef();
 
@@ -198,11 +199,11 @@ const FullScreenZoomableImage = ({
       }, 3000);
     };
 
-    let multiTouchDetected=false;
+    multiTouchDetectedRef.current=false;
 
     const handleTouchStart = (event) => {
       if (event.touches.length > 1) {
-         multiTouchDetected=true;
+         multiTouchDetectedRef.current=true;
       }
 
      
@@ -218,9 +219,9 @@ const FullScreenZoomableImage = ({
     const handleTouchYMove = (event) => {
 
       if (event.touches.length > 1) {
-        multiTouchDetected = true;
+        multiTouchDetectedRef.current = true;
       }
-      if(multiTouchDetected){
+      if(multiTouchDetectedRef.current){
         fixedZoomDiv.style.backgroundColor = getRgbValues(1);
         return;
       }
@@ -256,8 +257,8 @@ const FullScreenZoomableImage = ({
 
     const handleTouchEnd = (event) => {
       swipeYLock = false;
-      if (event.touches.length > 1 || multiTouchDetected) {
-        multiTouchDetected=false;
+      if (event.touches.length > 1 || multiTouchDetectedRef.current) {
+        multiTouchDetectedRef.current=false;
         imgDiv.style.transition =
                 "transform 0.3s ease, background-color 0.3s ease";
               imgDiv.style.transform = `translateY(${0}px)`;
