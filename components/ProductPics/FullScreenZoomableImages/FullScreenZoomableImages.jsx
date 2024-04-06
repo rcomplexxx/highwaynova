@@ -216,10 +216,16 @@ const FullScreenZoomableImage = ({
     };
 
     const handleTouchYMove = (event) => {
-      if (swipeYLock || zoomed) return;
+
       if (event.touches.length > 1) {
         multiTouchDetected = true;
       }
+      if(multiTouchDetected){
+        fixedZoomDiv.style.backgroundColor = getRgbValues(1);
+        return;
+      }
+      if (swipeYLock || zoomed) return;
+      
       console.log('new touch start')
       currY =
         event.changedTouches[event.changedTouches.length - 1].clientY -
