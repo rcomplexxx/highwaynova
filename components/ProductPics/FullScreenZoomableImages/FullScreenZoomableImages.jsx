@@ -175,8 +175,8 @@ const FullScreenZoomableImage = ({
     const fixedZoomDiv = fixedZoomDivRef.current;
     const bgColor = getComputedStyle(document.documentElement).getPropertyValue('--bg-color');
    
-    const baseRgb=`${parseInt(bgColor.slice(1, 3), 16)}, ${parseInt(bgColor.slice(3, 5), 16)}, ${parseInt(bgColor.slice(5, 7), 16)},`
-    const getRgbValues = (opacity) =>{ return `rgba(${baseRgb} ${opacity})`};
+    const baseRgb=`${parseInt(bgColor.slice(1, 3), 16)}, ${parseInt(bgColor.slice(3, 5), 16)}, ${parseInt(bgColor.slice(5, 7), 16)}`
+    const getRgbValues = (opacity) =>{ return `rgba(${baseRgb}, ${opacity})`};
 
 
     let timeoutId;
@@ -219,8 +219,7 @@ const FullScreenZoomableImage = ({
       if (swipeYLock || zoomed || multiTouchDetected) return;
       if (event.touches.length > 1) {
         multiTouchDetected=true;
-        imgDiv.style.transition =
-        "transform 0.3s ease, background-color 0.3s ease";
+        imgDiv.style.transition = "transform 0.3s ease, background-color 0.3s ease";
       imgDiv.style.transform = `translateY(${0}px)`;
 
       fixedZoomDiv.style.backgroundColor = getRgbValues(1);
