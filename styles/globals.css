@@ -417,7 +417,7 @@ Cormorant+Garamond */
   --writing-next-button-hover-bg: #364658;
   --writing-next-button-disabled-txt-color: rgb(15, 16, 26);
  
-  --cancel-image-button-bg: var(--surround-cancel-bg)
+  --cancel-image-button-bg: var(--surround-cancel-bg);
 
   
 
@@ -425,7 +425,7 @@ Cormorant+Garamond */
 
 
 /*~ Cart ~*/
-  --free-shipping-slider-empty-color: var(--neutral-9);
+  --free-shipping-slider-empty-color: var(--neutral-8);
   --free-shipping-slider-fill-color: var(--lion-5);
   --best-sellers-addtocart-border: var(--lion-5);
 

@@ -176,17 +176,11 @@ export default function CheckoutInfo({ products,  setCartProducts }) {
               </div>
 
               <h2
-                className={`${styles.checkoutTitle} ${Object.keys(errors).length > 0
-                    ? styles.deliveryTitle
-                    : styles.deliveryTitleNormal} `}
+                className={`${styles.checkoutTitle} ${styles.deliveryTitle}`}
               >
                 Delivery
               </h2>
-              {Object.keys(errors).length > 0 && (
-                <p className={styles.requiredNote}>
-                  Fields marked with * are required.
-                </p>
-              )}
+           
 
 <div className={styles.input_row}>
 <CountryInput

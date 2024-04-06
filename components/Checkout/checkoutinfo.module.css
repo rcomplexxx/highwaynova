@@ -43,12 +43,10 @@
 
   .deliveryTitle{
     
-    margin-bottom: 0;
-  }
-
-  .deliveryTitleNormal{
     margin-bottom: var(--size-5);
   }
+
+  
   
  
   
