@@ -362,7 +362,7 @@ fixedZoomDiv.style.backgroundColor = getRgbValues(1);
         // const scaleX = biggerWidth?fullImg.getBoundingClientRect().width / fullImg.offsetWidth:
         // fullImg.getBoundingClientRect().height / fullImg.offsetHeight;
         const scaleRatio = biggerWidth
-          ? (window.innerWidth - 40) / window.innerWidth
+          ? mainImg.getBoundingClientRect().width / fullImageRef.current.getBoundingClientRect().width
 
           : mainImg.getBoundingClientRect().height / fullImageRef.current.getBoundingClientRect().height;
 
@@ -412,7 +412,7 @@ fixedZoomDiv.style.backgroundColor = getRgbValues(1);
 
         fullImg.style.transformOrigin = "top center";
         fullImg.style.transition = "transform 0.3s ease";
-        fullImg.style.transform = `translateX(${XTr/ zoomScaleRef.current}px) translateY(${YTr/ zoomScaleRef.current}px) scale(${scaleRatio / zoomScaleRef.current})`;
+        fullImg.style.transform = `translateX(${XTr}px) translateY(${YTr}px) scale(${scaleRatio})`;
 
         fixedZoomDivRef.current.style.backgroundColor = `rgba(0, 0, 0, 0)`;
 
