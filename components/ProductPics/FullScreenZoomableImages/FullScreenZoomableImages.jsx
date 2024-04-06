@@ -515,7 +515,7 @@ const FullScreenZoomableImage = ({
               scale: zoomedScale
             }}
             onZoomChange={(swiper,scale, imageEl, slideEl) => {
-              setZoomed(scale);
+              setZoomed(scale!=1);
               setZoomedScale(scale)
             }}
             onSlideChange={(swiper) => {
