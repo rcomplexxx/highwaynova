@@ -384,7 +384,7 @@ Cormorant+Garamond */
             /*~ Customer reviews ~*/
 
  --rating-info-bg: var(--neutral-4);
- --rating-info-box-shadow: 0px 8px 32px -12px var(--neutral-7);
+ --rating-info-box-shadow: 0px 8px 24px -12px var(--neutral-7);
  --rating-info-percent-bar-empty: var(--star-empty-color);
  --rating-info-percent-bar-fill: var(--lion-3);
 
