@@ -359,16 +359,23 @@ fixedZoomDiv.style.backgroundColor = getRgbValues(1);
           (window.innerHeight - 48) / window.innerWidth >
           fullImg.naturalHeight / fullImg.naturalWidth;
 
-        // const scaleX = biggerWidth?fullImg.getBoundingClientRect().width / fullImg.offsetWidth:
-        // fullImg.getBoundingClientRect().height / fullImg.offsetHeight;
+       
+
+
+
+
+
+
+
+          
         const scaleRatio = biggerWidth
           ? mainImg.getBoundingClientRect().width / fullImageRef.current.getBoundingClientRect().width
 
           : mainImg.getBoundingClientRect().height / fullImageRef.current.getBoundingClientRect().height;
 
-        // mainImg.getBoundingClientRect().width /window.innerWidth:
+       
 
-     
+   
 
         const distanceXDifference =
           mainImg.getBoundingClientRect().left -
@@ -378,34 +385,37 @@ fixedZoomDiv.style.backgroundColor = getRgbValues(1);
 
 
         const XTr = biggerWidth
-          ? (distanceXDifference -
+          ? distanceXDifference -
             (fullImg.getBoundingClientRect().width -
               fullImg.getBoundingClientRect().width * scaleRatio) /
-              2)/ zoomScaleRef.current
-          : (mainImg.getBoundingClientRect().left -
+              2
+          : mainImg.getBoundingClientRect().left -
             (window.innerWidth -
               (fullImg.getBoundingClientRect().height / fullImg.naturalHeight) *
                 fullImg.naturalWidth *
                 scaleRatio) /
-              2) / zoomScaleRef.current;
+              2;
 
 
 
-              const distanceYDifference =
-              mainImg.getBoundingClientRect().top -
-              fullImg.getBoundingClientRect().top;
+               const distanceYDifference =
+          mainImg.getBoundingClientRect().top -
+          fullImg.getBoundingClientRect().top;
 
+          //Formula za izracunavanje mainImg topa minus fullImg Top
+           //  const { x, y } = swiper.getTranslate(); ali ne radi iz nekog razloga
         const YTr = biggerWidth
-          ? (mainImg.getBoundingClientRect().top -
+          ? 
+          
+          mainImg.getBoundingClientRect().top -
             48 -
             ((window.innerHeight -
               48 -
               (window.innerWidth * fullImg.naturalHeight) /
                 fullImg.naturalWidth) /
-              2) *
-              scaleRatio -
-            currY)/ zoomScaleRef.current
-          : distanceYDifference / zoomScaleRef.current;
+              2) -
+            currY
+          : distanceYDifference;
 
 
 
