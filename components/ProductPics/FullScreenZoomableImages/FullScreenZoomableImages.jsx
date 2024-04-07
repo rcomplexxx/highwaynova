@@ -335,7 +335,7 @@ fixedZoomDiv.style.backgroundColor = getRgbValues(1);
 
   const killFullScreen = useCallback((currY = 0) => {
   
-    if (zoomed) swiper.zoom.toggle();
+    // if (zoomed) swiper.zoom.toggle();
 
     
     if( !global.toastMessageNotShowable ){
@@ -375,7 +375,7 @@ fixedZoomDiv.style.backgroundColor = getRgbValues(1);
 
        
 
-   
+     
 
         const distanceXDifference =
           mainImg.getBoundingClientRect().left -
@@ -402,8 +402,7 @@ fixedZoomDiv.style.backgroundColor = getRgbValues(1);
           mainImg.getBoundingClientRect().top -
           fullImg.getBoundingClientRect().top;
 
-          //Formula za izracunavanje mainImg topa minus fullImg Top
-           //  const { x, y } = swiper.getTranslate(); ali ne radi iz nekog razloga
+          //48 + (window.innerHeight - 48 - (window.innerWidth * fullImg.naturalHeight / fullImg.naturalWidth))/2 Formula za izracunavanje mainImg topa minus fullImg Top
         const YTr = biggerWidth
           ? 
           
@@ -413,7 +412,8 @@ fixedZoomDiv.style.backgroundColor = getRgbValues(1);
               48 -
               (window.innerWidth * fullImg.naturalHeight) /
                 fullImg.naturalWidth) /
-              2) -
+              2) *
+              scaleRatio -
             currY
           : distanceYDifference;
 
