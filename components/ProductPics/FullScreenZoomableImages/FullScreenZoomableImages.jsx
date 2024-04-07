@@ -335,7 +335,7 @@ fixedZoomDiv.style.backgroundColor = getRgbValues(1);
 
   const killFullScreen = useCallback((currY = 0) => {
   
-    // if (zoomed) swiper.zoom.toggle();
+    if (zoomed) swiper.zoom.toggle();
 
     
     if( !global.toastMessageNotShowable ){
