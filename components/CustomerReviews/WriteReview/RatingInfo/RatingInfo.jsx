@@ -78,29 +78,29 @@ export default function RatingInfo({ratingData, openRatingInfo, setOpenRatingInf
           <span className={styles.ratingSpan}>{ratingData.rating.toFixed(1)}</span>
           </div>
           {
+            [5,4,3,2,1].map((starNumber)=>{
+
+              const sumOfAllReviews = ratingData.reviewsNumber;
+              const rateNumber = ratingData[`stars${starNumber}`];
+              const percentage= !openRatingInfo?0:rateNumber / sumOfAllReviews *100<1 && rateNumber !=0?1:rateNumber%1>0.4?Math.ceil(rateNumber / sumOfAllReviews *100):Math.floor(rateNumber / sumOfAllReviews *100);
+
+             return <RatingMetric percentage={percentage} rating={starNumber} rateNumber = {rateNumber}/>
+            })
 
           }
-          <RatingMetric rating={5} rateNumber={ratingData.stars5} sumOfAllReviews={ratingData.reviewsNumber}/>
-          <RatingMetric rating={4} rateNumber={ratingData.stars4} sumOfAllReviews={ratingData.reviewsNumber}/>
-          <RatingMetric rating={3} rateNumber={ratingData.stars3} sumOfAllReviews={ratingData.reviewsNumber}/>
-          <RatingMetric rating={2} rateNumber={ratingData.stars2} sumOfAllReviews={ratingData.reviewsNumber}/>
-          <RatingMetric rating={1} rateNumber={ratingData.stars1} sumOfAllReviews={ratingData.reviewsNumber}/>
+       
           </div>
     </div>
   );
 }
 
 
-function RatingMetric({rating, rateNumber,  sumOfAllReviews}) {  
+function RatingMetric({percentage ,rating, rateNumber}) {  
 
-    const [opened, setOpened]= useState(false);
-
-    useEffect(()=>{setOpened(true);
     
-    },[]);
-    const percentage= Math.round(rateNumber / sumOfAllReviews *100);
 
-
+    
+  
 
 return <div className={styles.ratingMetric}>
     <StarRatings
@@ -113,7 +113,7 @@ return <div className={styles.ratingMetric}>
             starSpacing="2px"
           />
           <div className={styles.percentRatingWrapper}>
-            <div className={styles.percentageRatingDiv} style={{width:`${opened?percentage:0}%`}} ></div>
+            <div className={styles.percentageRatingDiv} style={{width:`${percentage}%`}} ></div>
           </div>
           <span className={styles.rateNumber}>({rateNumber})</span>
 </div>
