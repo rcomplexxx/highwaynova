@@ -26,19 +26,22 @@ const mainReviewDiv= useRef();
 
 
 
+useEffect(()=>{
+  router.beforePopState((state) => {
+    
+    state.options.scroll = false;
+      
+    return true;
+ 
+  });
+})
 
 
 
 
 useEffect(()=>{
 
-  router.beforePopState((state) => {
-       
-    state.options.scroll = false;
-      
-    return true;
  
-  });
 
 
 

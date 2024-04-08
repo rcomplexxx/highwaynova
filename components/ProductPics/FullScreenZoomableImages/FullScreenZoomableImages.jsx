@@ -39,6 +39,17 @@ const FullScreenZoomableImage = ({
 
  
 
+
+  useEffect(()=>{
+    router.beforePopState((state) => {
+      
+      state.options.scroll = false;
+        
+      return true;
+   
+    });
+  })
+
  
 
 
