@@ -7,6 +7,7 @@ import "swiper/css/zoom";
 
 import Image from "next/image";
 import ToastMessage from "./ToastMessage/ToastMessage";
+import { useRouter } from "next/router";
 
 
 
@@ -36,7 +37,7 @@ const FullScreenZoomableImage = ({
   const fixedZoomDivRef= useRef();
   const fullImageRef= useRef();
 
-
+  const router = useRouter();
  
 
 
