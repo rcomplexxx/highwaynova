@@ -3,6 +3,7 @@ import styles from "./writereview.module.css";
 import StarRatings from "react-star-ratings";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 export default function WriteReview({ setInfoDivOpen }) {
  
