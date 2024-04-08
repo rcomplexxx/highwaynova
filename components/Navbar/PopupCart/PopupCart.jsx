@@ -33,7 +33,7 @@ useEffect(()=>{
         
     state.options.scroll = false;
       
-    return true;
+    return false;
  
   });
 
