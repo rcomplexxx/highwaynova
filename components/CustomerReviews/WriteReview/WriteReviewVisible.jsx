@@ -19,12 +19,22 @@ export default function WriteReviewVisible({ratingData}) {
 
   
 
+    useEffect(()=>{
+      router.beforePopState((state) => {
+        
+        state.options.scroll = false;
+          
+        return true;
+     
+      });
+    })
+
 
     useEffect(() => {
 
       if(infoDivOpen===undefined){
         if(router.asPath.includes("#write-review"))
-        router.push(router.asPath.split('#write-review')[0], { scroll: false });
+        router.push(router.asPath.split('#write-review')[0]);
       
         return;
       }
