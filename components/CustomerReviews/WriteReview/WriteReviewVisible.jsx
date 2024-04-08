@@ -24,7 +24,7 @@ export default function WriteReviewVisible({ratingData}) {
 
       if(infoDivOpen===undefined){
         if(router.asPath.includes("#write-review"))
-        router.push(router.asPath.split('#write-review')[0]);
+        router.push(router.asPath.split('#write-review')[0], { scroll: false });
       
         return;
       }

@@ -73,8 +73,7 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
     
     let destroyFixedCartTimeout;
    
-    const handleScroll = (event) => {
-      event.preventDefault();
+    const handleScroll = () => {
       const shouldSpawn= AddToCartEl.getBoundingClientRect().bottom < 0 && masonryEl.getBoundingClientRect().bottom > window.innerHeight;
       
       if(shouldSpawn){
