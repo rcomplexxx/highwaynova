@@ -57,13 +57,7 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
     
 
 
-    router.beforePopState((state) => {
-       
-      state.options.scroll = false;
-        
-      return true;
-   
-    });
+
 
     
     const AddToCartEl = document.getElementById("addToCart");

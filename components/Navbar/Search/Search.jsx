@@ -25,16 +25,7 @@ export default function Search({searchOpen, setSearchOpen}){
 
 
 
-    useEffect(()=>{
-      router.beforePopState((state) => {
-        if(searchOpen){
-        state.options.scroll = false;
-          
-        return false;
-      }
-    return true;
-      });
-    },[searchOpen,router])
+  
 
 
 

@@ -29,14 +29,6 @@ useEffect(()=>{
 
 
   
-  router.beforePopState((state) => {
-        
-    state.options.scroll = false;
-      
-    return true;
- 
-  });
-
 
 
   const popCart= popCartRef.current;

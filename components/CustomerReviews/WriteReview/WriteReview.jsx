@@ -18,21 +18,7 @@ export default function WriteReview({ setInfoDivOpen }) {
   const [errors, setErrors] = useState({ firstName: false, email: false, images5: false });
   
 
-  const router = useRouter();
-
-
-
   
-
-  useEffect(()=>{
-    router.beforePopState((state) => {
-      
-      state.options.scroll = false;
-        
-      return true;
-   
-    });
-  })
  
 
   useEffect(()=>{

@@ -22,6 +22,20 @@ export default function App({ Component, pageProps }) {
   const [emailPopup, setEmailPopup] = useState(false);
 
   const router = useRouter();
+
+
+
+  
+
+  useEffect(()=>{
+    router.beforePopState((state) => {
+      
+      state.options.scroll = false;
+        
+      return true;
+   
+    });
+  })
   
 
   useEffect(() => {

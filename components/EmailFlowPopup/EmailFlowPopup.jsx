@@ -33,11 +33,6 @@ export default function EmailFlowPopup({setEmailPopup}){
   
   
    
-          router.beforePopState((state) => {
-            state.options.scroll = false;
-            return false;
-          });
-          
        
   
        

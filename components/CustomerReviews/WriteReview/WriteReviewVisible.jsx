@@ -19,16 +19,6 @@ export default function WriteReviewVisible({ratingData}) {
 
   
 
-    useEffect(()=>{
-      router.beforePopState((state) => {
-        
-        state.options.scroll = false;
-          
-        return true;
-     
-      });
-    })
-
 
     useEffect(() => {
 
@@ -57,11 +47,7 @@ export default function WriteReviewVisible({ratingData}) {
     
       }
 
-      router.beforePopState((state) => {
-       
-        state.options.scroll = false;
-        return true;
-      });
+  
   
     
     }, [infoDivOpen]);

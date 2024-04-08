@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react'
 import Image from "next/image";
 import styles from './fullscreenreview.module.css';
 import StarRatings from 'react-star-ratings';
-import { useRouter } from 'next/router';
 
 export default function FullScreenReview({authorName, text, stars, imageSrc, setFullScreenReview}) {
     const [imageLoaded, setImageLoaded] = useState();
@@ -11,9 +10,7 @@ export default function FullScreenReview({authorName, text, stars, imageSrc, set
     const reviewImageRef= useRef();
   
 
-    const router = useRouter();
-    
-
+  
 
 
 
@@ -26,15 +23,7 @@ const mainReviewDiv= useRef();
 
 
 
-useEffect(()=>{
-  router.beforePopState((state) => {
-    
-    state.options.scroll = false;
-      
-    return true;
- 
-  });
-})
+
 
 
 
