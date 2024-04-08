@@ -40,7 +40,7 @@ const FullScreenZoomableImage = ({
   const router = useRouter();
  
 
-
+//Bug officially fixed
   useEffect(()=>{
     router.beforePopState((state) => {
       
