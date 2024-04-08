@@ -61,7 +61,7 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
        
       state.options.scroll = false;
         
-      return true;
+      return false;
    
     });
 
