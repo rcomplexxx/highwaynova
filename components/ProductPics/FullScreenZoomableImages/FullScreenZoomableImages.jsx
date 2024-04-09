@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import styles from "./fullscreenzoomableimage.module.css";
 import { Zoom } from "swiper/core";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -38,6 +38,66 @@ const FullScreenZoomableImage = ({
 
 
 
+
+  useLayoutEffect(()=>{
+
+
+    const mainImg = document.getElementById(`mainImage${imageIndex}`);
+
+    
+    
+
+    const fullImg = fullImageRef.current;
+
+
+    const biggerWidth =
+    (window.innerHeight - 48) / window.innerWidth >
+    fullImg.naturalHeight / fullImg.naturalWidth;
+  const scaleRatio = biggerWidth
+    ? (window.innerWidth - 40) / window.innerWidth
+    : mainImg.getBoundingClientRect().height / (window.innerHeight - 48);
+
+  // fixedZoomDiv.style.opacity = `0`;
+
+
+
+
+  //prebaciti u complete
+
+
+
+ 
+
+
+
+  const deltaX = biggerWidth
+    ? 0
+    : mainImg.getBoundingClientRect().left -
+      (window.innerWidth -
+        ((window.innerHeight - 48) / fullImg.naturalHeight) *
+          fullImg.naturalWidth *
+          scaleRatio) /
+        2;
+  const deltaY = biggerWidth
+    ? mainImg.getBoundingClientRect().top -
+      48 -
+      ((window.innerHeight -
+        48 -
+        (window.innerWidth / fullImg.naturalWidth) * fullImg.naturalHeight) /
+        2) *
+        scaleRatio
+    : mainImg.getBoundingClientRect().top - 48;
+
+
+  fullImg.style.transition = "transform 0s ease";
+  fullImg.style.transform = `translateX(${deltaX}px) translateY(${deltaY}px) scale(${scaleRatio})`;
+  fullImg.style.transition =
+        "left 0.3s ease, top 0.3s ease, transform 0.3s ease";
+ 
+
+       
+
+  },[])
  
 
 
@@ -47,81 +107,49 @@ const FullScreenZoomableImage = ({
 
    
      
-      setNavActive(true);
+     
 
-    const fixedZoomDiv = fixedZoomDivRef.current;
 
-    const mainImg = document.getElementById(`mainImage${imageIndex}`);
-
-    const fullImg = fullImageRef.current;
-    const biggerWidth =
-      (window.innerHeight - 48) / window.innerWidth >
-      fullImg.naturalHeight / fullImg.naturalWidth;
-    const scaleRatio = biggerWidth
-      ? (window.innerWidth - 40) / window.innerWidth
-      : mainImg.getBoundingClientRect().height / (window.innerHeight - 48);
-
-    // fixedZoomDiv.style.opacity = `0`;
 
   
-    mainImg.style.opacity = "0";
 
-    //prebaciti u complete
 
-    const bgColor = getComputedStyle(document.documentElement).getPropertyValue('--bg-color');
-   
-
-    const rgbValues = `rgba(${parseInt(bgColor.slice(1, 3), 16)}, ${parseInt(bgColor.slice(3, 5), 16)}, ${parseInt(bgColor.slice(5, 7), 16)}, 1)`;
-
-    const transitionEnded = () => {
-      mainImg.style.opacity = "1";
-     
-      fixedZoomDiv.removeEventListener("transitionend", transitionEnded);
-    };
-
-    fixedZoomDiv.addEventListener("transitionend", transitionEnded);
-
-    fixedZoomDiv.style.transition = "background-color 0.2s 0.01s ease";
-    fixedZoomDiv.style.backgroundColor = rgbValues;
-
- 
-
-    const deltaX = biggerWidth
-      ? 0
-      : mainImg.getBoundingClientRect().left -
-        (window.innerWidth -
-          ((window.innerHeight - 48) / fullImg.naturalHeight) *
-            fullImg.naturalWidth *
-            scaleRatio) /
-          2;
-    const deltaY = biggerWidth
-      ? mainImg.getBoundingClientRect().top -
-        48 -
-        ((window.innerHeight -
-          48 -
-          (window.innerWidth / fullImg.naturalWidth) * fullImg.naturalHeight) /
-          2) *
-          scaleRatio
-      : mainImg.getBoundingClientRect().top - 48;
-
-    fullImg.style.transformOrigin = "top center";
-    fullImg.style.transition = "transform 0s linear";
-    fullImg.style.transform = `translateX(${deltaX}px) translateY(${deltaY}px) scale(${scaleRatio})`;
-
-         
 
     if(imageLoaded){
 
-    setTimeout(() => {
-      fullImg.style.transition =
-        "left 0.3s ease, top 0.3s ease, transform 0.3s ease";
+
+      const mainImg = document.getElementById(`mainImage${imageIndex}`);
+
+      const fullImg = fullImageRef.current;
+
+
+      const fixedZoomDiv = fixedZoomDivRef.current;
+
+      const bgColor = getComputedStyle(document.documentElement).getPropertyValue('--bg-color');
+     
+    
+      const rgbValues = `rgba(${parseInt(bgColor.slice(1, 3), 16)}, ${parseInt(bgColor.slice(3, 5), 16)}, ${parseInt(bgColor.slice(5, 7), 16)}, 1)`;
+    
+    
+    
+      fixedZoomDiv.style.transition = "background-color 0.2s 0.01s ease";
+      fixedZoomDiv.style.backgroundColor = rgbValues;
+
+       fullImg.style.opacity='1';
+
+      setNavActive(true);
+
+      mainImg.style.opacity = "0";
+
+      setTimeout(()=>{
+        mainImg.style.opacity = "1";
+      },210)
+
+    
+      
       fullImg.style.left = `0`;
-      fullImg.style.transform = `scale(1)`;
       fullImg.style.top = `0`;
-    }, 1);
-  }
-
-
+      fullImg.style.transform = `scale(1)`;
 
 
 
@@ -129,34 +157,45 @@ const FullScreenZoomableImage = ({
 
 
 
-    setTimeout(()=>{
-      if(!global.toastMessageNotShowable){
-      setShowToastMessage(1);
-     
-    }
-
-
-    }, 380);
-
-
+        setTimeout(()=>{
+          if(!global.toastMessageNotShowable){
+          setShowToastMessage(1);
+         
+        }
+    
+    
+        }, 380);
+    
+    
+        
+    
+    
+      }
+    
+      else{
+        global.toastMessageNotShowable=true;
+      }
+    
+    
+        setTimeout(() => {
+          document.documentElement.classList.add("hideScroll");
+          
+        }, 280);
+    
+      
+    
     
 
 
-  }
-
-  else{
-    global.toastMessageNotShowable=true;
-  }
-
-
-    setTimeout(() => {
-      document.documentElement.classList.add("hideScroll");
-      
-    }, 280);
-
+     
   
+  }
 
 
+
+
+
+   
 
 
   }, [imageLoaded]);
@@ -422,10 +461,6 @@ fixedZoomDiv.style.backgroundColor = getRgbValues(1);
       
       
 
-         
-
-        fullImg.style.transformOrigin = "top center";
-        fullImg.style.transition = "transform 0.3s ease";
         fullImg.style.transform = `translateX(${XTr}px) translateY(${YTr}px) scale(${scaleRatio})`;
 
         fixedZoomDivRef.current.style.backgroundColor = `rgba(0, 0, 0, 0)`;
