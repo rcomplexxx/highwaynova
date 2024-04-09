@@ -89,11 +89,16 @@ const FullScreenZoomableImage = ({
     : mainImg.getBoundingClientRect().top - 48;
 
 
-    fullImg.opacity= 0;
+    fullImg.style.opacity= 0;
   fullImg.style.transition = "transform 0s ease";
   fullImg.style.transform = `translateX(${deltaX}px) translateY(${deltaY}px) scale(${scaleRatio})`;
-  fullImg.style.transition =
-        "left 0.3s ease, top 0.3s ease, transform 0.3s ease";
+
+  setTimeout(()=>{
+    
+    fullImg.style.transition =
+          "left 0.3s ease, top 0.3s ease, transform 0.3s ease";
+  },1)
+ 
  
 
        
