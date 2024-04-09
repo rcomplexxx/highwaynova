@@ -11,6 +11,8 @@
     justify-content: center;
     align-items: center;
     contain: content;
+
+    transition: background-color 0.2s 0.01s ease;
     z-index: 12;
   }
 

@@ -132,8 +132,9 @@ const FullScreenZoomableImage = ({
     
     
     
-      fixedZoomDiv.style.transition = "background-color 0.2s 0.01s ease";
+      
       fixedZoomDiv.style.backgroundColor = rgbValues;
+      
 
        fullImg.style.opacity='1';
 
@@ -178,6 +179,7 @@ const FullScreenZoomableImage = ({
     
     
         setTimeout(() => {
+          fixedZoomDiv.style.transition = "none";
           document.documentElement.classList.add("hideScroll");
           
         }, 280);
@@ -463,6 +465,7 @@ fixedZoomDiv.style.backgroundColor = getRgbValues(1);
 
         fullImg.style.transform = `translateX(${XTr}px) translateY(${YTr}px) scale(${scaleRatio})`;
 
+        fixedZoomDivRef.current.style.transition = "background-color 0.2s 0.01s ease";
         fixedZoomDivRef.current.style.backgroundColor = `rgba(0, 0, 0, 0)`;
 
        
