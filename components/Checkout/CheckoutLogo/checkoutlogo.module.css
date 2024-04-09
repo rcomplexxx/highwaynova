@@ -12,7 +12,7 @@
     position: relative;
    
     height: var(--size-10);
-    max-width: var(--size-18);
+    max-width: 1080px;
     width: calc(100% - var(--size-11));
     
     display: flex;
