@@ -96,7 +96,7 @@ const FullScreenZoomableImage = ({
 
  
  
-
+     
        
 
   },[])
@@ -473,12 +473,13 @@ fixedZoomDiv.style.backgroundColor = getRgbValues(1);
         fixedZoomDivRef.current.style.backgroundColor = `rgba(0, 0, 0, 0)`;
 
        
+       
               setNavActive(false);
-        document.documentElement.classList.remove("hideScroll");
+        
 
         setTimeout(function () {
           fullScreenChange(false);
-     
+          document.documentElement.classList.remove("hideScroll");
       
         }, 300);
 

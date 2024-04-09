@@ -42,7 +42,7 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
      
 
     } else { 
-    if (router.asPath.includes("#zoom")) {router.back();}
+    if (router.asPath.includes("#zoom")) {document.documentElement.classList.remove("hideScroll");  router.back();}
   }
 
    
