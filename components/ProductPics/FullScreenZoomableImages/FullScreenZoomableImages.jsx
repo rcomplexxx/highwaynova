@@ -134,6 +134,8 @@ const FullScreenZoomableImage = ({
     
       
       fixedZoomDiv.style.backgroundColor = rgbValues;
+
+      setTimeout(()=>{fixedZoomDiv.style.transition = "none";},1)
       
 
        fullImg.style.opacity='1';
@@ -179,7 +181,6 @@ const FullScreenZoomableImage = ({
     
     
         setTimeout(() => {
-          fixedZoomDiv.style.transition = "none";
           document.documentElement.classList.add("hideScroll");
           
         }, 280);
