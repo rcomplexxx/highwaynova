@@ -210,6 +210,7 @@ Cormorant+Garamond */
 
 
   --neutral-0: #EBECE9; /*#F5F6F4;*/
+  --neutral-0-5: #E1E3DE;
   --neutral-1: #D7DAD3;  
   --neutral-2: #B9BEB1;
   --neutral-3: #A5AB9B;
@@ -315,6 +316,7 @@ Cormorant+Garamond */
   --footer-txt-color: var(--neutral-2);
   --footer-link-active-color: var(--neutral-2);
   --footer-email-placeholder-color: var(--neutral-5);
+  --footer-subscribe-input-txt-color: var(--neutral-0);
   --subscribe-input-border: var(--lion-5);
   --action-button-footer-txt-color: var(--blue-9);
   --action-button-hover-footer-txt-color: var(--high-contrast-light-txt-color);
@@ -360,7 +362,7 @@ Cormorant+Garamond */
 
  --buy-now-bg: var(--lion-1);
  --buy-now-border: var(--lion-6);
- --buy-now-hover-box-shadow-border: var(--lion-6);
+ --buy-now-hover-box-shadow-border: var(--neutral-5);
 
  --dropcard-title-color: var(--high-contrast-light-txt-color);
 
@@ -369,7 +371,7 @@ Cormorant+Garamond */
 
  --fixed-add-to-cart-color: var(--high-contrast-light-txt-color);
  --fixed-add-to-cart-bg: var(--neutral-4);
- --fixed-add-to-cart-border-top: var(--blue-8);
+ --fixed-add-to-cart-border-top: var(--blue-5);
  
           /*~ Fullscreen product~*/
 
@@ -463,9 +465,9 @@ Cormorant+Garamond */
   --google-pay-border-color: transparent;
 
   --select-payment-circle-ring-color: var(--blue-2);
-  --select-payment-circle-color: var(--neutral-5);
+  --select-payment-circle-color: var(--input-outline-color);
 
-  --payment-div-bg: var(--neutral-1);
+  --payment-div-bg: var(--neutral-0-5);
 
   --paynow-stripe-button: var(--main-button-color);
   --paynow-stripe-button-hover: var(--main-button-hover-color);

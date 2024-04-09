@@ -1,6 +1,6 @@
 .form_group {
   position: relative;
-  width: 100%;
+  
   margin-left: var(--size-3);
   margin-right: var(--size-3);
     flex-grow: 1;

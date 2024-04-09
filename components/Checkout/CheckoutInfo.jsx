@@ -10,10 +10,13 @@ import Link from "next/link";
 import PaymentSection from "./PaymentSection/PaymentSection";
 import Tip from "./Tip/Tip";
 import { CheckoutContext } from "@/contexts/CheckoutContext";
+import Image from "next/image";
+
 
 export default function CheckoutInfo({ products,  setCartProducts }) {
   const [showApt, setShowApt] = useState(false);
   const [errors, setErrors] = useState({});
+  const [emailSubscribe, setEmailSubscribe] = useState(false);
   // const [shippingType, setShippingType] = useState("free");
 
   const {couponCode, tip} = useContext(CheckoutContext);
@@ -159,9 +162,9 @@ export default function CheckoutInfo({ products,  setCartProducts }) {
         <div className={styles.checkout_left}>
           <ExpressCheckout products={products} checkFields={checkFields} organizeUserData={organizeUserData} setCartProducts={setCartProducts } setErrors={setErrors}/>
           <div className={styles.checkout_section}>
-            <h2 className={styles.checkoutTitle}>Contact</h2>
+            <h2 className={styles.contactTitle}>Contact</h2>
           
-              <div className={styles.input_row}>
+              <div className={styles.emailField}>
                 <InputField
                   id="email"
                   placeHolder="Email"
@@ -173,10 +176,67 @@ export default function CheckoutInfo({ products,  setCartProducts }) {
                     <p className={styles.error}>{errors.email}</p>
                   )}
                 </InputField>
+
+
+
+
+                <div className={styles.emailSubscribeDiv}  onClick={()=>{ setEmailSubscribe(!emailSubscribe);}}>
+      <div  className={styles.emailSubscribeChecker}>
+        {emailSubscribe && <Image src='/images/correctDark.svg' height={10} width={10}/>}
+      </div>
+     
+  
+      <span className={styles.emailSubscribeText}>
+     Email me with news and offers
+    </span>
+
+    </div>
+
+{/* .tipShowCheckboxDiv{
+ 
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+
+  box-sizing: border-box;
+  padding: var(--size-6) var(--size-5) ;
+  font-size: var(--font-size-3);
+  cursor: pointer;
+  user-select: none;
+}
+
+
+.tipShowCheckboxDiv *{
+  cursor: pointer;
+}
+
+.tipShowChecker{
+  
+  height:  var(--size-5);
+  width:  var(--size-5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  border: 1px solid var(--border-color-strong);
+  flex-shrink: 0;
+}
+
+ */}
+
+
+   
+
+
+
+   
+
+
+
               </div>
 
               <h2
-                className={`${styles.checkoutTitle} ${styles.deliveryTitle}`}
+                className={styles.deliveryTitle}
               >
                 Delivery
               </h2>

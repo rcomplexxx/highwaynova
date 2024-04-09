@@ -17,9 +17,9 @@
  
  .checkout_left {
     max-width: var(--size-15-5);
-    margin-right: var(--size-8);
-    margin-left: var(--size-8);
-    margin-bottom: calc(100vh - 100lvh + var(--size-7));
+    margin-right: 40px;
+    margin-left: 40px;
+    margin-bottom: var(--size-7);
   } 
  
   
@@ -27,22 +27,63 @@
     margin-bottom: var(--size-7);
   }
   
-  .checkoutTitle {
-    font-size:  var(--font-size-6);
+
+  .contactTitle{
+    color: var(--high-contrast-light-txt-color);
+    font-size: var(--font-size-6);
+    font-weight: 600;
     margin-bottom: var(--size-4);
-    opacity: 0.9;
-    font-weight: 400;
   }
 
 
-  /* .checkout_section h1 {
-    opacity: 0.8;
-    font-weight: 400;
-    font-size: var(--font-size-6);
-  } */
+  .emailField{
+    display: flex;
+    flex-direction: column;
+    
+    margin-bottom: var(--size-5);
+  }
+  .emailField > :first-child{
+    margin-left: 0;
+    margin-right: 0;
+  }
+  
+  .emailSubscribeDiv{
+   
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    padding: var(--size-5) 0 ;
+    font-size: var(--font-size-3);
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .emailSubscribeChecker{
+
+    height:  var(--size-5);
+    width:  var(--size-5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    border: 1px solid var(--input-outline-color);
+    flex-shrink: 0;
+
+    margin-right: var(--size-3);
+  }
+
+  .emailSubscribeText{
+    color: var(--high-contrast-light-txt-color);
+    font-size: var(--font-size-2);
+   
+  }
+
+
 
   .deliveryTitle{
-    
+    color: var(--high-contrast-light-txt-color);
+    font-size: var(--font-size-6);
+    font-weight: 600;
     margin-bottom: var(--size-5);
   }
 

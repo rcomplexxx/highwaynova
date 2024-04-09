@@ -27,7 +27,12 @@ export default function App({ Component, pageProps }) {
 
   
 
-  useEffect(()=>{
+ 
+  
+
+  useEffect(() => {
+
+
     router.beforePopState((state) => {
       
       state.options.scroll = false;
@@ -35,10 +40,8 @@ export default function App({ Component, pageProps }) {
       return true;
    
     });
-  })
-  
 
-  useEffect(() => {
+    
 
     document.querySelector("html").className=`${inter.variable} ${eb_Garamond.variable}`;
 

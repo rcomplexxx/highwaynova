@@ -62,11 +62,13 @@
     width: 0;
     flex: 1;
     height: 40px;
-    color: var(--light-txt-color);
+    color: var(--footer-subscribe-input-txt-color);
     background-color: transparent;
     outline: none;
     border: solid var(--subscribe-input-border) 1px;
     border-radius: var(--size-2);
+
+    font-size: var(--font-size-1);
     box-sizing: border-box;
     padding: 0 var(--size-3);
     
@@ -131,6 +133,18 @@
   .subscribeButton:hover{
     color: var(--action-button-hover-footer-txt-color);
     background-color: var(--action-button-bg-color-hover);
+  }
+
+  .disabledEmailButton{
+    color: var(--disabled-email-button-color);
+    background-color: var(--disabled-email-button-bg);
+    cursor:auto;
+  
+  }
+
+  .disabledEmailButton:hover{
+    color: var(--disabled-email-button-color);
+    background-color: var(--disabled-email-button-bg);
   }
   
   .footerLinks {
