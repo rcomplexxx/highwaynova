@@ -42,6 +42,7 @@ body{
 }
 
 h1{
+  color: var(--high-contrast-light-txt-color);
   text-align: center;
   font-size: var(--font-size-7);
   margin-bottom: var(--size-8);
@@ -304,7 +305,7 @@ Cormorant+Garamond */
   --nav-select-search-link-color:var(--blue-0);
 
   --popcart-bg: var(--navbar-bg);
-  --cart-button-items-number-bg: var(--lion-5);
+  --cart-button-items-number-bg: var(--blue-3);
   --checkout-button-border: var(--lion-5);
 
 
@@ -363,6 +364,7 @@ Cormorant+Garamond */
  --buy-now-bg: var(--lion-1);
  --buy-now-border: var(--lion-6);
  --buy-now-hover-box-shadow-border: var(--neutral-5);
+ --buy-now-hover-bg: var(--lion-2);
 
  --dropcard-title-color: var(--high-contrast-light-txt-color);
 
@@ -429,7 +431,10 @@ Cormorant+Garamond */
 /*~ Cart ~*/
   --free-shipping-slider-empty-color: var(--neutral-8);
   --free-shipping-slider-fill-color: var(--lion-5);
-  --best-sellers-addtocart-border: var(--lion-5);
+  --best-sellers-bg: var(--lion-1);
+  --best-sellers-addtocart-bg: var(--lion-4);
+  --best-sellers-addtocart-bg-hover: var(--lion-5);
+  --best-sellers-addtocart-border: var(--blue-8);
 
   
   
@@ -460,6 +465,7 @@ Cormorant+Garamond */
   --checkout-input-placeholder: var(--neutral-8);
   --input-autofill-color: var(--bg-color);
  
+  --express-checkout-bg: var(--payment-div-bg);
   --express-checkout-button-bg: var(--blue-9);
   --paypal-wrapper-border: var(--lion-5);
   --google-pay-border-color: transparent;

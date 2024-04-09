@@ -207,7 +207,8 @@
 
 
   .but_now_button:hover {
-    box-shadow: 0 0 3px var(--buy-now-hover-box-shadow-border);
+    /* box-shadow: 0 0 3px var(--buy-now-hover-box-shadow-border); */
+    background-color: var(--buy-now-hover-bg);
   }
 
 

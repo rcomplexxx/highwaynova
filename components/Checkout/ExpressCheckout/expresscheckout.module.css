@@ -26,6 +26,11 @@
     display: flex;
     justify-content: space-between;
 
+    background-color: var(--express-checkout-bg);
+
+    box-sizing: border-box;
+    padding: var(--size-6);
+    border-radius: 12px;
 }
 
 
@@ -90,15 +95,20 @@
     .expressCheckoutTitle{
     margin-top: 0;
     }
+
+    .expressPaymentsWrapper{
+
+        background-color: transparent;
+        padding: var(--size-2) 0;
+    }
+    
 }
 
 
 
 @media(max-width: 380px){
 
-    .expressPaymentsWrapper:last-child{
-        margin-bottom: var(--size-5) !important;
-    }
+   
 
     .paymentDiv{
         width: 100%;

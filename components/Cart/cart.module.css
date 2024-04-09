@@ -48,7 +48,7 @@ height : 100vh;
     color: var(--high-contrast-light-txt-color);
       margin-bottom: var(--size-7);
       margin-top: var(--size-5);
-    font-weight: 400;
+    font-weight: 600;
   }
   
 
@@ -58,7 +58,7 @@ height : 100vh;
   .subtotalNew{
     color: var(--high-contrast-light-txt-color);
     font-size: var(--font-size-7); /* Adjust the font size as needed */
-    font-weight: 400; /* You can adjust the font weight */
+    font-weight: 600; /* You can adjust the font weight */
     padding:0;
     margin:0;
    
