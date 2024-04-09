@@ -327,6 +327,7 @@ Cormorant+Garamond */
 
 
  --shop-now-hero-button-bg: var(--blue-9);
+ --shop-now-hero-button-box-shadow: 0 2px 6px var(--neutral-10);
  --hero-image-border-bottom-color: var(--blue-2);
 
   --home-review-color: var(--neutral-2);

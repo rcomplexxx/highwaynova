@@ -12,7 +12,7 @@
      width:var(--size-11-5);
      height: var(--size-8);
     /* transition: transform 0.1s ease-in; */
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+    box-shadow: var(--shop-now-hero-button-box-shadow);
     z-index: 2;
     position: absolute;
     font-family: var(--hand-writing-font);
