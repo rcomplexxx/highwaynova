@@ -4,6 +4,7 @@ import { useState } from "react";
 import GetDataButton from "../MagicButtons/GetDataButton";
 import PageIndexButtons from "../MagicButtons/PageIndexButtons";
 import ReviewsCard from "./ReviewsCard/ReviewsCard";
+import SwapImageRevsButtons from "./SwapRevsWIthImagesToStart/SwapImageRevsButtons";
 
 export default function Reviews({ reviews, setReviews }) {
   const [page, setPage] = useState(0);
@@ -104,6 +105,7 @@ export default function Reviews({ reviews, setReviews }) {
       <div className={styles.titleDiv}>
         <h1>Reviews{reviews && <span> ({reviews.length})</span>}</h1>
         {reviews.length !== 0 ? (
+          <>
           <ReviewsSaveButton
             dataType="send_reviews"
             oldReviews={reviews}
@@ -111,6 +113,9 @@ export default function Reviews({ reviews, setReviews }) {
             setOldReviews={setReviews}
             clearAfterReviewsSave={clearAfterDataSave}
           />
+
+          <SwapImageRevsButtons reviews={reviews}  setReviewsArray={setReviewsArray} / > 
+          </>
         ) : (
           <div className={styles.reviewGetterDiv}>
             <label>Product id</label>

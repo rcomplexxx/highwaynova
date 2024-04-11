@@ -19,6 +19,7 @@ const AdminNavbar = ({ setIsAdmin }) => {
 
   const router = useRouter();
   const { adminroute } = router.query;
+ 
 
   const handleMobileMenuOpen = (event) => {
     setIsMenuOpen(true);
@@ -111,7 +112,7 @@ const AdminNavbar = ({ setIsAdmin }) => {
                 <Link
                   href="/admin/inbox"
                   className={`${styles.linkStyle} ${
-                    adminroute === "inbox" ? styles.currentLink : ""
+                    adminroute && adminroute[0] === "inbox" ? styles.currentLink : ""
                   }`}
                 >
                   Inbox
@@ -119,7 +120,7 @@ const AdminNavbar = ({ setIsAdmin }) => {
                 <Link
                   href="/admin/orders"
                   className={`${styles.linkStyle} ${
-                    adminroute === "orders" ? styles.currentLink : ""
+                    adminroute && adminroute[0] === "orders" ? styles.currentLink : ""
                   }`}
                 >
                   Orders
@@ -127,7 +128,7 @@ const AdminNavbar = ({ setIsAdmin }) => {
                 <Link
                   href="/admin/subscribers"
                   className={`${styles.linkStyle} ${
-                    adminroute === "subscribers" ? styles.currentLink : ""
+                    adminroute &&  adminroute[0] === "subscribers" ? styles.currentLink : ""
                   }`}
                 >
                   Subscribers
@@ -135,7 +136,7 @@ const AdminNavbar = ({ setIsAdmin }) => {
                 <Link
                   href="/admin/reviews"
                   className={`${styles.linkStyle} ${
-                    adminroute === "reviews" ? styles.currentLink : ""
+                    adminroute && adminroute[0] === "reviews" ? styles.currentLink : ""
                   }`}
                 >
                   Reviews
@@ -143,7 +144,7 @@ const AdminNavbar = ({ setIsAdmin }) => {
                 <Link
                   href="/admin/emails"
                   className={`${styles.linkStyle} ${
-                    adminroute === "emails" ? styles.currentLink : ""
+                    adminroute &&  adminroute[0] === "emails" ? styles.currentLink : ""
                   }`}
                 >
                   Emails
@@ -151,7 +152,7 @@ const AdminNavbar = ({ setIsAdmin }) => {
                 <Link
                   href="/admin/datawiper"
                   className={`${styles.linkStyle} ${
-                    adminroute==="datawiper" ? styles.currentLink : ""
+                    adminroute &&  adminroute[0]==="datawiper" ? styles.currentLink : ""
                   }`}
                 >
                   Data wiper
@@ -241,38 +242,40 @@ const AdminNavbar = ({ setIsAdmin }) => {
             </Link>
 
             <Link
-              href="/admin/orders"
-              className={`${styles.linkStyle} ${
-                adminroute === "orders" ? styles.currentLink : ""
-              }`}
-              onClick={() => {
-                adminroute !== "orders" && setIsMenuOpen(false);
-              }}
-            >
-              <MenuItem>
-                <Typography variant="body1">Orders</Typography>
-              </MenuItem>
-            </Link>
-            <Link
               href="/admin/inbox"
               className={`${styles.linkStyle} ${
-                adminroute === "inbox" ? styles.currentLink : ""
+                adminroute && adminroute[0] === "inbox" ? styles.currentLink : ""
               }`}
               onClick={() => {
-                adminroute && setIsMenuOpen(false);
+                adminroute && adminroute[0] && setIsMenuOpen(false);
               }}
             >
               <MenuItem>
                 <Typography variant="body1">Inbox</Typography>
               </MenuItem>
             </Link>
+
+            <Link
+              href="/admin/orders"
+              className={`${styles.linkStyle} ${
+                adminroute && adminroute[0] === "orders" ? styles.currentLink : ""
+              }`}
+              onClick={() => {
+                adminroute && adminroute[0] !== "orders" && setIsMenuOpen(false);
+              }}
+            >
+              <MenuItem>
+                <Typography variant="body1">Orders</Typography>
+              </MenuItem>
+            </Link>
+         
             <Link
               href="/admin/subscribers"
               className={`${styles.linkStyle} ${
-                adminroute === "subscribers" ? styles.currentLink : ""
+                adminroute && adminroute[0] === "subscribers" ? styles.currentLink : ""
               }`}
               onClick={() => {
-                adminroute !== "subscribers" && setIsMenuOpen(false);
+                adminroute && adminroute[0] !== "subscribers" && setIsMenuOpen(false);
               }}
             >
               <MenuItem>
@@ -282,14 +285,42 @@ const AdminNavbar = ({ setIsAdmin }) => {
             <Link
               href="/admin/reviews"
               className={`${styles.linkStyle} ${
-                adminroute === "reviews" ? styles.currentLink : ""
+                adminroute && adminroute[0] === "reviews" ? styles.currentLink : ""
               }`}
               onClick={() => {
-                adminroute !== "reviews" && setIsMenuOpen(false);
+                adminroute && adminroute[0] !== "reviews" && setIsMenuOpen(false);
               }}
             >
               <MenuItem>
                 <Typography variant="body1">Reviews</Typography>
+              </MenuItem>
+            </Link>
+
+            <Link
+              href="/admin/emails"
+              className={`${styles.linkStyle} ${
+                adminroute && adminroute[0] === "emails" ? styles.currentLink : ""
+              }`}
+              onClick={() => {
+                adminroute && adminroute[0] !== "emails" && setIsMenuOpen(false);
+              }}
+            >
+              <MenuItem>
+                <Typography variant="body1">Emails</Typography>
+              </MenuItem>
+            </Link>
+
+            <Link
+              href="/admin/datawiper"
+              className={`${styles.linkStyle} ${
+                adminroute && adminroute[0] === "datawiper" ? styles.currentLink : ""
+              }`}
+              onClick={() => {
+                adminroute && adminroute[0] !== "datawiper" && setIsMenuOpen(false);
+              }}
+            >
+              <MenuItem>
+                <Typography variant="body1">Data wiper</Typography>
               </MenuItem>
             </Link>
           </div>

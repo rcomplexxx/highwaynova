@@ -89,7 +89,7 @@ if(dataWipedTable && dataWipedTable!=="")return  <div className={styles.mainDiv}
     <div className={styles.mainDiv}>
         <h1>Data wiper</h1>
         <span className={styles.warning}>Warning! Dangerous operation. Once deleted, data can never be recovered again.</span>
-        <span className={styles.warning}>Admin verification required before operation can be initialized.</span>
+        <span className={styles.warning}>Admin verification required before operation can be executed.</span>
         {!verified?<form onSubmit={handleVerify} className={styles.loginBox}>
         <input type="text" placeholder="Username" ref={usernameRef} required />
         <input

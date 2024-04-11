@@ -11,6 +11,8 @@ export default function PageIndexButtons({ data, page, setPage }) {
   const getPageNumbersArray = useCallback(()=>{
    
       const max = Math.ceil(data.length / 10);
+
+      
       if(max<18) return Array.from({ length: Math.ceil(data.length / 10) }, (_, index) =>  index);
       else {
         console.log('act', page)
@@ -39,9 +41,9 @@ export default function PageIndexButtons({ data, page, setPage }) {
         </div>
       )}
       {getPageNumbersArray().map((pageNumber, i) =>
-        page === pageNumber+1 ? (
+        page === pageNumber ? (
           <span key={i} className={styles.linkDivPageNumber}>
-            <div className={styles.pageLink} onClick={() => setPage(pageNumber+1)}>
+            <div className={styles.pageLink}>
               {pageNumber+1}
             </div>
           </span>
@@ -49,7 +51,7 @@ export default function PageIndexButtons({ data, page, setPage }) {
           <div
             key={i}
             className={styles.linkDivPageNumber}
-            onClick={() => setPage(pageNumber+1)}
+            onClick={() => setPage(pageNumber)}
           >
             {pageNumber+1}
           </div>
@@ -60,7 +62,7 @@ export default function PageIndexButtons({ data, page, setPage }) {
           className={styles.linkDivPageNumber}
           onClick={() => setPage(page + 1)}
         >
-          {" "}
+          
           <span className={styles.arrowSpan}>
             <Image src={"/images/greater.svg"} alt="Black" fill />
           </span>

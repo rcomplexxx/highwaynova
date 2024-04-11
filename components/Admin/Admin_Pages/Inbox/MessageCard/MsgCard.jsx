@@ -9,6 +9,9 @@ export default function MessageCard({
   msgStatus,
   handleMsgStatusChange,
 }) {
+
+const [emailCopied, setEmailCopied] = useState(false);
+
   const changeMsgStatus = () => {
     msgStatus === "0"
       ? handleMsgStatusChange(id, "1")
@@ -22,13 +25,23 @@ export default function MessageCard({
       <div className={styles.mainInfo}>
       <h1 className={styles.identifier}>{id + 1}</h1>
       <div className={styles.infoPair}>
-         <p>Name</p>
-         <p>{name}</p>
+         <p className={styles.infoLabel}>Name</p>
+         <p className={styles.info}>{name}</p>
       </div>
       <div className={styles.infoPair}>
-         <p>Email</p>
-         <p>{email}</p>
+         <div className={styles.infoLabelWrapper}>
+          <p className={styles.infoLabel}>Email</p> 
+         <span onClick={()=>{
+          navigator.clipboard.writeText(email);
+          setEmailCopied(true);
+         }} className={styles.copySpan}>
+          {!emailCopied?'Click here to copy':'Email copied!'}</span></div>
+         <p className={styles.info}>{email}</p>
       </div>
+
+     
+
+   
       <button className={styles.msgStatusButton} onClick={changeMsgStatus}>
         {msgStatus === "0"
           ? "Not Answered"
