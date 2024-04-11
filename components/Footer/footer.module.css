@@ -85,17 +85,17 @@
 
 
   .subscribeInput:-webkit-autofill {
-    background-color: var(--bg-color);
-    -webkit-box-shadow: 0 0 0 30px var(--bg-color) inset !important;
-    -webkit-text-fill-color: var(--light-txt-color);
+    background-color: var(--footer-bg);
+    -webkit-box-shadow: 0 0 0 30px var(--footer-bg) inset !important;
+    -webkit-text-fill-color: var(--footer-txt-color);
    
   }
   
   /* For Firefox */
   .subscribeInput:-moz-autofill {
-    background-color: var(--bg-color);
-    -webkit-box-shadow: 0 0 0 30px var(--bg-color) inset !important;
-    -webkit-text-fill-color: var(--light-txt-color);
+    background-color: var(--footer-bg);
+    -webkit-box-shadow: 0 0 0 30px var(--footer-bg) inset !important;
+    -webkit-text-fill-color: var(--footer-txt-color);
   }
   
 

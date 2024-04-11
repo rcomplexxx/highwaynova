@@ -84,7 +84,7 @@ export default function RatingInfo({ratingData, openRatingInfo, setOpenRatingInf
               const rateNumber = ratingData[`stars${starNumber}`];
               const percentage= !openRatingInfo?0:rateNumber / sumOfAllReviews *100<1 && rateNumber !=0?1:rateNumber%1>0.4?Math.ceil(rateNumber / sumOfAllReviews *100):Math.floor(rateNumber / sumOfAllReviews *100);
 
-             return <RatingMetric percentage={percentage} rating={starNumber} rateNumber = {rateNumber}/>
+             return <RatingMetric key={starNumber} percentage={percentage} rating={starNumber} rateNumber = {rateNumber}/>
             })
 
           }
