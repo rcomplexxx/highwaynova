@@ -124,7 +124,7 @@ export default function PaymentSection({ checkFields, organizeUserData, setError
         onClick={(event)=>{if(!document.getElementById("moreCards")?.contains(event.target))setPaymentMethod("creditcard")}}>
            <div className={styles.pickOption}>
             <div className={`${styles.pickCheck} ${paymentMethod=="creditcard" && styles.pickCheckSelected}`}>
-                <div className={paymentMethod=="creditcard" && styles.ringEffectDiv}></div>
+                <div className={`${paymentMethod=="creditcard" && styles.ringEffectDiv}`}></div>
             </div>
             <span className={styles.optionSpan}>Credit Card</span>
            </div>
@@ -172,7 +172,7 @@ export default function PaymentSection({ checkFields, organizeUserData, setError
         <div className={`${styles.paymentOptionDiv} ${paymentMethod=="paypal" && styles.selectedOption}`} onClick={()=>{setPaymentMethod("paypal")}} >
            <div className={styles.pickOption}>
             <div className={`${styles.pickCheck} ${paymentMethod=="paypal" && styles.pickCheckSelected}`}>
-                <div className={paymentMethod=="paypal" && styles.ringEffectDiv}></div>
+                <div className={`${paymentMethod=="paypal" && styles.ringEffectDiv}`}></div>
             </div>
             <span>Paypal</span>
            </div>
