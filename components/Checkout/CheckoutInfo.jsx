@@ -16,10 +16,9 @@ import Image from "next/image";
 export default function CheckoutInfo({ products,  setCartProducts }) {
   const [showApt, setShowApt] = useState(false);
   const [errors, setErrors] = useState({});
-  const [emailSubscribe, setEmailSubscribe] = useState(false);
   // const [shippingType, setShippingType] = useState("free");
 
-  const {couponCode, tip} = useContext(CheckoutContext);
+  const {couponCode, tip, subscribe, setSubscribe} = useContext(CheckoutContext);
 
   useEffect(()=>{
    showApt && document.getElementById("apt").focus();
@@ -144,6 +143,7 @@ export default function CheckoutInfo({ products,  setCartProducts }) {
         city,
         phone,
         items:items ,
+        subscribe,
         couponCode: couponCode,
         tip: tip.toFixed(2)
       },
@@ -153,7 +153,7 @@ export default function CheckoutInfo({ products,  setCartProducts }) {
       // Include other payment-related data if required
     };
     return requestData
-  }, [couponCode, tip]);
+  }, [subscribe, couponCode, tip]);
 
  
 
@@ -180,13 +180,13 @@ export default function CheckoutInfo({ products,  setCartProducts }) {
 
 
 
-                <div className={styles.emailSubscribeDiv}  onClick={()=>{ setEmailSubscribe(!emailSubscribe);}}>
-      <div  className={styles.emailSubscribeChecker}>
-        {emailSubscribe && <Image src='/images/correctDark.svg' height={10} width={10}/>}
+                <div tabIndex={0} className={styles.emailSubscribeDiv} onClick={()=>{ setSubscribe(!subscribe);}}>
+      <div  className={`${styles.emailSubscribeChecker} ${subscribe && styles.emailSubscribeCheckerChecked}`}>
+       <Image src='/images/correctDark.svg' className={styles.checkImage} height={10} width={10}/>
       </div>
      
   
-      <span className={styles.emailSubscribeText}>
+      <span className={styles.subscribeText}>
      Email me with news and offers
     </span>
 

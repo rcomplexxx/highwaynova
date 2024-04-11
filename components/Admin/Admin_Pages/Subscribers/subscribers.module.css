@@ -38,8 +38,16 @@
 .subscribersRow{
     flex:1;
     display: flex;
+    flex-direction: column;
     justify-content: flex-start;
     flex-wrap: wrap;
+}
+
+.subscribePair{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid gray;
 }
 
 .identifier{
@@ -58,4 +66,10 @@
     
     padding: var(--size-3) var(--size-5);
     font-size: var(--font-size-5);
+}
+
+.source{
+    padding: var(--size-3) var(--size-5);
+    font-size: var(--font-size-3);
+    opacity: 0.7;
 }

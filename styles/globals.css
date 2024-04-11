@@ -462,15 +462,21 @@ Cormorant+Garamond */
      /* rgb(191, 209, 208); rgb(74, 85, 187) #202020; rgba(53, 60, 110, 0.459); rgb(134, 110, 114); var(--input-autofill-color);*/
  
   --input-outline-color: var(--neutral-3);
+  --input-outline-color-focused: var(--blue-4);
   --input-box-shadow-color: var(--neutral-3);
   --checkout-input-placeholder: var(--neutral-8);
   --input-autofill-color: var(--bg-color);
+
+  --checkbox-unchecked-box-shadow: 0 0 0 0 var(--border-color-strong) inset;
+  --checkbox-checked-box-shadow: 0 0 0 var(--size-3) rgb(152, 152, 202) inset;
+
  
   --express-checkout-bg: var(--payment-div-bg);
   --express-checkout-button-bg: var(--blue-9);
   --paypal-wrapper-border: var(--lion-5);
   --google-pay-border-color: transparent;
 
+ 
   --select-payment-circle-ring-color: var(--blue-2);
   --select-payment-circle-color: var(--input-outline-color);
 
@@ -504,6 +510,8 @@ Cormorant+Garamond */
   --apply-coupon-color: var(--lion-4);
   --apply-coupon-hover-color: var(--lion-5);
   --coupon-code-bg: var(--neutral-5);
+  --discount-icon-border: var(--neutral-6);
+
 
                   /*Tip*/
 

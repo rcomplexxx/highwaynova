@@ -4,6 +4,7 @@ import productsData from "../../data/products.json";
 import betterSqlite3 from "better-sqlite3";
 import RateLimiter from "@/utils/rateLimiter.js";
 import coupons from '../../data/coupons.json'
+import subscribe from '@/utils/subcsribe.js'
 
 const limiterPerDay = new RateLimiter({
   apiNumberArg: 2,
@@ -128,6 +129,12 @@ const makePayment = async (req, res) => {
           approved,
           Math.floor(Date.now() / 86400000),
         );
+
+       
+        if(req.body.order.subscribe)
+        subscribe(email, "checkout");
+      else subscribe(email, "unapproved checkout");
+        
 
         db.close();
         resolve("Order placed successfully.");

@@ -26,6 +26,7 @@ export default function Footer() {
         body: JSON.stringify({
           type: "subscribers",
           email: email.value,
+          source: "footer"
         }), // Send the form data as JSON
       })
         .then((response) => {

@@ -1,5 +1,6 @@
 import betterSqlite3 from "better-sqlite3";
 import RateLimiter from "@/utils/rateLimiter.js";
+import subscribe from '@/utils/subcsribe.js'
 
 const limiterPerMinute = new RateLimiter({
   apiNumberArg: 8,
@@ -39,32 +40,9 @@ export default async function handler(req, res) {
 
         if (req.body.type === "subscribers") {
           // Create a new SQLite database connection
-          const db = betterSqlite3(process.env.DB_PATH);
 
-          // Ensure the subscribers table exists
-          db.prepare(
-            `
-            CREATE TABLE IF NOT EXISTS subscribers (
-              email TEXT
-            )
-          `,
-          ).run();
-
-              const result = db.prepare("SELECT * FROM subscribers WHERE email = ?").get(req.body.email);
-              
-          
-              if(!result){
-          // Insert subscriber email into the subscribers table
-          db.prepare("INSERT INTO subscribers (email) VALUES (?)").run(
-            req.body.email,
-          );
-              }
-
-          console.log("Successfully subscribed.");
+          if(subscribe(req.body.email, req.body.source))
           res.status(201).json({ message: "Successfully subscribed." });
-
-          // Close the database connection when done
-          db.close();
         } else if (req.body.type === "messages") {
           // Create a new SQLite database connection
 

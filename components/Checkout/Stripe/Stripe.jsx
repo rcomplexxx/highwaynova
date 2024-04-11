@@ -246,22 +246,23 @@ const handleStripePay= async(event)=>{
               if(data.success) {
                
                
-               
+               console.log('pay success');
+               setPaymentProcessing(false);
                 router.push("/thank-you");
                   
                   
                 
              
               }
-              else{setPaymentProcessing(false);
+              else{setStripeError({stripeServerError: 'Error occured. Payment was not processed.'});setPaymentProcessing(false);
               //Ovde izbaci gresku
-              setStripeError('Error occured. Payment was not processed.')
+              setStripeError({stripeServerError: 'Error occured. Payment was not processed.'})
               }
   
           } catch (error) {
-            console.log(error)
+            console.log('error',error)
             setPaymentProcessing(false);
-            setStripeError('Error occured. Payment was not processed.')
+            setStripeError({stripeServerError: 'Error occured. Payment was not processed.'});
           }
       } else {
         console.log(transactionError)
@@ -409,11 +410,11 @@ const handleCCBlur= ()=>{
          error={errors.cardHolderName}
         />
       </div>
-      <div className={styles.billingCheckboxDiv}  onClick={()=>{setBillingAddressSameAsShipping(!billingAddressSameAsShipping)}}>
-      <div id="isShippingBilling" className={styles.addressTypeChecker} 
+      <div tabIndex={0} className={styles.billingCheckboxDiv} onClick={()=>{setBillingAddressSameAsShipping(!billingAddressSameAsShipping)}}>
+      <div id="isShippingBilling" className={`${styles.addressTypeChecker} ${billingAddressSameAsShipping && styles.addressTypeCheckerChecked}`} 
      
       >
-          {billingAddressSameAsShipping && <Image src='/images/correctDark.svg' height={10} width={10}/>}
+        <Image className={styles.addressCheckerImage} src='/images/correctDark.svg' height={10} width={10}/>
         </div>
       <span className={styles.billingCheckboxLabel}>
       Use shipping address as billing address
@@ -435,6 +436,7 @@ const handleCCBlur= ()=>{
     <button className={styles.payNowButton} onClick={handleStripePay}>{paymentProcessing?
     <Image src='/images/spinner.png' height={0} width={0} className={styles.spinner}/>
     :'Pay now'}</button>
+    {stripeError?.stripeServerError && <span className={styles.paymentError}>{stripeError.stripeServerError}</span>}
     </div>
   );
 };

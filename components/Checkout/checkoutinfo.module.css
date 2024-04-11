@@ -62,6 +62,8 @@
 
     height:  var(--size-5);
     width:  var(--size-5);
+   
+  
     display: flex;
     justify-content: center;
     align-items: center;
@@ -69,8 +71,33 @@
     border: 1px solid var(--input-outline-color);
     flex-shrink: 0;
 
+    box-shadow: var(--checkbox-unchecked-box-shadow);
+
+    transition: box-shadow 0.2s ease;
+
     margin-right: var(--size-3);
   }
+  
+
+  .emailSubscribeCheckerChecked{
+    box-shadow: var( --checkbox-checked-box-shadow);
+  }
+
+  .emailSubscribeDiv:focus .emailSubscribeChecker{
+    border: 1px solid var(--input-outline-color-focused);
+  }
+
+  .checkImage{
+    opacity: 0;
+    transition: opacity 0.2s ease;
+   
+  }
+
+  .emailSubscribeCheckerChecked .checkImage{
+    opacity: 1;
+  }
+
+ 
 
   .emailSubscribeText{
     color: var(--high-contrast-light-txt-color);

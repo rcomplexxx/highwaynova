@@ -14,7 +14,7 @@ const GooglePay = ({
   const [googlePayError, setGooglePayError] = useState();
 
 
-  const {subTotal, couponCode, discount, tip} = useContext(CheckoutContext);
+  const {subTotal, couponCode, discount, tip, subscribed} = useContext(CheckoutContext);
 
   const totalPrice = useMemo(()=>{
    return (subTotal - discount*subTotal/100 + parseFloat(tip)).toFixed(2)
@@ -73,10 +73,14 @@ const GooglePay = ({
           zipcode: paymentData.shippingAddress.postalCode,
           state: paymentData.shippingAddress.administrativeArea,
           city: paymentData.shippingAddress.locality,
+          
           phone: paymentData.shippingAddress.phoneNumber,
-          couponCode: couponCode,
-          tip:tip,
           items: items,
+          couponCode: couponCode,
+          
+          tip:tip,
+          subscribed: subscribed,
+          
         },
         paymentMethod: "GPAY",
         paymentToken: paymentToken,

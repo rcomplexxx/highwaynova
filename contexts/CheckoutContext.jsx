@@ -22,6 +22,7 @@ export const CheckoutContext = createContext({total:0,subTotal:0, couponCode:"",
     }
    
 
+    const [subscribe, setSubscribe] = useState(false);
     const [couponCode, setCouponCode] = useState('');
     const [tip, setTip]= useState(0);
 
@@ -95,7 +96,7 @@ export const CheckoutContext = createContext({total:0,subTotal:0, couponCode:"",
 
   
     return (
-      <CheckoutContext.Provider value={{ total,subTotal, couponCode, setAndValidateCouponCode, discount, tip, setTip }}>
+      <CheckoutContext.Provider value={{ total,subTotal, couponCode, setAndValidateCouponCode, discount, tip, setTip, subscribe, setSubscribe }}>
         {children}
       </CheckoutContext.Provider>
     );

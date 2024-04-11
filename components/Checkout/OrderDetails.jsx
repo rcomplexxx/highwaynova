@@ -172,7 +172,7 @@ const handleCouponApply = () => {
 
                 {couponCode &&
                   <div className={styles.mainCouponCode}> 
-                      <Image src='/images/discount7.png' className={styles.mainDiscountImg} height={16} width={16}/>
+                      <Image src='/images/discountIcon13.svg' className={styles.mainDiscountImg} height={18} width={18}/>
                       <span>{couponCode}</span>
                       <Image src='/images/cancelDark.png' onClick={(()=>{setAndValidateCouponCode("");})}
                        className={styles.discountCancelImage} height={16} width={16}/>
@@ -208,7 +208,7 @@ const handleCouponApply = () => {
 
                     <div className={`${styles.order_pair} ${styles.discountPair}`}>
                     <div className={styles.couponCodeDiv}>
-                        <Image src='/images/discount7.png' className={styles.discountImg} height={12} width={12}/>
+                        <Image src='/images/discountIconFaded.svg' className={styles.discountImg} height={16} width={16}/>
                         <span id="couponCode">{couponCode}</span>
                         </div>
                     <span id="discountPrice">- ${(subTotal*discount/100).toFixed(2)}</span>
@@ -240,7 +240,7 @@ const handleCouponApply = () => {
 
                   {couponCode &&
                   <div className={styles.totalDiscount}> 
-                      <Image src='/images/totalDiscount2.png' className={styles.totalDiscountImg} height={16} width={16}/>
+                      <Image src='/images/discountIconTotal5.svg' className={styles.totalDiscountImg} height={20} width={20}/>
                       <span className={styles.totalDiscountSpan}>Total savings</span><span className={styles.totalDiscountSpan}>${(subTotal*discount/100).toFixed(2)}</span>
                       
                       </div>

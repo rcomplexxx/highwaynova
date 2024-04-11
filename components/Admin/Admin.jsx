@@ -17,7 +17,7 @@ import DataWiper from "./Admin_Pages/DataWiper/DataWiper";
 export default function Admin() {
   const [isAdmin, setIsAdmin] = useState();
   const [triggerRender, setTriggerRender] = useState(false);
-  const [subscribers, setSubscribers] = useState("");
+  const [subscribers, setSubscribers] = useState([]);
 
   const [emailData, setEmailData] = useState({emails: [], campaigns: []});
 

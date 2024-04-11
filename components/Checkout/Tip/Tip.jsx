@@ -71,9 +71,9 @@ export default function Tip({products}){
     return <div className={styles.tipMainDiv}>
 
 
-<div className={styles.tipShowCheckboxDiv}  onClick={()=>{ setTipShow(!tipShow)}}>
-      <div  className={styles.tipShowChecker}>
-        {tipShow && <Image src='/images/correctDark.svg' height={10} width={10}/>}
+<div tabIndex={0} className={styles.tipShowCheckboxDiv}  onClick={()=>{ setTipShow(!tipShow)}}>
+      <div  className={`${styles.tipShowChecker} ${tipShow && styles.tipShowCheckerChecked}`}>
+     <Image className={styles.checkImage} src='/images/correctDark.svg' height={10} width={10}/>
       </div>
      
   
