@@ -107,6 +107,7 @@ export default function BestSellers( ) {
       
       },
     },
+    variableWidth: false,
     centeredSlides: false,
     loop: false,
   };
