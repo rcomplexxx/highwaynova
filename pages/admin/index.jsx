@@ -6,5 +6,5 @@ import Head from "next/head.js";
 const AdminDynamic = dynamic(() => import("../../components/Admin/Admin.jsx"));
 
 export default function AdminPage() {
-  return  <AdminDynamic />;
+  return <div style={{backgroundColor:"red"}}> <AdminDynamic /></div>;
 }

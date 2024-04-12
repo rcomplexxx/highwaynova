@@ -444,6 +444,7 @@ Cormorant+Garamond */
  --contact-input-color: transparent;
  --contact-input-outline: var(--neutral-3);
  --contact-input-outline-focused: var(--neutral-8); 
+ --contact-send-btn-outline: var(--neutral-10);
  /*#0c212b --input-color*/
 
 
