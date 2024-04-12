@@ -31,7 +31,7 @@ export default function Subscribers({ subscribers, setSubscribers }) {
 
     if (subscribers.length === 0)
     return (
-  <div>
+  <div className={styles.getButtonsWrapper}>
       <GetDataButton
         name="Subscribers"
         dataType={"get_subscribers"}

@@ -37,7 +37,7 @@ else{
 
 
       let queryString;
-      if (table === "orders" || table === "messages" || table==="subscribers") {
+      if (table === "orders" || table === "messages" || table==="subscribers" || table==='subscribersbh') {
         queryString = `SELECT ${selectVariables} FROM ${table} WHERE ${queryCondition}`;
       } 
       
@@ -352,6 +352,8 @@ else{
           ); //Doraditi za product_id===data.product_id
         else if (dataType === "get_subscribers")
           return getFromDb("subscribers");
+        else if(dataType === "get_subscribers_bh")
+        return getFromDb("subscribersbh");
           else if (dataType === "get_emails")
           {return getFromDb("emails");}
           else if (dataType === "get_email_campaigns")
