@@ -137,10 +137,16 @@
 
   
   .aptAdder{
-    color: var(--high-contrast-light-txt-color);
+    color: var(--apt-adder-color);
     margin: 0 var(--size-4);
+
+    transition: color 0.1s ease;
     user-select: none;
     cursor: pointer;
+  }
+
+  .aptAdder:hover{
+    color:var(--apt-adder-color-hover);
   }
  
  
