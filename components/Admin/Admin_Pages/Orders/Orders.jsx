@@ -65,22 +65,20 @@ export default function Orders({ data, setData }) {
             clearAfterDataSave={clearAfterDataSave}
           />
         ) : (
-          <>
+          <div className={styles.getButtonsWrapper}>
             <GetDataButton
               name="Fulfilled Orders"
-              secondStyle="firstButton"
               dataType={"get_fulfilled_orders"}
               setData={setData}
               initializeData={initializePackageStatusData}
             />
             <GetDataButton
               name="Unapproved Orders"
-              secondStyle="secButton"
               dataType={"get_unapproved_orders"}
               setData={setData}
               initializeData={initializePackageStatusData}
             />
-          </>
+          </div>
         )}
       </div>
       {data.length === 0 && (

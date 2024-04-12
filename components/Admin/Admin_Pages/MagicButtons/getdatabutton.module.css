@@ -2,6 +2,7 @@
 .magicButton{
     color: var(--admin-txt-color);
     background-color: transparent;
+    margin-top: var(--size-5);
     padding: var(--size-3) var(--size-6);
     border-radius: 2px;
     border: 1px solid var(--border-color-strong);
@@ -10,13 +11,13 @@
 }
 
 .secondStyle{
-    position:absolute;
+
     margin-top: var(--size-9);
     left: var(--size-5);
 }
 
 .secondStyleSecButton{
-    position:absolute;
+   
     left: var(--size-5);
     margin-top: 112px;
 }

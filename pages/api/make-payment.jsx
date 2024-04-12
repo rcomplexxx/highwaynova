@@ -133,7 +133,7 @@ const makePayment = async (req, res) => {
        
         if(req.body.order.subscribe)
         subscribe(email, "checkout");
-      else subscribe(email, "unapproved checkout");
+      else subscribe(email, "checkout x");
         
 
         db.close();

@@ -31,18 +31,21 @@ const AdminNavbar = ({ checkAdminStatus }) => {
   };
 
   return (
+    <div className={styles.adminMainDiv}>
     <div className={styles.centerLogin}>
-      <h1>Admin Login</h1>
+      <h1 className={styles.loginTitle}>Admin Login</h1>
       <form onSubmit={handleLogin} className={styles.loginBox}>
-        <input type="text" placeholder="Username" ref={usernameRef} required />
+        <input className={styles.loginInput} type="text" placeholder="Username" ref={usernameRef} required />
         <input
+        className={styles.loginInput} 
           type="password"
           placeholder="Password"
           ref={passwordRef}
           required
         />
-        <button type="submit">Login</button>
+        <button className={styles.loginButton}type="submit">Login</button>
       </form>
+    </div>
     </div>
   );
 };

@@ -1,5 +1,24 @@
+
+
+.adminMainDiv{
+    
+    min-height: 100vh;
+    min-width: 100%;
+    height: auto;
+   
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--admin-txt-color);
+    background-color: var(--gray-9-elegant);
+}
+
+.loginTitle{
+    color: var(--admin-txt-color);
+}
 .loginBox{
-    height: var(--size-10);
+    
+    width: var(--size-13);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -10,6 +29,44 @@
    
     margin-top: var(--size-7);
    
+}
+
+
+.loginInput{
+    color: rgb(225, 236, 238);
+    background-color: var(--email-input-bg);
+    
+    width: 100%;
+  
+    box-sizing: border-box;
+    padding: var(--size-3);
+    font-size: var(--font-size-3);
+    line-height: var(--size-7);
+   margin-top: var(--size-4);
+   border: 1px solid var(--border-color-strong);
+   border-radius: 8px;
+   outline: none;
+}
+
+.loginInput::placeholder{
+    font-size: var(--font-size-1);
+}
+
+.loginButton{
+    height: var(--size-7);
+    color: rgb(225, 236, 238);
+    background-color: var(--admin-login-btn-bg);
+
+    margin-top: var(--size-7);
+    padding: var(--size-3);
+    border-radius: 8px;
+   outline: none;
+   box-sizing: border-box;
+   border: 1px solid var(--border-color-strong);
+
+   cursor: pointer;
+   user-select: none;
+
 }
 
 @media(max-width: 980px){

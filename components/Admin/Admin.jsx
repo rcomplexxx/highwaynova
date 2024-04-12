@@ -141,7 +141,9 @@ export default function Admin() {
     checkAdminStatus();
   }, []); // The empty dependency array ensures this effect runs once when the component mounts
 
-  if (isAdmin === undefined) return <h2>Loading...</h2>;
+  if (isAdmin === undefined) return <div className={styles.adminMainDiv}>
+     <AdminNavbar setIsAdmin={setIsAdmin} />
+    <h1>Loading...</h1></div>;
 
   if (isAdmin) {
     const router = useRouter();

@@ -31,12 +31,22 @@ export default function Subscribers({ subscribers, setSubscribers }) {
 
     if (subscribers.length === 0)
     return (
+  <div>
       <GetDataButton
         name="Subscribers"
         dataType={"get_subscribers"}
         setData={() => {}}
         initializeData={initializeSubscribersData}
       />
+
+<GetDataButton
+      name="Subscribers bh"
+      dataType={"get_subscribers_bh"}
+      setData={() => {}}
+      initializeData={initializeSubscribersData}
+    />
+
+    </div>
     );
    
     console.log('subscr', subscribers)
