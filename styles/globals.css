@@ -471,8 +471,8 @@ Cormorant+Garamond */
   --checkbox-unchecked-box-shadow: 0 0 0 0 var(--border-color-strong) inset;
   --checkbox-checked-box-shadow: 0 0 0 var(--size-3) rgb(152, 152, 202) inset;
 
-  --apt-adder-color: var(--lion-5);
-  --apt-adder-color-hover: var(--lion-6);
+  --apt-adder-color: var(--lion-6);
+  --apt-adder-color-hover: var(--lion-7);
  
   --express-checkout-bg: var(--payment-div-bg);
   --express-checkout-button-bg: var(--blue-9);
