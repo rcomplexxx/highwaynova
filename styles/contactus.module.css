@@ -294,12 +294,13 @@ font-size: var(--font-size-1);
     align-self: flex-end;
     width: var(--size-11);
     height: var(--size-8);
-    border: none;
+    
     border-radius: 12px;
     color: var(--action-button-txt-color);
     background-color: var(--action-button-bg-color);
  
-    outline: 1px solid var(--contact-send-btn-outline);
+    box-sizing: border-box;
+    border: 1px solid var(--contact-send-btn-outline);
 
     margin: var(--size-6) var(--size-1);
     margin-bottom: 40px;
