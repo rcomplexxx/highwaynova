@@ -1,4 +1,5 @@
 import GetDataButton from "../MagicButtons/GetDataButton";
+import DismissListButton from "./DismissListButton/DismissListButton";
 import styles from "./subscribers.module.css";
 import { useState } from "react";
 
@@ -53,7 +54,7 @@ export default function Subscribers({ subscribers, setSubscribers }) {
 
     const subscribersLength = subscribers.length;
     
-    return subscribers?.map((subscriber,index)=>{
+    return <><DismissListButton setSubscribers={setSubscribers}/>{subscribers?.map((subscriber,index)=>{
       if((index)%5==0){
         return <div className={styles.subscribersRowWrapper}>
         <h1 className={styles.identifier}>{index==0?index:index/5}</h1>
@@ -67,7 +68,7 @@ export default function Subscribers({ subscribers, setSubscribers }) {
         </div>
       </div>
       }
-    })
+    })}</>
 
      
 
@@ -79,7 +80,9 @@ export default function Subscribers({ subscribers, setSubscribers }) {
       <h1>Subscribers</h1>
 
       <div className={styles.subscribersWrapper}>
+       
       <div className={styles.subscribersMain}>
+      
       {renderEmailList()}
       </div>
       </div>
