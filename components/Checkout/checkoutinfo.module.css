@@ -84,7 +84,7 @@
   }
 
   .emailSubscribeDiv:focus .emailSubscribeChecker{
-    border: 1px solid var(--input-outline-color-focused);
+    border: 1px solid var(--checkbox-checked-bg-color);
   }
 
   .checkImage{

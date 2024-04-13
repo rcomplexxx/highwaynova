@@ -18,9 +18,8 @@
 
   .countryFocused{
    
-      outline: none !important;
      border:none;
-    box-shadow: 0 0 6px var(--input-box-shadow-color) !important;
+     outline: 2px solid var(--input-outline-color-focused) !important;
    
   }
 
@@ -68,7 +67,7 @@
 
     .input_error{
       border: none;
-      box-shadow: 0 0 4px var(--error-box-shadow-color);
+      outline: 1px solid var(--error-box-shadow-color);
     }
     
 

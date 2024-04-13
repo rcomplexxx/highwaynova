@@ -119,8 +119,10 @@
     width:  var(--size-10);
     background-color: var(--apply-coupon-color);
     border-radius: 4px;
-    border: 1px solid var(--input-box-shadow-color);
+    border: none;
+    outline: 1px solid var(--apply-outline-color);
     margin-left: var(--size-3);
+    font-size: var(--font-size-3);
     
   }
   
@@ -257,14 +259,14 @@
   }
 
   .coupon_code_input_error{
-    box-shadow: 0 0 2px var(--error-box-shadow-color);
+    outline: 1px solid var(--error-box-shadow-color);
    
   }
 
   .coupon_code_input:focus { 
     
-    outline: solid 1px  var(--input-box-shadow-color);
-    box-shadow: 0 0 6px var(--input-box-shadow-color);
+    outline: solid 2px var(--input-outline-color-focused);
+   
 }
 
 .couponError{

@@ -25,15 +25,14 @@
       border-radius: 2px;
       align-self: center;
       box-sizing: border-box;
-      outline: solid 1px var( --input-outline-color);
+      outline: solid 2px var(--input-outline-color);
       font-size: var(--font-size-2);
     }
     
   
     .input_field:focus { 
       outline: none !important;
-      border-color: var(--input-box-shadow-color);
-      box-shadow: 0 0 6px var(--input-box-shadow-color);
+      border-color: var(--input-outline-color-focused);
   }
   
   
@@ -64,7 +63,7 @@
    
     .input_error{
       border: none;
-      box-shadow: 0 0 4px var(--error-box-shadow-color);
+      outline: 1px solid var(--error-box-shadow-color);
     }
 
     .error{

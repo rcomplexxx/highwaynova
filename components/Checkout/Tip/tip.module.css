@@ -54,7 +54,7 @@
 }
 
 .tipShowCheckboxDiv:focus .tipShowChecker{
-  border: 1px solid var(--input-outline-color-focused);
+  border: 1px solid var(--checkbox-checked-bg-color);
 }
 
 
@@ -218,8 +218,7 @@
 
   
     .customTipInput:focus { 
-      outline: solid 1px var(--input-box-shadow-color);
-      box-shadow: 0 0 6px var(--input-box-shadow-color);
+      outline: solid 2px var(--input-outline-color-focused);
       
   }
   
@@ -304,6 +303,9 @@
     box-sizing: border-box;
     border: 1px solid var(--border-color-mid);
     padding: 0 var(--size-5);
+
+    border: none;
+    outline: 1px solid var( --add-tip-outline);
     transition: background-color 0.1s ease;
     cursor: pointer;
     user-select: none;

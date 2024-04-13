@@ -1,8 +1,13 @@
 
 
 
+/*Ovako je postavljena margin-left, padding i width da bi popravilo glitch
+gde je input outline sa strane isecen kada se max height podize*/
 .billingAddressWrapper{
-   
+    width: calc(100% + var(--size-7));
+    box-sizing: border-box;
+    padding: 0 var(--size-5);
+    margin-left: calc(-1 * var(--size-5));
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.5s ease;

@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from 'react'
 import Image from "next/image";
 import styles from './fullscreenreview.module.css';
 import StarRatings from 'react-star-ratings';
+import ReactHtmlParser from "react-html-parser";
+    
 
 export default function FullScreenReview({authorName, text, stars, imageSrc, setFullScreenReview}) {
     const [imageLoaded, setImageLoaded] = useState();
@@ -151,7 +153,7 @@ ${(imageSrc?imageLoaded:true) && styles.spawnFullScreenReview}`}>
         />
 
         <div className={styles.reviewText}>
-        {text}
+        {ReactHtmlParser(text)}
         </div>
 
         

@@ -325,8 +325,8 @@ Cormorant+Garamond */
  /*~ Home page ~*/
 
 
-
- --shop-now-hero-button-bg: var(--blue-9);
+ --shop-now-hero-button-color: var(--neutral-1);
+ --shop-now-hero-button-bg: var(--blue-8);
  --shop-now-hero-button-box-shadow: 0 2px 6px var(--neutral-9);
  --hero-image-border-bottom-color: var(--blue-2);
 
@@ -463,8 +463,8 @@ Cormorant+Garamond */
      /* rgb(191, 209, 208); rgb(74, 85, 187) #202020; rgba(53, 60, 110, 0.459); rgb(134, 110, 114); var(--input-autofill-color);*/
  
   --input-outline-color: var(--neutral-3);
-  --input-outline-color-focused: var(--blue-4);
-  --input-box-shadow-color: var(--neutral-3);
+  --checkbox-checked-bg-color: var(--blue-4);
+  --input-outline-color-focused: var(--neutral-3);
   --checkout-input-placeholder: var(--neutral-8);
   --input-autofill-color: var(--bg-color);
 
@@ -509,7 +509,7 @@ Cormorant+Garamond */
   --checkout-order-summery-bg: var(--blue-2);
   --checkout-order-summery-bg-light: var(--blue-2);
 
- 
+  --apply-outline-color: var(--lion-7);
   --apply-coupon-color: var(--lion-4);
   --apply-coupon-hover-color: var(--lion-5);
   --coupon-code-bg: var(--neutral-5);
@@ -520,6 +520,7 @@ Cormorant+Garamond */
 
 
   --tip-selected: var(--blue-5);
+  --add-tip-outline: var(--lion-7);
   --add-tip-button-disabled-txt-color: var(--neutral-9);
   --add-tip-button-disabled: var(--neutral-3);
   --tip-thank-you-txt-color: var(--high-contrast-light-txt-color);

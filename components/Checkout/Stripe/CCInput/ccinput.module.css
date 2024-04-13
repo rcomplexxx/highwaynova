@@ -37,8 +37,7 @@
  
   
     .input_field:focus { 
-      outline: var(--input-box-shadow-color);
-      box-shadow: 0 0 6px var(--input-box-shadow-color);
+      outline: 2px solid var(--input-outline-color-focused);
   }
   
   
@@ -94,7 +93,7 @@
    
     .input_error{
       border: none;
-      box-shadow: 0 0 4px var(--error-box-shadow-color);
+      outline: 1px solid var(--error-box-shadow-color);
     }
 
     .error{

@@ -5,17 +5,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 .couponError{
     color: rgb(179, 30, 54);
     margin-top: 6px;
@@ -58,19 +47,18 @@
           border-radius: 2px;
           align-self: center;
           box-sizing: border-box;
-          outline: solid 1px var( --input-outline-color);
+          outline: solid 1px var(--input-outline-color);
         
           font-size: var(--font-size-2);
       }
     
       .coupon_code_input_error{
-        box-shadow: 0 0 2px var(--error-box-shadow-color);
+        outline: 1px solid var(--error-box-shadow-color);
       }
     
       .coupon_code_input:focus { 
-        outline: none !important;
-        border-color: var(--input-box-shadow-color);
-        box-shadow: 0 0 6px var(--input-box-shadow-color);
+        border: none;
+        outline: solid 2px var(--input-outline-color-focused);
     }
 
     .coupon_code_input:focus + .myLabel,
@@ -103,7 +91,7 @@
     width:  var(--size-10);
     background-color: var(--apply-coupon-color);
     border-radius: 4px;
-    border: 1px solid var(--input-box-shadow-color);
+    border: 1px solid var(--input-outline-color-focused);
     margin-left: var(--size-3);
     
   }

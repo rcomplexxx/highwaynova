@@ -137,14 +137,13 @@
 
     .stripeFieldFocused { 
 
-     
-      box-shadow: 0 0 6px var(--input-box-shadow-color) !important;
+      outline: 2px solid var(--input-outline-color-focused) !important;
+  
   }
   
     .input_field:focus { 
-      outline: none;
-      border-color: var(--input-box-shadow-color);
-      box-shadow: 0 0 6px var(--input-box-shadow-color);
+      outline: 2px solid var(--input-outline-color-focused) !important;
+      border:none;
   }
   
 
@@ -155,7 +154,7 @@
    
     .input_error{
       border: none;
-      box-shadow: 0 0 4px var(--error-box-shadow-color);
+      outline: 1px solid var(--error-box-shadow-color);
     }
 
     .error{
@@ -227,7 +226,7 @@
      
   }
   .billingCheckboxDiv:focus .addressTypeChecker{
-    border: 1px solid var(--input-outline-color-focused);
+    border: 1px solid var(--checkbox-checked-bg-color);
   }
 
   .addressTypeCheckerChecked{

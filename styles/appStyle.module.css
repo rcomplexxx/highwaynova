@@ -6,7 +6,7 @@
     justify-content: center;
     align-items: center;
     text-decoration: none;
-    color:rgb(218, 205, 181);
+    color:var(--shop-now-hero-button-color);
     background-color:var(--shop-now-hero-button-bg);
     border-radius: 4px;
      width:var(--size-11-5);
