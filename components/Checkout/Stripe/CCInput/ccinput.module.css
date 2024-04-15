@@ -93,7 +93,7 @@
    
     .input_error{
       border: none;
-      outline: 1px solid var(--error-box-shadow-color);
+      outline: 2px solid var(--error-box-shadow-color);
     }
 
     .error{

@@ -185,13 +185,13 @@
   
     .customTipInput {
       width: 100%;
-      height: 40px;
+      height: 48px;
      
       background-color: var(--input-color);
       color: var(--high-contrast-light-txt-color);
       padding: var(--size-3);
       padding-left: var(--size-6);
-      padding-top: 22px;
+      padding-top: 24px;
       border-radius: 2px;
       align-self: center;
       box-sizing: border-box;
@@ -224,7 +224,7 @@
   
   .dollarSign{
     position: absolute;
-    top: 18px;
+    top: 23px;
     left: var(--size-3);
     font-size: var(--font-size-2);
     opacity: 0;
@@ -240,7 +240,7 @@
       color: var(--checkout-input-placeholder);
       position: absolute;
       left: var(--size-3);
-      top: var(--size-4);
+      top: 14px;
       transition: all 0.3s ease;
       pointer-events: none;
       opacity: 0.7;
@@ -285,7 +285,7 @@
     .customTipInput:focus ~ .label,
     .customTipInput:not(:placeholder-shown) ~ .label {
       opacity: 0.9;
-    top: 3px;
+    top: 8px;
     font-size: var(--font-size-1);
     
   }
@@ -295,7 +295,7 @@
   .addTip{
     color: var( --action-button-txt-color);
     background-color: var(--action-button-bg-color);
-    height: 40px;
+    height: 48px;
     display: flex;
     justify-content: center;
     align-items: center;

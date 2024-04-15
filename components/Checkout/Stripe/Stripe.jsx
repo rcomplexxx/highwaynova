@@ -318,7 +318,7 @@ const handleCCBlur= ()=>{
       base: {
         color: getInputColor(),
         backgroundColor:getInputBgColor(),
-        lineHeight:"52px",
+        lineHeight:"64px",
       },
     
      
@@ -353,7 +353,7 @@ const handleCCBlur= ()=>{
         base: {
           color: getInputColor(),
           backgroundColor:getInputBgColor(),
-          lineHeight:"52px",
+          lineHeight:"64px",
         },
         invalid: {
           color: getInputColor()
@@ -378,7 +378,7 @@ const handleCCBlur= ()=>{
     base: {
       color: getInputColor(),
       backgroundColor: getInputBgColor(),
-      lineHeight:"52px",
+      lineHeight:"64px",
     },
     invalid: {
       color: getInputColor()

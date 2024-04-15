@@ -14,11 +14,12 @@ const GooglePay = ({
   const [googlePayError, setGooglePayError] = useState();
 
 
-  const {subTotal, couponCode, discount, tip, subscribed} = useContext(CheckoutContext);
+  const {subscribed, subTotal, discount, tip} = useContext(CheckoutContext);
 
   const totalPrice = useMemo(()=>{
-   return (subTotal - discount*subTotal/100 + parseFloat(tip)).toFixed(2)
-}, [subTotal, discount, tip]);
+    return (subTotal - discount*subTotal/100 + parseFloat(tip)).toFixed(2)
+ }, [subTotal, discount, tip]);
+ 
 
   const router = useRouter();
 
@@ -62,6 +63,18 @@ const GooglePay = ({
         firstName = name;
       }
 
+      const discEle = document.getElementById("couponCode");
+      const disc = discEle?discEle.innerText:"";
+    
+
+      const tipEl = document.getElementById("tipPrice");
+      const tip = tipEl?tipEl.innerText.split("$")[1]:"0.00"
+     
+      //document.getElementById('emailSubscribed')
+
+      const totalPrice =  parseFloat(document.getElementById('totalPrice').innerText.split('$')[1]).toFixed(2);
+
+      console.log('cr op',window?.getComputedStyle(document.getElementById('subscribeCorrectImage'))?.opacity );
       const requestData = {
         order: {
           email: paymentData.email,
@@ -76,10 +89,10 @@ const GooglePay = ({
           
           phone: paymentData.shippingAddress.phoneNumber,
           items: items,
-          couponCode: couponCode,
+          couponCode: disc,
           
           tip:tip,
-          subscribed: subscribed,
+          subscribed: window?.getComputedStyle(document.getElementById('subscribeCorrectImage'))?.opacity == '1',
           
         },
         paymentMethod: "GPAY",
@@ -88,7 +101,7 @@ const GooglePay = ({
         // Include other payment-related data if required
       };
 
-      const requestDataFinal = { ...requestData, amount: parseFloat(totalPrice).toFixed(2) };
+      const requestDataFinal = { ...requestData, amount:totalPrice };
 
       console.log("mydata", requestData);
       return await fetch("/api/make-payment", {

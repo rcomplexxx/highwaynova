@@ -53,7 +53,7 @@
       }
     
       .coupon_code_input_error{
-        outline: 1px solid var(--error-box-shadow-color);
+        outline: 2px solid var(--error-box-shadow-color);
       }
     
       .coupon_code_input:focus { 

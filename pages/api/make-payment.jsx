@@ -218,7 +218,7 @@ const makePayment = async (req, res) => {
     // }
     // await putInDatabase('GPAY',response.result.id);
  
-    
+   
     const amount= req.body.amount;
     
     if(amount!= totalPrice)
@@ -263,6 +263,8 @@ const makePayment = async (req, res) => {
 
 
   }
+
+  //check amount?
   else if(req.body.paymentMethod==='STRIPE'){
    
     // stripeId amount totalPrice

@@ -182,7 +182,7 @@ export default function CheckoutInfo({ products,  setCartProducts }) {
 
                 <div tabIndex={0} className={styles.emailSubscribeDiv} onClick={()=>{ setSubscribe(!subscribe);}}>
       <div  className={`${styles.emailSubscribeChecker} ${subscribe && styles.emailSubscribeCheckerChecked}`}>
-       <Image src='/images/correctDark.svg' className={styles.checkImage} height={10} width={10}/>
+       <Image id='subscribeCorrectImage' src='/images/correctDark.svg' className={styles.checkImage} height={10} width={10}/>
       </div>
      
   
