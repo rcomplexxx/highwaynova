@@ -101,8 +101,8 @@
     
     margin-top: var(--size-7);
     margin-bottom: var(--size-3);
-    background-color: var(--main-button-color);
-    color:  var(--high-contrast-light-txt-color);
+    background-color: var(--main-button-bg);
+    color: var(--main-button-color);
     font-size: var(--font-size-3);
     font-weight: 600;
     cursor: pointer;

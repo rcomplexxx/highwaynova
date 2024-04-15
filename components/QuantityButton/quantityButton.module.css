@@ -79,7 +79,7 @@
     min-width: 0;
     height: var(--size-8);
     flex-grow: 1;
-    color: var(--high-contrast-light-txt-color);
+    color: var(--quantity-input-color);
     
     background-color: var(--quantity-input-bg);
     

@@ -112,7 +112,7 @@
 
 .contactInput{
 
-    height: 40px;
+    height: 48px;
     width: 100%;
     
     color: var(--high-contrast-light-txt-color);
@@ -137,7 +137,7 @@
 
 
 .contactInput:focus{
-    outline: 1px solid var(--contact-input-outline-focused);
+    outline: 2px solid var(--contact-input-outline-focused);
 
 }
 
@@ -148,7 +148,7 @@
     -webkit-text-fill-color: var(--high-contrast-light-txt-color) !important;
     
     padding: var(--size-3);
-    padding-top: 22px;
+    padding-top: 24px;
 
   
   }
@@ -160,7 +160,7 @@
     -webkit-text-fill-color: var(--high-contrast-light-txt-color) !important;
     
     padding: var(--size-3);
-    padding-top: 22px;
+    padding-top: 24px;
   
   }
   
@@ -173,7 +173,7 @@
     color: var(--checkout-input-placeholder);
     position: absolute;
     left: var(--size-3);
-    top: calc(50% - var(--size-3));
+    top: calc(50% - 10px);
 
    
 
@@ -189,7 +189,7 @@
 .contactInput:focus + .inputGroupLabel,
 .contactInput:not(:placeholder-shown) + .inputGroupLabel {
   opacity: 0.9;
-top: 2px;
+top: 6px;
 font-size: var(--font-size-1);
 
 }
@@ -231,7 +231,7 @@ font-size: var(--font-size-1);
     font-size: var(--font-size-3);
     box-sizing: border-box;
     padding: var(--size-3);
-    padding-top: var(--size-6);
+    padding-top: 22px;
     outline: 1px solid var(--contact-input-outline);
 }
 
@@ -240,7 +240,7 @@ font-size: var(--font-size-1);
 }
 
 .messageTextArea:focus{
-    outline: 1px solid var(--contact-input-outline-focused);
+    outline: 2px solid var(--contact-input-outline-focused);
 }
 
 
@@ -256,7 +256,7 @@ font-size: var(--font-size-1);
     color: var(--checkout-input-placeholder);
     position: absolute;
     left: var(--size-3);
-    top: var(--size-5);
+    top: var(--size-4);
 
    
 
@@ -272,7 +272,7 @@ font-size: var(--font-size-1);
   .messageTextArea:focus + .messageText,
   .messageTextArea:not(:placeholder-shown) + .messageText {
   opacity: 0.9;
-top: 12px;
+top: 10px;
 font-size: var(--font-size-1);
 
 }
@@ -303,7 +303,7 @@ font-size: var(--font-size-1);
     border: 1px solid var(--contact-send-btn-outline);
 
     margin: var(--size-6) var(--size-1);
-    margin-bottom: 40px;
+    margin-bottom: 48px;
     font-size: var(--font-size-4);
     cursor: pointer;
 }

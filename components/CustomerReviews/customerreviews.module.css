@@ -58,7 +58,7 @@
 
  column-count: 4;
  column-gap: var(--size-5);
- contain: content;
+ contain:layout;
 
  
  user-select: none;

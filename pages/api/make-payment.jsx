@@ -146,10 +146,10 @@ const makePayment = async (req, res) => {
   };
 
   try {
-    // const clientIp = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
+    const clientIp = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
 
-    // if (!(await limiterPerDay.rateLimiterGate(clientIp)))
-    //   return res.status(429).json({ error: "Too many requests." });
+    if (!(await limiterPerDay.rateLimiterGate(clientIp)))
+      return res.status(429).json({ error: "Too many requests." });
     console.log('ITEMS', req.body.order.items)
     let totalPrice = req.body.order.items
       .reduce((sum, product) => {

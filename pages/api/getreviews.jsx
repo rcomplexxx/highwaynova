@@ -3,7 +3,7 @@ import RateLimiter from "@/utils/rateLimiter.js";
 
 const limiterPerDay = new RateLimiter({
   apiNumberArg: 7,
-  tokenNumberArg: 25,
+  tokenNumberArg: 35,
   expireDurationArg: 1800, //secs
 });
 

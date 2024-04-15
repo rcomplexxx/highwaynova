@@ -93,7 +93,7 @@
 
 .contactInput{
   
-    height: 40px;
+    height: 48px;
     width: 100%;
    
     color: var(--high-contrast-light-txt-color);
@@ -115,7 +115,7 @@
 
 
 .contactInput:focus{
-    outline: 1px solid var(--contact-input-outline-focus);
+    outline: 2px solid var(--contact-input-outline-focused);
 }
 
 
@@ -126,7 +126,7 @@
     -webkit-text-fill-color: var(--high-contrast-light-txt-color) !important;
     
     padding: var(--size-3);
-    padding-top: 22px;
+    padding-top: 24px;
   
   
   }
@@ -138,7 +138,7 @@
     -webkit-text-fill-color: var(--high-contrast-light-txt-color) !important;
     
     padding: var(--size-3);
-    padding-top: 22px;
+    padding-top: 24px;
   
   }
   
@@ -152,7 +152,7 @@
     color: var(--checkout-input-placeholder);
     position: absolute;
     left: var(--size-3);
-    top: calc(50% - var(--size-3));
+    top: calc(50% - 10px);
 
    
 
@@ -171,7 +171,7 @@
 .contactInput:focus + .inputGroupLabel,
 .contactInput:not(:placeholder-shown) + .inputGroupLabel {
   opacity: 0.9;
-top: 2px;
+top: 6px;
 font-size: var(--font-size-1);
 
 }
@@ -229,7 +229,7 @@ font-size: var(--font-size-1);
     font-size: var(--font-size-3);
     box-sizing: border-box;
     padding: 0 var(--size-3);
-    padding-top: var(--size-6);
+    padding-top: 22px;
     outline: 1px solid var(--contact-input-outline);
 }
 
@@ -238,7 +238,7 @@ font-size: var(--font-size-1);
 }
 
 .messageTextArea:focus{
-    outline: 1px solid var(--contact-input-outline-focus);
+    outline: 2px solid var(--contact-input-outline-focused);
 }
 
 
@@ -263,7 +263,7 @@ font-size: var(--font-size-1);
   .messageTextArea:focus + .messageText,
   .messageTextArea:not(:placeholder-shown) + .messageText {
   opacity: 0.9;
-top: 8px;
+top: 6px;
 font-size: var(--font-size-1);
 
 }

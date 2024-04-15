@@ -41,7 +41,7 @@
       height: var(--size-8);
       min-width: var(--size-13);
       
-      background-color: var(--main-button-color);
+      color: var(--main-button-color);
      
       border-radius: 4px;
       border: none;

@@ -297,7 +297,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    color: var(--light-txt-color);
+    color: var(--cart-button-items-number-color);
     background-color: var(--cart-button-items-number-bg);
    
     border-radius: 100%;

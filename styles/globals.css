@@ -189,39 +189,39 @@ Cormorant+Garamond */
   */
 
   --test: #171425;
-  --blue-0: #EEF2FB;
-  --blue-1: #DEE5F8;
-  --blue-2: #BCCCF0;
-  --blue-3: #8AA5E5;
-  --blue-4: #587FDA;
-  --blue-5: #2b59c3;
-  --blue-6: #214497;
-  --blue-7: #162E64;
-  --blue-8: #0B1732;
-  --blue-9: #040811;
+  --blue-0: #000000;
+  --blue-1: #2d2b1c;
+  --blue-2: #5a5538;
+  --blue-3: #888053;
+  --blue-4: #b5aa6f;
+  --blue-5: #e2d58b;
+  --blue-6: #e5d997;
+  --blue-7: #eee6b9;
+  --blue-8: #f6f2dc;
+  --blue-9: #fcfbf3;
 
 
-  --lion-1: #DDD2BB;
-  --lion-2: #D0C09F;
-  --lion-3: #C2AE84;
-  --lion-4: #B49A67;
-  --lion-5: #897243;
-  --lion-6: #604F2F;
-  --lion-7: #372D1B;
+  --lion-1: #000c12;
+  --lion-2: #001f2e;
+  --lion-3: #003149;
+  --lion-4: #003d5b;
+  --lion-5: #33647c;
+  --lion-6: #809ead;
+  --lion-7: #ccd8de;
 
 
-  --neutral-0: #EBECE9; /*#F5F6F4;*/
-  --neutral-0-5: #E1E3DE;
-  --neutral-1: #D7DAD3;  
-  --neutral-2: #B9BEB1;
-  --neutral-3: #A5AB9B;
-  --neutral-4: #919985;
-  --neutral-5: #7D856F;
-  --neutral-6: #5E6454;
-  --neutral-7: #4B5043;
-  --neutral-8: #34382E;
-  --neutral-9: #1F211C;
-  --neutral-10: #0A0B09;
+  --neutral-0: #1A1211; /*#F5F6F4;*/
+  --neutral-0-5: #1A1211; /*#f2e7e5*/
+  --neutral-1: #332522;  
+  --neutral-2: #553E39;
+  --neutral-3: #6F5049;
+  --neutral-4: #88625A;
+  --neutral-5: #aa7b71;
+  --neutral-6: #bd897e;
+  --neutral-7: #caa198;
+  --neutral-8: #d7b8b2;
+  --neutral-9: #e5d0cb;
+  --neutral-10: #f8f3f2;
 
 
 
@@ -259,22 +259,24 @@ Cormorant+Garamond */
   --high-contrast-light-txt-color: var(--neutral-10);
   --light-txt-color: var(--neutral-9);
   --weak-txt-color: var(--neutral-8);
-  --bg-color: 	var(--neutral-0); /*hsl(81, 7%, 92%)*/
+  --bg-color: 	var(--blue-0); /*hsl(81, 7%, 92%)*/
   --dim-bg: rgba(0, 0, 0, 0.5);
   --surround-cancel-bg: var(--lion-4);
   --surround-cancel-bg-hover: var(--lion-3);
   /*#e5e5e6   rgba(50, 50, 50, 0.7)*/
 
-  --main-button-color: var(--blue-4);
+  --main-button-color: var(--neutral-0);
+  --main-button-bg: var(--blue-4);
   --main-button-hover-color: var(--blue-5);
-  --main-light-color: #989898;
-  --main-dark-color: #323232;
+
+  /* --main-light-color: #989898;
+  --main-dark-color: #323232; */
 
 
  
-  --action-button-txt-color: var(--neutral-10);
+  --action-button-txt-color: var(--blue-9);
   --action-button-bg-color: var(--lion-4);
-  --action-button-bg-color-hover:var(--lion-5);
+  --action-button-bg-color-hover:var(--lion-3);
   /* txt-Alt:white; bg-Alt #202020 */
 
  
@@ -284,9 +286,9 @@ Cormorant+Garamond */
   --error-color: red;
   --error-box-shadow-color: rgb(158, 49, 6);
 
-  --border-color-weak: var(--neutral-2);
-  --border-color-mid: var(--neutral-4);
-  --border-color-strong: var(--neutral-5);
+  --border-color-weak: var(--neutral-1);
+  --border-color-mid: var(--neutral-2);
+  --border-color-strong: var(--neutral-3);
 
 
 
@@ -295,29 +297,30 @@ Cormorant+Garamond */
 
   --nav-site-title-color: var(--blue-4);
   --nav-txt-color: var(--light-txt-color);
-  --navbar-bg: var(--lion-1);
-  --nav-bottom-border-color: var(--blue-2);
+  --navbar-bg: var(--blue-0);
+  --nav-bottom-border-color: transparent;
 
 
-  --search-bg: var(--blue-1);
+  --search-bg: transparent;
   --nav-links-color: var(--lion-7);
-  --navbar-current-link-color: var(--blue-5);
-  --nav-select-search-link-color:var(--blue-0);
+  --navbar-current-link-color: var(--blue-4);
+  --nav-select-search-link-color:var(--blue-1);
 
   --popcart-bg: var(--navbar-bg);
-  --cart-button-items-number-bg: var(--blue-3);
+  --cart-button-items-number-color: var(--blue-0);
+  --cart-button-items-number-bg: var(--blue-4);
   --checkout-button-border: var(--lion-5);
 
 
 
    /*~ Footer ~*/
 
-   --footer-bg: var(--blue-9);
-   --footer-title-color: var(--neutral-0);
-  --footer-txt-color: var(--neutral-2);
-  --footer-link-active-color: var(--neutral-2);
+   --footer-bg: var(--blue-0);
+   --footer-title-color: var(--neutral-10);
+  --footer-txt-color: var(--neutral-9);
+  --footer-link-active-color: var(--neutral-9);
   --footer-email-placeholder-color: var(--neutral-5);
-  --footer-subscribe-input-txt-color: var(--neutral-0);
+  --footer-subscribe-input-txt-color: var(--neutral-9);
   --subscribe-input-border: var(--lion-5);
   --action-button-footer-txt-color: var(--blue-9);
   --action-button-hover-footer-txt-color: var(--high-contrast-light-txt-color);
@@ -330,9 +333,9 @@ Cormorant+Garamond */
  --shop-now-hero-button-box-shadow: 0 2px 6px var(--neutral-9);
  --hero-image-border-bottom-color: var(--blue-2);
 
-  --home-review-color: var(--neutral-2);
+  --home-review-color: var(--lion-1);
    /*#081522*/
-  --home-review-box-shadow: 0px 4px 8px var(--neutral-5), 0px 2px 4px var(--neutral-5);
+  --home-review-box-shadow: 0px 1px 2px var(--neutral-1);
   /*  0px 2px 6px #1b1e22;*/
   --star-home-review-color: #f7df48;
 
@@ -356,6 +359,7 @@ Cormorant+Garamond */
 
  --selected-product-image-border:var(--blue-8);
  --mini-slider-arrow-bg:var(--neutral-5);
+ --quantity-input-color: var(--blue-0);
  --quantity-input-bg: var(--blue-3);
  --quantity-button-border: var(--neutral-6);
  --quantity-button-hover: var(--lion-2);
@@ -443,7 +447,7 @@ Cormorant+Garamond */
  /*~ Contact us ~*/
  --contact-input-color: transparent;
  --contact-input-outline: var(--neutral-3);
- --contact-input-outline-focused: var(--neutral-8); 
+ --contact-input-outline-focused: var(--neutral-3); 
  --contact-send-btn-outline: var(--neutral-6);
  /*#0c212b --input-color*/
 
@@ -485,7 +489,7 @@ Cormorant+Garamond */
 
   --payment-div-bg: var(--neutral-0-5);
 
-  --paynow-stripe-button: var(--main-button-color);
+  --paynow-stripe-button: var(--main-button-bg);
   --paynow-stripe-button-hover: var(--main-button-hover-color);
  
 
@@ -504,10 +508,10 @@ Cormorant+Garamond */
   
   --summery-color: var(--high-contrast-light-txt-color);
   --summery-light-color: var(--high-contrast-light-txt-color);
-  --checkout-order-summery-bg-mobile: var(--blue-2);
+  --checkout-order-summery-bg-mobile: var(--blue-0);
   /* #0e2438*/
-  --checkout-order-summery-bg: var(--blue-1);
-  --checkout-order-summery-bg-light: var(--blue-2);
+  --checkout-order-summery-bg: var(--blue-0);
+  --checkout-order-summery-bg-light: var(--blue-0);
 
   --apply-outline-color: var(--lion-7);
   --apply-coupon-color: var(--lion-4);
