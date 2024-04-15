@@ -249,7 +249,7 @@
     .tipChangerDiv{
       position: absolute;
       right: var(--size-3);
-      top: var(--size-3);
+      top: var(--size-4);
       display:flex;
       justify-content: center;
       align-items: center;

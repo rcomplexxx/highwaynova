@@ -64,8 +64,9 @@
     height: 40px;
     color: var(--footer-subscribe-input-txt-color);
     background-color: transparent;
-    outline: none;
-    border: solid var(--subscribe-input-border) 1px;
+    border: none;
+    outline: 1px solid var(--subscribe-input-border);
+   
     border-radius: var(--size-2);
 
     font-size: var(--font-size-1);
@@ -80,7 +81,7 @@
   }
 
   .subscribeInput:focus{
-    border: 1px solid var(--border-color-strong);
+    outline: 1px solid var(--subscribe-input-border);
   }
 
 
@@ -185,6 +186,7 @@
     width: 100%;
     margin-top: var(--size-4);
     margin-bottom: var(--size-6);
+   
   }
 
   .getInTouch{

@@ -34,7 +34,7 @@
 
 .payNowButton{
    
-    height: var(--size-8);
+    height: 56px;
     width: calc(100% -  var(--size-5));
     background-color: var(--paynow-stripe-button);
     color: var(--high-contrast-light-txt-color);

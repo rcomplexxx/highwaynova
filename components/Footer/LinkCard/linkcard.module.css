@@ -23,6 +23,7 @@
   .title{
     color: var(--footer-title-color);
     font-size: var(--font-size-5);
+    padding: 0;
   }
 
   .dropMenuSign{
@@ -67,12 +68,16 @@
       cursor:auto;
     }
 
+    .title{
+     padding-left: var(--size-2);
+    }
+
 
     .linksContent{
       width: max-content;
    
       max-height: none !important;
-      padding: 0;
+      
       margin: 0;
     }
   }
