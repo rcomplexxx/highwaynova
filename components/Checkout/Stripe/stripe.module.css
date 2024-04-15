@@ -137,12 +137,12 @@
 
     .stripeFieldFocused { 
 
-      outline: 2px solid var(--input-outline-color-focused) !important;
+      outline: 2px solid var(--input-outline-color-focused);
   
   }
   
     .input_field:focus { 
-      outline: 2px solid var(--input-outline-color-focused) !important;
+      outline: 2px solid var(--input-outline-color-focused);
       border:none;
   }
   
@@ -154,7 +154,7 @@
    
     .input_error{
       border: none;
-      outline: 2px solid var(--error-box-shadow-color);
+      outline: 2px solid var(--error-box-shadow-color) !important;
     }
 
     .error{

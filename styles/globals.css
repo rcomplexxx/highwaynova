@@ -504,9 +504,9 @@ Cormorant+Garamond */
   
   --summery-color: var(--high-contrast-light-txt-color);
   --summery-light-color: var(--high-contrast-light-txt-color);
-  --checkout-order-summery-bg-mobile: var(--blue-3);
+  --checkout-order-summery-bg-mobile: var(--blue-2);
   /* #0e2438*/
-  --checkout-order-summery-bg: var(--blue-2);
+  --checkout-order-summery-bg: var(--blue-1);
   --checkout-order-summery-bg-light: var(--blue-2);
 
   --apply-outline-color: var(--lion-7);

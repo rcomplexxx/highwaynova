@@ -24,6 +24,10 @@ export default function CheckoutInfo({ products,  setCartProducts }) {
    showApt && document.getElementById("apt").focus();
    }, [showApt]);
 
+   useEffect(()=>{
+    document.getElementById("email").focus();
+   },[])
+
   const handleChange = (event) => {
     if (errors.hasOwnProperty(event.target.id)) {
       const newErrors = { ...errors };
@@ -36,24 +40,40 @@ export default function CheckoutInfo({ products,  setCartProducts }) {
 
 
   const checkFields=useCallback(()=>{
-    let newErrors = {};
+
+
+    const findError = ()=>{
+
+    
+
+
+
+    // let newErrors = {};
     // if(document.getElementById('email').value==='') return actions.reject();
     const testId = (id) => {
       if (document.getElementById(id).value === "") {
-        newErrors = { ...newErrors, [id]: `${id} is a required field.` };
+        // newErrors = { ...newErrors, [id]: `${id} is a required field.` };
+        setErrors({[id]: `${id} is a required field.`});
+        return {[id]: `${id} is a required field.`};
       }
     };
 
     if (document.getElementById("email").value === "") {
-      newErrors = { ...newErrors, email: "Email is a required field." };
+      setErrors({email: "Email is a required field."});
+      return {email: "Email is a required field."};
+      // newErrors = { ...newErrors, email: "Email is a required field." };
     }
     if (
       !/^\S{3,}@\S{3,}\.\S{2,}$/.test(document.getElementById("email").value)
     ) {
-      newErrors = {
-        ...newErrors,
-        email: "Please enter a valid email address.",
-      };
+      // newErrors = {
+      //   ...newErrors,
+      //   email: "Please enter a valid email address.",
+      // };
+
+      setErrors({email: "Please enter a valid email address."});
+      return {email: "Please enter a valid email address."};
+      
     }
 
     testId("firstName");
@@ -66,7 +86,9 @@ export default function CheckoutInfo({ products,  setCartProducts }) {
 
     const phone = document.getElementById("phone").value; //
     if (phone.length < 5)
-      newErrors = { ...newErrors, phone: "Invalid phone" };
+      // newErrors = { ...newErrors, phone: "Invalid phone" };
+      {setErrors({phone: "Invalid phone" });
+      return {phone: "Invalid phone" };}
     else {
       for (let i = 0; i < phone.length; i++) {
         const char = phone[i];
@@ -76,31 +98,55 @@ export default function CheckoutInfo({ products,  setCartProducts }) {
             ["+", "-", "(", ")", " ", ".", "/"].includes(char)
           )
         ) {
-          newErrors = { ...newErrors, phone: "Invalid phone" };
+          // newErrors = { ...newErrors, phone: "Invalid phone" };
+          setErrors({phone: "Invalid phone" });
+          return {phone: "Invalid phone" };
         }
       }
     }
+return false;
+  }
 
-    setErrors(newErrors);
 
 
-    const errorsExist=Object.keys(newErrors).length !== 0;
-    console.log('errorsExist?', errorsExist)
-    if (errorsExist) {
-      window.scrollTo({
-        top:
-          document
-            .getElementById(Object.keys(newErrors)[0])
-            .getBoundingClientRect().top +
-          window.scrollY -
-          12,
-        behavior: "smooth",
-      });
+ 
+
+
+  const error = findError();
+  if (error) {
+    window.scrollTo({
+      top:
+        document
+          .getElementById(Object.keys(error)[0])
+          .getBoundingClientRect().top +
+        window.scrollY -
+        12,
+      behavior: "smooth",
+    });
+
+
+
+
+    // setErrors(newErrors);
+
+
+    // const errorsExist=Object.keys(newErrors).length !== 0;
+    // console.log('errorsExist?', errorsExist)
+    // if (errorsExist) {
+    //   window.scrollTo({
+    //     top:
+    //       document
+    //         .getElementById(Object.keys(newErrors)[0])
+    //         .getBoundingClientRect().top +
+    //       window.scrollY -
+    //       12,
+    //     behavior: "smooth",
+    //   });
 
    
   }
 
-  return !errorsExist;
+  return !error;
 },[])
 
 

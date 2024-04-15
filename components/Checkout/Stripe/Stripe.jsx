@@ -59,19 +59,25 @@ const Stripe = ({organizeUserData, checkFields}) => {
    
     const checkBillingFields=()=>{
 
-
       if(billingAddressSameAsShipping)return true;
+
+
+      const testBillingErrors = ()=>{
+
+      
 
       let newErrors = {};
       // if(document.getElementById('email').value==='') return actions.reject();
       const testId = (id) => {
         if (document.getElementById(id).value === "") {
           newErrors = { ...newErrors, [id]: `${id} is a required field.` };
+          return newErrors;
         }
       };
   
       if (document.getElementById("billingEmail").value === "") {
         newErrors = { ...newErrors, billingEmail: "Email is a required field." };
+        return newErrors;
       }
       if (
         !/^\S{3,}@\S{3,}\.\S{2,}$/.test(document.getElementById("billingEmail").value)
@@ -91,8 +97,10 @@ const Stripe = ({organizeUserData, checkFields}) => {
       testId("billingCity");
   
       const phone = document.getElementById("billingPhone").value; //
-      if (phone.length < 5)
+      if (phone.length < 5){
         newErrors = { ...newErrors, phone: "Invalid phone" };
+        return newErrors;
+    }
       else {
         for (let i = 0; i < phone.length; i++) {
           const char = phone[i];
@@ -103,20 +111,25 @@ const Stripe = ({organizeUserData, checkFields}) => {
             )
           ) {
             newErrors = { ...newErrors, phone: "Invalid phone" };
+            return newErrors;
           }
         }
       }
   
       setBillingErrors(newErrors);
+
+    }
+
+    const billingError = testBillingErrors();
+    setBillingErrors(billingError);
   
-  
-      const errorsExist=Object.keys(newErrors).length !== 0;
+      const errorsExist=Object.keys(billingError).length !== 0;
       console.log('errorsExist?', errorsExist)
       if (errorsExist) {
         window.scrollTo({
           top:
             document
-              .getElementById(Object.keys(newErrors)[0])
+              .getElementById(Object.keys(billingError)[0])
               .getBoundingClientRect().top +
             window.scrollY -
             12,
@@ -137,15 +150,25 @@ const handleStripePay= async(event)=>{
   event.preventDefault();
   setPaymentProcessing(true);
   setStripeError();
+
+  
+ 
   errorhelperRef.current={...errors};
   if (!errors.hasOwnProperty('cardNumber')){errorhelperRef.current={...errorhelperRef.current, cardNumber:'Enter a valid card number'}}
   if (!errors.hasOwnProperty('expiryDate')){errorhelperRef.current={...errorhelperRef.current, expiryDate:'Enter a valid card number'}}
   if (!errors.hasOwnProperty('cvv')){errorhelperRef.current={...errorhelperRef.current, cvv:'Enter a valid card number'}}
   if(cardHolderName==='') {errorhelperRef.current={...errorhelperRef.current, cardHolderName:'Enter your name exactly as it\'s written on the card'}}
+  
+  
+  if(!checkFields()){
+    setPaymentProcessing(false);return;
+  }
+  
   setErrors(errorhelperRef.current);
  
-  const clickPass= checkFields()   && !errors.cardNumber && !errors.expiryDate && !errors.cvv && !errors.cardHolderName;
-  if(!clickPass) {checkBillingFields(); setPaymentProcessing(false);return;}
+  const clickPass=   !errors.cardNumber && !errors.expiryDate && !errors.cvv && !errors.cardHolderName;
+ 
+  if(!clickPass) { setPaymentProcessing(false);return;}
   if(!checkBillingFields()){setPaymentProcessing(false);return;}
 
   const cardElement = elements.getElement(CardNumberElement);
@@ -341,7 +364,12 @@ const handleCCBlur= ()=>{
         </div>
 </div>
       <div className={styles.ccInputRow}>
+
+
+
        <div className={styles.form_group}>
+
+       <div className={styles.inputWrapper}>
       <CardExpiryElement id="expiryDate"
  onBlur={handleCCBlur}
  onFocus={()=>{
@@ -362,6 +390,8 @@ const handleCCBlur= ()=>{
       className={`${styles.input_field} ${errors.expiryDate && styles.input_error} ${focusedField==='expiryDate' && styles.stripeFieldFocused}`}
     />
     <span className={`${styles.label} ${floatingLabels.expiryDate && styles.labelFloating}`}>Expiration Date (MM / YY)</span>
+   
+    </div>
     {errors.expiryDate && <p className={styles.stripeError}>{errors.expiryDate}</p>}
     </div>
      <div className={styles.form_group}>
@@ -390,6 +420,8 @@ const handleCCBlur= ()=>{
    </div>
  
   {errors.cvv && <p className={styles.stripeError}>{errors.cvv}</p>}
+
+
   </div>
       
 

@@ -149,7 +149,6 @@ const PayPalButton=({checkFields, organizeUserData, method='paypal',  type='norm
         "AQB3vOguzerJ-HXgJavEAMlivjs3DTNyWi2W7yKI94arI23zXOAaSJx4Zf4JzTO9RjvJdr5AflrFHWp1",
     }}
   >
-
       <PayPalButtons
               fundingSource={`${method}`}
               onClick={handlePayPalButtonClick}
@@ -158,14 +157,12 @@ const PayPalButton=({checkFields, organizeUserData, method='paypal',  type='norm
               createOrder={async()=>{return await handlePayPalOrder('PAYPAL')}}
               style={{
                 color: color,
-                height: type=="instant" || type=="express" ?48:42,
-
+                height: type=="instant" || type=="express" ?48:55
               }}
               
-              className={`${styles.paypalButton} ${type==="instant" && styles.instantPaypalButton} ${type==="normal" && styles.scalePaypal}`}
+              className={`${styles.paypalButton} ${type==="instant" && styles.instantPaypalButton}`}
             />
             {paypalError && type!=='instant'&& <p className={styles.paypalError}>{paypalError}</p>}
-          
     </PayPalScriptProvider>
 
 }
