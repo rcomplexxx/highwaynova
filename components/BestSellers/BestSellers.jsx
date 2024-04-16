@@ -13,14 +13,14 @@ import products from '@/data/products.json'
 import "swiper/css";
 import AppContext from '@/contexts/AppContext';
 
-export default function BestSellers( ) {
+export default function BestSellers() {
   const sliderRef = useRef();
 
 
 
   const { cartProducts, setCartProducts } = useContext(AppContext);
   
-  
+
  
   
 
