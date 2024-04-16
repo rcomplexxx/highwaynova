@@ -117,7 +117,7 @@ const FullScreenZoomableImage = ({
 
 
 
-    if(imageLoaded){
+    if(imageLoaded && fixedZoomDivRef.current){
 
 
       const mainImg = document.getElementById(`mainImage${imageIndex}`);
@@ -204,7 +204,7 @@ const FullScreenZoomableImage = ({
    
 
 
-  }, [imageLoaded]);
+  }, [imageLoaded, fixedZoomDivRef.current]);
 
 
 
@@ -368,7 +368,7 @@ fixedZoomDiv.style.backgroundColor = getRgbValues(1);
       window.removeEventListener("touchmove", handleTouchYMove, true);
       window.removeEventListener("touchend", handleTouchEnd);
     };
-  }, [imageIndex,zoomed]);
+  }, [imageIndex,zoomed, fixedZoomDivRef.current]);
 
 
 
@@ -487,7 +487,7 @@ fixedZoomDiv.style.backgroundColor = getRgbValues(1);
       },
       zoomed ? 300 : 0
     );
-  },[zoomed, imageIndex]);
+  },[zoomed, imageIndex, fixedZoomDivRef.current]);
 
 
  
