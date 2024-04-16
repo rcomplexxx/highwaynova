@@ -29,7 +29,7 @@ export async function getStaticProps() {
   return {
     props: {
       products: products.slice(0, 12),
-      links: links.length === 0 ? null : links,
+      links: links,
     },
   };
 }
