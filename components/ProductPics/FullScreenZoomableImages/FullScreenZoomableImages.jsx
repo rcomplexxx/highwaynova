@@ -204,7 +204,7 @@ const FullScreenZoomableImage = ({
    
 
 
-  }, [imageLoaded, fixedZoomDivRef.current]);
+  }, [imageLoaded, fixedZoomDivRef]);
 
 
 
@@ -368,7 +368,7 @@ fixedZoomDiv.style.backgroundColor = getRgbValues(1);
       window.removeEventListener("touchmove", handleTouchYMove, true);
       window.removeEventListener("touchend", handleTouchEnd);
     };
-  }, [imageIndex,zoomed, fixedZoomDivRef.current]);
+  }, [imageIndex,zoomed, fixedZoomDivRef]);
 
 
 
@@ -487,7 +487,7 @@ fixedZoomDiv.style.backgroundColor = getRgbValues(1);
       },
       zoomed ? 300 : 0
     );
-  },[zoomed, imageIndex, fixedZoomDivRef.current]);
+  },[zoomed, imageIndex,fixedZoomDivRef]);
 
 
  
