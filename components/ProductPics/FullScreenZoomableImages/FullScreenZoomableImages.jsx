@@ -542,7 +542,7 @@ fixedZoomDiv.style.backgroundColor = getRgbValues(1);
           <Image
             height={12}
             width={12}
-            src="/images/greaterLess3Dark.png"
+            src="/images/greaterLess3.png"
             onClick={() => {
               swiper.slidePrev();
             }}
@@ -551,7 +551,7 @@ fixedZoomDiv.style.backgroundColor = getRgbValues(1);
           <Image
             height={12}
             width={12}
-            src="/images/greaterLess3Dark.png"
+            src="/images/greaterLess3.png"
             onClick={() => {
               swiper.slideNext();
             }}

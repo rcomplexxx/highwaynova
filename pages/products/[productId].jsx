@@ -255,25 +255,7 @@ export async function getStaticProps(context) {
         src: "/images/" + img,
         alt: "product image",
       };
-    })
-    .concat([
-      {
-        src: "/images/boxItem5.png",
-        alt: "second product image",
-      },
-      {
-        src: "/images/boxItem6.png",
-        alt: "third product image",
-      },
-      {
-        src: "/images/boxItem7.png",
-        alt: "third product image",
-      },
-      {
-        src: "/images/boxItem8.png",
-        alt: "third product image",
-      },
-    ]);
+    });
 
 
     const reviewsData= getReviewsData(productId);

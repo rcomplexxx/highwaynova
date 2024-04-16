@@ -149,7 +149,7 @@ const NavBar = ({ totalItems, newProduct, setNewProduct }) => {
                 <Image
                   height={8}
                   width={8}
-                  src="/images/greaterLess3Dark.png"
+                  src="/images/greaterLess3.png"
                   alt="Show collection menu"
                   className={`${styles.subMenuArrow} ${
                     subMenu == 2 && styles.subMenuArrowOpen
@@ -191,7 +191,7 @@ const NavBar = ({ totalItems, newProduct, setNewProduct }) => {
                 <Image
                   height={8}
                   width={8}
-                  src="/images/greaterLess3Dark.png"
+                  src="/images/greaterLess3.png"
                   alt="Show info menu"
                   className={`${styles.subMenuArrow} ${
                     subMenu == 1 && styles.subMenuArrowOpen

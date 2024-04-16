@@ -86,7 +86,7 @@ export default function DropCard(props) {
         {props.title}
         </div>
         <Image
-        src={'/images/greaterLess3Dark.png'}
+        src={'/images/greaterLess3.png'}
         height={16}
         width={16}
         alt='Show card'

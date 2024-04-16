@@ -277,7 +277,7 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
         }}
       >
         Collections
-        <Image loading={'lazy'} alt='Go' height={12} width={12} src="/images/greaterLess3Dark.png" className={styles.subMenuArrow}/>
+        <Image loading={'lazy'} alt='Go' height={12} width={12} src="/images/greaterLess3.png" className={styles.subMenuArrow}/>
       </div>
 
     
@@ -290,7 +290,7 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
         }}
       >
       Info
-        <Image loading={'lazy'} alt='Go' height={12} width={12} src="/images/greaterLess3Dark.png" className={styles.subMenuArrow}/>
+        <Image loading={'lazy'} alt='Go' height={12} width={12} src="/images/greaterLess3.png" className={styles.subMenuArrow}/>
       </div>
      
       <Link href="/contant-us"
@@ -323,7 +323,7 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
         history.back();
        }}
      >
-       <Image loading={'lazy'} alt='Back' height={12} width={12} src="/images/greaterLess3Dark.png" className={`${styles.subMenuArrow} ${styles.subMenuBackArrow}`}/>
+       <Image loading={'lazy'} alt='Back' height={12} width={12} src="/images/greaterLess3.png" className={`${styles.subMenuArrow} ${styles.subMenuBackArrow}`}/>
        <span className={styles.subMenuTitle}>Info</span>
      </div>
 
@@ -442,7 +442,7 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
          history.back();
        }}
      >
-       <Image loading={'lazy'} alt='Back' height={12} width={12} src="/images/greaterLess3Dark.png" className={`${styles.subMenuArrow} ${styles.subMenuBackArrow}`}/>
+       <Image loading={'lazy'} alt='Back' height={12} width={12} src="/images/greaterLess3.png" className={`${styles.subMenuArrow} ${styles.subMenuBackArrow}`}/>
        <span className={styles.subMenuTitle}>Collections</span>
      </div>
 
