@@ -127,9 +127,9 @@ const FullScreenZoomableImage = ({
 
       const fixedZoomDiv = fixedZoomDivRef.current;
 
-      const bgColor = getComputedStyle(document.documentElement).getPropertyValue('--bg-color');
+      let bgColor = getComputedStyle(document.documentElement).getPropertyValue('--bg-color');
      
-      console.log('bg color is', bgColor);
+      if(bgColor.length===4)bgColor = bgColor + bgColor[2] + bgColor[2] + bgColor[2];
       const rgbValues = `rgba(${parseInt(bgColor.slice(1, 3), 16)}, ${parseInt(bgColor.slice(3, 5), 16)}, ${parseInt(bgColor.slice(5, 7), 16)}, 1)`;
     
     
@@ -221,6 +221,7 @@ const FullScreenZoomableImage = ({
   useEffect(() => {
     const fixedZoomDiv = fixedZoomDivRef.current;
     const bgColor = getComputedStyle(document.documentElement).getPropertyValue('--bg-color');
+    if(bgColor.length===4)bgColor = bgColor + bgColor[2] + bgColor[2] + bgColor[2];
    
     const baseRgb=`${parseInt(bgColor.slice(1, 3), 16)}, ${parseInt(bgColor.slice(3, 5), 16)}, ${parseInt(bgColor.slice(5, 7), 16)},`
     const getRgbValues = (opacity) =>{ return `rgba(${baseRgb} ${opacity})`};
