@@ -104,8 +104,8 @@
     max-width: var(--size-15);
     display: flex;
     flex-direction: column;
-    align-self: flex-start;
-    align-items: flex-start;
+    align-self: center;
+    align-items: center;
     margin-top: var(--size-7);
   }
 
@@ -134,14 +134,14 @@
 
   .productVariantSelected{
     box-sizing: border-box;
-    border: 1px solid var(--selected-product-image-border);
+    outline: 1px solid var(--selected-product-image-border);
   }
   
   .productVariantImage{
     height: 100%;
     width: 100%;
     object-fit: cover;
-    border-radius: 100%;
+    border-radius: 2px;
   
   }
 

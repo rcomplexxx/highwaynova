@@ -344,10 +344,11 @@ Cormorant+Garamond */
 
    /*Product list ~ Products ~ Collections */
 
-   --arrow-bg: var(--neutral-7);
+   --arrow-bg: var(--neutral-1);
    --collection-info-bg: var(--lion-2);
    --product-card-bg: var(--bg-color);
    --product-on-sale-bg: var(--lion-2);
+   --product-box-shadow: 0 1px 4px var(--neutral-0);
 
 
 
@@ -357,7 +358,7 @@ Cormorant+Garamond */
 
 
 
- --selected-product-image-border:var(--blue-8);
+ --selected-product-image-border:var(--blue-2);
  --mini-slider-arrow-bg:var(--neutral-5);
  --quantity-input-color: var(--blue-0);
  --quantity-input-bg: var(--blue-3);
@@ -373,8 +374,8 @@ Cormorant+Garamond */
 
  --dropcard-title-color: var(--high-contrast-light-txt-color);
 
- --faq-add-to-cart-bg: var(--blue-4);
- --faq-add-to-cart-hover-bg: var(--blue-5);
+ --faq-add-to-cart-bg: var(--main-button-bg);
+ --faq-add-to-cart-hover-bg: var(--main-button-hover-color);
 
  --fixed-add-to-cart-color: var(--high-contrast-light-txt-color);
  --fixed-add-to-cart-bg: var(--lion-1);
@@ -402,9 +403,9 @@ Cormorant+Garamond */
 --star-hover-color: orange;
 
 
- --customer-review-bg: var(--neutral-0);
+ --customer-review-bg: var(--blue-0);
  --customer-review-color: var(--high-contrast-light-txt-color);
- --customer-review-box-shadow: 0px 2px 2px -2px var(--neutral-4), 0px 2px 8px -4px var(--neutral-5);
+ --customer-review-box-shadow: 0px 1px 4px -2px var(--neutral-1);
 
  --fullscreen-customer-image-bg: var(--blue-9);
 
@@ -439,7 +440,7 @@ Cormorant+Garamond */
   --best-sellers-bg: var(--lion-1);
   --best-sellers-addtocart-bg: var(--lion-4);
   --best-sellers-addtocart-bg-hover: var(--lion-5);
-  --best-sellers-addtocart-border: var(--blue-8);
+  --best-sellers-addtocart-border: var(--blue-2);
 
   
   

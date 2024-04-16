@@ -68,7 +68,7 @@
     border: none;
   
     margin-top: var(--size-1);
-    color: var(--action-button-txt-color);
+    color: var(--main-button-color);
     background-color: var(--faq-add-to-cart-bg);
     
     font-size: var(--size-5);
