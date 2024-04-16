@@ -259,7 +259,7 @@ Cormorant+Garamond */
   --high-contrast-light-txt-color: var(--neutral-10);
   --light-txt-color: var(--neutral-9);
   --weak-txt-color: var(--neutral-8);
-  --bg-color: 	var(--blue-0); /*hsl(81, 7%, 92%)*/
+  --bg-color: var(--blue-0); /*hsl(81, 7%, 92%)*/
   --dim-bg: rgba(0, 0, 0, 0.5);
   --surround-cancel-bg: var(--lion-4);
   --surround-cancel-bg-hover: var(--lion-3);

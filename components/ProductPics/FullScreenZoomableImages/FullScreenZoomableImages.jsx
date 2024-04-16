@@ -35,7 +35,7 @@ const FullScreenZoomableImage = ({
 
   const fixedZoomDivRef= useRef();
   const fullImageRef= useRef();
-//
+
 
 
 
@@ -117,7 +117,7 @@ const FullScreenZoomableImage = ({
 
 
 
-    if(imageLoaded && fixedZoomDivRef.current){
+    if(imageLoaded){
 
 
       const mainImg = document.getElementById(`mainImage${imageIndex}`);
@@ -129,7 +129,7 @@ const FullScreenZoomableImage = ({
 
       const bgColor = getComputedStyle(document.documentElement).getPropertyValue('--bg-color');
      
-    
+      console.log('bg color is', bgColor);
       const rgbValues = `rgba(${parseInt(bgColor.slice(1, 3), 16)}, ${parseInt(bgColor.slice(3, 5), 16)}, ${parseInt(bgColor.slice(5, 7), 16)}, 1)`;
     
     
@@ -204,7 +204,7 @@ const FullScreenZoomableImage = ({
    
 
 
-  }, [imageLoaded, fixedZoomDivRef]);
+  }, [imageLoaded]);
 
 
 
@@ -368,7 +368,7 @@ fixedZoomDiv.style.backgroundColor = getRgbValues(1);
       window.removeEventListener("touchmove", handleTouchYMove, true);
       window.removeEventListener("touchend", handleTouchEnd);
     };
-  }, [imageIndex,zoomed, fixedZoomDivRef]);
+  }, [imageIndex,zoomed]);
 
 
 
@@ -487,7 +487,7 @@ fixedZoomDiv.style.backgroundColor = getRgbValues(1);
       },
       zoomed ? 300 : 0
     );
-  },[zoomed, imageIndex,fixedZoomDivRef]);
+  },[zoomed, imageIndex]);
 
 
  
@@ -542,7 +542,7 @@ fixedZoomDiv.style.backgroundColor = getRgbValues(1);
           <Image
             height={12}
             width={12}
-            src="/images/greaterLess3.png"
+            src="/images/greaterLess3Dark.png"
             onClick={() => {
               swiper.slidePrev();
             }}
@@ -551,7 +551,7 @@ fixedZoomDiv.style.backgroundColor = getRgbValues(1);
           <Image
             height={12}
             width={12}
-            src="/images/greaterLess3.png"
+            src="/images/greaterLess3Dark.png"
             onClick={() => {
               swiper.slideNext();
             }}
