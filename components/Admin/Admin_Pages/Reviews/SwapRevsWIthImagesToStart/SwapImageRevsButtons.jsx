@@ -19,10 +19,13 @@ export default function SwapImageRevsButtons({reviews, setReviewsArray}) {
     const swapRevsWithImagesToBeginning=()=>{
         if(!reviews || reviews.length===0 || swapped)return;
 
-        
+        for(let i = 0 ; i<=5; i++){
 
+        const reviewsByRating= reviews.filter(review => review.stars == i);
+        console.log('revs of rating' + i+ ' '+ reviewsByRating);
 
-        reviews.forEach((review, index)=>{
+        lastRevWithoutImageIdRef.current=0;
+        reviewsByRating.forEach((review, index)=>{
 
 
             if(review.imageNames){
@@ -31,13 +34,12 @@ export default function SwapImageRevsButtons({reviews, setReviewsArray}) {
 
                 console.log('..', lastRevWithoutImageIdRef.current)
               
-                let loopAllowed = true;
                 while(true){
 
-                    if(lastRevWithoutImageIdRef.current>=reviews.length-1)break;
+                    if(lastRevWithoutImageIdRef.current>=reviewsByRating.length-1)break;
                     if(lastRevWithoutImageIdRef.current>index)break;
                     
-                    if(!reviews[lastRevWithoutImageIdRef.current].imageNames){
+                    if(!reviewsByRating[lastRevWithoutImageIdRef.current].imageNames){
 
 
                         console.log('testid id', review.id)
@@ -45,10 +47,11 @@ export default function SwapImageRevsButtons({reviews, setReviewsArray}) {
                         updatedReviewsArrayRef.current.push(
 
                             {
-                            id: reviews[lastRevWithoutImageIdRef.current].id,
+                            id: reviewsByRating[lastRevWithoutImageIdRef.current].id,
                             changed: true,
-                            name:  reviews[lastRevWithoutImageIdRef.current].name,
-                            text: reviews[lastRevWithoutImageIdRef.current].text,
+                            name:  reviewsByRating[lastRevWithoutImageIdRef.current].name,
+                            text: reviewsByRating[lastRevWithoutImageIdRef.current].text,
+                            stars: reviewsByRating[lastRevWithoutImageIdRef.current].stars,
                             imageNames: null,
                             deleted: false,
                             swapId:review.id
@@ -72,6 +75,8 @@ export default function SwapImageRevsButtons({reviews, setReviewsArray}) {
 
 
         })
+
+    }
 
        
                 setReviewsArray(updatedReviewsArrayRef.current);

@@ -5,6 +5,7 @@ import GetDataButton from "../MagicButtons/GetDataButton";
 import PageIndexButtons from "../MagicButtons/PageIndexButtons";
 import ReviewsCard from "./ReviewsCard/ReviewsCard";
 import SwapImageRevsButtons from "./SwapRevsWIthImagesToStart/SwapImageRevsButtons";
+import SortByRating from "./SortByRating/SortByRating";
 
 export default function Reviews({ reviews, setReviews }) {
   const [page, setPage] = useState(0);
@@ -120,6 +121,7 @@ export default function Reviews({ reviews, setReviews }) {
             clearAfterReviewsSave={clearAfterDataSave}
           />
 
+      <SortByRating reviews={reviews}  setReviewsArray={setReviewsArray} / > 
           <SwapImageRevsButtons reviews={reviews}  setReviewsArray={setReviewsArray} / > 
           </>
         ) : (

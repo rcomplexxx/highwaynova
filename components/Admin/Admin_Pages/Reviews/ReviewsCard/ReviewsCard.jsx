@@ -21,7 +21,7 @@ export default function ReviewsCard({
   const [swapId, setSwapId] = useState("");
   const [images, setImages] = useState(
     imageNames && imageNames != null && imageNames != "null"
-      ? JSON.parse(imageNames).map((img) => {
+      ? JSON.parse(imageNames)?.map((img) => {
           return { imageName: img, deleted: false };
         })
       : null,
