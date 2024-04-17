@@ -244,10 +244,27 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps(context) {
+
+
+
+
+
   const productId = context.params.productId;
   const product = products.find((p) => {
     return p.id == productId;
   });
+  console.log('my product is', product);
+
+  if(product===undefined){
+    return {
+      props: {
+        product: null,
+        images: null,
+        startReviews: null,
+        ratingData: null,
+      },
+    };
+  }
 
   const images = product.images
     .map((img) => {

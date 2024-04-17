@@ -78,6 +78,7 @@
     top: calc(100% + 1px);
     left: 0;
     background-color: var(--navbar-bg);
+    padding-bottom: var(--size-2);
    
     user-select: none;
     z-index: 99;
@@ -166,6 +167,7 @@
 
     .customResults{
         margin-right: var(--size-7);
+       
    
     }
 
