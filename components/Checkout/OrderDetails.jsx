@@ -136,7 +136,7 @@ const handleCouponApply = () => {
                 />
                 <div className={styles.productTitleDiv}>
                 <span>
-                  {cp.quantity} {cp.name}s
+                  {cp.quantity} {`${cp.name}${cp.quantity>1?'s':''}`}
                 </span>
                 <span className={styles.variant}>
                   {cp.variant}

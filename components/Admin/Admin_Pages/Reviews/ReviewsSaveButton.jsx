@@ -17,6 +17,7 @@ export default function SaveButton({
           name: reviews[i].name,
           text: reviews[i].text,
           imageNames: reviews[i].imageNames,
+          stars: reviews[i].stars,
           deleted: reviews[i].deleted && reviews[i].deleted,
           swapId:
             reviews[i].swapId && reviews[i].swapId != "" && reviews[i].swapId,

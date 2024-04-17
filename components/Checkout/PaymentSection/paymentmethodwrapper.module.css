@@ -75,7 +75,7 @@
 
 .selectedOption{
     background-color: var(--payment-div-bg);
-    box-shadow: 0 0 0 1px var(--blue-5);
+    box-shadow: 0 0 0 1px var(--main-color-5);
     z-index: 3;
 }
 
@@ -137,7 +137,7 @@
 
 .moreCards{
     position: relative;
-    color: var(--blue-8);
+    color: var(--main-color-8);
     background-color: var(--more-cards-card-bg);  
     height: 26px;
     width: 46px;

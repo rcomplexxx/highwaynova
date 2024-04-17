@@ -9,10 +9,13 @@ export default function ReviewsCard({
   index,
   name,
   text,
+  stars,
   productId,
   imageNames,
   handleReviewsChange,
 }) {
+
+  const [newStars, setNewStars] = useState(stars);
   const [changed, setChanged] = useState(false);
   const [deleted, setDeleted] = useState(false);
   const [swapId, setSwapId] = useState("");
@@ -23,6 +26,9 @@ export default function ReviewsCard({
         })
       : null,
   );
+
+
+ 
 
   const transformedText = ReactHtmlParser(text);
   const divEditorRef = useRef();
@@ -43,11 +49,12 @@ export default function ReviewsCard({
     handleReviewsChange(
       id,
       !changed,
-      divEditorRefName.current.textContent === ""
+      divEditorRefName.current?.textContent === ""
         ? null
-        : divEditorRefName.current.textContent,
-      divEditorRef.current.innerHTML,
+        : divEditorRefName.current?.textContent,
+      divEditorRef.current?.innerHTML,
       JSON.stringify(imageNames),
+      newStars,
       deleted,
       swapId,
     );
@@ -93,9 +100,16 @@ export default function ReviewsCard({
           suppressContentEditableWarning={true}
           className={styles.textAreaName}
         >
+           
           {name}
         </div>
+        
         <div className={styles.swiperDiv}>
+
+
+       
+
+
           <label className={styles.swiperLabelCurrentId}>
             {id}
             <span> current id</span>
@@ -162,6 +176,27 @@ export default function ReviewsCard({
           onClick={addImage}
         ></Image>
       </div>
+
+      <div 
+      className={styles.ratingDiv}
+      contentEditable={!changed}
+      suppressContentEditableWarning={true}
+      onInput={(event)=>{
+          const ratingText = event.target.textContent;
+          if(!ratingText.startsWith('Rating:') || ratingText.length<8 || ratingText.length>9)
+          event.target.textContent = `Rating: ${newStars}`;
+        else{
+          if(ratingText.length === 9){
+            if(parseInt(ratingText[8])>0 && parseInt(ratingText[8])<6 )
+            setNewStars(ratingText[8]);
+          else event.target.textContent = `Rating: ${newStars}`;
+          }
+        }
+
+         
+    
+    }}
+      >{`Rating: ${newStars}`} </div>
 
       <button className={styles.reviewEditButton} onClick={changeReview}>
         {changed ? "Unsave edit" : "Save edit"}

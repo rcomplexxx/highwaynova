@@ -11,12 +11,16 @@ export default function Reviews({ reviews, setReviews }) {
   const [productId, setProductId] = useState();
   const [reviewsArray, setReviewsArray] = useState([]);
 
+  
+ 
+
   const handleReviewsChange = (
     id,
     changed,
     name,
     text,
     imageNames,
+    stars,
     deleted,
     swapId,
   ) => {
@@ -33,6 +37,7 @@ export default function Reviews({ reviews, setReviews }) {
           name: name,
           text: text,
           imageNames: imageNames,
+          stars: stars,
           deleted: deleted,
           swapId,
         };
@@ -48,6 +53,7 @@ export default function Reviews({ reviews, setReviews }) {
             name: name,
             text: text,
             imageNames: imageNames,
+            stars: stars,
             deleted: deleted,
             swapId,
           });
@@ -159,6 +165,7 @@ export default function Reviews({ reviews, setReviews }) {
                   id={review.id}
                   name={review.name}
                   text={review.text}
+                  stars = {review.stars}
                   productId={productId}
                   imageNames={review.imageNames}
                   handleReviewsChange={handleReviewsChange}

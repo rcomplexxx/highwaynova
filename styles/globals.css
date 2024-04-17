@@ -189,25 +189,27 @@ Cormorant+Garamond */
   */
 
   --test: #171425;
-  --blue-0: #000001;
-  --blue-1: #2d2b1c;
-  --blue-2: #5a5538;
-  --blue-3: #888053;
-  --blue-4: #b5aa6f;
-  --blue-5: #e2d58b;
-  --blue-6: #e5d997;
-  --blue-7: #eee6b9;
-  --blue-8: #f6f2dc;
-  --blue-9: #fcfbf3;
 
 
-  --lion-1: #000c12;
-  --lion-2: #001f2e;
-  --lion-3: #003149;
-  --lion-4: #003d5b;
-  --lion-5: #33647c;
-  --lion-6: #809ead;
-  --lion-7: #ccd8de;
+  --main-color-0: #000001;
+  --main-color-1: #2d2b1c;
+  --main-color-2: #5a5538;
+  --main-color-3: #888053;
+  --main-color-4: #b5aa6f;
+  --main-color-5: #e2d58b;
+  --main-color-6: #e5d997;
+  --main-color-7: #eee6b9;
+  --main-color-8: #f6f2dc;
+  --main-color-9: #fcfbf3;
+
+
+  --accent-color-1: #000c12;
+  --accent-color-2: #001f2e;
+  --accent-color-3: #003149;
+  --accent-color-4: #003d5b;
+  --accent-color-5: #33647c;
+  --accent-color-6: #809ead;
+  --accent-color-7: #ccd8de;
 
 
   --neutral-0: #1A1211; /*#F5F6F4;*/
@@ -259,24 +261,24 @@ Cormorant+Garamond */
   --high-contrast-light-txt-color: var(--neutral-10);
   --light-txt-color: var(--neutral-9);
   --weak-txt-color: var(--neutral-8);
-  --bg-color: var(--blue-0); /*hsl(81, 7%, 92%)*/
+  --bg-color: var(--main-color-0); /*hsl(81, 7%, 92%)*/
   --dim-bg: rgba(0, 0, 0, 0.5);
-  --surround-cancel-bg: var(--lion-4);
-  --surround-cancel-bg-hover: var(--lion-3);
+  --surround-cancel-bg: var(--accent-color-4);
+  --surround-cancel-bg-hover: var(--accent-color-3);
   /*#e5e5e6   rgba(50, 50, 50, 0.7)*/
 
   --main-button-color: var(--neutral-0);
-  --main-button-bg: var(--blue-4);
-  --main-button-hover-color: var(--blue-5);
+  --main-button-bg: var(--main-color-4);
+  --main-button-hover-color: var(--main-color-5);
 
   /* --main-light-color: #989898;
   --main-dark-color: #323232; */
 
 
  
-  --action-button-txt-color: var(--blue-9);
-  --action-button-bg-color: var(--lion-4);
-  --action-button-bg-color-hover:var(--lion-3);
+  --action-button-txt-color: var(--main-color-9);
+  --action-button-bg-color: var(--accent-color-4);
+  --action-button-bg-color-hover:var(--accent-color-3);
   /* txt-Alt:white; bg-Alt #202020 */
 
  
@@ -295,45 +297,45 @@ Cormorant+Garamond */
 
   /*~ Navbar ~*/
 
-  --nav-site-title-color: var(--blue-4);
+  --nav-site-title-color: var(--main-color-4);
   --nav-txt-color: var(--light-txt-color);
-  --navbar-bg: var(--blue-1);
+  --navbar-bg: var(--accent-color-2);
   --nav-bottom-border-color: transparent;
 
 
   --search-bg: transparent;
-  --nav-links-color: var(--lion-7);
-  --navbar-current-link-color: var(--blue-4);
-  --nav-select-search-link-color:var(--blue-1);
+  --nav-links-color: var(--accent-color-7);
+  --navbar-current-link-color: var(--main-color-4);
+  --nav-select-search-link-color:var(--main-color-1);
 
   --popcart-bg: var(--navbar-bg);
-  --cart-button-items-number-color: var(--blue-0);
-  --cart-button-items-number-bg: var(--blue-4);
-  --checkout-button-border: var(--lion-5);
+  --cart-button-items-number-color: var(--main-color-0);
+  --cart-button-items-number-bg: var(--main-color-4);
+  --checkout-button-border: var(--accent-color-5);
 
 
 
    /*~ Footer ~*/
 
-   --footer-bg: var(--blue-0);
+   --footer-bg: var(--main-color-0);
    --footer-title-color: var(--neutral-10);
   --footer-txt-color: var(--neutral-9);
   --footer-link-active-color: var(--neutral-9);
   --footer-email-placeholder-color: var(--neutral-5);
   --footer-subscribe-input-txt-color: var(--neutral-9);
-  --subscribe-input-border: var(--lion-5);
-  --action-button-footer-txt-color: var(--blue-9);
+  --subscribe-input-border: var(--accent-color-5);
+  --action-button-footer-txt-color: var(--main-color-9);
   --action-button-hover-footer-txt-color: var(--high-contrast-light-txt-color);
 
  /*~ Home page ~*/
 
 
  --shop-now-hero-button-color: var(--neutral-1);
- --shop-now-hero-button-bg: var(--blue-8);
+ --shop-now-hero-button-bg: var(--main-color-8);
  --shop-now-hero-button-box-shadow: 0 2px 6px var(--neutral-9);
- --hero-image-border-bottom-color: var(--blue-2);
+ --hero-image-border-bottom-color: var(--main-color-2);
 
-  --home-review-color: var(--lion-1);
+  --home-review-color: var(--accent-color-1);
    /*#081522*/
   --home-review-box-shadow: 0px 1px 2px var(--neutral-1);
   /*  0px 2px 6px #1b1e22;*/
@@ -345,9 +347,9 @@ Cormorant+Garamond */
    /*Product list ~ Products ~ Collections */
 
    --arrow-bg: var(--neutral-1);
-   --collection-info-bg: var(--lion-2);
+   --collection-info-bg: var(--accent-color-2);
    --product-card-bg: var(--bg-color);
-   --product-on-sale-bg: var(--lion-2);
+   --product-on-sale-bg: var(--accent-color-2);
    --product-box-shadow: 0 1px 4px var(--neutral-0);
 
 
@@ -358,19 +360,19 @@ Cormorant+Garamond */
 
 
 
- --selected-product-image-border:var(--blue-2);
+ --selected-product-image-border:var(--main-color-2);
  --mini-slider-arrow-bg:var(--neutral-5);
- --quantity-input-color: var(--blue-0);
- --quantity-input-bg: var(--blue-3);
+ --quantity-input-color: var(--main-color-0);
+ --quantity-input-bg: var(--main-color-3);
  --quantity-button-border: var(--neutral-6);
- --quantity-button-hover: var(--lion-2);
+ --quantity-button-hover: var(--accent-color-2);
 
  --paypal-bg:#FFC439;
 
- --buy-now-bg: var(--lion-1);
- --buy-now-border: var(--lion-6);
+ --buy-now-bg: var(--accent-color-1);
+ --buy-now-border: var(--accent-color-6);
  --buy-now-hover-box-shadow-border: var(--neutral-5);
- --buy-now-hover-bg: var(--lion-2);
+ --buy-now-hover-bg: var(--accent-color-2);
 
  --dropcard-title-color: var(--high-contrast-light-txt-color);
 
@@ -378,17 +380,17 @@ Cormorant+Garamond */
  --faq-add-to-cart-hover-bg: var(--main-button-hover-color);
 
  --fixed-add-to-cart-color: var(--high-contrast-light-txt-color);
- --fixed-add-to-cart-bg: var(--lion-1);
- --fixed-add-to-cart-border-top: var(--blue-2);
+ --fixed-add-to-cart-bg: var(--accent-color-1);
+ --fixed-add-to-cart-border-top: var(--main-color-2);
  
           /*~ Fullscreen product~*/
 
   --fullscreen-bg: var(--bg-color);
  --toast-message-bg: var(--neutral-4);
- --fullscreen-nav-bg: var(--blue-2);
+ --fullscreen-nav-bg: var(--main-color-2);
  --fullscreen-arrow-bg:var(--fullscreen-nav-bg);
- --fullscreen-arrow-hover-bg:var(--blue-4);
- --fullscreen-arrow-active-bg: var(--blue-5);
+ --fullscreen-arrow-hover-bg:var(--main-color-4);
+ --fullscreen-arrow-active-bg: var(--main-color-5);
   
 
             /*~ Customer reviews ~*/
@@ -396,18 +398,18 @@ Cormorant+Garamond */
  --rating-info-bg: var(--neutral-4);
  --rating-info-box-shadow: 0px 8px 24px -12px var(--neutral-7);
  --rating-info-percent-bar-empty: var(--star-empty-color);
- --rating-info-percent-bar-fill: var(--lion-3);
+ --rating-info-percent-bar-fill: var(--accent-color-3);
 
  --star-color:#e9b335;
 --star-empty-color: var(--neutral-8);
 --star-hover-color: orange;
 
 
- --customer-review-bg: var(--blue-0);
+ --customer-review-bg: var(--main-color-0);
  --customer-review-color: var(--high-contrast-light-txt-color);
  --customer-review-box-shadow: 0px 1px 4px -2px var(--neutral-1);
 
- --fullscreen-customer-image-bg: var(--blue-9);
+ --fullscreen-customer-image-bg: var(--main-color-9);
 
 
 
@@ -436,11 +438,11 @@ Cormorant+Garamond */
 
 /*~ Cart ~*/
   --free-shipping-slider-empty-color: var(--neutral-8);
-  --free-shipping-slider-fill-color: var(--lion-5);
-  --best-sellers-bg: var(--lion-1);
-  --best-sellers-addtocart-bg: var(--lion-4);
-  --best-sellers-addtocart-bg-hover: var(--lion-5);
-  --best-sellers-addtocart-border: var(--blue-2);
+  --free-shipping-slider-fill-color: var(--accent-color-5);
+  --best-sellers-bg: var(--accent-color-1);
+  --best-sellers-addtocart-bg: var(--accent-color-4);
+  --best-sellers-addtocart-bg-hover: var(--accent-color-5);
+  --best-sellers-addtocart-border: var(--main-color-2);
 
   
   
@@ -468,7 +470,7 @@ Cormorant+Garamond */
      /* rgb(191, 209, 208); rgb(74, 85, 187) #202020; rgba(53, 60, 110, 0.459); rgb(134, 110, 114); var(--input-autofill-color);*/
  
   --input-outline-color: var(--neutral-3);
-  --checkbox-checked-bg-color: var(--blue-4);
+  --checkbox-checked-bg-color: var(--main-color-4);
   --input-outline-color-focused: var(--neutral-3);
   --checkout-input-placeholder: var(--neutral-8);
   --input-autofill-color: var(--bg-color);
@@ -476,16 +478,16 @@ Cormorant+Garamond */
   --checkbox-unchecked-box-shadow: 0 0 0 0 var(--border-color-strong) inset;
   --checkbox-checked-box-shadow: 0 0 0 var(--size-3) rgb(152, 152, 202) inset;
 
-  --apt-adder-color: var(--lion-6);
-  --apt-adder-color-hover: var(--lion-7);
+  --apt-adder-color: var(--accent-color-6);
+  --apt-adder-color-hover: var(--accent-color-7);
  
   --express-checkout-bg: var(--payment-div-bg);
-  --express-checkout-button-bg: var(--blue-9);
-  --paypal-wrapper-border: var(--lion-5);
+  --express-checkout-button-bg: var(--main-color-9);
+  --paypal-wrapper-border: var(--accent-color-5);
   --google-pay-border-color: transparent;
 
  
-  --select-payment-circle-ring-color: var(--blue-2);
+  --select-payment-circle-ring-color: var(--main-color-2);
   --select-payment-circle-color: var(--input-outline-color);
 
   --payment-div-bg: var(--neutral-0-5);
@@ -509,14 +511,14 @@ Cormorant+Garamond */
   
   --summery-color: var(--high-contrast-light-txt-color);
   --summery-light-color: var(--high-contrast-light-txt-color);
-  --checkout-order-summery-bg-mobile: var(--blue-0);
+  --checkout-order-summery-bg-mobile: var(--main-color-0);
   /* #0e2438*/
-  --checkout-order-summery-bg: var(--blue-0);
-  --checkout-order-summery-bg-light: var(--blue-0);
+  --checkout-order-summery-bg: var(--main-color-0);
+  --checkout-order-summery-bg-light: var(--main-color-0);
 
-  --apply-outline-color: var(--lion-7);
-  --apply-coupon-color: var(--lion-4);
-  --apply-coupon-hover-color: var(--lion-5);
+  --apply-outline-color: var(--accent-color-7);
+  --apply-coupon-color: var(--accent-color-4);
+  --apply-coupon-hover-color: var(--accent-color-5);
   --coupon-code-bg: var(--neutral-5);
   --discount-icon-border: var(--neutral-6);
 
@@ -524,8 +526,8 @@ Cormorant+Garamond */
                   /*Tip*/
 
 
-  --tip-selected: var(--blue-5);
-  --add-tip-outline: var(--lion-7);
+  --tip-selected: var(--main-color-5);
+  --add-tip-outline: var(--accent-color-7);
   --add-tip-button-disabled-txt-color: var(--neutral-9);
   --add-tip-button-disabled: var(--neutral-3);
   --tip-thank-you-txt-color: var(--high-contrast-light-txt-color);

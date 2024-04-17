@@ -1,13 +1,13 @@
 :root {
-    --blue-1: #c0b5db;
-    --blue-2: rgb(105, 154, 182);
-    --blue-3: #4285B0;
-    --blue-5: #2965AB;
-    --blue-5: #1B4B83;
-    --blue-6: #193563;
-    --blue-7: #0A2249;
-    --blue-8: #06133D;
-    --blue-9: #040F2E;
+    --main-color-1: #c0b5db;
+    --main-color-2: rgb(105, 154, 182);
+    --main-color-3: #4285B0;
+    --main-color-5: #2965AB;
+    --main-color-5: #1B4B83;
+    --main-color-6: #193563;
+    --main-color-7: #0A2249;
+    --main-color-8: #06133D;
+    --main-color-9: #040F2E;
     --red-1: #daaba8;
     --red-2: #B87F65;
     --red-3: #A75631;

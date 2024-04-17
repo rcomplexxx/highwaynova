@@ -115,6 +115,7 @@
 }
 
 .textAreaName{
+    position: relative;
     color: rgb(225, 236, 238);
     background-color: var(--email-input-bg);
     
@@ -126,6 +127,30 @@
     line-height: var(--size-7);
    margin-bottom: var(--size-7);
    border-radius: 8px;
+}
+
+.ratingDiv{
+    position: absolute;
+    bottom: var(--size-5);
+    left:var(--size-5);
+
+    padding: var(--size-3) var(--size-5);
+    border-radius: 2px;
+
+    font-size: var(--font-size-5);
+    background-color: var(--email-input-bg);
+    color: rgb(77, 82, 90);
+}
+
+
+.ratingNumber{
+    margin-left: var(--size-2);
+}
+
+.ratingNumber:focus{
+
+    outline: 1px solid rgb(96, 102, 110);
+    color: rgb(96, 102, 110);
 }
 
 

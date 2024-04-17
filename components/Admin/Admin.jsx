@@ -109,10 +109,12 @@ export default function Admin() {
 
     for (let i = 0; i < data.length; i++) {
       const review = data[i];
+
   
       newReviews.push({
         id: review.id,
         name: review.name,
+        stars: review.stars,
         text: review.text,
         imageNames: review.imageNames,
       });

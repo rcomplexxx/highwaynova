@@ -177,6 +177,7 @@ else{
               data[i].name,
               data[i].text,
               data[i].imageNames === "null" ? null : data[i].imageNames,
+              data[i].stars,
               data[i].id,
             );
 
@@ -381,7 +382,7 @@ else{
           await updateDb(
             "reviews",
             data,
-            "SET name = ?, text = ?, imageNames = ? WHERE id = ?",
+            "SET name = ?, text = ?, imageNames = ?, stars = ? WHERE id = ?",
           );
         } 
         else if (dataType === "send_email_data") {
