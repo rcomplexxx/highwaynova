@@ -15,15 +15,15 @@
       0,
       1
     ],
-    "price": 12,
-    "stickerPrice": 32,
+    "price": 29.99,
+    "stickerPrice": 46.99,
     "fbt": [
       {
-        "id": 0,
+        "id": 1,
         "variantIndex": 0
       },
       {
-        "id": 0,
+        "id": 2,
         "variantIndex": 0
       }
     ],
@@ -35,5 +35,93 @@
         "image": "booklamp7.webp"
       }
     ]
+  },
+
+
+
+  {
+    "id": 1,
+    "name": "Night book reader",
+    "images": [
+      "bookNightReader1.webp",
+      "bookNightReader2.webp",
+      "bookNightReader3.webp",
+      "bookNightReader4.webp",
+      "bookNightReader5.webp",
+      "bookNightReader6.webp",
+      "bookNightReader7.webp"
+    ],
+    "thumbnails": [
+      0,
+      1
+    ],
+    "price": 22.99,
+    "stickerPrice": 17.99,
+    "fbt": [
+      {
+        "id": 0,
+        "variantIndex": 0
+      },
+      {
+        "id": 2,
+        "variantIndex": 0
+      }
+    ],
+    "raiting": 4.7,
+    "reviewNumber": 32,
+    "variants": [
+      {
+        "name": "White",
+        "image": "bookNightReader6.webp"
+      },
+      {
+        "name": "Black",
+        "image": "bookNightReader7.webp"
+      }
+    ]
+  },
+
+
+  {
+    "id": 2,
+    "name": "Night reading dimmed lamp",
+    "images": [
+      "nightUsbLamp1.webp",
+      "nightUsbLamp2.webp",
+      "nightUsbLamp3.webp",
+      "nightUsbLamp4.webp",
+      "nightUsbLamp5.webp",
+      "nightUsbLamp6.webp",
+      "nightUsbLamp7.webp"
+    ],
+    "thumbnails": [
+      0,
+      1
+    ],
+    "price": 19.99,
+    "stickerPrice": 16.99,
+    "fbt": [
+      {
+        "id": 0,
+        "variantIndex": 0
+      },
+      {
+        "id": 1,
+        "variantIndex": 0
+      }
+    ],
+    "raiting": 4.7,
+    "reviewNumber": 32,
+    "variants": [
+      {
+        "name": "White",
+        "image": "nightUsbLamp4.webp"
+      },
+      {
+        "name": "Black",
+        "image": "nightUsbLamp5.webp"
+      }
+    ]
   }
 ]
+
