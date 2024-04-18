@@ -54,7 +54,7 @@
   align-items: center;
   font-size: var(--font-size-7);
  margin-top: 0;
- margin-bottom: var(--size-5);
+ margin-bottom: var(--size-7);
 }
 
 .product_price_span{
@@ -106,7 +106,7 @@
     flex-direction: column;
     align-self: center;
     align-items: center;
-    margin-top: var(--size-7);
+    margin-top: var(--size-5);
   }
 
   .product_style_label{

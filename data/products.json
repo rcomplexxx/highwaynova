@@ -37,9 +37,6 @@
       }
     ]
   },
-
-
-
   {
     "id": 1,
     "name": "Night book reader",
@@ -83,8 +80,6 @@
       }
     ]
   },
-
-
   {
     "id": 2,
     "name": "Night reading dimmed lamp",
@@ -128,7 +123,6 @@
       }
     ]
   },
-  
   {
     "id": 3,
     "name": "Message lamp",
@@ -156,8 +150,35 @@
     ],
     "raiting": 4.7,
     "reviewNumber": 32
+  },
+  {
+    "id": "4",
+    "name": "Rabbit lamp",
+    "images": [
+      "product_4_image_0.jpg",
+      "product_4_image_1.jpg",
+      "product_4_image_2.jpg",
+      "product_4_image_3.jpg",
+      "product_4_image_4.jpg",
+      "product_4_image_5.jpg"
+    ],
+    "thumbnails": [
+      0,
+      1
+    ],
+    "price": 44.99,
+    "fbt": [
+      {
+        "id": 2,
+        "variantIndex": 0
+      },
+      {
+        "id": 3,
+        "variantIndex": 0
+      }
+    ],
+    "raiting": 4.7,
+    "reviewNumber": 32
    
   }
-  
 ]
-

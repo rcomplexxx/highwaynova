@@ -109,10 +109,10 @@ export default function ProductPage({ product, images, startReviews, ratingData 
             {product.stickerPrice && <span className={styles.product_price_span}>${product.stickerPrice.toFixed(2)}</span>}$
             {product.price.toFixed(2)}
           </div>
-          <div className={styles .variantDiv}>
+          {product.variants && <div className={styles .variantDiv}>
           <span className={styles.product_style_label}>Color: {variant}</span>
           <div className={styles.product_style_options}>
-            {product.variants && product.variants.map((v, i)=>{
+            {product.variants.map((v, i)=>{
            return  <div
            key={i}
               className={`${styles.product_style_span}`}
@@ -137,6 +137,7 @@ export default function ProductPage({ product, images, startReviews, ratingData 
            
           </div>
           </div>
+}
 
           <QuantityButton quantity={quantity} setQuantity={setQuantity} />
 

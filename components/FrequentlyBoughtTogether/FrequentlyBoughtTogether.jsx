@@ -10,7 +10,9 @@ const FreqProduct = ({ productId, variantIndex, onAddToCart }) => {
 
   console.log('variant index', variantIndex)
 
-  const variantName= product.variants && (variantIndex<0 || variantIndex>product.variants?.length-1)?product.variants[0].name:product.variants[variantIndex].name;
+  const variantName= product.variants?
+  (variantIndex<0 || variantIndex>product.variants?.length-1)?product.variants[0].name:product.variants[variantIndex].name
+  :null;
 
   return (
     <div className={styles.product_style_div}>
