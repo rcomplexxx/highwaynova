@@ -32,7 +32,8 @@
     "variants": [
       {
         "name": "Wood grain",
-        "image": "booklamp7.webp"
+        "image": "booklamp7.webp",
+        "variantProductImageIndex": 6
       }
     ]
   },
@@ -55,8 +56,8 @@
       0,
       1
     ],
-    "price": 22.99,
-    "stickerPrice": 17.99,
+    "price": 17.99,
+    "stickerPrice": 22.99,
     "fbt": [
       {
         "id": 0,
@@ -72,11 +73,13 @@
     "variants": [
       {
         "name": "White",
-        "image": "bookNightReader6.webp"
+        "image": "bookNightReader6.webp",
+        "variantProductImageIndex": 5
       },
       {
         "name": "Black",
-        "image": "bookNightReader7.webp"
+        "image": "bookNightReader7.webp",
+        "variantProductImageIndex": 6
       }
     ]
   },
@@ -98,8 +101,8 @@
       0,
       1
     ],
-    "price": 19.99,
-    "stickerPrice": 16.99,
+    "price": 16.99,
+    "stickerPrice": 19.99,
     "fbt": [
       {
         "id": 0,
@@ -115,13 +118,46 @@
     "variants": [
       {
         "name": "White",
-        "image": "nightUsbLamp4.webp"
+        "image": "nightUsbLamp4.webp",
+        "variantProductImageIndex": 3
       },
       {
         "name": "Black",
-        "image": "nightUsbLamp5.webp"
+        "image": "nightUsbLamp5.webp",
+        "variantProductImageIndex": 4
       }
     ]
+  },
+  
+  {
+    "id": 3,
+    "name": "Message lamp",
+    "images": [
+      "messageLamp1.webp",
+      "messageLamp2.webp",
+      "messageLamp3.webp",
+      "messageLamp4.webp"
+    ],
+    "thumbnails": [
+      0,
+      3
+    ],
+    "price": 21.99,
+    "stickerPrice": 27.99,
+    "fbt": [
+      {
+        "id": 0,
+        "variantIndex": 0
+      },
+      {
+        "id": 1,
+        "variantIndex": 0
+      }
+    ],
+    "raiting": 4.7,
+    "reviewNumber": 32
+   
   }
+  
 ]
 
