@@ -88,7 +88,7 @@ export default function SwapImageRevsButtons({reviews, setReviewsArray}) {
 
   return (
     <button className={styles.swapImgRevsToStartButton} onClick={swapRevsWithImagesToBeginning}>
-    Swap image reviews for non-image reviews
+    Swap image reviews for non-image reviews(swap happens per rating. It's suggested to first sort by rating.)
     {swapped && <Image src='/images/correct.png' className={styles.swappedSuccessfulImage} height={20} width={20}/>}
   </button>
    

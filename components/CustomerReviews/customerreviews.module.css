@@ -124,15 +124,16 @@
     margin-bottom: var(--size-4);
     font-family: var(--hand-writing-font);
     
-    font-size: var(--font-size-3);
+    font-size: var(--font-size-4);
     line-height: 24px;
-
+    font-weight: 400;
     padding: 0 var(--size-4);
   }
   /* padding: 0; */
 
   .reviewAuthor{
     margin-top: var(--size-2);
+    font-size: var(--font-size-5);
     font-weight: 400;
       padding: 0 var(--size-4);
     
