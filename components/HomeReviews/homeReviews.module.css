@@ -16,7 +16,9 @@
  
   
   .reviewDiv { 
-    background-color: var(--home-review-color);
+
+    color: var(--home-review-color);
+    background-color: var(--home-review-bg);
     min-height: max-content;
     height: var(--size-13-5);
    
@@ -28,10 +30,11 @@
     box-sizing: border-box;
     border-radius: var(--size-2);
     padding: var(--size-4);
-    margin-left: var(--size-6);
-    margin-right: var(--size-6);
-    margin-bottom: var(--size-9);
+
+    margin: var(--size-9) var(--size-6);
     margin-top: var(--size-3);
+
+    font-weight: 400;
     
     box-shadow: var(--home-review-box-shadow);
     
@@ -47,14 +50,7 @@
      contain: layout;
   }
 
-  .reviewTitle {
-    white-space: wrap;
-    color: var(--gray-1);
-    margin-top: var(--size-2);
-    margin-bottom: var(--size-2);
-    text-align: start;
-    font-size: var(--font-size-6);
-  }
+
 
   .ratingStarDiv{
     width: 100%;
@@ -73,6 +69,7 @@
 
     margin-top: auto;
     margin-bottom:0;
+    font-weight: 600;
   }
 
 
@@ -93,7 +90,7 @@
     text-align: left;
     /* text-indent:var(--size-3); */
     /* font-style: italic; */
-    font-family: var(--hand-writing-font);
+    /* font-family: var(--hand-writing-font); */
    }
  
   

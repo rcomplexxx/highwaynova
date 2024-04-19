@@ -191,39 +191,39 @@ Cormorant+Garamond */
   --test: #171425;
 
 
-  --main-color-0: #000001;
-  --main-color-1: #2d2b1c;
-  --main-color-2: #5a5538;
-  --main-color-3: #888053;
-  --main-color-4: #b5aa6f;
-  --main-color-5: #e2d58b;
-  --main-color-6: #e5d997;
-  --main-color-7: #eee6b9;
-  --main-color-8: #f6f2dc;
-  --main-color-9: #fcfbf3;
+  --main-color-0: #1B180E;
+  --main-color-1: #433C23;
+  --main-color-2: #6B6038;
+  --main-color-3: #93844D;
+  --main-color-4: #B2A36C;
+  --main-color-5: #C0B387;
+  --main-color-6: #CEC3A1;
+  --main-color-7: #DCD4BC;
+  --main-color-8: #EAE5D7;
+  --main-color-9: #F8F6F2;
 
 
-  --accent-color-1: #000c12;
-  --accent-color-2: #001f2e;
-  --accent-color-3: #003149;
-  --accent-color-4: #003d5b;
-  --accent-color-5: #33647c;
-  --accent-color-6: #809ead;
-  --accent-color-7: #ccd8de;
+  --accent-color-1: #130202;
+  --accent-color-2: #5D0909;
+  --accent-color-3: #A71111;
+  --accent-color-4: #E92020;
+  --accent-color-5: #EE5858;
+  --accent-color-6: #F49090;
+  --accent-color-7: #F9C7C7;
 
 
-  --neutral-0: #1A1211; /*#F5F6F4;*/
-  --neutral-0-5: #1A1211; /*#f2e7e5*/
-  --neutral-1: #332522;  
-  --neutral-2: #553E39;
-  --neutral-3: #6F5049;
-  --neutral-4: #88625A;
-  --neutral-5: #aa7b71;
-  --neutral-6: #bd897e;
-  --neutral-7: #caa198;
-  --neutral-8: #d7b8b2;
-  --neutral-9: #e5d0cb;
-  --neutral-10: #f8f3f2;
+  --neutral-0: #0A0A0A; /*#F5F6F4;*/
+  --neutral-0-5: #141414; /*#f2e7e5*/
+  --neutral-1: #292929;  
+  --neutral-2: #474747;
+  --neutral-3: #666666;
+  --neutral-4: #858585;
+  --neutral-5: #6B606C;
+  --neutral-6: #C2C2C2;
+  --neutral-7: #D6D6D6;
+  --neutral-8: #E0E0E0;
+  --neutral-9: #EBEBEB;
+  --neutral-10: #F5F5F5;
 
 
 
@@ -261,10 +261,10 @@ Cormorant+Garamond */
   --high-contrast-light-txt-color: var(--neutral-10);
   --light-txt-color: var(--neutral-9);
   --weak-txt-color: var(--neutral-8);
-  --bg-color: var(--main-color-0); /*hsl(81, 7%, 92%)*/
+  --bg-color: var(--neutral-0); /*hsl(81, 7%, 92%)*/
   --dim-bg: rgba(0, 0, 0, 0.5);
-  --surround-cancel-bg: var(--neutral-6);
-  --surround-cancel-bg-hover: var(--neutral-5);
+  --surround-cancel-bg: var(--neutral-5);
+  --surround-cancel-bg-hover: var(--neutral-4);
   /*#e5e5e6   rgba(50, 50, 50, 0.7)*/
 
   --main-button-color: var(--neutral-0);
@@ -276,7 +276,7 @@ Cormorant+Garamond */
 
 
  
-  --action-button-txt-color: var(--main-color-9);
+  --action-button-txt-color: var(--main-color-0);
   --action-button-bg-color: var(--accent-color-4);
   --action-button-bg-color-hover:var(--accent-color-3);
   /* txt-Alt:white; bg-Alt #202020 */
@@ -299,7 +299,7 @@ Cormorant+Garamond */
 
   --nav-site-title-color: var(--main-color-4);
   --nav-txt-color: var(--light-txt-color);
-  --navbar-bg: var(--accent-color-2);
+  --navbar-bg: var(--neutral-0-5);
   --nav-bottom-border-color: transparent;
 
 
@@ -317,7 +317,7 @@ Cormorant+Garamond */
 
    /*~ Footer ~*/
 
-   --footer-bg: var(--main-color-0);
+   --footer-bg: var(--neutral-0-5);
    --footer-title-color: var(--neutral-10);
   --footer-txt-color: var(--neutral-9);
   --footer-link-active-color: var(--neutral-9);
@@ -335,7 +335,9 @@ Cormorant+Garamond */
  --shop-now-hero-button-box-shadow: 0 2px 6px var(--neutral-9);
  --hero-image-border-bottom-color: var(--main-color-2);
 
-  --home-review-color: var(--accent-color-1);
+
+ --home-review-color: var(--neutral-0);
+  --home-review-bg: var(--neutral-3);
    /*#081522*/
   --home-review-box-shadow: 0px 1px 2px var(--neutral-1);
   /*  0px 2px 6px #1b1e22;*/
@@ -369,8 +371,8 @@ Cormorant+Garamond */
 
  --paypal-bg:#FFC439;
 
- --buy-now-bg: var(--accent-color-1);
- --buy-now-border: var(--accent-color-6);
+ --buy-now-bg: transparent;
+ --buy-now-border: var(--accent-color-7);
  --buy-now-hover-box-shadow-border: var(--neutral-5);
  --buy-now-hover-bg: var(--accent-color-2);
 
@@ -405,8 +407,8 @@ Cormorant+Garamond */
 --star-hover-color: orange;
 
 
---customer-review-bg: var(--neutral-2);
- --customer-review-color: black;
+--customer-review-bg: var(--neutral-0-5);
+ --customer-review-color: var(--neutral-9);
  --customer-review-box-shadow: 0px 1px 4px -2px var(--neutral-1);
 
  --fullscreen-customer-image-bg: var(--neutral-1);
@@ -437,7 +439,7 @@ Cormorant+Garamond */
 
 
 /*~ Cart ~*/
-  --free-shipping-slider-empty-color: var(--neutral-8);
+  --free-shipping-slider-empty-color: var(--neutral-5);
   --free-shipping-slider-fill-color: var(--accent-color-5);
   --best-sellers-bg: var(--accent-color-1);
   --best-sellers-addtocart-bg: var(--accent-color-4);
@@ -471,7 +473,7 @@ Cormorant+Garamond */
  
   --input-outline-color: var(--neutral-3);
   --checkbox-checked-bg-color: var(--main-color-4);
-  --input-outline-color-focused: var(--neutral-3);
+  --input-outline-color-focused: var(--main-color-4);
   --checkout-input-placeholder: var(--neutral-8);
   --input-autofill-color: var(--bg-color);
 
