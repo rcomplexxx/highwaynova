@@ -9,6 +9,7 @@ export default function NewEmail() {
 
     const titleRef = useRef();
     const emailTextRef=useRef();
+    const emailCssTextRef = useRef();
     const [previewEmailContent, setPreviewEmailContent]= useState();
 
     console.log('PreviewContent', previewEmailContent);
@@ -16,8 +17,12 @@ export default function NewEmail() {
 
     const handlePreviewEmail = ()=>{
         try {
+
+          const finalHtml= `<style>${emailCssTextRef.current.value}</style>${emailTextRef.current.value}`
+
             // Attempt to parse the HTML
-            const parsedHtml = ReactHtmlParser(emailTextRef.current.value);
+            const parsedHtml = ReactHtmlParser(finalHtml);
+            
         
             if (Array.isArray(parsedHtml) && parsedHtml.every(React.isValidElement)) {
                 setPreviewEmailContent(parsedHtml);
@@ -40,7 +45,10 @@ export default function NewEmail() {
 
       if(titleRef.current.value=='' || emailTextRef.current.value=='')return;
 
-      let newEmailData = {title:titleRef.current.value, text:emailTextRef.current.value };
+
+      const finalHtml= `<style>${emailCssTextRef.current.value}</style>${emailTextRef.current.value}`
+
+      let newEmailData = {title:titleRef.current.value, text:finalHtml };
 
     
      
@@ -81,6 +89,21 @@ export default function NewEmail() {
           event.target.style.height = event.target.scrollHeight + "px";
         }}
         />
+
+
+<textArea
+        ref={emailCssTextRef}
+        tabIndex={0}
+        contentEditable={true}
+        suppressContentEditableWarning={true}
+        className={styles.textArea}
+        
+        placeholder='Define email css classes here...'
+        onFocus={(event) => {
+          event.target.style.height = event.target.scrollHeight + "px";
+        }}
+        />
+
         <div className={styles.newEmailButtons}>
 
         <button className={styles.previewButton} onClick={handlePreviewEmail}>Preview Email</button>

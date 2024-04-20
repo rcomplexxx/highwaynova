@@ -1,0 +1,19 @@
+.descriptionDiv{
+    display: flex;
+    flex-direction: column;
+    margin-top: var(--size-5);
+    margin-bottom: var(--size-7);
+}
+
+.descriptionTitle{
+    align-self: center;
+}
+
+@media (max-width: 1080px){
+    .descriptionDiv{
+       
+        margin: var(--size-7) var(--size-3);
+        margin-top: 0;
+    }
+}
+

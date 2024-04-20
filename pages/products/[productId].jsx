@@ -23,6 +23,7 @@ import getRatingData from "@/utils/getRatingData";
 import PayPalButton from "@/components/Checkout/PayPal/PayPal";
 import { NextSeo } from "next-seo";
 import { productPageSeo } from "@/utils/SEO-configs/next-seo.config";
+import ProductDescription from "@/components/ProductDescription2/ProductDescription";
 
 //slickGoTo
 //afterChange(index)=>{}
@@ -224,6 +225,8 @@ export default function ProductPage({ product, images, startReviews, ratingData 
             fbtProductInfo={product.fbt}
             onAddToCart={onAddToCart}
           />
+
+          {product.description && <ProductDescription description = {product.description}/>}
 
           <ProductPageCards />
         </div>

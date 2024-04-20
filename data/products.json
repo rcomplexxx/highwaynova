@@ -2,6 +2,7 @@
   {
     "id": 0,
     "name": "Book of light",
+    "description": "<style>.helloClass{\nbackground-color:red;\nheight: 300px;\nwidth: 200px;\nmargin-top: 90px;\n}</style><div class=\"helloClass\">Hell0!</div>",
     "images": [
       "booklamp1.webp",
       "booklamp2.webp",
@@ -179,6 +180,5 @@
     ],
     "raiting": 4.7,
     "reviewNumber": 32
-   
   }
 ]

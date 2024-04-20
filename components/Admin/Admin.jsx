@@ -13,6 +13,7 @@ import NewEmail from "./Admin_Pages/Emails/NewEmail/NewEmail";
 import NewCampaign from "./Admin_Pages/Emails/NewCampaign/NewCampaign";
 import Campaigns from "./Admin_Pages/Emails/Campaigns/Campaigns";
 import DataWiper from "./Admin_Pages/DataWiper/DataWiper";
+import DescriptionMaker from "./Admin_Pages/DescriptionMaker/DescriptionMaker";
 
 export default function Admin() {
   const [isAdmin, setIsAdmin] = useState();
@@ -193,6 +194,12 @@ export default function Admin() {
 
 
         
+            break;
+
+            case "descriptionmaker":
+              content = (
+                <DescriptionMaker/>
+              );
             break;
 
             case "datawiper":

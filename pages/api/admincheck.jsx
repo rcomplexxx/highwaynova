@@ -3,6 +3,7 @@ import { verifyToken } from "../../utils/auth.js"; // Adjust the path based on y
 import RateLimiter from "@/utils/rateLimiter.js";
 import betterSqlite3 from "better-sqlite3";
 import emailSendJob from '@/utils/sendEmailJob.jsx';
+import makeNewDescription from "../../utils/makeNewDescription.js"
 
 const limiterPerTwoMins = new RateLimiter({
   apiNumberArg: 5,
@@ -429,6 +430,28 @@ else{
             
             'updateEmails'
           );
+        }
+        else if(dataType === 'send_new_product_description'){
+          console.log('send_new_product_description executed.');
+          const newDescriptionIntegrated = makeNewDescription(data.text , data.productId);
+
+          if(newDescriptionIntegrated){
+
+            res.status(200).json({ descriptionUpdated: true });
+             
+             
+            
+          
+        }
+
+        else{
+          res
+          .status(500)
+          .json({ descriptionUpdated: false });
+        }
+
+          //return true u res ako je uspesno revritowan fajl.
+         
         }
         else if(dataType === `wipe_orders`){
           wipeData('orders')

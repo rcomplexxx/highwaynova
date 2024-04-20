@@ -1,6 +1,20 @@
 import styles from "./productdescription.module.css";
+import ReactHtmlParser from "react-html-parser";
+              
 
 export default function ProductDescription() {
+
+
+
+  // if (Array.isArray(parsedHtml) && parsedHtml.every(React.isValidElement)) {
+  //   setPreviewDescription(parsedHtml);
+  // }
+
+
+
+
+
+
   return (
     <div className={styles.descriptionDiv}>
       <h2 className={styles.descriptionTitle}>Description</h2>{" "}

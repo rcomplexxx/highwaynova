@@ -40,7 +40,12 @@ const handleVerify = async(event)=>{
 
 const handleWipeData = (databaseTable)=>{
   if(!verified) return;
+  
   if(databaseTable=='reviews' && productId===undefined)return;
+
+
+  const answer = window.confirm('Warning! Data cannot be recovered. Do you still wish to proceed?');
+  if (!answer) {return;}
 
 
   console.log('wiping')

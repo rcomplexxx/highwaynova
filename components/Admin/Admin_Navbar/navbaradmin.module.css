@@ -232,6 +232,8 @@
   .cartStyle {
     color: #888b88;
     transition: transform 0.1s ease-in;
+    cursor: pointer;
+    user-select: none;
   }
   
   .cartStyle:hover {
