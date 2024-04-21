@@ -130,7 +130,7 @@
   /* padding: 0; */
 
   .reviewAuthor{
-    margin-top: var(--size-8);
+    margin-top: 40px;
     font-size: var(--font-size-4);
     font-weight: 400;
       padding: 0 var(--size-4);
