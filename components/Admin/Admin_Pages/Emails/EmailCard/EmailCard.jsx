@@ -9,13 +9,63 @@ import { useRouter } from 'next/router';
 export default function EmailCard({id,title, text, handleSaveEmail}) {
 
     const [emailTitle, setEmailTitle] = useState()
-    const [emailText, setEmailText] = useState()
+    const [emailTextHtml, setemailTextHtmlHtml] = useState();
+    const [emailTextCss, setEmailTextCss] = useState();
     const [previewEmailContent, setPreviewEmailContent]= useState();
 
+
+
+
+
+
     useEffect(()=>{
+
+
+
+
+
+
       setEmailTitle(title);
-      setEmailText(text)
+
+
+
+      
+      if(text.split("</style>").length>1){
+
+        
+
+        setemailTextHtmlHtml(text.split("</style>")[1]);
+
+        setemailTextHtmlHtml(text.split("</style>")[1]);
+        setEmailTextCss(text.substring(text.indexOf('<style>')+ '<style>'.length,
+        text.indexOf("</style>")));
+
+
+
+
+      }
+
+      else{
+        setemailTextHtmlHtml(text)
+      }
+
+
+
+
+
+
+
     },[])
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -44,7 +94,7 @@ export default function EmailCard({id,title, text, handleSaveEmail}) {
 
 
     // const handleSaveEmail = async()=>{
-    //   let newEmailData = {title:titleRef.current.value, text:emailTextRef.current.value };
+    //   let newEmailData = {title:titleRef.current.value, text:emailTextHtmlRef.current.value };
 
     
      
@@ -87,8 +137,8 @@ export default function EmailCard({id,title, text, handleSaveEmail}) {
         className={styles.titleInput} placeholder='Email title...'/>
 
         <textarea
-        value={emailText}
-        onChange={(event)=>{setEmailText(event.target.value)}}
+        value={emailTextHtml}
+        onChange={(event)=>{setemailTextHtmlHtml(event.target.value)}}
         tabIndex={0}
         contentEditable={true}
         suppressContentEditableWarning={true}
@@ -99,8 +149,22 @@ export default function EmailCard({id,title, text, handleSaveEmail}) {
           event.target.style.height = event.target.scrollHeight + "px";
         }}
         />
+
+<textarea
+        value={emailTextCss}
+        onChange={(event)=>{setemailTextHtmlHtml(event.target.value)}}
+        tabIndex={0}
+        contentEditable={true}
+        suppressContentEditableWarning={true}
+        className={`${styles.textArea} ${styles.textAreaCss}`}
+        
+        placeholder='Email css content...'
+        onFocus={(event) => {
+          event.target.style.height = event.target.scrollHeight + "px";
+        }}
+        />
         <button className={styles.previewButton} onClick={handlePreviewEmail}>Preview Email</button>
-        <button onClick={()=>{handleSaveEmail(id, emailTitle, emailText)}} className={`${styles.previewButton} ${styles.saveButton}`}>Save Email</button> 
+        <button onClick={()=>{handleSaveEmail(id, emailTitle, emailTextHtml)}} className={`${styles.previewButton} ${styles.saveButton}`}>Save Email</button> 
      
         { previewEmailContent && <><div className={styles.previewContent}>
         {previewEmailContent}

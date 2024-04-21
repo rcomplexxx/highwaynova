@@ -27,13 +27,15 @@
 
 
 .getCurrentDescriptionWrapper{
+    width: 100%;
     display: flex;
+    justify-content: flex-start;
+    align-items: center;
 
     margin-top: var(--size-5);
     margin-bottom: var(--size-5);
 
 
-    align-self: flex-start;
 
 
 
@@ -54,6 +56,35 @@
 }
 
 
+.unlinkProductButton{
+
+
+    margin-top: var(--size-3) !important;
+   
+
+}
+
+
+.featuresWrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    padding: var(--size-5) var(--size-3);
+    border: 1px solid rgb(72, 96, 126);
+    margin-left: auto;
+}
+
+.featureButton{
+
+    margin: 0;
+    margin-top: var(--size-3);
+   
+    padding: var(--size-3) var(--size-2) !important;
+    font-size: 12px;
+ 
+}
 
 
 
@@ -62,7 +93,9 @@
     color: rgb(225, 236, 238);
     background-color: var(--email-input-bg);
     min-height: var(--size-14);
+    max-height: var(--size-17);
     width: 100%;
+
     box-sizing: border-box;
     padding: var(--size-6);
     font-size: var(--font-size-5);
@@ -72,6 +105,10 @@
     border: none;
     outline: none;
     resize: none;
+}
+
+.textAreaCss{
+    margin-top: var(--size-7);
 }
 
 /* .textArea:focus{

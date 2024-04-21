@@ -1,15 +1,11 @@
 import styles from "./productdescription.module.css";
-import ReactHtmlParser from "react-html-parser";
+
               
 
 export default function ProductDescription() {
 
 
-
-  // if (Array.isArray(parsedHtml) && parsedHtml.every(React.isValidElement)) {
-  //   setPreviewDescription(parsedHtml);
-  // }
-
+ 
 
 
 

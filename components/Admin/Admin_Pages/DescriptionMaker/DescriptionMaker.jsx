@@ -17,7 +17,7 @@ export default function DescriptionMaker() {
     const [previewDescription, setPreviewDescription]= useState();
     const [descriptionGetterProductId, setDescriptionGetterProductId]=useState("");
     const [productId, setProductId] = useState("");
-    const [profuctIdConnected, setProductIdConnected] = useState(false);
+    const [productIdConnected, setProductIdConnected] = useState(false);
     
 
     console.log('PreviewContent', previewDescription);
@@ -31,14 +31,39 @@ export default function DescriptionMaker() {
 
         const product = productsData.find((product) => descriptionGetterProductId === product.id.toString());
 
-        console.log('hello', product.description)
-
+       
+        if(product){
 
         
-        if(product && product.description) {descriptionTextRef.current.value= product.description;
+        if(product.description) {
+          
+          if(product.description.split("</style>").length>1){
+
+            const fullDescription= product.description;
+
+            descriptionTextRef.current.value= fullDescription.split("</style>")[1];
+
+          
+            descriptionCssTextRef.current.value =  fullDescription.substring(fullDescription.indexOf('<style>')+ '<style>'.length,
+            fullDescription.indexOf("</style>"));
+
+
+
+
+          }
+
+          else{
+            descriptionTextRef.current.value= product.description;
+          }
+        }
+          
             setProductId(descriptionGetterProductId)
             setProductIdConnected(true);
-        }
+       
+
+       
+
+      }
     }
 
 
@@ -125,9 +150,12 @@ export default function DescriptionMaker() {
         as description string text is trying to be parsed to html(like it would be on regular page).
       </span>
 
+      <span className={styles.descriptionMakerInstructionSpan}>{`It's suggested to put images in /public/images/description/product_$productId.`}
+      </span>
+
       <div className={styles.getCurrentDescriptionWrapper}>
 
-     {!profuctIdConnected ? <> <input
+     {!productIdConnected ? <> <input
             id="product_id"
             className={styles.inputProductId}
             value={descriptionGetterProductId}
@@ -139,8 +167,32 @@ export default function DescriptionMaker() {
           />
           
 
-        <button onClick={getCurrentDescription} className={`${styles.getCurrentDescrition}`}>Get current description</button>
-        </>:<span>New description will affect product with ID: {descriptionGetterProductId}</span>}
+        <button onClick={getCurrentDescription} className={`${styles.getCurrentDescrition}`}>Link product by id(and get current description if exist)</button>
+        </>:<>
+        <span>New description is linked to and will affect product with ID: {descriptionGetterProductId}</span>
+        <button className={`${styles.getCurrentDescrition} ${styles.unlinkProductButton}`} 
+        onClick={()=>{ 
+          setProductIdConnected(false);
+          setProductId("");
+        }}>Unlink product id</button>
+        </>}
+        <div className={styles.featuresWrapper}>
+          <span>Handy options</span>
+        <button className={`${styles.getCurrentDescrition} ${styles.featureButton}`} 
+        onClick={(event)=>{ 
+          navigator.clipboard.writeText(`<div class="descriptionWrapper">\n\n</div>`);
+          event.target.innerText="Standard html content COPIED!"
+        }}>Copy standard html description content</button>
+         <button className={`${styles.getCurrentDescrition} ${styles.featureButton}`} 
+        onClick={(event)=>{ 
+          navigator.clipboard.writeText(`.descriptionWrapper{\ndisplay:flex;\nflex-direction: column;\nfont-size: 16px;\n}`);
+          event.target.innerText="Standard css content COPIED!"
+        
+        }}>Copy standard css description content</button>
+
+       
+        </div>
+        
         </div>
    
 
@@ -164,7 +216,7 @@ export default function DescriptionMaker() {
         tabIndex={0}
         contentEditable={true}
         suppressContentEditableWarning={true}
-        className={styles.textArea}
+        className={`${styles.textArea} ${styles.textAreaCss}`}
         
         placeholder='Define description css classes here...'
         onFocus={(event) => {
@@ -183,7 +235,7 @@ export default function DescriptionMaker() {
         {previewDescription}
       </div> </>}
 
-     {!profuctIdConnected ? <input
+     {!productIdConnected ? <input
             id="product_id"
             className={styles.inputProductId}
             value={productId}

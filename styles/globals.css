@@ -365,7 +365,7 @@ Cormorant+Garamond */
    /*Product list ~ Products ~ Collections */
 
    --arrow-bg: var(--neutral-1);
-   --collection-info-bg: var(--accent-color-2);
+   --collection-info-bg: var(--accent-color-1);
    --product-card-bg: var(--bg-color);
    --product-on-sale-bg: var(--accent-color-2);
    --product-box-shadow: 0 1px 4px var(--neutral-0);

@@ -74,6 +74,30 @@ export default function NewEmail() {
     <div className={styles.mainDiv}>
       <h1>New email</h1>
 
+<div className={styles.emailHelperWrapper}>
+      <span className={styles.emailMakerInstructionSpan}>{`Note: It's suggested to put images in /public/images/email/email_$emailId.`}
+      </span>
+      <div className={styles.featuresWrapper}>
+          <span>Handy options</span>
+        <button className={`${styles.getCurrentDescrition} ${styles.featureButton}`} 
+        onClick={(event)=>{ 
+          navigator.clipboard.writeText(`<div class="descriptionWrapper">\n\n</div>`);
+          event.target.innerText="Standard html content COPIED!"
+        }}>Copy standard html description content</button>
+         <button className={`${styles.getCurrentDescrition} ${styles.featureButton}`} 
+        onClick={(event)=>{ 
+          navigator.clipboard.writeText(`.descriptionWrapper{\ndisplay:flex;\nflex-direction: column;\nfont-size: 16px;\n}`);
+          event.target.innerText="Standard css content COPIED!"
+        
+        }}>Copy standard css description content</button>
+
+       
+        </div>
+
+        </div>
+      
+    
+
       <div className={styles.emailContentDiv}>
         <input ref={titleRef} className={styles.titleInput} placeholder='Email title...'/>
 
@@ -96,7 +120,7 @@ export default function NewEmail() {
         tabIndex={0}
         contentEditable={true}
         suppressContentEditableWarning={true}
-        className={styles.textArea}
+        className={`${styles.textArea} ${styles.textAreaCss}`}
         
         placeholder='Define email css classes here...'
         onFocus={(event) => {
