@@ -21,7 +21,7 @@ export default function ProductDescription({description}) {
             setProductDescription(description)
         }
 
-    },[])
+    },[description])
 
     // if (Array.isArray(parsedHtml) && parsedHtml.every(React.isValidElement)) {
     //   setPreviewDescription(parsedHtml);
