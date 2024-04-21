@@ -35,10 +35,27 @@ body{
   
   margin: 0;
   padding: 0;
-  font-family: var(--font-neutral);
+  font-family: var(--font-neutral), sans-serif;
   font-weight: 400;
   overflow-x: clip;
   overflow-anchor: none;
+}
+
+
+button{
+
+
+  font-family: var(--font-neutral);
+  font-weight: 600;
+  
+  /* height: var(--size-8);
+  border-radius: 4px;
+  transition: background-color 0.1s ease, color 0.1s ease;
+  
+  font-size: var(--font-size-3);
+  font-weight: 600;
+  user-select: none;
+  cursor: pointer; */
 }
 
 h1{
@@ -166,7 +183,6 @@ Cormorant+Garamond */
 --my-col: #829ee0;
   /* --hand-writing-font: var(--font-eb_garamond); */
   --hand-writing-font: "Times New Roman", serif;
-  /* --font-neutral: 'Roboto', sans-serif; */
   --font-neutral: var(--font-inter);
   --font-size-1: 12px;
   --font-size-2: 14px;
@@ -574,4 +590,10 @@ Cormorant+Garamond */
   --admin-campaign-type-options-bg: rgb(76, 46, 46);
 
 }
+
+
+
+
+
+
 

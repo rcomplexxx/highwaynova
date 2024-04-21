@@ -128,6 +128,7 @@
     margin-left: var(--size-3);
     transition: background-color 0.1s ease, color 0.1s ease;
     font-size: var(--font-size-2);
+    
     cursor: pointer;
   }
 
