@@ -90,8 +90,7 @@
 
    max-height: max-content;
    box-sizing: border-box;
-   padding: var(--size-5) 0;
-   padding-top: 0;
+   padding-bottom: var(--size-3);
    border-radius: 8px;
    overflow: clip;
    position: relative; 
@@ -131,7 +130,7 @@
   /* padding: 0; */
 
   .reviewAuthor{
-    margin-top: var(--size-7);
+    margin-top: var(--size-8);
     font-size: var(--font-size-5);
     font-weight: 400;
       padding: 0 var(--size-4);
