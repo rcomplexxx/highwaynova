@@ -58,7 +58,7 @@ height : 100vh;
   .subtotalNew{
     color: var(--high-contrast-light-txt-color);
     font-size: var(--font-size-7); /* Adjust the font size as needed */
-    font-weight: 600; /* You can adjust the font weight */
+    font-weight: 500; /* You can adjust the font weight */
     padding:0;
     margin:0;
    
@@ -157,7 +157,6 @@ height : 100vh;
       font-size: var(--font-size-3);   
       transition: background-color 0.3s ease;
       cursor: pointer;
-      font-weight: 600;
   }
 
 .shopNow:hover{
