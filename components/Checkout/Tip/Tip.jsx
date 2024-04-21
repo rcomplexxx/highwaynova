@@ -164,14 +164,14 @@ export default function Tip({products}){
        <span className={styles.dollarSign}>$ </span>
 
         </div>
-        <span className={`${styles.addTip} ${applyDisabled && styles.addTipDisabled}`}
+        <button className={`${styles.addTip} ${applyDisabled && styles.addTipDisabled}`}
         onClick={()=>{
           if(parseFloat(tipInputValue, 2) > fullProductCost) {setTipInputValue(""); setTipError(true); return;}
             setSelectedField(0);
             setApplyDisabled(true);
             if(tipInputValue=="")setTip(0);
             else setTip(parseFloat(tipInputValue, 2));
-        }}    >{tip==0?"Add tip":"Update tip"}</span>
+        }}    >{tip==0?"Add tip":"Update tip"}</button>
       
 
 

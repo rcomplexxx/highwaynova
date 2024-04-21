@@ -28,12 +28,12 @@ export default function BestSellers() {
     const product= products.find(p=>{return p.id== bsp.id});
     let variantName;
     if(bsp.variantIndex){
-    variantName =  bsp.variantIndex>0 && bsp.variantIndex<product.variants.length-1? product.variants[bsp.variantIndex].name:product?.variants[0].name;
+    variantName =   bsp.variantIndex>0 && bsp.variantIndex<product.variants.length-1? product.variants[bsp.variantIndex].name:product?.variants[0].name;
    
     }
 
     else{
-      variantName= product?.variants[0].name;
+      variantName= product?.variants ? product?.variants[0].name: undefined;
     }
      const newBsp = {product:product,variantName:variantName};
     return newBsp;

@@ -2,6 +2,13 @@
     {
         "id":0,
         "variantIndex":0
+    },
+    {
+        "id":2,
+        "variantIndex":0
+    },
+    {
+        "id":4
     }
 
 ]

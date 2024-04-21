@@ -307,6 +307,9 @@
     border: none;
     outline: 1px solid var( --add-tip-outline);
     transition: background-color 0.1s ease;
+
+    font-size: var(--font-size-3);
+   
     cursor: pointer;
     user-select: none;
    
@@ -320,6 +323,7 @@
   .addTipDisabled{
     color: var(--add-tip-button-disabled-txt-color);
     background-color: var(--add-tip-button-disabled);
+   
     cursor:auto;
   }
 
