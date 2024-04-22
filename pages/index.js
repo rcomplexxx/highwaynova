@@ -41,7 +41,7 @@ const HomePage = ({ products }) => {
         <Image
           height={0}
           width={0}
-         src={`/images/gamerGirl2Pc.jpg`} // Path to your image from the `public` directory
+         src={`/images/heroImg2.jpg`} // Path to your image from the `public` directory
           alt="Hero Discount Image"
           priority={true}
           sizes="100vw"

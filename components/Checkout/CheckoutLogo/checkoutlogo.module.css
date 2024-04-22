@@ -41,6 +41,7 @@
     height: var(--size-9-5);
     width: var(--size-9-5);
     z-index: 9;
+    border-radius: 100%;
 }
 
 

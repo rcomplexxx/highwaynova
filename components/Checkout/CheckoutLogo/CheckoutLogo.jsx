@@ -11,14 +11,14 @@ export default function CheckoutLogo() {
                   height={0}
                   width={0}
                   sizes="48px"
-                  src="/images/bagBlue.png"
+                  src="/images/bag.png"
                   className={styles.bagImg}
                   alt="cart"
                 />
 
       </Link>
       <Link href='/'>
-      <Image className={styles.logo} src="/images/commerce.png" height={0} width={0} sizes={'80px'}/>
+      <Image className={styles.logo} src="/images/commercebook.jpg" height={0} width={0} sizes={'80px'}/>
       </Link>
 
     
