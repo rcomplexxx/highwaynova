@@ -504,7 +504,7 @@ Cormorant+Garamond */
   --apt-adder-color-hover: var(--accent-color-7);
  
   --express-checkout-bg: var(--payment-div-bg);
-  --express-checkout-button-bg: var(--main-color-1);
+  --express-checkout-button-bg: var(--neutral-1);
   --paypal-wrapper-border: var(--accent-color-5);
   --google-pay-border-color: transparent;
 
