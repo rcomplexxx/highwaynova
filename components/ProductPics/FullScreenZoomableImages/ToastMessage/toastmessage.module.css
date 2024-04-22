@@ -10,7 +10,7 @@
     border-radius: 8px;
     padding: var(--size-4) var(--size-5);
 
-    text-wrap: nowrap;
+    white-space: nowrap;
     opacity: 1;
 
     font-size: var(--font-size-3);
