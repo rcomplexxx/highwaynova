@@ -11,7 +11,7 @@ const limit = 20;
   
     
   
-      const db = betterSqlite3(process.env.DB_PATH);
+      const db = betterSqlite3('./data/database.db');
   
       const query = `SELECT * FROM reviews WHERE product_id = ? LIMIT ?`;
       const stmt = db.prepare(query);
