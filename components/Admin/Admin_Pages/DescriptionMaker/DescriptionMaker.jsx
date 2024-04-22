@@ -18,6 +18,7 @@ export default function DescriptionMaker() {
     const [descriptionGetterProductId, setDescriptionGetterProductId]=useState("");
     const [productId, setProductId] = useState("");
     const [productIdConnected, setProductIdConnected] = useState(false);
+    const [savedContent, setSavedContent] = useState();
     
 
     console.log('PreviewContent', previewDescription);
@@ -47,7 +48,7 @@ export default function DescriptionMaker() {
             descriptionCssTextRef.current.value =  fullDescription.substring(fullDescription.indexOf('<style>')+ '<style>'.length,
             fullDescription.indexOf("</style>"));
 
-
+           
 
 
           }
@@ -55,7 +56,11 @@ export default function DescriptionMaker() {
           else{
             descriptionTextRef.current.value= product.description;
           }
+
+          setSavedContent(product.description);
         }
+
+        
           
             setProductId(descriptionGetterProductId)
             setProductIdConnected(true);
@@ -119,6 +124,7 @@ export default function DescriptionMaker() {
           .then((response) => {
             if (response.ok) {
               console.log(response);
+              setSavedContent(finalHtml);
               // router.push('/admin');
             }
           })
@@ -172,6 +178,14 @@ export default function DescriptionMaker() {
         <span>New description is linked to and will affect product with ID: {descriptionGetterProductId}</span>
         <button className={`${styles.getCurrentDescrition} ${styles.unlinkProductButton}`} 
         onClick={()=>{ 
+          if(savedContent !=  
+            `<style>${descriptionCssTextRef.current.value}</style>${descriptionTextRef.current.value}`
+          ){
+            const answer = 
+            window.confirm(`You have unsaved html/css content. Changes will not be applied. Are you sure you want to continue?`);
+            if (!answer) {return;}
+          }
+        
           setProductIdConnected(false);
           setProductId("");
         }}>Unlink product id</button>
