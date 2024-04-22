@@ -5,6 +5,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  color: var(--rating-info-color);
   background-color: var(--rating-info-bg);
   box-shadow: var(--rating-info-box-shadow);
   border-radius: 4px;
@@ -55,6 +57,7 @@
     display: flex;
     align-items: center;
     margin-top:  var(--size-5);
+    font-weight: 500;
     padding-top: 0;
   }
 
@@ -92,7 +95,7 @@
   }
 
   .rateNumber{
-    color: var(--high-contrast-light-txt-color);
+    font-weight: 500;
     width: var(--size-7);
   }
 

@@ -234,10 +234,10 @@ Cormorant+Garamond */
   --neutral-2: #474747;
   --neutral-3: #666666;
   --neutral-4: #858585;
-  --neutral-5: #6B606C;
-  --neutral-6: #C2C2C2;
-  --neutral-7: #D6D6D6;
-  --neutral-8: #E0E0E0;
+  --neutral-5: #999999;
+  --neutral-6: #ADADAD;
+  --neutral-7: #C2C2C2;
+  --neutral-8: #D6D6D6;
   --neutral-9: #EBEBEB;
   --neutral-10: #F5F5F5;
 
@@ -404,6 +404,7 @@ Cormorant+Garamond */
           /*~ Fullscreen product~*/
 
   --fullscreen-bg: var(--bg-color);
+  --toast-message-color: black;
  --toast-message-bg: var(--neutral-4);
  --fullscreen-nav-bg: var(--main-color-2);
  --fullscreen-arrow-bg:var(--fullscreen-nav-bg);
@@ -413,13 +414,15 @@ Cormorant+Garamond */
 
             /*~ Customer reviews ~*/
 
- --rating-info-bg: var(--neutral-4);
- --rating-info-box-shadow: 0px 8px 24px -12px var(--neutral-7);
+ --rating-info-color: var(--neutral-9);
+ --rating-info-bg: var(--neutral-1);
+ --rating-info-box-shadow: 0px 2px 4px 0px var(--neutral-1);
+ 
  --rating-info-percent-bar-empty: var(--star-empty-color);
- --rating-info-percent-bar-fill: var(--accent-color-3);
+ --rating-info-percent-bar-fill: var(--accent-color-2);
 
  --star-color:#e9b335;
---star-empty-color: var(--neutral-8);
+--star-empty-color: var(--neutral-3);
 --star-hover-color: orange;
 
 
@@ -455,7 +458,7 @@ Cormorant+Garamond */
 
 
 /*~ Cart ~*/
-  --free-shipping-slider-empty-color: var(--neutral-5);
+  --free-shipping-slider-empty-color: var(--neutral-2);
   --free-shipping-slider-fill-color: var(--accent-color-5);
   --best-sellers-addtocart-color: var(--neutral-0);
   --best-sellers-bg: var(--accent-color-1);

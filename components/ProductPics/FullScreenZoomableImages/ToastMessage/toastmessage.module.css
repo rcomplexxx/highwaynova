@@ -3,15 +3,18 @@
     bottom: var(--size-5);
     left: 50%;
    
-
+    color: var(--toast-message-color);
     background-color: var(--toast-message-bg);
     
     box-sizing: border-box;
-    border-radius: 4px;
-    padding: var(--size-3) var(--size-4);
+    border-radius: 8px;
+    padding: var(--size-4) var(--size-5);
+
+    text-wrap: nowrap;
     opacity: 1;
 
-    font-size: var(--font-size-2);
+    font-size: var(--font-size-3);
+    font-weight: 600;
     transform: translateX(-50%);
     transition: opacity 0.3s ease,  transform 0.3s ease;
     animation: spawnToast 0.3s ease;
