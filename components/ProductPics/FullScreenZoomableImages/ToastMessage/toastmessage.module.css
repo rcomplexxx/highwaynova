@@ -14,7 +14,7 @@
     opacity: 1;
 
     font-size: var(--font-size-3);
-    font-weight: 600;
+    font-weight: 500;
     transform: translateX(-50%);
     transition: opacity 0.3s ease,  transform 0.3s ease;
     animation: spawnToast 0.3s ease;
