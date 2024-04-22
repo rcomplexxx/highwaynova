@@ -292,7 +292,7 @@ Cormorant+Garamond */
 
 
  
-  --action-button-txt-color: var(--main-color-0);
+  --action-button-txt-color: var(--neutral-0);
   --action-button-bg-color: var(--accent-color-4);
   --action-button-bg-color-hover:var(--accent-color-3);
   /* txt-Alt:white; bg-Alt #202020 */
@@ -394,12 +394,12 @@ Cormorant+Garamond */
 
  --dropcard-title-color: var(--high-contrast-light-txt-color);
 
- --faq-add-to-cart-bg: var(--main-button-bg);
- --faq-add-to-cart-hover-bg: var(--main-button-hover-color);
+ --faq-add-to-cart-bg: var(--action-button-bg-color);
+ --faq-add-to-cart-hover-bg: var(--action-button-bg-color-hover);
 
- --fixed-add-to-cart-color: var(--high-contrast-light-txt-color);
- --fixed-add-to-cart-bg: var(--accent-color-1);
- --fixed-add-to-cart-border-top: var(--main-color-2);
+ --fixed-add-to-cart-color: var(--main-button-color);
+ --fixed-add-to-cart-bg: var(--main-button-bg);
+ --fixed-add-to-cart-border-top: var(--main-button-color);
  
           /*~ Fullscreen product~*/
 
@@ -457,10 +457,11 @@ Cormorant+Garamond */
 /*~ Cart ~*/
   --free-shipping-slider-empty-color: var(--neutral-5);
   --free-shipping-slider-fill-color: var(--accent-color-5);
+  --best-sellers-addtocart-color: var(--neutral-0);
   --best-sellers-bg: var(--accent-color-1);
-  --best-sellers-addtocart-bg: var(--accent-color-4);
-  --best-sellers-addtocart-bg-hover: var(--accent-color-5);
-  --best-sellers-addtocart-border: var(--main-color-2);
+  --best-sellers-addtocart-bg: var(--action-button-bg-color);
+  --best-sellers-addtocart-bg-hover: var(--action-button-bg-color-hover);
+  --best-sellers-addtocart-border: var(--neutral-5);
 
   
   

@@ -78,7 +78,7 @@
 }
 
 .addToCartButton{
-    color: var(--high-contrast-light-txt-color);
+    color: var(--best-sellers-addtocart-color);
     background-color: var(--best-sellers-addtocart-bg);
     height:var(--size-8);
     width: 100%;
@@ -89,6 +89,7 @@
     border-radius: 4px;
     box-sizing: border-box;
     border: 1px solid var(--best-sellers-addtocart-border);
+    font-size: var(--font-size-3);
 
     transition: background-color 0.3s ease;
     user-select: none;

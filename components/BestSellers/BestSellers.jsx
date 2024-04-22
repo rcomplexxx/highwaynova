@@ -126,9 +126,9 @@ export default function BestSellers() {
              
               </div>
             </Link>
-            <div onClick={()=>{ onAddToCart(1, bsp.product, bsp.variantName)}} className={styles.addToCartButton}>
+            <button onClick={()=>{ onAddToCart(1, bsp.product, bsp.variantName)}} className={styles.addToCartButton}>
               <span>Add</span>
-            </div>
+            </button>
             
           </SwiperSlide>
         ))}

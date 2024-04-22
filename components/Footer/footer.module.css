@@ -115,7 +115,7 @@
   }
 
   .subscribeButton{
-    color: var(--action-button-footer-txt-color);
+    color: var(--action-button-txt-color);
     background-color: var(--action-button-bg-color);
 
     width: var(--size-10);
