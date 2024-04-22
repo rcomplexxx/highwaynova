@@ -405,7 +405,7 @@ Cormorant+Garamond */
 
   --fullscreen-bg: var(--bg-color);
   --toast-message-color: black;
- --toast-message-bg: var(--neutral-4);
+ --toast-message-bg: var(--neutral-3);
  --fullscreen-nav-bg: var(--main-color-2);
  --fullscreen-arrow-bg:var(--fullscreen-nav-bg);
  --fullscreen-arrow-hover-bg:var(--main-color-4);
