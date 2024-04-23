@@ -182,7 +182,7 @@
 
     .masonry{
   
-      width: calc(100% - var(--size-5));
+      width: calc(100% - var(--size-6));
      
    
   }
