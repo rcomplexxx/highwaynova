@@ -280,6 +280,11 @@ export async function getStaticProps(context) {
 
 
     const reviewsData= getReviewsData(productId);
+
+    if ('supplierPrice' in product) {
+      // Remove the property
+      delete product.supplierPrice;
+    }
     
     
 
