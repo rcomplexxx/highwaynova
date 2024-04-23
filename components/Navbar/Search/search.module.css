@@ -73,13 +73,12 @@
   .customResults{
     display: none;
     max-height: var(--size-14);
-    width: var(--size-12);
+    width: calc(var(--size-12) + var(--size-3));
     position: absolute;
     top: calc(100% + 2px);
     left: 0;
     background-color: var(--navbar-bg);
     padding-bottom: var(--size-2);
-    padding-right: var(--size-4);
    
     user-select: none;
     z-index: 99;
@@ -190,7 +189,7 @@
 @media(max-width: 480px){
   .customSearchBarInput {
 
-    width: var(--size-12);
+    width: calc(var(--size-12) + var(--size-2));
   }
 }
 
@@ -199,11 +198,11 @@
 
   .customSearchBarInput {
 
-        width: 224px;
+        width: var(--size-12-5);
     }
 
     .customResults{
-        width: 224px;
+        width: calc(var(--size-12-5) + var(--size-2));
     }
 
    
