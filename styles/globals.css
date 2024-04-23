@@ -498,7 +498,7 @@ Cormorant+Garamond */
   --input-autofill-color: var(--bg-color);
 
   --checkbox-unchecked-box-shadow: 0 0 0 0 var(--border-color-strong) inset;
-  --checkbox-checked-box-shadow: 0 0 0 var(--size-3) rgb(152, 152, 202) inset;
+  --checkbox-checked-box-shadow: 0 0 0 var(--size-3) var(--main-color-4) inset;
 
   --apt-adder-color: var(--accent-color-6);
   --apt-adder-color-hover: var(--accent-color-7);
@@ -509,7 +509,7 @@ Cormorant+Garamond */
   --google-pay-border-color: transparent;
 
  
-  --select-payment-circle-ring-color: var(--main-color-2);
+  --select-payment-circle-ring-color: var(--main-color-4);
   --select-payment-circle-color: var(--input-outline-color);
 
   --payment-div-bg: var(--neutral-0-5);
@@ -518,7 +518,8 @@ Cormorant+Garamond */
   --paynow-stripe-button-hover: var(--main-button-hover-color);
  
 
-  --more-cards-card-bg: var(--neutral-1);  
+  --more-cards-card-color: var(--neutral-0);
+  --more-cards-card-bg: var(--neutral-6);  
 --more-cards-card-border: rgba(0, 0, 0, 0.08);
 
 --floating-badge-border-color: var(--neutral-7);

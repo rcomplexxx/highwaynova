@@ -1,7 +1,7 @@
 
 .paypalButton{
     position: relative;
-    height: var(--size-8);
+    height: 55px;
     width: 100% !important;
     /* box-shadow: 0 0 2px #704c96; */
     
