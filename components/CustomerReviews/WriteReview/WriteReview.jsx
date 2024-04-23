@@ -455,7 +455,8 @@ export default function WriteReview({ setInfoDivOpen }) {
                           handleNext();
                         }
                       }}
-                      className={`${styles.nextButton}`}
+                      className={`${styles.nextButton} ${
+                        (!reviewInfo.firstName || reviewInfo.firstName=="" || !reviewInfo.email || reviewInfo.email=="") && styles.nextButtonDisabled}`}
                       >
                       Done
                       </button>

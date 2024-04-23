@@ -439,19 +439,19 @@ Cormorant+Garamond */
               /*~ Writing review ~*/
 
 
-  --write-review-main-bg: var(--bg-color);
+  --write-review-main-bg: var(--neutral-1);
   /* #1b191a */
-  --writing-accent-color: gray;
-  --writing-empty-progress-bar: rgb(55, 55, 62);
-  --writing-media-button:  rgb(149, 165, 170);
+  --writing-accent-color: var(--main-color-4);
+  --writing-empty-progress-bar: var(--neutral-2);
+  --writing-media-button:  var(--main-color-5);
  
-  --writing-add-image-div-border: rgb(104, 111, 207);
-  --writing-next-button-bg: rgb(112, 128, 118);
-  --writing-next-button-hover-bg: #364658;
-  --writing-next-button-disabled-txt-color: rgb(15, 16, 26);
+  --writing-add-image-div-border: var(--accent-color-5);
+  --writing-next-button-bg: var(--main-color-3);
+  --writing-next-button-hover-bg: var(--main-color-4);
+  --write-review-disabled-bg: var(--main-color-1);
  
-  --cancel-image-button-bg: var(--surround-cancel-bg);
-
+  --cancel-image-button-bg: var(--neutral-4);
+  --cancel-image-button-bg-hover: var(--neutral-5);
   
 
   

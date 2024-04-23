@@ -105,15 +105,15 @@
     width: var(--size-6);
     
     border-radius: 6px;
-
+    background-color: var(--cancel-image-button-bg);
  
-      padding: var(--size-4);
+      padding: var(--size-3);
       cursor: pointer;
   }
 
   @media (hover: hover) {
   .closeButton:hover{
-    background-color: var(--surround-cancel-bg-hover);
+    background-color: var(--cancel-image-button-bg-hover);
     
   }
 }
@@ -204,7 +204,7 @@
     color: var(--var(--writing-accent-color)-9-elegant);
     background-color: var(--writing-media-button);
     width: 100%;
-    height: 40px;
+    height: 48px;
     border: none;
     border-radius: 8px;
     margin: var(--size-2) 0;
@@ -290,7 +290,7 @@
 
     min-width: 80px;
     width: max-content;
-    height: 40px;
+    height: 48px;
 
     color: var(--high-contrast-light-txt-color);
     background-color:transparent;
@@ -421,12 +421,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    color: black;
+  
     background-color: var(--writing-next-button-bg);
     border: none;
     min-width: 80px;
     width: max-content;
-    height: 40px;
+    height: 48px;
     padding: var(--size-4);
     border-radius: 6px;
     font-size: var(--font-size-3);
@@ -448,13 +448,15 @@
  }
 
  .nextButtonDisabled{
-  color: var(--writing-next-button-disabled-txt-color);
- opacity: 0.75;
+ /* opacity: 0.75; */
+ background-color: var(--write-review-disabled-bg);
+ cursor: default;
 
 }
 .nextButtonDisabled:hover{
   
-  background-color: var(--writing-next-button-bg);
+  background-color: var(--write-review-disabled-bg);
+  
 
 }
 
@@ -499,8 +501,9 @@
   .personInfoInput{
     color: var(--high-contrast-light-txt-color);
    width: 100%;
-    height: 40px;
+    height: 48px;
     background-color: transparent;
+    outline: none;
     border: 1px solid var(--writing-accent-color);
     border-radius: 8px;
     margin-top: var(--size-2);
@@ -508,8 +511,8 @@
   }
 
   .personInfoInput:focus{
-    border-color: var(--input-outline-color-focused);;
-    outline: none;
+    border: 2px solid var(--writing-accent-color);
+    
   }
 
   .personInfoDiv label{
@@ -529,9 +532,12 @@
   .personEmail{
     color:var(--high-contrast-light-txt-color);
     width: 100%;
-    height: 40px;
+    height: 48px;
     background-color: transparent;
-    outline: 1px solid var(--writing-accent-color);
+
+    outline: none;
+    border: 1px solid var(--writing-accent-color);
+    
     border-radius: 8px;
     margin-top: var(--size-2);
     box-sizing: border-box;
@@ -539,7 +545,7 @@
 
   .personEmail:focus{
     border:none;
-    outline: 2px solid var(--input-outline-color-focused);
+    border: 2px solid var(--writing-accent-color);
   }
 
   .personEmailDiv label{
@@ -676,7 +682,7 @@
 
     .continueLink{
       width: 100%;
-      height: 40px;
+      height: 48px;
 
       color: black;
       background-color: var(--writing-next-button-bg);
@@ -730,7 +736,7 @@
 
       display: block;
       position:absolute;
-      bottom: var(--size-9);
+      bottom: var(--size-12);
       left: var(--size-5);
 
       color: black;
