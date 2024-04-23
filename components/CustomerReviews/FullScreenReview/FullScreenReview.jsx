@@ -6,7 +6,7 @@ import ReactHtmlParser from "react-html-parser";
     
 
 export default function FullScreenReview({authorName, text, stars, imageSrc, setFullScreenReview}) {
-    const [imageLoaded, setImageLoaded] = useState();
+    const [imageLoaded, setImageLoaded] = useState({cancelImage: false, mainImage: false});
   
    
     const reviewImageRef= useRef();
@@ -75,7 +75,7 @@ useEffect(()=>{
 
 
 useEffect(()=>{
-  if(imageLoaded && imageSrc && reviewImageRef && window.innerWidth>600) {
+  if(imageLoaded.cancelImage && imageLoaded.mainImage && imageSrc && reviewImageRef && window.innerWidth>600) {
     const { naturalWidth, naturalHeight, clientWidth, clientHeight } = reviewImageRef.current;
     const widthIsBigger = naturalWidth > naturalHeight;
     const imageClientSmallerSize = widthIsBigger ? clientWidth/naturalWidth * naturalHeight : clientHeight/naturalHeight * naturalWidth;
@@ -112,7 +112,10 @@ useEffect(()=>{
 ${(imageSrc?imageLoaded:true) && styles.spawnFullScreenReview}`}>
 
     <Image src='/images/cancelDark.png' height={0} width={0} sizes='32px' onClick={()=>{history.back();}} 
-    className={`${styles.closeFullScreen} ${!imageSrc && styles.closeFullScreenNoImg}`}/>
+    className={`${styles.closeFullScreen} ${!imageSrc && styles.closeFullScreenNoImg}`}
+    onLoad={() => setImageLoaded({...imageLoaded, cancelImage:true})}
+        onError={() => setImageLoaded({...imageLoaded, cancelImage:true})}
+    />
 
    {imageSrc && <div className={styles.reviewImageDiv}>
 
@@ -124,8 +127,8 @@ ${(imageSrc?imageLoaded:true) && styles.spawnFullScreenReview}`}>
         
         loading='eager'
         //za mobilni je 100vw, inace ima tacno odredjeno
-        onLoad={() => setImageLoaded(true)}
-        onError={() =>setImageLoaded(true)}
+        onLoad={() => setImageLoaded({...imageLoaded, mainImage:true})}
+        onError={() => setImageLoaded({...imageLoaded, mainImage:true})}
         className={styles.reviewImage}
         />
 

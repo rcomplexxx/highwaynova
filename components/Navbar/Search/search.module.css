@@ -75,7 +75,7 @@
     max-height: var(--size-14);
     width: var(--size-12);
     position: absolute;
-    top: calc(100% + 1px);
+    top: calc(100% + 2px);
     left: 0;
     background-color: var(--navbar-bg);
     padding-bottom: var(--size-2);

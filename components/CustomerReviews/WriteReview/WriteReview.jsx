@@ -15,6 +15,7 @@ export default function WriteReview({ setInfoDivOpen }) {
   const [reviewInfo, setReviewInfo] = useState({
    
   });
+  const [cancelImageLoaded, setCancelImageLoaded] = useState(false);
   const [errors, setErrors] = useState({ firstName: false, email: false, images5: false });
   
 
@@ -117,7 +118,7 @@ export default function WriteReview({ setInfoDivOpen }) {
      
         <div className={styles.writeReviewPopupDiv}>
           <div className={styles.reviewBackgroundDiv} />
-          <div className={styles.mainReviewDiv}>
+          <div className={`${styles.mainReviewDiv} ${cancelImageLoaded && styles.spawnReviewDiv}`}>
             {ratingPage !== 0 && ratingPage !== 4 && (
               <div
                 className={`${styles.writeReviewFooter} ${styles.writeReviewFooterMobile}`}
@@ -338,6 +339,8 @@ export default function WriteReview({ setInfoDivOpen }) {
 
             {ratingPage == 0 || ratingPage == 4 ? (
                <Image height={24} width={24} src='/images/cancelWhite.png'
+               onLoad={()=>{setCancelImageLoaded(true)}}
+               onError={()=>{setCancelImageLoaded(true)}}
                 onClick={() => {
                   setInfoDivOpen(false);
                

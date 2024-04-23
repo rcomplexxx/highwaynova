@@ -46,9 +46,13 @@
     align-items: center;
     background-color: var(--write-review-main-bg);
     transform: scale(0);
-    animation: scaleAnim 0.5s ease-out 0.2s 1 normal forwards;
+    
     z-index: 2;
     overflow: hidden;
+  }
+
+  .spawnReviewDiv{
+    animation: scaleAnim 0.5s ease-out 0.2s 1 normal forwards;
   }
  
   .reviewPageDiv{
@@ -655,10 +659,14 @@
       max-height: none;
       height: 100%;
       width: 100%;
-      transform: scale(1);
+      transform: translatey(100%) scale(1);
       opacity: 1;
-        animation: spawnWriteReviewMob 0.5s ease;
+    
+    }
+
+    .spawnReviewDiv{
      
+      animation: spawnWriteReviewMob 0.5s ease forwards;
     }
 
     .addImageDiv{
