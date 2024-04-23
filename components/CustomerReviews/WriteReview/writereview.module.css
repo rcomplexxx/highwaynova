@@ -659,8 +659,8 @@
       max-height: none;
       height: 100%;
       width: 100%;
-      transform: translatey(100%) scale(1);
-      opacity: 1;
+      transform: translatey(100%), scale(1);
+      
     
     }
 
