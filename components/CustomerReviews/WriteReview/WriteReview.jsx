@@ -436,7 +436,7 @@ export default function WriteReview({ setInfoDivOpen }) {
               
                 <button
                       
-                      onClick={()=>{if( reviewInfo.text == "")return; handleNext();}}
+                      onClick={()=>{if( !reviewInfo.text || reviewInfo.text == "")return; handleNext();}}
                       className={`${styles.nextButton} ${
                         (!reviewInfo.text || reviewInfo.text == "") && styles.nextButtonDisabled
                       }`}

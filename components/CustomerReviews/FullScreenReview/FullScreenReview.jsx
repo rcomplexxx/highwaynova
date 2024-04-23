@@ -83,11 +83,11 @@ useEffect(()=>{
     //widthIsBigger==true, Width je veci tj 100% od parent div, tako da trebam da zumiram height
 
     if(widthIsBigger){
-      if(imageClientSmallerSize < 576 && imageClientSmallerSize > 520){
+      if(imageClientSmallerSize < 640 && imageClientSmallerSize > 576){
         reviewImageRef.current.style.width = 'auto';
         reviewImageRef.current.style.height = '100%';
       }
-    } else if(imageClientSmallerSize < 448 && imageClientSmallerSize > 400){
+    } else if(imageClientSmallerSize < 512 && imageClientSmallerSize > 464){
       reviewImageRef.current.style.width = '100%';
       reviewImageRef.current.style.height = 'auto';
     }
