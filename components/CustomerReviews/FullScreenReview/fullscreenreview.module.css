@@ -43,7 +43,7 @@
 }
 
 .spawnFullScreenReview{
-    animation: spawnFullScreenReview 0.3s ease forwards;
+    animation: spawnFullScreenReview 0.5s ease-out 0.2s 1 normal forwards;
     /* transform: scale(1); */
 }
 
@@ -165,7 +165,7 @@
     }
 
     .spawnFullScreenReview{
-        animation: spawnFullScreenReviewMob 0.3s ease forwards;
+        animation: spawnFullScreenReviewMob 0.5s ease forwards;
         /* transform: translatey(0); */
     }
 
