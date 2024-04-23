@@ -158,7 +158,7 @@ height : 100vh;
   .shopNow{
   
 
-      height: 48px;
+      height: var(--size-8);
       min-width: var(--size-12);
       color: var(--main-button-color);
       background-color: var(--main-button-bg);

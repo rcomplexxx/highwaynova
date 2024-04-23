@@ -184,7 +184,7 @@ export default function WriteReview({ setInfoDivOpen }) {
                     <div className={styles.userImagesDivWrapper}><div className={styles.userImagesDiv}>
                       {images.map((image, i) => {
                        return <div key={i} className={styles.userImageDiv}>
-                          <img height={0} width={0} src='/images/cancelDark.png' className={styles.cancelImage} onClick={()=>{
+                          <img height={0} width={0} src='/images/cancelWhite.png' className={styles.cancelImage} onClick={()=>{
                             let newImages= images.filter(img=>{return img!=image});
                             setImages(newImages);
                           }}>
@@ -327,13 +327,13 @@ export default function WriteReview({ setInfoDivOpen }) {
               ) : (
                 <>
                   <h1>Thank you!</h1>
-                  <span>Your review was submitted</span>
+                  <span>Your review has been submitted</span>
                 </>
               )}
             </div>
 
             {ratingPage == 0 || ratingPage == 4 ? (
-               <Image height={24} width={24} src='/images/cancelDark.png'
+               <Image height={24} width={24} src='/images/cancelWhite.png'
                 onClick={() => {
                   setInfoDivOpen(false);
                
@@ -430,9 +430,9 @@ export default function WriteReview({ setInfoDivOpen }) {
               
                 <button
                       
-                      onClick={()=>{if(reviewInfo.text == undefined || reviewInfo.text == "")return; handleNext();}}
+                      onClick={()=>{if( reviewInfo.text == "")return; handleNext();}}
                       className={`${styles.nextButton} ${
-                        reviewInfo.text == "" && styles.nextButtonDisabled
+                        (!reviewInfo.text || reviewInfo.text == "") && styles.nextButtonDisabled
                       }`}
                     >
                       Next

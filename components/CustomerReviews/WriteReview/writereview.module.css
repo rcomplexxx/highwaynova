@@ -204,7 +204,7 @@
     color: var(--var(--writing-accent-color)-9-elegant);
     background-color: var(--writing-media-button);
     width: 100%;
-    height: 48px;
+    height: var(--size-8);
     border: none;
     border-radius: 8px;
     margin: var(--size-2) 0;
@@ -290,7 +290,7 @@
 
     min-width: 80px;
     width: max-content;
-    height: 48px;
+    height: var(--size-8);
 
     color: var(--high-contrast-light-txt-color);
     background-color:transparent;
@@ -342,36 +342,7 @@
   }
 
 
-
-  .addImageDiv{
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid var(--writing-accent-color);
-    width: calc(100% / 5 - var(--size-4));
-    aspect-ratio: 1;
-    margin: 6px 6px;
-   box-sizing: border-box;
-   cursor: pointer;
-  }
-
-
-  @media (hover: hover) {
-    .addImageDiv:hover{
-    
-      border: 1px solid var(--writing-add-image-div-border);
-     
-    }
-   }
-
-   .addImageDiv:active{
-   
-    border: 1px solid var(--writing-add-image-div-border);
-   }
-
-
-
+  
   .userImageDiv{
   
     width: calc(100% / 5 - var(--size-4));
@@ -381,7 +352,6 @@
     box-sizing: border-box;
   }
 
- 
 
   .userImage{
     height: 100%;
@@ -410,6 +380,53 @@
 
 
 
+
+
+  .addImageDiv{
+
+    width: calc(100% / 5 - var(--size-4));
+    aspect-ratio: 1;
+
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
+    border: 1px solid var(--writing-accent-color);
+
+    border-radius: 4px;
+    margin: 6px 6px;
+    
+
+    font-weight: 400;
+    font-size: var(--font-size-3);
+   
+   cursor: pointer;
+  }
+
+
+  @media (hover: hover) {
+    .addImageDiv:hover{
+    
+      border: 1px solid var(--writing-add-image-div-border);
+     
+    }
+   }
+
+   .addImageDiv:active{
+   
+    border: 1px solid var(--writing-add-image-div-border);
+   }
+
+
+
+ 
+
+ 
+
+
+
   .userImgsContinue{
     display: none;
    
@@ -426,7 +443,7 @@
     border: none;
     min-width: 80px;
     width: max-content;
-    height: 48px;
+    height: var(--size-8);
     padding: var(--size-4);
     border-radius: 6px;
     font-size: var(--font-size-3);
@@ -501,7 +518,7 @@
   .personInfoInput{
     color: var(--high-contrast-light-txt-color);
    width: 100%;
-    height: 48px;
+    height: var(--size-8);
     background-color: transparent;
     outline: none;
     border: 1px solid var(--writing-accent-color);
@@ -532,7 +549,7 @@
   .personEmail{
     color:var(--high-contrast-light-txt-color);
     width: 100%;
-    height: 48px;
+    height: var(--size-8);
     background-color: transparent;
 
     outline: none;
@@ -682,7 +699,7 @@
 
     .continueLink{
       width: 100%;
-      height: 48px;
+      height: var(--size-8);
 
       color: black;
       background-color: var(--writing-next-button-bg);
@@ -736,7 +753,7 @@
 
       display: block;
       position:absolute;
-      bottom: var(--size-12);
+      bottom: var(--size-9);
       left: var(--size-5);
 
       color: black;

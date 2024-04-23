@@ -93,7 +93,7 @@
 
 .contactInput{
   
-    height: 48px;
+    height: var(--size-8);
     width: 100%;
    
     color: var(--high-contrast-light-txt-color);

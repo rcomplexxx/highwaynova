@@ -439,7 +439,7 @@ Cormorant+Garamond */
               /*~ Writing review ~*/
 
 
-  --write-review-main-bg: var(--neutral-1);
+  --write-review-main-bg: var(--neutral-0-5);
   /* #1b191a */
   --writing-accent-color: var(--main-color-4);
   --writing-empty-progress-bar: var(--neutral-2);
@@ -450,7 +450,7 @@ Cormorant+Garamond */
   --writing-next-button-hover-bg: var(--main-color-4);
   --write-review-disabled-bg: var(--main-color-1);
  
-  --cancel-image-button-bg: var(--neutral-4);
+  --cancel-image-button-bg: transparent;
   --cancel-image-button-bg-hover: var(--neutral-5);
   
 

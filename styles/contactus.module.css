@@ -112,7 +112,7 @@
 
 .contactInput{
 
-    height: 48px;
+    height: var(--size-8);
     width: 100%;
     
     color: var(--high-contrast-light-txt-color);
@@ -303,7 +303,7 @@ font-size: var(--font-size-1);
     border: 1px solid var(--contact-send-btn-outline);
 
     margin: var(--size-6) var(--size-1);
-    margin-bottom: 48px;
+    margin-bottom: var(--size-8);
     font-size: var(--font-size-4);
     cursor: pointer;
 }
