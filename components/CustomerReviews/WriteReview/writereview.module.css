@@ -30,7 +30,7 @@
     height: 100%;
     width: 100%;
     background-color: var(--dim-bg);
-
+    z-index: 11;
 
   }
 
@@ -836,20 +836,7 @@
     }
   }
 
-  /* @keyframes spawnWriteReviewMob{
-    0% {
-      opacity: 0.7;
-      transform: translatey(100%);
-    }
-    30%{
-      opacity:1;
-    }
-    100% {
-      opacity: 1;
-      transform: translatey(0);
-    }
-  } */
-
+  
 
   @keyframes fillBar {
     0% {
