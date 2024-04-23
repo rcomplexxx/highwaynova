@@ -223,8 +223,8 @@
     width: calc(100% - 32px) !important;
    
    
-    margin: 0 var(--size-3) !important;
-    transform: translateX(8px) !important;
+    margin: 0 var(--size-2) !important;
+    transform: translateX(12px) !important;
   }
 
 

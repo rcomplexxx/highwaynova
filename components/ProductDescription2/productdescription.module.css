@@ -12,7 +12,7 @@
 @media (max-width: 1080px){
     .descriptionDiv{
        
-        margin: var(--size-7) var(--size-3);
+        margin: var(--size-7) 0;
         margin-top: 0;
     }
 }
