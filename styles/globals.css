@@ -422,7 +422,7 @@ Cormorant+Garamond */
  --rating-info-percent-bar-fill: var(--accent-color-2);
 
  --star-color:#e9b335;
---star-empty-color: var(--neutral-3);
+--star-empty-color: var(--neutral-2);
 --star-hover-color: orange;
 
 
@@ -442,7 +442,7 @@ Cormorant+Garamond */
   --write-review-main-bg: var(--neutral-0-5);
   /* #1b191a */
   --writing-accent-color: var(--main-color-4);
-  --writing-empty-progress-bar: var(--neutral-2);
+  --writing-empty-progress-bar: var(--neutral-1);
   --writing-media-button:  var(--main-color-5);
  
   --writing-add-image-div-border: var(--accent-color-5);
@@ -458,7 +458,7 @@ Cormorant+Garamond */
 
 
 /*~ Cart ~*/
-  --free-shipping-slider-empty-color: var(--neutral-2);
+  --free-shipping-slider-empty-color: var(--neutral-1);
   --free-shipping-slider-fill-color: var(--accent-color-5);
   --best-sellers-addtocart-color: var(--neutral-0);
   --best-sellers-bg: var(--accent-color-1);
