@@ -6,9 +6,7 @@
   flex-direction: column;
   align-items: center;
 
-  color: var(--rating-info-color);
-  background-color: var(--rating-info-bg);
-  box-shadow: var(--rating-info-box-shadow);
+
   border-radius: 4px;
  
   opacity: 0;
@@ -21,7 +19,7 @@
 
 
   z-index: 9;
-  contain:content;
+  contain: layout;
   pointer-events: none;
 }
 
@@ -35,6 +33,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  color: var(--rating-info-color);
+  background-color: var(--rating-info-bg);
+  box-shadow: var(--rating-info-box-shadow);
 
   box-sizing: border-box;
   padding: 0 var(--size-5);
@@ -129,14 +131,14 @@
 
       max-width: var(--size-14);
       max-height: 0;
-      width: calc(100% + var(--size-5))  ;
+      width: calc(100% + var(--size-3))  ;
     
       
       margin-bottom: var(--size-3);
       transition: opacity 0.3s ease, transform 0.3s ease, max-height 0.3s ease;
       transform: translateY(-16px);
       opacity: 0;
-     
+      
      
       overflow: hidden;
      
@@ -145,6 +147,8 @@
     .ratingInfoMain{
       max-width: var(--size-14);
       width: 100% ;
+      margin: var(--size-3) 0;
+      
     }
 
 
