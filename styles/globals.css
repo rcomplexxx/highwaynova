@@ -416,10 +416,10 @@ Cormorant+Garamond */
 
  --rating-info-color: var(--neutral-9);
  --rating-info-bg: var(--neutral-1);
- --rating-info-box-shadow: 0px 2px 4px 0px var(--neutral-1);
+ --rating-info-box-shadow: 0px 2px 8px 1px var(--neutral-0-5);
  
  --rating-info-percent-bar-empty: var(--star-empty-color);
- --rating-info-percent-bar-fill: var(--accent-color-2);
+ --rating-info-percent-bar-fill: var(--main-color-4);
 
  --star-color:#e9b335;
 --star-empty-color: var(--neutral-2);

@@ -172,9 +172,7 @@
   }
 
 
-    .my_masonry_grid{
-      width: calc(100% - var(--size-11));
-    }
+    
     .mainDiv{
      margin-top: var(--size-9);
     }
@@ -184,15 +182,13 @@
 
     .masonry{
   
-      width: calc(100% - var(--size-8));
+      width: calc(100% - var(--size-7));
      
    
   }
 
 
-    .my_masonry_grid{
-      width: calc(100% - var(--size-8));
-    }
+  
   }
 
 

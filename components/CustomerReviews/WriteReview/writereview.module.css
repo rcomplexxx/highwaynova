@@ -325,31 +325,40 @@
   .userImagesDivWrapper{
    
     width: 100%;
-    margin: var(--size-9);
+    padding: var(--size-9);
    
   }
 
   .userImagesDiv{
     position: relative;
-    width: 100%;
+   
     display: flex;
     justify-content: flex-start;
+    align-items: center;
     flex-wrap:wrap;
    
-    padding: 6px;
+    padding: 8px;
     box-sizing: border-box;
     border: 1px solid var(--writing-accent-color);
+   
   }
 
 
   
+
+
+
+
   .userImageDiv{
+
+    display: flex;
+    align-items: center;
   
     width: calc(100% / 5 - var(--size-4));
     aspect-ratio: 1;
-    margin: 6px 6px;
+    margin: 6px;
     position: relative;
-    box-sizing: border-box;
+   
   }
 
 
@@ -357,9 +366,11 @@
     height: 100%;
     width: 100%;
     border-radius: 4px;
+
     
   }
 
+    
   .cancelImage{
     position: absolute;
     top: -6px;
@@ -378,6 +389,8 @@
   
   }
 
+ 
+
 
 
 
@@ -393,10 +406,11 @@
     align-items: center;
 
 
+    box-sizing: border-box;
     border: 1px solid var(--writing-accent-color);
 
     border-radius: 4px;
-    margin: 6px 6px;
+    margin: 6px;
     
 
     font-size: var(--font-size-3);
@@ -421,6 +435,7 @@
 
 
  
+
 
  
 

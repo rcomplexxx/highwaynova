@@ -181,7 +181,11 @@ export default function WriteReview({ setInfoDivOpen }) {
                  
 
                   {images.length !== 0 ? (
-                    <div className={styles.userImagesDivWrapper}><div className={styles.userImagesDiv}>
+                    <div className={styles.userImagesDivWrapper}>
+                      
+                      <div className={styles.userImagesDiv}>
+
+                        
                       {images.map((image, i) => {
                        return <div key={i} className={styles.userImageDiv}>
                           <img height={0} width={0} src='/images/cancelWhite.png' className={styles.cancelImage} onClick={()=>{
