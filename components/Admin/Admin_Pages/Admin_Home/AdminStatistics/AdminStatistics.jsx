@@ -3,52 +3,16 @@ import styles from './adminstatistics.module.css'
 import DatePicker from 'react-multi-date-picker';
 import "react-multi-date-picker/styles/backgrounds/bg-dark.css"
 import products from "@/data/products.json";
-import { Line } from 'react-chartjs-2';
-import 'chartjs-adapter-moment';
-import {Chart, LinearScale, PointElement,LineElement , Tooltip, Legend, TimeScale, Filler} from "chart.js"; 
+import coupons from "@/data/coupons.json"
+import Charts from './Charts/Charts';
 
-
-
-Chart.register(LinearScale, LineElement , PointElement, Tooltip, Legend, TimeScale, Filler); 
 
 export default function AdminStatistics(){
     const [selectedRange, setSelectedRange] = useState([]);
     const [cashData, setCashData] = useState([]);
 
-    const [chartData, setChartData] = useState(null);
-
-    const chartOptions = {
-      scales: {
-        x: {
-          type: 'time',
-          time: {
-            unit: 'day', // You can change the unit to 'week', 'month', or 'hour' as needed
-          },
-        },
-        y: {
-          beginAtZero: true,
-        },
-      },
-      plugins: {
-        legend: {
-          display: true,
-          position: 'top',
-        },
-        zoom: {
-          zoom: {
-            wheel: {
-              enabled: true,
-            },
-            pinch: {
-              enabled: true,
-            },
-            mode: 'x',
-          },
-        },
-      },
-
-      
-    };
+  
+   
 
 
 
@@ -73,81 +37,70 @@ export default function AdminStatistics(){
 
               
               const cashInfo = data.data.map(orderInfo => {
+                //Ovde se nalazi cash info.
                 const items = JSON.parse(orderInfo.items);
               
                 let totalPrice=0;
+                let supplierCosts=0;
+                let tip = orderInfo.tip?orderInfo.tip:0;
+
+
+                console.log('or in', orderInfo)
               items.forEach((item) => {
+
+
+                
                   const product = products.find((p) => p.id === item.id);
+                  console.log('coup', coupons)
+                  const coupon = coupons.find(c=>{return c.code ==orderInfo.couponCode.toLowerCase()});
+
+                  let discountPercentage = coupon?coupon.discountPercentage:0;
+
+                  console.log('disc percentage', discountPercentage);
                 
                   if (product) {
                     const price = product.price * parseInt(item.quantity, 10);
+                    console.log('supp pr', product)
                     totalPrice=totalPrice+price;
+                    if(discountPercentage)totalPrice=totalPrice - price  * discountPercentage /100;
+                    supplierCosts += product.supplierPrice.product * parseInt(item.quantity, 10)  + product.supplierPrice.shipping;
+                    
+                    
                   }
+
+                  console.log('Product data', product)
+
+
                 });
+
+                totalPrice= Number(totalPrice.toFixed(2));
+                supplierCosts= Number(supplierCosts.toFixed(2));
+                tip= parseFloat(tip, 2);
+
+                console.log('testing total price', totalPrice)
+                //Doradi popust
+                //Doradi tip
+             
               
-                return ({createdDate: orderInfo.createdDate, cash: totalPrice})
+
+          
+               
+
+                return ({createdDate: orderInfo.createdDate, cashObtained: totalPrice, supplierCosts:supplierCosts, tip:tip})
 
               }
               );
               setCashData(cashInfo);
 
-              const chartInfo = [];
+              console.log('cash info', cashInfo)
 
-              const startDate = Math.floor(Math.min(
-                ...cashInfo.map(item => {console.log(item);return item.createdDate})
-                
-                )
-                );
-              const currentDate = Math.floor(Date.now() / (1000 * 60 * 60 * 24))+1;
 
-              for ( let i = startDate; i < currentDate; i++){
-                console.log('dates',new Date(i * 1000 * 60 * 60 * 24));
-                chartInfo.push({date: i, cash: 0})
-              }
-
-              cashInfo.map(item=>{
-               const foundItemIndex= chartInfo.findIndex(chartItem=>{return chartItem.date===item.createdDate});
-               if(foundItemIndex != -1)chartInfo[foundItemIndex].cash=chartInfo[foundItemIndex].cash+item.cash;
-            
-               
-               else    chartInfo.push({date:item.createdDate, cash:item.cash});
-
-               
-              })
 
                 
-          
-                const formattedData = chartInfo.map(item => ({
-                  x: new Date(item.date * 24 * 60 * 60 * 1000),
-                  y: item.cash,
-                }));
-            
-                // Sorting data based on the date
-                formattedData.sort((a, b) => a.x - b.x);
-            
-                // Creating datasets for Chart.js
-                const chartDatasets = [
-                  {
-                    label: 'Money in (without expenses)',
-                    data: formattedData,
-                    fill: "origin",
-                    backgroundColor: 'rgba(21, 23, 27, 0.507)',
-                    borderColor: 'rgba(63, 96, 79, 0.85)',
-                    responsive: true,
-                    tension: 0.1
-                  },
-                ];
-            
-              
-            
-                setChartData({
-                  datasets: chartDatasets,
-                });
-  
 
-              // products
-              // setData(data.data);
-              // initializeData(data.data);
+
+
+
             } else {
               throw new Error("Network response was not ok.");
             }
@@ -180,20 +133,39 @@ export default function AdminStatistics(){
           else if(period=='All time') startPeriod=0;
         }
         let orderNumber= 0;
-        let cashEarned= 0;
-        console.log(cashData, startPeriod, endPeriod)
+        let customerCash= 0;
+        let supplierCosts = 0;
+        let tip = 0;
+       
         if(cashData) {cashData.forEach(info=>{
-            if(info.createdDate>startPeriod && info.createdDate< endPeriod){
+            if(info.createdDate>=startPeriod && info.createdDate<= endPeriod){
               orderNumber=orderNumber+1;
-              cashEarned=cashEarned+info.cash
+             
+              customerCash=customerCash+info.cashObtained
+              console.log('curent cus price', customerCash)
+              supplierCosts+=info.supplierCosts;
+              tip+=info.tip;
+          
             }
+
+            
+
+
         });
-        console.log('or', orderNumber)
+
+        customerCash=customerCash.toFixed(2);
+        supplierCosts=supplierCosts.toFixed(2);
+        tip=tip.toFixed(2);
+        let profit= Number(customerCash) - Number(supplierCosts)+Number(tip);
+        profit=profit.toFixed(2);
 
         return <div className={styles.saleStat}>
         <span className={styles.statName}>{period}</span> 
          <span className={styles.statName}>{orderNumber}</span> 
-        <span className={styles.statName}>${cashEarned}</span> 
+        <span className={styles.statName}>${customerCash}</span> 
+        <span className={styles.statName}>${tip}</span> 
+        <span className={styles.statName}>${supplierCosts}</span> 
+        <span className={styles.statName}>${profit}</span> 
         </div>
         }
         return <div className={styles.saleStat}>
@@ -202,18 +174,61 @@ export default function AdminStatistics(){
       }
 
       const CustomPeriodData= ()=>{
+
+
+
         let orderNumber= 0;
-        let cashEarned= 0;
+        let customerCash= 0;
+        let supplierCosts = 0;
+        let tip = 0;
+
+
+
+
         if(selectedRange.length===2) {cashData.forEach(info=>{
-          if(info.createdDate>selectedRange[0] && info.createdDate< selectedRange[1]){
-            orderNumber=orderNumber+1;
-            cashEarned=cashEarned+info.cash
+          if(info.createdDate>=selectedRange[0] && info.createdDate< selectedRange[1]){
+
+
+              //=
+
+
+
+
+
+
+        
+       
+
+              orderNumber=orderNumber+1;
+             
+              customerCash=customerCash+info.cashObtained
+              console.log('curent cus price', customerCash)
+              supplierCosts+=info.supplierCosts;
+              tip+=info.tip;
+        
+
+
+              
+
+
+
+
           }
       });
-      return {orderNumber, cashEarned}
+
+
+      
+      customerCash=customerCash.toFixed(2);
+      supplierCosts=supplierCosts.toFixed(2);
+      tip=tip.toFixed(2);
+      let profit= Number(customerCash) - Number(supplierCosts)+Number(tip);
+      profit=profit.toFixed(2);
+
+
+      return {orderNumber, customerCash, supplierCosts, tip, profit}
       }
       else{
-        return {orderNumber:'N/A', cashEarned:'N/A'}
+        return {orderNumber:'N/A', customerCash:'N/A', supplierCosts:'N/A', tip:'N/A', profit: 'N/A'}
       }
     };
 
@@ -230,7 +245,10 @@ export default function AdminStatistics(){
     <div className={styles.saleStat}>
       <h2>Period</h2>
       <h2>Number of orders</h2>
-      <h2>Cash Earned</h2>
+      <h2>Customer cash (with discounts)</h2>
+      <h2>Tips</h2>
+      <h2>Supplier costs</h2>
+      <h2>Profit</h2>
       </div>
 
       {StatField('Today')}
@@ -249,13 +267,18 @@ export default function AdminStatistics(){
     inputClass={styles.dateInput}
     onChange={(value) => {
             if(value.length>1)
-          setSelectedRange([ Math.floor(value[0].valueOf()/ 86400000),  Math.floor(value[1].valueOf()/ 86400000)]);
+          setSelectedRange([ Math.floor(value[0].valueOf()/ 86400000),  Math.floor(value[1].valueOf()/ 86400000)+1]);
         else setSelectedRange([]);
           }}/>
           
 </div>
+
+
 <span className={styles.statName}>{CustomPeriodData().orderNumber}</span> 
-        <span className={styles.statName}>${CustomPeriodData().cashEarned}</span>
+        <span className={styles.statName}>${CustomPeriodData().customerCash}</span>
+        <span className={styles.statName}>{CustomPeriodData().tip}</span> 
+        <span className={styles.statName}>${CustomPeriodData().supplierCosts}</span>
+        <span className={styles.statName}>{CustomPeriodData().profit}</span> 
 
 </div>
       
@@ -266,18 +289,11 @@ export default function AdminStatistics(){
     </div>
 
 
+          <Charts title="Customer cash (with discounts)" chartData={cashData.map(item => {return {createdDate:item.createdDate, yMetric:item.cashObtained}})}/>
 
+          <Charts title="Profit" chartData={cashData.map(item => {return {createdDate:item.createdDate, yMetric:Number(item.cashObtained) - Number(item.supplierCosts)+Number(item.tip)}})}/>
 
-    <div className={styles.lineStatsWrapper}>
-      {chartData && (
-        <Line
-          data={chartData}
-          options={chartOptions}
-          width={600}
-          height={400}
-        />
-      )}
-    </div>
+  
 
     </div>
 }

@@ -18,6 +18,7 @@
     ],
     "price": 29.99,
     "stickerPrice": 46.99,
+    "supplierPrice": {"product": 15.00, "shipping": 5.29},
     "fbt": [
       {
         "id": 1,
@@ -56,6 +57,7 @@
     ],
     "price": 17.99,
     "stickerPrice": 22.99,
+    "supplierPrice": {"product": 12.00, "shipping": 3.29},
     "fbt": [
       {
         "id": 0,
@@ -100,6 +102,7 @@
     ],
     "price": 16.99,
     "stickerPrice": 19.99,
+    "supplierPrice": {"product": 7.00, "shipping": 0.00},
     "fbt": [
       {
         "id": 0,
@@ -141,6 +144,7 @@
     ],
     "price": 21.99,
     "stickerPrice": 27.99,
+    "supplierPrice": {"product": 5.79, "shipping": 2.00},
     "fbt": [
       {
         "id": 0,
@@ -171,6 +175,7 @@
       1
     ],
     "price": 44.99,
+    "supplierPrice": {"product": 16.32, "shipping": 4.66},
     "fbt": [
       {
         "id": 2,
