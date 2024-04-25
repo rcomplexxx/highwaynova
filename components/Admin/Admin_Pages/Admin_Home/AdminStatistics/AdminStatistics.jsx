@@ -5,12 +5,16 @@ import "react-multi-date-picker/styles/backgrounds/bg-dark.css"
 import products from "@/data/products.json";
 import coupons from "@/data/coupons.json"
 import Charts from './Charts/Charts';
+import Image from 'next/image';
 
 
 export default function AdminStatistics(){
-    const [selectedRange, setSelectedRange] = useState([]);
+    const [selectedRange, setSelectedRange] = useState([]); //Modza ne treba selectedRange
     const [cashData, setCashData] = useState([]);
-
+    const [revealStatsReadingInstructions, setRevealStatsReadingInstructions] = useState(false);
+    const [showCharts, setShowCharts] = useState(true);
+    const [customDateStats, setCustomDateStats] = useState({orderNumber:'N/A', customerCash:'N/A', discountLostMoney:'N/A', supplierCosts:'N/A', tip:'N/A', profit: 'N/A'});
+    const [shouldUseOnlyFulfilledOrders, setShouldUseOnlyFulfilledOrders]= useState(false);
   
    
 
@@ -26,7 +30,7 @@ export default function AdminStatistics(){
                 "Content-Type": "application/json",
               },
               body: JSON.stringify(
-                { dataType:"get_order_cash_info" }
+                { dataType:shouldUseOnlyFulfilledOrders?"get_order_cash_info_only_fulfilled_orders":"get_order_cash_info" }
               ),
             });
       
@@ -43,6 +47,7 @@ export default function AdminStatistics(){
                 let totalPrice=0;
                 let supplierCosts=0;
                 let tip = orderInfo.tip?orderInfo.tip:0;
+                let discountLostMoney = 0;
 
 
                 console.log('or in', orderInfo)
@@ -62,7 +67,8 @@ export default function AdminStatistics(){
                     const price = product.price * parseInt(item.quantity, 10);
                     console.log('supp pr', product)
                     totalPrice=totalPrice+price;
-                    if(discountPercentage)totalPrice=totalPrice - price  * discountPercentage /100;
+                    discountLostMoney= discountLostMoney+price  * discountPercentage /100;
+                    if(discountPercentage)totalPrice=totalPrice - discountLostMoney;
                     supplierCosts += product.supplierPrice.product * parseInt(item.quantity, 10)  + product.supplierPrice.shipping;
                     
                     
@@ -74,6 +80,7 @@ export default function AdminStatistics(){
                 });
 
                 totalPrice= Number(totalPrice.toFixed(2));
+                discountLostMoney= Number(discountLostMoney.toFixed(2));
                 supplierCosts= Number(supplierCosts.toFixed(2));
                 tip= parseFloat(tip, 2);
 
@@ -86,7 +93,7 @@ export default function AdminStatistics(){
           
                
 
-                return ({createdDate: orderInfo.createdDate, cashObtained: totalPrice, supplierCosts:supplierCosts, tip:tip})
+                return ({createdDate: orderInfo.createdDate, cashObtained: totalPrice, discountLostMoney:discountLostMoney, supplierCosts:supplierCosts, tip:tip})
 
               }
               );
@@ -110,7 +117,7 @@ export default function AdminStatistics(){
         };
       
         fetchData();
-      }, []);
+      }, [shouldUseOnlyFulfilledOrders]);
 
 
 
@@ -134,6 +141,7 @@ export default function AdminStatistics(){
         }
         let orderNumber= 0;
         let customerCash= 0;
+        let discountLostMoney=0;
         let supplierCosts = 0;
         let tip = 0;
        
@@ -143,6 +151,7 @@ export default function AdminStatistics(){
              
               customerCash=customerCash+info.cashObtained
               console.log('curent cus price', customerCash)
+              discountLostMoney+= info.discountLostMoney;
               supplierCosts+=info.supplierCosts;
               tip+=info.tip;
           
@@ -163,6 +172,7 @@ export default function AdminStatistics(){
         <span className={styles.statName}>{period}</span> 
          <span className={styles.statName}>{orderNumber}</span> 
         <span className={styles.statName}>${customerCash}</span> 
+        <span className={styles.statName}>${discountLostMoney}</span>
         <span className={styles.statName}>${tip}</span> 
         <span className={styles.statName}>${supplierCosts}</span> 
         <span className={styles.statName}>${profit}</span> 
@@ -173,7 +183,7 @@ export default function AdminStatistics(){
         
       }
 
-      const CustomPeriodData= ()=>{
+      const customPeriodData= (selectedRange)=>{
 
 
 
@@ -181,12 +191,13 @@ export default function AdminStatistics(){
         let customerCash= 0;
         let supplierCosts = 0;
         let tip = 0;
+        let discountLostMoney= 0;
 
 
 
 
-        if(selectedRange.length===2) {cashData.forEach(info=>{
-          if(info.createdDate>=selectedRange[0] && info.createdDate< selectedRange[1]){
+        cashData.forEach(info=>{
+          if(info.createdDate>=selectedRange[0] && info.createdDate<= selectedRange[1]){
 
 
               //=
@@ -205,6 +216,7 @@ export default function AdminStatistics(){
               console.log('curent cus price', customerCash)
               supplierCosts+=info.supplierCosts;
               tip+=info.tip;
+              discountLostMoney+=info.discountLostMoney;
         
 
 
@@ -220,16 +232,17 @@ export default function AdminStatistics(){
       
       customerCash=customerCash.toFixed(2);
       supplierCosts=supplierCosts.toFixed(2);
+      discountLostMoney=discountLostMoney.toFixed(2);
       tip=tip.toFixed(2);
       let profit= Number(customerCash) - Number(supplierCosts)+Number(tip);
       profit=profit.toFixed(2);
 
+      setCustomDateStats({orderNumber, customerCash, discountLostMoney, supplierCosts, tip, profit})
 
-      return {orderNumber, customerCash, supplierCosts, tip, profit}
-      }
-      else{
-        return {orderNumber:'N/A', customerCash:'N/A', supplierCosts:'N/A', tip:'N/A', profit: 'N/A'}
-      }
+
+     
+    
+       
     };
 
 
@@ -244,10 +257,11 @@ export default function AdminStatistics(){
 
     <div className={styles.saleStat}>
       <h2>Period</h2>
-      <h2>Number of orders</h2>
-      <h2>Customer cash (with discounts)</h2>
+      <h2>OQ</h2>
+      <h2>SR</h2>
+      <h2>LID</h2>
       <h2>Tips</h2>
-      <h2>Supplier costs</h2>
+      <h2>SC</h2>
       <h2>Profit</h2>
       </div>
 
@@ -266,19 +280,31 @@ export default function AdminStatistics(){
     <DatePicker range format="DD/MM/YYYY"  className={`bg-dark ${styles.datePicker}`}
     inputClass={styles.dateInput}
     onChange={(value) => {
-            if(value.length>1)
-          setSelectedRange([ Math.floor(value[0].valueOf()/ 86400000),  Math.floor(value[1].valueOf()/ 86400000)+1]);
-        else setSelectedRange([]);
+
+            if(value.length>1){
+              const dateRange = [ Math.floor(value[0].valueOf()/ 86400000),  Math.floor(value[1].valueOf()/ 86400000)];
+          setSelectedRange(dateRange);
+          customPeriodData(dateRange); //ovde
+            }
+
+        else {
+          setSelectedRange([]);
+          setCustomDateStats({orderNumber:'N/A', customerCash:'N/A', discountLostMoney:'N/A', supplierCosts:'N/A', tip:'N/A', profit: 'N/A'});
+      
+
+        }
+        
           }}/>
           
 </div>
 
 
-<span className={styles.statName}>{CustomPeriodData().orderNumber}</span> 
-        <span className={styles.statName}>${CustomPeriodData().customerCash}</span>
-        <span className={styles.statName}>{CustomPeriodData().tip}</span> 
-        <span className={styles.statName}>${CustomPeriodData().supplierCosts}</span>
-        <span className={styles.statName}>{CustomPeriodData().profit}</span> 
+<span className={styles.statName}>{customDateStats.orderNumber}</span> 
+        <span className={styles.statName}>{`${customDateStats.customerCash!="N/A" ? "$": ""}${customDateStats.customerCash}`}</span>
+        <span className={styles.statName}>{`${customDateStats.discountLostMoney!="N/A" ? "$": ""}${customDateStats.discountLostMoney}`}</span>
+        <span className={styles.statName}>{`${customDateStats.tip!="N/A" ? "$": ""}${customDateStats.tip}`}</span> 
+        <span className={styles.statName}>{`${customDateStats.supplierCosts!="N/A" ? "$": ""}${customDateStats.supplierCosts}`}</span>
+        <span className={styles.statName}>{`${customDateStats.profit!="N/A" ? "$": ""}${customDateStats.profit}`}</span> 
 
 </div>
       
@@ -289,10 +315,60 @@ export default function AdminStatistics(){
     </div>
 
 
-          <Charts title="Customer cash (with discounts)" chartData={cashData.map(item => {return {createdDate:item.createdDate, yMetric:item.cashObtained}})}/>
+
+    <div tabIndex={0} className={styles.onlyFulfilledOrdersDiv} onClick={()=>{setShouldUseOnlyFulfilledOrders(!shouldUseOnlyFulfilledOrders)}}>
+               
+<div  className={`${styles.onlyFulfilledOrdersChecker} 
+${shouldUseOnlyFulfilledOrders && styles.onlyFulfilledOrdersChecked}`}
+ 
+>
+       <Image id='onlyFulfilledOrdersCorrect' src='/images/correctDark.svg' 
+       
+       className={styles.checkImage} height={10} width={10}/>
+      </div>
+
+      
+ 
+  <span className={styles.onlyFulfilledOrdersText}>
+  Show stats only for fulfilled orders
+ </span>
+      </div>
+
+    <div className={styles.adminHomeControlsWrapper}>
+          <button 
+          onClick={()=>{setRevealStatsReadingInstructions(!revealStatsReadingInstructions)}}
+          className={styles.revealInstructionsButton}>
+            {revealStatsReadingInstructions?"Hide stats reading instructions":"Reveal stats reading instructions"}
+            </button>
+
+            <button 
+            className={styles.revealInstructionsButton}
+             onClick={()=>{setShowCharts(!showCharts)}}
+             >
+              {showCharts?"Hide charts":"Show charts"}
+            </button>
+
+            </div>
+
+
+            {revealStatsReadingInstructions && <>
+    <span className={styles.readStatsInstructionsSpan}>Period is specified time in which metrics are measured.</span>
+    <span className={styles.readStatsInstructionsSpan}>Order quantity(OQ) is the number of orders placed.</span>
+    <span className={styles.readStatsInstructionsSpan}>Sales revenue(SR) is the money obtained just from sales(product costs minus discounts, excluding tips).</span>
+    <span className={styles.readStatsInstructionsSpan}>Lost in discounts(LID) is money lost in discounts. Ps. Discounts let you get more customers, and more long-term value.</span>
+    <span className={styles.readStatsInstructionsSpan}>Tips is money generously donated by customers.</span>
+    <span className={styles.readStatsInstructionsSpan}>Supplier costs(SC) is the money spent on suppliers to purchase products to fulfill orders.</span>
+    <span className={styles.readStatsInstructionsSpan}>Profit is the amount of money remaining after deducting Supplier costs from Revenue, and adding tips.</span>
+    </>
+}
+
+{showCharts && <>
+
+          <Charts title="Revenue" chartData={cashData.map(item => {return {createdDate:item.createdDate, yMetric:item.cashObtained}})}/>
 
           <Charts title="Profit" chartData={cashData.map(item => {return {createdDate:item.createdDate, yMetric:Number(item.cashObtained) - Number(item.supplierCosts)+Number(item.tip)}})}/>
-
+          </>
+}
   
 
     </div>

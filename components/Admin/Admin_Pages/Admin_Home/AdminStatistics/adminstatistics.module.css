@@ -86,10 +86,109 @@
 }
 
 
-.lineStatsWrapper{
-    height: var(--size-13);
+
+
+.onlyFulfilledOrdersDiv{
+   
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    padding: var(--size-5) 0 ;
+    font-size: var(--font-size-3);
+
+    align-self: flex-start;
+    cursor: pointer;
+    user-select: none;
+  }
+
+
+
+
+  .onlyFulfilledOrdersChecker{
+
+    height:  var(--size-5);
+    width:  var(--size-5);
+   
+  
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    border: 1px solid var(--input-outline-color);
+    flex-shrink: 0;
+
+    box-shadow: var(--checkbox-unchecked-box-shadow);
+
+    transition: box-shadow 0.2s ease;
+
+    margin-right: var(--size-3);
+    cursor: pointer;
+  }
+
+
+
+  .onlyFulfilledOrdersDiv:focus  .onlyFulfilledOrdersChecker{
+    border: 1px solid var(--checkbox-checked-bg-color);
+  }
+  
+
+  .onlyFulfilledOrdersChecked{
+    box-shadow: var( --checkbox-checked-box-shadow);
+  }
+
+  
+
+  .checkImage{
+    opacity: 0;
+    transition: opacity 0.2s ease;
+   
+  }
+
+  .onlyFulfilledOrdersChecked .checkImage{
+    opacity: 1;
+  }
+
+  .onlyFulfilledOrdersText{
+    font-size: var(--font-size-2);
+   
+  }
+
+
+
+
+.adminHomeControlsWrapper{
     width: 100%;
-    margin-top: var(--size-7);
-    margin-bottom: var(--size-7);
-    z-index: 10;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-top: var(--size-3);
 }
+
+
+.revealInstructionsButton{
+    color: var(--admin-txt-color);
+    background-color: transparent;
+
+    
+    margin-bottom: var(--size-3);
+    padding: var(--size-4) var(--size-6);
+   
+    border-radius: 2px;
+    border: 1px solid var(--border-color-strong);
+
+    font-weight: 400;
+
+    align-self: flex-start;
+    cursor: pointer;
+    user-select: none;
+}
+
+
+
+.readStatsInstructionsSpan{
+    line-height: var(--size-7);
+    align-self: flex-start;
+}
+

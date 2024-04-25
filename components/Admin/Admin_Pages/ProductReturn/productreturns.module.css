@@ -1,0 +1,64 @@
+.mainDiv{
+    position: relative;
+    color: rgb(225, 236, 238);
+    width:100%;
+    max-width: var(--size-18);
+    min-height: var(--size-13);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* border: 1px solid rgb(143, 151, 156); */
+    border-radius: 8px;
+    padding: var(--size-7);
+    padding-top: 0;
+}
+
+
+
+.inputProductId{
+    color: rgb(225, 236, 238);
+    background-color: var(--email-input-bg);
+    
+    width: auto;
+  
+    box-sizing: border-box;
+    padding: var(--size-3);
+    font-size: var(--font-size-5);
+    line-height: var(--size-7);
+   margin-top: var(--size-3);
+   border: 1px solid var(--border-color-strong);
+   border-radius: 8px;
+   outline: none;
+}
+
+.inputProductId::placeholder{
+    font-size: var(--font-size-1);
+}
+
+.saveDescription{
+    
+    color: var(--admin-txt-color);
+    background-color: transparent;
+    padding: var(--size-3) var(--size-6);
+    border-radius: 2px;
+    border: 1px solid var(--border-color-strong);
+    margin-top: var(--size-5);
+    margin-bottom: var(--size-3);
+    cursor: pointer;
+    user-select: none;
+}
+
+.fileNewReturnButton{
+    margin-top: var(--size-5);
+    margin-bottom: var(--size-9);
+}
+
+
+.ordersByEmailDiv{
+    height: var(--size-3);
+    width: 100%;
+    background-color: red;
+
+
+    margin-top: var(--size-6);
+}

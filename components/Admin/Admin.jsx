@@ -14,6 +14,8 @@ import NewCampaign from "./Admin_Pages/Emails/NewCampaign/NewCampaign";
 import Campaigns from "./Admin_Pages/Emails/Campaigns/Campaigns";
 import DataWiper from "./Admin_Pages/DataWiper/DataWiper";
 import DescriptionMaker from "./Admin_Pages/DescriptionMaker/DescriptionMaker";
+import FileReturn from "./Admin_Pages/ProductReturn/ProductReturns";
+import ProductReturns from "./Admin_Pages/ProductReturn/ProductReturns";
 
 export default function Admin() {
   const [isAdmin, setIsAdmin] = useState();
@@ -199,6 +201,12 @@ export default function Admin() {
             case "descriptionmaker":
               content = (
                 <DescriptionMaker/>
+              );
+            break;
+
+            case "productreturns":
+              content = (
+                <ProductReturns/>
               );
             break;
 

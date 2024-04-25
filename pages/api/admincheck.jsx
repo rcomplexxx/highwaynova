@@ -337,6 +337,8 @@ else{
       if (!dataType) return res.status(200).json({ successfulLogin: true });
       else {
         if(dataType === "get_order_cash_info")  return getFromDb("orders", `approved = '1'`, "createdDate, items, tip, couponCode");
+        //Ovde approved
+        else if(dataType === "get_order_cash_info_only_fulfilled_orders") return getFromDb("orders", `packageStatus != '0'`, "createdDate, items, tip, couponCode");
         else if (dataType === "get_unfulfilled_orders")
           return getFromDb("orders", `approved = '1' AND packageStatus = '0'`);
         else if (dataType === "get_unapproved_orders")

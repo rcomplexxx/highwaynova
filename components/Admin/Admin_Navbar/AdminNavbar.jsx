@@ -158,6 +158,14 @@ const AdminNavbar = ({ setIsAdmin }) => {
                   Description maker
                 </Link>
                 <Link
+                  href="/admin/productreturns"
+                  className={`${styles.linkStyle} ${
+                    adminroute &&  adminroute[0]==="productreturns" ? styles.currentLink : ""
+                  }`}
+                >
+                  Product returns
+                </Link>
+                <Link
                   href="/admin/datawiper"
                   className={`${styles.linkStyle} ${
                     adminroute &&  adminroute[0]==="datawiper" ? styles.currentLink : ""
@@ -330,6 +338,20 @@ const AdminNavbar = ({ setIsAdmin }) => {
             >
               <MenuItem>
                 <Typography variant="body1">Description maker</Typography>
+              </MenuItem>
+            </Link>
+
+            <Link
+              href="/admin/productreturns"
+              className={`${styles.linkStyle} ${
+                adminroute && adminroute[0] === "productreturns" ? styles.currentLink : ""
+              }`}
+              onClick={() => {
+                adminroute && adminroute[0] !== "productreturns" && setIsMenuOpen(false);
+              }}
+            >
+              <MenuItem>
+                <Typography variant="body1">Product returns</Typography>
               </MenuItem>
             </Link>
 
