@@ -11,6 +11,7 @@ import Image from 'next/image';
 export default function AdminStatistics(){
     const [selectedRange, setSelectedRange] = useState([]); //Modza ne treba selectedRange
     const [cashData, setCashData] = useState([]);
+    const [returnCashData, setReturnCashData] = useState([]);
     const [revealStatsReadingInstructions, setRevealStatsReadingInstructions] = useState(false);
     const [showCharts, setShowCharts] = useState(true);
     const [customDateStats, setCustomDateStats] = useState({orderNumber:'N/A', customerCash:'N/A', discountLostMoney:'N/A', supplierCosts:'N/A', tip:'N/A', profit: 'N/A'});
@@ -22,8 +23,51 @@ export default function AdminStatistics(){
 
     // dataType={}
     useEffect(() => {
+
+
+
+
+      
         const fetchData = async () => {
           try {
+
+            let returnCashInfo =[];
+
+
+
+            const responseReturnCashInfo = await fetch("/api/admincheck", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(
+                { dataType:"get_product_returns" }
+              ),
+            });
+
+      
+            if (responseReturnCashInfo.ok) {
+              const data = await responseReturnCashInfo.json();
+           
+              if(data.data){
+
+                returnCashInfo=data.data.map(productReturn=>{return {cashReturned: productReturn.cashReturned, createdDate: productReturn.createdDate}});
+                setReturnCashData(returnCashInfo);
+                
+
+              }
+             
+
+
+              
+          
+              }
+
+              console.log('return cash', returnCashInfo)
+            
+
+
+
             const response = await fetch("/api/admincheck", {
               method: "POST",
               headers: {
@@ -84,6 +128,12 @@ export default function AdminStatistics(){
                 supplierCosts= Number(supplierCosts.toFixed(2));
                 tip= parseFloat(tip, 2);
 
+
+              
+                
+
+
+
                 console.log('testing total price', totalPrice)
                 //Doradi popust
                 //Doradi tip
@@ -99,7 +149,14 @@ export default function AdminStatistics(){
               );
               setCashData(cashInfo);
 
-              console.log('cash info', cashInfo)
+              console.log('cash info', cashInfo);
+
+
+
+
+              
+               
+              
 
 
 
@@ -142,6 +199,7 @@ export default function AdminStatistics(){
         let orderNumber= 0;
         let customerCash= 0;
         let discountLostMoney=0;
+       
         let supplierCosts = 0;
         let tip = 0;
        
@@ -162,10 +220,28 @@ export default function AdminStatistics(){
 
         });
 
+        let lostInReturns = 0;
+
+        if(returnCashData.length !=0){
+          returnCashData.forEach(rcd =>{
+
+          
+          if(rcd.createdDate>=startPeriod && rcd.createdDate<= endPeriod)
+          lostInReturns = lostInReturns + Number(rcd.cashReturned);
+
+        }
+        )
+        }
+
+       
+
+        console.log('lost in returns', lostInReturns.toFixed(2));
+
         customerCash=customerCash.toFixed(2);
         supplierCosts=supplierCosts.toFixed(2);
         tip=tip.toFixed(2);
-        let profit= Number(customerCash) - Number(supplierCosts)+Number(tip);
+        let profit= Number(customerCash) - Number(supplierCosts)+Number(tip) - lostInReturns;
+        
         profit=profit.toFixed(2);
 
         return <div className={styles.saleStat}>
@@ -175,6 +251,8 @@ export default function AdminStatistics(){
         <span className={styles.statName}>${discountLostMoney}</span>
         <span className={styles.statName}>${tip}</span> 
         <span className={styles.statName}>${supplierCosts}</span> 
+        <span className={styles.statName}>${lostInReturns}</span> 
+       
         <span className={styles.statName}>${profit}</span> 
         </div>
         }
@@ -234,7 +312,25 @@ export default function AdminStatistics(){
       supplierCosts=supplierCosts.toFixed(2);
       discountLostMoney=discountLostMoney.toFixed(2);
       tip=tip.toFixed(2);
-      let profit= Number(customerCash) - Number(supplierCosts)+Number(tip);
+
+
+      
+      let lostInReturns = 0;
+
+      if(returnCashData.length !=0){
+        returnCashData.forEach(rcd =>{
+
+        
+        if(rcd.createdDate>=selectedRange[0] && rcd.createdDate<= selectedRange[1])
+        lostInReturns = lostInReturns + Number(rcd.cashReturned);
+
+      }
+      )
+      }
+
+
+      let profit= Number(customerCash) - Number(supplierCosts)+Number(tip) - Number(lostInReturns);
+      lostInReturns= lostInReturns.toFixed(2);
       profit=profit.toFixed(2);
 
       setCustomDateStats({orderNumber, customerCash, discountLostMoney, supplierCosts, tip, profit})
@@ -262,6 +358,7 @@ export default function AdminStatistics(){
       <h2>LID</h2>
       <h2>Tips</h2>
       <h2>SC</h2>
+      <h2>LIR</h2>
       <h2>Profit</h2>
       </div>
 
@@ -289,7 +386,7 @@ export default function AdminStatistics(){
 
         else {
           setSelectedRange([]);
-          setCustomDateStats({orderNumber:'N/A', customerCash:'N/A', discountLostMoney:'N/A', supplierCosts:'N/A', tip:'N/A', profit: 'N/A'});
+          setCustomDateStats({orderNumber:'N/A', customerCash:'N/A', discountLostMoney:'N/A', supplierCosts:'N/A', tip:'N/A', lostInReturns: 'N/A', profit: 'N/A'});
       
 
         }
@@ -304,6 +401,7 @@ export default function AdminStatistics(){
         <span className={styles.statName}>{`${customDateStats.discountLostMoney!="N/A" ? "$": ""}${customDateStats.discountLostMoney}`}</span>
         <span className={styles.statName}>{`${customDateStats.tip!="N/A" ? "$": ""}${customDateStats.tip}`}</span> 
         <span className={styles.statName}>{`${customDateStats.supplierCosts!="N/A" ? "$": ""}${customDateStats.supplierCosts}`}</span>
+        <span className={styles.statName}>{`${customDateStats.lostInReturns!="N/A" ? "$": ""}${customDateStats.supplierCosts}`}</span>
         <span className={styles.statName}>{`${customDateStats.profit!="N/A" ? "$": ""}${customDateStats.profit}`}</span> 
 
 </div>
@@ -358,6 +456,8 @@ ${shouldUseOnlyFulfilledOrders && styles.onlyFulfilledOrdersChecked}`}
     <span className={styles.readStatsInstructionsSpan}>Lost in discounts(LID) is money lost in discounts. Ps. Discounts let you get more customers, and more long-term value.</span>
     <span className={styles.readStatsInstructionsSpan}>Tips is money generously donated by customers.</span>
     <span className={styles.readStatsInstructionsSpan}>Supplier costs(SC) is the money spent on suppliers to purchase products to fulfill orders.</span>
+    <span className={styles.readStatsInstructionsSpan}>Lost in returns(LIR) is money lost in product returns. It affect profit metric, but it is not set to affect revenue,discounts, tips for now.</span>
+    
     <span className={styles.readStatsInstructionsSpan}>Profit is the amount of money remaining after deducting Supplier costs from Revenue, and adding tips.</span>
     </>
 }

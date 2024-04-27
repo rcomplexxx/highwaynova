@@ -191,7 +191,7 @@ export default function Search({searchOpen, setSearchOpen}){
             
                 event.preventDefault();
                 event.stopPropagation();
-            nextLink.current=`/products/${product.id}`;
+            nextLink.current=`/products/${product.name.toLowerCase().replace(/\s+/g, "-")}`;
            history.back();
 
           setSearchTerm('');

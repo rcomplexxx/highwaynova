@@ -8,7 +8,8 @@ export default function OrderCard({
   packageStatus,
   handlePackageStatusChange,
   products,
-  coupons
+  coupons,
+  productReturnsPageStyle=false
 }) {
   const [transactionCovered, setStransactionCovered]= useState(true);
   const [paymentIdCovered, setPaymentIdCovered] = useState(true);
@@ -101,7 +102,7 @@ export default function OrderCard({
   };
 
   return (
-    <div className={styles.cardMainDiv}>
+    <div className={`${styles.cardMainDiv} ${productReturnsPageStyle && styles.productReturnsPageStyle}`}>
       <div className={styles.cardRow}>
       <h1 className={styles.identifier}>{id + 1}</h1>
     

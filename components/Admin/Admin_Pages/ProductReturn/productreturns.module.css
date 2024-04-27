@@ -13,26 +13,45 @@
     padding-top: 0;
 }
 
+.productReturnWrapper{
+    min-height: var(--size-9-5);
+    width: 100%;
+    display: flex;
+
+    border: 1px solid gray;
+    margin-bottom: var(--size-7);
+    box-sizing: border-box;
+    padding: var(--size-5) var(--size-3);
+}
+
+.productReturnInfoPair{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.productReturnInfo{
+    flex:1;
+}
+
 
 
 .inputProductId{
     color: rgb(225, 236, 238);
     background-color: var(--email-input-bg);
-    
-    width: auto;
-  
+    min-width: var(--size-14);
+    width: 100%;
+    align-self: flex-start;
     box-sizing: border-box;
     padding: var(--size-3);
     font-size: var(--font-size-5);
     line-height: var(--size-7);
-   margin-top: var(--size-3);
-   border: 1px solid var(--border-color-strong);
+   margin-bottom: var(--size-6);
+   /* border: 1px solid var(--border-color-strong); */
+   border: none;
+ 
    border-radius: 8px;
    outline: none;
-}
-
-.inputProductId::placeholder{
-    font-size: var(--font-size-1);
 }
 
 .saveDescription{
@@ -48,6 +67,12 @@
     user-select: none;
 }
 
+.clearProductReturns{
+
+    margin-top: 0;
+    margin-bottom: var(--size-7);
+}
+
 .fileNewReturnButton{
     margin-top: var(--size-5);
     margin-bottom: var(--size-9);
@@ -55,9 +80,7 @@
 
 
 .ordersByEmailDiv{
-    height: var(--size-3);
     width: 100%;
-    background-color: red;
 
 
     margin-top: var(--size-6);

@@ -119,7 +119,7 @@ export default function BestSellers() {
         {bestSellerProducts.map((bsp, index) => (
           <SwiperSlide key={index} className={styles.productImageDiv}>
             <span className={styles.productTitle}>{bsp.product.name}</span>
-            <Link href={`/products/${bsp.product.id}`} className={styles.productImageLink}>
+            <Link href={`/products/${bsp.product.name.toLowerCase().replace(/\s+/g, "-")}`} className={styles.productImageLink}>
             
               <div className={styles.productImageDiv2}>
                 <PicWithThumbnail product={bsp.product} />

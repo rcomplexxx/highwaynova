@@ -107,7 +107,8 @@ if(dataWipedTable && dataWipedTable!=="")return  <div className={styles.mainDiv}
       </form>:<span className={styles.adminVerified}>Admin verified. Operation can be initialized.</span>}
         <button onClick={()=>{handleWipeData("orders")}} className={styles.wipeButton}>Wipe orders</button>
         <button onClick={()=>{handleWipeData("messages")}} className={styles.wipeButton}>Wipe inbox</button>
-
+        <button onClick={()=>{handleWipeData("product_returns")}} className={styles.wipeButton}>Wipe product returns</button>
+        
         <span className={styles.enterIdSpan}>Enter id of product to wipe reviews from, or enter "All" to wipe allr reviews</span>
         <input
             id="product_id"

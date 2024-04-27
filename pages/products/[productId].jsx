@@ -240,7 +240,7 @@ export default function ProductPage({ product, images, startReviews, ratingData 
 export async function getStaticPaths() {
   return {
     paths: products.map((product) => {
-      return { params: { productId: product.id.toString() } };
+      return { params: { productId: product.name.toLowerCase().replace(/\s+/g, "-") } };
     }),
 
     fallback: true,
@@ -253,10 +253,11 @@ export async function getStaticProps(context) {
 
 
 
-  const productId = context.params.productId;
+  const productName = context.params.productId;
   const product = products.find((p) => {
-    return p.id == productId;
+    return p.name.toLowerCase().replace(/\s+/g, "-") == productName;
   });
+  const productId = product.id.toString();
   console.log('my product is', product);
 
   if(product===undefined){

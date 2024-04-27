@@ -8,7 +8,7 @@ import PicWithThumbnail from "./PicWithThumbnail/PicWithThumbnail";
 const Product = ({ product}) => {
   return (
     <div className={styles.root}>
-      <Link href={"/products/" + product.id}>
+      <Link href={"/products/" + product.name.toLowerCase().replace(/\s+/g, "-")}>
         <div className={styles.media}>
           <PicWithThumbnail product={product} />
         </div>

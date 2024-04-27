@@ -38,7 +38,7 @@ else{
 
 
       let queryString;
-      if (table === "orders" || table === "messages" || table==="subscribers" || table==='subscribersbh') {
+      if (table === "orders" || table === "messages" || table==="subscribers" || table==='subscribersbh' || table==="product_returns") {
         queryString = `SELECT ${selectVariables} FROM ${table} WHERE ${queryCondition}`;
       } 
       
@@ -115,13 +115,14 @@ else{
             db.prepare(`DELETE FROM ${tableName} WHERE product_id = ?`).run(product_id);
             wipeReviewImageDirectory(product_id)
             
-
+            db.prepare(`DROP TABLE IF EXISTS ${tableName}`).run();
 
 
           }
         }
         else{
           db.prepare(`DELETE FROM ${tableName}`).run();
+          db.prepare(`DROP TABLE IF EXISTS ${tableName}`).run();
         }
         db.close();
         return res.status(200).json({ data_wiped: true });
@@ -136,6 +137,40 @@ else{
   const updateDb = async (table, data, queryCondition) => {
     try {
       const db = betterSqlite3(process.env.DB_PATH);
+
+     
+
+
+      if(table=='product_returns'){
+
+      
+        db.prepare(
+          `
+          CREATE TABLE IF NOT EXISTS product_returns (
+            id INTEGER PRIMARY KEY,
+            orderId TEXT,
+            items TEXT,
+            couponCode TEXT,
+            tip TEXT,
+            cashReturned TEXT,
+            createdDate DATE
+          )
+        `).run();
+        console.log('proso up db')
+        console.log('should be created');
+
+        db.prepare(`INSERT INTO ${table} (orderId, items,couponCode, tip, cashReturned, createdDate) VALUES (?, ?, ?, ?, ?, ?)`).run(
+          data.orderId,
+          data.products,
+          data.couponCode,
+          data.tip,
+          data.cashReturned,
+          Math.floor(Date.now() / 86400000)
+        );
+        db.close();
+        return res.status(200).json({ data_saved: true });
+      }
+
       if(table!='emails' && table!='emailCampaigns'){
       for (let i = 0; i < data.length; i++) {
         if (table === "reviews") {
@@ -345,6 +380,10 @@ else{
           return getFromDb("orders", `approved = '0'`);
         else if (dataType === "get_fulfilled_orders")
           return getFromDb("orders", `packageStatus != '0'`);
+        else if(dataType === "get_orders_by_email")
+        return getFromDb("orders", `email = '${data.email}'`);
+        else if(dataType ==="get_order_by_orderId")
+        return getFromDb("orders", `id = '${data.orderId}'`);
         else if (dataType === "get_unanswered_messages")
           return getFromDb("messages", `msgStatus = '0'`);
         else if (dataType === "get_answered_messages")
@@ -362,6 +401,8 @@ else{
           {return getFromDb("emails");}
           else if (dataType === "get_email_campaigns")
           return getFromDb("email_campaigns");
+        else if(dataType === "get_product_returns")
+        return getFromDb("product_returns");
         else if (dataType === "send_unfulfilled_orders") {
           if (!data)
             return res
@@ -455,6 +496,20 @@ else{
           //return true u res ako je uspesno revritowan fajl.
          
         }
+
+        else if (dataType == 'send_new_return'){
+          if (!data)
+          return res
+            .status(500)
+            .json({ successfulLogin: false, error: "No data to send" });
+
+            console.log('No data crossed', data);
+
+        await updateDb(
+          "product_returns",
+          data
+        );
+        }
         else if(dataType === `wipe_orders`){
           wipeData('orders')
         }
@@ -465,7 +520,8 @@ else{
           console.log('reviews wipiong', data.product_id)
           wipeData('reviews', data.product_id)
         }
-        
+        else if(dataType ==="wipe_product_returns")
+        wipeData('product_returns')
         
         else {
           console.error("Wrong data type");

@@ -14,6 +14,10 @@
     
 }
 
+.productReturnsPageStyle{
+    margin-top:var(--size-3);
+}
+
 .cardRow{
     width:100%;
     display: flex;
