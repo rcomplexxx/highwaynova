@@ -51,22 +51,23 @@
     position: absolute;
     top: 24px;
     left: 24px;
-    height: 40px;
-    width: 40px;
+    height: 32px;
+    width: 32px;
   
     box-sizing: border-box;
     padding: var(--size-2);
  
-    background-color: var(--surround-cancel-bg);
+    background-color: var(--fullscreen-customer-cancel-bg);
     
-    border-radius: 6px;
+    
+    border-radius: 4px;
     cursor: pointer;
     z-index: 200;
 }
 
 .closeFullScreen:hover{
     opacity: 1;
-    background-color: var(--surround-cancel-bg-hover);
+    background-color: var(--fullscreen-customer-cancel-hover);
 }
 
 .closeFullScreenNoImg{

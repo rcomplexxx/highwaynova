@@ -209,7 +209,7 @@ export default function Search({searchOpen, setSearchOpen}){
          
           </div>
           {searchOpen && <Image height={0} width={0}
-          src="/images/cancelDark.png"
+          src="/images/cancelIconSearch.svg"
           sizes='32px'
           onClick={()=>{  
             

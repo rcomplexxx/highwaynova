@@ -45,16 +45,16 @@
 
 
   .customSearchBarInput:-webkit-autofill {
-    background-color: var(--search-bg);
-    -webkit-box-shadow: 0 0 0 30px var(--search-bg) inset !important;
+    background-color: var(--search-autofill-color);
+    -webkit-box-shadow: 0 0 0 30px var(--search-autofill-color) inset !important;
     -webkit-text-fill-color: var(--light-txt-color);
    
   }
   
   /* For Firefox */
   .customSearchBarInput:-moz-autofill {
-    background-color: var(--search-bg);
-    -webkit-box-shadow: 0 0 0 30px var(--search-bg) inset !important;
+    background-color: var(--search-autofill-color);
+    -webkit-box-shadow: 0 0 0 30px var(--search-autofill-color) inset !important;
     -webkit-text-fill-color: var(--light-txt-color);
   }
   
@@ -141,7 +141,7 @@
          background-color: var(--navbar-bg);
         height:var(--size-9);
         width: 100%;
-        padding-right: var(--size-9);
+        padding-right: var(--size-8-5);
         justify-content: flex-end;
         transform: translateY(-50%);
         z-index: 9;
@@ -152,10 +152,10 @@
       display: block;
       position: absolute;
      
-      right: var(--size-7);
+      right: var(--size-6);
 
-      height: var(--size-6);
-      width: var(--size-6);
+      height: 20px;
+      width: 20px;
      
       /* font-size: var(--font-size-5);
       font-weight: 400; */

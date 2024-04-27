@@ -1,7 +1,7 @@
 .countrySelectStyle{
     width: 100%;
     height: var(--size-8);
-    background-color: var(--input-color);
+    background-color: var(--country-options-bg);
     padding: 0 var(--size-2);
     color: var(--checkout-input-placeholder);
     opacity: 0;

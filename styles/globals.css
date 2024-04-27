@@ -321,6 +321,7 @@ Cormorant+Garamond */
 
 
   --search-bg: transparent;
+  --search-autofill-color: var(--navbar-bg);
   --nav-links-color: var(--accent-color-7);
   --navbar-current-link-color: var(--main-color-4);
   --nav-select-search-link-color:var(--main-color-1);
@@ -438,6 +439,9 @@ Cormorant+Garamond */
 
  --fullscreen-customer-image-bg: var(--neutral-1);
 
+ --fullscreen-customer-cancel-bg: var(--neutral-2);
+ --fullscreen-customer-cancel-hover: var(--neutral-3);
+
 
 
 
@@ -457,7 +461,7 @@ Cormorant+Garamond */
   --write-review-disabled-bg: var(--main-color-1);
  
   --cancel-image-button-bg: transparent;
-  --cancel-image-button-bg-hover: var(--neutral-5);
+  --cancel-image-button-bg-hover: var(--neutral-1);
   
 
   
@@ -502,12 +506,13 @@ Cormorant+Garamond */
   --input-outline-color-focused: var(--main-color-4);
   --checkout-input-placeholder: var(--neutral-8);
   --input-autofill-color: var(--bg-color);
+  --country-options-bg: var(--checkout-bg);
 
   --checkbox-unchecked-box-shadow: 0 0 0 0 var(--border-color-strong) inset;
   --checkbox-checked-box-shadow: 0 0 0 var(--size-3) var(--main-color-4) inset;
 
-  --apt-adder-color: var(--accent-color-6);
-  --apt-adder-color-hover: var(--accent-color-7);
+  --apt-adder-color: var(--accent-color-4);
+  --apt-adder-color-hover: var(--accent-color-5);
  
   --express-checkout-bg: var(--payment-div-bg);
   --express-checkout-button-bg: var(--neutral-1);
