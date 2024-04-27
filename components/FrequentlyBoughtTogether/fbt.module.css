@@ -69,16 +69,18 @@
   
     margin-top: var(--size-1);
     color: var(--main-button-color);
-    background-color: var(--faq-add-to-cart-bg);
+    background-color: var(--fbt-add-to-cart-bg);
     
     font-size: var(--size-5);
     font-weight: 600;
     cursor: pointer;
     border-radius: 4px;
+    box-sizing: border-box;
+    border: 1px solid var(--fbt-add-to-cart-border);
     font-size: var(--font-size-2);
   }
 
   .add_to_cart_button:hover {
-    background-color: var(--faq-add-to-cart-hover-bg);
+    background-color: var(--fbt-add-to-cart-hover-bg);
   }
 
