@@ -405,7 +405,7 @@ Cormorant+Garamond */
  --fixed-add-to-cart-color: var(--main-button-color);
  --fixed-add-to-cart-bg: var(--main-color-3);
  --fixed-add-to-cart-border-top: var(--main-button-color);
- --fixed-add-to-cart-top-box-shadow: 0 0px 8px var(--neutral-3);
+ --fixed-add-to-cart-top-box-shadow: 0 0px 8px var(--main-color-1);
  
           /*~ Fullscreen product~*/
 
