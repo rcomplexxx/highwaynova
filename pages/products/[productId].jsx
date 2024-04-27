@@ -257,8 +257,7 @@ export async function getStaticProps(context) {
   const product = products.find((p) => {
     return p.name.toLowerCase().replace(/\s+/g, "-") == productName;
   });
-  const productId = product.id.toString();
-  console.log('my product is', product);
+  
 
   if(product===undefined){
     return {
@@ -270,6 +269,9 @@ export async function getStaticProps(context) {
       },
     };
   }
+
+  const productId = product.id.toString();
+  console.log('my product is', product);
 
   const images = product.images
     .map((img) => {
