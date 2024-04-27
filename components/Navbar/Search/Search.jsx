@@ -152,7 +152,7 @@ export default function Search({searchOpen, setSearchOpen}){
             onChange={(e) => handleSearch(e.target.value)}
           
           />
-          <Image ref={searchIconRef}  src={`/images/search6.svg`} alt='Search' className={styles.searchIcon} height={0} width={0} sizes='20px' onClick={()=>{setSearchOpen(!searchOpen);
+          <Image ref={searchIconRef}  src={`/images/search7.svg`} alt='Search' className={styles.searchIcon} height={0} width={0} sizes='20px' onClick={()=>{setSearchOpen(!searchOpen);
         }}/>
           {/* Custom results section */}
           <div ref={searchBoxRef} className={`${styles.customResults} ${searchOpen && styles.itemsVisible}` }>
