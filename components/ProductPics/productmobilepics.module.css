@@ -348,7 +348,8 @@
       align-items: center;
       transition: opacity 0.3s ease, transform 0.3s ease;
       box-sizing: border-box;
-      border-top: 1px solid var(--fixed-add-to-cart-border-top);
+      /* border-top: 1px solid var(--fixed-add-to-cart-border-top); */
+      box-shadow: var(--fixed-add-to-cart-top-box-shadow);
       font-size: var(--font-size-3);
       font-weight: 700;
 

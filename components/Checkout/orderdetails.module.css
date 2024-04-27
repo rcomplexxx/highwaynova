@@ -113,7 +113,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    color: var(--light-txt-color);
+    color: var(--apply-coupon-txt-color);
     text-decoration: none;
     height: var(--size-8);
     width:  var(--size-10);

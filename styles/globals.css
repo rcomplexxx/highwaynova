@@ -295,7 +295,7 @@ Cormorant+Garamond */
   --action-button-txt-color: var(--neutral-0);
   --action-button-bg-color: var(--accent-color-4);
   --action-button-bg-color-hover:var(--accent-color-3);
-  --action-button-border-color: var(--neutral-3);
+  --action-button-border-color: var(--neutral-1);
   /* txt-Alt:white; bg-Alt #202020 */
 
  
@@ -403,8 +403,9 @@ Cormorant+Garamond */
 
 
  --fixed-add-to-cart-color: var(--main-button-color);
- --fixed-add-to-cart-bg: var(--main-button-bg);
+ --fixed-add-to-cart-bg: var(--main-color-3);
  --fixed-add-to-cart-border-top: var(--main-button-color);
+ --fixed-add-to-cart-top-box-shadow: 0 0px 8px var(--neutral-3);
  
           /*~ Fullscreen product~*/
 
@@ -544,9 +545,11 @@ Cormorant+Garamond */
   --checkout-order-summery-bg: var(--main-color-0);
   --checkout-order-summery-bg-light: var(--main-color-0);
 
-  --apply-outline-color: var(--accent-color-7);
+  --apply-outline-color: var(--action-button-border-color);
   --apply-coupon-color: var(--accent-color-4);
   --apply-coupon-hover-color: var(--accent-color-5);
+  --apply-coupon-txt-color: var(--action-button-txt-color);
+ 
   --coupon-code-bg: var(--neutral-5);
   --discount-icon-border: var(--neutral-6);
 
@@ -555,7 +558,7 @@ Cormorant+Garamond */
 
 
   --tip-selected: var(--main-color-5);
-  --add-tip-outline: var(--accent-color-7);
+  --add-tip-outline: var(--action-button-border-color);
   --add-tip-button-disabled-txt-color: var(--neutral-0);
   --add-tip-button-disabled: var(--neutral-3);
   --tip-thank-you-txt-color: var(--high-contrast-light-txt-color);
