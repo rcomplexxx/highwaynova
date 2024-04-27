@@ -63,10 +63,9 @@
 
 
   .searchIcon{
-    opacity: 0.8;
     margin-left: var(--size-5);
-    width: 20px;
-    height: 20px;
+    width: 24px;
+    height: 24px;
     cursor: pointer;
   }
   
