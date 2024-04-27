@@ -36,7 +36,7 @@ const CartItem = ({ item }) => {
   return (
     <div className={styles.mainItemDiv}>
       
-      <Link className={styles.mediaLink} href={`/products/${item.name.toLowerCase().replace(/\s+/g, "-")}}`} >
+      <Link className={styles.mediaLink} href={`/products/${item.name.toLowerCase().replace(/\s+/g, "-")}`} >
        
           <Image
             src={`/images/${item.image}`}
@@ -48,7 +48,7 @@ const CartItem = ({ item }) => {
       </Link>
      
       <div className={styles.mainItemInfo}>
-        <Link className={styles.link} href={`/products/${item.name.toLowerCase().replace(/\s+/g, "-")}}`}>
+        <Link className={styles.link} href={`/products/${item.name.toLowerCase().replace(/\s+/g, "-")}`}>
           <span className={styles.productName}>{item.name}</span>
         </Link>
        
