@@ -56,6 +56,26 @@ const paypalPay=async(totalPrice)=>{
  return request;
 }
 
+
+
+
+function generateUniqueId() {
+  // Get current timestamp in milliseconds
+  const timestamp = Date.now().toString(16);
+
+  // Generate four random digits
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+ 
+  const randomDigits = characters.charAt(Math.floor(Math.random() * characters.length));
+
+  // Insert random digits at specified positions
+  const uniqueId = randomDigits.substring(0, 2) + timestamp.substring(0, 4) + randomDigits.substring(2, 4) + timestamp.substring(4) + randomDigits.substring(4);
+
+  return uniqueId;
+}
+
+
+
 const makePayment = async (req, res) => {
   console.log('  reqdata BITNO ~!!!~).', req.body)
 
@@ -67,7 +87,7 @@ const makePayment = async (req, res) => {
         db.prepare(
           `
           CREATE TABLE IF NOT EXISTS orders (
-            id INTEGER PRIMARY KEY,
+            id TEXT PRIMARY KEY,
             email TEXT,
             firstName TEXT,
             lastName TEXT,
@@ -109,8 +129,9 @@ const makePayment = async (req, res) => {
       
 
         db.prepare(
-          `INSERT INTO orders (email, firstName, lastName, address, apt, country, zipcode, state, city, phone, couponCode, tip, items, paymentMethod, paymentId, packageStatus, approved, createdDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, '0', ?, ?)`,
+          `INSERT INTO orders (id, email, firstName, lastName, address, apt, country, zipcode, state, city, phone, couponCode, tip, items, paymentMethod, paymentId, packageStatus, approved, createdDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, '0', ?, ?)`,
         ).run(
+          generateUniqueId(),
           email,
           firstName,
           lastName,
