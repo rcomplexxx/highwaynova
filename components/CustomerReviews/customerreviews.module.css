@@ -49,10 +49,10 @@
 .masonry{
 
 
-  width: calc(100% - var(--size-5));
+  width: calc(100% - var(--size-7));
    
   box-sizing: border-box;
-  padding: 0 var(--size-3);
+  padding: 0;
   padding-bottom: var(--size-6);
   gap: 0;
 
@@ -182,7 +182,7 @@
 
     .masonry{
   
-      width: calc(100% - var(--size-6));
+      width: calc(100% - var(--size-8));
      
    
   }
@@ -191,6 +191,18 @@
   
   }
 
+  @media (max-width: 480px)  {
+
+    .masonry{
+  
+      width: calc(100% - var(--size-7));
+     
+   
+  }
+
+
+  
+  }
 
 
 

@@ -52,6 +52,7 @@
         height: var(--size-8);
         width: var(--size-11);
         background-color: transparent;
+        box-sizing: border-box;
         border: 1px solid var(--border-color-strong);
         cursor: pointer;
         
@@ -84,7 +85,7 @@
 
       @media(max-width: 480px){
       .writeReviewDiv{
-        width: calc(100% - var(--size-8));
+        width: calc(100% - var(--size-7));
         flex-direction: column;
          justify-content: center;
          align-items: center;
@@ -101,7 +102,7 @@
 
       .writeReviewButton{
         margin-top: var(--size-2);
-        width: calc(100% - var(--size-4));
+        width: 100%;
       }
 
       .reviewsNumberSpan{
