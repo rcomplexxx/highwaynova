@@ -51,11 +51,10 @@
     position: absolute;
     top: 24px;
     left: 24px;
-    height: 32px;
-    width: 32px;
+    height: 20px;
+    width: 20px;
   
-    box-sizing: border-box;
-    padding: var(--size-2);
+    padding: 8px;
  
     background-color: var(--fullscreen-customer-cancel-bg);
     

@@ -439,8 +439,9 @@ Cormorant+Garamond */
 
  --fullscreen-customer-image-bg: var(--neutral-1);
 
- --fullscreen-customer-cancel-bg: var(--neutral-2);
- --fullscreen-customer-cancel-hover: var(--neutral-3);
+ --fullscreen-customer-cancel-bg: rgba(133, 133, 133, 0.7);
+ 
+ --fullscreen-customer-cancel-hover: rgb(133, 133, 133);
 
 
 
