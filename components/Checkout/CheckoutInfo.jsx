@@ -25,7 +25,7 @@ export default function CheckoutInfo({ products,  setCartProducts }) {
    }, [showApt]);
 
    useEffect(()=>{
-    document.getElementById("email").focus({ focusVisible: true });
+    document.getElementById("email").focus({ preventScroll: true });
    },[])
 
   const handleChange = (event) => {
