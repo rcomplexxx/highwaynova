@@ -27,6 +27,7 @@ export default function WriteReview({ setInfoDivOpen }) {
 
    
   
+  
 
 
     const handlePopState=(event)=>{  event.preventDefault(); global.stopRouteExecution=true; setInfoDivOpen(false);}

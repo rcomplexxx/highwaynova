@@ -38,6 +38,8 @@ body{
   font-family: var(--font-neutral), sans-serif;
   font-weight: 400;
   overflow-x: clip;
+
+  overscroll-behavior: contain;
   overflow-anchor: none;
 }
 
