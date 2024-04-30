@@ -10,21 +10,12 @@ import ReactHtmlParser from "react-html-parser";
 import WriteReviewVisible from "./WriteReview/WriteReviewVisible";
 import FullScreenReview from "./FullScreenReview/FullScreenReview";
 
-function Review({ product_id,  name, text,  stars, imageNames, setFullScreenReview }) {
+function Review({ product_id,  name, text,  stars, imageNames, setFullScreenReview, shrinkReview}) {
 
     const reviewRef= useRef();
-    const mounted = useRef(false);
 
 
-  useEffect(()=>{
-    if(!mounted.current){mounted.current=true;return;}
 
-    reviewRef.current.style.transform = 'scale(0)';
-
-    setTimeout(()=>{ reviewRef.current.style.transform = 'scale(1)';},500)
- 
-
-  },[text])
 
  
   return (
@@ -34,7 +25,7 @@ function Review({ product_id,  name, text,  stars, imageNames, setFullScreenRevi
   
   })}} 
     
-    className={styles.reviewDiv}>
+    className={`${styles.reviewDiv} ${shrinkReview && styles.reviewDivShrinked}`}>
       {imageNames && JSON.parse(imageNames).length!==0 &&
             <Image
             
@@ -42,7 +33,7 @@ function Review({ product_id,  name, text,  stars, imageNames, setFullScreenRevi
               width={0}
               src={`/images/review_images/productId_${product_id}/${JSON.parse(imageNames)[0]}`}
               alt="review image"
-              loading={"lazy"}
+              loading={shrinkReview?"eager":"lazy"}
               sizes="(max-width: 580px) 100vw, (max-width: 700px) 50vw, (max-width: 1200px) 33vw, 25vw"
               className={styles.reviewImage}
             />
@@ -73,6 +64,7 @@ export default function CustomerReviews({ product_id, ratingData, startReviews }
   const [loadButtonExists, setLoadButtonExists] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [sortingType, setSortingType] = useState("featured");
+  const [shrinkReview, setShrinkReview] = useState(false)
 
   const [fullScreenReview, setFullScreenReview] = useState();
 
@@ -80,19 +72,14 @@ export default function CustomerReviews({ product_id, ratingData, startReviews }
 
 
 
+  const handleSortingTypeChange = async(newSortingType) =>{
+
+    setShrinkReview(true);
 
 
-  
 
-  useEffect(()=>{
-    
-    
-    const fetchReviews=async()=>{
+    const fetchReviews = async()=>{
 
-    if(!mountedRef.current){mountedRef.current=true;}
-
-    else{
-  
     const response = await fetch("/api/getreviews", {
       method: "POST",
       headers: {
@@ -109,44 +96,67 @@ export default function CustomerReviews({ product_id, ratingData, startReviews }
 
     if (response.ok) {
 
-
-     
-
-
       const data = await response.json();
 
-   
-
       console.log('response ok, ', data)
-
-  
-
 
 
       setReviews([
         ...data.reviews
       ]);
 
-    
 
       newReviews.current = [...data.reviews]; // Load 6 more reviews
- 
-
     
     } 
     else{
       console.log('response not ok, ', response)
     }
+  }
 
+
+  
+
+
+
+
+
+
+    setTimeout(async()=>{
+      setSortingType(newSortingType);
+
+      await fetchReviews();
+
+      setTimeout(()=>{setShrinkReview(false)},300);
+      
+      
+
+    }, 500)
+  
 
   }
-}
-
-fetchReviews();
 
 
+  
 
-  },[sortingType, product_id])
+  useEffect(()=>{
+    
+    
+
+
+
+
+      setReviews(startReviews);
+
+    
+
+      newReviews.current = startReviews; // Load 6 more reviews
+ 
+      setLoadButtonExists(true);
+  
+
+
+  },[product_id, startReviews])
 
 
 
@@ -267,7 +277,7 @@ fetchReviews();
       <h1>Customer Reviews</h1>
 
       
-   <WriteReviewVisible ratingData={ratingData} setSortingType={setSortingType}/>
+   <WriteReviewVisible ratingData={ratingData} sortingType={sortingType} setSortingType={handleSortingTypeChange}/>
 
 
 
@@ -291,6 +301,7 @@ fetchReviews();
                 stars={review.stars}
                 product_id={product_id}
                 imageNames={review.imageNames} //popravi ovo
+                shrinkReview={shrinkReview}
               />
             );
           })}

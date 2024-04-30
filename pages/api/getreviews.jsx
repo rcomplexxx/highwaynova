@@ -44,6 +44,7 @@ const getReviews = (req, res) => {
     const stmt = db.prepare(query);
 
     const result = stmt.all(product_id, limit, starting_position);
+    console.log('rs', result)
 
     db.close();
 

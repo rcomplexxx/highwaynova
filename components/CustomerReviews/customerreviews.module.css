@@ -100,7 +100,14 @@ column-fill:balance;
    break-inside: avoid;
    cursor: pointer;
    box-shadow: var(--customer-review-box-shadow);
+   transform: scale(1);
    transition: transform 0.5s ease;
+   transform-origin: center;
+}
+
+
+.reviewDivShrinked{
+  transform: scale(0);
 }
 
 

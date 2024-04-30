@@ -323,7 +323,7 @@ Cormorant+Garamond */
   --search-bg: transparent;
   --search-autofill-color: var(--navbar-bg);
   --nav-links-color: var(--accent-color-7);
-  --navbar-current-link-color: var(--main-color-4);
+  --navbar-current-link-color: var(--light-txt-colo);
   --nav-select-search-link-color:var(--main-color-1);
 
   --popcart-bg: var(--navbar-bg);

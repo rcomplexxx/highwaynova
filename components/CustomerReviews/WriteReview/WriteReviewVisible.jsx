@@ -12,7 +12,7 @@ import SortReviewsButton from './SortReviewsButton/SortReviewsButton';
 const WriteReview = dynamic(() => import('./WriteReview'));
 
 
-export default function WriteReviewVisible({ratingData, setSortingType}) {
+export default function WriteReviewVisible({ratingData, sortingType, setSortingType}) {
     const [openRatingInfo, setOpenRatingInfo]=useState(false);
     const  [infoDivOpen, setInfoDivOpen] = useState(undefined);
 
@@ -124,7 +124,7 @@ export default function WriteReviewVisible({ratingData, setSortingType}) {
         >
           Write review
         </button>
-        <SortReviewsButton/>
+        <SortReviewsButton sortingType={sortingType} setSortingType={setSortingType}/>
       </div>
           {infoDivOpen &&  <WriteReview infoDivOpen={infoDivOpen} setInfoDivOpen={setInfoDivOpen}/>}
       </>
