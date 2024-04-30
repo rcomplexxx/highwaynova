@@ -49,12 +49,13 @@
 
       .writeReviewButton{
         color: var(--light-txt-color);
-        height: var(--size-8);
+        height: 40px;
         width: var(--size-11);
         background-color: transparent;
         box-sizing: border-box;
         border: 1px solid var(--border-color-strong);
         cursor: pointer;
+        margin-right: var(--size-8);
         
        
         border-radius: 4px;
@@ -102,6 +103,7 @@
 
       .writeReviewButton{
         margin-top: var(--size-2);
+        margin-right: 0;
         width: 100%;
       }
 

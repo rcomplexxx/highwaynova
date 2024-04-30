@@ -11,9 +11,24 @@ import WriteReviewVisible from "./WriteReview/WriteReviewVisible";
 import FullScreenReview from "./FullScreenReview/FullScreenReview";
 
 function Review({ product_id,  name, text,  stars, imageNames, setFullScreenReview }) {
+
+    const reviewRef= useRef();
+    const mounted = useRef(false);
+
+
+  useEffect(()=>{
+    if(!mounted.current){mounted.current=true;return;}
+
+    reviewRef.current.style.transform = 'scale(0)';
+
+    setTimeout(()=>{ reviewRef.current.style.transform = 'scale(1)';},500)
+ 
+
+  },[text])
+
  
   return (
-    <div onClick={()=>{setFullScreenReview({authorName:name, text:text, stars:stars, 
+    <div ref={reviewRef}  onClick={()=>{setFullScreenReview({authorName:name, text:text, stars:stars, 
     imageSrc:(imageNames && JSON.parse(imageNames).length!==0) && 
     `/images/review_images/productId_${product_id}/${JSON.parse(imageNames)[0]}`
   
@@ -62,7 +77,6 @@ export default function CustomerReviews({ product_id, ratingData, startReviews }
   const [fullScreenReview, setFullScreenReview] = useState();
 
   const mountedRef = useRef();
-  const currentProductId = useRef(product_id);
 
 
 

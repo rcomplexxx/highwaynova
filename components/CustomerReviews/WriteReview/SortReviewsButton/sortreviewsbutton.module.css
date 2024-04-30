@@ -1,0 +1,31 @@
+
+
+.mainButton{
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 40px;
+    width: 40px;
+  
+    box-sizing: border-box;
+    border: 1px solid var(--border-color-strong);
+    border-radius: 4px;
+
+    cursor: pointer;
+}
+
+
+.dropMenu{
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 30px;
+    width: 30px;
+}
+
+
+@media(max-width: 480px){
+    .mainButton{
+        transform: translateY(-4px);
+    }
+}

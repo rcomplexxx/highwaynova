@@ -6,6 +6,7 @@ import styles from './writereviewvisible.module.css';
 
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
+import SortReviewsButton from './SortReviewsButton/SortReviewsButton';
 
 
 const WriteReview = dynamic(() => import('./WriteReview'));
@@ -112,7 +113,7 @@ export default function WriteReviewVisible({ratingData, setSortingType}) {
         </div>
        <RatingInfo ratingData={ratingData} openRatingInfo={openRatingInfo} setOpenRatingInfo={setOpenRatingInfo}/>
 
-<button onClick={()=>{setSortingType('new')}}>New</button>
+
 
 
         <button
@@ -123,6 +124,7 @@ export default function WriteReviewVisible({ratingData, setSortingType}) {
         >
           Write review
         </button>
+        <SortReviewsButton/>
       </div>
           {infoDivOpen &&  <WriteReview infoDivOpen={infoDivOpen} setInfoDivOpen={setInfoDivOpen}/>}
       </>
