@@ -25,9 +25,8 @@ export default function CheckoutInfo({ products,  setCartProducts }) {
    }, [showApt]);
 
    useEffect(()=>{
-    document.getElementById("email").readOnly = true;
-    document.getElementById("email").focus();
-    document.getElementById("email").readOnly = false;
+    const emailInput = document.getElementById("email")
+    emailInput.focus(); emailInput.blur();
    },[])
 
   const handleChange = (event) => {
