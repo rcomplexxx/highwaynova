@@ -8,8 +8,8 @@ const limiterPerDay = new RateLimiter({
 });
 
 const getReviews = (req, res) => {
-  const { product_id, starting_position } = req.body;
-  const limit = 40;
+  const { product_id, starting_position, limit = 40 ,sortingType} = req.body;
+
 
   try {
     const clientIp = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
@@ -27,7 +27,20 @@ const getReviews = (req, res) => {
 
     const db = betterSqlite3(process.env.DB_PATH);
 
-    const query = `SELECT * FROM reviews WHERE product_id = ? LIMIT ? OFFSET ?`;
+    let query;
+
+
+   if(sortingType === "featured"){
+    query=`SELECT * FROM reviews WHERE product_id = ? LIMIT ? OFFSET ?`;}
+   else if(sortingType === "new")
+    query = `SELECT * FROM common_reviews WHERE product_id = ? LIMIT ? OFFSET ?`;
+    else if(sortingType === "highest_ratings")
+     query = `SELECT * FROM common_reviews WHERE product_id = ? ORDER BY stars DESC LIMIT ? OFFSET ?`;
+    else 
+    query = `SELECT * FROM common_reviews WHERE product_id = ? ORDER BY stars LIMIT ? OFFSET ?`;
+   
+
+  
     const stmt = db.prepare(query);
 
     const result = stmt.all(product_id, limit, starting_position);

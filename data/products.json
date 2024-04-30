@@ -18,7 +18,10 @@
     ],
     "price": 29.99,
     "stickerPrice": 46.99,
-    "supplierPrice": {"product": 15.00, "shipping": 5.29},
+    "supplierPrice": {
+      "product": 15,
+      "shipping": 5.29
+    },
     "fbt": [
       {
         "id": 1,
@@ -29,7 +32,7 @@
         "variantIndex": 0
       }
     ],
-    "raiting": 4.8,
+    "raiting": 4.7,
     "reviewNumber": 49,
     "variants": [
       {
@@ -57,7 +60,10 @@
     ],
     "price": 17.99,
     "stickerPrice": 22.99,
-    "supplierPrice": {"product": 12.00, "shipping": 3.29},
+    "supplierPrice": {
+      "product": 12,
+      "shipping": 3.29
+    },
     "fbt": [
       {
         "id": 0,
@@ -68,8 +74,8 @@
         "variantIndex": 0
       }
     ],
-    "raiting": 4.7,
-    "reviewNumber": 32,
+    "raiting": 5,
+    "reviewNumber": 17,
     "variants": [
       {
         "name": "White",
@@ -102,7 +108,10 @@
     ],
     "price": 16.99,
     "stickerPrice": 19.99,
-    "supplierPrice": {"product": 7.00, "shipping": 0.00},
+    "supplierPrice": {
+      "product": 7,
+      "shipping": 0
+    },
     "fbt": [
       {
         "id": 0,
@@ -114,7 +123,7 @@
       }
     ],
     "raiting": 4.7,
-    "reviewNumber": 32,
+    "reviewNumber": 621,
     "variants": [
       {
         "name": "White",
@@ -144,7 +153,10 @@
     ],
     "price": 21.99,
     "stickerPrice": 27.99,
-    "supplierPrice": {"product": 5.79, "shipping": 2.00},
+    "supplierPrice": {
+      "product": 5.79,
+      "shipping": 2
+    },
     "fbt": [
       {
         "id": 0,
@@ -156,7 +168,7 @@
       }
     ],
     "raiting": 4.7,
-    "reviewNumber": 32,
+    "reviewNumber": 621,
     "description": "<style>.descriptionWrapper{\ndisplay:flex;\nflex-direction: column;\nfont-size: 16px;\n}\n\n.descriptionImage{\nwidth: 100%;\n\nmargin-top: 16px;\n\nalign-self:center;\n}</style><div class=\"descriptionWrapper\">\n<span>\nThe message board lamp will give you ability to throw the light on one message. The one message, which will shine on your desk every day. Be careful what you write, as it can destroy you, or reborn you into a feared entity. One message, to shine though time.\n</span>\n</br>\n<span>\nSpecification:\n</span>\n\n<ul>\n<li>\nMaterial: Acrylic, LED, Electronic Component\n</li>\n\n<li>\nColor:\n<ul>\n<li>\nBoard: Tranparent\n</li>\n<li>\nBase: White\n</li>\n<li>\nType: Blank, Calendar, Heart\n</li>\n<li>\nLight Color: Warm\n</li>\n\n</ul>\n</li>\n\n\n\n\n\n<li>\nSize: Board: 10*15cm; Base: 9.7*4cm\n</li>\n\n<li>\nPower Way: USB Input\n</li>\n\n\n\n\n\n<li>\nPackage Details:\n<ul>\n<li>\n1pc x Acrylic Board\n</li>\n<li>\n1pc x Base\n</li>\n<li>\n1pc x Pen\n</li>\n\n\n</ul>\n</li>\n\n\n\n<li>\nVoltage: 5V 1A\n</li>\n\n</ul>\n\n\n<img class=\"descriptionImage\" src=\"/images/description_images/4.webp\"/>\n<img class=\"descriptionImage\" src=\"/images/description_images/4.5.webp\"/>\n</div>\n\n"
   },
   {
@@ -175,7 +187,10 @@
       1
     ],
     "price": 44.99,
-    "supplierPrice": {"product": 16.32, "shipping": 4.66},
+    "supplierPrice": {
+      "product": 16.32,
+      "shipping": 4.66
+    },
     "fbt": [
       {
         "id": 2,
@@ -187,7 +202,7 @@
       }
     ],
     "raiting": 4.7,
-    "reviewNumber": 32,
+    "reviewNumber": 621,
     "description": "<style>.descriptionWrapper{\ndisplay:flex;\nflex-direction: column;\nfont-size: 16px;\n}\n\n.descriptionImage{\nwidth: 100%;\n\nmargin-top: 16px;\n\nalign-self:center;\n}</style><div class=\"descriptionWrapper\">\n<span>\nCute rabbit. He is just cute, not very useful. But, in the times of recovering energy before next attack, it can be source of joy, a beautiful thing to look at. Such a beauty can be a source of healing power. Let the rabbit lamp heal your wounds, and prepare for the next strike.\n</span>\n</br>\n<span>\nSpecification:\n</span>\n\n<ul>\n\n<li>\nMaterial: ABS+silicone\n</li>\n\n\n\n\n<li>\nRated voltage: 5V/0.3A\n</li>\n\n<li>\nRated power: 1W\n</li>\n\n<li>\nBattery capacity: 1200 mAh 18650 battery\n</li>\n<li>\nCharging time: 2-3H\n</li>\n<li>\nUsage time: 6-8 hours\n</li>\n\n\n\n\n\n\n\n\n\n\n<li>\nPackage include:\n<ul>\n<li>\nCute rabbit night light * 1\n</li>\n<li>\nCharging cable * 1\n</li>\n<li>\nInstruction manual * 1\n</li>\n\n\n</ul>\n</li>\n\n\n\n<li>\nVoltage: 5V 1A\n</li>\n\n</ul>\n\n\n<img class=\"descriptionImage\" src=\"/images/description_images/5.webp\"/>\n<img class=\"descriptionImage\" src=\"/images/description_images/5.5.webp\"/>\n</div>\n\n"
   }
 ]

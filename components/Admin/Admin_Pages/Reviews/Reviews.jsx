@@ -6,11 +6,13 @@ import PageIndexButtons from "../MagicButtons/PageIndexButtons";
 import ReviewsCard from "./ReviewsCard/ReviewsCard";
 import SwapImageRevsButtons from "./SwapRevsWIthImagesToStart/SwapImageRevsButtons";
 import SortByRating from "./SortByRating/SortByRating";
+import ShuffleCommonReviews from "./ShuffleCommonReviews/ShuffleCommonReviews";
 
 export default function Reviews({ reviews, setReviews }) {
   const [page, setPage] = useState(0);
   const [productId, setProductId] = useState();
   const [reviewsArray, setReviewsArray] = useState([]);
+  const [areCommonReviews, setAreCommonReviews]= useState(false);
 
   
  
@@ -26,6 +28,8 @@ export default function Reviews({ reviews, setReviews }) {
     swapId,
   ) => {
 
+
+    if(areCommonReviews)return;
     
     let updatedReviewsArray = [...reviewsArray];
     let idAlreadyIncluded = false;
@@ -65,6 +69,7 @@ export default function Reviews({ reviews, setReviews }) {
   };
 
   const clearAfterDataSave = () => {
+    setAreCommonReviews(false);
     setReviewsArray([]);
     setPage(0);
   };
@@ -77,6 +82,11 @@ export default function Reviews({ reviews, setReviews }) {
 
     setReviewsArray(newReviewsArray);
   };
+
+  const initializeReviewsCommonData = (data)=>{
+    initializeReviewsData(data);
+    setAreCommonReviews(true);
+  }
 
   if (reviews.length === 1 && reviews[0] === "No Reviews")
     return (
@@ -102,6 +112,14 @@ export default function Reviews({ reviews, setReviews }) {
             setData={setReviews}
             initializeData={initializeReviewsData}
           />
+
+            <GetDataButton
+            name="Common Reviews"
+            reqData={{ product_id: productId }}
+            dataType={"get_common_reviews"}
+            setData={setReviews}
+            initializeData={initializeReviewsCommonData}
+          />
         </div>
         <p>No reviews imported.</p>
       </>
@@ -114,15 +132,21 @@ export default function Reviews({ reviews, setReviews }) {
         {reviews.length !== 0 ? (
           <>
           <ReviewsSaveButton
-            dataType="send_reviews"
+            dataType={areCommonReviews?"send_common_reviews":"send_reviews"}
             oldReviews={reviews}
             reviews={reviewsArray}
             setOldReviews={setReviews}
             clearAfterReviewsSave={clearAfterDataSave}
+            areCommonReviews={areCommonReviews}
           />
 
-      <SortByRating reviews={reviews}  setReviewsArray={setReviewsArray} / > 
+{areCommonReviews ? <>
+<span className={styles.commonReviewsWarning}>Warning! Changes will not be applied on common_reviews. Only shuffle will apply.
+</span><ShuffleCommonReviews reviews={reviews}  setReviewsArray={setReviewsArray}/></>:
+     <> <SortByRating reviews={reviews}  setReviewsArray={setReviewsArray} / > 
           <SwapImageRevsButtons reviews={reviews}  setReviewsArray={setReviewsArray} / > 
+          </>
+}
           </>
         ) : (
           <div className={styles.reviewGetterDiv}>
@@ -146,13 +170,20 @@ export default function Reviews({ reviews, setReviews }) {
               setData={setReviews}
               initializeData={initializeReviewsData}
             />
+               <GetDataButton
+            name="Common Reviews"
+            reqData={{ product_id: productId }}
+            dataType={"get_common_reviews"}
+            setData={setReviews}
+            initializeData={initializeReviewsCommonData}
+          />
           </div>
         )}
       </div>
 
       {reviews.length !== 0 && reviews.length >= page * 10 && (
         <>
-          {reviews
+         {reviews
             .slice(
               page * 10,
               (page + 1) * 10 > reviews.length - 1
@@ -171,6 +202,7 @@ export default function Reviews({ reviews, setReviews }) {
                   productId={productId}
                   imageNames={review.imageNames}
                   handleReviewsChange={handleReviewsChange}
+                  areCommonReviews={areCommonReviews}
                 />
               );
             })}

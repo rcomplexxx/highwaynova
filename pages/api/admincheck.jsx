@@ -173,7 +173,10 @@ else{
 
       if(table!='emails' && table!='emailCampaigns'){
       for (let i = 0; i < data.length; i++) {
-        if (table === "reviews") {
+        if (table === "reviews" || table === "common_reviews") {
+
+          console.log('upao u save db', data)
+         
           if (data[i].deleted) {
             const deleteStatement = db.prepare(
               `DELETE FROM ${table} WHERE id = ?`,
@@ -184,7 +187,7 @@ else{
             );
 
 
-            console.log('deleted',deleted)
+            console.log('deleted',data[i].deleted)
 
 
           } else {
@@ -260,6 +263,14 @@ else{
                 );
               }
             }
+          }
+          console.log('proso delete stat')
+          if(table==='reviews'){
+       
+            db.prepare('DELETE FROM common_reviews').run();
+  
+            // Insert all rows from the 'reviews_2' table into the 'reviews' table
+            db.prepare('INSERT INTO common_reviews SELECT * FROM reviews').run();
           }
         } 
        
@@ -338,9 +349,13 @@ else{
         emailSendJob(JSON.parse(data.emails)[0].sendDate,campaignId, JSON.parse(data.emails)[0].id);
       }
 
-      db.close();
+    
 
-      return res.status(200).json({ data_saved: true });
+    
+
+        db.close();
+
+       return res.status(200).json({ data_saved: true });
     } catch (error) {
       console.error(error);
       return res
@@ -392,7 +407,12 @@ else{
           return getFromDb(
             "reviews",
             `product_id = ${data.product_id}`,
-          ); //Doraditi za product_id===data.product_id
+          ); 
+          else if (dataType === "get_common_reviews")
+          return getFromDb(
+            "common_reviews",
+            `product_id = ${data.product_id}`,
+          );//Doraditi za product_id===data.product_id
         else if (dataType === "get_subscribers")
           return getFromDb("subscribers");
         else if(dataType === "get_subscribers_bh")
@@ -425,6 +445,19 @@ else{
 
           await updateDb(
             "reviews",
+            data,
+            "SET name = ?, text = ?, imageNames = ?, stars = ? WHERE id = ?",
+          );
+         
+        } 
+        else if (dataType === "send_common_reviews") {
+          if (!data)
+            return res
+              .status(500)
+              .json({ successfulLogin: false, error: "No data to send" });
+
+          await updateDb(
+            "common_reviews",
             data,
             "SET name = ?, text = ?, imageNames = ?, stars = ? WHERE id = ?",
           );

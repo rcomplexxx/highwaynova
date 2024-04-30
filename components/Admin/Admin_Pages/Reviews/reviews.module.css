@@ -39,3 +39,9 @@
 .reviewGetterDiv button{
     margin-top: var(--size-6);
 }
+
+.commonReviewsWarning{
+    color:yellow;
+    margin-top: var(--size-5);
+
+}

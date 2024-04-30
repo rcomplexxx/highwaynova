@@ -11,7 +11,7 @@ import { useRouter } from 'next/router';
 const WriteReview = dynamic(() => import('./WriteReview'));
 
 
-export default function WriteReviewVisible({ratingData}) {
+export default function WriteReviewVisible({ratingData, setSortingType}) {
     const [openRatingInfo, setOpenRatingInfo]=useState(false);
     const  [infoDivOpen, setInfoDivOpen] = useState(undefined);
 
@@ -112,6 +112,7 @@ export default function WriteReviewVisible({ratingData}) {
         </div>
        <RatingInfo ratingData={ratingData} openRatingInfo={openRatingInfo} setOpenRatingInfo={setOpenRatingInfo}/>
 
+<button onClick={()=>{setSortingType('new')}}>New</button>
 
 
         <button

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from "react";
+import React, { useState, useRef, useCallback, useEffect } from "react";
 import Image from "next/image";
 import styles from "./customerreviews.module.css";
 import StarRatings from "react-star-ratings";
@@ -57,8 +57,85 @@ export default function CustomerReviews({ product_id, ratingData, startReviews }
   const newReviews = useRef(startReviews ? startReviews : []);
   const [loadButtonExists, setLoadButtonExists] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const [sortingType, setSortingType] = useState("featured");
 
   const [fullScreenReview, setFullScreenReview] = useState();
+
+  const mountedRef = useRef();
+  const currentProductId = useRef(product_id);
+
+
+
+
+
+  
+
+  useEffect(()=>{
+    
+    
+    const fetchReviews=async()=>{
+
+    if(!mountedRef.current){mountedRef.current=true;}
+
+    else{
+  
+    const response = await fetch("/api/getreviews", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        product_id: product_id,
+        starting_position: 0,
+        limit: 20,
+        sortingType: sortingType
+
+      }),
+    });
+
+    if (response.ok) {
+
+
+     
+
+
+      const data = await response.json();
+
+   
+
+      console.log('response ok, ', data)
+
+  
+
+
+
+      setReviews([
+        ...data.reviews
+      ]);
+
+    
+
+      newReviews.current = [...data.reviews]; // Load 6 more reviews
+ 
+
+    
+    } 
+    else{
+      console.log('response not ok, ', response)
+    }
+
+
+  }
+}
+
+fetchReviews();
+
+
+
+  },[sortingType, product_id])
+
+
+
 
 
   const handleShowMore= useCallback( async () => {
@@ -111,6 +188,7 @@ export default function CustomerReviews({ product_id, ratingData, startReviews }
         body: JSON.stringify({
           product_id: product_id,
           starting_position: currentReviewLength,
+          sortingType: sortingType
         }),
       });
 
@@ -158,7 +236,7 @@ export default function CustomerReviews({ product_id, ratingData, startReviews }
     } finally {
       setIsLoading(false); // Reset loading state regardless of success or failure
     }
-  },[isLoading, reviews, newReviews.current])
+  },[isLoading, reviews, newReviews.current, sortingType])
 
 
 
@@ -175,7 +253,7 @@ export default function CustomerReviews({ product_id, ratingData, startReviews }
       <h1>Customer Reviews</h1>
 
       
-   <WriteReviewVisible ratingData={ratingData}/>
+   <WriteReviewVisible ratingData={ratingData} setSortingType={setSortingType}/>
 
 
 

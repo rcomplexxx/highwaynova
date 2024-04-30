@@ -57,6 +57,8 @@
   gap: 0;
 
  column-count: 4;
+column-fill:balance;
+
  column-gap: var(--size-5);
  contain:layout;
 

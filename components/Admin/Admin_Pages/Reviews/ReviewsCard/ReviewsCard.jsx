@@ -13,6 +13,7 @@ export default function ReviewsCard({
   productId,
   imageNames,
   handleReviewsChange,
+  areCommonReviews
 }) {
 
   const [newStars, setNewStars] = useState(stars);
@@ -37,6 +38,7 @@ export default function ReviewsCard({
  
 
   const changeReview = () => {
+    if(areCommonReviews)return;
     let imageNames = null;
     if (images) {
       const survivedImages = images.filter((img) => !img.deleted);
