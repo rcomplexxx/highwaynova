@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback, useContext, useLayoutEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback, useContext } from "react";
 import styles from "./checkoutinfo.module.css";
 import InputField from "./Input/InputField";
 import CountryInput from "./Input/CountryInput/CountryInput";
@@ -24,8 +24,10 @@ export default function CheckoutInfo({ products,  setCartProducts }) {
    showApt && document.getElementById("apt").focus();
    }, [showApt]);
 
-   useLayoutEffect(()=>{
+   useEffect(()=>{
+    document.getElementById("email").readOnly = true;
     document.getElementById("email").focus();
+    document.getElementById("email").readOnly = false;
    },[])
 
   const handleChange = (event) => {
