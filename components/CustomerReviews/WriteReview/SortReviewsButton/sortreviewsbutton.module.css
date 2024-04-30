@@ -18,13 +18,7 @@
 }
 
 
-.dropMenu{
-    position: absolute;
-    top: 0;
-    right: 0;
-    height: 30px;
-    width: 30px;
-}
+
 
 .sortingImg{
     height: 40px;
@@ -36,6 +30,14 @@
     border-radius: 4px;
 
     cursor: pointer;
+}
+
+.dropMenu{
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 30px;
+    width: 30px;
 }
 
 
@@ -89,6 +91,13 @@
 
 
 @media(max-width: 480px){
+
+
+    .sortingImg{
+        height: 40px;
+        width: 40px;
+        }
+
     .mainButton{
         transform: translateY(-4px);
     }

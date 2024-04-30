@@ -94,7 +94,6 @@
       }
 
       .ratingDiv{
-        margin-left:6px;
         align-self: flex-start;
         padding: var(--size-2) 0;
       }
@@ -102,6 +101,7 @@
 
 
       .writeReviewButton{
+        height: 48px;
         margin-top: var(--size-2);
         margin-right: 0;
         width: 100%;

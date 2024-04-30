@@ -127,7 +127,7 @@ export default function CustomerReviews({ product_id, ratingData, startReviews }
 
       await fetchReviews();
 
-      setTimeout(()=>{setShrinkReview(false)},300);
+      setTimeout(()=>{setShrinkReview(false)},200);
       
       
 

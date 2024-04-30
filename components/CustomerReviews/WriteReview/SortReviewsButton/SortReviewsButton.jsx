@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from './sortreviewsbutton.module.css'
 import Image from 'next/image'
 
@@ -7,10 +7,37 @@ export default function SortReviewsButton({sortingType, setSortingType}) {
     const [openSortingDiv, setOpenSortingDiv] = useState(false);
 
 
+
+    useEffect(()=>{
+
+  
+        const handleClick= (event)=>{
+        
+      
+            setOpenSortingDiv(false);
+        }
+    
+    
+       if(openSortingDiv) {
+    
+        document.addEventListener("click", handleClick)
+    
+    
+       }
+    
+       return ()=>{ 
+        document.removeEventListener("click", handleClick)
+      
+      }
+      
+    
+    }, [openSortingDiv])
+
+
   
 
   return (
-    <div  className={styles.mainButton}>
+    <div onClick={(event)=>{event.stopPropagation();}} className={styles.mainButton}>
 
         <Image src={`/images/customer_review_sort7.svg`} onClick={()=>{setOpenSortingDiv(!openSortingDiv)}} height={0} width={0} className={styles.sortingImg}/>
 
