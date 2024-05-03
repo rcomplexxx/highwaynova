@@ -110,13 +110,16 @@ else{
         })
 
         db.prepare(`DELETE FROM ${tableName}`).run();
+        db.prepare(`DROP TABLE IF EXISTS ${tableName}`).run()
           }
           else{
+            const deletedItemsNumber=  db.prepare(`SELECT COUNT(id) as count FROM ${tableName} WHERE product_id = ?`).get(product_id).count;
             db.prepare(`DELETE FROM ${tableName} WHERE product_id = ?`).run(product_id);
-            wipeReviewImageDirectory(product_id)
+            wipeReviewImageDirectory(product_id);
+            db.prepare(`UPDATE ${tableName} SET id = id - ? WHERE product_id > ?`).run(
+              deletedItemsNumber, product_id
+            );
             
-            db.prepare(`DROP TABLE IF EXISTS ${tableName}`).run();
-
 
           }
         }
@@ -173,7 +176,7 @@ else{
 
       if(table!='emails' && table!='emailCampaigns'){
       for (let i = 0; i < data.length; i++) {
-        if (table === "reviews" || table === "common_reviews") {
+        if (table === "reviews" ) {
 
           console.log('upao u save db', data)
          
@@ -263,15 +266,12 @@ else{
                 );
               }
             }
+
+
+            
           }
           console.log('proso delete stat')
-          if(table==='reviews'){
        
-            db.prepare('DELETE FROM common_reviews').run();
-  
-            // Insert all rows from the 'reviews_2' table into the 'reviews' table
-            db.prepare('INSERT INTO common_reviews SELECT * FROM reviews').run();
-          }
         } 
        
         
@@ -408,11 +408,7 @@ else{
             "reviews",
             `product_id = ${data.product_id}`,
           ); 
-          else if (dataType === "get_common_reviews")
-          return getFromDb(
-            "common_reviews",
-            `product_id = ${data.product_id}`,
-          );//Doraditi za product_id===data.product_id
+       
         else if (dataType === "get_subscribers")
           return getFromDb("subscribers");
         else if(dataType === "get_subscribers_bh")
@@ -438,6 +434,8 @@ else{
 
           await updateDb("messages", data, `SET msgStatus = ? WHERE id = ?`);
         } else if (dataType === "send_reviews") {
+
+
           if (!data)
             return res
               .status(500)
@@ -450,18 +448,7 @@ else{
           );
          
         } 
-        else if (dataType === "send_common_reviews") {
-          if (!data)
-            return res
-              .status(500)
-              .json({ successfulLogin: false, error: "No data to send" });
-
-          await updateDb(
-            "common_reviews",
-            data,
-            "SET name = ?, text = ?, imageNames = ?, stars = ? WHERE id = ?",
-          );
-        } 
+      
         else if (dataType === "send_email_data") {
           console.log('started email send');
           if (!data)

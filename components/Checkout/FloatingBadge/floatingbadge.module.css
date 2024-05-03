@@ -15,17 +15,7 @@
 
 
 
-.floatingDiv{
-    height: var(--size-5);
-    width: var(--size-5);
-    border: 1px solid var(--floating-badge-border-color);
-    box-sizing: border-box;
-    font-size: var(--font-size-1);
 
-    border-radius: 100%;
-    cursor: pointer;
-  
-}
 
 
 .floatingBadge{
@@ -36,6 +26,18 @@
     height:  var(--size-5);
     width:  var(--size-5);
     user-select: none;
+  
+}
+
+.floatingDiv{
+    
+    box-sizing: border-box;
+    border: 1px solid var(--floating-badge-border-color);
+   
+    font-size: var(--font-size-1);
+
+    border-radius: 100%;
+    cursor: pointer;
   
 }
 

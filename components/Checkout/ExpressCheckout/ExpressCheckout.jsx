@@ -16,7 +16,6 @@ export default function ExpressCheckout({
       <h3 className={styles.expressCheckoutTitle}>Express checkout</h3>
       <div className={styles.expressPaymentsWrapper}>
         <div className={styles.paymentDiv}>
-          <span className={styles.paymentDivBg}/>
           <div className={styles.paymentDivFront}>
           <PayPalButton
           color='blue'
@@ -42,7 +41,6 @@ export default function ExpressCheckout({
             }}
           />
           </div>
-          <span className={styles.paymentDivBg}/>
         </div>
       </div>
 

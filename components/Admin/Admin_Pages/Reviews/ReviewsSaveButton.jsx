@@ -1,8 +1,7 @@
 import styles from "./reviewssavebutton.module.css";
 
 export default function SaveButton({
-  dataType,
-  oldReviews,
+
   reviews,
   setOldReviews,
   clearAfterReviewsSave,
@@ -24,6 +23,8 @@ export default function SaveButton({
             reviews[i].swapId && reviews[i].swapId != "" && reviews[i].swapId,
         });
     }
+
+    
     console.log(data);
     if (data.length !== 0)
       await fetch("/api/admincheck", {
@@ -31,7 +32,7 @@ export default function SaveButton({
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ dataType: dataType, data: data }),
+        body: JSON.stringify({ dataType: "send_reviews", data: data }),
       })
         .then((response) => {
           if (response.ok) {

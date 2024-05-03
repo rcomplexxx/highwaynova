@@ -117,7 +117,6 @@ export default function WriteReview({ setInfoDivOpen }) {
 
      
         <div className={styles.writeReviewPopupDiv}>
-          <div className={styles.reviewBackgroundDiv} />
           <div className={`${styles.mainReviewDiv} ${cancelImageLoaded && styles.spawnReviewDiv}`}>
             {ratingPage !== 0 && ratingPage !== 4 && (
               <div

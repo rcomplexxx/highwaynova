@@ -34,18 +34,7 @@
 
 
 
-.innerBorder {
-    width: calc(100% - var(--size-1));
-    height: calc(100% - var(--size-1));
-    box-sizing: border-box;
-    position: absolute;
-    top: 1px;
-    left: 1px;
-    border-radius: 8px;
-    outline: 1px solid var(--border-color-mid); /* Inner border color and width */
-    pointer-events: none;
-    z-index: 2;
-  }
+
 
   .paymentContent{
     z-index: 3;

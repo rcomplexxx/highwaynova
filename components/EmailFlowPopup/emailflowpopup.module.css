@@ -12,19 +12,11 @@
     justify-content: center;
     align-items: center;
     z-index: 999;
-   
-}
-
-
-.popupBackground{
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
     background-color: black;
     animation: darkenScreen 0.5s ease forwards;
 }
+
+
 
 .popupWrapper{
 

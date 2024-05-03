@@ -193,8 +193,6 @@ export default function PaymentSection({ checkFields, organizeUserData, setError
         </div>  </div>
 
 
-        {/* <div className={styles.innerBorder}/> */}
-
       </div>
     </>
   );

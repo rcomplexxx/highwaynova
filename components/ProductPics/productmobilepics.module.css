@@ -36,12 +36,6 @@
 
 
 
-  .productPicsBot{
-   width:100%;
-    position: absolute;
-   bottom: 0px;
-  }
-
   .slide{
     position: relative;
     aspect-ratio: 1;
@@ -154,10 +148,7 @@
     .productPicsFixed{
       width: var(--size-15-5);
     }
-    .productPicsBot{
-      width: var(--size-15-5);
-    }
-
+ 
   
 
 
@@ -206,13 +197,6 @@
   
 
  
-  
-    .productPicsBot{
-     width:100%;
-      position: static;
-    
-    }
-
    
    
     

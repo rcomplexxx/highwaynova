@@ -3,9 +3,6 @@ import Image from "next/image";
 import styles from "./customerreviews.module.css";
 import StarRatings from "react-star-ratings";
 import ReactHtmlParser from "react-html-parser";
-// import Masonry from "react-masonry-css";
-// import classNames from "classnames";
-// import Masonry, {ResponsiveMasonry} from "react-responsive-masonry"
 
 import WriteReviewVisible from "./WriteReview/WriteReviewVisible";
 import FullScreenReview from "./FullScreenReview/FullScreenReview";
@@ -33,7 +30,8 @@ function Review({ product_id,  name, text,  stars, imageNames, setFullScreenRevi
               width={0}
               src={`/images/review_images/productId_${product_id}/${JSON.parse(imageNames)[0]}`}
               alt="review image"
-              loading={shrinkReview?"eager":"lazy"}
+              loading={reviewRef.current?"eager":"lazy"}
+              priority={reviewRef.current}
               sizes="(max-width: 580px) 100vw, (max-width: 700px) 50vw, (max-width: 1200px) 33vw, 25vw"
               className={styles.reviewImage}
             />
@@ -68,7 +66,6 @@ export default function CustomerReviews({ product_id, ratingData, startReviews }
 
   const [fullScreenReview, setFullScreenReview] = useState();
 
-  const mountedRef = useRef();
 
 
 
@@ -89,7 +86,7 @@ export default function CustomerReviews({ product_id, ratingData, startReviews }
         product_id: product_id,
         starting_position: 0,
         limit: 20,
-        sortingType: sortingType
+        sortingType: newSortingType
 
       }),
     });
@@ -101,12 +98,12 @@ export default function CustomerReviews({ product_id, ratingData, startReviews }
       console.log('response ok, ', data)
 
 
-      setReviews([
-        ...data.reviews
-      ]);
+      
 
 
-      newReviews.current = [...data.reviews]; // Load 6 more reviews
+      newReviews.current = data.reviews; // Load 6 more reviews
+      setReviews(data.reviews);
+      setLoadButtonExists(true);
     
     } 
     else{
@@ -144,13 +141,14 @@ export default function CustomerReviews({ product_id, ratingData, startReviews }
     
 
 
-
+    setSortingType("featured")
 
       setReviews(startReviews);
 
     
 
       newReviews.current = startReviews; // Load 6 more reviews
+      
  
       setLoadButtonExists(true);
   
@@ -175,9 +173,7 @@ export default function CustomerReviews({ product_id, ratingData, startReviews }
 
 
       let currentReviewLength= reviews.length;
-      const index = newReviews.current.findIndex(
-        (review) => review.id === reviews[reviews.length - 1].id,
-      );
+      const index = reviews.length - 1;
 
 
         
@@ -247,6 +243,7 @@ export default function CustomerReviews({ product_id, ratingData, startReviews }
       
 
         newReviews.current = [...data.reviews.slice(8,data.reviews.length)]; // Load 6 more reviews
+
    
 
       

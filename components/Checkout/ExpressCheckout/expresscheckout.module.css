@@ -55,16 +55,7 @@
     border-radius: 4px;
 }
 
-.paymentDivBg{
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: var(--size-8);
-    background-color: var(--express-checkout-button-bg);
-    border-radius: 4px;
-    z-index: 1;
-}
+
 
 
 
