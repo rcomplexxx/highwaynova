@@ -104,7 +104,7 @@ export default function ProductPage({ product, images, startReviews, ratingData 
               numberOfStars={5}
               starEmptyColor={"var(--star-empty-color)"}
               starDimension="20px"
-              starSpacing="0.4px"
+              starSpacing="2px"
             />
             <span className={styles.product_rating_reviews_number}>({ratingData.reviewsNumber})</span>
           </div>
