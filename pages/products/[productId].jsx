@@ -24,6 +24,7 @@ import PayPalButton from "@/components/Checkout/PayPal/PayPal";
 import { NextSeo } from "next-seo";
 import { productPageSeo } from "@/utils/SEO-configs/next-seo.config";
 import ProductDescription from "@/components/ProductDescription2/ProductDescription";
+import { STARPATH } from "@/data/constants";
 
 //slickGoTo
 //afterChange(index)=>{}
@@ -98,6 +99,7 @@ export default function ProductPage({ product, images, startReviews, ratingData 
            
             <StarRatings
               rating={ratingData.rating?ratingData.rating:4.7}
+              svgIconPath={STARPATH}
               starRatedColor="var(--star-color)"
               numberOfStars={5}
               starEmptyColor={"var(--star-empty-color)"}

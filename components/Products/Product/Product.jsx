@@ -4,6 +4,7 @@ import Link from "next/link";
 import StarRatings from "react-star-ratings";
 import styles from "./product.module.css";
 import PicWithThumbnail from "./PicWithThumbnail/PicWithThumbnail";
+import { STARPATH } from "@/data/constants";
 
 const Product = ({ product}) => {
   return (
@@ -18,6 +19,7 @@ const Product = ({ product}) => {
         <div className={styles.starDiv}>
 <StarRatings
 rating={product.raiting?product.raiting:4.7}
+svgIconPath={STARPATH}
 starRatedColor="var(--star-color)"
 numberOfStars={5}
 starEmptyColor={"var(--star-empty-color)"}

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import StarRatings from "react-star-ratings";
 import styles from "./ratinginfo.module.css";
+import { STARPATH } from "@/data/constants";
 
 export default function RatingInfo({ratingData, openRatingInfo, setOpenRatingInfo}) {  
   
@@ -68,6 +69,9 @@ export default function RatingInfo({ratingData, openRatingInfo, setOpenRatingInf
         <div className={styles.ratingTitle}>
                <StarRatings
             rating={ratingData.rating}
+
+            svgIconPath={STARPATH}
+
             starRatedColor="var(--star-color)"
             numberOfStars={1}
             starEmptyColor={"var(--star-empty-color)"}
@@ -108,6 +112,8 @@ return <div className={styles.ratingMetric}>
             starRatedColor="var(--star-color)"
             numberOfStars={5}
             starEmptyColor={"var(--star-empty-color)"}
+
+            svgIconPath={STARPATH}
             
             starDimension="16px"
             starSpacing="2px"

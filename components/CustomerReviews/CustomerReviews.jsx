@@ -6,6 +6,7 @@ import ReactHtmlParser from "react-html-parser";
 
 import WriteReviewVisible from "./WriteReview/WriteReviewVisible";
 import FullScreenReview from "./FullScreenReview/FullScreenReview";
+import { STARPATH } from "@/data/constants";
 
 function Review({ product_id,  name, text,  stars, imageNames, setFullScreenReview, shrinkReview}) {
 
@@ -40,6 +41,7 @@ function Review({ product_id,  name, text,  stars, imageNames, setFullScreenRevi
         <div className={styles.starDiv}>
         <StarRatings
           rating={parseInt(stars, 10)}
+          svgIconPath={STARPATH}
           starRatedColor="var(--star-color)"
           numberOfStars={5}
           starEmptyColor={"var(--star-empty-color)"}

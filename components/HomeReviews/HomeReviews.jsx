@@ -5,6 +5,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Image from "next/image";
+import { STARPATH } from "@/data/constants";
 
 const reviews = [
   {
@@ -46,7 +47,7 @@ function Review({ reviewText, author, authorImage }) {
 
       <StarRatings
           rating={5}
-        
+          svgIconPath={STARPATH}
           starRatedColor="var(--star-home-review-color)"
           numberOfStars={5}
           starEmptyColor={"var(--star-empty-color)"}

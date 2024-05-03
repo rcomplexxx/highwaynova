@@ -7,6 +7,7 @@ import styles from './writereviewvisible.module.css';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import SortReviewsButton from './SortReviewsButton/SortReviewsButton';
+import { STARPATH } from '@/data/constants';
 
 
 const WriteReview = dynamic(() => import('./WriteReview'));
@@ -88,6 +89,7 @@ export default function WriteReviewVisible({ratingData, sortingType, setSortingT
          setOpenRatingInfo(!openRatingInfo)}}>
           <StarRatings
             rating={ratingData.rating}
+            svgIconPath={STARPATH}
             starRatedColor="var(--star-color)"
             numberOfStars={5}
             starEmptyColor={"var(--star-empty-color)"}

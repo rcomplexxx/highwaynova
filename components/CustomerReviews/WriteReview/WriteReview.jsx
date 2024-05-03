@@ -4,6 +4,7 @@ import StarRatings from "react-star-ratings";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { STARPATH } from "@/data/constants";
 
 export default function WriteReview({ setInfoDivOpen }) {
  
@@ -160,6 +161,7 @@ export default function WriteReview({ setInfoDivOpen }) {
                   </span>
                   <StarRatings
                     rating={rating}
+                    svgIconPath={STARPATH}
                     starRatedColor="var(--star-color)"
                     numberOfStars={5}
                     changeRating={(newRating) => {    

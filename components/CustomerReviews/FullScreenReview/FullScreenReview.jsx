@@ -3,6 +3,7 @@ import Image from "next/image";
 import styles from './fullscreenreview.module.css';
 import StarRatings from 'react-star-ratings';
 import ReactHtmlParser from "react-html-parser";
+import { STARPATH } from '@/data/constants';
     
 
 export default function FullScreenReview({authorName, text, stars, imageSrc, setFullScreenReview}) {
@@ -147,7 +148,7 @@ ${(imageSrc?imageLoaded:true) && styles.spawnFullScreenReview}`}>
         </div>
         <StarRatings
           rating={parseInt(stars, 10)}
-         
+          svgIconPath={STARPATH}
           starRatedColor="var(--star-color)"
           numberOfStars={5}
           starEmptyColor={"var(--star-empty-color)"}
