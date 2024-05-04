@@ -216,7 +216,7 @@
 
 
   .mainCouponCode {
-    
+    color: var(--high-contrast-light-txt-color);
     background-color: var(--coupon-code-bg);
     width:min-content;
     display: flex;

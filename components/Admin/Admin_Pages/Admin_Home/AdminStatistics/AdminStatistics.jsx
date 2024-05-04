@@ -420,7 +420,7 @@ export default function AdminStatistics(){
 ${shouldUseOnlyFulfilledOrders && styles.onlyFulfilledOrdersChecked}`}
  
 >
-       <Image id='onlyFulfilledOrdersCorrect' src='/images/correctDark.svg' 
+       <Image id='onlyFulfilledOrdersCorrect' src='/images/svgs/correctDark.svg' 
        
        className={styles.checkImage} height={10} width={10}/>
       </div>

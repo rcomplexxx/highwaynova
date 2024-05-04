@@ -4,6 +4,7 @@ import styles from "./footer.module.css";
 import Image from "next/image";
 import LinkCard from "./LinkCard/LinkCard";
 import collections from "@/data/collections.json";
+import { Amex,Discover, GPay, Jcb, MasterCard, PaypalWhite, UntionPay, Visa } from "@/public/images/svgs/svgImages";
 
 
 export default function Footer() {
@@ -141,15 +142,15 @@ export default function Footer() {
         <div  className={styles.paymentsDivWrapper}>
         <div  className={styles.paymentsDiv}>
       
-           <Image loading={'lazy'} src='/images/cardVisa2.svg' alt='Visa' className={styles.payments} height={0} width={0} sizes="72px"/>
-            <Image loading={'lazy'} src='/images/cardMasterCard5.svg' alt='MasterCard' className={styles.payments} height={0} width={0} sizes="72px"/>
-           <Image loading={'lazy'} src='/images/cardAmex2.svg' alt='Amex' className={styles.payments} height={0} width={0} sizes="72px"/>
+           <Visa styleClassName={styles.payments}/>
+            <MasterCard styleClassName={styles.payments}/>
+           <Amex styleClassName={styles.payments}/>
            
-          <Image loading={'lazy'} src='/images/cardDiscover3.svg' alt='Discover' className={styles.payments} height={0} width={0} sizes="72px"/>
-            <Image loading={'lazy'} src='/images/cardJcb2.svg' alt='Jcb' className={styles.payments} height={0} width={0} sizes="72px"/>
-            <Image loading={'lazy'} src='/images/cardUnionPay4.svg' alt='UnionPay' className={styles.payments} height={0} width={0} sizes="72px"/>
-            <Image loading={'lazy'} src='/images/cardPaypalWhite3.svg' alt='Paypal' className={styles.payments} height={0} width={0} sizes="72px"/>
-            <Image loading={'lazy'} src='/images/cardGpay2.svg' alt='Gpay' className={styles.payments} height={0} width={0} sizes="72px"/>
+          <Discover styleClassName={styles.payments}/>
+            <Jcb styleClassName={styles.payments}/>
+            <UntionPay styleClassName={styles.payments}/>
+            <PaypalWhite styleClassName={styles.payments}/>
+            <GPay styleClassName={styles.payments}/>
         </div>
         </div>
         <p className={styles.reservedRightsPharagraph}>

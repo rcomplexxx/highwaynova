@@ -3,6 +3,7 @@ import PayPalButton from "../PayPal/PayPal";
 import StripeWrapper from "../Stripe/Stripe";
 import styles from "./paymentmethodwrapper.module.css";
 import Image from "next/image";
+import {Amex, Discover, Jcb, MasterCard, UntionPay, Visa} from '@/public/images/svgs/svgImages.jsx'
 
 export default function PaymentSection({ checkFields, organizeUserData, setErrors, products,setCartProducts}) {
     const [paymentMethod, setPaymentMethod] = useState("creditcard");
@@ -129,9 +130,9 @@ export default function PaymentSection({ checkFields, organizeUserData, setError
             <span className={styles.optionSpan}>Credit Card</span>
            </div>
            <div className={styles.CCSolutions}>
-            <Image src='/images/cardVisa2.svg' className={styles.creditCardLogo} height={28} width={48}/>
-            <Image src='/images/cardMasterCard5.svg' className={styles.creditCardLogo} height={28} width={48}/>
-            {!showOnlyTwoCards && <Image src='/images/cardAmex2.svg' className={styles.creditCardLogo} height={28} width={48}/>}
+            <Visa styleClassName={styles.creditCardLogo}/>
+            <MasterCard styleClassName={styles.creditCardLogo}/>
+            {!showOnlyTwoCards && <Amex styleClassName={styles.creditCardLogo}/>}
            
             <div id="moreCards" className={styles.moreCards} onMouseEnter={()=>{if(window.matchMedia('(pointer: fine)').matches) setMoreCardsPopupOpen(true)}}
             onMouseLeave={()=>{if(window.matchMedia('(pointer: fine)').matches) setMoreCardsPopupOpen(false)}}
@@ -140,10 +141,10 @@ export default function PaymentSection({ checkFields, organizeUserData, setError
            
             <div className={`${styles.moreCardsPopupWrapper} ${moreCardsPopupOpen && styles.moreCardsPopupOpen}`}>
             <div onClick={(event)=>{event.stopPropagation();setMoreCardsPopupOpen(false);}} className={styles.moreCardsPopup}>
-            {showOnlyTwoCards && <Image src='/images/cardAmex2.svg' className={styles.creditCardLogo} height={28} width={48}/>}
-            <Image src='/images/cardDiscover3.svg' className={styles.creditCardLogo} height={28} width={48}/>
-            <Image src='/images/cardJcb2.svg' className={styles.creditCardLogo} height={28} width={48}/>
-            <Image src='/images/cardUnionPay4.svg' className={styles.creditCardLogo} height={28} width={48}/>
+            {showOnlyTwoCards && <Amex styleClassName={styles.creditCardLogo}/>}
+            <Discover styleClassName={styles.creditCardLogo}/>
+            <Jcb styleClassName={styles.creditCardLogo}/>
+            <UntionPay styleClassName={styles.creditCardLogo}/>
             </div>
             <div className={styles.moreCardsPopupTriangle}/>
             </div>

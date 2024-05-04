@@ -190,7 +190,7 @@ export default function WriteReview({ setInfoDivOpen }) {
                         
                       {images.map((image, i) => {
                        return <div key={i} className={styles.userImageDiv}>
-                          <img height={0} width={0} src='/images/cancelIconWriteReview.svg' className={styles.cancelImage} onClick={()=>{
+                          <img height={0} width={0} src='/images/svgs/cancelIconWriteReview.svg' className={styles.cancelImage} onClick={()=>{
                             let newImages= images.filter(img=>{return img!=image});
                             setImages(newImages);
                           }}>
@@ -339,7 +339,7 @@ export default function WriteReview({ setInfoDivOpen }) {
             </div>
 
             {ratingPage == 0 || ratingPage == 4 ? (
-               <Image height={20} width={20} src='/images/cancelIconWriteReview.svg'
+               <Image height={20} width={20} src='/images/svgs/cancelIconWriteReview.svg'
                onLoad={()=>{setCancelImageLoaded(true)}}
                onError={()=>{setCancelImageLoaded(true)}}
                 onClick={() => {

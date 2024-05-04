@@ -172,9 +172,9 @@ const handleCouponApply = () => {
 
                 {couponCode &&
                   <div className={styles.mainCouponCode}> 
-                      <Image src='/images/discountIcon13.svg' className={styles.mainDiscountImg} height={18} width={18}/>
+                      <Image src='/images/svgs/discountIcon13.svg' className={styles.mainDiscountImg} height={18} width={18}/>
                       <span>{couponCode}</span>
-                      <Image src='/images/cancelDark.png' onClick={(()=>{setAndValidateCouponCode("");})}
+                      <Image src='/images/svgs/cancelIconDark.svg' onClick={(()=>{setAndValidateCouponCode("");})}
                        className={styles.discountCancelImage} height={16} width={16}/>
                       </div>
                    }
@@ -208,7 +208,7 @@ const handleCouponApply = () => {
 
                     <div className={`${styles.order_pair} ${styles.discountPair}`}>
                     <div className={styles.couponCodeDiv}>
-                        <Image src='/images/discountIconFaded.svg' className={styles.discountImg} height={16} width={16}/>
+                        <Image src='/images/svgs/discountIconFaded.svg' className={styles.discountImg} height={16} width={16}/>
                         <span id="couponCode">{couponCode}</span>
                         </div>
                     <span id="discountPrice">- ${(subTotal*discount/100).toFixed(2)}</span>
@@ -240,7 +240,7 @@ const handleCouponApply = () => {
 
                   {couponCode &&
                   <div className={styles.totalDiscount}> 
-                      <Image src='/images/discountIconTotal5.svg' className={styles.totalDiscountImg} height={20} width={20}/>
+                      <Image src='/images/svgs/discountIconTotal5.svg' className={styles.totalDiscountImg} height={20} width={20}/>
                       <span className={styles.totalDiscountSpan}>Total savings</span><span className={styles.totalDiscountSpan}>${(subTotal*discount/100).toFixed(2)}</span>
                       
                       </div>

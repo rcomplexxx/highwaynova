@@ -446,7 +446,7 @@ const handleCCBlur= ()=>{
       <div id="isShippingBilling" className={`${styles.addressTypeChecker} ${billingAddressSameAsShipping && styles.addressTypeCheckerChecked}`} 
      
       >
-        <Image className={styles.addressCheckerImage} src='/images/correctDark.svg' height={10} width={10}/>
+        <Image className={styles.addressCheckerImage} src='/images/svgs/correctDark.svg' height={10} width={10}/>
         </div>
       <span className={styles.billingCheckboxLabel}>
       Use shipping address as billing address

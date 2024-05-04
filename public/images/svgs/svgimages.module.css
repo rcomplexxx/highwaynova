@@ -1,0 +1,18 @@
+
+
+.cardIcon{
+    margin-left: var(--size-1);
+    margin-right:  var(--size-1);
+    border-radius: 2px;
+
+
+}
+
+
+@media(max-width: 980px){
+    
+.cardIcon{
+    width: 40px;
+}
+
+}

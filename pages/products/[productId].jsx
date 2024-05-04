@@ -25,6 +25,7 @@ import { NextSeo } from "next-seo";
 import { productPageSeo } from "@/utils/SEO-configs/next-seo.config";
 import ProductDescription from "@/components/ProductDescription2/ProductDescription";
 import { STARPATH } from "@/data/constants";
+import { Amex,Discover, Jcb, MasterCard, Visa } from "@/public/images/svgs/svgImages";
 
 //slickGoTo
 //afterChange(index)=>{}
@@ -211,16 +212,14 @@ export default function ProductPage({ product, images, startReviews, ratingData 
         
 
           <div className={styles.buyBadges}>
-          <Image src='/images/cardVisa2.svg' alt='Visa' loading={'lazy'} className={styles.creditCardLogo} height={0} width={0} sizes="72px"/>
-            <Image src='/images/cardMasterCard5.svg' alt='MasterCard' loading={'lazy'} className={styles.creditCardLogo} height={0} width={0} sizes="72px"/>
-           <Image src='/images/cardAmex2.svg' alt='Amex' loading={'lazy'} className={styles.creditCardLogo} height={0} width={0} sizes="72px"/>
+          <Visa styleClassName={styles.creditCardLogo}/>
+           <MasterCard styleClassName={styles.creditCardLogo}/>
+           <Amex styleClassName={styles.creditCardLogo}/>
            
          
-          {/* <div id="moreCards" className={styles.moreCards}>+4</div> */}
-            <Image src='/images/cardJcb2.svg' alt='Jcb' loading={'lazy'} className={styles.creditCardLogo} height={0} width={0} sizes="72px"/>
+            <Jcb styleClassName={styles.creditCardLogo}/>
             
-            {/* <Image src='/images/cardGpay2.svg' className={styles.creditCardLogo} height={0} width={0} sizes="72px"/> */}
-            <Image src='/images/cardDiscover3.svg' alt='Discover' loading={'lazy'} className={styles.creditCardLogo} height={0} width={0} sizes="72px"/>
+           <Discover styleClassName={styles.creditCardLogo}/>
           </div>
 
           <FrequentlyBoughtTogether
