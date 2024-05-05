@@ -5,6 +5,7 @@ import collections from '@/data/collections.json'
 import products from '@/data/products.json'
 import { useRouter } from 'next/router';
 import Image from 'next/image';
+import { CancelIcon } from '@/public/images/svgs/svgImages';
 
 
 
@@ -208,16 +209,13 @@ export default function Search({searchOpen, setSearchOpen}){
           </div>
          
           </div>
-          {searchOpen && <Image height={0} width={0}
-          src="/images/svgs/cancelIconSearch.svg"
-          sizes='32px'
-          onClick={()=>{  
+          {searchOpen && 
+          
+          <CancelIcon color={`var(--search-cancel-icon-color)`} styleClassName={styles.searchCancel} handleClick={()=>{  
             
             setSearchOpen(false);
-          history.back();}} 
-          className={styles.searchCancel}
-          
-          />}
+          history.back();}}/>
+        }
         </div>
     
     

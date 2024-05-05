@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import styles from './emailflowpopup.module.css'
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import { CancelIcon } from '@/public/images/svgs/svgImages';
 
 
 
@@ -116,7 +117,8 @@ export default function EmailFlowPopup({setEmailPopup}){
     return <div className={styles.popupMainWrapper}>
          <div className={styles.popupWrapper}>
             <div onClick={()=>{setEmailPopup(false)}} className={styles.cancelButton}>
-                <Image src='/images/svgs/cancelIconDark.svg' height={8} width={8}/>
+              <CancelIcon color={"var(--email-cancel-icon-color)"} styleClassName={styles.cancelIcon}/>
+           
             </div>
                { !successfullySignedUp ?popupRequestContent():thankYouContent()}
            

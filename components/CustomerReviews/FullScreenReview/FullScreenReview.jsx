@@ -4,10 +4,11 @@ import styles from './fullscreenreview.module.css';
 import StarRatings from 'react-star-ratings';
 import ReactHtmlParser from "react-html-parser";
 import { STARPATH } from '@/data/constants';
+import { CancelIcon } from '@/public/images/svgs/svgImages';
     
 
 export default function FullScreenReview({authorName, text, stars, imageSrc, setFullScreenReview}) {
-    const [imageLoaded, setImageLoaded] = useState({cancelImage: false, mainImage: false});
+    const [imageLoaded, setImageLoaded] = useState(false);
   
    
     const reviewImageRef= useRef();
@@ -76,7 +77,7 @@ useEffect(()=>{
 
 
 useEffect(()=>{
-  if(imageLoaded.cancelImage && imageLoaded.mainImage && imageSrc && reviewImageRef && window.innerWidth>600) {
+  if(imageLoaded && imageSrc && reviewImageRef && window.innerWidth>600) {
     const { naturalWidth, naturalHeight, clientWidth, clientHeight } = reviewImageRef.current;
     const widthIsBigger = naturalWidth > naturalHeight;
     const imageClientSmallerSize = widthIsBigger ? clientWidth/naturalWidth * naturalHeight : clientHeight/naturalHeight * naturalWidth;
@@ -112,12 +113,8 @@ useEffect(()=>{
 <div ref={mainReviewDiv} onClick={(event)=>{event.stopPropagation()}} className={`${styles.mainDiv} 
 ${(imageSrc?imageLoaded:true) && styles.spawnFullScreenReview}`}>
 
-    <Image src='/images/svgs/cancelIconReview.svg' height={0} width={0} sizes='32px' onClick={()=>{history.back();}} 
-    className={`${styles.closeFullScreen} ${!imageSrc && styles.closeFullScreenNoImg}`}
-    onLoad={() => setImageLoaded({...imageLoaded, cancelImage:true})}
-        onError={() => setImageLoaded({...imageLoaded, cancelImage:true})}
-    />
-
+<CancelIcon color={"var(--fullscreen-customer-cancel-icon-color)"} styleClassName={`${styles.closeFullScreen} ${!imageSrc && styles.closeFullScreenNoImg}`}  handleClick={()=>{history.back();}}
+   />
    {imageSrc && <div className={styles.reviewImageDiv}>
 
         <Image
@@ -128,8 +125,8 @@ ${(imageSrc?imageLoaded:true) && styles.spawnFullScreenReview}`}>
         
         loading='eager'
         //za mobilni je 100vw, inace ima tacno odredjeno
-        onLoad={() => setImageLoaded({...imageLoaded, mainImage:true})}
-        onError={() => setImageLoaded({...imageLoaded, mainImage:true})}
+        onLoad={() => setImageLoaded(true)}
+        onError={() => setImageLoaded(true)}
         className={styles.reviewImage}
         />
 

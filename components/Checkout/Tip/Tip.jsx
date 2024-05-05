@@ -4,6 +4,7 @@ import InputField from '../Input/InputField'
 import styles from './tip.module.css'
 import Image from 'next/image';
 import { CheckoutContext } from '@/contexts/CheckoutContext';
+import { CorrectIcon } from '@/public/images/svgs/svgImages';
 
 
 export default function Tip({products}){
@@ -73,7 +74,7 @@ export default function Tip({products}){
 
 <div tabIndex={0} className={styles.tipShowCheckboxDiv}  onClick={()=>{ setTipShow(!tipShow)}}>
       <div  className={`${styles.tipShowChecker} ${tipShow && styles.tipShowCheckerChecked}`}>
-     <Image className={styles.checkImage} src='/images/svgs/correctDark.svg' height={10} width={10}/>
+        <CorrectIcon styleClassName={styles.checkImage}/>
       </div>
      
   

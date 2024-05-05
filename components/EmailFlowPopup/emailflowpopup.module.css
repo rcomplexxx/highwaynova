@@ -51,6 +51,11 @@
     cursor: pointer;
 }
 
+.cancelIcon{
+    height: 8px;
+    width: 8px;
+}
+
 .signUpText{
 }
 

@@ -9,6 +9,7 @@ import React, {
   import Image from "next/image";
   import coupons from "@/data/coupons.json";
 import { CheckoutContext } from "@/contexts/CheckoutContext";
+import { CancelIcon, DiscountIcon, DiscountIconTotal } from "@/public/images/svgs/svgImages";
   
   export default function OrderDetails({  products }) {
     const [showAnswer, setShowAnswer] = useState(false);
@@ -172,10 +173,11 @@ const handleCouponApply = () => {
 
                 {couponCode &&
                   <div className={styles.mainCouponCode}> 
-                      <Image src='/images/svgs/discountIcon13.svg' className={styles.mainDiscountImg} height={18} width={18}/>
+                  <DiscountIcon color={`var(--discount-icon-color)`} styleClassName={styles.mainDiscountImg}/>
+                  
                       <span>{couponCode}</span>
-                      <Image src='/images/svgs/cancelIconDark.svg' onClick={(()=>{setAndValidateCouponCode("");})}
-                       className={styles.discountCancelImage} height={16} width={16}/>
+                      <CancelIcon color={`var(--discount-cancel-icon-color)`} styleClassName={styles.discountCancelImage} handleClick={()=>{setAndValidateCouponCode("");}}
+                    />
                       </div>
                    }
 
@@ -184,7 +186,7 @@ const handleCouponApply = () => {
 
 
                     <button
-                      className={`${styles.apply} ${ tempCouponCode !== "" && styles.applyEnabled }`}
+                      className={`${styles.apply} ${tempCouponCode !== "" && styles.applyEnabled }`}
                       onClick={handleCouponApply}
                     >
                       Apply
@@ -208,7 +210,7 @@ const handleCouponApply = () => {
 
                     <div className={`${styles.order_pair} ${styles.discountPair}`}>
                     <div className={styles.couponCodeDiv}>
-                        <Image src='/images/svgs/discountIconFaded.svg' className={styles.discountImg} height={16} width={16}/>
+                      <DiscountIcon color={`var(--discount-icon-faded-color)`} styleClassName={styles.discountImg}/>
                         <span id="couponCode">{couponCode}</span>
                         </div>
                     <span id="discountPrice">- ${(subTotal*discount/100).toFixed(2)}</span>
@@ -240,7 +242,7 @@ const handleCouponApply = () => {
 
                   {couponCode &&
                   <div className={styles.totalDiscount}> 
-                      <Image src='/images/svgs/discountIconTotal5.svg' className={styles.totalDiscountImg} height={20} width={20}/>
+                    <DiscountIconTotal color={`var(--discount-icon-total-color)`} styleClassName={styles.totalDiscountImg}/>
                       <span className={styles.totalDiscountSpan}>Total savings</span><span className={styles.totalDiscountSpan}>${(subTotal*discount/100).toFixed(2)}</span>
                       
                       </div>

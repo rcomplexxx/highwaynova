@@ -303,6 +303,8 @@ Cormorant+Garamond */
  
   /* //#43A146 //#42A147 */
 
+  --success-icon-color: black;
+
   --success-color: #43A146;
   --error-color: red;
   --error-box-shadow-color: rgb(158, 49, 6);
@@ -324,6 +326,9 @@ Cormorant+Garamond */
 
   --search-bg: transparent;
   --search-autofill-color: var(--navbar-bg);
+  --search-cancel-icon-color: var(--neutral-5);
+  --mobile-nav-cancel-icon-color: var(--search-cancel-icon-color);
+
   --nav-links-color: var(--accent-color-7);
   --navbar-current-link-color: var(--light-txt-colo);
   --nav-select-search-link-color:var(--main-color-1);
@@ -442,6 +447,7 @@ Cormorant+Garamond */
  --fullscreen-customer-image-bg: var(--neutral-1);
 
  --fullscreen-customer-cancel-bg: rgba(102, 102, 102, 0.7);
+  --fullscreen-customer-cancel-icon-color: var(--neutral-0);
  
  --fullscreen-customer-cancel-hover: rgb(133, 133, 133);
 
@@ -465,6 +471,7 @@ Cormorant+Garamond */
  
   --cancel-image-button-bg: transparent;
   --cancel-image-button-bg-hover: var(--neutral-1);
+  --cancel-image-color: var(--neutral-5);
   
 
   
@@ -559,7 +566,11 @@ Cormorant+Garamond */
   --apply-coupon-txt-color: var(--action-button-txt-color);
  
   --coupon-code-bg: var(--neutral-5);
-  --discount-icon-border: var(--neutral-6);
+  --discount-icon-color: var(--neutral-0-5);
+  --discount-icon-faded-color: var(--neutral-6);
+  --discount-icon-total-color: var(--neutral-10);
+
+  --discount-cancel-icon-color: var(--neutral-0-5);
 
 
                   /*Tip*/
@@ -587,6 +598,7 @@ Cormorant+Garamond */
 --email-popup-light-color: white;
 --email-popup-cancel-button-bg: rgb(28, 49, 50);
 
+--email-cancel-icon-color: var(--neutral-0-5);
 
 
 

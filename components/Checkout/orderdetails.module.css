@@ -231,12 +231,15 @@
 
   
   .mainDiscountImg{
-  
+    height: 18px;
+    width: 18px;
     margin-left: var(--size-2);
  
   }
 
   .discountCancelImage{
+    height: var(--size-5);
+    width: var(--size-5);
     margin-left: var(--size-2);
     margin-right: var(--size-2);
     opacity: 0.8;
@@ -256,6 +259,8 @@
   }
 
   .discountImg{
+    height: var(--size-5);
+    width: var(--size-5);
     margin-left: var(--size-2);
     margin-right: var(--size-1);
   }
@@ -327,6 +332,8 @@
   }
 
   .totalDiscountImg{
+    height: 20px;
+    width: 20px;
     opacity: 1;
     margin-left: var(--size-2);
     margin-right: var(--size-1);

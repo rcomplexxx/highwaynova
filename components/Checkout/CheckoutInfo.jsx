@@ -10,6 +10,7 @@ import Link from "next/link";
 import PaymentSection from "./PaymentSection/PaymentSection";
 import Tip from "./Tip/Tip";
 import { CheckoutContext } from "@/contexts/CheckoutContext";
+import { CorrectIcon, correctIcon } from "@/public/images/svgs/svgImages";
 import Image from "next/image";
 
 
@@ -231,7 +232,7 @@ return false;
 
                 <div tabIndex={0} className={styles.emailSubscribeDiv} onClick={()=>{ setSubscribe(!subscribe);}}>
       <div  className={`${styles.emailSubscribeChecker} ${subscribe && styles.emailSubscribeCheckerChecked}`}>
-       <Image id='subscribeCorrectImage' src='/images/svgs/correctDark.svg' className={styles.checkImage} height={10} width={10}/>
+        <CorrectIcon styleClassName={styles.checkImage}/>
       </div>
      
   

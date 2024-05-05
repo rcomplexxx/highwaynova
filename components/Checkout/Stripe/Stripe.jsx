@@ -12,6 +12,7 @@ import BillingInfo from './BillingInfo/BillingInfo';
 import swapCountryCode from '@/utils/countryList';
 import { CheckoutContext } from '@/contexts/CheckoutContext';
 import InputField from '../Input/InputField';
+import { CorrectIcon } from '@/public/images/svgs/svgImages';
                
 
 const Stripe = ({organizeUserData, checkFields}) => {
@@ -446,7 +447,7 @@ const handleCCBlur= ()=>{
       <div id="isShippingBilling" className={`${styles.addressTypeChecker} ${billingAddressSameAsShipping && styles.addressTypeCheckerChecked}`} 
      
       >
-        <Image className={styles.addressCheckerImage} src='/images/svgs/correctDark.svg' height={10} width={10}/>
+        <CorrectIcon styleClassName={styles.addressCheckerImage}/>
         </div>
       <span className={styles.billingCheckboxLabel}>
       Use shipping address as billing address

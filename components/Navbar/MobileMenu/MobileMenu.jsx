@@ -4,6 +4,7 @@ import {  useEffect, useRef } from "react";
 import collections from '@/data/collections.json'
 import Image from "next/image";
 import Link from "next/link";
+import { CancelIcon } from "@/public/images/svgs/svgImages";
 
 export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
 
@@ -204,14 +205,13 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
       
     >
     
-   
-      <Image loading={'lazy'} alt='Cancel' height={16} width={16} src='/images/svgs/cancelIconSearch.svg' 
-      onClick={()=>{
+   <CancelIcon color={`var(--mobile-nav-cancel-icon-color)`} styleClassName={styles.menuItem_x_button} handleClick={()=>{
         whiteButtonCancelRef.current= true
          history.back();
          
         // setIsMenuOpen(false); 
-        }} className={styles.menuItem_x_button}/>                 
+        }}/>
+                      
                     
 
      

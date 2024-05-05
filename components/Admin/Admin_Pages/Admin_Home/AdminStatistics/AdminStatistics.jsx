@@ -6,6 +6,7 @@ import products from "@/data/products.json";
 import coupons from "@/data/coupons.json"
 import Charts from './Charts/Charts';
 import Image from 'next/image';
+import { CorrectIcon } from '@/public/images/svgs/svgImages';
 
 
 export default function AdminStatistics(){
@@ -420,9 +421,8 @@ export default function AdminStatistics(){
 ${shouldUseOnlyFulfilledOrders && styles.onlyFulfilledOrdersChecked}`}
  
 >
-       <Image id='onlyFulfilledOrdersCorrect' src='/images/svgs/correctDark.svg' 
+  <CorrectIcon styleClassName={styles.checkImage}/>
        
-       className={styles.checkImage} height={10} width={10}/>
       </div>
 
       

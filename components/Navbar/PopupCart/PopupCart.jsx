@@ -5,6 +5,7 @@ import styles from './popupcart.module.css'
 import Image from 'next/image';
 import { useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
+import { CorrectIcon } from '@/public/images/svgs/svgImages';
 
 
 
@@ -101,7 +102,7 @@ const handlePopCartLinkClick=(event, nextLinkHref)=>{
     return <div id='popCart' ref={popCartRef} className={`${styles.cartPopup}`} >
   
   <div className={`${styles.cartPopupTitle} ${styles .firstPopupTitle}`}>
-     <Image height={12} width={12} src='/images/svgs/correctDark.svg' className={styles.smallCorrect}/>
+    <CorrectIcon styleClassName={styles.smallCorrect}/>
      <h3 className={styles.popCartMainTitle}>Item added to your cart</h3>
       </div>
  <div className={styles.cartPopupTitle}> 

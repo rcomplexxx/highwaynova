@@ -140,6 +140,8 @@
   
 
   .checkImage{
+    height: 10px;
+    width: 10px;
     opacity: 0;
     transition: opacity 0.2s ease;
    

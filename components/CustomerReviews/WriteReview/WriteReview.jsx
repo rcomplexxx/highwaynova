@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { STARPATH } from "@/data/constants";
+import { CancelIcon } from "@/public/images/svgs/svgImages";
 
 export default function WriteReview({ setInfoDivOpen }) {
  
@@ -16,7 +17,6 @@ export default function WriteReview({ setInfoDivOpen }) {
   const [reviewInfo, setReviewInfo] = useState({
    
   });
-  const [cancelImageLoaded, setCancelImageLoaded] = useState(false);
   const [errors, setErrors] = useState({ firstName: false, email: false, images5: false });
   
 
@@ -118,7 +118,7 @@ export default function WriteReview({ setInfoDivOpen }) {
 
      
         <div className={styles.writeReviewPopupDiv}>
-          <div className={`${styles.mainReviewDiv} ${cancelImageLoaded && styles.spawnReviewDiv}`}>
+          <div className={`${styles.mainReviewDiv}`}>
             {ratingPage !== 0 && ratingPage !== 4 && (
               <div
                 className={`${styles.writeReviewFooter} ${styles.writeReviewFooterMobile}`}
@@ -339,14 +339,13 @@ export default function WriteReview({ setInfoDivOpen }) {
             </div>
 
             {ratingPage == 0 || ratingPage == 4 ? (
-               <Image height={20} width={20} src='/images/svgs/cancelIconWriteReview.svg'
-               onLoad={()=>{setCancelImageLoaded(true)}}
-               onError={()=>{setCancelImageLoaded(true)}}
-                onClick={() => {
-                  setInfoDivOpen(false);
-               
-                }}
-                className={styles.closeButton}
+              
+
+              <CancelIcon color={"var(--cancel-image-color)"}
+              styleClassName={styles.closeButton} handleClick={() => {
+                setInfoDivOpen(false);
+             
+              }}
               />
              
                
