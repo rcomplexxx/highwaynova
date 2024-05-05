@@ -102,7 +102,7 @@ const handlePopCartLinkClick=(event, nextLinkHref)=>{
     return <div id='popCart' ref={popCartRef} className={`${styles.cartPopup}`} >
   
   <div className={`${styles.cartPopupTitle} ${styles .firstPopupTitle}`}>
-    <CorrectIcon styleClassName={styles.smallCorrect}/>
+    <CorrectIcon color={`var(--popcart-correct-icon-color)`} styleClassName={styles.smallCorrect}/>
      <h3 className={styles.popCartMainTitle}>Item added to your cart</h3>
       </div>
  <div className={styles.cartPopupTitle}> 

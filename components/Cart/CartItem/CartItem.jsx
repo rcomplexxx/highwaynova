@@ -91,7 +91,7 @@ const CartItem = ({ item }) => {
           />
 
 
-      <h2 className={styles.totalPrice}>${item.quantity*item.price}</h2>
+      <h2 className={styles.totalPrice}>${(item.quantity*item.price).toFixed(2)}</h2>
      
       </div>
     </div>

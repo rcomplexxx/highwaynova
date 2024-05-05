@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { STARPATH } from "@/data/constants";
-import { CancelIcon } from "@/public/images/svgs/svgImages";
+import { BackIcon, CancelIcon } from "@/public/images/svgs/svgImages";
 
 export default function WriteReview({ setInfoDivOpen }) {
  
@@ -124,13 +124,9 @@ export default function WriteReview({ setInfoDivOpen }) {
                 className={`${styles.writeReviewFooter} ${styles.writeReviewFooterMobile}`}
               >
                 
-                <Image src='/images/arrowRight3.png'
-                onClick={handleBack}
-                className={`${styles.arrowBack} ${styles.arrowBackMob}`}
-                height={0}
-                width={0}
-                sizes="32px"
-                />
+                <BackIcon color={`var(--write-review-back-button-color)`} styleClassName={`${styles.arrowBack} ${styles.arrowBackMob}`}
+                handleClick={handleBack}/>
+              
               
                 {/* //doraditi uslov */}
                 {ratingPage == 1 && (

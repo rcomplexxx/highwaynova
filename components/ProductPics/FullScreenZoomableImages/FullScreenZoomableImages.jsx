@@ -7,6 +7,7 @@ import "swiper/css/zoom";
 
 import Image from "next/image";
 import ToastMessage from "./ToastMessage/ToastMessage";
+import { CancelIcon } from "@/public/images/svgs/svgImages";
 
 
 
@@ -525,18 +526,12 @@ fixedZoomDiv.style.backgroundColor = getRgbValues(1);
                 }}
                 className={styles.zoomButton}
               />
-              <Image
-                height={0}
-                width={0}
-                sizes="24px"
-                src="/images/cancelDark.png"
-                alt="cancel"
-                onClick={(event) => {
+
+              <CancelIcon color={`var(--fullscreen-cancel-image-color)`} styleClassName={styles.close_button} handleClick={(event) => {
                   event.stopPropagation();
                   killFullScreen();
-                }}
-                className={styles.close_button}
-              />
+                }}/>
+              
             </div>
           </div>
 
