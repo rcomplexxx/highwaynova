@@ -43,8 +43,8 @@ color: var(--high-contrast-light-txt-color);
 
 
       .itemPrice{
+        color: var(--cart-weaker-color);
         margin: var(--size-5) 0;
-        opacity: 0.7;
         font-size: var(--font-size-5);
         font-weight: 400;
       }
@@ -52,7 +52,7 @@ color: var(--high-contrast-light-txt-color);
       .variant{
         margin: 0;
         margin-bottom:  var(--size-5);
-        opacity: 0.7;
+        color: var(--cart-weaker-color);
         font-size: var(--font-size-3);
         font-weight: 300;
         
@@ -116,7 +116,7 @@ color: var(--high-contrast-light-txt-color);
 
 
   .quantityButton{
-    color: var(--light-txt-color);
+    color: var(--cart-mid-color);
     height: 20px;
     width: 20px;
     display: flex;
@@ -130,7 +130,6 @@ color: var(--high-contrast-light-txt-color);
     border-radius: 2px;
      border: 1px solid var(--border-color-mid);
     font-weight: 400;
-    opacity: 0.9;
      cursor: pointer;
   }
   
@@ -138,7 +137,7 @@ color: var(--high-contrast-light-txt-color);
     font-size: var(--font-size-3);
     font-weight: 300;
     margin: 0 var(--size-4);
-    opacity: 0.9;
+    color: var(--cart-mid-color);
   }
 
 

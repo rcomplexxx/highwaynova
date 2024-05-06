@@ -6,6 +6,9 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    color: var(--free-shipping-txt-color);
+
     font-size: var(--font-size-2);
     margin-bottom: 56px;
 }
