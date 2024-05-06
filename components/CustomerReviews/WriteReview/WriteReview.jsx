@@ -4,7 +4,7 @@ import StarRatings from "react-star-ratings";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { STARPATH } from "@/data/constants";
+import { ErrorIcon, STARPATH } from "@/public/images/svgs/svgImages";
 import { BackIcon, CancelIcon } from "@/public/images/svgs/svgImages";
 
 export default function WriteReview({ setInfoDivOpen }) {
@@ -17,7 +17,7 @@ export default function WriteReview({ setInfoDivOpen }) {
   const [reviewInfo, setReviewInfo] = useState({
    
   });
-  const [errors, setErrors] = useState({ firstName: false, email: false, images5: false });
+  const [errors, setErrors] = useState({  email: false, images5: false });
   
 
   
@@ -186,13 +186,15 @@ export default function WriteReview({ setInfoDivOpen }) {
                         
                       {images.map((image, i) => {
                        return <div key={i} className={styles.userImageDiv}>
-                          <img height={0} width={0} src='/images/svgs/cancelIconWriteReview.svg' className={styles.cancelImage} onClick={()=>{
-                            let newImages= images.filter(img=>{return img!=image});
+                          <CancelIcon color={"var(--cancel-image-color)"}
+              styleClassName={styles.cancelImage} handleClick={() => {
+                let newImages= images.filter(img=>{return img!=image});
                             setImages(newImages);
-                          }}>
-                            
-
-                          </img>
+                            setErrors({...errors, images5:false});
+             
+              }}
+              />
+                        
                           <img src={image} className={styles.userImage} />
                         </div>;
                       })}
@@ -214,7 +216,7 @@ export default function WriteReview({ setInfoDivOpen }) {
                      
                     </div>
                     
-                      {errors.images5 && <p className={styles.requiredError}>You can select up to 5 photos</p>}
+                      {errors.images5 && <p className={styles.requiredError}><ErrorIcon/>You can select up to 5 photos</p>}
                       </div>
                   ) : (
                     <>
@@ -276,14 +278,11 @@ export default function WriteReview({ setInfoDivOpen }) {
                         value={reviewInfo.firstName}
                         onChange={(event) => {
                         
-                            setErrors( { ...errors, firstName: false } );
                           setReviewInfo( {...reviewInfo, firstName: event.target.value });
                         }}
                         className={styles.personInfoInput}
                       />
-                      {errors.firstName && (
-                        <p className={styles.requiredError}>Required field</p>
-                      )}
+                      
                     </div>
                     <div className={styles.personInfoDiv}>
                       <label>Last Name</label>
@@ -313,7 +312,7 @@ export default function WriteReview({ setInfoDivOpen }) {
                     />
                     {errors.email && (
                       <p className={styles.requiredError}>
-                        {reviewInfo.email == ""
+                        <ErrorIcon/>{reviewInfo.email == ""
                           ? "Required field"
                           : "Please fill a valid email address"}
                       </p>
@@ -337,7 +336,7 @@ export default function WriteReview({ setInfoDivOpen }) {
             {ratingPage == 0 || ratingPage == 4 ? (
               
 
-              <CancelIcon color={"var(--cancel-image-color)"}
+              <CancelIcon color={"var(--cancel-write-review-color)"}
               styleClassName={styles.closeButton} handleClick={() => {
                 setInfoDivOpen(false);
              
@@ -443,20 +442,24 @@ export default function WriteReview({ setInfoDivOpen }) {
 
                       <button
                       onClick={() => {
-                        if (reviewInfo.firstName == "") {
-                          if (!/^\S{3,}@\S{3,}\.\S{2,}$/.test(reviewInfo.email))
-                            setErrors({ email: true, firstName: true });
-                          else setErrors({ email: false, firstName: true });
-                          return;
-                        } else if (
-                          !/^\S{3,}@\S{3,}\.\S{2,}$/.test(reviewInfo.email)
-                        ) {
-                          setErrors({ firstName: false, email: true });
-                          return;
-                        } else {
-                          setErrors({ firstName: false, email: false });
-                          handleNext();
-                        }
+
+                        if(!reviewInfo.firstName || reviewInfo.firstName == "" ||
+                          !reviewInfo.email || reviewInfo.firstName ===""
+                        )return;
+
+
+                        const newErrors={...errors};
+                       
+                        if( !/^\S{3,}@\S{3,}\.\S{2,}$/.test(reviewInfo.email))
+                          newErrors.email=true;
+                        else newErrors.email=false;
+
+
+                        setErrors(newErrors);
+
+
+                       if(!newErrors.email)
+                        handleNext();
                       }}
                       className={`${styles.nextButton} ${
                         (!reviewInfo.firstName || reviewInfo.firstName=="" || !reviewInfo.email || reviewInfo.email=="") && styles.nextButtonDisabled}`}

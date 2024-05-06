@@ -5,6 +5,7 @@ import styles from '../styles/contactus.module.css'
 import Link from "next/link";
 import { unimportantPageSeo } from "@/utils/SEO-configs/next-seo.config";
 import { NextSeo } from "next-seo";
+import { ErrorIcon } from "@/public/images/svgs/svgImages";
 
 export default function ContactUs() {
 
@@ -107,7 +108,7 @@ export default function ContactUs() {
                   <label className={`${styles.inputGroupLabel} ${errors.name && styles.inputGroupLabelErrorCorrection}`}>Name</label>
                  
               </div>
-              {errors.name && <span className={styles.contactError}>{errors.name}</span>}
+              {errors.name && <span className={styles.contactError}><ErrorIcon/>{errors.name}</span>}
 
               <div className={`${styles.inputGroup} ${errors.email && styles.inputGroupErrorMargin}`}>
            
@@ -121,7 +122,7 @@ export default function ContactUs() {
                      <label className={styles.inputGroupLabel}>Email</label>
                 
               </div>
-              {errors.email && <span className={styles.contactError}>{errors.email}</span>}
+              {errors.email && <span className={styles.contactError}><ErrorIcon/>{errors.email}</span>}
           </div>
           <div className={styles.messageField}>
          
@@ -137,7 +138,7 @@ export default function ContactUs() {
               
             />
                <label className={`${styles.messageText}`}>Message</label>
-          {errors.message &&  <span className={`${styles.contactError} ${styles.contactMessageError}`}>{errors.message}</span>}
+          {errors.message &&  <span className={`${styles.contactError} ${styles.contactMessageError}`}><ErrorIcon/>{errors.message}</span>}
            {messageSent && <span className={styles.messageSuccess}>Message sent successfully.</span>}
           </div>
           <button onClick={handleSubmit} className={`${styles.sendButton} ${(messageLoading || messageSent) && styles.sendButtonDisabled}`}>

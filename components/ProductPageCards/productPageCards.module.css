@@ -182,9 +182,13 @@ font-size: var(--font-size-1);
 
 
 .contactError{
+
+    display:flex;
+    align-items: center;
+
     color: var(--error-color);
     margin-bottom: var(--size-5);
-    margin-top:  var(--size-2);
+    margin-top:  var(--size-3);
     margin-left: var(--size-2);
     font-family: var(--font-neutral);
     font-size: var(--font-size-2);

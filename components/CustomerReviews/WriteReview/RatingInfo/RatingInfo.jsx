@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import StarRatings from "react-star-ratings";
 import styles from "./ratinginfo.module.css";
-import { STARPATH } from "@/data/constants";
+import { STARPATH } from "@/public/images/svgs/svgImages";
 
 export default function RatingInfo({ratingData, openRatingInfo, setOpenRatingInfo}) {  
   

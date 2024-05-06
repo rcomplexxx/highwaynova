@@ -4,7 +4,7 @@ import styles from "./footer.module.css";
 import Image from "next/image";
 import LinkCard from "./LinkCard/LinkCard";
 import collections from "@/data/collections.json";
-import { Amex,Discover, GPay, Jcb, MasterCard, PaypalWhite, UntionPay, Visa } from "@/public/images/svgs/svgImages";
+import { Amex,Discover, ErrorIcon, GPay, Jcb, MasterCard, PaypalWhite, UntionPay, Visa } from "@/public/images/svgs/svgImages";
 
 
 export default function Footer() {
@@ -117,7 +117,7 @@ export default function Footer() {
           Subscribe
         </button>
         </div>
-        {error && <p className={styles.subscribeValidationMessage}>{error}</p>}
+        {error && <p className={styles.subscribeValidationMessage}><ErrorIcon/>{error}</p>}
         {successful && !error && (
           <p
             className={`${styles.subscribeValidationMessage} ${styles.subscribeSuccess}`}

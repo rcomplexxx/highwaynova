@@ -5,7 +5,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Image from "next/image";
-import { STARPATH } from "@/data/constants";
+import { STARPATH } from "@/public/images/svgs/svgImages";
 
 const reviews = [
   {

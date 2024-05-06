@@ -1,12 +1,11 @@
 
 
-
-export const BackIcon = ({color, styleClassName,handleClick})=>{
-	
-	return <svg fill={color} className={styleClassName} onClick={handleClick} width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd">
-<path d="M21.883 12l-7.527 6.235.644.765 9-7.521-9-7.479-.645.764 7.529 6.236h-21.884v1h21.883z"/>
-</svg>
+export const ErrorIcon = ()=>{
+	return <svg style={{height:'16px', width: '16px', marginRight: 'var(--size-2)'}} xmlns="http://www.w3.org/2000/svg" fill="none" width="16" height="16" viewBox="0 0 16 16" role="img" data-icon="CircleXSmall" aria-hidden="true" class="default-ltr-cache-0 e1vkmu651">
+	<path fill-rule="evenodd" clip-rule="evenodd" d="M14.5 8C14.5 11.5899 11.5899 14.5 8 14.5C4.41015 14.5 1.5 11.5899 1.5 8C1.5 4.41015 4.41015 1.5 8 1.5C11.5899 1.5 14.5 4.41015 14.5 8ZM16 8C16 12.4183 12.4183 16 8 16C3.58172 16 0 12.4183 0 8C0 3.58172 3.58172 0 8 0C12.4183 0 16 3.58172 16 8ZM4.46967 5.53033L6.93934 8L4.46967 10.4697L5.53033 11.5303L8 9.06066L10.4697 11.5303L11.5303 10.4697L9.06066 8L11.5303 5.53033L10.4697 4.46967L8 6.93934L5.53033 4.46967L4.46967 5.53033Z" fill="var(--error-color)">
+	</path></svg>
 }
+
 
 
 export const CorrectIcon = ({color, styleClassName})=>{
@@ -28,18 +27,7 @@ export const CancelIcon = ({color, styleClassName, handleClick})=>{
 	</svg>
 }
 
-export const discountIcon = ({color, styleClassName })=>{
-	return <svg className={styleClassName} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14">
-	<path fill="transparent" stroke={color} d="M7.284 1.402h4.964a.35.35 0 0 1 .35.35v4.964a.7.7 0 0 1-.205.495L7.49 12.115a.7.7 0 0 1-.99 0L1.885 7.5a.7.7 0 0 1 0-.99L6.79 1.607a.7.7 0 0 1 .495-.205Z"/>
-	<circle fill={color} cx="9.1" cy="4.9" r="1"/>
-	</svg>
-}
 
-export const discountIconTotal = ({color, styleClassName})=>{
-	return <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
-<path stroke-linecap="round" stroke-linejoin="round" fill="transparent" stroke={color} d="m10.802 15.686 5.367-5.368a.15.15 0 0 0 .046-.109V4.144m-2.998-.95h-5.67a.16.16 0 0 0-.11.046L1.779 8.897a.154.154 0 0 0 0 .219l5.594 5.593c.06.06.158.06.218 0l5.658-5.657a.15.15 0 0 0 .045-.11v-5.67a.077.077 0 0 0-.077-.077Zm-3.06 3.749a.643.643 0 1 1-1.286 0 .643.643 0 0 1 1.286 0m-.648-.005h.01v.01h-.01z"/>
-</svg>
-}
 
 
 
@@ -156,3 +144,36 @@ export const ApplePay = ({styleClassName}) =>{
 
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ CREDIT CARD ICONS INITIALIZATION ENDED ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+
+
+
+export const BackIcon = ({color, styleClassName,handleClick})=>{
+	
+	return <svg fill={color} className={styleClassName} onClick={handleClick} width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd">
+<path d="M21.883 12l-7.527 6.235.644.765 9-7.521-9-7.479-.645.764 7.529 6.236h-21.884v1h21.883z"/>
+</svg>
+}
+
+
+
+
+export const STARPATH = `M26.285,2.486l5.407,10.956c0.376,0.762,1.103,1.29,1.944,1.412l12.091,1.757
+c2.118,0.308,2.963,2.91,1.431,4.403l-8.749,8.528c-0.608,0.593-0.886,1.448-0.742,2.285l2.065,12.042
+c0.362,2.109-1.852,3.717-3.746,2.722l-10.814-5.685c-0.752-0.395-1.651-0.395-2.403,0l-10.814,5.685
+c-1.894,0.996-4.108-0.613-3.746-2.722l2.065-12.042c0.144-0.837-0.134-1.692-0.742-2.285l-8.749-8.528
+c-1.532-1.494-0.687-4.096,1.431-4.403l12.091-1.757c0.841-0.122,1.568-0.65,1.944-1.412l5.407-10.956
+C22.602,0.567,25.338,0.567,26.285,2.486z`;
+
+
+export const discountIcon = ({color, styleClassName })=>{
+	return <svg className={styleClassName} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14">
+	<path fill="transparent" stroke={color} d="M7.284 1.402h4.964a.35.35 0 0 1 .35.35v4.964a.7.7 0 0 1-.205.495L7.49 12.115a.7.7 0 0 1-.99 0L1.885 7.5a.7.7 0 0 1 0-.99L6.79 1.607a.7.7 0 0 1 .495-.205Z"/>
+	<circle fill={color} cx="9.1" cy="4.9" r="1"/>
+	</svg>
+}
+
+export const discountIconTotal = ({color, styleClassName})=>{
+	return <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
+<path stroke-linecap="round" stroke-linejoin="round" fill="transparent" stroke={color} d="m10.802 15.686 5.367-5.368a.15.15 0 0 0 .046-.109V4.144m-2.998-.95h-5.67a.16.16 0 0 0-.11.046L1.779 8.897a.154.154 0 0 0 0 .219l5.594 5.593c.06.06.158.06.218 0l5.658-5.657a.15.15 0 0 0 .045-.11v-5.67a.077.077 0 0 0-.077-.077Zm-3.06 3.749a.643.643 0 1 1-1.286 0 .643.643 0 0 1 1.286 0m-.648-.005h.01v.01h-.01z"/>
+</svg>
+}

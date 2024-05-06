@@ -2,6 +2,7 @@ import Image from "next/image";
 import DropCard from "./DropCard/DropCard";
 import styles from "./productPageCards.module.css";
 import { useRef, useState } from "react";
+import { ErrorIcon } from "@/public/images/svgs/svgImages";
 
 export default function ProductPageCards() {
   const [messageLoading, setMessageLoading]= useState(false);
@@ -112,7 +113,7 @@ export default function ProductPageCards() {
               />
                <label htmlFor="name" className={styles.inputGroupLabel}>Name</label>
                </div>
-               {contactErrors.name && <span className={styles.contactError}>{contactErrors.name}</span>}
+               {contactErrors.name && <span className={styles.contactError}><ErrorIcon/>{contactErrors.name}</span>}
           
             <div className={`${styles.inputGroup} ${contactErrors.email && styles.inputGroupErrorMargin}`}>
              
@@ -125,7 +126,7 @@ export default function ProductPageCards() {
               />
                <label className={styles.inputGroupLabel}>Email</label>
               </div>
-              {contactErrors.email && <span className={styles.contactError}>{contactErrors.email}</span>}
+              {contactErrors.email && <span className={styles.contactError}><ErrorIcon/>{contactErrors.email}</span>}
            
         </div>
         <div className={styles.messageField}>
@@ -141,10 +142,11 @@ export default function ProductPageCards() {
             maxLength={500}
           />
           <label className={styles.messageText}>Question</label>
-           {contactErrors.message && <span className={`${styles.contactError} ${styles.contactMessageError}`}>{contactErrors.message}</span>}
+        </div>
+        {contactErrors.message && <span className={`${styles.contactError} ${styles.contactMessageError}`}><ErrorIcon/>{contactErrors.message}</span>}
           
           {messageSent && <span className={styles.messageSuccess}>Question sent successfully.</span>}
-        </div>
+       
         <button onClick={handleSubmit} className={`${styles.sendButton} ${(messageLoading || messageSent) && styles.sendButtonDisabled}`}>
           Send
         </button>

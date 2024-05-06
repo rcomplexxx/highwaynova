@@ -7,7 +7,7 @@ import styles from './writereviewvisible.module.css';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import SortReviewsButton from './SortReviewsButton/SortReviewsButton';
-import { STARPATH } from '@/data/constants';
+import { STARPATH } from '@/public/images/svgs/svgImages';
 
 
 const WriteReview = dynamic(() => import('./WriteReview'));

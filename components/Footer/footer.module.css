@@ -102,6 +102,10 @@
 
 
   .subscribeValidationMessage{
+
+    display: flex;
+    align-items: center;
+
     color: var(--error-color);
     align-self: flex-start;
     margin-top: var(--size-3);

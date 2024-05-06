@@ -6,7 +6,7 @@ import ReactHtmlParser from "react-html-parser";
 
 import WriteReviewVisible from "./WriteReview/WriteReviewVisible";
 import FullScreenReview from "./FullScreenReview/FullScreenReview";
-import { STARPATH } from "@/data/constants";
+import { STARPATH } from "@/public/images/svgs/svgImages";
 
 function Review({ product_id,  name, text,  stars, imageNames, setFullScreenReview, shrinkReview}) {
 

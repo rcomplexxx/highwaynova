@@ -4,7 +4,7 @@ import Link from "next/link";
 import StarRatings from "react-star-ratings";
 import styles from "./product.module.css";
 import PicWithThumbnail from "./PicWithThumbnail/PicWithThumbnail";
-import { STARPATH } from "@/data/constants";
+import { STARPATH } from "@/public/images/svgs/svgImages";
 
 const Product = ({ product}) => {
   return (

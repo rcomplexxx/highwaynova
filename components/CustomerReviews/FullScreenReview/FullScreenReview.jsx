@@ -3,7 +3,7 @@ import Image from "next/image";
 import styles from './fullscreenreview.module.css';
 import StarRatings from 'react-star-ratings';
 import ReactHtmlParser from "react-html-parser";
-import { STARPATH } from '@/data/constants';
+import { STARPATH } from '@/public/images/svgs/svgImages';
 import { CancelIcon } from '@/public/images/svgs/svgImages';
     
 
@@ -145,6 +145,7 @@ ${(imageSrc?imageLoaded:true) && styles.spawnFullScreenReview}`}>
         </div>
         <StarRatings
           rating={parseInt(stars, 10)}
+          
           svgIconPath={STARPATH}
           starRatedColor="var(--star-color)"
           numberOfStars={5}

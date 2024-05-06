@@ -24,7 +24,7 @@ import PayPalButton from "@/components/Checkout/PayPal/PayPal";
 import { NextSeo } from "next-seo";
 import { productPageSeo } from "@/utils/SEO-configs/next-seo.config";
 import ProductDescription from "@/components/ProductDescription2/ProductDescription";
-import { STARPATH } from "@/data/constants";
+import { STARPATH } from "@/public/images/svgs/svgImages";
 import { Amex,Discover, Jcb, MasterCard, Visa } from "@/public/images/svgs/svgImages";
 
 //slickGoTo
