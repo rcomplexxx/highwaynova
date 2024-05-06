@@ -15,6 +15,10 @@
    
 }
 
+.contactUsTitle{
+    align-self: center;
+}
+
 .contactUsTitl{
 
     margin-bottom:var(--size-7);
