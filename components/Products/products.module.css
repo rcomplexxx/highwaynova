@@ -20,7 +20,7 @@
   /* Mozda ovde staviti max width ili nesto */
   .title {
   
-    margin-bottom: var(--size-7);
+    margin-bottom: 40px;
   }
   
   .homeProductsTitle{
