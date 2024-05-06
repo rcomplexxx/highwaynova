@@ -529,6 +529,9 @@
     height: var(--size-8);
     background-color: transparent;
     outline: none;
+
+    box-sizing: border-box;
+    padding-left: var(--size-3);
     border: 1px solid var(--writing-accent-color);
     border-radius: 8px;
     margin-top: var(--size-2);
@@ -561,8 +564,9 @@
     background-color: transparent;
 
     outline: none;
+    box-sizing: border-box;
     border: 1px solid var(--writing-accent-color);
-    
+    padding-left: var(--size-3);
     border-radius: 8px;
     margin-top: var(--size-2);
     box-sizing: border-box;
@@ -591,9 +595,10 @@
 
     display: flex;
     align-items: center;
-    
-    font-size: var(--font-size-2);
     color: var(--error-color);
+    margin-left: var(--size-1);
+    font-size: var(--font-size-2);
+   
   }
 
   .writeReviewTerms{
