@@ -134,6 +134,7 @@ color: var(--high-contrast-light-txt-color);
   }
   
   .quantity{
+    color: var(--cart-weaker-color);
     font-size: var(--font-size-3);
     font-weight: 300;
     margin: 0 var(--size-4);
