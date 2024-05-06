@@ -58,7 +58,7 @@
  
     background-color: var(--fullscreen-customer-cancel-bg);
     
-    
+    transition: background-color 0.15s ease;
     border-radius: 4px;
     cursor: pointer;
     z-index: 200;

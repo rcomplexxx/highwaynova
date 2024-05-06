@@ -31,7 +31,7 @@ function Review({ product_id,  name, text,  stars, imageNames, setFullScreenRevi
               width={0}
               src={`/images/review_images/productId_${product_id}/${JSON.parse(imageNames)[0]}`}
               alt="review image"
-              loading={reviewRef.current?"eager":"lazy"}
+              loading={reviewRef.current?undefined:"lazy"}
               priority={reviewRef.current}
               sizes="(max-width: 580px) 100vw, (max-width: 700px) 50vw, (max-width: 1200px) 33vw, 25vw"
               className={styles.reviewImage}

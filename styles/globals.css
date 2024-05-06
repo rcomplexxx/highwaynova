@@ -442,17 +442,18 @@ Cormorant+Garamond */
 --star-empty-color: var(--neutral-2);
 --star-hover-color: orange;
 
-
+/*neutral3-#666666(102, 102, 102) n1-#292929(41,41,41)
+*/
 --customer-review-bg: var(--neutral-0-5);
  --customer-review-color: var(--neutral-9);
  --customer-review-box-shadow: 0px 1px 4px -2px var(--neutral-1);
 
  --fullscreen-customer-image-bg: var(--neutral-1);
 
- --fullscreen-customer-cancel-bg: rgba(102, 102, 102, 0.7);
-  --fullscreen-customer-cancel-icon-color: var(--neutral-0);
+ --fullscreen-customer-cancel-bg: rgba(20, 20, 20, 0.7);
+  --fullscreen-customer-cancel-icon-color: var(--neutral-9);
  
- --fullscreen-customer-cancel-hover: rgb(133, 133, 133);
+ --fullscreen-customer-cancel-hover: var(--neutral-0-5);
 
 
 
