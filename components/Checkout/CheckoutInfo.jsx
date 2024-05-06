@@ -79,14 +79,15 @@ export default function CheckoutInfo({ products,  setCartProducts }) {
       return {email: "Please enter a valid email address."};
       
     }
-
-    testId("firstName");
-    testId("lastName");
-    testId("address");
-    testId("country");
-    testId("zipcode");
-    testId("state");
-    testId("city");
+    if(testId("country"))return testId("country");
+    if(testId("firstName"))return testId("firstName");
+    if(testId("lastName")) return testId("lastName");
+    if(testId("address"))return testId("address");
+    
+   
+    if(testId("city"))return testId("city");
+    if(testId("state"))return testId("state");
+    if(testId("zipcode"))return testId("zipcode");
 
     const phone = document.getElementById("phone").value; //
     if (phone.length < 5)
@@ -130,22 +131,6 @@ return false;
 
 
 
-
-    // setErrors(newErrors);
-
-
-    // const errorsExist=Object.keys(newErrors).length !== 0;
-    // console.log('errorsExist?', errorsExist)
-    // if (errorsExist) {
-    //   window.scrollTo({
-    //     top:
-    //       document
-    //         .getElementById(Object.keys(newErrors)[0])
-    //         .getBoundingClientRect().top +
-    //       window.scrollY -
-    //       12,
-    //     behavior: "smooth",
-    //   });
 
    
   }

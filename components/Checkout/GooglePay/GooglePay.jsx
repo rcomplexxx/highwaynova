@@ -5,6 +5,7 @@ import classNames from "classnames";
 import { useRouter } from "next/router";
 import swapCountryCode from "@/utils/countryList";
 import { CheckoutContext } from "@/contexts/CheckoutContext";
+import { ErrorIcon } from "@/public/images/svgs/svgImages";
 
 const GooglePay = ({
   products,
@@ -222,7 +223,7 @@ const GooglePay = ({
         setGooglePayError('Error occured. Payment was not processed.')
       }}
     />
-   <p className={styles.googlePayError}>{googlePayError}</p>
+   {googlePayError && <p className={styles.googlePayError}><ErrorIcon/>{googlePayError}</p>}
     </>
   );
 };

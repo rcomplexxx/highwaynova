@@ -9,7 +9,7 @@ import React, {
   import Image from "next/image";
   import coupons from "@/data/coupons.json";
 import { CheckoutContext } from "@/contexts/CheckoutContext";
-import { CancelIcon, DiscountIcon, DiscountIconTotal } from "@/public/images/svgs/svgImages";
+import { CancelIcon, DiscountIcon, DiscountIconTotal, ErrorIcon } from "@/public/images/svgs/svgImages";
   
   export default function OrderDetails({  products }) {
     const [showAnswer, setShowAnswer] = useState(false);
@@ -167,7 +167,7 @@ const handleCouponApply = () => {
                       </label>
                       {couponError && (
                     <span className={styles.couponError}>
-                      Enter a valid discount code.
+                      <ErrorIcon/>Enter a valid discount code.
                     </span>
                   )}
 

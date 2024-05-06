@@ -12,7 +12,7 @@ import BillingInfo from './BillingInfo/BillingInfo';
 import swapCountryCode from '@/utils/countryList';
 import { CheckoutContext } from '@/contexts/CheckoutContext';
 import InputField from '../Input/InputField';
-import { CorrectIcon } from '@/public/images/svgs/svgImages';
+import { CorrectIcon, ErrorIcon } from '@/public/images/svgs/svgImages';
                
 
 const Stripe = ({organizeUserData, checkFields}) => {
@@ -361,7 +361,7 @@ const handleCCBlur= ()=>{
 
 
 
-      {errors.cardNumber && <p className={styles.stripeError}>{errors.cardNumber}</p>}
+      {errors.cardNumber && <p className={styles.stripeError}><ErrorIcon/>{errors.cardNumber}</p>}
         </div>
 </div>
       <div className={styles.ccInputRow}>
@@ -393,7 +393,7 @@ const handleCCBlur= ()=>{
     <span className={`${styles.label} ${floatingLabels.expiryDate && styles.labelFloating}`}>Expiration Date (MM / YY)</span>
    
     </div>
-    {errors.expiryDate && <p className={styles.stripeError}>{errors.expiryDate}</p>}
+    {errors.expiryDate && <p className={styles.stripeError}><ErrorIcon/>{errors.expiryDate}</p>}
     </div>
      <div className={styles.form_group}>
 
@@ -420,7 +420,7 @@ const handleCCBlur= ()=>{
   <span className={`${styles.label} ${floatingLabels.cvv && styles.labelFloating}`}>Security code</span>
    </div>
  
-  {errors.cvv && <p className={styles.stripeError}>{errors.cvv}</p>}
+  {errors.cvv && <p className={styles.stripeError}><ErrorIcon/>{errors.cvv}</p>}
 
 
   </div>

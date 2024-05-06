@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import styles from './paypal.module.css'
+import { ErrorIcon } from "@/public/images/svgs/svgImages";
 
 
 const PayPalButton=({checkFields, organizeUserData, method='paypal',  type='normal', color='blue'})=>{
@@ -162,7 +163,7 @@ const PayPalButton=({checkFields, organizeUserData, method='paypal',  type='norm
               
               className={`${styles.paypalButton} ${type==="instant" && styles.instantPaypalButton}`}
             />
-            {paypalError && type!=='instant'&& <p className={styles.paypalError}>{paypalError}</p>}
+            {paypalError && type!=='instant'&& <p className={styles.paypalError}><ErrorIcon/>{paypalError}</p>}
     </PayPalScriptProvider>
 
 }
