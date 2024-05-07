@@ -8,7 +8,7 @@ import collections from "@/data/collections.json";
 import Search from "./Search/Search";
 
 import dynamic from "next/dynamic";
-import { ArrowDown } from "@/public/images/svgs/svgImages";
+import { ArrowDown, MenuIcon } from "@/public/images/svgs/svgImages";
 
 // import MobileMenu from "./MobileMenu/MobileMenu";
 const MobileMenu = dynamic(() => import("./MobileMenu/MobileMenu"));
@@ -83,17 +83,12 @@ const NavBar = ({ totalItems, newProduct, setNewProduct }) => {
       >
         <div className={styles.toolbarDiv}>
           <div className={styles.growAlt}>
+
+            <MenuIcon
+            
+             handleClick={handleMobileMenuOpen} styleClassName={styles.smallMenuImage}/>
           
-              <Image
-              id="mobileMenuSpawn"
-                height={0}
-                width={0}
-                sizes="32px"
-                src="/images/menuIcon2.png"
-                onClick={handleMobileMenuOpen}
-                className={styles.smallMenuImage}
-                alt="Mobile menu"
-              />
+            
           
             <Link href="/" className={styles.logoLink}>
               <Image

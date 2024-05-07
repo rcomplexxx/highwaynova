@@ -1,5 +1,23 @@
 
 
+
+export const MenuIcon = ({ styleClassName, handleClick})=>{
+
+	return <svg id="mobileMenuSpawn" onClick={handleClick} className={styleClassName} viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" 
+	fill={"var(--menu-icon-color)"}>
+	<path  fill-rule="evenodd" 
+	d="M19 4a1 1 0 01-1 1H2a1 1 0 010-2h16a1 1 0 011 1zm0 6a1 1 0 01-1 1H2a1 1 0 110-2h16a1 1 0 011 1zm-1 7a1 1 0 100-2H2a1 1 0 100 2h16z"/>
+  </svg>
+}
+
+export const SearchIcon = ({styleClassName,handleClick})=>{
+	return <svg onClick={handleClick} className={styleClassName} fill="var(--search-icon-color)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" >
+	<path d="M107.52 15.36c-48.12 0-87.04 38.92-87.04 87.04s38.92 87.04 87.04 87.04c17.18 0 33.08-5.04 46.56-13.6l62.88 62.88 21.76-21.76-62.08-61.92c11.16-14.64 17.92-32.78 17.92-52.64 0-48.12-38.92-87.04-87.04-87.04zm0 20.48c36.86 0 66.56 29.7 66.56 66.56s-29.7 66.56-66.56 66.56-66.56-29.7-66.56-66.56 29.7-66.56 66.56-66.56z"/>
+	</svg>
+}
+
+
+
 export const ArrowDown = ({color,styleClassName, handleClick})=>{
 	return <svg onClick={handleClick} className={styleClassName} fill={color} version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" 
 	viewBox="0 0 330 330" xmlSpace="preserve">

@@ -325,11 +325,12 @@ Cormorant+Garamond */
   --nav-bottom-border-color: transparent;
 
 
+  --search-icon-color: var(--neutral-7);
   --search-bg: transparent;
   --search-autofill-color: var(--navbar-bg);
   --search-cancel-icon-color: var(--neutral-5);
   --mobile-nav-cancel-icon-color: var(--search-cancel-icon-color);
-
+  --menu-icon-color: var(--neutral-8);
   --nav-links-color: var(--accent-color-7);
   --navbar-current-link-color: var(--light-txt-colo);
   --navbar-arrow-color: var(--nav-links-color);

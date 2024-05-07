@@ -5,7 +5,7 @@ import collections from '@/data/collections.json'
 import products from '@/data/products.json'
 import { useRouter } from 'next/router';
 import Image from 'next/image';
-import { CancelIcon } from '@/public/images/svgs/svgImages';
+import { CancelIcon, SearchIcon } from '@/public/images/svgs/svgImages';
 
 
 
@@ -153,8 +153,9 @@ export default function Search({searchOpen, setSearchOpen}){
             onChange={(e) => handleSearch(e.target.value)}
           
           />
-          <Image ref={searchIconRef}  src={`/images/search7.svg`} alt='Search' className={styles.searchIcon} height={0} width={0} sizes='20px' onClick={()=>{setSearchOpen(!searchOpen);
-        }}/>
+
+          <SearchIcon handleClick={()=>{setSearchOpen(!searchOpen);}} styleClassName={styles.searchIcon}/>
+       
           {/* Custom results section */}
           <div ref={searchBoxRef} className={`${styles.customResults} ${searchOpen && styles.itemsVisible}` }>
 

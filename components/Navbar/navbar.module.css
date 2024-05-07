@@ -318,8 +318,8 @@
   .smallMenuImage{
  
     position:relative;
-    height:var(--size-6);
-    width: var(--size-6);
+    height: 20px;
+    width: 24px;
     
     align-self: center;
     margin-right:var(--size-3);
