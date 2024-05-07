@@ -114,7 +114,7 @@ export default function BestSellers() {
 
   return (
     <div className={`${styles.mainDiv} ${cartProducts.length==0 && styles.mainDivCloseToBottom}`}>
-      <h1 className={styles.bestSellersTitle}>Bestsellers</h1>
+      <h1 className={styles.bestSellersTitle}>You might also like</h1>
       <Swiper {...settings} ref={sliderRef} className={styles.slider}>
         {bestSellerProducts.map((bsp, index) => (
           <SwiperSlide key={index} className={styles.productImageDiv}>

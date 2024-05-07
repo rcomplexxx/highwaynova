@@ -249,7 +249,6 @@
     height: var(--size-6);
     width: var(--size-6);
 
-    transform: rotate(180deg);
    
     cursor: pointer;
   }

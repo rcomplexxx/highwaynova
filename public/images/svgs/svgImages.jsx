@@ -198,8 +198,11 @@ export const ApplePay = ({styleClassName}) =>{
 
 export const BackIcon = ({color, styleClassName,handleClick})=>{
 	
-	return <svg fill={color} className={styleClassName} onClick={handleClick} width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd">
-<path d="M21.883 12l-7.527 6.235.644.765 9-7.521-9-7.479-.645.764 7.529 6.236h-21.884v1h21.883z"/>
+	return <svg  className={styleClassName} fill={color} onClick={handleClick} xmlns="http://www.w3.org/2000/svg" 
+	 width="800px" height="800px" viewBox="0 0 52 52" enableBackground="new 0 0 52 52" xmlSpace="preserve">
+<path d="M48.6,23H15.4c-0.9,0-1.3-1.1-0.7-1.7l9.6-9.6c0.6-0.6,0.6-1.5,0-2.1l-2.2-2.2c-0.6-0.6-1.5-0.6-2.1,0
+	L2.5,25c-0.6,0.6-0.6,1.5,0,2.1L20,44.6c0.6,0.6,1.5,0.6,2.1,0l2.1-2.1c0.6-0.6,0.6-1.5,0-2.1l-9.6-9.6C14,30.1,14.4,29,15.3,29
+	h33.2c0.8,0,1.5-0.6,1.5-1.4v-3C50,23.8,49.4,23,48.6,23z"/>
 </svg>
 }
 
@@ -213,6 +216,12 @@ c-1.894,0.996-4.108-0.613-3.746-2.722l2.065-12.042c0.144-0.837-0.134-1.692-0.742
 c-1.532-1.494-0.687-4.096,1.431-4.403l12.091-1.757c0.841-0.122,1.568-0.65,1.944-1.412l5.407-10.956
 C22.602,0.567,25.338,0.567,26.285,2.486z`;
 
+export const Star =()=>{
+	return <svg className={styleClassName} fill="red" stroke={"orange"} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14">
+	<path  d="M7.284 1.402h4.964a.35.35 0 0 1 .35.35v4.964a.7.7 0 0 1-.205.495L7.49 12.115a.7.7 0 0 1-.99 0L1.885 7.5a.7.7 0 0 1 0-.99L6.79 1.607a.7.7 0 0 1 .495-.205Z"/>
+	
+	</svg>
+}
 
 export const discountIcon = ({color, styleClassName })=>{
 	return <svg className={styleClassName} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14">
