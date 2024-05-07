@@ -21,7 +21,7 @@
 
 .bestSellersTitle{
     align-self: flex-start;
-    margin-top: var(--size-8);
+    margin-top: var(--size-7);
     margin-left: var(--size-8);
     margin-bottom: var(--size-4);
     font-size: var(--font-size-7);

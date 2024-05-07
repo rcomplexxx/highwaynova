@@ -4,8 +4,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import styles from "./floatingbadge.module.css";
 import Image from "next/image";
+import { LockIcon } from "@/public/images/svgs/svgImages";
 
-export default function FloatingBadge({imageName, message}) {
+export default function FloatingBadge({makeLockBadge, message}) {
 
     const [showDialog, setShowDialog] = useState(false);
     const popupRef = useRef();
@@ -37,9 +38,7 @@ export default function FloatingBadge({imageName, message}) {
 
   return (
     <div  className={styles.badgeWrapper}  onClick={()=>{setShowDialog(!showDialog)}} >
-    {imageName?<Image className={styles.floatingBadge}
-    height={0} width={0} sizes="16px"
-    src={`/images/${imageName}`}/>
+    {makeLockBadge?<LockIcon styleClassName={styles.floatingBadge}/>
     :<>
     <div className={`${styles.floatingBadge} ${styles.floatingDiv}`} onMouseEnter={()=>{if(window.matchMedia('(pointer: fine)').matches)setShowDialog(true)}}
      onMouseLeave={()=>{if(window.matchMedia('(pointer: fine)').matches)setShowDialog(false)}}

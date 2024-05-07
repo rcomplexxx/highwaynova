@@ -561,6 +561,7 @@ Cormorant+Garamond */
 --more-cards-card-border: rgba(0, 0, 0, 0.08);
 
 --floating-badge-border-color: var(--neutral-6);
+--lock-icon-color: var(--neutral-4);
 --badge-popup-message-bg: rgba(165, 171, 155, 0.7);/*neutral neki - iz hex u rgb i dodato a*/
 
 
