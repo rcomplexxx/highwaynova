@@ -492,6 +492,7 @@ Cormorant+Garamond */
 
 /*~ Cart ~*/
   --cart-weaker-color: var(--neutral-7);
+  --bin-icon-color: var(--accent-color-4);
   --free-shipping-txt-color: var(--neutral-7);
   --free-shipping-slider-empty-color: var(--neutral-1);
   --free-shipping-slider-fill-color: var(--accent-color-5);
@@ -559,7 +560,7 @@ Cormorant+Garamond */
   --more-cards-card-bg: var(--neutral-8);  
 --more-cards-card-border: rgba(0, 0, 0, 0.08);
 
---floating-badge-border-color: var(--neutral-7);
+--floating-badge-border-color: var(--neutral-6);
 --badge-popup-message-bg: rgba(165, 171, 155, 0.7);/*neutral neki - iz hex u rgb i dodato a*/
 
 

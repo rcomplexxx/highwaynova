@@ -100,7 +100,7 @@ const handleCouponApply = () => {
                       Order summery
               
 
-          <ArrowDown styleClassName={`${styles.arrowImg} ${
+          <ArrowDown color={'var(--summery-color)'} styleClassName={`${styles.arrowImg} ${
                           !showAnswer && styles.arrowDown
                         }`}/>
                    

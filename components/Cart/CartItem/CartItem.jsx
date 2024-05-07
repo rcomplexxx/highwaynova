@@ -6,6 +6,7 @@ import styles from "./cartitem.module.css";
 import classNames from "classnames";
 
 import AppContext from "@/contexts/AppContext";
+import { BinIcon } from "@/public/images/svgs/svgImages";
 
 const CartItem = ({ item }) => {
   const { cartProducts, setCartProducts } = useContext(AppContext);
@@ -81,14 +82,10 @@ const CartItem = ({ item }) => {
        
       </div>
       <div className={styles.edgeDiv}>
+        
 
-      <Image
-          src='/images/bin.png'
-            className={styles.removeButton}
-            onClick={() => handleRemoveFromCart(item.id, item.variant)}
-            height={0} width={0}
-            sizes="48px"
-          />
+      <BinIcon styleClassName={styles.removeButton} handleClick={() => handleRemoveFromCart(item.id, item.variant)}/>
+
 
 
       <h2 className={styles.totalPrice}>${(item.quantity*item.price).toFixed(2)}</h2>

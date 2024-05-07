@@ -91,7 +91,7 @@ color: var(--high-contrast-light-txt-color);
 
   .removeButton{
     height: auto;
-    width: var(--size-6);
+    width: 20px;
     margin-right: var(--size-1);
     margin-bottom: var(--size-1);
     border: none;
@@ -268,7 +268,7 @@ color: var(--high-contrast-light-txt-color);
       }
 
       .removeButton{
-      width: 20px;
+      width: 18px;
       }
 
     
