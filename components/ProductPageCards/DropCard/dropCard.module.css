@@ -36,9 +36,11 @@
 
   
   .plusStyle {
+    height: var(--size-4);
+    width: var(--size-4);
     padding:0;
     margin: 0;
-    transform: rotateY(0deg) rotate(-90deg);
+   
     transform-origin: center;
  
     align-self: end;
@@ -46,7 +48,7 @@
   }
   
   .plusStyleRotate {
-    transform: rotateY(0deg) rotate(-270deg);
+    transform: rotateY(0deg) rotate(-180deg);
     transform-origin: center;
   }
   

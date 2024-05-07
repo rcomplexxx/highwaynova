@@ -1,6 +1,7 @@
 import Image from "next/image";
 import styles from "./pageindexbuttons.module.css";
 import { useCallback } from "react";
+import { ArrowDown } from "@/public/images/svgs/svgImages";
 
 export default function PageIndexButtons({ data, page, setPage }) {
   if (data.length == 0) return;
@@ -30,14 +31,9 @@ export default function PageIndexButtons({ data, page, setPage }) {
           className={styles.linkDivPageNumber}
           onClick={() => setPage(page - 1)}
         >
-          <span className={styles.arrowSpan}>
-            <Image
-              src={"/images/greater.svg"}
-              alt="Black"
-              className={styles.leftArrowImg}
-              fill
-            />
-          </span>
+            <ArrowDown color={'var(--neutral-10)'} styleClassName={styles.leftArrowImg}/>
+          
+          
         </div>
       )}
       {getPageNumbersArray().map((pageNumber, i) =>
@@ -63,9 +59,7 @@ export default function PageIndexButtons({ data, page, setPage }) {
           onClick={() => setPage(page + 1)}
         >
           
-          <span className={styles.arrowSpan}>
-            <Image src={"/images/greater.svg"} alt="Black" fill />
-          </span>
+          <ArrowDown color={'var(--neutral-10)'} styleClassName={`${styles.leftArrowImg} ${styles.rightArrowImg}`}/>
         </div>
       )}
     </div>

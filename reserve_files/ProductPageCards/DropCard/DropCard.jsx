@@ -75,14 +75,9 @@ export default function DropCard(props) {
       }.png`} className={styles.cardIcon}/>
         {props.title}
         </div>
-        <Image
-        src={'/images/greaterLess3.png'}
-        height={16}
-        width={16}
-          className={`${styles.plusStyle} ${
-            showAnswer ? styles.plusStyleRotate : ""
-          }`}
-        />
+        <ArrowDown color={"var(--dropcard-title-color)"} styleClassName={`${styles.plusStyle} ${
+            showAnswer && styles.plusStyleRotate
+          }`}/>
          
       </button>
       <div

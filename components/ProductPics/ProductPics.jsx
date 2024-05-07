@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import "swiper/css";
 import FullScreenZoomableImage from "./FullScreenZoomableImages/FullScreenZoomableImages";
+import { ArrowDown } from "@/public/images/svgs/svgImages";
 
 // const FullScreenZoomableImage = dynamic(() => import('@/components/ProductPics/FullScreenZoomableImages/FullScreenZoomableImages'));
 
@@ -208,30 +209,25 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
       ))}
     </Swiper>
         <div className={styles.slider2Suiter}>
+
+
+
+        <ArrowDown color={'var(--mini-slider-arrow-color)'}
+        handleClick={()=>{ swiper.slideTo(imageIndex-1);}} 
+            
+            styleClassName={`${styles.leftArrowDiv} ${imageIndex===images.length-1 && styles.disabledArrow}`}/>
+          
    
 
-   <div className={`${styles.leftArrowDiv} ${imageIndex===0 && styles.disabledArrow}`}
-   
-   onClick={()=>{ swiper.slideTo(imageIndex-1);}}>
-                <Image 
-                height={12}
-                width={12}
-                src='/images/greaterLess3.png'
-               
-                alt='Prev'
-                />
-            </div>
 
-            <div className={`${styles.leftArrowDiv} ${styles.rightArrowDiv} ${imageIndex===images.length-1 && styles.disabledArrow}`} 
-            onClick={()=>{ swiper.slideTo(imageIndex+1);}}>
-                <Image 
-               height={12}
-               width={12}
-             
-                src='/images/greaterLess3.png'
-                alt='Next'
-                />
-            </div>
+
+            <ArrowDown color={'var(--mini-slider-arrow-color)'}
+            handleClick={()=>{swiper.slideTo(imageIndex+1)}} 
+            
+            styleClassName={`${styles.leftArrowDiv} ${styles.rightArrowDiv} ${imageIndex===images.length-1 && styles.disabledArrow}`}/>
+           
+
+           
 
 
             

@@ -1,5 +1,5 @@
 .arrowSpan{
-    position:relative;  height:var(--size-6); width:8px;
+   
   }
   
   /* .arrowLink{
@@ -7,9 +7,7 @@
   } */
 
 
-  .leftArrowImg {
-    transform: scaleX(-1);
-  }
+  
 
   .linkDiv {
     display: flex;
@@ -31,6 +29,19 @@
    align-items: center;
    cursor: pointer;
    
+  }
+
+  .leftArrowImg {
+    position:relative;  
+    height: var(--size-7);
+    width:var(--size-7);
+    height:var(--size-6); 
+    width:8px;
+    transform: rotate(90deg);
+  }
+
+  .rightArrowImg{
+    transform: rotate(-90deg);
   }
 
 

@@ -191,12 +191,13 @@
 
    
   .subMenuArrow{
- 
+    height: var(--size-3);
+    width: var(--size-3);
     margin-left: var(--size-3);
-    transform: rotate(-90deg);
+    
   }
 
-  .subMenuArrowOpen{ transform: rotate(90deg);}
+  .subMenuArrowOpen{ transform: rotate(180deg);}
 
   
   

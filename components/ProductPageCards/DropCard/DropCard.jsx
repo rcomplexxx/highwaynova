@@ -1,6 +1,7 @@
 import Image from "next/image";
 import styles from "./dropCard.module.css";
 import { useEffect, useRef, useState } from "react";
+import { ArrowDown } from "@/public/images/svgs/svgImages";
 
 export default function DropCard(props) {
   const [showAnswer, setShowAnswer] = useState(false);
@@ -85,16 +86,10 @@ export default function DropCard(props) {
       }.png`} className={styles.cardIcon}/>
         {props.title}
         </div>
-        <Image
-        src={'/images/greaterLess3.png'}
-        height={16}
-        width={16}
-        alt='Show card'
-        loading={'lazy'}
-          className={`${styles.plusStyle} ${
-            showAnswer ? styles.plusStyleRotate : ""
-          }`}
-        />
+        <ArrowDown color={"var(--dropcard-title-color)"} styleClassName={`${styles.plusStyle} ${
+            showAnswer && styles.plusStyleRotate
+          }`}/>
+    
          
       </button>
 

@@ -26,13 +26,15 @@
   }
 
   .dropMenuSign{
-    transform: rotateY(0deg) rotate(-90deg);
+    height: var(--size-3);
+    width: var(--size-3);
+  
     margin-top: var(--size-1);
     margin-right: var(--size-1);
   }
 
   .dropMenuOpen{
-    transform: rotateY(0deg) rotate(-270deg);
+    transform: rotateY(0deg) rotate(-180deg);
   }
 
   .linksContent{

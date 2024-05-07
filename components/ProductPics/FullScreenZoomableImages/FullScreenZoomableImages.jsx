@@ -7,7 +7,7 @@ import "swiper/css/zoom";
 
 import Image from "next/image";
 import ToastMessage from "./ToastMessage/ToastMessage";
-import { CancelIcon } from "@/public/images/svgs/svgImages";
+import { ArrowDown, CancelIcon } from "@/public/images/svgs/svgImages";
 
 
 
@@ -55,7 +55,7 @@ const FullScreenZoomableImage = ({
     (window.innerHeight - 48) / window.innerWidth >
     fullImg.naturalHeight / fullImg.naturalWidth;
   const scaleRatio = biggerWidth
-    ? (window.innerWidth - 40) / window.innerWidth
+    ? (window.innerWidth - 48) / window.innerWidth
     : mainImg.getBoundingClientRect().height / (window.innerHeight - 48);
 
   // fixedZoomDiv.style.opacity = `0`;
@@ -535,25 +535,17 @@ fixedZoomDiv.style.backgroundColor = getRgbValues(1);
             </div>
           </div>
 
-          <Image
-            height={12}
-            width={12}
-            src="/images/greaterLess3Dark.png"
-            onClick={() => {
+          <ArrowDown color={'var(--fullscreen-arrow-color)'}
+          handleClick={() => {
               swiper.slidePrev();
-            }}
-            className={`${styles.leftArrow} ${navActive && styles.spawnArrow}`} //!arrowDissapear
-         / >
-          <Image
-            height={12}
-            width={12}
-            src="/images/greaterLess3Dark.png"
-            onClick={() => {
-              swiper.slideNext();
-            }}
-            className={`${styles.leftArrow} ${styles.rightArrow} ${navActive && styles.spawnArrow}`}
-          />
+            }} styleClassName={`${styles.leftArrow} ${navActive && styles.spawnArrow}`}/>
 
+<ArrowDown color={'var(--fullscreen-arrow-color)'}
+          handleClick={() => {
+              swiper.slideNext();
+            }} styleClassName={`${styles.leftArrow} ${styles.rightArrow} ${navActive && styles.spawnArrow}`}/>
+
+        
 
            <Swiper
             initialSlide={imageIndex}

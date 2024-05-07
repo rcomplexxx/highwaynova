@@ -25,6 +25,8 @@ export default function BenefitSwiper() {
            }, 2000);
       }
 
+      /*~!!!Prebaciti png slike strelica u ArrowDown kad koristim ovu komponentu!!!~ */
+
 
   return (
     <div className={styles.benefitDivWrapper}>

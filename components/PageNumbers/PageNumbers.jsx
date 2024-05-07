@@ -2,6 +2,7 @@
 import Link from 'next/link';
 import styles from './pagenumber.module.css'
 import Image from 'next/image';
+import { ArrowDown } from '@/public/images/svgs/svgImages';
 
 
 export default function PageNumber({ mainLink, links, pageId}){
@@ -15,8 +16,7 @@ export default function PageNumber({ mainLink, links, pageId}){
         className={`${styles.pageLink} ${styles.arrowLink}`}
       >
        
-      
-        <Image className={`${styles.rightArrowImg} ${styles.leftArrowImg}`} src={"/images/greater.svg"} alt="Back" height={0} width={0} sizes='32px' />
+       <ArrowDown styleClassName={styles.rightArrowImg}/>
        
       </Link>
     )}
@@ -41,9 +41,8 @@ export default function PageNumber({ mainLink, links, pageId}){
         className={`${styles.pageLink} ${styles.arrowLink}`}
       >
        
-       
-          <Image className={styles.rightArrowImg} src={"/images/greater.svg"} alt="Next" height={0} width={0} sizes='32px' />
-       
+        <ArrowDown styleClassName={`${styles.leftArrowImg} ${styles.rightArrowImg}`}/>
+         
       </Link>
     )}
   </div>

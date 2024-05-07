@@ -243,7 +243,7 @@
     border-radius: 100%;
     padding: var(--size-3);
     
-    transform: translateY(-50%);
+    transform: translateY(-50%) rotate(90deg);
     cursor: pointer;
   }
 
@@ -262,7 +262,7 @@
   .rightArrowDiv{
     left: auto;
     right: var(--size-5);
-    transform: rotate(180deg) translateY(50%);
+    transform: translateY(-50%) rotate(-90deg) ;
   }
 
   .disabledArrow{

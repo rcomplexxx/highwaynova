@@ -13,6 +13,7 @@
     contain: content;
 
     transition: background-color 0.2s 0.01s ease;
+    user-select: none;
     z-index: 12;
   }
 
@@ -97,11 +98,14 @@
     position: absolute;
     top: calc(50% + var(--size-6));
     left: var(--size-5);
+
+    height: var(--size-4);
+    width: var(--size-4);
   
     background-color: var(--fullscreen-arrow-bg);
     padding: var(--size-3);
     border-radius: 4px;
-    transform: translateY(-50%);
+    transform: translateY(-50%) rotate(90deg);
     z-index: 8;
     cursor: pointer;
     transition: opacity 0.2s 0.01s ease;
@@ -138,7 +142,7 @@
     justify-self: flex-end;
     left: auto;
     right: var(--size-5);
-    transform: translateY(-50%) rotate(180deg);
+    transform: translateY(-50%) rotate(-90deg);
 
   
  

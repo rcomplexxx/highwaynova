@@ -7,7 +7,7 @@ import styles from './writereviewvisible.module.css';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import SortReviewsButton from './SortReviewsButton/SortReviewsButton';
-import { STARPATH } from '@/public/images/svgs/svgImages';
+import { ArrowDown, STARPATH } from '@/public/images/svgs/svgImages';
 
 
 const WriteReview = dynamic(() => import('./WriteReview'));
@@ -103,16 +103,10 @@ export default function WriteReviewVisible({ratingData, sortingType, setSortingT
             {ratingData.reviewsNumber} reviews
           </span>
 
-          <Image
-        src={'/images/greaterLess3.png'}
-        loading={'lazy'} alt='Show'
-        height={0}
-        width={0}
-        sizes="12px"
-          className={`${styles.plusStyle} ${
+          <ArrowDown color={'var(--rating-arrow-color)'} styleClassName={`${styles.plusStyle} ${
             openRatingInfo && styles.plusStyleRotate
-          }`}
-        />
+          }`}/>
+        
 
         </div>
        <RatingInfo ratingData={ratingData} openRatingInfo={openRatingInfo} setOpenRatingInfo={setOpenRatingInfo}/>

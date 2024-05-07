@@ -96,8 +96,9 @@
   }
 
   .subMenuArrow{
-   
-    transform: rotate(180deg);
+    height: var(--size-4);
+    width: var(--size-4);
+    transform: rotate(-90deg);
   }
 
 
@@ -108,7 +109,7 @@
 
   .subMenuBackArrow{
     margin-right: var(--size-3);
-    transform: rotate(0deg);
+    transform: rotate(90deg);
   }
 
 

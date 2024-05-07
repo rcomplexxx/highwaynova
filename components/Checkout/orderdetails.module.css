@@ -499,9 +499,11 @@
   }
 
    .arrowImg{
+    height: var(--size-3);
+    width: var(--size-3);
     margin: 0;
     margin-left: var(--size-4);
-    transform: rotateY(0deg) rotate(90deg);
+    transform: rotateY(0deg) rotate(180deg);
     transform-origin: center;
     transition: transform 0.2s ease;
     contain: paint;
@@ -509,7 +511,7 @@
    }
 
    .arrowDown{
-    transform: rotateY(180deg) rotate(270deg);
+    transform: rotateY(180deg) rotate(0deg);
     transform-origin: center;
    }
 

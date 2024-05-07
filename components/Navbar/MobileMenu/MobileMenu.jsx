@@ -4,7 +4,7 @@ import {  useEffect, useRef } from "react";
 import collections from '@/data/collections.json'
 import Image from "next/image";
 import Link from "next/link";
-import { CancelIcon } from "@/public/images/svgs/svgImages";
+import { ArrowDown, CancelIcon } from "@/public/images/svgs/svgImages";
 
 export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
 
@@ -277,7 +277,7 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
         }}
       >
         Collections
-        <Image loading={'lazy'} alt='Go' height={12} width={12} src="/images/greaterLess3.png" className={styles.subMenuArrow}/>
+        <ArrowDown color={'var(--navbar-arrow-color)'} styleClassName={styles.subMenuArrow}/>
       </div>
 
     
@@ -290,7 +290,7 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
         }}
       >
       Info
-        <Image loading={'lazy'} alt='Go' height={12} width={12} src="/images/greaterLess3.png" className={styles.subMenuArrow}/>
+      <ArrowDown color={'var(--navbar-arrow-color)'} styleClassName={styles.subMenuArrow}/>
       </div>
      
       <Link href="/contant-us"
@@ -323,7 +323,7 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
         history.back();
        }}
      >
-       <Image loading={'lazy'} alt='Back' height={12} width={12} src="/images/greaterLess3.png" className={`${styles.subMenuArrow} ${styles.subMenuBackArrow}`}/>
+       <ArrowDown color={'var(--navbar-arrow-color)'} styleClassName={`${styles.subMenuArrow} ${styles.subMenuBackArrow}`}/>
        <span className={styles.subMenuTitle}>Info</span>
      </div>
 
@@ -442,7 +442,7 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
          history.back();
        }}
      >
-       <Image loading={'lazy'} alt='Back' height={12} width={12} src="/images/greaterLess3.png" className={`${styles.subMenuArrow} ${styles.subMenuBackArrow}`}/>
+       <ArrowDown color={'var(--navbar-arrow-color)'} styleClassName={`${styles.subMenuArrow} ${styles.subMenuBackArrow}`}/>
        <span className={styles.subMenuTitle}>Collections</span>
      </div>
 

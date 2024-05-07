@@ -9,7 +9,7 @@ import React, {
   import Image from "next/image";
   import coupons from "@/data/coupons.json";
 import { CheckoutContext } from "@/contexts/CheckoutContext";
-import { CancelIcon, DiscountIcon, DiscountIconTotal, ErrorIcon } from "@/public/images/svgs/svgImages";
+import { ArrowDown, CancelIcon, DiscountIcon, DiscountIconTotal, ErrorIcon } from "@/public/images/svgs/svgImages";
   
   export default function OrderDetails({  products }) {
     const [showAnswer, setShowAnswer] = useState(false);
@@ -98,15 +98,14 @@ const handleCouponApply = () => {
                   <div className={styles.titleWrapper}>
                     <div className={styles.mobileTitle}>
                       Order summery
-                      <Image
-                        src={"/images/greaterLess3.png"}
-                        height={8}
-                        width={8}
-                        alt="arrow"
-                        className={`${styles.arrowImg} ${
+              
+
+          <ArrowDown styleClassName={`${styles.arrowImg} ${
                           !showAnswer && styles.arrowDown
-                        }`}
-                      />
+                        }`}/>
+                   
+
+
                     </div>
                   </div>
   

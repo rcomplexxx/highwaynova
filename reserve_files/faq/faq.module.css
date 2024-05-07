@@ -67,6 +67,8 @@
 
 
 .plusStyle {
+  height: var(--size-4);
+  width: var(--size-4);
   padding:0;
   margin: 0;
   margin-left: var(--size-3);

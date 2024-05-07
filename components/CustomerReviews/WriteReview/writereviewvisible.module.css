@@ -34,14 +34,14 @@
         margin: 0;
         margin-bottom: var(--size-1);
         margin-left: var(--size-4);
-        transform:  rotateY(0deg) rotate(-90deg);
+        transform:  rotateY(0deg) rotate(0deg);
         transform-origin: center;
-     
+        
        
       }
       
       .plusStyleRotate {
-        transform: rotateY(0deg) rotate(-270deg);
+        transform: rotateY(0deg) rotate(-180deg);
         transform-origin: center;
       }
     

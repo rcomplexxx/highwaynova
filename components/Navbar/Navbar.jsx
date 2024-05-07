@@ -8,6 +8,7 @@ import collections from "@/data/collections.json";
 import Search from "./Search/Search";
 
 import dynamic from "next/dynamic";
+import { ArrowDown } from "@/public/images/svgs/svgImages";
 
 // import MobileMenu from "./MobileMenu/MobileMenu";
 const MobileMenu = dynamic(() => import("./MobileMenu/MobileMenu"));
@@ -146,15 +147,11 @@ const NavBar = ({ totalItems, newProduct, setNewProduct }) => {
                 }}
               >
                 <span>Collections</span>
-                <Image
-                  height={8}
-                  width={8}
-                  src="/images/greaterLess3.png"
-                  alt="Show collection menu"
-                  className={`${styles.subMenuArrow} ${
+
+                <ArrowDown color={'var(--navbar-arrow-color)'} styleClassName={`${styles.subMenuArrow} ${
                     subMenu == 2 && styles.subMenuArrowOpen
-                  }`}
-                />
+                  }`}/>
+                
               </div>
              
                 <div id="collectionsDropMenu" className={`${styles.subMenu} ${subMenu == 2 && styles.showSubMenu}`}>
@@ -188,15 +185,10 @@ const NavBar = ({ totalItems, newProduct, setNewProduct }) => {
                 }}
               >
                 <span>Info</span>
-                <Image
-                  height={8}
-                  width={8}
-                  src="/images/greaterLess3.png"
-                  alt="Show info menu"
-                  className={`${styles.subMenuArrow} ${
+                <ArrowDown color={'var(--navbar-arrow-color)'} styleClassName={`${styles.subMenuArrow} ${
                     subMenu == 1 && styles.subMenuArrowOpen
-                  }`}
-                />
+                  }`}/>
+               
               </div>
               
                 <div

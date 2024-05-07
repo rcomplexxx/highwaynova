@@ -332,6 +332,7 @@ Cormorant+Garamond */
 
   --nav-links-color: var(--accent-color-7);
   --navbar-current-link-color: var(--light-txt-colo);
+  --navbar-arrow-color: var(--nav-links-color);
   --nav-select-search-link-color:var(--main-color-1);
 
   --popcart-bg: var(--navbar-bg);
@@ -346,6 +347,7 @@ Cormorant+Garamond */
 
    --footer-bg: var(--neutral-0-5);
    --footer-title-color: var(--neutral-10);
+   --footer-arrow-down-color: var(--neutral-10);
   --footer-txt-color: var(--neutral-9);
   --footer-link-active-color: var(--neutral-9);
   --footer-email-placeholder-color: var(--neutral-5);
@@ -391,7 +393,8 @@ Cormorant+Garamond */
 
 
  --selected-product-image-border:var(--main-color-2);
- --mini-slider-arrow-bg:var(--neutral-5);
+ --mini-slider-arrow-bg:var(--main-color-1);
+ --mini-slider-arrow-color: var(--neutral-9);
  --quantity-input-color: var(--main-color-0);
  --quantity-input-bg: var(--main-color-3);
  --quantity-button-border: var(--neutral-6);
@@ -424,6 +427,7 @@ Cormorant+Garamond */
  --toast-message-bg: var(--neutral-3);
  --fullscreen-nav-bg: var(--main-color-2);
  --fullscreen-cancel-image-color: var(--neutral-8);
+ --fullscreen-arrow-color: var(--neutral-0);
  --fullscreen-arrow-bg:var(--fullscreen-nav-bg);
  --fullscreen-arrow-hover-bg:var(--main-color-4);
  --fullscreen-arrow-active-bg: var(--main-color-5);
@@ -431,6 +435,8 @@ Cormorant+Garamond */
 
             /*~ Customer reviews ~*/
 
+
+ --rating-arrow-color:var(--neutral-10);
  --rating-info-color: var(--neutral-9);
  --rating-info-bg: var(--neutral-1);
  --rating-info-box-shadow: 0px 2px 8px 1px var(--neutral-0-5);
@@ -524,6 +530,7 @@ Cormorant+Garamond */
   --input-outline-color-focused: var(--main-color-4);
   --checkout-input-placeholder: var(--neutral-8);
   --input-autofill-color: var(--bg-color);
+  --country-input-arrow-color: var(--checkout-input-placeholder);
   --country-options-bg: var(--checkout-bg);
 
   --checkbox-unchecked-box-shadow: 0 0 0 0 var(--border-color-strong) inset;

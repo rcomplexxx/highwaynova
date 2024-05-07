@@ -60,14 +60,19 @@
     background-color: var(--arrow-bg);
   }
   
-  .rightArrowImg {
+  .leftArrowImg{
     height:var(--size-6); width:var(--size-3);
+    transform: rotate(90deg);
+  }
+
+
+  .rightArrowImg {
+   
+    transform: rotate(-90deg);
    
   }
 
-  .leftArrowImg{
-    transform: scaleX(-1);
-  }
+ 
   
   
 @media(max-width: 1080px){

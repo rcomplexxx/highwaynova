@@ -3,6 +3,7 @@ import { useState } from "react";
 import { CountryDropdown } from "react-country-region-selector";
 import styles from "./countryinput.module.css";
 import Image from "next/image";
+import { ArrowDown } from "@/public/images/svgs/svgImages";
 
 export default function CountryInput({ id, setErrors, error }) {
   const [country, setCountry] = useState("");
@@ -42,14 +43,8 @@ export default function CountryInput({ id, setErrors, error }) {
         tabIndex={1000}
         disabled={false}
       />
-      <Image
-        src="/images/greater.svg"
-        alt="Arrow Down"
-        height={12}
-        width={16}
-        priority={true}
-        className={styles.arrowDown}
-      />
+      <ArrowDown color={'var(--country-input-arrow-color)'} styleClassName={styles.arrowDown}/>
+     
       <label
         htmlFor={id}
         className={`${styles.label} ${country != "" && styles.labelDown}`}

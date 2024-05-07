@@ -1,6 +1,7 @@
 import React, {  useRef, useState } from 'react';
 import styles from './linkcard.module.css'
 import Image from 'next/image';
+import { ArrowDown } from '@/public/images/svgs/svgImages';
 
 export default function LinkCard({title, children}) {
 
@@ -49,7 +50,8 @@ export default function LinkCard({title, children}) {
     <div className={styles.footerLinksWrapper}>
         <div onClick={handleCardExpend} className={styles.linksCard}>
         <span className={styles.title}>{title}</span>
-        <Image loading={'lazy'} alt='Show' className={`${styles.dropMenuSign} ${cardOpen && styles.dropMenuOpen}`} src='/images/greaterLess3.png' height={8} width={8}/>
+        <ArrowDown color='var(--footer-arrow-down-color)' styleClassName={`${styles.dropMenuSign} ${cardOpen && styles.dropMenuOpen}`}/>
+       
         </div>
         <div ref={cardContentRef} className={styles.linksContent}>
             {children}

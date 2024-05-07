@@ -19,17 +19,18 @@ function Question(props) {
     setShowAnswer(!showAnswer);
   }
 
+
+  /* U global ubaciti --faq-arrow-color kada koristim ovu komponentu*/
   return (
     <>
       <button className={styles.question_div} onClick={summonAnswer}>
         {props.question}
-        <Image
-        src='/images/greaterLess3.png'
-        height={12} width={12}
-          className={`${styles.plusStyle} ${
+ 
+    
+        <ArrowDown color={"var(--faq-arrow-color)"} styleClassName={`${styles.plusStyle} ${
             showAnswer ? styles.plusStyleRotate : ""
-          }`}
-        />
+          }`}/>
+       
           
        
       </button>
