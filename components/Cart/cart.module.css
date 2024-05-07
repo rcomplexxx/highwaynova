@@ -31,7 +31,7 @@ height : 100vh;
   min-width: 100%;
   /* transition: min-height 0.2s ease; */
   padding: 0 var(--size-10);
-  padding-bottom: var(--size-7) ;
+  padding-bottom: var(--size-6) ;
   box-sizing: border-box;
 }
 
@@ -82,6 +82,8 @@ height : 100vh;
     font-size: var(--font-size-3);   
     transition: background-color 0.3s ease;
     cursor: pointer;
+    
+   
   }
 
   .checkoutButtonNew:hover{
@@ -187,7 +189,7 @@ height : 100vh;
     
 .containerStyle{
   padding: 0 var(--size-8);
-  padding-bottom: var(--size-6) ;
+  padding-bottom: var(--size-5) ;
 }
 
 
@@ -221,7 +223,7 @@ height : 100vh;
   @media(max-width: 600px){
     .containerStyle{
     padding: 0 var(--size-5);
-    padding-bottom: var(--size-6) ;
+    padding-bottom: var(--size-5) ;
     }
   }
 
