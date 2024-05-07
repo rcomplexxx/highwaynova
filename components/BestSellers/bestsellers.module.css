@@ -6,7 +6,7 @@
     flex-direction: column;
     align-items: center;
     margin-top: auto;
-    padding-bottom: var(--size-8);
+    padding-bottom: var(--size-7);
     contain: content;
    
 }
