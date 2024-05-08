@@ -136,6 +136,9 @@
 
 .reviewText{
     margin-top: var(--size-6);
+    font-size: var(--font-size-4);
+    line-height: 26px;
+    font-weight: 400;
 }
 
 
