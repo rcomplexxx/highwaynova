@@ -113,6 +113,11 @@ export default function ProductPage({ product, images, startReviews, ratingData 
             {product.stickerPrice && <span className={styles.product_price_span}>${product.stickerPrice.toFixed(2)}</span>}$
             {product.price.toFixed(2)}
           </div>
+
+          <div className={styles.inStockDiv}>
+            <div className={styles.pulseDiv}><div className={styles.pulser}></div></div>
+            <span className={styles.inStockSpan}>In stock, ready to shop</span>
+          </div>
           {product.variants && <div className={styles .variantDiv}>
           <span className={styles.product_style_label}>Color: {variant}</span>
           <div className={styles.product_style_options}>

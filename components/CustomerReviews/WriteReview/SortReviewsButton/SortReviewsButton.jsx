@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import styles from './sortreviewsbutton.module.css'
 import Image from 'next/image'
+import { SortButtonIcon } from '@/public/images/svgs/svgImages';
 
 export default function SortReviewsButton({sortingType, setSortingType}) {
 
@@ -39,7 +40,10 @@ export default function SortReviewsButton({sortingType, setSortingType}) {
   return (
     <div onClick={(event)=>{event.stopPropagation();}} className={styles.mainButton}>
 
-        <Image src={`/images/customer_review_sort7.svg`} onClick={()=>{setOpenSortingDiv(!openSortingDiv)}} height={0} width={0} className={styles.sortingImg}/>
+      <SortButtonIcon handleClick={()=>{setOpenSortingDiv(!openSortingDiv)}}
+       styleClassName={styles.sortingImg} />
+
+        
 
 
 {openSortingDiv &&
