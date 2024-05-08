@@ -19,9 +19,9 @@
 
   .productInfo{
     
-    width: var(--size-14-5);
+    width: var(--size-15);
    
-    margin-left:  var(--size-9-5);
+    margin-left:  var(--size-9);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -85,7 +85,7 @@
 .product_price_span{
   color: var(--weak-txt-color);
   font-size: var(--font-size-4);
-  margin-right: var(--size-4);
+  margin-left: var(--size-4);
   text-decoration: line-through;
   font-weight: 300;
 
@@ -133,7 +133,7 @@
 
 
   .inStockSpan{
-    margin-left: var(--size-5);
+    margin-left: var(--size-4);
     font-size: var(--font-size-2);
   }
 
