@@ -96,8 +96,7 @@ export default function ProductPage({ product, images, startReviews, ratingData 
             }}
           >
 
-        {/* <span className={styles.ratingNumber}>{ratingData.rating.toFixed(1)}</span> */}
-           
+        <span className={styles.ratingNumber}>{ratingData.rating.toFixed(1)}</span>
             <StarRatings
               rating={ratingData.rating?ratingData.rating:4.7}
               svgIconPath={STARPATH}
@@ -107,7 +106,7 @@ export default function ProductPage({ product, images, startReviews, ratingData 
               starDimension="20px"
               starSpacing="2px"
             />
-            <span className={styles.product_rating_reviews_number}>({ratingData.reviewsNumber})</span>
+            <span className={styles.product_rating_reviews_number}>{ratingData.reviewsNumber} reviews</span>
           </div>
           <div className={styles.product_price}>
           ${product.price.toFixed(2)}
