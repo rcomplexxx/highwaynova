@@ -25,7 +25,7 @@ numberOfStars={5}
 starEmptyColor={"var(--star-empty-color)"}
 starDimension="20px"
 starSpacing="2px"
-/> {product.reviewNumber} reviews</div>
+/> <span className={styles.product_rating_reviews_number}>{product.reviewNumber} reviews</span></div>
         <div className={`${styles.cardContentText} ${styles.cardContentPrice}`}>
           {product.stickerPrice && (
             <span className={styles.stickerPrice}>${product.stickerPrice.toFixed(2)}</span>

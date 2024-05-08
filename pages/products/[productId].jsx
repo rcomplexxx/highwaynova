@@ -116,7 +116,7 @@ export default function ProductPage({ product, images, startReviews, ratingData 
 
           <div className={styles.inStockDiv}>
             <div className={styles.pulseDiv}><div className={styles.pulser}></div></div>
-            <span className={styles.inStockSpan}>In stock, ready to shop</span>
+            <span className={styles.inStockSpan}>In stock, ready to ship</span>
           </div>
           {product.variants && <div className={styles .variantDiv}>
           <span className={styles.product_style_label}>Color: {variant}</span>
