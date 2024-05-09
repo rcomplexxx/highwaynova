@@ -96,7 +96,7 @@ export default function ProductPage({ product, images, startReviews, ratingData 
             }}
           >
 
-        <span className={styles.ratingNumber}>{ratingData.rating.toFixed(1)}</span>
+        {/* <span className={styles.ratingNumber}>{ratingData.rating.toFixed(1)}</span> */}
             <StarRatings
               rating={ratingData.rating?ratingData.rating:4.7}
               svgIconPath={STARPATH}
@@ -115,7 +115,7 @@ export default function ProductPage({ product, images, startReviews, ratingData 
           </div>
 
           <div className={styles.inStockDiv}>
-            <div className={styles.pulseDiv}><div className={styles.pulser}></div></div>
+            <div className={styles.pulseDiv}><div className={styles.pulser}/></div>
             <span className={styles.inStockSpan}>In stock, ready to ship</span>
           </div>
           {product.variants && <div className={styles .variantDiv}>

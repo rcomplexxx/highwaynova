@@ -81,6 +81,25 @@
       font-size: var(--font-size-2);
       font-weight: 300;
     }
+
+
+
+    .product_price{
+      display: flex;
+      align-items: center;
+      font-size: var(--font-size-7);
+     margin-top: 0;
+     margin-bottom: var(--size-6);
+    }
+    
+    .product_price_span{
+      color: var(--weak-txt-color);
+      font-size: var(--font-size-4);
+      margin-left: var(--size-4);
+      text-decoration: line-through;
+      font-weight: 300;
+    
+    }
   
 
   .stickerPrice{

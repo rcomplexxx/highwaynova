@@ -6,6 +6,8 @@
     
     margin-top: 0;
     font-size: var(--font-size-5);
+    color: var(--neutral-10);
+    font-weight: 500;
   }
 
   .freqMain{

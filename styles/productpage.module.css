@@ -71,6 +71,7 @@
   text-align: start;
 }
 
+
 .product_price{
   display: flex;
   justify-content: space-between;
@@ -115,6 +116,10 @@
 
     
   }
+
+
+
+  
 
   .pulser{
     position:absolute;

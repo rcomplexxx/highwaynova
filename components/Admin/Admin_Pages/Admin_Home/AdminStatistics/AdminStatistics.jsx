@@ -354,7 +354,7 @@ export default function AdminStatistics(){
 
     <div className={styles.saleStat}>
       <h2>Period</h2>
-      <h2>OQ</h2>
+      <h2>TO</h2>
       <h2>SR</h2>
       <h2>LID</h2>
       <h2>Tips</h2>
@@ -451,7 +451,7 @@ ${shouldUseOnlyFulfilledOrders && styles.onlyFulfilledOrdersChecked}`}
 
             {revealStatsReadingInstructions && <>
     <span className={styles.readStatsInstructionsSpan}>Period is specified time in which metrics are measured.</span>
-    <span className={styles.readStatsInstructionsSpan}>Order quantity(OQ) is the number of orders placed.</span>
+    <span className={styles.readStatsInstructionsSpan}>Total orders(TO) is the number of orders placed.</span>
     <span className={styles.readStatsInstructionsSpan}>Sales revenue(SR) is the money obtained just from sales(product costs minus discounts, excluding tips).</span>
     <span className={styles.readStatsInstructionsSpan}>Lost in discounts(LID) is money lost in discounts. Ps. Discounts let you get more customers, and more long-term value.</span>
     <span className={styles.readStatsInstructionsSpan}>Tips is money generously donated by customers.</span>
