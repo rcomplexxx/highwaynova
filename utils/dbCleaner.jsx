@@ -7,26 +7,26 @@ cron.schedule('0 0 * * *', async () => {
   console.log('Running the task to delete rows from the database...');
 
 
- 
+ //!!!!!!!!!!!!!! NAPOMENA !!!!!!!!!!!!!!! ORDER MI TREBAJU ZARAD IZRACUNAVANJA ADMIN STATISTIKA, TAKO DA NJIH
+ //NE BRISATI. A MESSAGES NAMONTIRATI DA STIZU NA MEJL, A NA ADMIN SAMO DA SE PREUZIMAJU !!!!!!!!!!!!!!!!!!!!!!
+ //rateLimiter data je ok da se brise.
 
 
-// Open a database connection (or create a new one if the file does not exist)
 const db = betterSqlite3(process.env.DB_PATH);
 
 
 
-  // Your SQL query to delete rows (for example, delete rows older than a certain date)
   const currUnixDateInDays = Math.floor(Date.now() / (86400000)) - 100;
   const currUnixDateInSeconds= (Math.floor(Date.now() / 1000));
   // const cleanOrdersQuery = `DELETE FROM orders WHERE ((packageStatus='2' OR packageStatus='3')  AND createdDate < ${currUnixDateInDays+33}) OR (approved='0' AND createdDate < ${currUnixDateInDays})`;
-  const cleanOrdersQuery = `DELETE FROM orders WHERE createdDate < ${currUnixDateInDays}`;
-  const cleanMessagesQuery = `DELETE FROM messages WHERE msgStatus = '2'`;
+  // const cleanOrdersQuery = `DELETE FROM orders WHERE createdDate < ${currUnixDateInDays}`;
+  // const cleanMessagesQuery = `DELETE FROM messages WHERE msgStatus = '2'`;
   const cleanRateLimiterQuery = `DELETE FROM rateLimiter WHERE expireDate < ${currUnixDateInSeconds}`;
   // 
   try {
     // Execute the delete query using run() method of better-sqlite3
-    db.exec(cleanOrdersQuery);
-    db.exec(cleanMessagesQuery);
+    // db.exec(cleanOrdersQuery);
+    // db.exec(cleanMessagesQuery);
     db.exec(cleanRateLimiterQuery);
     console.log('Rows deleted successfully!');
   } catch (error) {
@@ -35,7 +35,6 @@ const db = betterSqlite3(process.env.DB_PATH);
 
 
 
-// Handle errors
 db.on('error', (err) => {
   console.error('Database error:', err.message);
 });

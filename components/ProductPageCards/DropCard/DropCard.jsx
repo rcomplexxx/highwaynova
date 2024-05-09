@@ -39,8 +39,8 @@ export default function DropCard(props) {
 
     myAnswer.style.maxHeight=`${myAnswer.scrollHeight}px`;
     setTimeout(()=>{
-      myAnswer.style.transition=`max-height 0.3s ease`;
       myAnswer.style.maxHeight="0";
+      myAnswer.style.opacity = "0";
      }, 1)
   
    
@@ -51,6 +51,7 @@ export default function DropCard(props) {
 
 
     myAnswer.style.maxHeight=`${myAnswer.scrollHeight}px`;
+    myAnswer.style.opacity = "1";
     emergeTimeoutRef.current= setTimeout(()=>{
       myAnswer.style.maxHeight='none'
     },500);

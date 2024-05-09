@@ -38,10 +38,12 @@ useEffect(()=>{
     const chartCalculatedData = [];
 
     const startDate = Math.floor(Math.min(
-        chartData.map(data=>data.createdDate)
+        chartData.map(data=> {return data.createdDate})
       
       )
       );
+
+     
     const currentDate = Math.floor(Date.now() / (1000 * 60 * 60 * 24));
 
     for ( let i = startDate; i <= currentDate; i++){
@@ -49,31 +51,35 @@ useEffect(()=>{
       chartCalculatedData.push({date: i, yMetric: 0})
     }
 
+    console.log('start data', chartCalculatedData)
 
+    chartData.forEach(item=>{
 
-    chartData.map(item=>{
      const foundItemIndex= chartCalculatedData.findIndex(chartItem=>{
 
       
-      
-      return chartItem.date===item.createdDate});
+      return chartItem.date==item.createdDate
+    }
+    );
+
+    console.log('foundItemIndex', foundItemIndex);
 
 
 
 
-     if(foundItemIndex != -1)chartCalculatedData[foundItemIndex].cash=chartCalculatedData[foundItemIndex].yMetric+item.yMetric;
+     if(foundItemIndex != -1)chartCalculatedData[foundItemIndex].yMetric=chartCalculatedData[foundItemIndex].yMetric+item.yMetric;
 
 
 
      
   
      
-     else    chartCalculatedData.push({date:item.createdDate, yMetric:item.yMetric});
+    //  else    chartCalculatedData.push({date:item.createdDate, yMetric:item.yMetric});
 
      
     })
 
-      
+  
 
       const formatedChartData = chartCalculatedData.map(item => ({
         x: new Date(item.date * 24 * 60 * 60 * 1000),
@@ -81,6 +87,8 @@ useEffect(()=>{
       }));
   
       // Sorting data based on the date
+
+
       formatedChartData.sort((a, b) => a.x - b.x);
   
       // Creating datasets for Chart.js
@@ -95,6 +103,7 @@ useEffect(()=>{
           tension: 0.1
         },
       ];
+
   
     
   
@@ -135,6 +144,7 @@ useEffect(()=>{
             time: {
               unit: 'day', // You can change the unit to 'week', 'month', or 'hour' as needed
             },
+            bounds: 'data',
           },
           y: {
             beginAtZero: true,

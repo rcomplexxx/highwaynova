@@ -25,28 +25,39 @@
     width: 100%;
     margin-top: var(--size-3);
     margin-bottom: var(--size-7);
-    padding: var(--size-2) var(--size-4);
+    padding: 0 var(--size-4);
     box-sizing: border-box;
-    border: 1px solid var(--border-color-strong);
+    
     display: flex;
-    flex-direction: column;
+   
     justify-content: space-between;
 }
+
+
 
 
 .saleStat{
     
     width: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
+    
+
+    
     align-items: center;
 }
 
 .saleStat h2, .statName{
+  width: 100%;
     flex:1;
     display: flex;
     justify-content: center;
-    margin: var(--size-3) 0;
+    align-items: center;
+    margin:  0;
+    padding: var(--size-3) 0;
+    border-bottom: 1px solid var(--border-color-weak);
+   
 }
 
 .pickPeriod{
@@ -63,7 +74,8 @@
     
     flex-direction: column;
     align-items: center;
-    margin: var(--size-3) 0;
+    padding: var(--size-3) 0;
+    border-bottom: 1px solid var(--border-color-weak);
 }
 
 .datePicker{
@@ -81,8 +93,8 @@
     color: var(--admin-txt-color);
     background-color: black ;
     padding: var(--size-2);
-    margin: var(--size-3) 0;
     border: 1px solid var(--border-color-strong);
+  
 }
 
 

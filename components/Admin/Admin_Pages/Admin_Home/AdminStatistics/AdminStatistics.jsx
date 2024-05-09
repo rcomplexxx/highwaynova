@@ -15,7 +15,7 @@ export default function AdminStatistics(){
     const [returnCashData, setReturnCashData] = useState([]);
     const [revealStatsReadingInstructions, setRevealStatsReadingInstructions] = useState(false);
     const [showCharts, setShowCharts] = useState(true);
-    const [customDateStats, setCustomDateStats] = useState({orderNumber:'N/A', customerCash:'N/A', discountLostMoney:'N/A', supplierCosts:'N/A', tip:'N/A', profit: 'N/A'});
+    const [customDateStats, setCustomDateStats] = useState({orderNumber:'N/A', customerCash:'N/A', discountLostMoney:'N/A', supplierCosts:'N/A', tip:'N/A',lostInReturns:'N/A', averageOrderValue:'N/A', profit: 'N/A'});
     const [shouldUseOnlyFulfilledOrders, setShouldUseOnlyFulfilledOrders]= useState(false);
   
    
@@ -135,7 +135,7 @@ export default function AdminStatistics(){
 
 
 
-                console.log('testing total price', totalPrice)
+                console.log('testing total price', orderInfo)
                 //Doradi popust
                 //Doradi tip
              
@@ -245,6 +245,12 @@ export default function AdminStatistics(){
         
         profit=profit.toFixed(2);
 
+        let averageOrderValue= orderNumber==0?0:(Number(profit) / Number(orderNumber));
+        averageOrderValue=averageOrderValue.toFixed(2);
+
+
+
+
         return <div className={styles.saleStat}>
         <span className={styles.statName}>{period}</span> 
          <span className={styles.statName}>{orderNumber}</span> 
@@ -253,7 +259,7 @@ export default function AdminStatistics(){
         <span className={styles.statName}>${tip}</span> 
         <span className={styles.statName}>${supplierCosts}</span> 
         <span className={styles.statName}>${lostInReturns}</span> 
-       
+        <span className={styles.statName}>${averageOrderValue}</span>
         <span className={styles.statName}>${profit}</span> 
         </div>
         }
@@ -334,14 +340,37 @@ export default function AdminStatistics(){
       lostInReturns= lostInReturns.toFixed(2);
       profit=profit.toFixed(2);
 
-      setCustomDateStats({orderNumber, customerCash, discountLostMoney, supplierCosts, tip, profit})
+      const averageOrderValue= (Number(profit) / Number(orderNumber)).toFixed(2);
 
+      setCustomDateStats({orderNumber, customerCash, discountLostMoney, supplierCosts, tip, lostInReturns, averageOrderValue, profit})
 
+console.log('cs', cashData);
      
     
        
     };
 
+
+    const getAovChartData = ()=>{
+      
+      const AovChartData = [];
+      
+
+      cashData.forEach(item => {
+        const indexOfCreatedDate = AovChartData.findIndex(data => {return data.createdDate == item.createdDate});
+        if(indexOfCreatedDate == -1)
+          AovChartData.push({createdDate:item.createdDate, profit: Number(item.cashObtained) - Number(item.supplierCosts)+Number(item.tip), orderNumber: 1})
+        else {
+          AovChartData[indexOfCreatedDate].profit += Number(item.cashObtained) - Number(item.supplierCosts)+Number(item.tip);
+          AovChartData[indexOfCreatedDate].orderNumber += 1;
+        }
+      })
+
+    
+
+      return AovChartData.map(item => {return {createdDate:item.createdDate,yMetric: (item.profit/item.orderNumber).toFixed(2)}});
+
+    }
 
 
 
@@ -360,6 +389,7 @@ export default function AdminStatistics(){
       <h2>Tips</h2>
       <h2>SC</h2>
       <h2>LIR</h2>
+      <h2>AOV</h2>
       <h2>Profit</h2>
       </div>
 
@@ -374,8 +404,8 @@ export default function AdminStatistics(){
 
 
 
-    <span className={styles.dateRangeLabel}>Pick a date range</span> 
     <DatePicker range format="DD/MM/YYYY"  className={`bg-dark ${styles.datePicker}`}
+    placeholder='Pick a date range'
     inputClass={styles.dateInput}
     onChange={(value) => {
 
@@ -387,7 +417,7 @@ export default function AdminStatistics(){
 
         else {
           setSelectedRange([]);
-          setCustomDateStats({orderNumber:'N/A', customerCash:'N/A', discountLostMoney:'N/A', supplierCosts:'N/A', tip:'N/A', lostInReturns: 'N/A', profit: 'N/A'});
+          setCustomDateStats({orderNumber:'N/A', customerCash:'N/A', discountLostMoney:'N/A', supplierCosts:'N/A', tip:'N/A', lostInReturns: 'N/A', averageOrderValue: 'N/A', profit: 'N/A'});
       
 
         }
@@ -402,7 +432,9 @@ export default function AdminStatistics(){
         <span className={styles.statName}>{`${customDateStats.discountLostMoney!="N/A" ? "$": ""}${customDateStats.discountLostMoney}`}</span>
         <span className={styles.statName}>{`${customDateStats.tip!="N/A" ? "$": ""}${customDateStats.tip}`}</span> 
         <span className={styles.statName}>{`${customDateStats.supplierCosts!="N/A" ? "$": ""}${customDateStats.supplierCosts}`}</span>
-        <span className={styles.statName}>{`${customDateStats.lostInReturns!="N/A" ? "$": ""}${customDateStats.supplierCosts}`}</span>
+        <span className={styles.statName}>{`${customDateStats.lostInReturns!="N/A" ? "$": ""}${customDateStats.lostInReturns}`}</span>
+        <span className={styles.statName}>{`${customDateStats.averageOrderValue!="N/A" ? "$": ""}${customDateStats.averageOrderValue}`}</span>
+       
         <span className={styles.statName}>{`${customDateStats.profit!="N/A" ? "$": ""}${customDateStats.profit}`}</span> 
 
 </div>
@@ -450,15 +482,16 @@ ${shouldUseOnlyFulfilledOrders && styles.onlyFulfilledOrdersChecked}`}
 
 
             {revealStatsReadingInstructions && <>
-    <span className={styles.readStatsInstructionsSpan}>Period is specified time in which metrics are measured.</span>
-    <span className={styles.readStatsInstructionsSpan}>Total orders(TO) is the number of orders placed.</span>
-    <span className={styles.readStatsInstructionsSpan}>Sales revenue(SR) is the money obtained just from sales(product costs minus discounts, excluding tips).</span>
-    <span className={styles.readStatsInstructionsSpan}>Lost in discounts(LID) is money lost in discounts. Ps. Discounts let you get more customers, and more long-term value.</span>
-    <span className={styles.readStatsInstructionsSpan}>Tips is money generously donated by customers.</span>
-    <span className={styles.readStatsInstructionsSpan}>Supplier costs(SC) is the money spent on suppliers to purchase products to fulfill orders.</span>
-    <span className={styles.readStatsInstructionsSpan}>Lost in returns(LIR) is money lost in product returns. It affect profit metric, but it is not set to affect revenue,discounts, tips for now.</span>
+    <span className={styles.readStatsInstructionsSpan}>PERIOD - Period is specified time in which metrics are measured.</span>
+    <span className={styles.readStatsInstructionsSpan}>TO - Total orders is the number of orders placed.</span>
+    <span className={styles.readStatsInstructionsSpan}>SR - Sales revenue is the money obtained just from sales(product costs minus discounts, excluding tips).</span>
+    <span className={styles.readStatsInstructionsSpan}>LID - Lost in discounts is money lost in discounts. Ps. Discounts let you get more customers, and more long-term value.</span>
+    <span className={styles.readStatsInstructionsSpan}>TIPS - Tips is money generously donated by customers.</span>
+    <span className={styles.readStatsInstructionsSpan}>SC - Supplier costs is the money spent on suppliers to purchase products to fulfill orders.</span>
+    <span className={styles.readStatsInstructionsSpan}>LIR - Lost in returns is money lost in product returns. It affect profit metric, but it is not set to affect revenue,discounts, tips for now.</span>
+    <span className={styles.readStatsInstructionsSpan}>AOV - Average order value is the average profit per order.</span>
     
-    <span className={styles.readStatsInstructionsSpan}>Profit is the amount of money remaining after deducting Supplier costs from Revenue, and adding tips.</span>
+    <span className={styles.readStatsInstructionsSpan}>PROFIT - Profit is the amount of money remaining after deducting Supplier costs from Revenue, and adding tips.</span>
     </>
 }
 
@@ -467,9 +500,18 @@ ${shouldUseOnlyFulfilledOrders && styles.onlyFulfilledOrdersChecked}`}
           <Charts title="Revenue" chartData={cashData.map(item => {return {createdDate:item.createdDate, yMetric:item.cashObtained}})}/>
 
           <Charts title="Profit" chartData={cashData.map(item => {return {createdDate:item.createdDate, yMetric:Number(item.cashObtained) - Number(item.supplierCosts)+Number(item.tip)}})}/>
+          
+
+          <Charts title="Average order number" chartData={getAovChartData() }/>
+         
+
+
           </>
 }
   
 
     </div>
 }
+
+
+
