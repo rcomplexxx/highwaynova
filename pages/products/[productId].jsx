@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import products from "../../data/products.json";
 import Image from "next/image";
 import AppContext from "@/contexts/AppContext";
@@ -43,6 +43,15 @@ export default function ProductPage({ product, images, startReviews, ratingData 
 
 
   const { cartProducts, setCartProducts, setNewProduct, } = useContext(AppContext);
+
+
+
+  useEffect(()=>{
+      setVariant(product.variants && product.variants[0].name);
+      setQuantity(1);
+  },[product])
+
+
 
   const onAddToCart = useCallback(( quantity = 1,addedProduct=product, addedVariant=variant) => {
     const productIndex = cartProducts.findIndex((cp) => cp.id === addedProduct.id && cp.variant===addedVariant);
