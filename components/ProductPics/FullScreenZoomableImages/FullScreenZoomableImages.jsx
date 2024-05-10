@@ -300,7 +300,7 @@ const FullScreenZoomableImage = ({
         fixedZoomDiv.style.backgroundColor = getRgbValues(1);
         return;
       }
-      if (event.touches.length > 0) {
+      if (event.touches.length > 1) {
         multiTouchDetected=true;
         imgDiv.style.transform = `translateY(${0}px)`;
 fixedZoomDiv.style.backgroundColor = getRgbValues(1);
@@ -316,7 +316,7 @@ fixedZoomDiv.style.backgroundColor = getRgbValues(1);
         const lastTouch = event.changedTouches[0];
         if (currY < -128 || currY > 128) {
           //
-          if(multiTouchDetected)return;
+          // if(multiTouchDetected)return;
           
           killFullScreen(currY);
         } else {
