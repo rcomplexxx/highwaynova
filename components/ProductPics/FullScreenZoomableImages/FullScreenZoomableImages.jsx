@@ -263,7 +263,7 @@ const FullScreenZoomableImage = ({
     };
 
     const handleTouchYMove = (event) => {
-      if (swipeYLock || zoomed || multiTouchDetected || event.touches.length > 1) return;
+      if (swipeYLock || zoomed || multiTouchDetected ) return;
    
       
       console.log('new touch start')
@@ -312,10 +312,8 @@ fixedZoomDiv.style.backgroundColor = getRgbValues(1);
         const lastTouch = event.changedTouches[0];
         if (currY < -128 || currY > 128) {
           //
-          if (event.touches.length > 1) {
-            return;
-          }
-          killFullScreen(currY);
+          
+          killFullScreen(lastTouch.clientY - startingTouchCoordinates.y);
         } else {
           if (currY > 16 || currY < -16) {//
           
