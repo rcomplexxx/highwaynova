@@ -92,6 +92,7 @@
    
     object-fit: contain;
     display: block;
+    user-select: none;
   
 }
 

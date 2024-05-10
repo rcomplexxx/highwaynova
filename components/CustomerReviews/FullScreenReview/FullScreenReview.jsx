@@ -107,7 +107,7 @@ useEffect(()=>{
 
 
   return (
-    <div onClick={()=>{history.back();}} className={styles.mainWrapper}>
+    <div onClick={()=>{if(window.innerWidth>600) history.back();}} className={styles.mainWrapper}>
 
       
 <div ref={mainReviewDiv} onClick={(event)=>{event.stopPropagation()}} className={`${styles.mainDiv} 
