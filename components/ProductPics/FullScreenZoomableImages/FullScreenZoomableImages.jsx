@@ -248,7 +248,7 @@ const FullScreenZoomableImage = ({
     };
 
     const handleTouchStart = (event) => {
-      if (event.touches.length > 1) {
+      if (event.changedTouches.length > 1) {
         return;
       }
 
@@ -257,8 +257,8 @@ const FullScreenZoomableImage = ({
       imgDiv.style.transition = "transform 0s ease";
 
       startingTouchCoordinates = {
-        x: event.touches[0].clientX,
-        y: event.touches[0].clientY,
+        x: event.changedTouches[0].clientX,
+        y: event.changedTouches[0].clientY,
       };
     };
 
@@ -316,7 +316,7 @@ const FullScreenZoomableImage = ({
           
           killFullScreen(currY);
         } else {
-          if (currY > 16 || currY < -16) {//
+          if (currY > 16 || currY < -16) {
           
             if (!zoomed) {
               imgDiv.style.transition =
