@@ -16,6 +16,7 @@
     display: flex;
     width: 100%;
     max-width: var(--size-15);
+    margin-top: var(--size-8);
 }
 
 
@@ -28,7 +29,7 @@
     text-align: center;
     box-sizing: border-box;
     padding: 0 var(--size-2);
-    margin-top: var(--size-7);
+   
    
 }
 
@@ -335,8 +336,8 @@ font-size: var(--font-size-1);
 
 @media(max-width: 600px){
 
-    .trustIcon{
-        margin-top: var(--size-6);
+    .trustIcons{
+        margin-top: var(--size-8);
     }
 }
 
@@ -361,7 +362,7 @@ font-size: var(--font-size-1);
 
 @media( max-width: 370px){
 
-    .trustIcon{
+    .trustIcons{
         margin-top: var(--size-5);
     }
 
