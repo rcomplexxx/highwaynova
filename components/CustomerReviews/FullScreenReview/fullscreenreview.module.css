@@ -32,7 +32,7 @@
     
     border-radius: 12px;
     transform: scale(0);
-    transition: transform 0.5s 0.2s ease;
+    transition: transform 0.3s ease;
    overflow: hidden;
     border-radius: 12px;
     background-color: var(--customer-review-bg);
@@ -43,8 +43,7 @@
 }
 
 .spawnFullScreenReview{
-    transform: scale(1);
-    /* animation: spawnFullScreenReview 0.5s ease-out 0.2s 1 normal forwards; */
+    animation: spawnFullScreenReview 0.5s ease-out 0.2s 1 normal forwards;
     /* transform: scale(1); */
 }
 
@@ -169,9 +168,7 @@
     }
 
     .spawnFullScreenReview{
-        transition: transform 0.5s ease;
-        transform: translatey(0);
-        /* animation: spawnFullScreenReviewMob 0.5s ease forwards; */
+        animation: spawnFullScreenReviewMob 0.5s ease forwards;
         /* transform: translatey(0); */
     }
 
