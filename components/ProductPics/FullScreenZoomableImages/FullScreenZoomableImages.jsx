@@ -248,7 +248,7 @@ const FullScreenZoomableImage = ({
     };
 
     const handleTouchStart = (event) => {
-      if (event.touches.length > 1) {
+      if (event.changedTouches.length > 1) {
         return;
       }
 
@@ -300,15 +300,14 @@ const FullScreenZoomableImage = ({
         fixedZoomDiv.style.backgroundColor = getRgbValues(1);
         return;
       }
-      if (event.touches.length > 1) {
+      if (event.changedTouches.length > 1) {
         multiTouchDetected=true;
         imgDiv.style.transform = `translateY(${0}px)`;
 fixedZoomDiv.style.backgroundColor = getRgbValues(1);
         return;
       }
 
-      if(event.changedTouches.length>1)
-        return;
+    
       
       multiTouchDetected=false;
       swipeYLock = false;
