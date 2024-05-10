@@ -300,10 +300,10 @@ const FullScreenZoomableImage = ({
         fixedZoomDiv.style.backgroundColor = getRgbValues(1);
         return;
       }
-      if (event.touches.length > 0) {
+      if (event.changedTouches.length > 1) {
         multiTouchDetected=true;
-        imgDiv.style.transform = `translateY(${0}px)`;
-fixedZoomDiv.style.backgroundColor = getRgbValues(1);
+//         imgDiv.style.transform = `translateY(${0}px)`;
+// fixedZoomDiv.style.backgroundColor = getRgbValues(1);
         return;
       }
       multiTouchDetected=false;
@@ -312,8 +312,9 @@ fixedZoomDiv.style.backgroundColor = getRgbValues(1);
         const lastTouch = event.changedTouches[0];
         if (currY < -128 || currY > 128) {
           //
+        
           
-          killFullScreen(lastTouch.clientY - startingTouchCoordinates.y);
+          killFullScreen(currY);
         } else {
           if (currY > 16 || currY < -16) {//
           
