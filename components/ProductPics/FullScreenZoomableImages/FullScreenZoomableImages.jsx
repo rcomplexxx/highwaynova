@@ -263,7 +263,7 @@ const FullScreenZoomableImage = ({
     };
 
     const handleTouchYMove = (event) => {
-      // if (swipeYLock || zoomed || multiTouchDetected ) return;
+      if (swipeYLock || zoomed || multiTouchDetected ) return;
    
       
       console.log('new touch start')
