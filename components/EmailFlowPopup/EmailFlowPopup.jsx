@@ -97,7 +97,7 @@ export default function EmailFlowPopup({setEmailPopup}){
         return <> <span className={styles.signUpText}>SIGN UP AND GET 15% OFF!</span> 
         {/* <span>SIGN UP BELOW!</span>  */}
         <div className={styles.provideEmailDiv}>
-          <input ref={emailFieldRef} placeholder='Enter email here' onChange={()=>{setError()}} className={styles.emailField}/>
+          <input ref={emailFieldRef} placeholder='Enter email here' onChange={()=>{setError()}} className={styles.emailField} maxLength={127}/>
           <button className={styles.sendEmailButton}
           onClick={handleSignUp}>Sign up</button>
            </div>

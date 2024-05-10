@@ -154,15 +154,15 @@
     }
 
     .mainDiv{
-
+        height: auto;
         width: 100%;
         flex-direction: column;
 
         min-height: 100%;
         max-height: none;
-        height: auto;
        
-        transform: scale(1) translatey(100%);
+       
+        transform:  translatey(100%);
 
         border-radius: 0;
      
@@ -175,6 +175,7 @@
 
     .reviewImageDiv{
       
+        height: min-content;
         width: 100%;
     }
 

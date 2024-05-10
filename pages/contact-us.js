@@ -103,6 +103,7 @@ export default function ContactUs() {
                   placeholder=" "
                   ref={nameRef}
                   className={styles.contactInput}
+                  maxLength={127}
                   onChange={()=>{setErrors({...errors, name: false})}}
                 />
                   <label className={`${styles.inputGroupLabel} ${errors.name && styles.inputGroupLabelErrorCorrection}`}>Name</label>
@@ -117,6 +118,7 @@ export default function ContactUs() {
                 id="email"
                 ref={emailRef}
                 className={styles.contactInput}
+                maxLength={127}
                 onChange={()=>{setErrors({...errors, email: false})}}
                 />
                      <label className={styles.inputGroupLabel}>Email</label>
@@ -134,7 +136,7 @@ export default function ContactUs() {
               }}
               className={styles.messageTextArea}
               
-              maxLength={500}
+              maxLength={900}
               
             />
                <label className={`${styles.messageText}`}>Message</label>

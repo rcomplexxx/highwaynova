@@ -18,7 +18,7 @@ export default function InputField({
         id={id}
         placeholder=" "
         onChange={handleChange}
-        
+        maxLength={127}
         autoComplete={autocomplete && autocomplete}
         className={`${styles.input_field} ${error ? styles.input_error : ""}`}
       />

@@ -107,7 +107,7 @@ export default function Footer() {
           id="subscribe"
           className={styles.subscribeInput}
           placeholder="Enter your email address"
-         
+          maxLength={127}
           onChange={() => {
             if (error) setError();
             if (successful) setSuccessful(false);

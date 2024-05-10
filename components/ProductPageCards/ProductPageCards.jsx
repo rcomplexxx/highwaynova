@@ -108,6 +108,7 @@ export default function ProductPageCards() {
                 id="name"
                 placeholder=" "
                 ref={nameRef}
+                maxLength={127}
                 className={styles.contactInput}
                 onChange={()=>{ setContactErrors({...contactErrors, name: false})}}
               />
@@ -122,6 +123,7 @@ export default function ProductPageCards() {
                 id="email"
                 ref={emailRef}
                 className={styles.contactInput}
+                maxLength={127}
                 onChange={()=>{ setContactErrors({...contactErrors, email: false})}}
               />
                <label className={styles.inputGroupLabel}>Email</label>
@@ -139,7 +141,7 @@ export default function ProductPageCards() {
             }}
             className={styles.messageTextArea}
             rows={6}
-            maxLength={500}
+            maxLength={900}
           />
           <label className={styles.messageText}>Question</label>
         </div>
