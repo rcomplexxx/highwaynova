@@ -248,7 +248,7 @@ const FullScreenZoomableImage = ({
     };
 
     const handleTouchStart = (event) => {
-      if (event.changedTouches.length > 1) {
+      if (event.touches.length > 1) {
         return;
       }
 
@@ -263,19 +263,19 @@ const FullScreenZoomableImage = ({
     };
 
     const handleTouchYMove = (event) => {
-      if (swipeYLock || zoomed || multiTouchDetected ) return;
+      if (swipeYLock || zoomed || multiTouchDetected || event.touches.length > 1) return;
    
       
       console.log('new touch start')
       currY =
-        event.changedTouches[event.changedTouches.length - 1].clientY -
+        event.touches[0].clientY -
         startingTouchCoordinates.y;
       if (currY > -16 && currY < 16) {
         imgDiv.style.transform = `translateY(${0}px)`;
         fixedZoomDiv.style.backgroundColor = getRgbValues(1);
 
         currX =
-          event.changedTouches[event.changedTouches.length - 1].clientX -
+        event.touches[0].clientX -
           startingTouchCoordinates.x;
         if (currX < -5 || currX > 5) swipeYLock = true;
 
@@ -300,23 +300,18 @@ const FullScreenZoomableImage = ({
         fixedZoomDiv.style.backgroundColor = getRgbValues(1);
         return;
       }
-      if (event.changedTouches.length > 1) {
+      if (event.touches.length > 0) {
         multiTouchDetected=true;
         imgDiv.style.transform = `translateY(${0}px)`;
 fixedZoomDiv.style.backgroundColor = getRgbValues(1);
         return;
       }
-
-    
-      
       multiTouchDetected=false;
       swipeYLock = false;
 
         const lastTouch = event.changedTouches[0];
         if (currY < -128 || currY > 128) {
-          //
-          // if(multiTouchDetected)return;
-          
+        
           killFullScreen(currY);
         } else {
           if (currY > 16 || currY < -16) {//
