@@ -2,7 +2,7 @@ import Image from "next/image";
 import DropCard from "./DropCard/DropCard";
 import styles from "./productPageCards.module.css";
 import { useRef, useState } from "react";
-import { ErrorIcon } from "@/public/images/svgs/svgImages";
+import { ErrorIcon, GuaranteeIcon, PackageReturnIcon, TruckIcon } from "@/public/images/svgs/svgImages";
 
 export default function ProductPageCards() {
   const [messageLoading, setMessageLoading]= useState(false);
@@ -158,15 +158,15 @@ export default function ProductPageCards() {
 
       <div className={styles.trustIcons}>
         <div className={styles.trustIcon}>
-          <Image height={0} width={0} sizes="48px" loading={'lazy'} className={styles.trustIconImage} alt='Free shipping' src='/images/truckIcon8.svg' />
+          <TruckIcon styleClassName={styles.trustIconImage} />
           <span>Free shipping</span>
         </div>
         <div className={styles.trustIcon}>
-          <Image height={0} width={0} sizes="48px" loading={'lazy'} className={styles.trustIconImage} alt='Free return' src='/images/packageReturn4.png'/>
-          <span>Free returns</span>
+         <PackageReturnIcon styleClassName={styles.trustIconImage}/>
+         <span>Free returns</span>
         </div>
         <div className={styles.trustIcon}>
-          <Image height={0} width={0} sizes="48px" loading={'lazy'} className={styles.trustIconImage} alt='Guarantee' src='/images/guarantee4.png'/>
+          <GuaranteeIcon styleClassName={styles.trustIconImage}/>
           <span>30 Days money back guarantee</span>
         </div>
       </div>
