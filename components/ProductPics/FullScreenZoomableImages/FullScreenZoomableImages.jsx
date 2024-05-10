@@ -311,7 +311,9 @@ fixedZoomDiv.style.backgroundColor = getRgbValues(1);
 
         const lastTouch = event.changedTouches[0];
         if (currY < -128 || currY > 128) {
-        
+          window.removeEventListener("touchstart", handleTouchStart, true);
+          window.removeEventListener("touchmove", handleTouchYMove, true);
+          window.removeEventListener("touchend", handleTouchEnd);
           killFullScreen(currY);
         } else {
           if (currY > 16 || currY < -16) {//
