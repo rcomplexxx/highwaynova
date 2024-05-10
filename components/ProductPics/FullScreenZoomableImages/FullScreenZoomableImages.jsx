@@ -263,7 +263,9 @@ const FullScreenZoomableImage = ({
     };
 
     const handleTouchYMove = (event) => {
-      if (swipeYLock || zoomed || multiTouchDetected || event.touches.length > 1) return;
+      if(event.touches.length > 1)return;
+      else{multiTouchDetected=false;}
+      if (swipeYLock || zoomed || multiTouchDetected) return;
    
       
       console.log('new touch start')
