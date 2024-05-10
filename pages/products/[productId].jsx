@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo, useRef } from "react";
 import products from "../../data/products.json";
 import Image from "next/image";
 import AppContext from "@/contexts/AppContext";
@@ -40,6 +40,7 @@ export default function ProductPage({ product, images, startReviews, ratingData 
   const [quantity, setQuantity] = useState(1);
   const [variant, setVariant]=useState(product.variants && product.variants[0].name);
   const router = useRouter();
+  const stopVariantImageChange = useRef(false);
 
 
   const { cartProducts, setCartProducts, setNewProduct, } = useContext(AppContext);
@@ -47,6 +48,7 @@ export default function ProductPage({ product, images, startReviews, ratingData 
 
 
   useEffect(()=>{
+    stopVariantImageChange.ref = true;
       setVariant(product.variants && product.variants[0].name);
       setQuantity(1);
   },[product])
@@ -82,6 +84,7 @@ export default function ProductPage({ product, images, startReviews, ratingData 
   };
 
   const variantImageIndex = useMemo(()=>{
+    if(stopVariantImageChange.ref){stopVariantImageChange.ref=false; return;}
     return product.variants && product.variants.find((v)=>{return v.name==variant})?.variantProductImageIndex;
   },[variant])
   
