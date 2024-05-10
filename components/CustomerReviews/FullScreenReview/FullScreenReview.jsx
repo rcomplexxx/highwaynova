@@ -38,9 +38,8 @@ useEffect(()=>{
 
 
 
-  setTimeout(()=>{document.documentElement.classList.add("hideScroll");}, 500)
 
-  
+  document.documentElement.classList.add("hideScroll");
 
 
 
