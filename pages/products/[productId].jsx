@@ -96,8 +96,9 @@ export default function ProductPage({ product, images, startReviews, ratingData 
        
           <ProductPics productId={product.id} onAddToCart ={ onAddToCart } images={images} variantImageIndex={variantImageIndex} />
       
-
+          <div className={styles.productInfoWrapper}>
         <div className={styles.productInfo}>
+          
           <h1 className={styles.product_title}>{product.name}</h1>
           <div
             className={styles.product_rating}
@@ -249,7 +250,7 @@ export default function ProductPage({ product, images, startReviews, ratingData 
           <ProductPageCards />
         </div>
       </div>
-
+      </div>
       <CustomerReviews product_id={product.id} startReviews={startReviews} ratingData={ratingData} />
     </>
   );
