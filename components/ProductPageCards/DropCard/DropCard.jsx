@@ -1,7 +1,7 @@
 import Image from "next/image";
 import styles from "./dropCard.module.css";
 import { useEffect, useRef, useState } from "react";
-import { ArrowDown } from "@/public/images/svgs/svgImages";
+import { ArrowDown, ChatIcon, PackageReturnIcon } from "@/public/images/svgs/svgImages";
 
 export default function DropCard(props) {
   const [showAnswer, setShowAnswer] = useState(false);
@@ -85,6 +85,8 @@ export default function DropCard(props) {
       props.title=='Key features'?'keyIcon7':props.title=='Shipping & Returns'?'shippingReturnIcon2'
       :props.title=='Ask a question'?'chatIcon6':'description'
       }.png`} className={styles.cardIcon}/> */}
+      {props.title ==='Shipping & Returns' && <PackageReturnIcon isDropCardIcon={true} styleClassName={styles.cardIcon}/>}
+      {props.title ==='Ask a question' && <ChatIcon styleClassName={styles.cardIcon}/>}
         {props.title}
         </div>
         <ArrowDown color={"var(--dropcard-title-color)"} styleClassName={`${styles.plusStyle} ${

@@ -409,6 +409,8 @@ Cormorant+Garamond */
  --buy-now-hover-bg: var(--accent-color-1);
 
  --dropcard-title-color: var(--high-contrast-light-txt-color);
+ --package-return-dropcard-icon-color: rgb(170, 152, 49);
+ --chat-icon-color: rgb(53, 144, 248);
  --truck-icon-color: var(--neutral-3);
  --package-return-icon-color: var(--neutral-3);
  --guarantee-icon-color: var(--neutral-3);
