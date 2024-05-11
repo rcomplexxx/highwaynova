@@ -337,7 +337,7 @@ font-size: var(--font-size-1);
 @media(max-width: 600px){
 
     .trustIcons{
-        margin-top: var(--size-8);
+        margin-top: 40px;
     }
 }
 
@@ -348,7 +348,7 @@ font-size: var(--font-size-1);
         align-self: center;
         width: 100%;
       
-        margin-top: var(--size-7);
+        margin-top: var(--size-6);
        
         
         border-radius: 4px;
@@ -362,7 +362,9 @@ font-size: var(--font-size-1);
 
 @media( max-width: 370px){
 
-  
+    .trustIcons{
+        margin-top: var(--size-6);
+    }
 
     .trustIcon span{
         font-size: var(--font-size-1);
