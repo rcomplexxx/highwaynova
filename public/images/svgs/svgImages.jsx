@@ -21,8 +21,8 @@ export const TruckIcon = ({styleClassName})=>{
 
 export const PackageReturnIcon = ({styleClassName})=>{
 
-	return <svg fill="var(--package-return-icon-color)" className={styleClassName} xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" 
-	viewBox="0 0 487 487" xmlSpace="preserve">
+	return <svg fill="var(--package-return-icon-color)" style={{scale:'0.9'}} className={styleClassName} xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" 
+	viewBox="0 0 487 487" xmlSpace="preserve" >
 
    <path d="M456,128.3c0-0.1,0-0.3,0-0.4c0-0.3,0-0.5-0.1-0.8c0-0.1,0-0.2,0-0.4c0-0.4-0.1-0.7-0.2-1c0-0.1-0.1-0.3-0.1-0.4
 	   c-0.1-0.3-0.1-0.6-0.2-0.8c0-0.1-0.1-0.2-0.1-0.3c-0.1-0.4-0.3-0.7-0.4-1.1c0-0.1-0.1-0.2-0.1-0.3c-0.3-0.7-0.7-1.4-1.2-2.1
