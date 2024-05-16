@@ -16,20 +16,60 @@ function startEmailJobs(){
   try{
   const db = betterSqlite3(process.env.DB_PATH);
 
-const campaigns= db.prepare(`SELECT * FROM emailCampaigns`).all();
+const campaigns= db.prepare(`SELECT * FROM email_campaigns`).all();
+
+
+
+
+//Ako je campaign email counter manji od sequence.emails.length - 1, runovati tu kampanju
+//I datum izracunati na osnovu sendingDate i time gapove, mislim da je vec uradjen algoritam za to na sendEmailJob
+
+
 console.log('campaigns', campaigns);
 
 campaigns.forEach(campaign=>{
-  if(campaign.campaignType=='sequence')return;
-  const emails = JSON.parse(campaign.emails);
-  const emailToSend=emails.find(email=>{
-    return email.sent==false
-  
-      });
-      const altSendDate= new Date(new Date().getTime() + 1000 * 60 * 30).getTime();
-      console.log('alt time',altSendDate);
-      if( emailToSend)sendEmailJob(emailToSend.sendDate<new Date().getTime()?altSendDate:emailToSend.sendDate, campaign.id, emailToSend.id );
 
+
+ 
+
+  const campaignEmails = JSON.parse(db.prepare(`SELECT emails FROM email_sequences WHERE id = ?`).get(campaign.sequenceId)?.emails);
+
+
+
+  const currentEmailIndex = campaign.emailSentCounter;
+
+
+
+  if(currentEmailIndex < campaignEmails.length ){
+
+
+
+    
+    let sendTimeGap = parseInt(campaignEmails[currentEmailIndex+1]?.sendTimeGap);
+      if(!sendTimeGap || isNaN(sendTimeGap)) sendTimeGap = 0;
+
+    let dateCalculated = campaign.sendingDateInUnix;
+    campaignEmails.forEach((emailPointer, index) =>{
+    
+      if(index!==0 && index < currentEmailIndex+1)
+      dateCalculated = dateCalculated + parseInt(emailPointer.sendTimeGap);
+   
+
+    })
+
+    let   finalSendingDate=(Date.now() - dateCalculated >  0)?
+    Date.now()+sendTimeGap: dateCalculated+sendTimeGap;
+
+
+
+
+      // const altSendDate= new Date(new Date().getTime() + 1000 * 60 * 30).getTime();
+      console.log('My send time is', sendTimeGap, new Date(finalSendingDate));
+
+
+      
+      sendEmailJob(finalSendingDate, campaign.id);
+  }
 })
   }
   catch(error){

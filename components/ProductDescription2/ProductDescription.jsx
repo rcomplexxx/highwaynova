@@ -12,10 +12,8 @@ export default function ProductDescription({description}) {
 
     useLayoutEffect(()=>{
 
-        let myProductDescription;
         try{
-            myProductDescription = ReactHtmlParser(description);
-            setProductDescription(myProductDescription)
+            setProductDescription(ReactHtmlParser(description))
         }
         catch(error){
             setProductDescription(description)

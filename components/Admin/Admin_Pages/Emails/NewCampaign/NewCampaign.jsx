@@ -1,37 +1,54 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import styles from './newcampaign.module.css'
 import {useRouter} from 'next/router'
+import SequenceList from './SequenceList/SequenceList';
+import DatePicker from 'react-multi-date-picker';
+import TimePicker from 'react-multi-date-picker/plugins/time_picker';
 
 
-import EmailList from './EmailList/EmailList';
 
-export default function NewCampaign({emailData, setEmailData}) {
 
-  const [campaignEmails, setCampaignEmails] = useState([]);
-  const [campaignType, setCampaignType] = useState('campaign');
-  const titleRef = useRef();
+
+
+
+
+
+
+
+
+
+/*
+  data.title,
+          data.sequenceId,
+          data.sendingDateInUnix,
+          data.targetSubscribers
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+          */
+
+
+export default function NewCampaign({sequences, setEmailData}) {
+
+
+
+
+  const [targetTraffic, setTargetTraffic]= useState();
+  const [sendDate, setSendDate] = useState();
+  const [linkedSequenceId, setLinkedSequenceId] = useState();
+  const [title, setTitle] = useState();
+ 
+
 
   const router = useRouter();
 
 
 
-  console.log('camp emails', campaignEmails);
+  console.log('my sequences~!', sequences);
 
 
-  const handleSelectChange = (e) => {
-    setCampaignType(e.target.value);
-    setCampaignEmails([]);
-  };
-
-  let campaignEmailsInputString = useMemo(()=>{
-    let inputString=``;
-    campaignEmails.forEach(email=>{inputString=inputString+ `{Id:${email.id}, title:${email.title}, sendDate:${new Date(email.sendDate).toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', timeZoneName: 'short'  })}}`})
-    return inputString;
-  },[campaignEmails])
   
 
     useEffect(()=>{
-        if(emailData.emails.length==0){
+        if(!sequences || sequences.length==0){
 
             (async function() {
             try {
@@ -47,7 +64,7 @@ export default function NewCampaign({emailData, setEmailData}) {
           
                 if (response.ok) {
                   const data = await response.json();
-                  console.log("Maine DATA!", data);
+                  console.log("Maine DATA!!!!!", data);
                   //Ovde takodje zatraziti emails campaign kasnije .
                   //na slican princip kao sto sam trazio emails.
                   setEmailData(data.data);
@@ -69,26 +86,17 @@ export default function NewCampaign({emailData, setEmailData}) {
         }
     },[])
 
-    const addEmail=(newEmail)=>{
-      console.log('add', campaignEmails.findIndex((email)=>{return email.id==newEmail.id}))
-      if(
-        campaignEmails.findIndex((email)=>{return email.id==newEmail.id})!==-1
-      )return;
-      setCampaignEmails([...campaignEmails, newEmail])
-    }
+  
 
     const handleSaveCampaign = async()=>{
-      if(titleRef.current.value=='' || campaignEmails.length==0)return;
-      let sortedCapaignEmails= [...campaignEmails];
-      if(campaignType=='campaign')
-      sortedCapaignEmails=campaignEmails.sort((a, b) => a.sendDate - b.sendDate);
+      if(setTitle() || !targetTraffic || !linkedSequenceId || !sendDate)return;
 
-      let newCampaignData = {title:titleRef.current.value, campaignType:campaignType, emails:JSON.stringify(sortedCapaignEmails.map((email)=>{
-        if(campaignType=='campaign')
-        return {id:email.id, sendDate:email.sendDate, sent:false}
-        else{return {id:email.id, sent:false}}
-      }))
-      
+
+  
+   
+
+      let newCampaignData = {title:title, sequenceId: linkedSequenceId, sendingDateInUnix:sendDate,
+        targetSubscribers: targetTraffic
       };
 
     
@@ -111,24 +119,69 @@ export default function NewCampaign({emailData, setEmailData}) {
     }
 
 
+
+  
+
   return (
     <div className={styles.mainDiv}>
       <h1>New email campaign</h1>
+    
+
+      <input onChange={(event)=>{setTitle(event.target.value)}} className={styles.campaignInput} placeholder='Campaign title'/>
+
+      <div className={styles.campaignPropertiesWrapper}>
+
       <select
-        id="campaignTypeSelect"
-        className={styles.campaignTypeSelect}
-        value={campaignType}
-        onChange={handleSelectChange}
+        id="targetTrafficSelect"
+        className={styles.targetTrafficSelect}
+        value={targetTraffic}
+        onChange={(e) => {setTargetTraffic(e.target.value)}}
       >
-         <option value="campaign">Campaign</option>
-        <option value="sequence">Sequence</option>
-       
+         <option value={undefined}>Select target traffic</option>
+        <option value="cold_traffic">Cold traffic</option>
+        <option value="warm_traffic">Warm traffic</option>
+        <option value="hot_traffic">Hot traffic</option>
+        <option value="all">All</option>
+        <option value="bh_subscribers">Bh subscribers(not inc. in All)</option>
       </select>
 
-      <input ref={titleRef} className={styles.campaignInput} placeholder='Campaign title'/>
-      <input value={campaignEmailsInputString} className={styles.campaignInput} placeholder='Included emails'/>
-      <EmailList emailData={emailData} addEmail={addEmail} campaignType={campaignType}/>
-      <button className={styles.saveCampaign} onClick={handleSaveCampaign}>Save campaign</button>
+
+      <div className={styles.datePickerWrapper}>
+     <DatePicker multiple={false}
+            plugins={[
+                <TimePicker format="HH:mm:ss" position="bottom" />
+              ]}
+
+              onChange={(date) => {
+           
+                setSendDate(date.unix*1000)
+              }}
+
+              placeholder='Pick campaign sending date'
+
+            // onChange={(date)=>{
+             
+            //   setEmailSendDate(date.unix*1000)}}
+            minDate={Date.now()} 
+            format="MM/DD/YYYY HH:mm:ss"  
+            className={`bg-dark ${styles.datePicker}`}
+    inputClass={styles.dateInput}
+   />
+   </div>
+   </div>
+
+
+     {/* <div className={styles.linkedSequenceDiv}>Please link the sequence to create campaign</div> */}
+     {linkedSequenceId ?<div className={styles.linkedSequenceDiv}>
+     <span>Sequence with id {linkedSequenceId} linked</span>
+      <button className={styles.unlinkSequenceButton} onClick={()=>{setLinkedSequenceId()}}>Unlink sequence</button>
+      </div>
+      :
+     <SequenceList sequenceData={sequences} linkSequence={(id)=>{setLinkedSequenceId(id)}} />}
+
+
+    
+    {title && title!="" && targetTraffic && sendDate && linkedSequenceId &&  <button className={styles.runCampaign} onClick={handleSaveCampaign}>Run campaign</button>}
       </div>
 
   )

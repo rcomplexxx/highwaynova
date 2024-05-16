@@ -14,27 +14,6 @@
     padding-top: 0;
 }
 
-.campaignTypeSelect{
-    align-self: flex-start;
-    color: var(--admin-txt-color);
-    background-color: transparent;
-
-    margin-bottom: var(--size-6);
-  
-    padding: var(--size-3) var(--size-6);
-   
-    border-radius: 2px;
-    border: 1px solid var(--border-color-strong);
-    cursor: pointer;
-    user-select: none;
-  
-}
-
-.campaignTypeSelect option{
-    background-color: var(--admin-campaign-type-options-bg);
-    margin: 40px;
-}
-
 
 
 .campaignInput{
@@ -62,7 +41,100 @@
 
 
 
-.saveCampaign{
+
+
+
+
+.campaignPropertiesWrapper{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--size-5);
+}
+
+
+.targetTrafficSelect{
+    align-self: flex-start;
+    color: var(--admin-txt-color);
+    background-color: transparent;
+
+    margin-bottom: var(--size-6);
+  
+    padding: var(--size-3) var(--size-6);
+   
+    border-radius: 2px;
+    border: 1px solid var(--border-color-strong);
+    cursor: pointer;
+    user-select: none;
+  
+}
+
+.targetTrafficSelect option{
+    background-color: var(--admin-campaign-type-options-bg);
+    margin: 40px;
+}
+
+
+
+
+
+
+
+.datePickerWrapper{
+    align-self: flex-start;
+}
+
+.datePicker{
+  
+   
+    background-color: black !important;
+
+}
+
+.dateRangeLabel{
+    margin-left: var(--size-1);
+    font-size: var(--font-size-3);
+    font-weight: 400;
+}
+
+.dateInput{
+    
+    color: var(--admin-txt-color);
+    background-color: transparent ;
+    padding: var(--size-3);
+    border: 1px solid var(--border-color-strong);
+}
+
+.linkedSequenceDiv{
+
+    display: flex;
+    flex-direction: column;
+
+    margin-bottom: var(--size-6);
+
+    align-self: flex-start;
+}
+
+.unlinkSequenceButton{
+
+    color: var(--admin-txt-color);
+    background-color: transparent;
+
+    
+    margin-top: var(--size-3);
+  
+    padding: var(--size-3) var(--size-6);
+   
+    border-radius: 2px;
+    border: 1px solid var(--border-color-strong);
+    cursor: pointer;
+    user-select: none;
+
+}
+
+
+.runCampaign{
     
     margin: var(--size-4) var(--size-5);
     margin-top: var(--size-7);

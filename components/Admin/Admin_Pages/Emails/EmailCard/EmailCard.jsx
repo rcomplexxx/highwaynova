@@ -55,9 +55,7 @@ export default function EmailCard({id,title, text, handleSaveEmail}) {
 
 
 
-    },[])
-
-
+    },[id])
 
 
 
@@ -164,7 +162,7 @@ export default function EmailCard({id,title, text, handleSaveEmail}) {
         }}
         />
         <button className={styles.previewButton} onClick={handlePreviewEmail}>Preview Email</button>
-        <button onClick={()=>{handleSaveEmail(id, emailTitle, emailTextHtml)}} className={`${styles.previewButton} ${styles.saveButton}`}>Save Email</button> 
+        {handleSaveEmail && <button onClick={()=>{handleSaveEmail(id, emailTitle, emailTextHtml)}} className={`${styles.previewButton} ${styles.saveButton}`}>Save Email</button> }
      
         { previewEmailContent && <><div className={styles.previewContent}>
         {previewEmailContent}

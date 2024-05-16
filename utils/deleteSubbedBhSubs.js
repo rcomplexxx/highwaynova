@@ -44,4 +44,4 @@ const db = betterSqlite3(process.env.DB_PATH);
 
 }
 
-module.exports = dbCleaner;
+module.exports = deleteSubbedBhSubs;

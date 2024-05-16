@@ -54,14 +54,13 @@ const AdminNavbar = ({ setIsAdmin }) => {
             <div className={styles.growAlt}>
            
 
-              <Image
-                    src="/images/menuIcon2.png"
-                    onClick={handleMobileMenuOpen}
-                    alt="Gamebuff"
-                    height={24}
-                    width={24}
-                    className={styles.menuIcon}
-                  />
+            
+                  
+            <MenuIcon
+            
+            handleClick={handleMobileMenuOpen} 
+            styleClassName={styles.menuIcon}/>
+         
 
 
 

@@ -1,0 +1,76 @@
+.emailsListDiv{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-self: space-between;
+    border-top: 1px solid var(--border-color-strong);
+}
+
+.emailsListDiv > :last-child{
+    margin-bottom: 0;
+}
+
+.emailDiv{
+
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: var(--size-3);
+    border-bottom: 1px solid var(--border-color-strong);
+    box-sizing: border-box;
+    padding: var(--size-3);
+}
+
+
+
+.emailInfoDiv{
+    flex:1;
+
+display: flex;
+align-items: center;
+  
+}
+
+.id{
+    margin-right: var(--size-2);
+}
+
+.datePicker{
+  
+    background-color: black !important;
+
+}
+
+.dateRangeLabel{
+    margin-left: var(--size-1);
+    font-size: var(--font-size-3);
+    font-weight: 400;
+}
+
+.dateInput{
+    color: var(--admin-txt-color);
+    background-color: black ;
+    padding: var(--size-2);
+    margin: var(--size-3) 0;
+    border: 1px solid var(--border-color-strong);
+}
+
+.addEmailWrapper{
+    flex:1;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.addEmail{
+    
+    color: var(--admin-txt-color);
+    background-color: transparent;
+
+ 
+    padding: var(--size-3) var(--size-6);
+   
+    border-radius: 2px;
+    border: 1px solid var(--border-color-strong);
+    cursor: pointer;
+    user-select: none;
+}

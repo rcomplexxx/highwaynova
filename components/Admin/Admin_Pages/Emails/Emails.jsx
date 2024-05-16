@@ -94,9 +94,13 @@ export default function Emails({emailData, setEmailData}) {
       <div className={styles.interfaceDiv}>
       <button className={styles.magicButton} onClick={getEmailData}>Get email data</button>
       <button className={styles.magicButton} onClick={handleUpdateEmailsInDb}>Save email data</button>
-      <Link className={styles.emailLink} href='/admin/emails/new-email'>New email.</Link>
+      
       <Link className={styles.emailLink} href='/admin/emails/campaigns'>Campaigns</Link>
+      <Link className={styles.emailLink} href='/admin/emails/sequences'>Sequences</Link>
+      <Link className={styles.emailLink} href='/admin/emails/new-email'>New email.</Link>
+      <Link className={styles.emailLink} href='/admin/emails/new-sequence'>New sequence.</Link>
       <Link className={styles.emailLink} href='/admin/emails/new-campaign'>New campaign.</Link>
+      
       </div>
       {emailData?.emails.map((email, index)=>{
        return <EmailCard key={index} id={email.id} title={email.title} text={email.text} handleSaveEmail={handleSaveEmail}/>

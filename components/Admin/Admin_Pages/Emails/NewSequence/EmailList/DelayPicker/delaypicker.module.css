@@ -1,0 +1,29 @@
+
+
+
+.delayPickerDiv{
+    display: flex;
+
+}
+
+
+.delayInput{
+    color: var(--admin-txt-color);
+    background-color: transparent;
+    height: var(--size-7);
+    width: var(--size-12);
+    margin-right: var(--size-3);
+    border: none;
+    outline: 1px solid gray;
+}
+
+
+
+.setDelayButton{
+    color: var(--admin-txt-color);
+    background-color: transparent;
+    border: 1px solid rgb(73, 77, 74);
+    user-select: none;
+    cursor: pointer;
+
+}

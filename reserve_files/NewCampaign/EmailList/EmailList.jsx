@@ -49,6 +49,9 @@ const EmailElement= ({id, title, addEmail, campaignType})=>{
             plugins={[
                 <TimePicker format="HH:mm:ss" position="bottom" />
               ]}
+
+              placeholder='Pick email sending date.'
+
             onChange={(date)=>{
              
               setEmailSendDate(date.unix*1000)}}

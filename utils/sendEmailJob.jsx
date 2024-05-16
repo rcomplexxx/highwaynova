@@ -1,20 +1,22 @@
 const cron = require('node-cron');
 const betterSqlite3 = require('better-sqlite3');
 const nodemailer = require("nodemailer");
+const deleteSubbedBhSubs = require('./deleteSubbedBhSubs');
 
 
 
 
 
- function emailSendJob( dateInUnix, campaignId, emailId) {
+ async function emailSendJob( dateInUnix, campaignId) {
 
 
 //
+
    
 
 
 
-    console.log('setting email cron scheduler', new Date(dateInUnix* 1000), dateInUnix)
+  
 
 
 const date =formatDateToCron(new Date(dateInUnix));
@@ -36,56 +38,148 @@ cron.schedule(date, () => {
     try{
 
         const db = betterSqlite3(process.env.DB_PATH);
-    const campaign= db.prepare(`SELECT * FROM emailCampaigns WHERE id = ?`, campaignId).get(campaignId);
-    console.log('c',campaign);
-      const campaignEmails=JSON.parse(campaign.emails);
-      console.log('campaignEmails', campaignEmails)
+    const campaign= db.prepare(`SELECT * FROM email_campaigns WHERE id = ?`, campaignId).get(campaignId);
+
+    const currentEmailIndex = campaign.emailSentCounter
+
+    let sequenceEmailPointers = db.prepare(`SELECT emails from email_sequences WHERE ID = ?`).get(campaign.sequenceId);
+    console.log('sequenceEmailPOinters', sequenceEmailPointers)
+    if(sequenceEmailPointers)sequenceEmailPointers= JSON.parse(sequenceEmailPointers.emails);
+    console.log('sequenceEmailPOinters', sequenceEmailPointers)
 
     
+    
 
-        const email = db.prepare(`SELECT * FROM emails WHERE id = ?`).get(emailId);
+    //Da li je vreme sad premasilo izkalkulisano vreme koje je dogovoreno za odredjeni procenat(1.1*)
 
+
+    let sendTimeGap = parseInt(sequenceEmailPointers[currentEmailIndex+1]?.sendTimeGap);
+      if(!sendTimeGap || isNaN(sendTimeGap)) sendTimeGap = 0;
+
+    let dateCalculated = campaign.sendingDateInUnix;
+    sequenceEmailPointers.forEach((emailPointer, index) =>{
+    
+      if(index!==0 && index < currentEmailIndex+1)
+      dateCalculated = dateCalculated + parseInt(emailPointer.sendTimeGap);
+   
+
+    })
+
+
+
+    let   finalSendingDate=(Date.now() - dateCalculated > 0)?
+    Date.now()+sendTimeGap: dateCalculated+sendTimeGap;
+
+ 
+console.log('times', sendTimeGap, dateCalculated, finalSendingDate)
+console.log('CAMPAIGN ID!!!!!!!!!!!!!! IS', campaignId)
+   
+  
+
+
+   
+    
+
+    //Naci ovde sequence, pa onda mailovefinalSendingDate
       
 
-        const currentEmailIndex=campaignEmails.findIndex(email=>{return email.id==emailId});
     
-        if(currentEmailIndex!=-1 && currentEmailIndex<campaignEmails.length-1)
+
+        const email = db.prepare(`SELECT * FROM emails WHERE id = ?`).get(sequenceEmailPointers[currentEmailIndex].id);
+
+
+        
+
+
+
+
+    
+        if(currentEmailIndex < sequenceEmailPointers.length)
             {
-                emailSendJob( campaignEmails[currentEmailIndex+1].sendDate, campaignId, campaignEmails[currentEmailIndex+1].id)
+              console.log(`SCHEDULING NEXT EMAIL!!!!!!!!`, new Date(finalSendingDate) , new Date())
+
+                emailSendJob( finalSendingDate, campaignId)
             }
-        console.log('Email to send', email.title);
 
 
-        db.prepare(`UPDATE emailCampaigns SET emails = ? WHERE id = ?`).run(
-            JSON.stringify(campaignEmails.map(email=>{if(email.id==emailId)return {...email, sent:true};
-            return email;
-            })),
+
+
+        db.prepare(`UPDATE email_campaigns SET emailSentCounter = ? WHERE id = ?`).run(
+          campaign.emailSentCounter + 1,
             campaign.id,
           );
 
-          const emails = db.prepare(`SELECT * FROM subscribers`).all();
-          const campaigns= db.prepare(`SELECT * FROM emailCampaigns`).all();
-            db.close();
+
+          //Za sad gadjam sve subscribere.
+          const potentialTargets = db.prepare(`SELECT * FROM subscribers`).all()?.map(target=>{return target.email});
+         
+         
+         
+         
+         
+         
+         
+          let targets;
+
+          const campaignTargets= campaign.targetSubscribers;
+
+          console.log('campaigntargets', campaignTargets, 'potential targets', potentialTargets)
+
+          if(campaignTargets=='all'){
+            targets= potentialTargets;
+          }
+          else if(campaignTargets=='cold_traffic'){
+            targets= potentialTargets;
+          }
+            else if(campaignTargets=='warm_traffic'){
+              targets= potentialTargets;
+            }
+              else if(campaignTargets=='hot_traffic') {
+                targets= potentialTargets;
+              } 
+              else if(campaignTargets=='bh_subscribers'){
+                deleteSubbedBhSubs();
+              targets = db.prepare(`SELECT * FROM subscribersbh`).all()?.map(target=>{return target.email});
+              }
+              else{
+
+                 targets= potentialTargets.filter(potentialTarget=>{
+                  try{
+                  return JSON.parse(campaignTargets).findIndex(target=>{
+                     return potentialTarget==campaignTargets
+                })==-1
+              }
+              catch{return false;}
+              })
+
+
+              }
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+          db.close();
+
+            console.log('targets!!!!!!', targets)
 
 
 
           
 
             try {
-             
-              //pored ovih filtered majlova dodatno filtrirati ako im je sent==false uz email=target.
-              //Ako je sent==true i target je, ispitati da li je zadnji datu minus trenutni 7+ dana
-              const filteredEmails= emails.filter(email=>{
-                return campaigns.findIndex(campaign=>{
-                return email==campaign.targetMail
-              })==-1
-            })
-              const mailTarget = campaign.targetMail=='all'?filteredEmails:campaign.targetMail;
-              //umesto lol, providuji sve emaila preko subscribers ili ness
-              //izbaciti odredjene subscribere ako imaju vec neku kampanju u koju su upleteni(i targetovani samo oni)
-              //a to mogu proveriti tako sto njihov mejlo uporedim sa nizom emailova kampanje tj polja targetEmail
-             
 
+          
+
+
+
+
+              
 
               const transporter = nodemailer.createTransport({
                 service: "hotmail",
@@ -98,7 +192,7 @@ cron.schedule(date, () => {
               transporter.sendMail({
                 //   from: 'orderconfirmed@selling-game-items-next.com',
                 from: process.env.EMAIL_USER,
-                to: mailTarget,
+                to: targets,
                 subject: email.title,
                 html: email.text,
               });
@@ -108,7 +202,9 @@ cron.schedule(date, () => {
 
           
 
-        
+        console.log('here should be sent email with index', sequenceEmailPointers[currentEmailIndex])
+
+        //Here email
     }
     catch(error){
         console.log('cron error', error)
@@ -121,6 +217,7 @@ cron.schedule(date, () => {
 
 
 });
+
 
  }
 

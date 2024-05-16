@@ -24,13 +24,21 @@ export default async function adminCheckHandler(req, res) {
        let queryString = `SELECT * FROM emails`;
        const rows1 = db.prepare(queryString).all();
 
-       
+
        let rows2=[];
        try{
-        queryString = `SELECT * FROM emailCampaigns`;
+        queryString = `SELECT * FROM email_sequences`;
         rows2 = db.prepare(queryString).all();
        }catch{}
-       rows= {emails: rows1, campaigns: rows2};
+
+       
+       let rows3=[];
+       try{
+        queryString = `SELECT * FROM email_campaigns`;
+        rows3 = db.prepare(queryString).all();
+       }catch{}
+
+       rows= {emails: rows1, sequences: rows2, campaigns: rows3};
 
       }
 
@@ -174,7 +182,7 @@ else{
         return res.status(200).json({ data_saved: true });
       }
 
-      if(table!='emails' && table!='emailCampaigns'){
+      if(table!='emails' &&  table!='email_sequences' && table!='email_campaigns'){
       for (let i = 0; i < data.length; i++) {
         if (table === "reviews" ) {
 
@@ -319,35 +327,69 @@ else{
         }
       }
 
-      else{
-        console.log('in table emailCampaigns');
+      else if(table=='email_sequences'){
+
+
+        console.log('in table email_sequences');
         db.prepare(
           `
-          CREATE TABLE IF NOT EXISTS emailCampaigns (
+          CREATE TABLE IF NOT EXISTS email_sequences (
             id INTEGER PRIMARY KEY,
             title TEXT,
-            campaignType TEXT,
-            emails TEXT,
-            targetEmail TEXT
+            emails TEXT
           )
         `).run();
 
         console.log('should be created');
 
-        const result =db.prepare(`INSERT INTO ${table} (title, emails,campaignType, targetEmail) VALUES (?, ?, ?, ?)`).run(
+       db.prepare(`INSERT INTO ${table} (title, emails) VALUES (?, ?)`).run(
           data.title,
           data.emails,
-          data.campaignType,
-          data.targetEmail?data.targetEmail:'all',
         );
+        
+      }
+
+      else{
+
+        console.log('in table email_campaigns');
+        db.prepare(
+          `
+          CREATE TABLE IF NOT EXISTS email_campaigns (
+            id INTEGER PRIMARY KEY,
+            title TEXT,
+            sequenceId INTEGER,
+            sendingDateInUnix INTEGER,
+            emailSentCounter INTEGER,
+            targetSubscribers TEXT
+          )
+        `).run();
+
+        //Ovde pisati uslove za subscribere i traffic type kao sto je hot cold warm itd
+
+
+        const result = db.prepare(`INSERT INTO ${table} (title, sequenceId, sendingDateInUnix, emailSentCounter, targetSubscribers) VALUES (?, ?, ?, ?, ?)`)
+        .run(
+          data.title,
+          data.sequenceId,
+          data.sendingDateInUnix,
+          0,
+          data.targetSubscribers
+          
+        );
+
+        //RUN JOB HERE.
+
+        //sendDelayAfterPrevious
+
+        console.log('sending date in unix!!', data.sendingDateInUnix)
 
         const campaignId = result.lastInsertRowid;
 
-        console.log('should be inserted?',data.title,
-        data.emails,data.campaignType);
-        if(data.campaignType=='campaign')
-        emailSendJob(JSON.parse(data.emails)[0].sendDate,campaignId, JSON.parse(data.emails)[0].id);
+
+        emailSendJob(data.sendingDateInUnix,campaignId);
+
       }
+      
 
     
 
@@ -356,6 +398,8 @@ else{
         db.close();
 
        return res.status(200).json({ data_saved: true });
+
+     
     } catch (error) {
       console.error(error);
       return res
@@ -415,6 +459,8 @@ else{
         return getFromDb("subscribersbh");
           else if (dataType === "get_emails")
           {return getFromDb("emails");}
+          else if (dataType === "get_email_sequences")
+            return getFromDb("email_sequences");
           else if (dataType === "get_email_campaigns")
           return getFromDb("email_campaigns");
         else if(dataType === "get_product_returns")
@@ -478,7 +524,28 @@ else{
             data,
             'newEmail'
           );
-        } else if(dataType === 'send_new_capaign'){
+        }
+        
+        else if(dataType==='send_new_sequence'){
+
+          if (!data)
+            return res
+              .status(500)
+              .json({ successfulLogin: false, error: "No data to send" });
+
+              console.log('No data crossed', data);
+
+          await updateDb(
+            "email_sequences",
+            data,
+            
+            'updateEmails'
+          );
+
+        }
+        
+        
+        else if(dataType === 'send_new_capaign'){
           console.log('started campaign send');
           if (!data)
             return res
@@ -488,7 +555,7 @@ else{
               console.log('No data crossed', data);
 
           await updateDb(
-            "emailCampaigns",
+            "email_campaigns",
             data,
             
             'updateEmails'

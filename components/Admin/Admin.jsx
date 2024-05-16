@@ -14,8 +14,10 @@ import NewCampaign from "./Admin_Pages/Emails/NewCampaign/NewCampaign";
 import Campaigns from "./Admin_Pages/Emails/Campaigns/Campaigns";
 import DataWiper from "./Admin_Pages/DataWiper/DataWiper";
 import DescriptionMaker from "./Admin_Pages/DescriptionMaker/DescriptionMaker";
-import FileReturn from "./Admin_Pages/ProductReturn/ProductReturns";
+
 import ProductReturns from "./Admin_Pages/ProductReturn/ProductReturns";
+import NewSequence from "./Admin_Pages/Emails/NewSequence/NewSequence";
+import Sequences from "./Admin_Pages/Emails/Sequences/Sequences";
 
 export default function Admin() {
   const [isAdmin, setIsAdmin] = useState();
@@ -140,6 +142,8 @@ export default function Admin() {
     }
   };
 
+
+
   useEffect(() => {
     // Check if the user is an admin when the component mounts
 
@@ -183,9 +187,13 @@ export default function Admin() {
           case "emails":
             if(adminroute.length==2){
                 if(adminroute[1]=='new-email')content= <NewEmail/>
-                else if(adminroute[1]=='campaigns')content = <Campaigns campaignData={emailData.campaigns}/>
-                else if(adminroute[1]=='new-campaign')content = <NewCampaign  emailData={emailData} setEmailData={setEmailData}/>
-               else{ 
+                else if(adminroute[1]=='campaigns')content = <Campaigns emails={emailData?.emails} sequences={emailData?.sequences} campaignData={emailData?.campaigns}/>
+                else if(adminroute[1]=='sequences')content = <Sequences emails={emailData?.emails} sequences={emailData?.sequences}/>
+               
+                else if(adminroute[1]=='new-campaign')content = <NewCampaign  sequences={emailData?.sequences} setEmailData={setEmailData}/>
+                else if(adminroute[1]=='new-sequence')content = <NewSequence  emailData={emailData} setEmailData={setEmailData}/>
+             
+                else{ 
                content = <Emails  emailData={emailData} setEmailData={setEmailData}/>
                }
             }
