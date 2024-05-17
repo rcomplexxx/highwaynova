@@ -26,6 +26,9 @@
 }
 
 
+
+
+
 .getCurrentDescriptionWrapper{
     width: 100%;
     display: flex;
@@ -39,6 +42,10 @@
 
 
 
+}
+
+.newDescWarning{
+    margin-top: var(--size-8);
 }
 
 

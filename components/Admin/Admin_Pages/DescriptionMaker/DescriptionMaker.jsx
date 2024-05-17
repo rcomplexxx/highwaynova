@@ -175,7 +175,7 @@ export default function DescriptionMaker() {
 
         <button onClick={getCurrentDescription} className={`${styles.getCurrentDescrition}`}>Link product by id(and get current description if exist)</button>
         </>:<>
-        <span>New description is linked to and will affect product with ID: {descriptionGetterProductId}</span>
+        <span className={styles.newDescWarning}>New description is linked to and will affect product with ID: {descriptionGetterProductId}</span>
         <button className={`${styles.getCurrentDescrition} ${styles.unlinkProductButton}`} 
         onClick={()=>{ 
           if(savedContent !=  
@@ -258,7 +258,7 @@ export default function DescriptionMaker() {
               const inputNumber = event.target.value;
                setProductId(inputNumber);
             }}
-          />:<span>New description will affect product with ID: {descriptionGetterProductId}</span>
+          />:<span className={styles.newDescWarning}>New description will affect product with ID: {descriptionGetterProductId}</span>
 
         }
 
