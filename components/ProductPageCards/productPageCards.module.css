@@ -362,9 +362,7 @@ font-size: var(--font-size-1);
 
 @media( max-width: 370px){
 
-    .trustIcons{
-        margin-top: var(--size-6);
-    }
+ 
 
     .trustIcon span{
         font-size: var(--font-size-1);
