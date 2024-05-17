@@ -340,7 +340,7 @@
 
       animation: spawnAddToCart 0.3s ease;
       cursor: pointer;
-    z-index: 10;
+    z-index: 11;
      
     }
 

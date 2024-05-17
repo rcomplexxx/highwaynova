@@ -167,7 +167,7 @@ export default function ProductPageCards() {
         </div>
         <div className={styles.trustIcon}>
           <GuaranteeIcon styleClassName={styles.trustIconImage}/>
-          <span>30 Days money back guarantee</span>
+          <span>Money back guarantee</span>
         </div>
       </div>
     </>
