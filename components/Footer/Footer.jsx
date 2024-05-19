@@ -154,7 +154,7 @@ export default function Footer() {
         </div>
         </div>
         <p className={styles.reservedRightsPharagraph}>
-          © 2023, Gamebuff All Rights Reserved.
+          © 2024, Lightbook All Rights Reserved.
         </p>
       </div>
     </footer>
