@@ -168,6 +168,26 @@ export default function Reviews({ reviews, setReviews }) {
                 : (page + 1) * 10,
             )
             .map((review, index) => {
+
+              const revTransformed= reviewsArray.find(rev=>{return rev.id==review.id });
+              console.log('did find', revTransformed)
+
+              if (revTransformed && Object.keys(revTransformed).length>2){
+                return  <ReviewsCard
+                    key={revTransformed.id}
+                    index={page * 10 + index + 1}
+                    id={revTransformed.id}
+                    name={revTransformed.name}
+                    text={revTransformed.text}
+                    stars = {revTransformed.stars}
+                    productId={productId}
+                    imageNames={revTransformed.imageNames}
+                    changed={revTransformed.changed}
+                    handleReviewsChange={handleReviewsChange}
+                  />
+
+              }
+
               return (
                 <ReviewsCard
                   key={review.id}
@@ -178,6 +198,7 @@ export default function Reviews({ reviews, setReviews }) {
                   stars = {review.stars}
                   productId={productId}
                   imageNames={review.imageNames}
+                  changed={false}
                   handleReviewsChange={handleReviewsChange}
                 />
               );

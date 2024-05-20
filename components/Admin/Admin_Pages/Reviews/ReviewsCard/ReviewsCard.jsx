@@ -13,10 +13,10 @@ export default function ReviewsCard({
   productId,
   imageNames,
   handleReviewsChange,
+  changed
 }) {
 
   const [newStars, setNewStars] = useState(stars);
-  const [changed, setChanged] = useState(false);
   const [deleted, setDeleted] = useState(false);
   const [swapId, setSwapId] = useState("");
   const [images, setImages] = useState(
@@ -58,7 +58,6 @@ export default function ReviewsCard({
       deleted,
       swapId,
     );
-    setChanged(!changed);
   };
 
   const addImage = (imageName) => {
@@ -177,7 +176,7 @@ export default function ReviewsCard({
           width={40}
           // onClick={addImage}
         ></Image>
-        <input className={styles.addImagePathInput} type="file"
+        <input  className={styles.addImagePathInput} type="file"
           onChange={(event)=>{ 
             const files = event.target.files;
             console.log('files', files);
