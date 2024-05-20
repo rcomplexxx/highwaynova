@@ -61,10 +61,11 @@ export default function ReviewsCard({
     setChanged(!changed);
   };
 
-  const addImage = () => {
+  const addImage = (imageName) => {
+    console.log('IMAGE NAME', imageName)
     if (changed) return;
-    const imageName = window.prompt("Enter link of new pic:");
-    fetch(`/images/review_images/${imageName}`, {
+    // const imageName = window.prompt("Enter link of new pic:");
+    fetch(`/images/review_images/productId_${productId}/${imageName}`, {
       method: "HEAD",
     })
       .then((response) => {
@@ -168,13 +169,26 @@ export default function ReviewsCard({
               />
             );
           })}
+          <div className={styles.addImage}>
         <Image
           src="/images/add_image.png"
-          className={styles.addImage}
+           className={styles.addImageIcon}
           height={40}
           width={40}
-          onClick={addImage}
+          // onClick={addImage}
         ></Image>
+        <input className={styles.addImagePathInput} type="file"
+          onChange={(event)=>{ 
+            const files = event.target.files;
+            console.log('files', files);
+            for (let i =0; i<files.length; i++)
+            addImage(files[i].name);
+
+          }}
+        />
+</div>
+
+
       </div>
 
       <div 
