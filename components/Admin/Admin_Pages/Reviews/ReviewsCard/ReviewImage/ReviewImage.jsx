@@ -10,6 +10,7 @@ export default function ReviewsCard({
   setImages,
   changed
 }) {
+  const [imgNameCopied, setImgNameCopied] = useState(false);
  
   return (
     <div className={styles.imgController}>
@@ -33,6 +34,10 @@ export default function ReviewsCard({
         });
       }}
     />
+    <button onClick={()=>{navigator.clipboard.writeText(imageName);setImgNameCopied(true);}} className={styles.copyImgName}>{imgNameCopied?"Img name copied!":"Copy img name"}</button>
+    <div className={styles.validateCodeWrapper}>
+   <span className={styles.validateCodeLabel}>...</span><span className={styles.validateCode}>{imageName.match(/(.{4})\./)[1]}{imageName.match(/\.(.*)$/)[0]}</span>
+   </div>
     </div>
   );
 }

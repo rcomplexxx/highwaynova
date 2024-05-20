@@ -72,6 +72,28 @@ else{
   };
 
 
+  function deleteImage(product_id, imageName) {
+    const fs = require('fs');
+
+    // Construct the file path
+    const filePath = `${process.cwd()}/public/images/review_images/productId_${product_id}/${imageName}`;
+  
+
+    try {
+        // Check if the file exists
+        if (fs.existsSync(filePath)) {
+            // Delete the file
+            fs.unlinkSync(filePath);
+            console.log(`File '${imageName}' deleted successfully.`);
+        } else {
+            console.log(`File '${imageName}' not found.`);
+        }
+    } catch (error) {
+        console.error(`Error deleting file '${imageName}':`, error);
+    }
+}
+
+
 
   function  wipeReviewImageDirectory(product_id) {
 
@@ -186,9 +208,47 @@ else{
       for (let i = 0; i < data.length; i++) {
         if (table === "reviews" ) {
 
-          console.log('upao u save db', data)
+          const productId = db.prepare(`SELECT product_id FROM reviews WHERE id = ${data[0].id}`).all()[0].product_id;
+          console.log('upao u save db', data, productId)
+       
          
           if (data[i].deleted) {
+
+
+
+            let reviewImages= JSON.parse(data[i].imageNames);
+            if(!reviewImages)reviewImages=[];
+            const allReviewImages=  JSON.parse(db.prepare(`SELECT imageNames FROM reviews WHERE id = ${data[i].id}`).all()[0].imageNames);
+            
+         
+            if(allReviewImages){
+             
+                const basePath = `${process.cwd()}/public/images/review_images/productId_${productId}/`;
+                const deletedImagesPath = `${basePath}/deleted_images/`;
+
+
+                if (!fs.existsSync(deletedImagesPath)) {
+                  fs.mkdirSync(deletedImagesPath, { recursive: true });
+
+                allReviewImages?.forEach((image)=>{
+                  console.log('path', image);
+                  fs.rename(`${basePath}/${image}`, `${basePath}/deleted_images/${image}`,function (err) {
+                    if (err) throw err
+                    console.log('Successfully renamed - AKA moved!')
+                  });
+                  
+                
+                });
+            }
+          }
+
+           
+
+
+
+
+
+
             const deleteStatement = db.prepare(
               `DELETE FROM ${table} WHERE id = ?`,
             );
@@ -212,16 +272,32 @@ else{
               return !reviewImages.includes(img)
             });
 
-
-           if(deletedImages) deletedImages.forEach((deletedImage)=>{
-            console.log('path', deletedImage);
-            fs.rename(process.cwd() +`${process.cwd()}/public/images/review_images/productId_${data[i].id}/${deletedImage}/`, process.cwd() +`${process.cwd()}/public/images/review_images/productId_${data[i].id}/deleted_images/${deletedImage}`,function (err) {
-              if (err) throw err
-              console.log('Successfully renamed - AKA moved!')
-            });
             
-          
+            if(deletedImages){
+             
+              const basePath = `${process.cwd()}/public/images/review_images/productId_${productId}/`;
+              const deletedImagesPath = `${basePath}/deleted_images/`;
+
+
+              if (!fs.existsSync(deletedImagesPath)) {
+                fs.mkdirSync(deletedImagesPath, { recursive: true });
+              }
+
+                deletedImages.forEach((deletedImage)=>{
+                  console.log('path', deletedImage);
+                  fs.rename(`${basePath}/${deletedImage}`, `${deletedImagesPath}/${deletedImage}`,function (err) {
+                    if (err) throw err
+                    console.log('Successfully renamed - AKA moved!')
+                  });
           });
+        
+      }
+
+
+
+
+
+        
 
             db.prepare(`UPDATE ${table} ${queryCondition}`).run(
               data[i].name,

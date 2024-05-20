@@ -2,16 +2,24 @@
 
 .imgController{
     position: relative;
-    height: 160px;
+    
     width: auto;
-    cursor: pointer;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+
+
+   
 }
 
 .reviewImage{
-   height:100%;
+    height: 160px;
    width: auto;
    border: 2px solid rgb(74, 228, 125);
    box-shadow: 0 0 8px #4fabe0;
+   cursor: pointer;
 }
 
 
@@ -25,4 +33,46 @@
 
 .imageChanged{
     cursor: auto;
+}
+
+.validateCodeWrapper{
+    margin-left: 0;
+    margin: 0;
+    flex-shrink: 0;
+    width: 100%;
+    
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.copyImgName{
+    color: var(--admin-txt-color);
+    background-color: transparent;
+
+    padding: var(--size-2) var(--size-3);
+    border: 1px solid var(--border-color-strong);
+
+    font-size: 10px;
+    font-weight: 400;
+
+    margin-bottom: var(--size-4);
+
+    cursor: pointer;
+
+}
+
+.validateCode{
+    margin: 0;
+    padding-left: var(--size-1);
+    font-size: var(--font-size-1);
+    opacity: 0.9;
+    font-weight: 300;
+}
+
+.validateCodeLabel{
+    margin: 0;
+    padding-left: var(--size-5);
+    font-size: 10px;
+    opacity: 0.7;
 }

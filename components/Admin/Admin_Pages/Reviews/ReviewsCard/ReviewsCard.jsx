@@ -60,9 +60,11 @@ export default function ReviewsCard({
     );
   };
 
+  console.log('img names', images)
+
   const addImage = (imageName) => {
     console.log('IMAGE NAME', imageName)
-    if (changed) return;
+    if (changed || images?.find(img=> {return img===imageName})) return;
     // const imageName = window.prompt("Enter link of new pic:");
     fetch(`/images/review_images/productId_${productId}/${imageName}`, {
       method: "HEAD",
