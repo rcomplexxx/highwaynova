@@ -293,6 +293,56 @@ else{
         
       }
 
+      const addedImagesFromDel= reviewImages?.filter((img)=>{
+     
+        return img.includes('deleted_images/');
+      });
+
+      
+      data.imageNames= data.imageNames?.map(img=>{
+        if(addedImagesFromDel.find(addedImg => {return addedImg == img})){
+          return img.split('deleted_images/')[1]
+        }
+        return img;
+
+
+      })
+
+      console.log('hello everyone!', addedImagesFromDel)
+
+      if(addedImagesFromDel.length>0){
+
+        const basePath = `${process.cwd()}/public/images/review_images/productId_${productId}/`;
+        const deletedImagesPath = `${basePath}/deleted_images/`;
+
+
+     
+  
+        addedImagesFromDel?.forEach((image)=>{
+          console.log('path', image);
+
+
+          if(image.includes('deleted_images/'))
+          fs.rename(`${deletedImagesPath}${image.split('deleted_images/')[1]}`, `${basePath}${image.split('deleted_images/')[1]}`,function (err) {
+            if (err) throw err
+            console.log('Successfully renamed - AKA moved!')
+          });
+          
+        
+        });
+
+       
+
+    }
+  
+
+      
+
+
+   
+
+    
+
 
 
 

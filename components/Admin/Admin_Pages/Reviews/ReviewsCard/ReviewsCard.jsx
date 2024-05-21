@@ -80,8 +80,36 @@ export default function ReviewsCard({
             return newImages;
           });
         }
+        else{
+
+
+          fetch(`/images/review_images/productId_${productId}/deleted_images/${imageName}`, {
+            method: "HEAD",
+          })
+            .then((response) => {
+              if (response.ok) {
+                setImages((prevImages) => {
+                  if (prevImages == null) return [{ imageName:`deleted_images/${imageName}`, deleted: false }];
+      
+                  let newImages = [...prevImages];
+      
+                  newImages.push({ imageName:`deleted_images/${imageName}`, deleted: false });
+                  return newImages;
+                });
+              }
+            })
+  
+
+
+        }
       })
       .catch((error) => {
+
+
+     
+
+
+
         console.error("Error:", error);
       });
   };
