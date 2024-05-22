@@ -107,13 +107,13 @@ useEffect(()=>{
 
 
   return (
-    <div onClick={()=>{if(window.innerWidth>600) history.back();}} className={styles.mainWrapper}>
+    <div onClick={()=>{if(window.innerWidth>600) router.back();}} className={styles.mainWrapper}>
 
       
 <div ref={mainReviewDiv} onClick={(event)=>{event.stopPropagation()}} className={`${styles.mainDiv} 
 ${(imageSrc?imageLoaded:true) && styles.spawnFullScreenReview}`}>
 
-<CancelIcon color={"var(--fullscreen-customer-cancel-icon-color)"} styleClassName={`${styles.closeFullScreen} ${!imageSrc && styles.closeFullScreenNoImg}`}  handleClick={()=>{history.back();}}
+<CancelIcon color={"var(--fullscreen-customer-cancel-icon-color)"} styleClassName={`${styles.closeFullScreen} ${!imageSrc && styles.closeFullScreenNoImg}`}  handleClick={()=>{router.back();}}
    />
    {imageSrc && <div className={styles.reviewImageDiv}>
 

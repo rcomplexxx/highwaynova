@@ -39,6 +39,7 @@ useEffect(()=>{
 
 
   window.history.pushState(null, null, router.asPath);
+        
   history.go(1);
 
 
@@ -49,20 +50,26 @@ useEffect(()=>{
    
    
     setNewProduct();
+    window?.removeEventListener("popstate", handlePopState);
   
   }
 
   const navBar = document.getElementById('navBar')
   const handleClick = (event) => {
   
-    if (!navBar.contains(event.target) ) {
+    if (!navBar.contains(event.target)) {
     
-      history.back();
+      router.back();
       
     }
-    // else if (navBar.contains(document.getElementById('mobileMenuSpawn'))) {
-   
+
+    else if(popCartRef.current && !popCartRef.current.contains(event.target) && event.target.closest('a')){
+      setNewProduct();
+    
+    }
+
       
+  
     
     // }
   };
@@ -95,7 +102,7 @@ const handlePopCartLinkClick=(event, nextLinkHref)=>{
   event.preventDefault();
  
     nextLink.current= nextLinkHref;
-  history.back();
+    router.back();
 
 }
 
@@ -135,7 +142,7 @@ const handlePopCartLinkClick=(event, nextLinkHref)=>{
   
     </Link>
     
-    <span className={styles.continue_shopping}  onClick={()=>{ history.back();}}>Continue shopping</span>
+    <span className={styles.continue_shopping}  onClick={()=>{ router.back();}}>Continue shopping</span>
     
 
  

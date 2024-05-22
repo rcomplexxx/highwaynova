@@ -85,7 +85,7 @@ const NavBar = ({ totalItems, newProduct, setNewProduct }) => {
           <div className={styles.growAlt}>
 
             <MenuIcon
-            
+             
              handleClick={handleMobileMenuOpen} styleClassName={styles.smallMenuImage}/>
           
             

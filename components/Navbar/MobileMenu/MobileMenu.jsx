@@ -78,9 +78,9 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
         
           closeMenu();
           if(subMenu!=0){
-          history.back();
+          router.back();
         }
-        history.back();
+        router.back();
       
         // document.removeEventListener('click', handleClickOutside, true);
       
@@ -104,7 +104,7 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
        if(whiteButtonCancelRef.current){
         closeMenu();
         if(subMenu!=0){
-        history.back();
+        router.back();
       }
       return;
 
@@ -117,7 +117,7 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
          
           if(subMenu!=0 && !subMenuBackDone.current){
             subMenuBackDone.current=true;
-            history.back();
+            router.back();
             return;
           }
 
@@ -207,7 +207,7 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
     
    <CancelIcon color={`var(--mobile-nav-cancel-icon-color)`} styleClassName={styles.menuItem_x_button} handleClick={()=>{
         whiteButtonCancelRef.current= true
-         history.back();
+         router.back();
          
         // setIsMenuOpen(false); 
         }}/>
@@ -226,7 +226,7 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
           if(pathname !== "/") { 
             nextLink.current='/';
            
-           history.back();
+           router.back();
 
           }
         }}
@@ -241,7 +241,7 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
           event.preventDefault();
           if(pathname !== "/products") { 
             nextLink.current='/products';
-            history.back();
+            router.back();
 
           }
         }}
@@ -259,7 +259,7 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
           event.preventDefault();
           if(pathname !== "/collection/sale/page/1") { 
             nextLink.current='/collection/sale/page/1';
-           history.back();
+           router.back();
 
           }
         }}
@@ -302,7 +302,7 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
           event.preventDefault();
           if(pathname !== "/contact-us") { 
             nextLink.current='/contact-us';
-           history.back();
+           router.back();
 
           }
         }
@@ -320,7 +320,7 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
        className={`${styles.linkStyle}`}
        onClick={() => {
         
-        history.back();
+        router.back();
        }}
      >
        <ArrowDown color={'var(--navbar-arrow-color)'} styleClassName={`${styles.subMenuArrow} ${styles.subMenuBackArrow}`}/>
@@ -337,7 +337,7 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
           event.preventDefault();
           if(pathname !== "/our-story") { 
             nextLink.current='/our-story';
-           history.back();
+           router.back();
 
           }
         }}
@@ -356,7 +356,7 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
           event.preventDefault();
           if(pathname !== "/faq") { 
             nextLink.current="/faq";
-           history.back();
+           router.back();
 
           }
         }}
@@ -374,7 +374,7 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
           event.preventDefault();
           if(pathname !== "/terms-of-service") { 
             nextLink.current="/terms-of-service";
-           history.back();
+           router.back();
           }
         }}
       >
@@ -391,7 +391,7 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
           if(pathname !== "/privacy-policy") { 
         
             nextLink.current="/privacy-policy";
-           history.back();
+           router.back();
           }
         }}
       >
@@ -408,7 +408,7 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
           if(pathname !== "/shipping-policy") { 
        
             nextLink.current="/shipping-policy";
-           history.back();
+           router.back();
           }
         }}
       >
@@ -424,7 +424,7 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
           if(pathname !== "/refund-policy") { 
          
             nextLink.current="/refund-policy";
-           history.back();
+           router.back();
           }
         }}
       >
@@ -439,7 +439,7 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
        
        className={`${styles.linkStyle} ${styles.subMenuTitle}`}
        onClick={() => {
-         history.back();
+         router.back();
        }}
      >
        <ArrowDown color={'var(--navbar-arrow-color)'} styleClassName={`${styles.subMenuArrow} ${styles.subMenuBackArrow}`}/>
@@ -455,7 +455,7 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
     if(pathname !== `/collection/${c.name.toLowerCase().replace(/ /g, '-')}/page/1`) { 
 
       nextLink.current=`/collection/${c.name.toLowerCase().replace(/ /g, '-')}/page/1`;
-     history.back();
+     router.back();
     }
     
   }}

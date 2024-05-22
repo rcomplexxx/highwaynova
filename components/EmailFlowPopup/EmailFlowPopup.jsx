@@ -45,7 +45,7 @@ export default function EmailFlowPopup({setEmailPopup}){
 
         return () => {
 
-            if(!backPressed.current)history.back();
+            if(!backPressed.current)router.back();
             window?.removeEventListener("popstate", handlePopState);
 
         };
