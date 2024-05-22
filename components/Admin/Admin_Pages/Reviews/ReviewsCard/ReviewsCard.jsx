@@ -1,6 +1,6 @@
 import styles from "./reviewscard.module.css";
 import { useRef, useState } from "react";
-import parse from "html-react-parser";
+import ReactHtmlParser from "react-html-parser";
 import ReviewImage from "./ReviewImage/ReviewImage";
 import Image from "next/image";
 
@@ -30,7 +30,7 @@ export default function ReviewsCard({
 
  
 
-  const transformedText = parse(text);
+  const transformedText = ReactHtmlParser(text);
   const divEditorRef = useRef();
   const divEditorRefName = useRef();
 

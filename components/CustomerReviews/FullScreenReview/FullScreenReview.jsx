@@ -2,8 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import Image from "next/image";
 import styles from './fullscreenreview.module.css';
 import StarRatings from 'react-star-ratings';
-
-import parse from "html-react-parser";
+import ReactHtmlParser from "react-html-parser";
 import { STARPATH } from '@/public/images/svgs/svgImages';
 import { CancelIcon } from '@/public/images/svgs/svgImages';
     
@@ -108,7 +107,7 @@ useEffect(()=>{
 
 
   return (
-    <div onClick={()=>{if(window.innerWidth>600) router.back();}} className={styles.mainWrapper}>
+    <div onClick={()=>{if(window.innerWidth>600) history.back();}} className={styles.mainWrapper}>
 
       
 <div ref={mainReviewDiv} onClick={(event)=>{event.stopPropagation()}} className={`${styles.mainDiv} 
@@ -156,7 +155,7 @@ ${(imageSrc?imageLoaded:true) && styles.spawnFullScreenReview}`}>
         />
 
         <div className={styles.reviewText}>
-        {parse(text)}
+        {ReactHtmlParser(text)}
         </div>
 
         

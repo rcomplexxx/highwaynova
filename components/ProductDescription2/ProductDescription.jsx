@@ -1,25 +1,25 @@
+import React, { useLayoutEffect, useState } from 'react'
 
-import Image from 'next/image';
 import styles from './productdescription.module.css'
 
-import parse from "html-react-parser";
+import ReactHtmlParser from "react-html-parser";
+import Image from 'next/image';
 
 export default function ProductDescription({description}) {
 
 
-
   const options = {
-    replace: ({ name, attribs, children }) => {
-      if (name === 'img' && attribs) {
-        // Return the Next.js Image component
+    transform: (node) => {
+      // Replace <img> tags with Next.js <Image> components
+      if (node.type === 'tag' && node.name === 'img' && node.attribs) {
         return (
           <Image
-            src={attribs.src}
-            alt={attribs.alt || ''}
-            className={attribs.class || ''}
-            height={0}
-            width ={0}
+            src={node.attribs.src}
+            alt={node.attribs.alt || ''}
+            className={node.attribs.class || ''}
             layout='responsive'
+            width={0} // set your desired width
+            height={0} // set your desired height
             sizes="(max-width: 980px) 40vw, 100vw"
           />
         );
@@ -27,11 +27,11 @@ export default function ProductDescription({description}) {
     }
   };
 
-//
+
 
 
 
   return (
-    <div className={styles.descriptionDiv}>{description && parse(description, options)}</div>
+    <div className={styles.descriptionDiv}>{ReactHtmlParser(description, options)}</div>
   )
 }
