@@ -194,7 +194,7 @@ export default function DescriptionMaker() {
           <span>Handy options</span>
         <button className={`${styles.getCurrentDescrition} ${styles.featureButton}`} 
         onClick={(event)=>{ 
-          navigator.clipboard.writeText(`<div class="descriptionWrapper">\n\n<img class="descriptionImage" src="/images/description_images/1-3.png"/>\n\n<h1 class="descTitle">My title</h1>\n\n<span class="subText">This is my description text</span>\n\n</div>`);
+          navigator.clipboard.writeText(`<div class="descriptionWrapper">\n\n<img alt="description image" class="descriptionImage" src="/images/description_images/1-3.png"/>\n\n<h1 class="descTitle">My title</h1>\n\n<span class="subText">This is my description text</span>\n\n</div>`);
           event.target.innerText="Standard html content COPIED!"
         }}>Copy standard html description content</button>
          <button className={`${styles.getCurrentDescrition} ${styles.featureButton}`} 
