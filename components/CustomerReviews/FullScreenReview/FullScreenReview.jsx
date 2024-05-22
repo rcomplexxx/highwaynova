@@ -2,7 +2,8 @@ import React, { useEffect, useRef, useState } from 'react'
 import Image from "next/image";
 import styles from './fullscreenreview.module.css';
 import StarRatings from 'react-star-ratings';
-import ReactHtmlParser from "react-html-parser";
+
+import parse from "html-react-parser";
 import { STARPATH } from '@/public/images/svgs/svgImages';
 import { CancelIcon } from '@/public/images/svgs/svgImages';
     
@@ -113,7 +114,7 @@ useEffect(()=>{
 <div ref={mainReviewDiv} onClick={(event)=>{event.stopPropagation()}} className={`${styles.mainDiv} 
 ${(imageSrc?imageLoaded:true) && styles.spawnFullScreenReview}`}>
 
-<CancelIcon color={"var(--fullscreen-customer-cancel-icon-color)"} styleClassName={`${styles.closeFullScreen} ${!imageSrc && styles.closeFullScreenNoImg}`}  handleClick={()=>{router.back();}}
+<CancelIcon color={"var(--fullscreen-customer-cancel-icon-color)"} styleClassName={`${styles.closeFullScreen} ${!imageSrc && styles.closeFullScreenNoImg}`}  handleClick={()=>{history.back();}}
    />
    {imageSrc && <div className={styles.reviewImageDiv}>
 
@@ -155,7 +156,7 @@ ${(imageSrc?imageLoaded:true) && styles.spawnFullScreenReview}`}>
         />
 
         <div className={styles.reviewText}>
-        {ReactHtmlParser(text)}
+        {parse(text)}
         </div>
 
         

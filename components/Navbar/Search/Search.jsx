@@ -64,7 +64,7 @@ export default function Search({searchOpen, setSearchOpen}){
           // Clicked outside the floating div, so close the dialog
           
           setSearchOpen(false);
-          router.back();
+          history.back();
         }
       };
 
@@ -168,7 +168,7 @@ export default function Search({searchOpen, setSearchOpen}){
                 event.preventDefault();
                 event.stopPropagation();
             nextLink.current=`/collection/${collection.name.toLowerCase().replace(/ /g, '-')}/page/1`;
-           router.back();
+           history.back();
 
           setSearchTerm('');
               
@@ -194,7 +194,7 @@ export default function Search({searchOpen, setSearchOpen}){
                 event.preventDefault();
                 event.stopPropagation();
             nextLink.current=`/products/${product.name.toLowerCase().replace(/\s+/g, "-")}`;
-           router.back();
+           history.back();
 
           setSearchTerm('');
               
@@ -215,7 +215,7 @@ export default function Search({searchOpen, setSearchOpen}){
           <CancelIcon color={`var(--search-cancel-icon-color)`} styleClassName={styles.searchCancel} handleClick={()=>{  
             
             setSearchOpen(false);
-          router.back();}}/>
+          history.back();}}/>
         }
         </div>
     

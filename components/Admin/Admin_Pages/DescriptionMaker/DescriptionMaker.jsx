@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react'
 
-import ReactHtmlParser from "react-html-parser";
+import parse from "html-react-parser";
 
 import styles from './descriptionmaker.module.css'
 import {  useRouter } from 'next/router';
@@ -83,7 +83,7 @@ export default function DescriptionMaker() {
 
 
             console.log(finalHtml);
-            const parsedHtml = ReactHtmlParser(finalHtml);
+            const parsedHtml = parse(finalHtml);
         
             if (Array.isArray(parsedHtml) && parsedHtml.every(React.isValidElement)) {
                 setPreviewDescription(parsedHtml);

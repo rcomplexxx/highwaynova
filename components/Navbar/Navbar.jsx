@@ -275,7 +275,7 @@ const NavBar = ({ totalItems, newProduct, setNewProduct }) => {
 
           <div className={styles.rightOptions}>
             <Search searchOpen={searchOpen} setSearchOpen={setSearchOpen} />
-            <Link href="/cart">
+            <Link id="cart" href="/cart">
               <div className={styles.cartStyle}>
                 <Image
                   height={0}

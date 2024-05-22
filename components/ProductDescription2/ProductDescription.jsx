@@ -1,35 +1,37 @@
-import React, { useLayoutEffect, useState } from 'react'
 
+import Image from 'next/image';
 import styles from './productdescription.module.css'
 
-import ReactHtmlParser from "react-html-parser";
+import parse from "html-react-parser";
 
 export default function ProductDescription({description}) {
 
 
-    const [produectDescription, setProductDescription]= useState("");
 
+  const options = {
+    replace: ({ name, attribs, children }) => {
+      if (name === 'img' && attribs) {
+        // Return the Next.js Image component
+        return (
+          <Image
+            src={attribs.src}
+            alt={attribs.alt || ''}
+            className={attribs.class || ''}
+            height={0}
+            width ={0}
+            layout='responsive'
+            sizes="(max-width: 980px) 40vw, 100vw"
+          />
+        );
+      }
+    }
+  };
 
-    useLayoutEffect(()=>{
-
-        try{
-            setProductDescription(ReactHtmlParser(description))
-        }
-        catch(error){
-            setProductDescription(description)
-        }
-
-    },[description])
-
-    // if (Array.isArray(parsedHtml) && parsedHtml.every(React.isValidElement)) {
-    //   setPreviewDescription(parsedHtml);
-    // }
-  
 
 
 
 
   return (
-    <div className={styles.descriptionDiv}>{produectDescription}</div>
+    <div className={styles.descriptionDiv}>{parse(description, options)}</div>
   )
 }

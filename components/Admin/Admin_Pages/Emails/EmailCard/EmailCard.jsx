@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 
-import ReactHtmlParser from "react-html-parser";
+import parse from "html-react-parser";
 
 import styles from './emailcard.module.css'
 import { useRouter } from 'next/router';
@@ -70,7 +70,7 @@ export default function EmailCard({id,title, text, handleSaveEmail}) {
     const handlePreviewEmail = ()=>{
         try {
             // Attempt to parse the HTML
-            const parsedHtml = ReactHtmlParser(text);
+            const parsedHtml = parse(text);
         
             if (Array.isArray(parsedHtml) && parsedHtml.every(React.isValidElement)) {
                 setPreviewEmailContent(parsedHtml);

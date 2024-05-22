@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react'
 
-import ReactHtmlParser from "react-html-parser";
+import parse from "html-react-parser";
 
 import styles from './newemail.module.css'
 import { Router, useRouter } from 'next/router';
@@ -21,7 +21,7 @@ export default function NewEmail() {
           const finalHtml= `<style>${emailCssTextRef.current.value}</style>${emailTextRef.current.value}`
 
             // Attempt to parse the HTML
-            const parsedHtml = ReactHtmlParser(finalHtml);
+            const parsedHtml = parse(finalHtml);
             
         
             if (Array.isArray(parsedHtml) && parsedHtml.every(React.isValidElement)) {

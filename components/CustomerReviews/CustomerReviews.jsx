@@ -2,8 +2,7 @@ import React, { useState, useRef, useCallback, useEffect } from "react";
 import Image from "next/image";
 import styles from "./customerreviews.module.css";
 import StarRatings from "react-star-ratings";
-import ReactHtmlParser from "react-html-parser";
-
+import parse from "html-react-parser";
 import WriteReviewVisible from "./WriteReview/WriteReviewVisible";
 import FullScreenReview from "./FullScreenReview/FullScreenReview";
 import { STARPATH } from "@/public/images/svgs/svgImages";
@@ -49,7 +48,7 @@ function Review({ product_id,  name, text,  stars, imageNames, setFullScreenRevi
           starSpacing="2px"
         />
     </div>
-      <p className={styles.reviewText}>{ReactHtmlParser(text)}</p>
+      <p className={styles.reviewText}>{parse(text)}</p>
       <p className={styles.reviewAuthor}>{name}</p>
     </div>
   );

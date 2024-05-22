@@ -39,7 +39,6 @@ useEffect(()=>{
 
 
   window.history.pushState(null, null, router.asPath);
-        
   history.go(1);
 
 
@@ -59,14 +58,16 @@ useEffect(()=>{
   
     if (!navBar.contains(event.target)) {
     
-      router.back();
+      history.back();
       
     }
 
-    else if(popCartRef.current && !popCartRef.current.contains(event.target) && event.target.closest('a')){
-      setNewProduct();
+    else if(document.getElementById('cart').contains(event.target) || document.getElementById('mobileMenuSpawn').contains(event.target)){
+        setNewProduct();
     
     }
+
+    
 
       
   
@@ -102,7 +103,7 @@ const handlePopCartLinkClick=(event, nextLinkHref)=>{
   event.preventDefault();
  
     nextLink.current= nextLinkHref;
-    router.back();
+  history.back();
 
 }
 
@@ -142,7 +143,7 @@ const handlePopCartLinkClick=(event, nextLinkHref)=>{
   
     </Link>
     
-    <span className={styles.continue_shopping}  onClick={()=>{ router.back();}}>Continue shopping</span>
+    <span className={styles.continue_shopping}  onClick={()=>{ history.back();}}>Continue shopping</span>
     
 
  
