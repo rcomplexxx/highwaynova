@@ -220,11 +220,6 @@ const FullScreenZoomableImage = ({
   },[imageIndex,zoomed])
 
   useEffect(() => {
-
-
-    if(!imageIndex) return;
-
-
     const fixedZoomDiv = fixedZoomDivRef.current;
     let bgColor = getComputedStyle(document.documentElement).getPropertyValue('--bg-color');
     if(bgColor.length===4)bgColor = bgColor + bgColor[2] + bgColor[2] + bgColor[2];
@@ -377,7 +372,7 @@ const FullScreenZoomableImage = ({
       window.removeEventListener("touchmove", handleTouchYMove, true);
       window.removeEventListener("touchend", handleTouchEnd);
     };
-  }, [imageIndex,zoomed, imageIndex]);
+  }, [imageIndex,zoomed]);
 
 
 
