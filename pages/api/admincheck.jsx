@@ -4,6 +4,7 @@ import RateLimiter from "@/utils/rateLimiter.js";
 import betterSqlite3 from "better-sqlite3";
 import emailSendJob from '@/utils/sendEmailJob.jsx';
 import makeNewDescription from "../../utils/makeNewDescription.js"
+import reorderReviewsByRatingAndImages from '@/utils/reorderReviews.jsx';
 
 const limiterPerTwoMins = new RateLimiter({
   apiNumberArg: 5,
@@ -620,6 +621,22 @@ else{
           );
          
         } 
+        else if (dataType === "send_reviews_reorder") {
+
+
+          if (!data)
+            return res
+              .status(500)
+              .json({ successfulLogin: false, error: "No data to send" });
+
+
+              const successfulReorder= await reorderReviewsByRatingAndImages(data.product_id);
+
+             if(successfulReorder)return res.status(200).json({ success: true });
+             else return res.status(500).json({ success: false });
+              
+         
+        } 
       
         else if (dataType === "send_email_data") {
           console.log('started email send');
@@ -723,6 +740,7 @@ else{
           data
         );
         }
+        
         else if(dataType === `wipe_orders`){
           wipeData('orders')
         }

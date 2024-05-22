@@ -94,7 +94,7 @@ const FullScreenZoomableImage = ({
   fullImg.style.transition = "transform 0s ease";
   fullImg.style.transform = `translateX(${deltaX}px) translateY(${deltaY}px) scale(${scaleRatio})`;
 
-
+  fullImg.style.transition = "transform 0.3s ease";
  
  
      
@@ -220,6 +220,11 @@ const FullScreenZoomableImage = ({
   },[imageIndex,zoomed])
 
   useEffect(() => {
+
+
+    if(!imageIndex) return;
+
+
     const fixedZoomDiv = fixedZoomDivRef.current;
     let bgColor = getComputedStyle(document.documentElement).getPropertyValue('--bg-color');
     if(bgColor.length===4)bgColor = bgColor + bgColor[2] + bgColor[2] + bgColor[2];
@@ -372,7 +377,7 @@ const FullScreenZoomableImage = ({
       window.removeEventListener("touchmove", handleTouchYMove, true);
       window.removeEventListener("touchend", handleTouchEnd);
     };
-  }, [imageIndex,zoomed]);
+  }, [imageIndex,zoomed, imageIndex]);
 
 
 
@@ -638,7 +643,7 @@ const FullScreenZoomableImage = ({
                       width={0}
                       sizes="100vw"
                       loading={"eager"}
-                      onLoad={()=>{setImageLoaded(true)}}
+                      onLoad={()=>{if(index==imageIndex)setImageLoaded(true);}}
                       src={image.src}
                       alt="Zoomable"
                       className={`${styles.productImage}`}

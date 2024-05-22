@@ -81,10 +81,7 @@ export default function DropCard(props) {
     <div className={styles.dropDiv}>
       <button className={styles.title_div} onClick={summonAnswer}>
         <div>
-        {/* <Image alt={"Card icon"} height={16} width={16} sizes="16px" loading="lazy" src={`/images/${props.title=='Description'?'description_icon6':
-      props.title=='Key features'?'keyIcon7':props.title=='Shipping & Returns'?'shippingReturnIcon2'
-      :props.title=='Ask a question'?'chatIcon6':'description'
-      }.png`} className={styles.cardIcon}/> */}
+
       {props.title ==='Shipping & Returns' && <PackageReturnIcon isDropCardIcon={true} styleClassName={styles.cardIcon}/>}
       {props.title ==='Ask a question' && <ChatIcon styleClassName={styles.cardIcon}/>}
         {props.title}
