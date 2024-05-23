@@ -416,7 +416,7 @@ Cormorant+Garamond */
  --dropcard-title-color: var(--high-contrast-light-txt-color);
  --description-content-color: var(--neutral-6);
  
- --package-return-dropcard-icon-color: rgb(170, 152, 49);
+ --package-return-dropcard-icon-color: rgb(151, 139, 61);
  --chat-icon-color: rgb(53, 144, 248);
  --truck-icon-color: var(--neutral-3);
  --package-return-icon-color: var(--neutral-3);
