@@ -85,6 +85,7 @@
 
 
 .product_price{
+  color: var(--product-price);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -147,7 +148,7 @@
 
 
   .inStockSpan{
-    color: var(--neutral-7);
+    color: var(--in-stock-color);
     margin-left: var(--size-4);
     font-size: var(--font-size-2);
     font-weight: 300;

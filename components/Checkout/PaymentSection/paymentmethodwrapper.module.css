@@ -63,7 +63,7 @@
 }
 
 .selectedOption{
-    background-color: var(--payment-div-bg);
+    /* background-color: var(--payment-div-bg); */
     box-shadow: 0 0 0 1px var(--main-color-5);
     z-index: 3;
 }

@@ -85,6 +85,7 @@
 
 
     .product_price{
+      color: var(--product-price);
       display: flex;
       align-items: center;
       font-size: var(--font-size-7);
