@@ -185,7 +185,7 @@ const handleCouponApply = () => {
 
 
                     <button
-                      className={`${styles.apply} ${tempCouponCode !== "" && styles.applyEnabled }`}
+                      className={`${styles.apply} ${tempCouponCode === "" && styles.applyDisabled }`}
                       onClick={handleCouponApply}
                     >
                       Apply

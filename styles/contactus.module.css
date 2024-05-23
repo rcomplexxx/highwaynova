@@ -296,21 +296,25 @@ font-size: var(--font-size-1);
 }
 
 .sendButton{
-    align-self: flex-end;
+   
     width: var(--size-11);
-    height: var(--size-8);
-    
-    border-radius: 12px;
+
     color: var(--action-button-txt-color);
     background-color: var(--action-button-bg-color);
- 
-    box-sizing: border-box;
-    border: 1px solid var(--contact-send-btn-outline);
-
+  
+    
     margin: var(--size-6) var(--size-1);
     margin-bottom: var(--size-8);
+ 
+    border-radius: 12px;
+    border: 1px solid var(--contact-send-btn-outline);
+
+   
     font-size: var(--font-size-4);
-    cursor: pointer;
+
+    transition: background-color 0.2s ease;
+    align-self: flex-end;
+
 }
 
 .sendButton:hover{

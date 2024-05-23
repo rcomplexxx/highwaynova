@@ -46,18 +46,16 @@ body{
 
 button{
 
+  height: var(--size-8);
 
   font-family: var(--font-neutral);
   font-weight:  700;
   
-  /* height: var(--size-8);
-  border-radius: 4px;
-  transition: background-color 0.1s ease, color 0.1s ease;
   
-  font-size: var(--font-size-3);
-  font-weight: 600;
-  user-select: none;
-  cursor: pointer; */
+  box-sizing: border-box;
+
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 h1{
@@ -626,7 +624,7 @@ Cormorant+Garamond */
 --email-popup-light-color: white;
 --email-popup-cancel-button-bg: rgb(28, 49, 50);
 
---email-cancel-icon-color: var(--neutral-0-5);
+--email-cancel-icon-color: red;
 
 
 

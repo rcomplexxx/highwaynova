@@ -199,19 +199,22 @@
   }
 
   .add_to_cart_button {
-    height: var(--size-8);
+    
     max-width: var(--size-15);
     width:100%;
-    display: inline-block;
+
+    color: var(--main-button-color);
+    background-color: var(--main-button-bg);
+    
+   
     border: none;
-    padding: 0 var(--size-6);
+ 
     margin-top: var(--size-6);
     margin-bottom: var(--size-3);
-    background-color: var(--main-button-bg);
-    color: var(--main-button-color);
+    
     font-size:var(--font-size-3);
-    cursor: pointer;
-    border-radius: 4px;
+   
+  
   }
   
  
@@ -238,22 +241,22 @@
 
 
   .but_now_button{
-    height: var(--size-8);
-    max-width: var(--size-15);
-    width:100%;
-    display: inline-block;
-   
-   
+  
     color: var(--high-contrast-light-txt-color);
     background-color: var(--buy-now-bg);
+
+    max-width: var(--size-15);
+    width:100%;
+   
+   
+    
     border: 1px solid var(--buy-now-border);
 
     margin-top: var(--size-2);
     margin-bottom: var(--size-3);
    
     font-size: var(--font-size-3);
-    cursor: pointer;
-    border-radius: 4px;
+   
   }
 
 

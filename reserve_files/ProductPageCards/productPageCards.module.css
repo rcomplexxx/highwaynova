@@ -163,9 +163,11 @@
   
     margin-right: var(--size-4);
     margin-bottom: var(--size-4);
-    font-family: var(--font-neutral);
+
+    transition: background-color 0.2s ease;
+    
     align-self: flex-end;
-    cursor: pointer;
+   
 }
 
 .sendButton:hover{

@@ -116,10 +116,8 @@ export default function EmailFlowPopup({setEmailPopup}){
 
     return <div className={styles.popupMainWrapper}>
          <div className={styles.popupWrapper}>
-            <div onClick={()=>{setEmailPopup(false)}} className={styles.cancelButton}>
               <CancelIcon color={"var(--email-cancel-icon-color)"} styleClassName={styles.cancelIcon}/>
            
-            </div>
                { !successfullySignedUp ?popupRequestContent():thankYouContent()}
            
          </div>

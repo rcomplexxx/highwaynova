@@ -59,23 +59,7 @@
 
 
 
-  .showProductsButton{
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    cursor: pointer;
-    user-select: none;
-  }
-  .showProducts{
-    display: flex;
-    align-items: center;
-  }
-
-  .showProductsImage {
-    margin-left: var(--size-2);
-    transform: rotate(-90deg);
-  }
+ 
 
   .productImageDiv{
     height: min-content;
@@ -172,7 +156,6 @@
     align-items: center;
     color: var(--apply-coupon-txt-color);
     text-decoration: none;
-    height: var(--size-8);
     width:  var(--size-10);
     background-color: var(--apply-coupon-color);
     border-radius: 4px;
@@ -182,14 +165,20 @@
     font-size: var(--font-size-3);
     
   }
-  
-  .applyEnabled{
-    cursor: pointer;
+
+  .apply:hover{
+    background-color: var(--apply-coupon-hover-color);
   }
 
-  .applyEnabled:hover{
+  .applyDisabled{
+    cursor: auto;
+  }
+  
+ 
+
+  .applyDisabled:hover{
+    background-color: var(--apply-coupon-color);
    
-    background-color: var(--apply-coupon-hover-color);
   }
 
 

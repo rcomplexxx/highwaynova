@@ -1,28 +1,40 @@
 .linkButton{
+
+  position: absolute;
+
+  color:var(--shop-now-hero-button-color);
+  background-color:var(--shop-now-hero-button-bg);
+
+
+  width:var(--size-11-5);
+  height: var(--size-8);
    
-    font-size:var(--font-size-6);
+    
     
     display: flex;
     justify-content: center;
     align-items: center;
-    text-decoration: none;
-    color:var(--shop-now-hero-button-color);
-    background-color:var(--shop-now-hero-button-bg);
+   
+   
     border-radius: 4px;
-     width:var(--size-11-5);
-     height: var(--size-8);
-    /* transition: transform 0.1s ease-in; */
+    
+
     box-shadow: var(--shop-now-hero-button-box-shadow);
-    z-index: 2;
-    position: absolute;
+   
+   
+    font-size:var(--font-size-6);
     font-family: var(--hand-writing-font);
     font-weight: 800; 
-    cursor: pointer;
+
+    transition: transform 0.1s ease;
+    text-decoration: none;
+
+    z-index: 2;
   }
 
   .linkButton:hover{
-    transition: transform 0.1s ease;
-    transform: scale(1.1) !important;
+ 
+    transform: scale(1.1);
   
   }
  

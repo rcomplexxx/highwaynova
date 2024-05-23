@@ -297,12 +297,12 @@
   .addTip{
     color: var( --action-button-txt-color);
     background-color: var(--action-button-bg-color);
-    height: var(--size-8);
+   
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 4px;
-    box-sizing: border-box;
+    
+   
     border: 1px solid var(--border-color-mid);
     padding: 0 var(--size-5);
 
@@ -312,8 +312,7 @@
 
     font-size: var(--font-size-3);
    
-    cursor: pointer;
-    user-select: none;
+   
    
   }
 

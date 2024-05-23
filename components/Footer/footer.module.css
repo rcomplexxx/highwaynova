@@ -127,13 +127,12 @@
     box-sizing: border-box;
 
     border-radius: var(--size-2);
-    box-sizing: border-box;
+    
     border: 1px solid var( --action-button-border-color);
     margin-left: var(--size-3);
     transition: background-color 0.1s ease, color 0.1s ease;
     font-size: var(--font-size-2);
     
-    cursor: pointer;
   }
 
   .subscribeButton:hover{

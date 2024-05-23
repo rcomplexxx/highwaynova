@@ -152,14 +152,15 @@ column-fill:balance;
   .showMoreButton{
     margin-top:  var(--size-4);
     margin-bottom:  var(--size-6);
-    font-size: 28px;
-    padding: var(--size-3) var(--size-5);
+    font-size: 24px;
+    padding: 0 var(--size-6);
     color: var(--light-txt-color);
     background-color: transparent;
     border: 1px solid var(--border-color-strong);
     border-radius: var(--size-2);
-    text-decoration: none;
-    cursor: pointer;
+    font-weight: 600;
+
+    
   }
 
   

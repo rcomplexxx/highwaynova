@@ -93,25 +93,32 @@
 
   .add_to_cart_button {
     flex-shrink: 0;
-    max-width: var(--size-15);
+    
     height: var(--size-8);
     width:100%;
-    display: inline-block;
+    max-width: var(--size-15);
+
+    color: var(--main-button-color);
+    background-color: var(--main-button-bg);
+   
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+ 
+    
+
     border: none;
     box-sizing: border-box;
     
     margin-top: var(--size-7);
     margin-bottom: var(--size-3);
-    background-color: var(--main-button-bg);
-    color: var(--main-button-color);
-    font-size: var(--font-size-3);
+    
+
     font-weight: 800;
-    cursor: pointer;
     border-radius: 4px;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+   
     text-decoration: none;
 
 
@@ -121,11 +128,15 @@
   .checkoutButton{
     flex-shrink: 0;
 
-    color:  var(--high-contrast-light-txt-color);
-    background-color: transparent;
-    height: var(--size-8) !important;
+    
+    height: var(--size-8);
     max-width: var(--size-15);
     width:100%;
+
+    color:  var(--high-contrast-light-txt-color);
+  
+
+
     display: flex;
     justify-content: center;
     align-items: center;
@@ -138,10 +149,10 @@
    
     border: 1px solid var(--checkout-button-border);
     border-radius: 4px;
-    font-size: var(--font-size-3);
+   
     font-weight: 800;
     text-decoration: none;
-    cursor: pointer;
+
     
   }
 

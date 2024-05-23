@@ -89,9 +89,8 @@
     
     font-size: var(--size-5);
     font-weight: 600;
-    cursor: pointer;
-    border-radius: 4px;
-    box-sizing: border-box;
+  
+    
     border: 1px solid var(--fbt-add-to-cart-border);
     font-size: var(--font-size-2);
   }

@@ -366,11 +366,13 @@ export default function WriteReview({ setInfoDivOpen }) {
                   onClick={handleBack}
                   className={`${styles.remindMeLater} ${styles.remindMeLaterMobileControl}`}
                 >
-            <Image src='/images/arrowRight3.png'
-                className={styles.arrowBack}
-                height={0} width={0} sizes="32px"
+            <BackIcon color={`var(--write-review-back-button-color)`} styleClassName={`${styles.arrowBack}`}
                 /> Back
                 </button>
+
+               
+
+
 
                 <div
                   className={`${styles.progressDiv} 
