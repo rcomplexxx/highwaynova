@@ -284,6 +284,7 @@ font-size: var(--font-size-1);
     font-size: var(--font-size-2);
     margin-top: var(--size-2);
     margin-left: var(--size-2);
+    align-self: flex-start;
     
 }
 

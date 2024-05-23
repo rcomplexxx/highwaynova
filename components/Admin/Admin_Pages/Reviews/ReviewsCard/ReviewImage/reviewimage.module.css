@@ -5,6 +5,8 @@
     
     width: auto;
 
+    margin-top: var(--size-6);
+
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -14,12 +16,30 @@
    
 }
 
+.cancelImage{
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translateX(50%) translateY(-50%);
+    height: 14px;
+    width: 14px;
+    padding: 2px;
+    border-radius: 50%;
+    border: 1px solid var(--error-color);
+    cursor: pointer;
+
+}
+
+/* .correctImage{
+    border: 1px solid var(--success-color);
+} */
+
 .reviewImage{
     height: 160px;
    width: auto;
    border: 2px solid rgb(74, 228, 125);
    box-shadow: 0 0 8px #4fabe0;
-   cursor: pointer;
+  
 }
 
 
@@ -27,6 +47,7 @@
     
     border: 2px solid red;
     box-shadow: 0 0 6px #5e550a;
+    cursor: pointer;
 }
 
 
