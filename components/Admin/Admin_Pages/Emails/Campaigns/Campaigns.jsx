@@ -68,7 +68,7 @@ export default function Campaigns({sequences, campaignData, emails}) {
 }
 
 
-function CampaignCard({id, title, sequenceEmails, sendingDateInUnix,emailSentCounter, 
+function CampaignCard({id, title, sequenceEmails, sendingDateInUnix, emailSentCounter, 
   targetSubscribers, emails}){
 
 

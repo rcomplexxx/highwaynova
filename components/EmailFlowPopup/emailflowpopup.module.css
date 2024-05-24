@@ -20,21 +20,46 @@
 
 .popupWrapper{
 
-
-    max-width: var(--size-13);
+    position: relative;
+    max-width: var(--size-14);
     width: calc(100% - var(--size-7));
+    aspect-ratio: 1;
    
 
     background-color: var(--email-popup-bg);
   
-    position: relative;
+   
+
+    animation: spawnPopup 0.5s ease forwards;
+}
+
+.contentWrapperDiv{
+
+    height: 100%;
+    width: 100%;
+
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border-radius: 8px;
-    padding: var(--size-6) ;
-    animation: spawnPopup 0.5s ease forwards;
+    /* background-color: var(--email-popup-cancel-button-bg); */
+   
+
+    z-index: 3;
+}
+
+
+.emailPopupBg{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+
+   
+    z-index: -1;
+
+   
 }
 
 
@@ -56,12 +81,12 @@
 
 
     cursor: pointer;
+  
 
    
 }
 
-.signUpText{
-}
+
 
 
 .provideEmailDiv{
@@ -73,14 +98,15 @@
     padding: 0 var(--size-5);
     margin-top: var(--size-6);
     margin-bottom: var(--size-2);
+   
 }
 
 
 .emailField{
     min-width: 0;
     color: var(--email-popup-light-color);
-    background-color: transparent;
-    height: var(--size-7);
+    background-color: var(--email-popup-input-bg);
+    height: var(--size-8);
     flex: 1;
     margin-right: var(--size-3);
     box-sizing: border-box;
@@ -98,9 +124,10 @@
 }
 
 .sendEmailButton{
+    min-width: var(--size-10);
     color: var(--email-popup-light-color);
-    background-color: transparent;
-    height: var(--size-7);
+    background-color: var(--email-popup-send-button-bg);
+   
     box-sizing: border-box;
     border: 1px solid var(--email-popup-send-button-border);
     border-radius: 8px;
@@ -114,6 +141,8 @@
     margin: 0 var(--size-5);
     padding-left: var(--size-1);
 }
+
+
 
 .thankYouTitle{
     margin-bottom: var(--size-2);

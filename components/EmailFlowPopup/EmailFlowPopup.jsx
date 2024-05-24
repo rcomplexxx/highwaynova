@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import styles from './emailflowpopup.module.css'
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { CancelIcon } from '@/public/images/svgs/svgImages';
+import { CancelIcon, ErrorIcon } from '@/public/images/svgs/svgImages';
 
 
 
@@ -20,9 +20,7 @@ export default function EmailFlowPopup({setEmailPopup}){
     useEffect(() => {
 
    
-      localStorage.setItem("popupShownDateInDays", Math.floor(Date.now() / 86400000));
-
-
+    
        
   
         const handlePopState = (event)=>{
@@ -44,6 +42,8 @@ export default function EmailFlowPopup({setEmailPopup}){
 
 
         return () => {
+
+          console.log('hello from email flow popup')
 
             if(!backPressed.current)router.back();
             window?.removeEventListener("popstate", handlePopState);
@@ -101,7 +101,7 @@ export default function EmailFlowPopup({setEmailPopup}){
           <button className={styles.sendEmailButton}
           onClick={handleSignUp}>Sign up</button>
            </div>
-           {error && <span className={styles.emailError}>{error}</span>}
+           {error && <span className={styles.emailError}><ErrorIcon/>{error}</span>}
            </>
       }
 
@@ -116,9 +116,25 @@ export default function EmailFlowPopup({setEmailPopup}){
 
     return <div className={styles.popupMainWrapper}>
          <div className={styles.popupWrapper}>
-              <CancelIcon color={"var(--email-cancel-icon-color)"} styleClassName={styles.cancelIcon}/>
+
+         <Image 
+          src='/images/emailPopupBg3.jpeg'
+          height={0} width={0}
+          className={styles.emailPopupBg}
+          sizes='100vw'
+          loading={'eager'}
+          />
+
+       
+<div className={styles.contentWrapperDiv}>
+              <CancelIcon handleClick={()=>{history.back()}} color={"var(--email-cancel-icon-color)"} styleClassName={styles.cancelIcon}/>
+
+        
            
                { !successfullySignedUp ?popupRequestContent():thankYouContent()}
+
+
+               </div>
            
          </div>
     </div>

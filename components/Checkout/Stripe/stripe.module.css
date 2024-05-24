@@ -45,7 +45,7 @@
     border-radius: 4px;
     font-size: var(--font-size-4);
     transition: background-color 0.2s ease;
-    cursor: pointer;
+    
 }
 
 .payNowButton:hover{

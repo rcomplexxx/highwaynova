@@ -625,10 +625,16 @@ Cormorant+Garamond */
 
  --email-popup-bg: rgb(22, 42, 60);
 
---email-popup-light-color: white;
---email-popup-cancel-button-bg: rgb(28, 49, 50);
+--email-popup-light-color: var(--neutral-0);
 
---email-cancel-icon-color: red;
+--email-popup-send-button-bg:var(--accent-color-4);
+--email-popup-send-button-border: var(--neutral-0);
+--email-popup-input-bg:var(--neutral-9);
+--email-popup-input-border: var(--neutral-0);
+
+--email-popup-cancel-button-bg: var(--neutral-4);
+--email-cancel-icon-color: var(--neutral-0);
+
 
 
 
@@ -645,8 +651,8 @@ Cormorant+Garamond */
   --order-cover-details-color: rgb(10, 12, 19);
 
   --email-input-bg: rgb(15, 15, 14);
-  --email-popup-send-button-border: white;
-  --email-popup-input-border: white;
+  
+
 
   --campaign-display-emails-bg:rgba(43, 35, 35, 0.145);
 

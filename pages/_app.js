@@ -52,6 +52,8 @@ export default function App({ Component, pageProps }) {
 
 
 
+    console.log('1111111112222222', Date.now())
+
 
 
     let popupTimeout;
@@ -61,30 +63,46 @@ export default function App({ Component, pageProps }) {
 
       clearTimeout(popupTimeout); 
 
-      console.log(url) 
-
+      console.log('1111111112222222', url)
+    
       
       popupTimeout= setTimeout(()=>{
 
-     
+   
        
    
 
       if(  url!=='/404' && (url==='/' || (url.includes('/products') && !url.includes('#zoom')
       && !url.includes('#write-review')) || url.includes('/collection') || url==='/our-story' || url==='/faq')){
+       
+     
         setEmailPopup(true); 
         localStorage.setItem("popupShownDateInDays", Math.floor(Date.now() / 86400000));
-        router.events.off('routeChangeStart', handleRouteChangeStart);
+      
+   
+      
       }
      
-      }, 30000);
+      }, 10000);
       
     };
 
   
     if(localStorage.getItem("popupShownDateInDays")){
-      if((Math.floor(Date.now() / 86400000))-localStorage.getItem("popupShownDateInDays")>15)
+      
+      const emailPopupTimeChecker = Math.floor(Date.now() / 86400000)-localStorage.getItem("popupShownDateInDays");
+
+      const daysBetweenEmailPopups = 15;
+
+     
+
+      if(emailPopupTimeChecker>=daysBetweenEmailPopups){
+      
+      handleRouteChangeStart(router.pathname);
       router.events.on('routeChangeStart', handleRouteChangeStart);
+      }
+
+      else if(emailPopupTimeChecker<daysBetweenEmailPopups-1) router.events.off('routeChangeStart', handleRouteChangeStart);
     }
     else{
       localStorage.setItem("popupShownDateInDays", Math.floor(Date.now() / 86400000));
@@ -92,18 +110,6 @@ export default function App({ Component, pageProps }) {
     
 
   
-
-  
-   
- 
- 
- 
-  
-
-
-
-   
-   
 
    
 
@@ -115,7 +121,17 @@ export default function App({ Component, pageProps }) {
   
 
 
+
+
   }, []);
+
+
+
+
+
+
+
+
 
   useEffect(() => {
     localStorage.setItem("cartProducts", JSON.stringify(cartProducts));
