@@ -34,11 +34,12 @@
 }
 
 .collectionDescription{
+  color: var(--collection-description-txt-color);
   margin-bottom: 0;
   font-size: var(--font-size-2);
   font-style: italic;
-  opacity: 0.8;
   font-weight: 400;
+  line-height: var(--size-6);
 }
 
 .collectionText{

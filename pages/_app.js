@@ -61,16 +61,17 @@ export default function App({ Component, pageProps }) {
 
       clearTimeout(popupTimeout); 
 
-
+      console.log(url) 
 
       
       popupTimeout= setTimeout(()=>{
 
      
        
-         
+   
+
       if(  url!=='/404' && (url==='/' || (url.includes('/products') && !url.includes('#zoom')
-      && !url.includes('#write-review')) ||url.includes('/collection') || url==='/our-story' || url==='/faq')){
+      && !url.includes('#write-review')) || url.includes('/collection') || url==='/our-story' || url==='/faq')){
         setEmailPopup(true); 
         localStorage.setItem("popupShownDateInDays", Math.floor(Date.now() / 86400000));
         router.events.off('routeChangeStart', handleRouteChangeStart);

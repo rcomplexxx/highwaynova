@@ -36,8 +36,8 @@ export const ArrowDown = ({color,styleClassName, handleClick})=>{
 
 
 export const ErrorIcon = ()=>{
-	return <svg style={{height:'12px', width: '12px', marginTop:'var(--size-1)', marginRight: 'var(--size-2)', flexShrink:'0', alignSelf:"flex-start"}} xmlns="http://www.w3.org/2000/svg" fill="none" width="16" height="16" viewBox="0 0 16 16" role="img" data-icon="CircleXSmall" aria-hidden="true" class="default-ltr-cache-0 e1vkmu651">
-	<path fillRule="evenodd" clip-rule="evenodd" d="M14.5 8C14.5 11.5899 11.5899 14.5 8 14.5C4.41015 14.5 1.5 11.5899 1.5 8C1.5 4.41015 4.41015 1.5 8 1.5C11.5899 1.5 14.5 4.41015 14.5 8ZM16 8C16 12.4183 12.4183 16 8 16C3.58172 16 0 12.4183 0 8C0 3.58172 3.58172 0 8 0C12.4183 0 16 3.58172 16 8ZM4.46967 5.53033L6.93934 8L4.46967 10.4697L5.53033 11.5303L8 9.06066L10.4697 11.5303L11.5303 10.4697L9.06066 8L11.5303 5.53033L10.4697 4.46967L8 6.93934L5.53033 4.46967L4.46967 5.53033Z" fill="var(--error-color)">
+	return <svg style={{height:'12px', width: '12px', marginTop:'var(--size-1)', marginRight: 'var(--size-2)', flexShrink:'0', alignSelf:"flex-start"}} xmlns="http://www.w3.org/2000/svg" fill="none" width="16" height="16" viewBox="0 0 16 16" role="img" data-icon="CircleXSmall" aria-hidden="true">
+	<path fillRule="evenodd" clipRule="evenodd" d="M14.5 8C14.5 11.5899 11.5899 14.5 8 14.5C4.41015 14.5 1.5 11.5899 1.5 8C1.5 4.41015 4.41015 1.5 8 1.5C11.5899 1.5 14.5 4.41015 14.5 8ZM16 8C16 12.4183 12.4183 16 8 16C3.58172 16 0 12.4183 0 8C0 3.58172 3.58172 0 8 0C12.4183 0 16 3.58172 16 8ZM4.46967 5.53033L6.93934 8L4.46967 10.4697L5.53033 11.5303L8 9.06066L10.4697 11.5303L11.5303 10.4697L9.06066 8L11.5303 5.53033L10.4697 4.46967L8 6.93934L5.53033 4.46967L4.46967 5.53033Z" fill="var(--error-color)">
 	</path></svg>
 }
 
@@ -175,8 +175,8 @@ export const GuaranteeIcon = ({styleClassName})=>{
 
 export const SortButtonIcon = ({styleClassName, handleClick})=>{
 
-	return <svg className={styleClassName} onClick={handleClick} fill='var(--neutral-9)' dataPanel="dropdown"  viewBox="0 0 20 21" xmlns="http://www.w3.org/2000/svg" aria-label="Sort reviews">
-	<path dataPanel="dropdown" 
+	return <svg className={styleClassName} onClick={handleClick} fill='var(--neutral-9)'  viewBox="0 0 20 21" xmlns="http://www.w3.org/2000/svg" aria-label="Sort reviews">
+	<path 
 	d="M4.17 16.096C4.3766 15.5104 4.75974 15.0034 5.2666 14.6447C5.77346 14.2861 6.37909 14.0935 7 14.0935C7.62091 14.0935 8.22654 14.2861 8.7334 14.6447C9.24026 15.0034 9.6234 15.5104 9.83 16.096H20V18.096H9.83C9.6234 18.6815 9.24026 19.1885 8.7334 19.5472C8.22654 19.9058 7.62091 20.0984 7 20.0984C6.37909 20.0984 5.77346 19.9058 5.2666 19.5472C4.75974 19.1885 4.3766 18.6815 4.17 18.096H0V16.096H4.17ZM10.17 9.09596C10.3766 8.51042 10.7597 8.00339 11.2666 7.64475C11.7735 7.2861 12.3791 7.09351 13 7.09351C13.6209 7.09351 14.2265 7.2861 14.7334 7.64475C15.2403 8.00339 15.6234 8.51042 15.83 9.09596H20V11.096H15.83C15.6234 11.6815 15.2403 12.1885 14.7334 12.5472C14.2265 12.9058 13.6209 13.0984 13 13.0984C12.3791 13.0984 11.7735 12.9058 11.2666 12.5472C10.7597 12.1885 10.3766 11.6815 10.17 11.096H0V9.09596H10.17ZM4.17 2.09596C4.3766 1.51042 4.75974 1.00339 5.2666 0.644746C5.77346 0.286102 6.37909 0.0935059 7 0.0935059C7.62091 0.0935059 8.22654 0.286102 8.7334 0.644746C9.24026 1.00339 9.6234 1.51042 9.83 2.09596H20V4.09596H9.83C9.6234 4.68149 9.24026 5.18852 8.7334 5.54717C8.22654 5.90581 7.62091 6.09841 7 6.09841C6.37909 6.09841 5.77346 5.90581 5.2666 5.54717C4.75974 5.18852 4.3766 4.68149 4.17 4.09596H0V2.09596H4.17ZM7 4.09596C7.26522 4.09596 7.51957 3.9906 7.70711 3.80306C7.89464 3.61553 8 3.36117 8 3.09596C8 2.83074 7.89464 2.57639 7.70711 2.38885C7.51957 2.20131 7.26522 2.09596 7 2.09596C6.73478 2.09596 6.48043 2.20131 6.29289 2.38885C6.10536 2.57639 6 2.83074 6 3.09596C6 3.36117 6.10536 3.61553 6.29289 3.80306C6.48043 3.9906 6.73478 4.09596 7 4.09596ZM13 11.096C13.2652 11.096 13.5196 10.9906 13.7071 10.8031C13.8946 10.6155 14 10.3612 14 10.096C14 9.83074 13.8946 9.57639 13.7071 9.38885C13.5196 9.20131 13.2652 9.09596 13 9.09596C12.7348 9.09596 12.4804 9.20131 12.2929 9.38885C12.1054 9.57639 12 9.83074 12 10.096C12 10.3612 12.1054 10.6155 12.2929 10.8031C12.4804 10.9906 12.7348 11.096 13 11.096ZM7 18.096C7.26522 18.096 7.51957 17.9906 7.70711 17.8031C7.89464 17.6155 8 17.3612 8 17.096C8 16.8307 7.89464 16.5764 7.70711 16.3888C7.51957 16.2013 7.26522 16.096 7 16.096C6.73478 16.096 6.48043 16.2013 6.29289 16.3888C6.10536 16.5764 6 16.8307 6 17.096C6 17.3612 6.10536 17.6155 6.29289 17.8031C6.48043 17.9906 6.73478 18.096 7 18.096Z">
 	</path>
 	</svg>
@@ -208,9 +208,9 @@ export const BackIcon = ({color, styleClassName,handleClick})=>{
 export const BinIcon = ({styleClassName, handleClick}) =>{
 
 	return <svg onClick={handleClick} className={styleClassName} stroke="var(--bin-icon-color)" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-	<path d="M3 6H21M5 6V20C5 21.1046 5.89543 22 7 22H17C18.1046 22 19 21.1046 19 20V6M8 6V4C8 2.89543 8.89543 2 10 2H14C15.1046 2 16 2.89543 16 4V6" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round"/>
-	<path d="M14 11V17"  strokeWidth="2" strokeLinecap="round" stroke-linejoin="round"/>
-	<path d="M10 11V17"  strokeWidth="2" strokeLinecap="round" stroke-linejoin="round"/>
+	<path d="M3 6H21M5 6V20C5 21.1046 5.89543 22 7 22H17C18.1046 22 19 21.1046 19 20V6M8 6V4C8 2.89543 8.89543 2 10 2H14C15.1046 2 16 2.89543 16 4V6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+	<path d="M14 11V17"  strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+	<path d="M10 11V17"  strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
 	</svg>
 
 }
@@ -227,16 +227,16 @@ export const BinIcon = ({styleClassName, handleClick}) =>{
 
 
 
-export const discountIcon = ({color, styleClassName })=>{
+export const DiscountIcon = ({color, styleClassName })=>{
 	return <svg className={styleClassName} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14">
 	<path fill="transparent" stroke={color} d="M7.284 1.402h4.964a.35.35 0 0 1 .35.35v4.964a.7.7 0 0 1-.205.495L7.49 12.115a.7.7 0 0 1-.99 0L1.885 7.5a.7.7 0 0 1 0-.99L6.79 1.607a.7.7 0 0 1 .495-.205Z"/>
 	<circle fill={color} cx="9.1" cy="4.9" r="1"/>
 	</svg>
 }
 
-export const discountIconTotal = ({color, styleClassName})=>{
-	return <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
-<path strokeLinecap="round" stroke-linejoin="round" fill="transparent" stroke={color} d="m10.802 15.686 5.367-5.368a.15.15 0 0 0 .046-.109V4.144m-2.998-.95h-5.67a.16.16 0 0 0-.11.046L1.779 8.897a.154.154 0 0 0 0 .219l5.594 5.593c.06.06.158.06.218 0l5.658-5.657a.15.15 0 0 0 .045-.11v-5.67a.077.077 0 0 0-.077-.077Zm-3.06 3.749a.643.643 0 1 1-1.286 0 .643.643 0 0 1 1.286 0m-.648-.005h.01v.01h-.01z"/>
+export const DiscountIconTotal = ({color, styleClassName})=>{
+	return <svg className={styleClassName} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
+<path strokeLinecap="round" strokeLinejoin="round" fill="transparent" stroke={color} d="m10.802 15.686 5.367-5.368a.15.15 0 0 0 .046-.109V4.144m-2.998-.95h-5.67a.16.16 0 0 0-.11.046L1.779 8.897a.154.154 0 0 0 0 .219l5.594 5.593c.06.06.158.06.218 0l5.658-5.657a.15.15 0 0 0 .045-.11v-5.67a.077.077 0 0 0-.077-.077Zm-3.06 3.749a.643.643 0 1 1-1.286 0 .643.643 0 0 1 1.286 0m-.648-.005h.01v.01h-.01z"/>
 </svg>
 }
 

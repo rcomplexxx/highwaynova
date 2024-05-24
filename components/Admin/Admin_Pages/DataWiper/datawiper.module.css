@@ -23,6 +23,10 @@
     user-select: none;
 }
 
+.marginTop{
+    margin-top: var(--size-8);
+}
+
 .enterIdSpan{
     margin-top: var(--size-6);
     font-size: var(--font-size-2);

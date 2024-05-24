@@ -753,6 +753,22 @@ else{
         }
         else if(dataType ==="wipe_product_returns")
         wipeData('product_returns')
+
+        else if(dataType ==="wipe_emails")
+          {
+          wipeData('emails')
+          wipeData('email_sequences')
+          wipeData('email_campaigns')
+          }
+
+        else if(dataType ==="wipe_email_sequences")
+         {
+          wipeData('email_sequences')
+          wipeData('email_campaigns')
+         }
+        else if(dataType ==="wipe_email_campaigns")
+          wipeData('email_campaigns')
+     
         
         else {
           console.error("Wrong data type");

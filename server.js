@@ -45,7 +45,7 @@ campaigns.forEach(campaign=>{
 
 
     
-    let sendTimeGap = parseInt(campaignEmails[currentEmailIndex+1]?.sendTimeGap);
+    let sendTimeGap = parseInt(campaignEmails[currentEmailIndex]?.sendTimeGap);
       if(!sendTimeGap || isNaN(sendTimeGap)) sendTimeGap = 0;
 
     let dateCalculated = campaign.sendingDateInUnix;
@@ -57,8 +57,10 @@ campaigns.forEach(campaign=>{
 
     })
 
+    console.log('date now', new Date(Date.now()), 'calculated date', new Date(dateCalculated))
+
     let   finalSendingDate=(Date.now() - dateCalculated >  0)?
-    Date.now()+sendTimeGap: dateCalculated+sendTimeGap;
+    Date.now()+60000: dateCalculated+sendTimeGap;
 
 
 
