@@ -127,6 +127,7 @@ column-fill:balance;
     padding: 0 var(--size-4);
     box-sizing: border-box;
     padding-top: var(--size-5);
+    margin-bottom: var(--size-2);
   }
 
   
@@ -207,6 +208,16 @@ column-fill:balance;
 
   @media (max-width: 480px)  {
 
+
+    .starDiv{
+      padding: 0 var(--size-3);
+      padding-top: var(--size-5);
+    }
+
+    .reviewText{
+      padding: 0 var(--size-3);
+    }
+
     .masonry{
   
       width: calc(100% - var(--size-7));
@@ -217,5 +228,7 @@ column-fill:balance;
 
   
   }
+
+
 
 
