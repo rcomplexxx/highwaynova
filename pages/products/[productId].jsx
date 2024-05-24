@@ -245,7 +245,7 @@ export default function ProductPage({ product, images, startReviews, ratingData 
             onAddToCart={onAddToCart}
           />
 
-          {product.description && <div className={styles.descriptionDiv} dangerouslySetInnerHTML={{ __html: product.description }}/>}
+          {product.description && <ProductDescription description = {product.description}/>}
 
           <ProductPageCards />
         </div>

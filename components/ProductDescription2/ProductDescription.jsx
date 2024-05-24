@@ -32,6 +32,6 @@ export default function ProductDescription({description}) {
 
 
   return (
-    <div></div>
+    <div className={styles.descriptionDiv}>{ReactHtmlParser(description, options)}</div>
   )
 }
