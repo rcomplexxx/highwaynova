@@ -87,6 +87,7 @@ export default function App({ Component, pageProps }) {
       
     };
 
+
   
     if(localStorage.getItem("popupShownDateInDays")){
       
@@ -105,7 +106,8 @@ export default function App({ Component, pageProps }) {
       else if(emailPopupTimeChecker<daysBetweenEmailPopups-1) router.events.off('routeChangeStart', handleRouteChangeStart);
     }
     else{
-      localStorage.setItem("popupShownDateInDays", Math.floor(Date.now() / 86400000));
+      handleRouteChangeStart(router.pathname);
+      router.events.on('routeChangeStart', handleRouteChangeStart);
     }
     
 
