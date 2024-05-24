@@ -629,10 +629,11 @@ Cormorant+Garamond */
 
 --email-popup-send-button-bg:var(--accent-color-4);
 --email-popup-send-button-border: var(--neutral-0);
---email-popup-input-bg:var(--neutral-9);
---email-popup-input-border: var(--neutral-0);
 
---email-popup-cancel-button-bg: var(--neutral-4);
+--email-popup-input-bg:var(--neutral-0);
+--email-popup-input-border: var(--neutral-4);
+
+--email-popup-cancel-button-bg: var(--neutral-3);
 --email-cancel-icon-color: var(--neutral-0);
 
 

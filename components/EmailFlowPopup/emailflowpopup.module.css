@@ -67,17 +67,17 @@
 .cancelIcon{
 
     position: absolute;
-    top:0;
-    right: 0;
+    top: var(--size-2);
+    right: var(--size-2);
     height: var(--size-4);
     width: var(--size-4);
 
     background-color: var(--email-popup-cancel-button-bg);
 
     padding: var(--size-3);
+    border: 1px solid var(--email-cancel-icon-color);
     border-radius: 50%;
 
-    transform: translateX(calc(50% - 2px)) translateY(calc(-50% + 2px));
 
 
     cursor: pointer;
