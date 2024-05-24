@@ -155,7 +155,7 @@
     justify-content: center;
     align-items: center;
     color: var(--apply-coupon-txt-color);
-    text-decoration: none;
+    
     width:  var(--size-10);
     background-color: var(--apply-coupon-color);
     border-radius: 4px;

@@ -75,8 +75,12 @@ h2{
 }
 
 a{
+  text-decoration: none;
   color: #49869e;
+  /* color: #ff1e1e; */
 }
+
+
 
 p {
   margin: var(--size-3) 0;
@@ -128,9 +132,7 @@ p {
   object-fit: cover;
 }
 
-.text_decoration_none{
-  text-decoration: none;
-}
+
 
 .hideScroll{
   overflow-y: hidden;
@@ -366,9 +368,9 @@ Cormorant+Garamond */
 
 
  --home-review-color: var(--neutral-10);
-  --home-review-bg: var(--neutral-1);
+  --home-review-bg: var(--neutral-0-5);
    /*#081522*/
-  --home-review-box-shadow: 0px 1px 2px var(--neutral-1);
+  --home-review-box-shadow: 0px 1px 2px var(--home-review-bg);
   /*  0px 2px 6px #1b1e22;*/
   --star-home-review-color: #f7df48;
 

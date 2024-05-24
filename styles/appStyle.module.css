@@ -27,7 +27,6 @@
     font-weight: 800; 
 
     transition: transform 0.1s ease;
-    text-decoration: none;
 
     z-index: 2;
   }

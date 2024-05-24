@@ -21,7 +21,6 @@
   }
   
   .pageLink {
-    text-decoration: none;
     color: var(--high-contrast-light-txt-color);
     margin-left: var(--size-4);
     margin-right: var(--size-4);

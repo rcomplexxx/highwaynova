@@ -72,13 +72,17 @@
     color: var(--nav-site-title-color);
     align-items: center;
     display: flex;
-    text-decoration: none;
-    transition: transform 0.08s ease-in;
+
+    margin-top: var(--size-2);
+    margin-bottom: var(--size-2);
+    
+    
     font-size: var(--font-size-5);
  
     font-weight: 600;
-    margin-top: var(--size-2);
-    margin-bottom: var(--size-2);
+
+    transition: transform 0.08s ease-in;
+  
   
     
   }
@@ -93,7 +97,7 @@
   }
 
   .logoLink{
-    text-decoration: none;
+    
     display: flex;
     justify-content: center;
     align-items: center;
@@ -153,7 +157,7 @@
   
   .linkStyle {
     color: var(--nav-links-color);
-    text-decoration: none;
+    
     transition: transform 0.08s ease-in;
     font-size: var(--font-size-3);
     font-weight: 600;
@@ -227,7 +231,6 @@
     justify-content: flex-start;
   
    
-    cursor: pointer;
 
     color: var(--nav-links-color);
    
@@ -236,7 +239,6 @@
     padding: var(--size-4);
     font-weight: 600;
 
-    text-decoration: none;
     font-size: var(--font-size-2);
     
   }

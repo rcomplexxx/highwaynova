@@ -34,11 +34,19 @@
     margin: var(--size-9) var(--size-6);
     margin-top: var(--size-3);
 
+    font-size: var(--font-size-4);
     font-weight: 400;
+    line-height: 24px;
     
     box-shadow: var(--home-review-box-shadow);
     
   }
+
+  
+ 
+
+
+
   
   .mainDiv {
     display: flex;
@@ -62,6 +70,9 @@
   }
   
 
+ 
+   
+
   .authorDiv{
 
     display: flex;
@@ -69,7 +80,10 @@
 
     margin-top: auto;
     margin-bottom:0;
-    font-weight: 600;
+
+
+    font-size: var(--font-size-4);
+    font-weight: 500;
   }
 
 

@@ -21,7 +21,6 @@
     color: var(--nav-site-title-color);
     align-items: center;
     display: flex;
-    text-decoration: none;
     transition: transform 0.08s ease-in;
     font-size: var(--font-size-5);
     margin: var(--size-2) 0;
@@ -197,7 +196,6 @@
   
   .linkStyle {
     color: var(--red-2);
-    text-decoration: none;
     transition: transform 0.08s ease-in;
     font-size: var(--font-size-3);
   }

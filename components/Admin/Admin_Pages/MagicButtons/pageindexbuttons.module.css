@@ -17,7 +17,6 @@
   }
   
   .linkDivPageNumber {
-    text-decoration: none;
     color: rgb(239, 241, 217);
     margin-left:  var(--size-4);
     margin-right:  var(--size-4);

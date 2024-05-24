@@ -616,16 +616,23 @@
 
   
   .continueLink{
-    margin-left: auto;
-    text-decoration: none;
 
-    padding: var(--size-4);
+
     color:var(--high-contrast-light-txt-color);
-   
 
-      display: flex;
+
+    display: flex;
       justify-content: center;
       align-items: center;
+
+      margin-left: auto;
+    
+
+    padding: var(--size-4);
+ 
+   
+
+      
       font-weight: 700;
       border-radius: 6px;
       

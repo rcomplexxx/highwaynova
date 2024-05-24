@@ -64,18 +64,24 @@
     height: var(--size-8);
     max-width: calc(var(--size-16) - var(--size-9));
     width: calc(100% - var(--size-9));
+
     color: var(--high-contrast-light-txt-color);
-    border: 1px solid var(--border-color-strong);
-    border-radius: 4px;
-    background-color: transparent;
-    margin-top: auto;
-    margin-bottom: var(--size-7);
+
     display: flex;
     justify-content: center;
     align-items: center;
-    text-decoration: none;
+
+   
+    margin-top: auto;
+    margin-bottom: var(--size-7);
+    border: 1px solid var(--border-color-strong);
+    border-radius: 4px;
+   
+
+   
+    
     font-size: var(--font-size-5);
-    cursor: pointer;
+ 
 }
 
 
