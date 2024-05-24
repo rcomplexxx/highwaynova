@@ -19,6 +19,13 @@
     margin-top: var(--size-8);
 }
 
+.iconText{
+    max-width: var(--size-10);
+    font-size: var(--font-size-1);
+    margin-top: var(--size-3);
+
+}
+
 
 .trustIcon{
     flex:1;
@@ -38,10 +45,6 @@
     width: 40px;
 }
 
-.trustIcon span{
-    margin-top: var(--size-3);
-    font-size: var(--font-size-2);
-}
 
 
 .mainContactDiv{

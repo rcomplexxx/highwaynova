@@ -159,15 +159,15 @@ export default function ProductPageCards() {
       <div className={styles.trustIcons}>
         <div className={styles.trustIcon}>
           <TruckIcon styleClassName={styles.trustIconImage} />
-          <span>Free shipping</span>
+          <span className={styles.iconText}>Free shipping</span>
         </div>
         <div className={styles.trustIcon}>
          <PackageReturnIcon styleClassName={styles.trustIconImage}/>
-         <span>Free returns</span>
+         <span className={styles.iconText}>Free returns</span>
         </div>
         <div className={styles.trustIcon}>
           <GuaranteeIcon styleClassName={styles.trustIconImage}/>
-          <span>Money back guarantee</span>
+          <span className={styles.iconText}>Money back guarantee</span>
         </div>
       </div>
     </>

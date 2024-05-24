@@ -420,9 +420,9 @@ Cormorant+Garamond */
  
  --package-return-dropcard-icon-color: rgb(156, 144, 63);
  --chat-icon-color: rgb(53, 144, 248);
- --truck-icon-color: var(--neutral-3);
- --package-return-icon-color: var(--neutral-3);
- --guarantee-icon-color: var(--neutral-3);
+ --truck-icon-color: var(--neutral-4);
+ --package-return-icon-color: var(--neutral-4);
+ --guarantee-icon-color: var(--neutral-4);
 
  
 
