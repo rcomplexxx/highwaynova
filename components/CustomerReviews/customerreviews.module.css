@@ -136,8 +136,8 @@ column-fill:balance;
     margin-top: var(--size-1);
     margin-bottom: var(--size-4);
     
-    font-size: var(--font-size-4);
-    line-height: 26px;
+    font-size: var(--font-size-3);
+    line-height: 24px;
     font-weight: 400;
     padding: 0 var(--size-4);
   }
@@ -145,7 +145,7 @@ column-fill:balance;
 
   .reviewAuthor{
     margin-top: 40px;
-    font-size: var(--font-size-4);
+    font-size: var(--font-size-3);
     font-weight: 500;
       padding: 0 var(--size-4);
     
@@ -209,13 +209,23 @@ column-fill:balance;
   @media (max-width: 480px)  {
 
 
-    .starDiv{
+    /* .starDiv{
       padding: 0 var(--size-3);
       padding-top: var(--size-5);
     }
 
     .reviewText{
       padding: 0 var(--size-3);
+    } */
+
+    .reviewText{
+      font-size: var(--font-size-2);
+      line-height: 22px;
+    }
+
+    .reviewAuthor{
+       font-size: var(--font-size-2);
+  
     }
 
     .masonry{
