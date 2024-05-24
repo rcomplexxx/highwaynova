@@ -173,7 +173,7 @@ const totalItems= useMemo(()=>{
         <DefaultSeo {...SEO}/>
        
       
-      {<EmailFlowPopup setEmailPopup={setEmailPopup}/>}
+      {emailPopup && <EmailFlowPopup setEmailPopup={setEmailPopup}/>}
     {!router.pathname.includes('admin') && <Navbar totalItems={totalItems}  newProduct={newProduct} setNewProduct={setNewProduct}/>}
 
       
