@@ -37,7 +37,7 @@
     border-radius: 12px;
     background-color: var(--customer-review-bg);
     /* animation: spawnFullScreenReview 0.3s ease forwards; */
-    
+    word-wrap: break-word;
     
    
 }
