@@ -124,7 +124,7 @@ export const PartFilledStar =({fillPercentage, size})=>{
 }
 
 
-export const Stars = ({ratingNumber, size, gap, fillColor=`var(--star-color)`})=>{
+const starArray = memo(({ ratingNumber, size, gap, fillColor = 'var(--star-color)' }) => {
 
 
 	const stars = [];
@@ -145,10 +145,19 @@ export const Stars = ({ratingNumber, size, gap, fillColor=`var(--star-color)`})=
 		);
 	  }
 	}
+	return stars;
+}, [ratingNumber, size, fillColor]);
+
+
+export const Stars = ({ ratingNumber, size, gap, fillColor = 'var(--star-color)' }) => {
 
 
 
-	return <div className={styles.starsWrapper} style={gap && {gap:`${gap}px`}}>{stars}</div>
+
+
+	return <div className={styles.starsWrapper} style={gap && { gap: `${gap}px` }}>
+		{starArray({ ratingNumber, size, fillColor })}
+		</div>;
 
 
 }
