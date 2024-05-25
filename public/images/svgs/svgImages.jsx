@@ -147,7 +147,7 @@ export const Stars = ({ratingNumber, size, gap, fillColor=`var(--star-color)`})=
 
 
 
-	return <div style={{display:"flex", gap:`${gap}px`}}>{stars}</div>
+	return <div style={{display:"flex", gap:`${gap}px`, contain:'layout paint'}}>{stars}</div>
 
 
 }
