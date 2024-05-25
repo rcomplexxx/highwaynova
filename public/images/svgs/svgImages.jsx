@@ -124,22 +124,30 @@ export const PartFilledStar =({fillPercentage, size})=>{
 
 export const Stars = ({ratingNumber, size, gap, fillColor=`var(--star-color)`})=>{
 
-	return <div style={{display:"flex", width:'min-content', gap:`${gap}px`}}> {Array.from({ length: 5 }, (_, index) => {
 
-		if(index===Math.floor(ratingNumber)){
-			return <PartFilledStar fillPercentage={ratingNumber % 1 * 100} size={size} gap={gap}/>
-		}
-
-
-       return <Star color={index<ratingNumber?fillColor:`var(--star-empty-color)`}
-	   size={size} gap ={gap}
-	  
-	   />
-
+	const stars = [];
+	const filledIndex = Math.floor(ratingNumber);
+  
+	for (let i = 0; i < 5; i++) {
+	  if (i === filledIndex) {
+		stars.push(
+		  <PartFilledStar key={i} fillPercentage={ratingNumber % 1 * 100} size={size} gap={gap} />
+		);
+	  } else {
+		stars.push(
+		  <Star
+			key={i}
+			color={i < ratingNumber ? fillColor : 'var(--star-empty-color)'}
+			size={size}
+			gap={gap}
+		  />
+		);
+	  }
 	}
-      )
-	  
-	  }</div>
+
+
+
+	return <div style={{display:"flex", gap:`${gap}px`}}>{stars}</div>
 
 
 }
