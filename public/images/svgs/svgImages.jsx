@@ -125,39 +125,39 @@ export const PartFilledStar =({fillPercentage, size})=>{
 }
 
 
+const starArray = React.memo(({ ratingNumber, size, gap, fillColor = 'var(--star-color)' }) => {
 
+
+	const stars = [];
+	const filledIndexExists= ratingNumber % 1 >0;
+  
+	for (let i = 0; i < 5; i++) {
+	  if (filledIndexExists && i === Math.floor(ratingNumber)) {
+		stars.push(
+		  <PartFilledStar fillPercentage={ratingNumber % 1} size={size} />
+		);
+	  } else {
+		stars.push(
+		  <Star
+			color={i < ratingNumber ? fillColor : 'var(--star-empty-color)'}
+			size={size}
+			
+		  />
+		);
+	  }
+	}
+	return stars;
+}, [ratingNumber, size, fillColor]);
 
 
 export const Stars = ({ ratingNumber, size, gap, fillColor = 'var(--star-color)' }) => {
 
 
-	const StarArray = React.memo(({ ratingNumber, size, gap, fillColor = 'var(--star-color)' }) => {
 
-
-		const stars = [];
-		const filledIndex = Math.floor(ratingNumber);
-	  
-		for (let i = 0; i < 5; i++) {
-		  if (i === filledIndex) {
-			stars.push(
-			  <PartFilledStar fillPercentage={ratingNumber % 1} size={size} />
-			);
-		  } else {
-			stars.push(
-			  <Star
-				color={i < ratingNumber ? fillColor : 'var(--star-empty-color)'}
-				size={size}
-				
-			  />
-			);
-		  }
-		}
-		return stars;
-	}, [ratingNumber, size, fillColor]);
 
 
 	return <div className={styles.starsWrapper} style={gap && { gap: `${gap}px` }}>
-		<StarArray ratingNumber={ratingNumber} size={size} fillColor={fillColor} />
+		{starArray({ ratingNumber, size, fillColor })}
 		</div>;
 
 
