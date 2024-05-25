@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
-import StarRatings from "react-star-ratings";
 import styles from "./homeReviews.module.css";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Image from "next/image";
-import { STARPATH } from "@/public/images/svgs/svgImages";
+import { STARPATH, Stars } from "@/public/images/svgs/svgImages";
 
 const reviews = [
   {
@@ -45,15 +44,8 @@ function Review({ reviewText, author, authorImage }) {
       
       <div   className={styles.ratingStarDiv}>
 
-      <StarRatings
-          rating={5}
-          svgIconPath={STARPATH}
-          starRatedColor="var(--star-home-review-color)"
-          numberOfStars={5}
-          starEmptyColor={"var(--star-empty-color)"}
-          starDimension="24px"
-          starSpacing="2px"
-        />
+    
+          <Stars ratingNumber={5} size={24} gap={4} fillColor={`var(--star-home-review-color)`}/>
 
 </div>
 

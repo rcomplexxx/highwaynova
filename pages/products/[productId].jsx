@@ -7,7 +7,6 @@ import CustomerReviews from "@/components/CustomerReviews/CustomerReviews.jsx";
 // import "react-gallery-carousel/dist/index.css";
 
 import { useState, useContext} from "react";
-import StarRatings from "react-star-ratings";
 import styles from "../../styles/productpage.module.css";
 
 
@@ -24,7 +23,7 @@ import PayPalButton from "@/components/Checkout/PayPal/PayPal";
 import { NextSeo } from "next-seo";
 import { productPageSeo } from "@/utils/SEO-configs/next-seo.config";
 import ProductDescription from "@/components/ProductDescription2/ProductDescription";
-import { STARPATH } from "@/public/images/svgs/svgImages";
+import { STARPATH, Stars } from "@/public/images/svgs/svgImages";
 import { Amex,Discover, Jcb, MasterCard, Visa } from "@/public/images/svgs/svgImages";
 
 //slickGoTo
@@ -110,15 +109,8 @@ export default function ProductPage({ product, images, startReviews, ratingData 
           >
 
         {/* <span className={styles.ratingNumber}>{ratingData.rating.toFixed(1)}</span> */}
-            <StarRatings
-              rating={ratingData.rating?ratingData.rating:4.7}
-              svgIconPath={STARPATH}
-              starRatedColor="var(--star-color)"
-              numberOfStars={5}
-              starEmptyColor={"var(--star-empty-color)"}
-              starDimension="20px"
-              starSpacing="2px"
-            />
+            
+            <Stars ratingNumber={ratingData.rating?ratingData.rating:4.7} size={20} gap={4}/>
             <span className={styles.product_rating_reviews_number}>{ratingData.reviewsNumber} reviews</span>
           </div>
           <div className={styles.product_price}>

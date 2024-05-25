@@ -459,6 +459,7 @@ Cormorant+Garamond */
 
  --star-color:#e9b335;
 --star-empty-color: var(--neutral-2);
+--star-stroke-color: var(--neutral-0);
 --star-hover-color: orange;
 
 /*neutral3-#666666(102, 102, 102) n1-#292929(41,41,41)

@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import StarRatings from "react-star-ratings";
 import styles from "./ratinginfo.module.css";
-import { STARPATH } from "@/public/images/svgs/svgImages";
+import { STARPATH, Star, Stars } from "@/public/images/svgs/svgImages";
 
 export default function RatingInfo({ratingData, openRatingInfo, setOpenRatingInfo}) {  
   
@@ -67,18 +66,11 @@ export default function RatingInfo({ratingData, openRatingInfo, setOpenRatingInf
     <div className={styles.ratingInfoMain}>
   
         <div className={styles.ratingTitle}>
-               <StarRatings
-            rating={ratingData.rating}
-
-            svgIconPath={STARPATH}
-
-            starRatedColor="var(--star-color)"
-            numberOfStars={1}
-            starEmptyColor={"var(--star-empty-color)"}
           
-            starDimension="32px"
-            starSpacing="2px"
-          />
+
+      <Star color={`var(--star-color)`} size={32} gap ={4}/>
+
+
           <span className={styles.ratingSpan}>{ratingData.rating.toFixed(1)}</span>
           </div>
           {
@@ -107,17 +99,8 @@ function RatingMetric({percentage ,rating, rateNumber}) {
   
 
 return <div className={styles.ratingMetric}>
-    <StarRatings
-            rating={rating}
-            starRatedColor="var(--star-color)"
-            numberOfStars={5}
-            starEmptyColor={"var(--star-empty-color)"}
-
-            svgIconPath={STARPATH}
-            
-            starDimension="16px"
-            starSpacing="2px"
-          />
+    
+           <Stars ratingNumber={rating} size={16} gap={4}/>
           <div className={styles.percentRatingWrapper}>
             <div className={styles.percentageRatingDiv} style={{width:`${percentage}%`}} ></div>
           </div>

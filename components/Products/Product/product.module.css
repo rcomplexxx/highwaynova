@@ -71,13 +71,15 @@
   }
 
   .starDiv{
+    display: flex;
+    align-items: center;
    margin: var(--size-3) 0; 
   }
 
   
     .product_rating_reviews_number{
       color: var(--weak-txt-color);
-      margin-left: var(--size-3);
+      margin-left: var(--size-4);
       font-size: var(--font-size-2);
       font-weight: 300;
     }

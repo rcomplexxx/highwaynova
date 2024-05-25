@@ -1,9 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Image from "next/image";
 import styles from './fullscreenreview.module.css';
-import StarRatings from 'react-star-ratings';
 import ReactHtmlParser from "react-html-parser";
-import { STARPATH } from '@/public/images/svgs/svgImages';
+import { STARPATH, Stars } from '@/public/images/svgs/svgImages';
 import { CancelIcon } from '@/public/images/svgs/svgImages';
     
 
@@ -143,16 +142,9 @@ ${(imageSrc?imageLoaded:true) && styles.spawnFullScreenReview}`}>
         <span>Verified purchase</span>
         </div> */}
         </div>
-        <StarRatings
-          rating={parseInt(stars, 10)}
-          
-          svgIconPath={STARPATH}
-          starRatedColor="var(--star-color)"
-          numberOfStars={5}
-          starEmptyColor={"var(--star-empty-color)"}
-          starDimension="20px"
-          starSpacing="2px"
-        />
+       
+
+<Stars ratingNumber={parseInt(stars, 10)} size={20} gap={4}/>
 
         <div className={styles.reviewText}>
         {ReactHtmlParser(text)}

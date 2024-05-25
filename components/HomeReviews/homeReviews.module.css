@@ -64,9 +64,9 @@
     width: 100%;
    /* display: flex;
    justify-content: center; */
-   margin-left: var(--size-2);
+
    margin-top: var(--size-3);
-   margin-bottom: var(--size-2);
+   margin-bottom: var(--size-3);
   }
   
 

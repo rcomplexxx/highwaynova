@@ -1,13 +1,12 @@
 import Image from 'next/image';
 import React, { useEffect,  useState } from 'react'
-import StarRatings from 'react-star-ratings';
 import RatingInfo from './RatingInfo/RatingInfo';
 import styles from './writereviewvisible.module.css';
 
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import SortReviewsButton from './SortReviewsButton/SortReviewsButton';
-import { ArrowDown, STARPATH } from '@/public/images/svgs/svgImages';
+import { ArrowDown, STARPATH, Stars } from '@/public/images/svgs/svgImages';
 
 
 const WriteReview = dynamic(() => import('./WriteReview'));
@@ -89,16 +88,9 @@ export default function WriteReviewVisible({ratingData, sortingType, setSortingT
           event.preventDefault();
           
          setOpenRatingInfo(!openRatingInfo)}}>
-          <StarRatings
-            rating={ratingData.rating}
-            svgIconPath={STARPATH}
-            starRatedColor="var(--star-color)"
-            numberOfStars={5}
-            starEmptyColor={"var(--star-empty-color)"}
-           
-            starDimension="24px"
-            starSpacing="2px"
-          />
+         
+          <Stars ratingNumber={ratingData.rating} size={24} gap={4}/>
+          
           <span className={styles.reviewsNumberSpan}>
             {ratingData.reviewsNumber} reviews
           </span>
