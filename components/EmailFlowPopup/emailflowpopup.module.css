@@ -27,6 +27,15 @@
    
 
     background-color: var(--email-popup-bg);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
+
+    border-radius: 16px;
+    overflow: clip;
   
    
 
@@ -35,7 +44,6 @@
 
 .contentWrapperDiv{
 
-    height: 100%;
     width: 100%;
 
     display: flex;
@@ -44,6 +52,7 @@
     align-items: center;
     /* background-color: var(--email-popup-cancel-button-bg); */
    
+    margin-top: var(--size-3);
 
     z-index: 3;
 }
@@ -69,16 +78,15 @@
     position: absolute;
     top: var(--size-2);
     right: var(--size-2);
-    height: var(--size-4);
-    width: var(--size-4);
+    height: 20px;
+    width: 20px;
 
-    background-color: var(--email-popup-cancel-button-bg);
+    /* background-color: var(--email-popup-cancel-button-bg); */
 
     padding: var(--size-3);
-    border: 1px solid var(--email-cancel-icon-color);
+    /* border: 1px solid var(--email-cancel-icon-color); */
+  
     border-radius: 50%;
-
-
 
     cursor: pointer;
   
@@ -87,11 +95,30 @@
 }
 
 
+.signUpText{
+
+    font-size: var(--font-size-4);
+    font-weight: 500;
+
+}
+
+.discountText{
+  
+    margin-top: var(--size-2);
+    margin-bottom: var(--size-2);
+    font-size: var(--font-size-9);
+    font-weight: 700;
+
+}
+
+
 
 
 .provideEmailDiv{
+    height: max-content;
     width: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     box-sizing: border-box;
@@ -103,12 +130,14 @@
 
 
 .emailField{
+    width: 100%;
     min-width: 0;
     color: var(--email-popup-light-color);
     background-color: var(--email-popup-input-bg);
-    height: var(--size-8);
-    flex: 1;
-    margin-right: var(--size-3);
+    height: 40px;
+
+    /* margin-right: var(--size-3); */
+    margin-bottom: var(--size-3);
     box-sizing: border-box;
     text-indent: var(--size-2);
     border: 1px solid var(--email-popup-input-border);
@@ -124,6 +153,8 @@
 }
 
 .sendEmailButton{
+    height: 40px;
+    width: 100%;
     min-width: var(--size-10);
     color: var(--email-popup-light-color);
     background-color: var(--email-popup-send-button-bg);
@@ -131,16 +162,23 @@
     box-sizing: border-box;
     border: 1px solid var(--email-popup-send-button-border);
     border-radius: 8px;
+    font-weight: 500;
     white-space: nowrap;
 }
 
 .emailError{
+    background-color: var(--neutral-0);
     color: var(--error-color);
     align-self: flex-start;
     font-size: var(--font-size-2);
-    margin: 0 var(--size-5);
-    padding-left: var(--size-1);
+  
+    margin: var(--size-2) var(--size-5);
+
+    border-radius: 8px;
+    padding: var(--size-1) var(--size-2);
 }
+
+
 
 
 

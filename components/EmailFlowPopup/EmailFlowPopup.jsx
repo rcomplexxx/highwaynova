@@ -94,7 +94,10 @@ export default function EmailFlowPopup({setEmailPopup}){
       };
 
       const popupRequestContent= ()=>{
-        return <> <span className={styles.signUpText}>SIGN UP AND GET 15% OFF!</span> 
+        return <> 
+        <span className={styles.signUpText}>Sign up and get</span> 
+        <span className={styles.discountText}>10% OFF!</span> 
+        <span className={styles.signUpText}>your first order</span> 
         {/* <span>SIGN UP BELOW!</span>  */}
         <div className={styles.provideEmailDiv}>
           <input ref={emailFieldRef} placeholder='Enter email here' onChange={()=>{setError()}} className={styles.emailField} maxLength={127}/>
@@ -122,6 +125,7 @@ export default function EmailFlowPopup({setEmailPopup}){
           height={0} width={0}
           className={styles.emailPopupBg}
           sizes='100vw'
+          priority={true}
           loading={'eager'}
           />
 
