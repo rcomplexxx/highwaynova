@@ -122,7 +122,7 @@
     justify-content: center;
     align-items: center;
     box-sizing: border-box;
-    padding: 0 var(--size-5);
+    padding: 0 var(--size-7);
     margin-top: var(--size-6);
     margin-bottom: var(--size-2);
    
@@ -162,7 +162,8 @@
     box-sizing: border-box;
     border: 1px solid var(--email-popup-send-button-border);
     border-radius: 8px;
-    font-weight: 500;
+    font-size: var(--font-size-3);
+    font-weight: 700;
     white-space: nowrap;
 }
 
@@ -193,6 +194,31 @@
     opacity: 0.8;
 }
 
+
+
+@media (max-width: 480px)  {
+
+ 
+
+
+    .provideEmailDiv{
+        padding: 0 var(--size-6);
+    }
+}
+
+@media (max-width: 440px)  {
+
+ 
+
+
+    .provideEmailDiv{
+        padding: 0 var(--size-5);
+    }
+}
+
+
+
+
 @keyframes darkenScreen{
     0%{
         opacity: 0;
@@ -212,3 +238,5 @@
         transform: translateY(0) scale(1);
     }
 }
+
+
