@@ -144,7 +144,7 @@ ${(imageSrc?imageLoaded:true) && styles.spawnFullScreenReview}`}>
         </div>
        
 
-<Stars ratingNumber={parseInt(stars, 10)} size={20}}/>
+<Stars ratingNumber={parseInt(stars, 10)} size={20}/>
 
         <div className={styles.reviewText}>
         {ReactHtmlParser(text)}
