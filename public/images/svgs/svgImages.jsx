@@ -124,7 +124,7 @@ export const PartFilledStar =({fillPercentage, size})=>{
 }
 
 
-const starArray = memo(({ ratingNumber, size, gap, fillColor = 'var(--star-color)' }) => {
+const starArray = React.memo(({ ratingNumber, size, gap, fillColor = 'var(--star-color)' }) => {
 
 
 	const stars = [];
