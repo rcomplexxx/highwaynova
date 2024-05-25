@@ -3,6 +3,7 @@
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ GENERAL ICONS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
+import styles from './svgimages.module.css'
 
 
 export const MenuIcon = ({ styleClassName, handleClick})=>{
@@ -83,7 +84,7 @@ c-1.532-1.494-0.687-4.096,1.431-4.403l12.091-1.757c0.841-0.122,1.568-0.65,1.944-
 C22.602,0.567,25.338,0.567,26.285,2.486z`;
 
 export const Star =({color, size})=>{
-	return <svg  stroke={`var(--star-stroke-color)`} strokeWidth={2} style={{height:`${size}px`, width: `${size}px`, marginBottom:'var(--size-2)'}} viewBox="0 0 48 48" fill={color}  xmlns="http://www.w3.org/2000/svg" >
+	return <svg className={`${styles.star}`} stroke={`var(--star-stroke-color)`} strokeWidth={2} style={{height:`${size}px`, width: `${size}px`}} viewBox="0 0 48 48" fill={color}  xmlns="http://www.w3.org/2000/svg" >
 	<path  d="M26.285,2.486l5.407,10.956c0.376,0.762,1.103,1.29,1.944,1.412l12.091,1.757
 c2.118,0.308,2.963,2.91,1.431,4.403l-8.749,8.528c-0.608,0.593-0.886,1.448-0.742,2.285l2.065,12.042
 c0.362,2.109-1.852,3.717-3.746,2.722l-10.814-5.685c-0.752-0.395-1.651-0.395-2.403,0l-10.814,5.685
@@ -98,14 +99,15 @@ C22.602,0.567,25.338,0.567,26.285,2.486z"/>
 export const PartFilledStar =({fillPercentage, size})=>{
 	return  <svg
 	stroke={`var(--star-stroke-color)`}  strokeWidth={2}
-	style={{ height: `${size}px`, width: `${size}px`, marginBottom:'var(--size-2)' }}
+	className={`${styles.star}`}
+	style={{ height: `${size}px`, width: `${size}px` }}
 	viewBox="0 0 48 48"
 	xmlns="http://www.w3.org/2000/svg"
   >
 	<defs>
 	  <linearGradient id="half-fill" x1="0%" y1="0%" x2="100%" y2="0%">
-		<stop offset={`${fillPercentage}%`} stopColor={`var(--star-color)`} />
-		<stop offset={`${fillPercentage}%`} stopColor={`var(--star-empty-color)`} />
+		<stop offset={`${fillPercentage * 100}%`} stopColor={`var(--star-color)`} />
+		<stop offset={`${fillPercentage * 100}%`} stopColor={`var(--star-empty-color)`} />
 	  </linearGradient>
 	</defs>
 	<path
@@ -131,15 +133,14 @@ export const Stars = ({ratingNumber, size, gap, fillColor=`var(--star-color)`})=
 	for (let i = 0; i < 5; i++) {
 	  if (i === filledIndex) {
 		stars.push(
-		  <PartFilledStar key={i} fillPercentage={ratingNumber % 1 * 100} size={size} gap={gap} />
+		  <PartFilledStar fillPercentage={ratingNumber % 1} size={size} />
 		);
 	  } else {
 		stars.push(
 		  <Star
-			key={i}
 			color={i < ratingNumber ? fillColor : 'var(--star-empty-color)'}
 			size={size}
-			gap={gap}
+			
 		  />
 		);
 	  }
@@ -147,7 +148,7 @@ export const Stars = ({ratingNumber, size, gap, fillColor=`var(--star-color)`})=
 
 
 
-	return <div style={{display:"flex", gap:`${gap}px`, contain:'layout paint'}}>{stars}</div>
+	return <div className={styles.starsWrapper} style={{gap:`${gap}px`}}>{stars}</div>
 
 
 }

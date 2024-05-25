@@ -1,4 +1,14 @@
 
+
+.starsWrapper{
+  display: flex;
+  contain: layout paint ;
+}
+
+.star{
+margin-bottom: var(--size-2);
+}
+
  .error{
     color: var(--error-color);
     margin-top: var(--size-3);
