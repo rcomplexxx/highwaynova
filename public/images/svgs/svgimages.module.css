@@ -2,7 +2,7 @@
 
 .starsWrapper{
   display: flex;
-  contain: layout paint ;
+  contain: content;
   gap: 4px;
 }
 
