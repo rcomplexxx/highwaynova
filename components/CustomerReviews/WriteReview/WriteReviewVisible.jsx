@@ -89,7 +89,7 @@ export default function WriteReviewVisible({ratingData, sortingType, setSortingT
           
          setOpenRatingInfo(!openRatingInfo)}}>
          
-          <Stars ratingNumber={ratingData.rating} size={24} gap={4}/>
+          <Stars ratingNumber={ratingData.rating} size={24}/>
           
           <span className={styles.reviewsNumberSpan}>
             {ratingData.reviewsNumber} reviews

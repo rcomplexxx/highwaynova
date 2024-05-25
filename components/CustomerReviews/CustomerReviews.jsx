@@ -39,7 +39,7 @@ function Review({ product_id,  name, text,  stars, imageNames, setFullScreenRevi
 
         <div className={styles.starDiv}>
 
-        <Stars ratingNumber={parseInt(stars, 10)} size={20} gap={4}/>
+        <Stars ratingNumber={parseInt(stars, 10)} size={20}/>
 
         
     </div>

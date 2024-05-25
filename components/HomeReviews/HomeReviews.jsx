@@ -45,7 +45,7 @@ function Review({ reviewText, author, authorImage }) {
       <div   className={styles.ratingStarDiv}>
 
     
-          <Stars ratingNumber={5} size={24} gap={4} fillColor={`var(--star-home-review-color)`}/>
+          <Stars ratingNumber={5} size={24} fillColor={`var(--star-home-review-color)`}/>
 
 </div>
 

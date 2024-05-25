@@ -110,7 +110,7 @@ export default function ProductPage({ product, images, startReviews, ratingData 
 
         {/* <span className={styles.ratingNumber}>{ratingData.rating.toFixed(1)}</span> */}
             
-            <Stars ratingNumber={ratingData.rating?ratingData.rating:4.7} size={20} gap={4}/>
+            <Stars ratingNumber={ratingData.rating?ratingData.rating:4.7} size={20}/>
             <span className={styles.product_rating_reviews_number}>{ratingData.reviewsNumber} reviews</span>
           </div>
           <div className={styles.product_price}>

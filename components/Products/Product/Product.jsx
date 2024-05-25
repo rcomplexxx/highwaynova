@@ -17,7 +17,7 @@ const Product = ({ product}) => {
         <p className={styles.cardContentText}>{product.name}</p>
         <div className={styles.starDiv}>
 
-        <Stars ratingNumber={product.raiting?product.raiting:4.7} size={20} gap={4}/>
+        <Stars ratingNumber={product.raiting?product.raiting:4.7} size={20}/>
 
 
  <span className={styles.product_rating_reviews_number}>{product.reviewNumber} reviews</span></div>

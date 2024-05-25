@@ -3,6 +3,7 @@
 .starsWrapper{
   display: flex;
   contain: layout paint ;
+  gap: 4px;
 }
 
 .star{

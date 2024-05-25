@@ -148,7 +148,7 @@ export const Stars = ({ratingNumber, size, gap, fillColor=`var(--star-color)`})=
 
 
 
-	return <div className={styles.starsWrapper} style={{gap:`${gap}px`}}>{stars}</div>
+	return <div className={styles.starsWrapper} style={gap && {gap:`${gap}px`}}>{stars}</div>
 
 
 }
