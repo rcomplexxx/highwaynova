@@ -179,7 +179,7 @@ export const CustomerStars = ({ratingNumber}) =>{
 
 	const stars = [];
   
-	for (let i = 0; i < 5; i++) {
+	for (let i = 1; i < 6; i++) {
 		stars.push(
 		  <CustomerStar
 		  isEmpty={i > ratingNumber}

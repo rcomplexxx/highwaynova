@@ -87,7 +87,7 @@
     top: var(--size-4);
     transition: all 0.3s ease;
     pointer-events: none;
-    opacity: 0.7;
+ 
   }
 
 
@@ -178,12 +178,12 @@
       top: calc(50% - 10px);
       transition: all 0.3s ease;
       pointer-events: none;
-      opacity: 0.7;
+  
     }
   
   
     .labelFloating {
-      opacity: 0.9;
+      color: var(--checkout-input-placeholder-floating);
     top: 8px;
     font-size: var(--size-4);
     

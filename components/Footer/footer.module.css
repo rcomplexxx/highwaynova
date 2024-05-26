@@ -75,10 +75,7 @@
     
   }
 
-  .subscribeInput::placeholder{
-    color: var(--footer-email-placeholder-color);
-    font-size: var(--font-size-1);
-  }
+
 
   .subscribeInput:focus{
     outline: 1px solid var(--subscribe-input-border);

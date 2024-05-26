@@ -84,37 +84,37 @@
       top: var(--size-4);
       transition: all 0.3s ease;
       pointer-events: none;
-      opacity: 0.7;
+     
     }
   
   
     .input_field:focus + .label,
     .input_field:not(:placeholder-shown) + .label {
-      opacity: 0.9;
+      color: var(--checkout-input-placeholder-floating);
     top: 3px;
     font-size: var(--size-4);
     
   }
   
   .input_field:-webkit-autofill + .label {
-    color: var(--checkout-input-placeholder);
+    color: var(--checkout-input-placeholder-floating);
     position: absolute;
     left: var(--size-3);
     top: 3px;
     transition: none;
     pointer-events: none;
-    opacity: 0.7;
+   
   }
   
   /* For Firefox */
   .input_field:-moz-autofill + .label {
-    color: var(--checkout-input-placeholder);
+    color: var(--checkout-input-placeholder-floating);
     position: absolute;
     left: var(--size-3);
     top: 3px;
     transition: none;
     pointer-events: none;
-    opacity: 0.7;
+
   }
   
   

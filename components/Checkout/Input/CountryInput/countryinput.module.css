@@ -3,7 +3,7 @@
     height: var(--size-8);
     background-color: var(--country-options-bg);
     padding: 0 var(--size-2);
-    color: var(--checkout-input-placeholder);
+    color: var(--checkout-input-placeholder-floating);
     opacity: 0;
     /* box-shadow: 0 0 4px #749ac2; */
     border-radius: 2px;
@@ -79,11 +79,11 @@
       top: calc(50% - 10px);
       transition: all 0.3s ease;
       pointer-events: none;
-      opacity: 0.7;
+
     }
 
     .labelDown{
-      opacity: 0.9;
+      color: var(--checkout-input-placeholder-floating);
       top: 8px;
       font-size: var(--font-size-1);
     }

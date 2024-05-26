@@ -310,7 +310,7 @@
     top: 14px;
     transition: all 0.3s ease;
     pointer-events: none;
-    opacity: 0.7;
+   
   }
 
   .totalDiscount{
@@ -343,7 +343,7 @@
   .coupon_code_input:focus + .myLabel,
   .coupon_code_input:not(:placeholder-shown) + .myLabel {
    
-    opacity: 0.9;
+    color: var(--checkout-input-placeholder-floating);
   top: 8px;
   font-size: var(--size-4);
   

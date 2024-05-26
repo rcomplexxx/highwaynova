@@ -162,7 +162,7 @@
 
     transition: all 0.2s ease;
     pointer-events: none;
-    opacity: 0.7;
+ 
   }
 
 
@@ -174,7 +174,7 @@
 
 .contactInput:focus + .inputGroupLabel,
 .contactInput:not(:placeholder-shown) + .inputGroupLabel {
-  opacity: 0.9;
+    color: var(--checkout-input-placeholder-floating);
 top: 6px;
 font-size: var(--font-size-1);
 
@@ -261,7 +261,7 @@ font-size: var(--font-size-1);
 
     transition: all 0.2s ease;
     pointer-events: none;
-    opacity: 0.7;
+
   }
 
 
@@ -270,7 +270,7 @@ font-size: var(--font-size-1);
 
   .messageTextArea:focus + .messageText,
   .messageTextArea:not(:placeholder-shown) + .messageText {
-  opacity: 0.9;
+    color: var(--checkout-input-placeholder-floating);
 top: 6px;
 font-size: var(--font-size-1);
 

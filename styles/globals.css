@@ -58,6 +58,15 @@ button{
   cursor: pointer;
 }
 
+input{
+  
+}
+
+input::placeholder{
+  color: var(--neutral-5);
+  font-size: var(--font-size-1);
+}
+
 h1{
   color: var(--high-contrast-light-txt-color);
   text-align: center;
@@ -543,7 +552,8 @@ Cormorant+Garamond */
   --input-outline-color: var(--neutral-3);
   --checkbox-checked-bg-color: var(--main-color-4);
   --input-outline-color-focused: var(--main-color-4);
-  --checkout-input-placeholder: var(--neutral-8);
+  --checkout-input-placeholder: var(--neutral-6);
+  --checkout-input-placeholder-floating: var(--neutral-7);
   --input-autofill-color: var(--bg-color);
   --country-input-arrow-color: var(--checkout-input-placeholder);
   --country-options-bg: var(--checkout-bg);

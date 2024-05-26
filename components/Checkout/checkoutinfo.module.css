@@ -184,65 +184,7 @@
     align-self: flex-end;
   }
 
-  /* .checkMarkText{
-    opacity: 1;
-  }
 
-  .unselectedCheckmarkText{
-    cursor: pointer;
-    color: var(--checkout-input-placeholder);
-    opacity: 0.7;
-  }
-  
-
-  .checkmark {
-    position: absolute;
-    top: 3px;
-    left: 1px;
-    height: 12px;
-    width: 12px;
-    background-color: rgb(161, 196, 187);
-    
-    border-radius: 50%;
-    margin-left: 6px;
-   cursor: pointer;
-  }
-
-  .unselectedCheckmark{
-    background-color: var(--checkout-input-placeholder);
-    opacity: 0.3;
-  }
-
-  .shipping_method:hover .checkmark {
-    background-color: #ccc;
-    
-  }
-
-  .checkmark:after {
-    content: "";
-    position: absolute;
-    display: none;
-  }
-  
-  /* Show the indicator (dot/circle) when checked */
-  /* .shipping_method input:checked ~ .checkmark:after {
-    display: block;
-    
-  }
-  
-  /* Style the indicator (dot/circle) 
-  .shipping_method .checkmark:after {
-     top: 2px;
-    left: 2px;
-    width: var(--size-3);
-    height: var(--size-3);
-    border-radius: 50%;
-    background-color: var(--gray-9-elegant);
-   
-  } */
-
-  
-   
  
  
   .requiredNote{
