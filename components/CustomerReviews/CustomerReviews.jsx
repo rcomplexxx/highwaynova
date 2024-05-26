@@ -5,7 +5,7 @@ import ReactHtmlParser from "react-html-parser";
 
 import WriteReviewVisible from "./WriteReview/WriteReviewVisible";
 import FullScreenReview from "./FullScreenReview/FullScreenReview";
-import { STARPATH, Stars } from "@/public/images/svgs/svgImages";
+import { CustomerStars, STARPATH, Stars } from "@/public/images/svgs/svgImages";
 
 function Review({ product_id,  name, text,  stars, imageNames, setFullScreenReview, shrinkReview}) {
 
@@ -39,7 +39,7 @@ function Review({ product_id,  name, text,  stars, imageNames, setFullScreenRevi
 
         <div className={styles.starDiv}>
 
-        <Stars ratingNumber={parseInt(stars, 10)} size={20}/>
+        <CustomerStars ratingNumber={parseInt(stars, 10)}/>
 
         
     </div>
