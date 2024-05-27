@@ -2,7 +2,7 @@ import paypal from "@paypal/checkout-server-sdk";
 import betterSqlite3 from "better-sqlite3";
 import RateLimiter from "@/utils/rateLimiter.js";
 import emailSendJob from "@/utils/sendEmailJob";
-import sendWelcomeSequence from "@/utils/SendWelcomeSequence";
+
 
 const limiterPerDay = new RateLimiter({
   apiNumberArg: 3,
