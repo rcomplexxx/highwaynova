@@ -29,7 +29,29 @@ export default function Emails({emailData, setEmailData}) {
               console.log("Maine DATA!", data);
               //Ovde takodje zatraziti emails campaign kasnije .
               //na slican princip kao sto sam trazio emails.
-              setEmailData(data.data);
+
+
+
+             
+              const emailsPresentedInSequences = [];
+
+               data.data?.sequences.forEach(sequence=>{
+
+                
+
+               JSON.parse(sequence.emails).forEach(email=>{emailsPresentedInSequences.push(email.id)}) 
+
+
+              
+              });
+
+              const emailsUnusedInSequences =  data.data?.emails.filter(email=>{return !emailsPresentedInSequences.find(emailSeq=> emailSeq===email.id)})
+
+              setEmailData({...data.data, emailsUnusedInSequences:emailsUnusedInSequences});
+
+
+          
+
               console.log('Email data', data);
              
              
@@ -102,7 +124,8 @@ export default function Emails({emailData, setEmailData}) {
       <Link className={styles.emailLink} href='/admin/emails/new-campaign'>New campaign.</Link>
       
       </div>
-      {emailData?.emails.map((email, index)=>{
+      {emailData?.emailsUnusedInSequences?.map((email, index)=>{
+       
        return <EmailCard key={index} id={email.id} title={email.title} text={email.text} handleSaveEmail={handleSaveEmail}/>
       })}
    

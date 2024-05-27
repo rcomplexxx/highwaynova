@@ -22,7 +22,7 @@ const deleteSubbedBhSubs = require('./deleteSubbedBhSubs');
 const date =formatDateToCron(new Date(dateInUnix));
 console.log('setting email cron scheduler', date)
 
-cron.schedule(date, () => {
+cron.schedule(date, async() => {
   console.log('Send email here');
   //da li poslati svim mejlovima ili samo nekim?
 
@@ -53,25 +53,13 @@ cron.schedule(date, () => {
     //Da li je vreme sad premasilo izkalkulisano vreme koje je dogovoreno za odredjeni procenat(1.1*)
 
 
-    let sendTimeGap = parseInt(sequenceEmailPointers[currentEmailIndex+1]?.sendTimeGap);
-      if(!sendTimeGap || isNaN(sendTimeGap)) sendTimeGap = 0;
-
-    let dateCalculated = campaign.sendingDateInUnix;
-    sequenceEmailPointers.forEach((emailPointer, index) =>{
-    
-      if(index!==0 && index < currentEmailIndex+1)
-      dateCalculated = dateCalculated + parseInt(emailPointer.sendTimeGap);
-   
-
-    })
 
 
 
-    let   finalSendingDate=(Date.now() - dateCalculated > 0)?
-    Date.now()+sendTimeGap: dateCalculated+sendTimeGap;
+
+
 
  
-console.log('times', sendTimeGap, dateCalculated, finalSendingDate)
 console.log('CAMPAIGN ID!!!!!!!!!!!!!! IS', campaignId)
    
   
@@ -80,7 +68,6 @@ console.log('CAMPAIGN ID!!!!!!!!!!!!!! IS', campaignId)
    
     
 
-    //Naci ovde sequence, pa onda mailovefinalSendingDate
       
 
     
@@ -94,20 +81,6 @@ console.log('CAMPAIGN ID!!!!!!!!!!!!!! IS', campaignId)
 
 
     
-        if(currentEmailIndex < sequenceEmailPointers.length)
-            {
-              console.log(`SCHEDULING NEXT EMAIL!!!!!!!!`, new Date(finalSendingDate) , new Date())
-
-                emailSendJob( finalSendingDate, campaignId)
-            }
-
-
-
-
-        db.prepare(`UPDATE email_campaigns SET emailSentCounter = ? WHERE id = ?`).run(
-          campaign.emailSentCounter + 1,
-            campaign.id,
-          );
 
 
           //Za sad gadjam sve subscribere.
@@ -143,14 +116,19 @@ console.log('CAMPAIGN ID!!!!!!!!!!!!!! IS', campaignId)
               }
               else{
 
-                 targets= potentialTargets.filter(potentialTarget=>{
-                  try{
-                  return JSON.parse(campaignTargets).findIndex(target=>{
-                     return potentialTarget==campaignTargets
-                })==-1
-              }
-              catch{return false;}
-              })
+
+                try{
+
+                  targets = JSON.parse(campaignTargets);
+
+            
+                  
+
+            }
+
+            catch(error){
+              console.log('target not achieved.', error)
+              targets=[];}
 
 
               }
@@ -164,7 +142,7 @@ console.log('CAMPAIGN ID!!!!!!!!!!!!!! IS', campaignId)
          
          
          
-          db.close();
+        
 
             console.log('targets!!!!!!', targets)
 
@@ -189,16 +167,81 @@ console.log('CAMPAIGN ID!!!!!!!!!!!!!! IS', campaignId)
                 },
               });
     
-              transporter.sendMail({
+              await transporter.sendMail({
                 //   from: 'orderconfirmed@selling-game-items-next.com',
                 from: process.env.EMAIL_USER,
                 to: targets,
                 subject: email.title,
                 html: email.text,
               });
-            } catch (error) {
-              console.error("Email not sent.", error);
+
+
+
+              let sendTimeGap = parseInt(sequenceEmailPointers[currentEmailIndex+1]?.sendTimeGap);
+              if(!sendTimeGap || isNaN(sendTimeGap)) sendTimeGap = 0;
+        
+            let dateCalculated = campaign.sendingDateInUnix;
+            sequenceEmailPointers.forEach((emailPointer, index) =>{
+            
+              if(index!==0 && index < currentEmailIndex+1)
+              dateCalculated = dateCalculated + parseInt(emailPointer.sendTimeGap);
+           
+        
+            })
+
+
+
+
+              let   finalSendingDate=(Date.now() - dateCalculated > 0)?
+              Date.now()+sendTimeGap: dateCalculated+sendTimeGap;
+
+
+
+              
+        if(currentEmailIndex < sequenceEmailPointers.length)
+          {
+            console.log(`SCHEDULING NEXT EMAIL!!!!!!!!`, new Date(finalSendingDate) , new Date())
+
+            await emailSendJob( finalSendingDate, campaignId)
+          }
+
+
+
+
+      db.prepare(`UPDATE email_campaigns SET emailSentCounter = ?, retryCounter = ? WHERE id = ?`).run(
+        campaign.emailSentCounter + 1,
+        0,
+          campaign.id,
+        );
+
+
+
             }
+            
+            
+            
+            catch (error) {
+              console.error("Email not sent, trying again.", error,`/n retryCounter is`, campaign.retryCounter+1);
+
+           
+
+             
+
+                db.prepare(`UPDATE email_campaigns SET retryCounter = ? WHERE id = ?`).run(
+                  campaign.retryCounter + 1,
+                    campaign.id,
+                  );
+                  
+
+                  if( campaign.retryCounter<10)
+              
+                await  emailSendJob( (campaign.retryCounter+1)%3===0?Date.now()+10800000:Date.now()+60000, campaignId)
+            }
+         
+            
+            db.close();
+
+           
 
           
 

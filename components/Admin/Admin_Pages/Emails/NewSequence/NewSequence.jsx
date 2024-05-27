@@ -111,7 +111,11 @@ export default function NewSequence({emailData, setEmailData}) {
 
 
 
-const filteredEmails = emailData?.emails.filter(email=>{return sequenceEmails.findIndex((seqEmail)=>{return seqEmail.id===email.id})==-1})
+
+const filteredEmails = emailData?.emailsUnusedInSequences?.filter(email=>{
+  
+  
+  return sequenceEmails.findIndex((seqEmail)=>{return seqEmail.id===email.id})==-1})
 
 
 

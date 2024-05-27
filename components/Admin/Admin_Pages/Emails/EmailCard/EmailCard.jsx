@@ -30,13 +30,14 @@ export default function EmailCard({id,title, text, handleSaveEmail}) {
 
 
       
-      if(text.split("</style>").length>1){
+      if(text?.split("</style>").length>1){
 
         
 
-        setemailTextHtmlHtml(text.split("</style>")[1]);
+    
 
         setemailTextHtmlHtml(text.split("</style>")[1]);
+
         setEmailTextCss(text.substring(text.indexOf('<style>')+ '<style>'.length,
         text.indexOf("</style>")));
 
@@ -90,30 +91,6 @@ export default function EmailCard({id,title, text, handleSaveEmail}) {
 
    
 
-
-    // const handleSaveEmail = async()=>{
-    //   let newEmailData = {title:titleRef.current.value, text:emailTextHtmlRef.current.value };
-
-    
-     
-    //     await fetch("/api/admincheck", {
-    //       method: "POST",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //       },
-    //       body: JSON.stringify({ dataType: 'send_new_email', data: newEmailData }),
-    //     })
-    //       .then((response) => {
-    //         if (response.ok) {
-    //           console.log(response);
-    //           router.push('/admin/emails');
-    //         }
-    //       })
-  
-    //       .catch((error) => {console.log(error)});
-    // }
-
-    
 
 
   return (

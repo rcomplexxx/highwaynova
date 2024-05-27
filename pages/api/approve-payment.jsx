@@ -1,7 +1,8 @@
 import paypal from "@paypal/checkout-server-sdk";
 import betterSqlite3 from "better-sqlite3";
 import RateLimiter from "@/utils/rateLimiter.js";
-import nodemailer from "nodemailer";
+import emailSendJob from "@/utils/sendEmailJob";
+import sendWelcomeSequence from "@/utils/SendWelcomeSequence";
 
 const limiterPerDay = new RateLimiter({
   apiNumberArg: 3,
@@ -100,30 +101,64 @@ const approvePayment = async (req, res) => {
 
   const approvedConsequence= async()=>{
 
-    
-
-
     await updateDb();
 
-        try {
-          const transporter = nodemailer.createTransport({
-            service: "hotmail",
-            auth: {
-              user: process.env.EMAIL_USER,
-              pass: process.env.EMAIL_PASSWORD,
-            },
-          });
 
-          await transporter.sendMail({
-            //   from: 'orderconfirmed@selling-game-items-next.com',
-            from: "rcomplexx@outlook.com",
-            to: "rcomplexx@gmail.com",
-            subject: "Order Confirmed",
-            text: "Your order is confirmed.",
-          });
-        } catch (error) {
-          console.error("Email not sent.");
-        }
+   
+
+
+    const db = betterSqlite3(process.env.DB_PATH);
+ 
+
+    const targetEmail = db.prepare(`Select email from orders WHERE paymentId = ? AND paymentMethod = ?`)
+    .get(paymentId, paymentMethod)?.email;
+
+
+
+            
+          
+db.prepare(
+  `
+  CREATE TABLE IF NOT EXISTS email_campaigns (
+    id INTEGER PRIMARY KEY,
+    title TEXT,
+    sequenceId INTEGER,
+    sendingDateInUnix INTEGER,
+    emailSentCounter INTEGER,
+    retryCounter INTEGER,
+    targetSubscribers TEXT
+  )
+`).run();
+
+console.log('target email', targetEmail)
+
+
+const result = db.prepare(`INSERT INTO email_campaigns (title, sequenceId, sendingDateInUnix, emailSentCounter, retryCounter, targetSubscribers) VALUES (?, ?, ?, ?, ?, ?)`)
+.run(
+`Thank you for purcasing ${targetEmail}`,
+2,
+Date.now()+60000,
+0,
+0,
+JSON.stringify([targetEmail])
+
+);
+
+
+    const campaignId = result.lastInsertRowid;
+
+ 
+
+
+    await emailSendJob(Date.now()+60000,campaignId);
+
+
+
+    db.close();
+
+
+
+
   }
 
 

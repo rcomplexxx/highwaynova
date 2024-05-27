@@ -6,7 +6,7 @@ const betterSqlite3 = require('better-sqlite3');
 
 
 
- function emailSendJob( sequenceId, dates, targetEmail) {
+ function sequenceToCampaign( sequenceId, dates, targetEmail) {
 
 
    
@@ -45,7 +45,7 @@ const betterSqlite3 = require('better-sqlite3');
 
             db.close();
 
-            emailSendJob(campaignEmails[0].sendDate, campaignId,campaignEmails[0].id )
+           await emailSendJob(campaignEmails[0].sendDate, campaignId,campaignEmails[0].id )
         
     }
     catch(error){
@@ -72,4 +72,4 @@ const betterSqlite3 = require('better-sqlite3');
 
 
 
- module.exports = emailSendJob;
+ module.exports = sequenceToCampaign;

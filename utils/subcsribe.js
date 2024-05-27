@@ -1,4 +1,5 @@
 import betterSqlite3 from "better-sqlite3";
+import emailSendJob from "./sendEmailJob";
 
 
 function subscribe(email, source) {
@@ -33,6 +34,44 @@ function subscribe(email, source) {
         email,
       source
     );
+
+
+
+
+
+  db.prepare(
+    `
+    CREATE TABLE IF NOT EXISTS email_campaigns (
+      id INTEGER PRIMARY KEY,
+      title TEXT,
+      sequenceId INTEGER,
+      sendingDateInUnix INTEGER,
+      emailSentCounter INTEGER,
+      retryCounter INTEGER,
+      targetSubscribers TEXT
+    )
+  `).run();
+
+
+  const result = db.prepare(`INSERT INTO email_campaigns (title, sequenceId, sendingDateInUnix, emailSentCounter, retryCounter, targetSubscribers) VALUES (?, ?, ?, ?, ?, ?)`)
+  .run(
+    `Welcome ${email}`,
+    1,
+    Date.now()+60000,
+    0,
+    0,
+    JSON.stringify([email])
+    
+  );
+   
+
+        const campaignId = result.lastInsertRowid;
+
+     
+
+
+        emailSendJob(Date.now()+60000,campaignId);
+
         }
 
     console.log("Successfully subscribed.");

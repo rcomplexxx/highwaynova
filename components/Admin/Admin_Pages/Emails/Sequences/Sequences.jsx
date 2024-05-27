@@ -67,10 +67,36 @@ Emails
 })}
 
 </div>
-{showEmailInfo && <EmailCard id={showEmailInfo.id} title={showEmailInfo.title} text={showEmailInfo.text} emails={emails}/>}
+{showEmailInfo && <EmailCard id={showEmailInfo.id} title={showEmailInfo.title} text={showEmailInfo.text} 
+
+
+handleSaveEmail={(id, emailTitle, emailTextHtml)=>{
+
+
+  let emailData = [{ id: id, 
+    title:emailTitle, text:emailTextHtml }];
+
+   fetch("/api/admincheck", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ dataType: "send_email_data", data: emailData }),
+  })
+    .then((response) => {
+      if (response.ok) {
+        console.log(response);
+        setShowEmailInfo(false);
+      }
+    })
+
+    .catch((error) => {console.log(error)});
+  
+}}
+
+/>}
 </div>
 
 }
-
 
 

@@ -5,6 +5,7 @@ import betterSqlite3 from "better-sqlite3";
 import RateLimiter from "@/utils/rateLimiter.js";
 import coupons from '../../data/coupons.json'
 import subscribe from '@/utils/subcsribe.js'
+import emailSendJob from "@/utils/sendEmailJob";
 
 const limiterPerDay = new RateLimiter({
   apiNumberArg: 2,
@@ -157,13 +158,63 @@ const makePayment = async (req, res) => {
       else subscribe(email, "checkout x");
         
 
+      
+
+        if(approved===1){
+        
+          
+          
+db.prepare(
+  `
+  CREATE TABLE IF NOT EXISTS email_campaigns (
+    id INTEGER PRIMARY KEY,
+    title TEXT,
+    sequenceId INTEGER,
+    sendingDateInUnix INTEGER,
+    emailSentCounter INTEGER,
+    retryCounter INTEGER,
+    targetSubscribers TEXT
+  )
+`).run();
+
+console.log('target email', email)
+
+
+const result = db.prepare(`INSERT INTO email_campaigns (title, sequenceId, sendingDateInUnix, emailSentCounter, retryCounter, targetSubscribers) VALUES (?, ?, ?, ?, ?, ?)`)
+.run(
+`Thank you for purcasing ${email}`,
+2,
+Date.now()+60000,
+0,
+0,
+JSON.stringify([email])
+
+);
+
+
+    const campaignId = result.lastInsertRowid;
+
+ 
+
+
+    emailSendJob(Date.now()+60000,campaignId);
+
+
+
+        }
+
         db.close();
+
         resolve("Order placed successfully.");
       } catch (error) {
         console.error("Error in database operations:", error);
         reject("Error in database operations.");
       }
     });
+
+  
+
+
   };
 
   try {

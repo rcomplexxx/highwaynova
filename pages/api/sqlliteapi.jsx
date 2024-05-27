@@ -26,10 +26,10 @@ export default async function handler(req, res) {
 
     // Perform rate limiting checks
 
-    if (!(await limiterPerMinute.rateLimiterGate(clientIp)))
-      return res.status(429).json({ error: "Too many requests." });
-    if (!(await limiterPerWeek.rateLimiterGate(clientIp)))
-      return res.status(429).json({ error: "Too many requests." });
+    // if (!(await limiterPerMinute.rateLimiterGate(clientIp)))
+    //   return res.status(429).json({ error: "Too many requests." });
+    // if (!(await limiterPerWeek.rateLimiterGate(clientIp)))
+    //   return res.status(429).json({ error: "Too many requests." });
 
     // Rate limiting checks passed, proceed with API logic
 

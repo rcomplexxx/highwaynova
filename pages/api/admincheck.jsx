@@ -442,6 +442,9 @@ else{
 
         console.log('should be inserted?');
         }
+
+
+
         else{
           data.forEach(emailData=>{
             db.prepare(`UPDATE ${table} SET title = ?, text = ? WHERE id = ?`).run(
@@ -487,6 +490,7 @@ else{
             sequenceId INTEGER,
             sendingDateInUnix INTEGER,
             emailSentCounter INTEGER,
+            retryCounter INTEGER,
             targetSubscribers TEXT
           )
         `).run();
@@ -499,6 +503,7 @@ else{
           data.title,
           data.sequenceId,
           data.sendingDateInUnix,
+          0,
           0,
           data.targetSubscribers
           
@@ -513,7 +518,7 @@ else{
         const campaignId = result.lastInsertRowid;
 
 
-        emailSendJob(data.sendingDateInUnix,campaignId);
+        await emailSendJob(data.sendingDateInUnix,campaignId);
 
       }
       

@@ -14,6 +14,16 @@
     height: var(--size-8) !important;
    
   
+    background-color: var(--paypal-bg);
+  
+    max-width: var(--size-15);
+
+  
+    border-radius: 4px;
+    box-sizing: border-box;
+    border: 1px solid var(--paypal-wrapper-border);
+    margin-bottom: var(--size-2);
+    overflow: hidden;
    
   
     
