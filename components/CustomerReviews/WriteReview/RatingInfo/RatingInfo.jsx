@@ -100,7 +100,7 @@ function RatingMetric({percentage ,rating, rateNumber}) {
 
 return <div className={styles.ratingMetric}>
     
-           <Stars ratingNumber={rating} size={16} starClassName={styles.starClassName}/>
+           <Stars ratingNumber={rating} starClassName={styles.starClassName}/>
 
 
 

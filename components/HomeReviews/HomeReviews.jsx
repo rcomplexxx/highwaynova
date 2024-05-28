@@ -44,7 +44,7 @@ function Review({ reviewText, author, authorImage }) {
       
     
     
-          <Stars ratingNumber={5} starClassName={styles.starClassName} fillColor={`var(--star-home-review-color)`}/>
+          <Stars ratingNumber={5} starWrapperClassName={styles.starWrapperClassName} starClassName={styles.starClassName} fillColor={`var(--star-home-review-color)`}/>
 
 
       <p className={styles.reviewText}>{reviewText}</p>

@@ -128,7 +128,7 @@ export const PartFilledStar =({fillPercentage, starClassName})=>{
 
 
 
-export const Stars = ({ ratingNumber, starClassName, gap, fillColor = 'var(--star-color)' }) => {
+export const Stars = ({ ratingNumber, starWrapperClassName, starClassName, fillColor = 'var(--star-color)' }) => {
 
 	const stars = [];
 	const filledIndexExists= ratingNumber % 1 >0;
@@ -151,7 +151,7 @@ export const Stars = ({ ratingNumber, starClassName, gap, fillColor = 'var(--sta
 
 
 
-	return <div className={styles.starsWrapper} style={gap && { gap: `${gap}px` }}>
+	return <div className={`${styles.starsWrapper} ${starWrapperClassName}`} >
 		{stars}
 		</div>;
 

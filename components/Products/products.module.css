@@ -112,7 +112,27 @@
     
   @media (max-width: 480px)  {
     .toolbar{
-      width: calc(100% - 40px);
+      width: calc(100% - var(--size-6));
+    }
+
+    .mainGridStyle{
+      column-gap: var(--size-3);
     }
   
+  }
+
+  @media (max-width: 380px)  {
+
+    .toolbar{
+      width: calc(100% - var(--size-5));
+    }
+  }
+
+
+  @media (max-width: 340px) {
+
+    .toolbar{
+      width: calc(100% - var(--size-4));
+    }
+    
   }
