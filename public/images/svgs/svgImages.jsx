@@ -162,7 +162,7 @@ export const Stars = ({ ratingNumber, size, gap, fillColor = 'var(--star-color)'
 
 const CustomerStar = ({isEmpty})=>{
 
-	return <svg className={`${styles.customerStar}`} stroke={`var(--star-stroke-color)`} strokeWidth={2} 
+	return <svg stroke={`var(--star-stroke-color)`} strokeWidth={2} 
 	viewBox="0 0 48 48" fill={isEmpty?`var(--empty-star-color)`:`var(--star-color)`}  xmlns="http://www.w3.org/2000/svg" >
 	<path  d="M26.285,2.486l5.407,10.956c0.376,0.762,1.103,1.29,1.944,1.412l12.091,1.757
 c2.118,0.308,2.963,2.91,1.431,4.403l-8.749,8.528c-0.608,0.593-0.886,1.448-0.742,2.285l2.065,12.042
@@ -193,7 +193,7 @@ export const CustomerStars = ({ratingNumber}) =>{
 
 
 
-	return <div className={styles.starsWrapper}>
+	return <div className={styles.customerStarsWrapper}>
 		{stars}
 		</div>;
 

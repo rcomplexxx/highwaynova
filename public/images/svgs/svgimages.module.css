@@ -11,6 +11,18 @@ margin-bottom: var(--size-2);
 }
 
 
+.customerStarsWrapper{
+  display: flex;
+  contain: content;
+  gap: 4px;
+}
+
+.customerStarsWrapper > svg{
+  height: 20px;
+  width: 20px;
+  margin-bottom: var(--size-2);
+}
+
 .customerStar{
   height: 20px;
   width: 20px;
