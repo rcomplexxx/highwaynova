@@ -100,7 +100,10 @@ function RatingMetric({percentage ,rating, rateNumber}) {
 
 return <div className={styles.ratingMetric}>
     
-           <Stars ratingNumber={rating} size={16}/>
+           <Stars ratingNumber={rating} size={16} starClassName={styles.starClassName}/>
+
+
+
           <div className={styles.percentRatingWrapper}>
             <div className={styles.percentageRatingDiv} style={{width:`${percentage}%`}} ></div>
           </div>

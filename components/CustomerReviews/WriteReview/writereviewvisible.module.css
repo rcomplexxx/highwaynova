@@ -19,6 +19,11 @@
         cursor: pointer;
       }
 
+      .starClassName{
+        height: 24px;
+        width: 24px;
+      }
+
       .reviewsNumberSpan{
         margin-bottom: var(--size-1);
         margin-left: var(--size-3);

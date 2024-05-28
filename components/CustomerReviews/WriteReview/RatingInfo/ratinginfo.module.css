@@ -82,6 +82,12 @@
     align-items: center;
   }
 
+
+  .starClassName{
+    height: 16px;
+    width: 16px;
+  }
+
   .percentRatingWrapper{
     height: var(--size-4);
     flex-grow: 1;

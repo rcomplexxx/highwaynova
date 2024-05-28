@@ -110,7 +110,7 @@ export default function ProductPage({ product, images, startReviews, ratingData 
 
         {/* <span className={styles.ratingNumber}>{ratingData.rating.toFixed(1)}</span> */}
             
-            <Stars ratingNumber={ratingData.rating?ratingData.rating:4.7} size={20}/>
+            <Stars ratingNumber={ratingData.rating?ratingData.rating:4.7} starClassName={styles.starClassName}/>
             <span className={styles.product_rating_reviews_number}>{ratingData.reviewsNumber} reviews</span>
           </div>
           <div className={styles.product_price}>
@@ -166,7 +166,7 @@ export default function ProductPage({ product, images, startReviews, ratingData 
             Add to Cart
           </button>
 
-            {/* <PayPalButton type='instant' color='gold' organizeUserData={
+            <PayPalButton type='instant' color='gold' organizeUserData={
              useCallback((paymentMethod)=>{
                 const email = "";
                 const firstName = "";
@@ -210,7 +210,7 @@ export default function ProductPage({ product, images, startReviews, ratingData 
               }
             
   ,[])}/>
-         */}
+        
 
 
           <button className={styles.but_now_button} onClick={() => buyNow()}>

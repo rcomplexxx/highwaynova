@@ -42,12 +42,10 @@ function Review({ reviewText, author, authorImage }) {
   return (
     <div className={styles.reviewDiv}>
       
-      <div   className={styles.ratingStarDiv}>
-
     
-          <Stars ratingNumber={5} size={24} fillColor={`var(--star-home-review-color)`}/>
+    
+          <Stars ratingNumber={5} starClassName={styles.starClassName} fillColor={`var(--star-home-review-color)`}/>
 
-</div>
 
       <p className={styles.reviewText}>{reviewText}</p>
       <div className={styles.authorDiv}>

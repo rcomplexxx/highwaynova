@@ -59,6 +59,11 @@
     cursor: pointer;
   }
 
+ .starClassName{
+    height: 20px;
+    width: 20px;
+  }
+
   .ratingNumber{
    
     margin-right: var(--size-3);

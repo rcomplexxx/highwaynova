@@ -135,6 +135,11 @@
         margin-right: var(--size-2);
 }
 
+.starClassName{
+    height: 20px;
+    width: 20px;
+  }
+
 .reviewText{
     margin-top: var(--size-6);
     font-size: var(--font-size-4);
