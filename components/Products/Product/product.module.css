@@ -4,9 +4,7 @@
     background-color: var(--product-card-bg);
     color: var(--light-txt-color);
 
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  
 
 
     box-sizing: border-box;
@@ -53,6 +51,8 @@
     display: flex;
     align-items: flex-end;
     margin: 0;
+
+  
     font-size: var(--font-size-6);
     font-weight: 400;
   }
@@ -105,6 +105,14 @@
 
 
  
+    @media (max-width: 980px) {
+
+      .root{
+        margin-bottom:  var(--size-7);
+      }
+     
+      
+    }
 
   
 
@@ -114,7 +122,10 @@
 
   @media(max-width: 600px){
 
-  
+    .root{
+      margin-bottom:  var(--size-6);
+      padding: var(--size-3);
+    }
   
   .cardContentText{
     font-size: var(--font-size-5);
@@ -150,12 +161,14 @@
 @media (max-width: 480px) {
 
   .root{
-    padding: var(--size-3);
+  
+      margin-bottom:  var(--size-5);
+    padding: 0;
   }
 
 
   .cardContentText{
-    font-size: var(--font-size-4);
+    font-size: var(--font-size-3);
   }
 
 
@@ -189,6 +202,14 @@
 
 
 
+}
+
+@media (max-width: 440px) {
+
+  .cardContentText{
+    font-size: var(--font-size-3);
+  }
+  
 }
 
 @media (max-width: 340px) {
