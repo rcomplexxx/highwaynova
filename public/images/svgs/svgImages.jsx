@@ -136,7 +136,7 @@ export const Stars = ({ ratingNumber, starClassName, gap, fillColor = 'var(--sta
 	for (let i = 0; i < 5; i++) {
 	  if (filledIndexExists && i === Math.floor(ratingNumber)) {
 		stars.push(
-		  <PartFilledStar starClassName={starClassName} fillPercentage={ratingNumber % 1} size={size} />
+		  <PartFilledStar starClassName={starClassName} fillPercentage={ratingNumber % 1} />
 		);
 	  } else {
 		stars.push(
