@@ -47,6 +47,7 @@
   }
 
   .cardContentText{
+    color: var(--neutral-9);
     height: min-content;
     display: flex;
     align-items: flex-end;

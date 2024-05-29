@@ -655,7 +655,8 @@ Cormorant+Garamond */
 
 
   /*~Admin sector colors*/
-
+  --admin-txt-color-weak: rgb(120, 120, 131);
+  --admin-txt-color-mid: rgb(149, 149, 161);
   --admin-txt-color: rgb(178, 178, 194);
   --admin-txt-color-darker: rgb(160, 160, 177);
   --admin-login-btn-bg: rgb(8, 10, 12);

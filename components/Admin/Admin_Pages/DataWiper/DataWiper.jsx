@@ -126,6 +126,9 @@ if(dataWipedTable && dataWipedTable!=="")return  <div className={styles.mainDiv}
         <button onClick={()=>{handleWipeData("emails")}} className={`${styles.wipeButton} ${styles.marginTop}`}>Wipe emails</button>
         <button onClick={()=>{handleWipeData("email_sequences")}} className={styles.wipeButton}>Wipe email sequences</button>
         <button onClick={()=>{handleWipeData("email_campaigns")}} className={styles.wipeButton}>Wipe email campaigns</button>
+
+        <button onClick={()=>{handleWipeData("customers")}} className={`${styles.wipeButton} ${styles.wipeCustomers}`}>Wipe customers</button>
+  
     </div>
   )
 }

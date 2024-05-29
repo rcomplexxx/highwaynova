@@ -56,7 +56,7 @@ export default function Campaigns({sequences, campaignData, emails}) {
         return <CampaignCard id={campaign.id} title={campaign.title} 
         sequenceEmails={currentSequenceEmails?JSON.parse(currentSequenceEmails):undefined}
         sendingDateInUnix={campaign.sendingDateInUnix}
-        emailSentCounter={campaign.emailSentCounter} targetSubscribers={campaign.targetSubscribers}
+        emailSentCounter={campaign.emailSentCounter} targetCustomers={campaign.targetCustomers}
         emails={emails}/>
        
       })
@@ -69,7 +69,7 @@ export default function Campaigns({sequences, campaignData, emails}) {
 
 
 function CampaignCard({id, title, sequenceEmails, sendingDateInUnix, emailSentCounter, 
-  targetSubscribers, emails}){
+  targetCustomers, emails}){
 
 
   const [showEmailInfo, setShowEmailInfo]= useState();
@@ -98,8 +98,8 @@ function CampaignCard({id, title, sequenceEmails, sendingDateInUnix, emailSentCo
 
  <div className={styles.currentId}>
    
-   {targetSubscribers?.length< 100 && <span className={styles.currentIdSpan}>target traffic: </span>}
-   {targetSubscribers}
+   {targetCustomers?.length< 100 && <span className={styles.currentIdSpan}>target traffic: </span>}
+   {targetCustomers}
  </div>
 
  

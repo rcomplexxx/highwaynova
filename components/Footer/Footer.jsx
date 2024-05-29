@@ -25,7 +25,7 @@ export default function Footer() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          type: "subscribers",
+          type: "customers",
           email: email.value,
           source: "footer"
         }), // Send the form data as JSON

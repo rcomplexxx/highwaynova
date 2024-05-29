@@ -85,6 +85,29 @@ const makePayment = async (req, res) => {
       try {
         const db = betterSqlite3(process.env.DB_PATH);
         //  db.prepare(`DROP TABLE IF EXISTS orders`).run();
+
+
+        db.prepare(
+          `
+          CREATE TABLE IF NOT EXISTS customers (
+            id INTEGER PRIMARY KEY,
+            email TEXT,
+            totalOrderCount INTEGER,
+            subscribed INTEGER,
+            source TEXT
+          )
+        `,
+        ).run();
+
+    
+        if(!db.prepare("SELECT * FROM customers WHERE email = ?").get(req.body.order.email)){
+          db.prepare("INSERT INTO customers (email, totalOrderCount, subscribed, source) VALUES (?, ?, ?, ?)").run( req.body.order.email, 0, 0, 'make_payment' );
+           
+
+
+        }
+
+
         db.prepare(
           `
           CREATE TABLE IF NOT EXISTS orders (
@@ -128,7 +151,7 @@ const makePayment = async (req, res) => {
         } = req.body.order;
         console.log(' and items!!!!!!!!!',  items);
       
-
+        // user_id INTEGER REFERENCES users(id),
         db.prepare(
           `INSERT INTO orders (id, email, firstName, lastName, address, apt, country, zipcode, state, city, phone, couponCode, tip, items, paymentMethod, paymentId, packageStatus, approved, createdDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, '0', ?, ?)`,
         ).run(
@@ -152,53 +175,18 @@ const makePayment = async (req, res) => {
           Math.floor(Date.now() / 86400000),
         );
 
-       
-        if(req.body.order.subscribe)
-        subscribe(email, "checkout");
-      else subscribe(email, "checkout x");
-        
+      
 
       
 
         if(approved===1){
         
           
+           
+        if(req.body.order.subscribe)
+          subscribe(email, "checkout");
+        else subscribe(email, "checkout x");
           
-db.prepare(
-  `
-  CREATE TABLE IF NOT EXISTS email_campaigns (
-    id INTEGER PRIMARY KEY,
-    title TEXT,
-    sequenceId INTEGER,
-    sendingDateInUnix INTEGER,
-    emailSentCounter INTEGER,
-    retryCounter INTEGER,
-    targetSubscribers TEXT
-  )
-`).run();
-
-console.log('target email', email)
-
-
-const result = db.prepare(`INSERT INTO email_campaigns (title, sequenceId, sendingDateInUnix, emailSentCounter, retryCounter, targetSubscribers) VALUES (?, ?, ?, ?, ?, ?)`)
-.run(
-`Thank you for purcasing ${email}`,
-2,
-Date.now()+60000,
-0,
-0,
-JSON.stringify([email])
-
-);
-
-
-    const campaignId = result.lastInsertRowid;
-
- 
-
-
-    emailSendJob(Date.now()+60000,campaignId);
-
 
 
         }

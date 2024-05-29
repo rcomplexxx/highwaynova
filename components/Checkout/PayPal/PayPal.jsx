@@ -110,6 +110,7 @@ const PayPalButton=({checkFields, organizeUserData, method='paypal',  type='norm
             body: JSON.stringify({
               paymentMethod: type=="normal"?"PAYPAL":(type=="express"?"PAYPAL(EXPRESS)":"PAYPAL(INSTANT)"),
               paymentId: data.orderID,
+              customerSubscribed: document.getElementById('subscribeCheckbox')?.getAttribute('data-subscribe')
             }),
           });
           // Parse the JSON response

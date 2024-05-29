@@ -24,14 +24,14 @@ db.prepare(
     sendingDateInUnix INTEGER,
     emailSentCounter INTEGER,
     retryCounter INTEGER,
-    targetSubscribers TEXT
+    targetCustomers TEXT
   )
 `).run();
 
 console.log('target email', targetEmail)
 
 
-const result = db.prepare(`INSERT INTO email_campaigns (title, sequenceId, sendingDateInUnix, emailSentCounter, retryCounter, targetSubscribers) VALUES (?, ?, ?, ?, ?, ?)`)
+const result = db.prepare(`INSERT INTO email_campaigns (title, sequenceId, sendingDateInUnix, emailSentCounter, retryCounter, targetCustomers) VALUES (?, ?, ?, ?, ?, ?)`)
 .run(
 `Thank you for purcasing ${targetEmail}`,
 2,

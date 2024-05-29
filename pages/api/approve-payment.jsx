@@ -1,7 +1,7 @@
 import paypal from "@paypal/checkout-server-sdk";
 import betterSqlite3 from "better-sqlite3";
 import RateLimiter from "@/utils/rateLimiter.js";
-import emailSendJob from "@/utils/sendEmailJob";
+import subscribe from '@/utils/subcsribe'
 
 
 const limiterPerDay = new RateLimiter({
@@ -23,7 +23,7 @@ const environment =
 const client = new paypal.core.PayPalHttpClient(environment);
 
 const approvePayment = async (req, res) => {
-  const { paymentId, paymentMethod } = req.body;
+  const { paymentId, paymentMethod, customerSubscribed } = req.body;
   console.log(paymentId);
 
 
@@ -99,62 +99,17 @@ const approvePayment = async (req, res) => {
   };
 
 
-  const approvedConsequence= async()=>{
+  const approvedConsequence= async(email)=>{
 
     await updateDb();
 
 
-   
-
-
-    const db = betterSqlite3(process.env.DB_PATH);
- 
-
-    const targetEmail = db.prepare(`Select email from orders WHERE paymentId = ? AND paymentMethod = ?`)
-    .get(paymentId, paymentMethod)?.email;
-
-
-
-            
-          
-db.prepare(
-  `
-  CREATE TABLE IF NOT EXISTS email_campaigns (
-    id INTEGER PRIMARY KEY,
-    title TEXT,
-    sequenceId INTEGER,
-    sendingDateInUnix INTEGER,
-    emailSentCounter INTEGER,
-    retryCounter INTEGER,
-    targetSubscribers TEXT
-  )
-`).run();
-
-console.log('target email', targetEmail)
-
-
-const result = db.prepare(`INSERT INTO email_campaigns (title, sequenceId, sendingDateInUnix, emailSentCounter, retryCounter, targetSubscribers) VALUES (?, ?, ?, ?, ?, ?)`)
-.run(
-`Thank you for purcasing ${targetEmail}`,
-2,
-Date.now()+60000,
-0,
-0,
-JSON.stringify([targetEmail])
-
-);
-
-
-    const campaignId = result.lastInsertRowid;
-
- 
-
-
-    await emailSendJob(Date.now()+60000,campaignId);
-
-
-
-    db.close();
+    console.log('did customer subed', customerSubscribed);
+    
+    if(customerSubscribed)
+      subscribe(email, "checkout");
+    else subscribe(email, "checkout x");
+      
 
 
 
@@ -189,7 +144,7 @@ JSON.stringify([targetEmail])
 
         await updateAddress(response.result.payer.email_address,response.result.purchase_units[0].shipping);
         
-        await approvedConsequence();
+        await approvedConsequence(response.result.payer.email_address);
         return res.status(200).json({ message: "Payment successful" });
       } else if (response.result.status === "INSTRUMENT_DECLINED") {
         res.status(500).json({ error: "INSTRUMENT_DECLINED" });
@@ -198,10 +153,10 @@ JSON.stringify([targetEmail])
       }
     }
   } 
-  else if(paymentMethod==='STRIPE'){
-    await approvedConsequence();
-    return res.status(200).json({ message: "Payment successful" });
-  }
+  // else if(paymentMethod==='STRIPE'){
+  //   await approvedConsequence();
+  //   return res.status(200).json({ message: "Payment successful" });
+  // }
 
     res.status(500).json({ error: response.result });
   } catch (error) {

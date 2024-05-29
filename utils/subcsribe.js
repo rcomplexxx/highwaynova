@@ -6,36 +6,37 @@ function subscribe(email, source) {
 
 
 
-  if(source==="checkout x"){
-    subscribeCheckoutX(email);
-    return true;
-  }
+
+  try{
+
 
 
     const db = betterSqlite3(process.env.DB_PATH);
 
-    // Ensure the subscribers table exists
-    db.prepare(
-      `
-      CREATE TABLE IF NOT EXISTS subscribers (
-        id INTEGER PRIMARY KEY,
-        email TEXT,
-        source TEXT
-      )
-    `,
-    ).run();
 
-        const result = db.prepare("SELECT * FROM subscribers WHERE email = ?").get(email);
-        
     
-        if(!result){
-    // Insert subscriber email into the subscribers table
-    db.prepare("INSERT INTO subscribers (email, source) VALUES (?, ?)").run(
-        email,
-      source
-    );
+db.prepare(
+  `
+  CREATE TABLE IF NOT EXISTS customers (
+    id INTEGER PRIMARY KEY,
+    email TEXT,
+    totalOrderCount INTEGER,
+    subscribed INTEGER,
+    source TEXT
+  )
+`,
+).run();
+
+   
 
 
+
+
+
+
+
+    
+const startCampaign = (email)=>{
 
 
 
@@ -48,12 +49,12 @@ function subscribe(email, source) {
       sendingDateInUnix INTEGER,
       emailSentCounter INTEGER,
       retryCounter INTEGER,
-      targetSubscribers TEXT
+      targetCustomers TEXT
     )
   `).run();
 
 
-  const result = db.prepare(`INSERT INTO email_campaigns (title, sequenceId, sendingDateInUnix, emailSentCounter, retryCounter, targetSubscribers) VALUES (?, ?, ?, ?, ?, ?)`)
+  const result = db.prepare(`INSERT INTO email_campaigns (title, sequenceId, sendingDateInUnix, emailSentCounter, retryCounter, targetCustomers) VALUES (?, ?, ?, ?, ?, ?)`)
   .run(
     `Welcome ${email}`,
     1,
@@ -71,42 +72,100 @@ function subscribe(email, source) {
 
 
         emailSendJob(Date.now()+60000,campaignId);
-
-        }
-
-    console.log("Successfully subscribed.");
-   
-
-    // Close the database connection when done
-    db.close();
-
-    return true;
 }
 
-const subscribeCheckoutX = (email)=>{
 
-  const db = betterSqlite3(process.env.DB_PATH);
 
-    // Ensure the subscribers table exists
-    db.prepare(
-      `
-      CREATE TABLE IF NOT EXISTS subscribersbh (
-        id INTEGER PRIMARY KEY,
-        email TEXT,
-        source TEXT
-      )
-    `,
-    ).run();
 
-        const result = db.prepare("SELECT * FROM subscribersbh WHERE email = ?").get(email);
-        const result2 = db.prepare("SELECT * FROM subscribers WHERE email = ?").get(email);
+
     
-        if(!result && !result2){
-    // Insert subscriber email into the subscribers table
-    db.prepare("INSERT INTO subscribersbh (email, source) VALUES (?, ?)").run(
+   
+
+
+
+   
+
+       const result = db.prepare("SELECT * FROM customers WHERE email = ?").get(email);
+        
+    
+        if(!result){
+
+
+
+
+    //bh subscriberi(customeri)
+
+
+    if(source==="checkout"){ 
+      db.prepare("INSERT INTO customers (email, totalOrderCount, subscribed, source) VALUES (?, ?, ?, ?)").run( email, 1, 1, source );
+      startCampaign(email);
+     
+      console.log("Successfully subscribed.");
+
+      db.close();
+      
+  }
+
+      else if(source==="checkout x"){ 
+            db.prepare("INSERT INTO customers (email, totalOrderCount, subscribed, source) VALUES (?, ?, ?, ?)").run( email, 1, 0, source );
+            console.log("Successfully subscribed.");
+   
+            db.close();
+             return true;
+        }
+
+
+
+
+    else{
+          
+    db.prepare("INSERT INTO customers (email, totalOrderCount, subscribed, source) VALUES (?, ?, ?, ?)").run(
         email,
-      "bh"
+        0,
+        1,
+      source
     );
+
+
+    startCampaign(email);
+
+  }
+
+    return true;
+
+
+
+
+
+        }
+
+        else {
+
+
+          if(source==="checkout"){
+            db.prepare("UPDATE customers SET totalOrderCount = totalOrderCount + 1, subscribed = 1 WHERE email = ?").run( email);    
+            console.log('in source checkout,', result.subscribed)
+            if(!result.subscribed) startCampaign(email);
+
+       
+          }
+
+          else  if(source==="checkout x"){ 
+
+              db.prepare("UPDATE customers SET totalOrderCount = totalOrderCount + 1 WHERE email = ?").run(email);
+           
+          }
+
+            else{
+
+
+              db.prepare("UPDATE customers SET subscribed = 1 WHERE email = ?").run(email);
+          
+              if(!result.subscribed) startCampaign(email);
+
+            }
+
+        
         }
 
     console.log("Successfully subscribed.");
@@ -116,7 +175,20 @@ const subscribeCheckoutX = (email)=>{
     db.close();
 
     return true;
-  
+
+      }
+
+      catch(error){
+        console.log('subscribe error', error)
+      }
+
+
+
 }
+
+
+
+
+
 
 module.exports =  subscribe;

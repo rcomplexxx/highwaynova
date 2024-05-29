@@ -69,9 +69,9 @@ export default function EmailFlowPopup({setEmailPopup}){
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              type: "subscribers",
+              type: "customers",
               email: emailFieldRef.current.value,
-              source: "popUp15%"
+              source: "popUp10%"
             }), // Send the form data as JSON
           })
             .then((response) => {

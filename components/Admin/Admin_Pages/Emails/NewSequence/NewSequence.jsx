@@ -88,9 +88,7 @@ export default function NewSequence({emailData, setEmailData}) {
       
       };
 
-      //Novi mehanizam za pracenje da li je poslata campanja. EmailsSent koji je integer, i ako je jednak
-      //broju mejla, onda je sve poslato. targetSubscribers
-    
+  
      
       await fetch("/api/admincheck", {
         method: "POST",

@@ -125,12 +125,12 @@ const AdminNavbar = ({ setIsAdmin }) => {
                   Orders
                 </Link>
                 <Link
-                  href="/admin/subscribers"
+                  href="/admin/customers"
                   className={`${styles.linkStyle} ${
-                    adminroute &&  adminroute[0] === "subscribers" ? styles.currentLink : ""
+                    adminroute &&  adminroute[0] === "customers" ? styles.currentLink : ""
                   }`}
                 >
-                  Subscribers
+                  Customers
                 </Link>
                 <Link
                   href="/admin/reviews"
@@ -285,16 +285,16 @@ const AdminNavbar = ({ setIsAdmin }) => {
             </Link>
          
             <Link
-              href="/admin/subscribers"
+              href="/admin/customers"
               className={`${styles.linkStyle} ${
-                adminroute && adminroute[0] === "subscribers" ? styles.currentLink : ""
+                adminroute && adminroute[0] === "customers" ? styles.currentLink : ""
               }`}
               onClick={() => {
-                adminroute && adminroute[0] !== "subscribers" && setIsMenuOpen(false);
+                adminroute && adminroute[0] !== "customers" && setIsMenuOpen(false);
               }}
             >
               <MenuItem>
-                <Typography variant="body1">Subscribers</Typography>
+                <Typography variant="body1">Customers</Typography>
               </MenuItem>
             </Link>
             <Link

@@ -47,7 +47,7 @@ else{
 
 
       let queryString;
-      if (table === "orders" || table === "messages" || table==="subscribers" || table==='subscribersbh' || table==="product_returns") {
+      if (table === "orders" || table === "messages" || table==="customers" || table==="product_returns") {
         queryString = `SELECT ${selectVariables} FROM ${table} WHERE ${queryCondition}`;
       } 
       
@@ -491,21 +491,19 @@ else{
             sendingDateInUnix INTEGER,
             emailSentCounter INTEGER,
             retryCounter INTEGER,
-            targetSubscribers TEXT
+            targetCustomers TEXT
           )
         `).run();
 
-        //Ovde pisati uslove za subscribere i traffic type kao sto je hot cold warm itd
 
-
-        const result = db.prepare(`INSERT INTO ${table} (title, sequenceId, sendingDateInUnix, emailSentCounter, targetSubscribers) VALUES (?, ?, ?, ?, ?)`)
+        const result = db.prepare(`INSERT INTO ${table} (title, sequenceId, sendingDateInUnix, emailSentCounter,  retryCounter, targetCustomers) VALUES (?, ?, ?, ?, ?, ?)`)
         .run(
           data.title,
           data.sequenceId,
           data.sendingDateInUnix,
           0,
           0,
-          data.targetSubscribers
+          data.targetCustomers
           
         );
 
@@ -585,10 +583,10 @@ else{
             `product_id = ${data.product_id}`,
           ); 
        
-        else if (dataType === "get_subscribers")
-          return getFromDb("subscribers");
-        else if(dataType === "get_subscribers_bh")
-        return getFromDb("subscribersbh");
+        else if (dataType === "get_customers")
+          return getFromDb("customers", 'subscribed = 1');
+        else if(dataType === "get_customers_bh")
+        return getFromDb("customers", 'subscribed = 0');
           else if (dataType === "get_emails")
           {return getFromDb("emails");}
           else if (dataType === "get_email_sequences")
@@ -773,6 +771,9 @@ else{
          }
         else if(dataType ==="wipe_email_campaigns")
           wipeData('email_campaigns')
+
+        else if(dataType ==="wipe_customers")
+          wipeData('customers')
      
         
         else {

@@ -17,20 +17,13 @@ import TimePicker from 'react-multi-date-picker/plugins/time_picker';
 
 
 
-/*
-  data.title,
-          data.sequenceId,
-          data.sendingDateInUnix,
-          data.targetSubscribers
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-          */
 
 
 export default function NewCampaign({sequences, setEmailData}) {
 
 
 
-
+  const [explainTargetTraffic, setExplainTargetTraffic] = useState(false);
   const [targetTraffic, setTargetTraffic]= useState();
   const [sendDate, setSendDate] = useState();
   const [linkedSequenceId, setLinkedSequenceId] = useState();
@@ -96,7 +89,7 @@ export default function NewCampaign({sequences, setEmailData}) {
    
 
       let newCampaignData = {title:title, sequenceId: linkedSequenceId, sendingDateInUnix:sendDate,
-        targetSubscribers: targetTraffic
+        targetCustomers: targetTraffic
       };
 
     
@@ -131,6 +124,12 @@ export default function NewCampaign({sequences, setEmailData}) {
 
       <div className={styles.campaignPropertiesWrapper}>
 
+
+
+
+
+      <div className={styles.targetTrafficDivWrapper}>
+
       <select
         id="targetTrafficSelect"
         className={styles.targetTrafficSelect}
@@ -138,12 +137,24 @@ export default function NewCampaign({sequences, setEmailData}) {
         onChange={(e) => {setTargetTraffic(e.target.value)}}
       >
          <option value={undefined}>Select target traffic</option>
-        <option value="cold_traffic">Cold traffic</option>
-        <option value="warm_traffic">Warm traffic</option>
-        <option value="hot_traffic">Hot traffic</option>
+        <option value="cold_traffic">Cold traffic (0-1)</option>
+        <option value="warm_traffic">Warm traffic (2)</option>
+        <option value="hot_traffic">Hot traffic (3-5)</option>
+        <option value="loyal_traffic">Loyal traffic (5+)</option>
         <option value="all">All</option>
-        <option value="bh_subscribers">Bh subscribers(not inc. in All)</option>
+        <option value="bh_customers">Bh customers</option>
       </select>
+
+      <button onClick={()=>{setExplainTargetTraffic(!explainTargetTraffic)}} className={styles.explainTargetTrafficButton}>Explain target traffics</button>
+
+
+      </div>
+
+
+
+
+
+  
 
 
       <div className={styles.datePickerWrapper}>
@@ -167,9 +178,23 @@ export default function NewCampaign({sequences, setEmailData}) {
             className={`bg-dark ${styles.datePicker}`}
     inputClass={styles.dateInput}
    />
-   </div>
+
+
    </div>
 
+   </div>
+   
+             {explainTargetTraffic && <div className={styles.targetTrafficExplanationWrapper}>
+
+               <span className={styles.targetTrafficExplanationSpan}>Cold traffic - Subscribed users who bought 0-1 times</span>
+               <span className={styles.targetTrafficExplanationSpan}>Warm traffic - Subscribed users who bought 2 times</span>
+               <span className={styles.targetTrafficExplanationSpan}>Hot traffic - Subscribed users who bought 3-5 times</span>
+               <span className={styles.targetTrafficExplanationSpan}>Loyal traffic - Subscribed users who bought 5+ times</span>
+               <span className={styles.targetTrafficExplanationSpan}>All - All subscribed users</span>
+               <span className={styles.targetTrafficExplanationSpan}>Bh traffic - not subbed yet, bh obtained users</span>
+           
+              </div>
+            }
 
      {/* <div className={styles.linkedSequenceDiv}>Please link the sequence to create campaign</div> */}
      {linkedSequenceId ?<div className={styles.linkedSequenceDiv}>

@@ -1,8 +1,6 @@
 const cron = require('node-cron');
 const betterSqlite3 = require('better-sqlite3');
 const nodemailer = require("nodemailer");
-const deleteSubbedBhSubs = require('./deleteSubbedBhSubs');
-
 
 
 
@@ -24,17 +22,8 @@ console.log('setting email cron scheduler', date)
 
 cron.schedule(date, async() => {
   console.log('Send email here');
-  //da li poslati svim mejlovima ili samo nekim?
-
-    //inicijalizuji kampanju, i email kampanje(sa svim atributima).
-    //proveri da li kampanja poseduje taj mejl, ako ne, neka greska je u pitanju i return
-    //posalji email
-    //Updatovati u db tu kampanju, sa razlikom da je email verdnost sent=true;
-        // Ako je to bio zadnji mejlo u kampanju, staviti da je kampanja completed(ubaciti completed vrednost i 
-        // prilikom kreiranja tabele campaign)
-    //Ako nije zadnji mejl, pozvati funkciju emailSendJob( dateInUnix, campaignId, emailId)(da, istu ovu f-ju)
-    //sa vrednostima sledeceg emaila(email sendDate), iste ove campaign, i sledeceg emailId
-
+ 
+  
     try{
 
         const db = betterSqlite3(process.env.DB_PATH);
@@ -49,9 +38,6 @@ cron.schedule(date, async() => {
 
     
     
-
-    //Da li je vreme sad premasilo izkalkulisano vreme koje je dogovoreno za odredjeni procenat(1.1*)
-
 
 
 
@@ -84,7 +70,7 @@ console.log('CAMPAIGN ID!!!!!!!!!!!!!! IS', campaignId)
 
 
           //Za sad gadjam sve subscribere.
-          const potentialTargets = db.prepare(`SELECT * FROM subscribers`).all()?.map(target=>{return target.email});
+      
          
          
          
@@ -94,48 +80,43 @@ console.log('CAMPAIGN ID!!!!!!!!!!!!!! IS', campaignId)
          
           let targets;
 
-          const campaignTargets= campaign.targetSubscribers;
+          const campaignTargets= campaign.targetCustomers;
 
-          console.log('campaigntargets', campaignTargets, 'potential targets', potentialTargets)
+       
+         
+          if(campaignTargets==='cold_traffic'){
+            targets= db.prepare(`SELECT * FROM customers WHERE subscribed = ? AND totalOrderCount <= 1`).all(1)?.map(target=>{return target.email});
 
-          if(campaignTargets=='all'){
-            targets= potentialTargets;
           }
-          else if(campaignTargets=='cold_traffic'){
-            targets= potentialTargets;
-          }
-            else if(campaignTargets=='warm_traffic'){
-              targets= potentialTargets;
+            else if(campaignTargets==='warm_traffic'){
+              targets= db.prepare(`SELECT * FROM customers WHERE subscribed = ? AND totalOrderCount = 2`).all(1)?.map(target=>{return target.email});
+
             }
-              else if(campaignTargets=='hot_traffic') {
-                targets= potentialTargets;
+              else if(campaignTargets==='hot_traffic') {
+                targets= db.prepare(`SELECT * FROM customers WHERE subscribed = ? AND totalOrderCount >= 3 AND totalOrderCount <5`).all(1)?.map(target=>{return target.email});
+
               } 
-              else if(campaignTargets=='bh_subscribers'){
-                deleteSubbedBhSubs();
-              targets = db.prepare(`SELECT * FROM subscribersbh`).all()?.map(target=>{return target.email});
+              else if(campaignTargets==='loyal_traffic'){
+
+                targets= db.prepare(`SELECT * FROM customers WHERE subscribed = ? AND totalOrderCount >= 5`).all(1)?.map(target=>{return target.email});
+
+              }
+
+              else  if(campaignTargets==='all'){
+                targets= db.prepare(`SELECT * FROM customers WHERE subscribed = ?`).all(1)?.map(target=>{return target.email});
+              }
+              else if(campaignTargets==='bh_customers'){
+             
+              targets = db.prepare(`SELECT * FROM customers WHERE subscribed = ?`).all(0)?.map(target=>{return target.email});
               }
               else{
-
-
-                try{
-
                   targets = JSON.parse(campaignTargets);
-
-            
-                  
-
-            }
-
-            catch(error){
-              console.log('target not achieved.', error)
-              targets=[];}
-
-
               }
          
          
          
-         
+              console.log('campaigntargets', campaignTargets, 'targets', targets)
+
          
          
          
@@ -143,8 +124,6 @@ console.log('CAMPAIGN ID!!!!!!!!!!!!!! IS', campaignId)
          
          
         
-
-            console.log('targets!!!!!!', targets)
 
 
 
@@ -259,7 +238,8 @@ console.log('CAMPAIGN ID!!!!!!!!!!!!!! IS', campaignId)
 
 
 
-});
+}
+);
 
 
  }

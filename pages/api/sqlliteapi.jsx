@@ -38,7 +38,7 @@ export default async function handler(req, res) {
       try {
         if (!req.body.type) return;
 
-        if (req.body.type === "subscribers") {
+        if (req.body.type === "customers") {
           // Create a new SQLite database connection
 
           if(subscribe(req.body.email, req.body.source))

@@ -50,7 +50,13 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: var(--size-5);
+    margin-bottom: var(--size-9);
+}
+
+
+.targetTrafficDivWrapper{
+    display: flex;
+ 
 }
 
 
@@ -59,7 +65,9 @@
     color: var(--admin-txt-color);
     background-color: transparent;
 
-    margin-bottom: var(--size-6);
+    height: 40px;
+
+  
   
     padding: var(--size-3) var(--size-6);
    
@@ -75,6 +83,47 @@
     margin: 40px;
 }
 
+.explainTargetTrafficButton {
+
+    color: var(--admin-txt-color-mid);
+    background-color: transparent;
+
+    height: 40px;
+
+    margin-left: var(--size-5);
+ 
+   
+    border-radius: 2px;
+    border: 1px solid var(--border-color-mid);
+    font-weight: 400;
+    align-self: flex-start;
+
+}
+
+.targetTrafficExplanationWrapper{
+
+    
+
+    display: flex;
+    flex-direction: column;
+
+    box-sizing: border-box;
+
+    /* margin: 0 var(--size-9); */
+    padding: var(--size-5);
+    border: 1px solid var(--border-color-strong);
+
+    gap: var(--size-4);
+    margin-top: calc(-1 * var(--size-8));
+    margin-bottom: var(--size-9);
+    align-self: flex-start;
+
+}
+
+.targetTrafficExplanationSpan{
+
+}
+
 
 
 
@@ -82,6 +131,7 @@
 
 
 .datePickerWrapper{
+    
     align-self: flex-start;
 }
 
@@ -102,6 +152,9 @@
     
     color: var(--admin-txt-color);
     background-color: transparent ;
+
+    height: 40px;
+    box-sizing: border-box;
     padding: var(--size-3);
     border: 1px solid var(--border-color-strong);
 }

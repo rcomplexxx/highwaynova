@@ -6,7 +6,6 @@ import AdminLogin from "./Admin_Login/AdminLogin";
 import AdminHome from "./Admin_Pages/Admin_Home/AdminHome";
 import Orders from "./Admin_Pages/Orders/Orders";
 import Inbox from "./Admin_Pages/Inbox/Inbox";
-import Subscribers from "./Admin_Pages/Subscribers/Subscribers";
 import Reviews from "./Admin_Pages/Reviews/Reviews";
 import Emails from "./Admin_Pages/Emails/Emails";
 import NewEmail from "./Admin_Pages/Emails/NewEmail/NewEmail";
@@ -18,11 +17,12 @@ import DescriptionMaker from "./Admin_Pages/DescriptionMaker/DescriptionMaker";
 import ProductReturns from "./Admin_Pages/ProductReturn/ProductReturns";
 import NewSequence from "./Admin_Pages/Emails/NewSequence/NewSequence";
 import Sequences from "./Admin_Pages/Emails/Sequences/Sequences";
+import Customers from "./Admin_Pages/Customers/Customers";
 
 export default function Admin() {
   const [isAdmin, setIsAdmin] = useState();
   const [triggerRender, setTriggerRender] = useState(false);
-  const [subscribers, setSubscribers] = useState([]);
+  const [customers, setCustomers] = useState([]);
 
   const [emailData, setEmailData] = useState({emails: [], campaigns: []});
 
@@ -171,11 +171,12 @@ export default function Admin() {
         case "inbox":
           content = <Inbox data={messages.current} setData={setMessages} />;
           break;
-        case "subscribers":
+        case "customers":
           content = (
-            <Subscribers
-              subscribers={subscribers}
-              setSubscribers={setSubscribers}
+         
+            <Customers
+            customers={customers}
+              setCustomers={setCustomers}
             />
           );
           break;

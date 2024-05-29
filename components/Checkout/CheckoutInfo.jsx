@@ -216,7 +216,7 @@ return false;
 
 
                 <div tabIndex={0} className={styles.emailSubscribeDiv} onClick={()=>{ setSubscribe(!subscribe);}}>
-      <div  className={`${styles.emailSubscribeChecker} ${subscribe && styles.emailSubscribeCheckerChecked}`}>
+      <div id='subscribeCheckbox' data-subscribe={subscribe} className={`${styles.emailSubscribeChecker} ${subscribe && styles.emailSubscribeCheckerChecked}`}>
         <CorrectIcon styleClassName={styles.checkImage}/>
       </div>
      
