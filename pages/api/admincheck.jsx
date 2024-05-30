@@ -195,8 +195,8 @@ else{
             createdDate DATE
           )
         `).run();
-        console.log('proso up db')
-        console.log('should be created');
+        console.log('proso up db', 'should be created')
+       
 
         db.prepare(`INSERT INTO ${table} (orderId, items,couponCode, tip, cashReturned, createdDate) VALUES (?, ?, ?, ?, ?, ?)`).run(
           data.orderId,
@@ -210,24 +210,204 @@ else{
         return res.status(200).json({ data_saved: true });
       }
 
-      if(table!='emails' &&  table!='email_sequences' && table!='email_campaigns'){
-      for (let i = 0; i < data.length; i++) {
+
+
+
+
+
+
+
+
+
+
+      else if(table=='emails'){
+
+        if(queryCondition=== 'newEmail'){
+
+        console.log('in table emails');
+        db.prepare(
+          `
+          CREATE TABLE IF NOT EXISTS emails (
+            id INTEGER PRIMARY KEY,
+            title TEXT,
+            text TEXT 
+          )
+        `).run();
+
+        console.log('should be created');
+
+        db.prepare(`INSERT INTO ${table} (title, text) VALUES (?, ?)`).run(
+          data.title,
+          data.text,
+        );
+
+        console.log('should be inserted?');
+        }
+
+
+
+        else{
+          data.forEach(emailData=>{
+            db.prepare(`UPDATE ${table} SET title = ?, text = ? WHERE id = ?`).run(
+              emailData.title,
+              emailData.text,
+              emailData.id
+              );
+          })
+        
+        }
+      }
+
+
+
+
+
+      else if(table=='email_sequences'){
+
+
+        console.log('in table email_sequences');
+        db.prepare(
+          `
+          CREATE TABLE IF NOT EXISTS email_sequences (
+            id INTEGER PRIMARY KEY,
+            title TEXT,
+            emails TEXT
+          )
+        `).run();
+
+        console.log('should be created');
+
+       db.prepare(`INSERT INTO ${table} (title, emails) VALUES (?, ?)`).run(
+          data.title,
+          data.emails,
+        );
+        
+      }
+
+
+
+
+
+
+
+
+
+
+
+
+      else if(table=='email_campaigns'){
+
+        console.log('in table email_campaigns');
+        db.prepare(
+          `
+          CREATE TABLE IF NOT EXISTS email_campaigns (
+            id INTEGER PRIMARY KEY,
+            title TEXT,
+            sequenceId INTEGER,
+            sendingDateInUnix INTEGER,
+            emailSentCounter INTEGER,
+            retryCounter INTEGER,
+            targetCustomers TEXT
+          )
+        `).run();
+
+
+        const result = db.prepare(`INSERT INTO ${table} (title, sequenceId, sendingDateInUnix, emailSentCounter,  retryCounter, targetCustomers) VALUES (?, ?, ?, ?, ?, ?)`)
+        .run(
+          data.title,
+          data.sequenceId,
+          data.sendingDateInUnix,
+          0,
+          0,
+          data.targetCustomers
+          
+        );
+
+        //RUN JOB HERE.
+
+        //sendDelayAfterPrevious
+
+        console.log('sending date in unix!!', data.sendingDateInUnix)
+
+        const campaignId = result.lastInsertRowid;
+
+
+        await emailSendJob(data.sendingDateInUnix,campaignId);
+
+      }
+
+
+
+
+
+
+
+
+      else if(table==='messages'){
+
+        for (let i = 0; i < data.length; i++) {
+        db.prepare(`UPDATE ${table} ${queryCondition}`).run(
+          data[i].status,
+          data[i].id,
+        );
+
+      }
+      }
+
+
+
+
+
+
+
+
+
+
+
+     
         if (table === "reviews" ) {
 
+
+
+
+
+          //factor which determains for how much ids moves.
+
           const productId = db.prepare(`SELECT product_id FROM reviews WHERE id = ${data[0].id}`).all()[0].product_id;
-          console.log('upao u save db', data, productId)
+
+
+
+
+        
+
+          for (let i = 0; i < data.length; i++) {
+
+      
+
+
+
+            
+            console.log('upao u save db', data, productId)
+
+
+          const reviewProductImages =  JSON.parse(db.prepare(`SELECT imageNames FROM reviews WHERE id = ${data[i].id}`).all()[0].imageNames);
        
-         
+          
+
+
+
+
           if (data[i].deleted) {
+
 
 
 
             let reviewImages= JSON.parse(data[i].imageNames);
             if(!reviewImages)reviewImages=[];
-            const allReviewImages=  JSON.parse(db.prepare(`SELECT imageNames FROM reviews WHERE id = ${data[i].id}`).all()[0].imageNames);
+         
             
          
-            if(allReviewImages){
+            if(reviewProductImages){
              
                 const basePath = `${process.cwd()}/public/images/review_images/productId_${productId}/`;
                 const deletedImagesPath = `${basePath}/deleted_images/`;
@@ -236,7 +416,7 @@ else{
                 if (!fs.existsSync(deletedImagesPath)) {
                   fs.mkdirSync(deletedImagesPath, { recursive: true });
 
-                allReviewImages?.forEach((image)=>{
+                reviewProductImages?.forEach((image)=>{
                   console.log('path', image);
                   fs.rename(`${basePath}/${image}`, `${basePath}/deleted_images/${image}`,function (err) {
                     if (err) throw err
@@ -250,30 +430,38 @@ else{
 
            
 
-
-
-
-
-
-            const deleteStatement = db.prepare(
+           db.prepare(
               `DELETE FROM ${table} WHERE id = ?`,
-            );
-            deleteStatement.run(data[i].id);
+            ).run(data[i].id);
+           
+            
             db.prepare(`UPDATE ${table} SET id = id - 1 WHERE id > ?`).run(
               data[i].id,
             );
+
+            console.log('Deleted. Now minus')
+
+            for(let j =i+1; j<data.length; j++){
+              data[j].id = data[j].id -1;
+            }
 
 
             console.log('deleted',data[i].deleted)
 
 
-          } else {
+          } 
+          
+          
+          
+          
+          else {
+
+
               let reviewImages= JSON.parse(data[i].imageNames);
             console.log(reviewImages, 'and', );
             if(!reviewImages)reviewImages=[];
-            const allReviewImages=  JSON.parse(db.prepare(`SELECT imageNames FROM reviews WHERE id = ${data[i].id}`).all()[0].imageNames);
             
-            const deletedImages= allReviewImages?.filter((img)=>{
+            const deletedImages= reviewProductImages?.filter((img)=>{
               console.log('img name', img)
               return !reviewImages.includes(img)
             });
@@ -342,20 +530,12 @@ else{
     }
   
 
-      
-
-
-   
-
-    
-
-
 
 
 
         
 
-            db.prepare(`UPDATE ${table} ${queryCondition}`).run(
+            db.prepare(`UPDATE reviews ${queryCondition}`).run(
               data[i].name,
               data[i].text,
               data[i].imageNames === "null" ? null : data[i].imageNames,
@@ -365,15 +545,15 @@ else{
 
             if (data[i].swapId) {
               const currentRowData = db
-                .prepare(`SELECT * FROM ${table} WHERE id = ?`)
+                .prepare(`SELECT * FROM reviews WHERE id = ?`)
                 .get(data[i].id);
               const targetRowData = db
-                .prepare(`SELECT * FROM ${table} WHERE id = ?`)
+                .prepare(`SELECT * FROM reviews WHERE id = ?`)
                 .get(data[i].swapId);
 
               if (targetRowData) {
                 db.prepare(
-                  `UPDATE ${table} SET name = ?, text = ?, stars = ?, imageNames = ? WHERE id = ?`,
+                  `UPDATE reviews SET name = ?, text = ?, stars = ?, imageNames = ? WHERE id = ?`,
                 ).run(
                   targetRowData.name,
                   targetRowData.text,
@@ -383,7 +563,7 @@ else{
                 );
 
                 db.prepare(
-                  `UPDATE ${table} SET name = ?, text = ?, stars = ?, imageNames = ? WHERE id = ?`,
+                  `UPDATE reviews SET name = ?, text = ?, stars = ?, imageNames = ? WHERE id = ?`,
                 ).run(
                   currentRowData.name,
                   currentRowData.text,
@@ -392,10 +572,10 @@ else{
                   data[i].swapId,
                 );
               } else {
-                db.prepare(`DELETE FROM ${table} WHERE id = ?`).run(data[i].id);
+                db.prepare(`DELETE FROM reviews WHERE id = ?`).run(data[i].id);
 
                 db.prepare(
-                  `INSERT INTO ${table} (id, name, text, stars, imageNames, product_id) VALUES (?, ?, ?, ?, ?, ?)`,
+                  `INSERT INTO reviews (id, name, text, stars, imageNames, product_id) VALUES (?, ?, ?, ?, ?, ?)`,
                 ).run(
                   data[i].swapId,
                   currentRowData.name,
@@ -411,119 +591,32 @@ else{
             
           }
           console.log('proso delete stat')
+
+        }
+
+
+
+        
        
         } 
        
         
-        else {
-          db.prepare(`UPDATE ${table} ${queryCondition}`).run(
-            data[i].status,
-            data[i].id,
-          );
-        }
-      }
-    }
-
-      else if(table=='emails'){
-
-        if(queryCondition=== 'newEmail'){
-
-        console.log('in table emails');
-        db.prepare(
-          `
-          CREATE TABLE IF NOT EXISTS emails (
-            id INTEGER PRIMARY KEY,
-            title TEXT,
-            text TEXT 
-          )
-        `).run();
-
-        console.log('should be created');
-
-        db.prepare(`INSERT INTO ${table} (title, text) VALUES (?, ?)`).run(
-          data.title,
-          data.text,
-        );
-
-        console.log('should be inserted?');
-        }
+       
+     
 
 
 
-        else{
-          data.forEach(emailData=>{
-            db.prepare(`UPDATE ${table} SET title = ?, text = ? WHERE id = ?`).run(
-              emailData.title,
-              emailData.text,
-              emailData.id
-              );
-          })
-        
-        }
-      }
-
-      else if(table=='email_sequences'){
 
 
-        console.log('in table email_sequences');
-        db.prepare(
-          `
-          CREATE TABLE IF NOT EXISTS email_sequences (
-            id INTEGER PRIMARY KEY,
-            title TEXT,
-            emails TEXT
-          )
-        `).run();
-
-        console.log('should be created');
-
-       db.prepare(`INSERT INTO ${table} (title, emails) VALUES (?, ?)`).run(
-          data.title,
-          data.emails,
-        );
-        
-      }
-
-      else{
-
-        console.log('in table email_campaigns');
-        db.prepare(
-          `
-          CREATE TABLE IF NOT EXISTS email_campaigns (
-            id INTEGER PRIMARY KEY,
-            title TEXT,
-            sequenceId INTEGER,
-            sendingDateInUnix INTEGER,
-            emailSentCounter INTEGER,
-            retryCounter INTEGER,
-            targetCustomers TEXT
-          )
-        `).run();
 
 
-        const result = db.prepare(`INSERT INTO ${table} (title, sequenceId, sendingDateInUnix, emailSentCounter,  retryCounter, targetCustomers) VALUES (?, ?, ?, ?, ?, ?)`)
-        .run(
-          data.title,
-          data.sequenceId,
-          data.sendingDateInUnix,
-          0,
-          0,
-          data.targetCustomers
-          
-        );
-
-        //RUN JOB HERE.
-
-        //sendDelayAfterPrevious
-
-        console.log('sending date in unix!!', data.sendingDateInUnix)
-
-        const campaignId = result.lastInsertRowid;
 
 
-        await emailSendJob(data.sendingDateInUnix,campaignId);
+    
 
-      }
+     
+
+    
       
 
     

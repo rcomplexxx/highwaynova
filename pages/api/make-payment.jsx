@@ -60,20 +60,7 @@ const paypalPay=async(totalPrice)=>{
 
 
 
-function generateUniqueId() {
-  // Get current timestamp in milliseconds
-  const timestamp = Date.now().toString(16);
 
-  // Generate four random digits
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
- 
-  const randomDigits = characters.charAt(Math.floor(Math.random() * characters.length));
-
-  // Insert random digits at specified positions
-  const uniqueId = randomDigits.substring(0, 2) + timestamp.substring(0, 4) + randomDigits.substring(2, 4) + timestamp.substring(4) + randomDigits.substring(4);
-
-  return uniqueId;
-}
 
 
 
@@ -85,6 +72,38 @@ const makePayment = async (req, res) => {
       try {
         const db = betterSqlite3(process.env.DB_PATH);
         //  db.prepare(`DROP TABLE IF EXISTS orders`).run();
+
+
+
+        function generateUniqueId() {
+
+
+
+
+
+          // Generate four random digits
+          const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+         
+        
+          while (true) {
+        
+            const timestamp = Date.now().toString(16);
+        
+            const randomDigits = characters.charAt(Math.floor(Math.random() * characters.length));
+        
+          const uniqueId = randomDigits.substring(0, 2) + timestamp.substring(0, 4) + randomDigits.substring(2, 4) + timestamp.substring(4) + randomDigits.substring(4);
+        
+        
+          if(!db.prepare('SELECT 1 FROM orders WHERE id = ?').get(uniqueId)) return uniqueId;
+        
+          
+        }
+        
+        }
+
+
+
+
 
 
        
