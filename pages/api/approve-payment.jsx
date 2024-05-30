@@ -76,9 +76,17 @@ const approvePayment = async (req, res) => {
         console.log("Here is my data!",email, fullName.slice(0, fullName.indexOf(" ")), fullName.slice(fullName.indexOf(" "), fullName.length), shippingAddress.address.address_line_1, shippingAddress.address.address_line_2,shippingAddress.address.country_code, shippingAddress.address.postal_code, shippingAddress.address.admin_area_1,shippingAddress.address.admin_area_2 , paymentId, paymentMethod)
         
 
+        if(customerSubscribed)
+          subscribe(email, "checkout");
+        else subscribe(email, "checkout x");
+
+        const myCustomerId = db.prepare(`SELECT id FROM customers WHERE email = ?`).get(email)?.id;
+        
+
+
         const result = db
-          .prepare("UPDATE orders SET email = ?, firstName = ?, lastName = ?, address = ?, apt = ?, country = ?, zipcode =?, state = ?, city=? WHERE paymentId = ? AND paymentMethod = ?")
-          .run(email, fullName.slice(0, fullName.indexOf(" ")), fullName.slice(fullName.indexOf(" "), fullName.length), shippingAddress.address.address_line_1, shippingAddress.address.address_line_2,shippingAddress.address.country_code, shippingAddress.address.postal_code, shippingAddress.address.admin_area_1,shippingAddress.address.admin_area_2 , paymentId, paymentMethod);
+          .prepare("UPDATE orders SET customer_id = ?, firstName = ?, lastName = ?, address = ?, apt = ?, country = ?, zipcode =?, state = ?, city=? WHERE paymentId = ? AND paymentMethod = ?")
+          .run(myCustomerId, fullName.slice(0, fullName.indexOf(" ")), fullName.slice(fullName.indexOf(" "), fullName.length), shippingAddress.address.address_line_1, shippingAddress.address.address_line_2,shippingAddress.address.country_code, shippingAddress.address.postal_code, shippingAddress.address.admin_area_1,shippingAddress.address.admin_area_2 , paymentId, paymentMethod);
           // , phone=?
         // Check the result of the update operation
         console.log('result',result);

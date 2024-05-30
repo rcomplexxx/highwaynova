@@ -87,22 +87,16 @@ const makePayment = async (req, res) => {
         //  db.prepare(`DROP TABLE IF EXISTS orders`).run();
 
 
-        db.prepare(
-          `
-          CREATE TABLE IF NOT EXISTS customers (
-            id INTEGER PRIMARY KEY,
-            email TEXT,
-            totalOrderCount INTEGER,
-            subscribed INTEGER,
-            source TEXT
-          )
-        `,
-        ).run();
+       
 
     
-        if(!db.prepare("SELECT * FROM customers WHERE email = ?").get(req.body.order.email)){
-          db.prepare("INSERT INTO customers (email, totalOrderCount, subscribed, source) VALUES (?, ?, ?, ?)").run( req.body.order.email, 0, 0, 'make_payment' );
+
+        let customerId = db.prepare("SELECT id FROM customers WHERE email = ?").get(req.body.order.email)?.id
+
+        if(!customerId){
+         const inserCustomerInfo = db.prepare("INSERT INTO customers (email, totalOrderCount, subscribed, source) VALUES (?, ?, ?, ?)").run( req.body.order.email, 0, 0, 'make_payment' );
            
+         customerId= inserCustomerInfo.lastInsertRowid;
 
 
         }
@@ -112,7 +106,7 @@ const makePayment = async (req, res) => {
           `
           CREATE TABLE IF NOT EXISTS orders (
             id TEXT PRIMARY KEY,
-            email TEXT,
+            customer_id INTEGER REFERENCES customers(id),
             firstName TEXT,
             lastName TEXT,
             address TEXT,
@@ -135,7 +129,7 @@ const makePayment = async (req, res) => {
         ).run();
 
         const {
-          email,
+          
           firstName,
           lastName,
           address,
@@ -151,12 +145,12 @@ const makePayment = async (req, res) => {
         } = req.body.order;
         console.log(' and items!!!!!!!!!',  items);
       
-        // user_id INTEGER REFERENCES users(id),
+        
         db.prepare(
-          `INSERT INTO orders (id, email, firstName, lastName, address, apt, country, zipcode, state, city, phone, couponCode, tip, items, paymentMethod, paymentId, packageStatus, approved, createdDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, '0', ?, ?)`,
+          `INSERT INTO orders (id, customer_id, firstName, lastName, address, apt, country, zipcode, state, city, phone, couponCode, tip, items, paymentMethod, paymentId, packageStatus, approved, createdDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, '0', ?, ?)`,
         ).run(
           generateUniqueId(),
-          email,
+          customerId,
           firstName,
           lastName,
           address,

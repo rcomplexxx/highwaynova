@@ -47,10 +47,15 @@ else{
 
 
       let queryString;
-      if (table === "orders" || table === "messages" || table==="customers" || table==="product_returns") {
+      if (table === "orders" || table === `orders JOIN customers` || table === "messages" || table==="customers" || table==="product_returns") {
         queryString = `SELECT ${selectVariables} FROM ${table} WHERE ${queryCondition}`;
+
+        console.log('my query selector is', queryString)
       } 
-      
+
+ 
+
+    
       else {
         queryString = `SELECT id, name, text, stars, imageNames, product_id FROM ${table} WHERE ${queryCondition}`;
       }
@@ -564,15 +569,21 @@ else{
         //Ovde approved
         else if(dataType === "get_order_cash_info_only_fulfilled_orders") return getFromDb("orders", `packageStatus != '0'`, "createdDate, items, tip, couponCode");
         else if (dataType === "get_unfulfilled_orders")
-          return getFromDb("orders", `approved = '1' AND packageStatus = '0'`);
+          return getFromDb(`orders JOIN customers`, `approved = '1' AND packageStatus = '0'`, `orders.*, customers.email`);
         else if (dataType === "get_unapproved_orders")
-          return getFromDb("orders", `approved = '0'`);
+          return getFromDb(`orders JOIN customers`, `approved = '0'`, `orders.*, customers.email`);
         else if (dataType === "get_fulfilled_orders")
-          return getFromDb("orders", `packageStatus != '0'`);
+          return getFromDb(`orders JOIN customers`, `packageStatus != '0'`, `orders.*, customers.email`);
+
+        
         else if(dataType === "get_orders_by_email")
-        return getFromDb("orders", `email = '${data.email}'`);
+        return getFromDb(`orders JOIN customers`, `email = '${data.email}'`, `orders.*, customers.email`);
+      
+
+       
+        
         else if(dataType ==="get_order_by_orderId")
-        return getFromDb("orders", `id = '${data.orderId}'`);
+        return getFromDb(`orders JOIN customers`, `id = '${data.orderId}'`, `orders.*, customers.email`);
         else if (dataType === "get_unanswered_messages")
           return getFromDb("messages", `msgStatus = '0'`);
         else if (dataType === "get_answered_messages")

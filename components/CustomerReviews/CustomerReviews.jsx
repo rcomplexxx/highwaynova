@@ -43,7 +43,7 @@ function Review({ product_id,  name, text,  stars, imageNames, setFullScreenRevi
 
         
     </div>
-      <p className={styles.reviewText}>{ReactHtmlParser(text)}</p>
+      <p className={styles.reviewText}>{`${text}`}</p>
       <p className={styles.reviewAuthor}>{name}</p>
     </div>
   );
