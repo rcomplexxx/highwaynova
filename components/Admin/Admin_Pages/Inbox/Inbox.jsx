@@ -9,6 +9,9 @@ export default function Inbox({ data, setData }) {
   const [page, setPage] = useState(0);
   const [msgStatusArray, setMsgStatusArray] = useState([]);
 
+
+  console.log('hello', data)
+
   const handleMsgStatusChange = (i, msgStatus) => {
     const updatedMsgStatusArray = [];
     msgStatusArray.map((ps, id) => {
@@ -92,6 +95,7 @@ export default function Inbox({ data, setData }) {
                 id={page * 10 + index}
                 name={msg.name}
                 email={msg.email}
+                totalOrderCount={msg.totalOrderCount}
                 message={msg.message}
                 msgStatus={msgStatusArray[index]}
                 handleMsgStatusChange={handleMsgStatusChange}

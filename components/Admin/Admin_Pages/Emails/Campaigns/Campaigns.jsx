@@ -5,42 +5,6 @@ import EmailCard from '../EmailCard/EmailCard'
 export default function Campaigns({sequences, campaignData, emails}) {
 
 
-    // const getEmailData=async()=>{
-
-    //     try {
-    //         const response = await fetch("/api/admincheck", {
-    //           method: "POST",
-    //           headers: {
-    //             "Content-Type": "application/json",
-    //           },
-    //           body: JSON.stringify(
-    //            { dataType:'get_email_campaigns' } 
-    //           ),
-    //         });
-      
-    //         if (response.ok) {
-    //           const data = await response.json();
-    //           console.log("Maine DATA!", data);
-    //           //Ovde takodje zatraziti emails campaign kasnije .
-    //           //na slican princip kao sto sam trazio emails.
-    //           setCampaignData(data.data);
-    //           console.log('Email data', data);
-             
-             
-    //         } else {
-    //           throw new Error("Network response was not ok.");
-    //         }
-    //       } catch (error) {
-    //         console.error(
-    //           "There has been a problem with your fetch operation:",
-    //           error
-    //         );
-    //       }
-
-    // }
-
-
-
 
 
 

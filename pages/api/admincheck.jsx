@@ -5,6 +5,7 @@ import betterSqlite3 from "better-sqlite3";
 import emailSendJob from '@/utils/sendEmailJob.jsx';
 import makeNewDescription from "../../utils/makeNewDescription.js"
 import reorderReviewsByRatingAndImages from '@/utils/reorderReviews.jsx';
+import createSqliteTables from '@/utils/createSqliteTables.js';
 
 const limiterPerTwoMins = new RateLimiter({
   apiNumberArg: 5,
@@ -47,7 +48,7 @@ else{
 
 
       let queryString;
-      if (table === "orders" || table === `orders JOIN customers` || table === "messages" || table==="customers" || table==="product_returns") {
+      if (table === "orders" || table === `orders JOIN customers` || table === "messages JOIN customers" || table==="customers" || table==="product_returns") {
         queryString = `SELECT ${selectVariables} FROM ${table} WHERE ${queryCondition}`;
 
         console.log('my query selector is', queryString)
@@ -135,6 +136,8 @@ else{
     const db = betterSqlite3(process.env.DB_PATH);
 
       if(tableName==='reviews'){
+
+        
       if (product_id == 'all'){
 
 
@@ -145,25 +148,70 @@ else{
           wipeReviewImageDirectory(product_id.product_id)
         })
 
-        db.prepare(`DELETE FROM ${tableName}`).run();
-        db.prepare(`DROP TABLE IF EXISTS ${tableName}`).run()
+        db.prepare(`DELETE FROM reviews`).run();
+        db.prepare(`DROP TABLE IF EXISTS reviews`).run()
           }
           else{
-            const deletedItemsNumber=  db.prepare(`SELECT COUNT(id) as count FROM ${tableName} WHERE product_id = ?`).get(product_id).count;
-            db.prepare(`DELETE FROM ${tableName} WHERE product_id = ?`).run(product_id);
+            const deletedItemsNumber=  db.prepare(`SELECT COUNT(id) as count FROM reviews WHERE product_id = ?`).get(product_id).count;
+            db.prepare(`DELETE FROM reviews WHERE product_id = ?`).run(product_id);
             wipeReviewImageDirectory(product_id);
-            db.prepare(`UPDATE ${tableName} SET id = id - ? WHERE product_id > ?`).run(
+            db.prepare(`UPDATE reviews SET id = id - ? WHERE product_id > ?`).run(
               deletedItemsNumber, product_id
             );
             
 
           }
         }
+
+
         else{
+
+          if(tableName==='customers'){
+
+            try{
+              db.prepare(`DELETE FROM product_returns`).run();
+              db.prepare(`DROP TABLE IF EXISTS product_returns`).run();
+              }
+              catch(error){}
+
+            try{
+              
+            db.prepare(`DELETE FROM orders`).run();
+            db.prepare(`DROP TABLE IF EXISTS orders`).run();
+
+            }
+            catch(error){}
+
+            try{
+              
+              db.prepare(`DELETE FROM messages`).run();
+              db.prepare(`DROP TABLE IF EXISTS messages`).run();
+  
+              }
+              catch(error){}
+
+          
+          }
+
+          else if(tableName==='orders'){
+
+            try{
+              db.prepare(`DELETE FROM product_returns`).run();
+              db.prepare(`DROP TABLE IF EXISTS product_returns`).run();
+              }
+              catch(error){}
+
+          }
+        
+
           db.prepare(`DELETE FROM ${tableName}`).run();
           db.prepare(`DROP TABLE IF EXISTS ${tableName}`).run();
         }
         db.close();
+
+
+        createSqliteTables();
+
         return res.status(200).json({ data_wiped: true });
       } catch (error) {
         console.error(error);
@@ -180,25 +228,14 @@ else{
      
 
 
-      if(table=='product_returns'){
+      if(table==='product_returns'){
 
       
-        db.prepare(
-          `
-          CREATE TABLE IF NOT EXISTS product_returns (
-            id INTEGER PRIMARY KEY,
-            orderId TEXT,
-            items TEXT,
-            couponCode TEXT,
-            tip TEXT,
-            cashReturned TEXT,
-            createdDate DATE
-          )
-        `).run();
+       
         console.log('proso up db', 'should be created')
        
 
-        db.prepare(`INSERT INTO ${table} (orderId, items,couponCode, tip, cashReturned, createdDate) VALUES (?, ?, ?, ?, ?, ?)`).run(
+        db.prepare(`INSERT INTO 'product_returns' (orderId, items,couponCode, tip, cashReturned, createdDate) VALUES (?, ?, ?, ?, ?, ?)`).run(
           data.orderId,
           data.products,
           data.couponCode,
@@ -206,15 +243,8 @@ else{
           data.cashReturned,
           Math.floor(Date.now() / 86400000)
         );
-        db.close();
-        return res.status(200).json({ data_saved: true });
+      
       }
-
-
-
-
-
-
 
 
 
@@ -225,18 +255,11 @@ else{
         if(queryCondition=== 'newEmail'){
 
         console.log('in table emails');
-        db.prepare(
-          `
-          CREATE TABLE IF NOT EXISTS emails (
-            id INTEGER PRIMARY KEY,
-            title TEXT,
-            text TEXT 
-          )
-        `).run();
+       
 
         console.log('should be created');
 
-        db.prepare(`INSERT INTO ${table} (title, text) VALUES (?, ?)`).run(
+        db.prepare(`INSERT INTO emails (title, text) VALUES (?, ?)`).run(
           data.title,
           data.text,
         );
@@ -248,7 +271,7 @@ else{
 
         else{
           data.forEach(emailData=>{
-            db.prepare(`UPDATE ${table} SET title = ?, text = ? WHERE id = ?`).run(
+            db.prepare(`UPDATE emails SET title = ?, text = ? WHERE id = ?`).run(
               emailData.title,
               emailData.text,
               emailData.id
@@ -266,18 +289,11 @@ else{
 
 
         console.log('in table email_sequences');
-        db.prepare(
-          `
-          CREATE TABLE IF NOT EXISTS email_sequences (
-            id INTEGER PRIMARY KEY,
-            title TEXT,
-            emails TEXT
-          )
-        `).run();
+      
 
         console.log('should be created');
 
-       db.prepare(`INSERT INTO ${table} (title, emails) VALUES (?, ?)`).run(
+       db.prepare(`INSERT INTO email_sequences (title, emails) VALUES (?, ?)`).run(
           data.title,
           data.emails,
         );
@@ -295,24 +311,13 @@ else{
 
 
 
-      else if(table=='email_campaigns'){
+      else if(table==='email_campaigns'){
 
         console.log('in table email_campaigns');
-        db.prepare(
-          `
-          CREATE TABLE IF NOT EXISTS email_campaigns (
-            id INTEGER PRIMARY KEY,
-            title TEXT,
-            sequenceId INTEGER,
-            sendingDateInUnix INTEGER,
-            emailSentCounter INTEGER,
-            retryCounter INTEGER,
-            targetCustomers TEXT
-          )
-        `).run();
+      
 
 
-        const result = db.prepare(`INSERT INTO ${table} (title, sequenceId, sendingDateInUnix, emailSentCounter,  retryCounter, targetCustomers) VALUES (?, ?, ?, ?, ?, ?)`)
+        const result = db.prepare(`INSERT INTO email_campaigns (title, sequenceId, sendingDateInUnix, emailSentCounter,  retryCounter, targetCustomers) VALUES (?, ?, ?, ?, ?, ?)`)
         .run(
           data.title,
           data.sequenceId,
@@ -344,9 +349,10 @@ else{
 
 
       else if(table==='messages'){
+        
 
         for (let i = 0; i < data.length; i++) {
-        db.prepare(`UPDATE ${table} ${queryCondition}`).run(
+        db.prepare(`UPDATE messages ${queryCondition}`).run(
           data[i].status,
           data[i].id,
         );
@@ -431,11 +437,11 @@ else{
            
 
            db.prepare(
-              `DELETE FROM ${table} WHERE id = ?`,
+              `DELETE FROM reviews WHERE id = ?`,
             ).run(data[i].id);
            
             
-            db.prepare(`UPDATE ${table} SET id = id - 1 WHERE id > ?`).run(
+            db.prepare(`UPDATE reviews SET id = id - 1 WHERE id > ?`).run(
               data[i].id,
             );
 
@@ -596,27 +602,12 @@ else{
 
 
 
-        
+
        
         } 
        
         
        
-     
-
-
-
-
-
-
-
-
-
-    
-
-     
-
-    
       
 
     
@@ -676,11 +667,11 @@ else{
        
         
         else if(dataType ==="get_order_by_orderId")
-        return getFromDb(`orders JOIN customers`, `id = '${data.orderId}'`, `orders.*, customers.email`);
+        return getFromDb(`orders JOIN customers`, `orders.id = '${data.orderId}'`, `orders.*, customers.email`);
         else if (dataType === "get_unanswered_messages")
-          return getFromDb("messages", `msgStatus = '0'`);
+          return getFromDb("messages JOIN customers", `msgStatus = '0'`, `messages.*, customers.email, customers.totalOrderCount`);
         else if (dataType === "get_answered_messages")
-          return getFromDb("messages", `msgStatus != '0'`);
+          return getFromDb("messages JOIN customers", `msgStatus != '0'`, `messages.*, customers.email, customers.totalOrderCount`);
         else if (dataType === "get_reviews")
           return getFromDb(
             "reviews",
@@ -834,7 +825,7 @@ else{
          
         }
 
-        else if (dataType == 'send_new_return'){
+        else if (dataType === 'send_new_return'){
           if (!data)
           return res
             .status(500)
@@ -870,8 +861,9 @@ else{
 
         else if(dataType ==="wipe_email_sequences")
          {
-          wipeData('email_sequences')
           wipeData('email_campaigns')
+          wipeData('email_sequences')
+         
          }
         else if(dataType ==="wipe_email_campaigns")
           wipeData('email_campaigns')

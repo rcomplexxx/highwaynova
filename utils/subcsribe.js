@@ -15,17 +15,7 @@ function subscribe(email, source) {
 
 
     
-db.prepare(
-  `
-  CREATE TABLE IF NOT EXISTS customers (
-    id INTEGER PRIMARY KEY,
-    email TEXT,
-    totalOrderCount INTEGER,
-    subscribed INTEGER,
-    source TEXT
-  )
-`,
-).run();
+
 
    
 
@@ -40,24 +30,13 @@ const startCampaign = (email)=>{
 
 
 
-  db.prepare(
-    `
-    CREATE TABLE IF NOT EXISTS email_campaigns (
-      id INTEGER PRIMARY KEY,
-      title TEXT,
-      sequenceId INTEGER,
-      sendingDateInUnix INTEGER,
-      emailSentCounter INTEGER,
-      retryCounter INTEGER,
-      targetCustomers TEXT
-    )
-  `).run();
+
 
 
   const result = db.prepare(`INSERT INTO email_campaigns (title, sequenceId, sendingDateInUnix, emailSentCounter, retryCounter, targetCustomers) VALUES (?, ?, ?, ?, ?, ?)`)
   .run(
     `Welcome ${email}`,
-    1,
+    process.env.WELCOME_SEQUENCE_ID,
     Date.now()+60000,
     0,
     0,
@@ -100,18 +79,15 @@ const startCampaign = (email)=>{
       db.prepare("INSERT INTO customers (email, totalOrderCount, subscribed, source) VALUES (?, ?, ?, ?)").run( email, 1, 1, source );
       startCampaign(email);
      
-      console.log("Successfully subscribed.");
+     
 
-      db.close();
       
   }
 
       else if(source==="checkout x"){ 
             db.prepare("INSERT INTO customers (email, totalOrderCount, subscribed, source) VALUES (?, ?, ?, ?)").run( email, 1, 0, source );
-            console.log("Successfully subscribed.");
+          
    
-            db.close();
-             return true;
         }
 
 
@@ -131,7 +107,6 @@ const startCampaign = (email)=>{
 
   }
 
-    return true;
 
 
 

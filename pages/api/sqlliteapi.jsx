@@ -53,25 +53,32 @@ export default async function handler(req, res) {
           const db = betterSqlite3(process.env.DB_PATH);
 
           // Ensure the messages table exists
-          db.prepare(
-            `
-            CREATE TABLE IF NOT EXISTS messages (
-              id INTEGER PRIMARY KEY,
-              email TEXT,
-              name TEXT,
-              message TEXT,
-              msgStatus TEXT
-            )
-          `,
-          ).run();
+
+          const { email, name, message } = req.body.message;
+
+              
+         
+
+
+            let customerId =db.prepare(`SELECT id FROM customers WHERE email = ?`).get(email)?.id;
+
+          if(!customerId)
+            customerId = db.prepare(`INSERT INTO customers (email, totalOrderCount, subscribed, source) VALUES (?, ?, ?, ?)`).run(email, 0, 0, 'message' ).lastInsertRowid;
+
+
+
+
+
+
+     
 
           // Assuming you have the message data in the request body
-          const { email, name, message } = req.body.message;
+       
 
           // Insert message data into the messages table
           db.prepare(
-            `INSERT INTO messages (email, name, message, msgStatus) VALUES (?, ?, ?, '0')`,
-          ).run(email, name, message);
+            `INSERT INTO messages (customer_id, name, message, msgStatus) VALUES (?, ?, ?, '0')`,
+          ).run(customerId, name, message);
 
           console.log("Message sent successfully.");
           res.status(201).json({ message: "Message sent successfully." });

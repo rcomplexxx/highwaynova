@@ -1,8 +1,10 @@
 const next = require('next');
 const express = require('express');
+const createSqliteTables = require('./utils/createSqliteTables.js')
 const dbCleaner = require('./utils/dbCleaner.jsx');
 const sendEmailJob = require('./utils/sendEmailJob.jsx');
 const betterSqlite3 = require ("better-sqlite3");
+
 
 
 
@@ -90,6 +92,10 @@ console.log('Additional code.');
 
 
 app.prepare().then(() => {
+
+
+  createSqliteTables();
+
 
   dbCleaner();
   //Here start email crons

@@ -121,31 +121,7 @@ const makePayment = async (req, res) => {
         }
 
 
-        db.prepare(
-          `
-          CREATE TABLE IF NOT EXISTS orders (
-            id TEXT PRIMARY KEY,
-            customer_id INTEGER REFERENCES customers(id),
-            firstName TEXT,
-            lastName TEXT,
-            address TEXT,
-            apt TEXT,
-            country TEXT,
-            zipcode TEXT,
-            state TEXT,
-            city TEXT,
-            phone TEXT,
-            couponCode TEXT,
-            tip TEXT,
-            items TEXT,
-            paymentMethod TEXT,
-            paymentId TEXT,
-            packageStatus TEXT,
-            approved BOOLEAN,
-            createdDate INTEGER
-          )
-        `,
-        ).run();
+      
 
         const {
           

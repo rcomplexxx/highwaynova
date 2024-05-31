@@ -11,15 +11,7 @@ class RateLimiter {
     constructor({apiNumberArg, tokenNumberArg, expireDurationArg}) {
         const db = betterSqlite3(process.env.DB_PATH);
 
-        db.prepare(`
-            CREATE TABLE IF NOT EXISTS rateLimiter (
-                id INTEGER PRIMARY KEY,
-                ip TEXT,
-                tokenNumber INTEGER,
-                apiNumber INTEGER,
-                expireDate INTEGER
-            )
-        `).run();
+    
 
         db.close();
             this.apiNumber=apiNumberArg;
@@ -37,15 +29,7 @@ class RateLimiter {
       return new Promise((resolve, reject) => {
         const db= betterSqlite3(process.env.DB_PATH);
           try {
-              db.prepare(`
-                  CREATE TABLE IF NOT EXISTS rateLimiter (
-                      id INTEGER PRIMARY KEY,
-                      ip TEXT,
-                      tokenNumber INTEGER,
-                      apiNumber INTEGER,
-                      expireDate INTEGER
-                  )
-              `).run();
+         
   
               const existingRecord = db.prepare(`
                   SELECT * FROM rateLimiter WHERE ip = ? AND apiNumber = ?

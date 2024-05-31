@@ -91,6 +91,7 @@ export default function Admin() {
         name: message.name,
         email: message.email,
         message: message.message,
+        totalOrderCount: message.totalOrderCount
       });
     }
 

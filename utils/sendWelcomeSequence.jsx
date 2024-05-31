@@ -15,18 +15,7 @@ const db = betterSqlite3(process.env.DB_PATH);
 
 
 
-db.prepare(
-  `
-  CREATE TABLE IF NOT EXISTS email_campaigns (
-    id INTEGER PRIMARY KEY,
-    title TEXT,
-    sequenceId INTEGER,
-    sendingDateInUnix INTEGER,
-    emailSentCounter INTEGER,
-    retryCounter INTEGER,
-    targetCustomers TEXT
-  )
-`).run();
+
 
 console.log('target email', targetEmail)
 

@@ -5,6 +5,7 @@ export default function MessageCard({
   id,
   name,
   email,
+  totalOrderCount,
   message,
   msgStatus,
   handleMsgStatusChange,
@@ -28,6 +29,13 @@ const [emailCopied, setEmailCopied] = useState(false);
          <p className={styles.infoLabel}>Name</p>
          <p className={styles.info}>{name}</p>
       </div>
+
+      <div className={styles.infoPair}>
+         <p className={styles.infoLabel}>Order count</p>
+         <p className={styles.info}>{totalOrderCount}</p>
+      </div>
+
+     
       <div className={styles.infoPair}>
          <div className={styles.infoLabelWrapper}>
           <p className={styles.infoLabel}>Email</p> 
@@ -35,7 +43,7 @@ const [emailCopied, setEmailCopied] = useState(false);
           navigator.clipboard.writeText(email);
           setEmailCopied(true);
          }} className={styles.copySpan}>
-          {!emailCopied?'Click here to copy':'Email copied!'}</span></div>
+          {!emailCopied?'Click here to copy email':'Email copied!'}</span></div>
          <p className={styles.info}>{email}</p>
       </div>
 
