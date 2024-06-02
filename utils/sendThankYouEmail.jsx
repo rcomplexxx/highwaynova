@@ -11,14 +11,15 @@ const sendThankYouEmail = (email, orderId)=>{
   
   
   
-    const result = db.prepare(`INSERT INTO email_campaigns (title, sequenceId, sendingDateInUnix, emailSentCounter, retryCounter, targetCustomers) VALUES (?, ?, ?, ?, ?, ?)`)
+    const result = db.prepare(`INSERT INTO email_campaigns (title, sequenceId, sendingDateInUnix, emailSentCounter, retryCounter, targetCustomers, extraData) VALUES (?, ?, ?, ?, ?, ?, ?)`)
     .run(
       `Thank you ${email}`,
       process.env.THANK_YOU_SEQUENCE_ID,
       Date.now()+60000,
       0,
       0,
-      JSON.stringify([email])
+      JSON.stringify([email]),
+      JSON.stringify({orderId: orderId})
       
     );
      
@@ -30,3 +31,6 @@ const sendThankYouEmail = (email, orderId)=>{
   
           emailSendJob(Date.now()+60000,campaignId);
   }
+
+
+  module.exports= sendThankYouEmail;

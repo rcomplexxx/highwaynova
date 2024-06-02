@@ -158,8 +158,7 @@ function createSqliteTables() {
           INSERT INTO key_email_sequences (id, thank_you_sequence, welcome_sequence)
           VALUES (1, NULL, NULL)
         `).run();
-      }
-    });
+      };
 
 
 

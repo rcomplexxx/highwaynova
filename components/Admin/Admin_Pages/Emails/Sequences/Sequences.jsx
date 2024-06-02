@@ -10,6 +10,8 @@ export default function Sequences({emails,sequences}) {
   
         <div className={styles.mainDiv}>
          <h1>Sequences</h1>
+
+        
          {sequences?.map(sequence=>{
    
       
@@ -32,6 +34,9 @@ export default function Sequences({emails,sequences}) {
 const SequenceCard = ({id, title, sequenceEmails, emails})=>{
 
     const [showEmailInfo, setShowEmailInfo] = useState(false);
+    const [hideSequence, setHideSequence] = useState(false);
+
+    if(hideSequence)return <></>
 
 
     return <div className={styles.campaignDiv}>
@@ -48,7 +53,42 @@ const SequenceCard = ({id, title, sequenceEmails, emails})=>{
 
 
 
+<buttons onClick={async ()=>{
+  if (window.confirm("Are you sure you want to delete this sequence?")) {
 
+
+    try {
+      const response = await fetch("/api/admincheck", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(
+         { dataType:'delete_email_sequence', data:{deleteId: id }} 
+        ),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Maine DATA!", data);
+       
+        setHideSequence(true)
+
+       
+       
+      } else {
+        throw new Error("Network response was not ok.");
+      }
+    } catch (error) {
+      console.error(
+        "There has been a problem with your fetch operation:",
+        error
+      );
+    }
+
+
+  }
+}} className={styles.deleteSequenceButton}>Delete sequence</buttons>
 
 
 </div>
@@ -66,7 +106,13 @@ Emails
 </div>
 })}
 
+
+
 </div>
+
+
+
+
 {showEmailInfo && <EmailCard id={showEmailInfo.id} title={showEmailInfo.title} text={showEmailInfo.text} 
 
 

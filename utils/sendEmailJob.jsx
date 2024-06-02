@@ -29,9 +29,14 @@ cron.schedule(date, async() => {
 
 
 
-    const campaign= db.prepare(`SELECT email_campaigns.*, email_sequences.emails FROM email_campaigns JOIN email_sequences WHERE email_campaigns.id = ?`).get(campaignId);
+    const campaign= db.prepare(`SELECT email_campaigns.*, email_sequences.emails FROM email_campaigns JOIN email_sequences ON email_campaigns.sequenceId = email_sequences.id WHERE email_campaigns.id = ?`)
+    .get(campaignId);
 
     console.log('Lets check emails without getting sequence', campaign);
+
+
+    const allSequences = db.prepare('SELECT emails FROM email_sequences WHERE id = ?').all(campaign.sequenceId);
+console.log('All sequences:', allSequences);
 
     const currentEmailIndex = campaign.emailSentCounter
 
@@ -51,6 +56,7 @@ cron.schedule(date, async() => {
         const email = db.prepare(`SELECT * FROM emails WHERE id = ?`).get(sequenceEmailPointers[currentEmailIndex].id);
 
 
+        console.log('so here is my email', email, 'em pointers', sequenceEmailPointers )
         
 
 
@@ -160,7 +166,13 @@ cron.schedule(date, async() => {
           
 
 
-
+                if(campaign.sequenceId == process.env.THANK_YOU_SEQUENCE_ID){
+                  console.log('thank you campaign detected!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', process.env.THANK_YOU_SEQUENCE_ID,
+                    email
+                  )
+                  email.text = email.text.replace(/\[order_id\]/g, JSON.parse(campaign.extraData).orderId)
+                  console.log(email.text)
+                }
 
               
 

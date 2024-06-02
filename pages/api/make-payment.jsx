@@ -120,6 +120,8 @@ const makePayment = async (req, res) => {
 
         }
 
+        const uniqueId = generateUniqueId();
+
 
       
 
@@ -144,7 +146,7 @@ const makePayment = async (req, res) => {
         db.prepare(
           `INSERT INTO orders (id, customer_id, firstName, lastName, address, apt, country, zipcode, state, city, phone, couponCode, tip, items, paymentMethod, paymentId, packageStatus, approved, createdDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, '0', ?, ?)`,
         ).run(
-          generateUniqueId(),
+          uniqueId,
           customerId,
           firstName,
           lastName,
@@ -171,10 +173,16 @@ const makePayment = async (req, res) => {
         if(approved===1){
         
           
+          console.log('its approved, sending thank you campaign');
+
+         
+
+          
+
            
         if(req.body.order.subscribe)
-          subscribe(email, "checkout");
-        else subscribe(email, "checkout x");
+          subscribe(req.body.order.email, "checkout",  {orderId:uniqueId});
+        else subscribe(req.body.order.email, "checkout x", {orderId:uniqueId});
           
 
 
@@ -197,8 +205,8 @@ const makePayment = async (req, res) => {
   try {
     const clientIp = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
 
-    if (!(await limiterPerDay.rateLimiterGate(clientIp)))
-      return res.status(429).json({ error: "Too many requests." });
+    // if (!(await limiterPerDay.rateLimiterGate(clientIp)))
+    //   return res.status(429).json({ error: "Too many requests." });
     console.log('ITEMS', req.body.order.items)
     let totalPrice = req.body.order.items
       .reduce((sum, product) => {

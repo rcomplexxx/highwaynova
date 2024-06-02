@@ -25,6 +25,8 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
+
+    margin-bottom: var(--size-3);
 }
 
 .currentId{
@@ -38,6 +40,21 @@
     font-size: var(--font-size-4);
     opacity: 0.18;
     color: var(--admin-txt-color);
+}
+
+
+.deleteSequenceButton{
+    color: var(--admin-txt-color-weak);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding:  var(--size-3) var(--size-5);
+    border: 1px solid var(--border-color-mid);
+
+    cursor: pointer;
+
 }
 
 

@@ -28,9 +28,14 @@ export default async function adminCheckHandler(req, res) {
 
 
        let rows2=[];
+      //  let row2_5={};
        try{
         queryString = `SELECT * FROM email_sequences`;
         rows2 = db.prepare(queryString).all();
+
+        // queryString = `SELECT * FROM key_email_sequences WHERE id = 1`;
+        // row2_5 = db.prepare(queryString).get();
+
        }catch{}
 
        
@@ -40,7 +45,8 @@ export default async function adminCheckHandler(req, res) {
         rows3 = db.prepare(queryString).all();
        }catch{}
 
-       rows= {emails: rows1, sequences: rows2, campaigns: rows3};
+      //  keySequences: row2_5,
+       rows= {emails: rows1, sequences: rows2,  campaigns: rows3};
 
       }
 
@@ -48,7 +54,7 @@ else{
 
 
       let queryString;
-      if (table === "orders" || table === `orders JOIN customers` || table === "messages JOIN customers" || table==="customers" || table==="product_returns") {
+      if (table === "orders" || table === `orders JOIN customers ON orders.customer_id = customers.id` || table === "messages JOIN customers ON messages.customer_id = customers.id" || table==="customers" || table==="product_returns") {
         queryString = `SELECT ${selectVariables} FROM ${table} WHERE ${queryCondition}`;
 
         console.log('my query selector is', queryString)
@@ -123,6 +129,34 @@ else{
     // Remove the directory itself
     fs.rmdirSync(directoryPath);
 }
+
+
+  const deleteRow= (tableName, deleteId)=>{
+
+
+    try {
+
+    console.log('deleting data row from', tableName, deleteId)
+    const db = betterSqlite3(process.env.DB_PATH);
+    
+
+    if(tableName==='email_sequences')
+    db.prepare(`DELETE FROM email_campaigns WHERE sequenceId = ?`).run(deleteId);
+
+
+   db.prepare(`DELETE FROM ${tableName} WHERE id = ?`).run(deleteId);
+  
+    db.close();
+
+    return res.status(200).json({ row_deleted: true });
+  } catch (error) {
+    console.error(error);
+    return res
+      .status(500)
+      .json({ successfulLogin: false, error: "Database update error" });
+  }
+    
+  }
 
 
 
@@ -206,6 +240,10 @@ else{
 
           db.prepare(`DELETE FROM ${tableName}`).run();
           db.prepare(`DROP TABLE IF EXISTS ${tableName}`).run();
+
+
+          createSqliteTables();
+
         }
         db.close();
 
@@ -293,10 +331,27 @@ else{
 
         console.log('should be created');
 
-       db.prepare(`INSERT INTO email_sequences (title, emails) VALUES (?, ?)`).run(
+        let insertId = db.prepare(`SELECT id FROM email_sequences WHERE id = 1`).get()?.id;
+
+        if(insertId)
+        insertId = db.prepare(`SELECT id FROM email_sequences WHERE id + 1 NOT IN (SELECT id FROM email_sequences)`).get().id + 1;
+        else insertId=1
+
+       const sequenceId = db.prepare(`INSERT INTO email_sequences (id, title, emails) VALUES (?, ?, ?)`).run(
+        insertId,
           data.title,
           data.emails,
-        );
+        ).lastInsertRowid;
+
+        console.log('should be created3', data.key_sequence_type);
+
+        if(data.key_sequence_type){
+
+          console.log('should be created');
+
+          db.prepare(`UPDATE key_email_sequences SET ${data.key_sequence_type} = ? WHERE id = 1`).run(sequenceId)
+
+        }
         
       }
 
@@ -653,25 +708,25 @@ else{
         //Ovde approved
         else if(dataType === "get_order_cash_info_only_fulfilled_orders") return getFromDb("orders", `packageStatus != '0'`, "createdDate, items, tip, couponCode");
         else if (dataType === "get_unfulfilled_orders")
-          return getFromDb(`orders JOIN customers`, `approved = '1' AND packageStatus = '0'`, `orders.*, customers.email`);
+          return getFromDb(`orders JOIN customers ON orders.customer_id = customers.id`, `approved = '1' AND packageStatus = '0'`, `orders.*, customers.email`);
         else if (dataType === "get_unapproved_orders")
-          return getFromDb(`orders JOIN customers`, `approved = '0'`, `orders.*, customers.email`);
+          return getFromDb(`orders JOIN customers ON orders.customer_id = customers.id`, `approved = '0'`, `orders.*, customers.email`);
         else if (dataType === "get_fulfilled_orders")
-          return getFromDb(`orders JOIN customers`, `packageStatus != '0'`, `orders.*, customers.email`);
+          return getFromDb(`orders JOIN customers ON orders.customer_id = customers.id`, `packageStatus != '0'`, `orders.*, customers.email`);
 
         
         else if(dataType === "get_orders_by_email")
-        return getFromDb(`orders JOIN customers`, `email = '${data.email}'`, `orders.*, customers.email`);
+        return getFromDb(`orders JOIN customers ON orders.customer_id = customers.id`, `email = '${data.email}'`, `orders.*, customers.email`);
       
 
        
         
         else if(dataType ==="get_order_by_orderId")
-        return getFromDb(`orders JOIN customers`, `orders.id = '${data.orderId}'`, `orders.*, customers.email`);
+        return getFromDb(`orders JOIN customers ON orders.customer_id = customers.id`, `orders.id = '${data.orderId}'`, `orders.*, customers.email`);
         else if (dataType === "get_unanswered_messages")
-          return getFromDb("messages JOIN customers", `msgStatus = '0'`, `messages.*, customers.email, customers.totalOrderCount`);
+          return getFromDb("messages JOIN customers ON messages.customer_id = customers.id", `msgStatus = '0'`, `messages.*, customers.email, customers.totalOrderCount`);
         else if (dataType === "get_answered_messages")
-          return getFromDb("messages JOIN customers", `msgStatus != '0'`, `messages.*, customers.email, customers.totalOrderCount`);
+          return getFromDb("messages JOIN customers ON messages.customer_id = customers.id", `msgStatus != '0'`, `messages.*, customers.email, customers.totalOrderCount`);
         else if (dataType === "get_reviews")
           return getFromDb(
             "reviews",
@@ -838,6 +893,13 @@ else{
           data
         );
         }
+
+        else if(dataType ==="delete_email_sequence")
+          {
+           deleteRow('email_sequences', data.deleteId)
+        
+          
+          }
         
         else if(dataType === `wipe_orders`){
           wipeData('orders')

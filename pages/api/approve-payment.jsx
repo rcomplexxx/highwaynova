@@ -29,7 +29,7 @@ const approvePayment = async (req, res) => {
 
 
 
-  const updateDb = async () => {
+  const updateDb = async (email) => {
     return new Promise((resolve, reject) => {
       try {
         const db = betterSqlite3(process.env.DB_PATH);
@@ -43,6 +43,19 @@ const approvePayment = async (req, res) => {
         // Check the result of the update operation
         if (result.changes > 0) {
           // If changes were made, resolve the promise
+
+
+          const orderId = db.prepare(`SELECT id FROM orders WHERE paymentId = ? AND paymentMethod = ?`).get(paymentId, paymentMethod).id;
+          
+
+
+
+          if(customerSubscribed)
+            subscribe(email, "checkout", {orderId:orderId});
+          else subscribe(email, "checkout x",  {orderId:orderId});
+        
+
+
           resolve("Order approved successfully.");
         } else {
           // If no changes were made, reject the promise with an error message
@@ -76,9 +89,11 @@ const approvePayment = async (req, res) => {
         console.log("Here is my data!",email, fullName.slice(0, fullName.indexOf(" ")), fullName.slice(fullName.indexOf(" "), fullName.length), shippingAddress.address.address_line_1, shippingAddress.address.address_line_2,shippingAddress.address.country_code, shippingAddress.address.postal_code, shippingAddress.address.admin_area_1,shippingAddress.address.admin_area_2 , paymentId, paymentMethod)
         
 
-        if(customerSubscribed)
-          subscribe(email, "checkout");
-        else subscribe(email, "checkout x");
+    
+
+          
+
+
 
         const myCustomerId = db.prepare(`SELECT id FROM customers WHERE email = ?`).get(email)?.id;
         
@@ -109,15 +124,12 @@ const approvePayment = async (req, res) => {
 
   const approvedConsequence= async(email)=>{
 
-    await updateDb();
+    await updateDb(email);
 
 
     console.log('did customer subed', customerSubscribed);
     
-    if(customerSubscribed)
-      subscribe(email, "checkout");
-    else subscribe(email, "checkout x");
-      
+ 
 
 
 
@@ -131,8 +143,8 @@ const approvePayment = async (req, res) => {
   try {
     const clientIp = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
 
-    if (!(await limiterPerDay.rateLimiterGate(clientIp)))
-      return res.status(429).json({ error: "Too many requests." });
+    // if (!(await limiterPerDay.rateLimiterGate(clientIp)))
+    //   return res.status(429).json({ error: "Too many requests." });
 
     if(paymentMethod.includes('PAYPAL')){
     const request = new paypal.orders.OrdersCaptureRequest(paymentId);

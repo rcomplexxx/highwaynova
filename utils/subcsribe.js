@@ -2,7 +2,7 @@ import betterSqlite3 from "better-sqlite3";
 import emailSendJob from "./sendEmailJob";
 
 
-function subscribe(email, source) {
+function subscribe(email, source, extraData) {
 
 
 
@@ -18,7 +18,31 @@ function subscribe(email, source) {
 
 
    
+    const sendThankYouEmail = ()=>{
 
+   
+    
+    
+      const result = db.prepare(`INSERT INTO email_campaigns (title, sequenceId, sendingDateInUnix, emailSentCounter, retryCounter, targetCustomers, extraData) VALUES (?, ?, ?, ?, ?, ?, ?)`)
+      .run(
+        `Thank you ${email}`,
+        process.env.THANK_YOU_SEQUENCE_ID,
+        Date.now()+60000,
+        0,
+        0,
+        JSON.stringify([email]),
+        JSON.stringify({orderId: extraData.orderId})
+        
+      );
+       
+    
+            const campaignId = result.lastInsertRowid;
+    
+         console.log('in thank you', db.prepare(`SELECT * FROM email_sequences WHERE id = ?`).get(process.env.THANK_YOU_SEQUENCE_ID))
+    
+    
+            emailSendJob(Date.now()+60000,campaignId);
+    }
 
 
 
@@ -26,11 +50,11 @@ function subscribe(email, source) {
 
 
     
-const startCampaign = (email)=>{
+const startCampaign = ()=>{
 
 
 
-
+  
 
 
   const result = db.prepare(`INSERT INTO email_campaigns (title, sequenceId, sendingDateInUnix, emailSentCounter, retryCounter, targetCustomers) VALUES (?, ?, ?, ?, ?, ?)`)
@@ -41,6 +65,7 @@ const startCampaign = (email)=>{
     0,
     0,
     JSON.stringify([email])
+   
     
   );
    
@@ -69,50 +94,17 @@ const startCampaign = (email)=>{
     
         if(!result){
 
-
-
-
-    //bh subscriberi(customeri)
-
-
-    if(source==="checkout"){ 
-      db.prepare("INSERT INTO customers (email, totalOrderCount, subscribed, source) VALUES (?, ?, ?, ?)").run( email, 1, 1, source );
-      startCampaign(email);
-     
-     
-
+          db.prepare("INSERT INTO customers (email, totalOrderCount, subscribed, source) VALUES (?, ?, ?, ?)").run( email, source.includes('checkout')?1:0, source==='checkout x'?0:1, source );
       
-  }
-
-      else if(source==="checkout x"){ 
-            db.prepare("INSERT INTO customers (email, totalOrderCount, subscribed, source) VALUES (?, ?, ?, ?)").run( email, 1, 0, source );
-          
-   
+          if(source.includes('checkout')) sendThankYouEmail();
+          if(source!='checkout x')startCampaign();
+      
         }
 
 
 
-
-    else{
-          
-    db.prepare("INSERT INTO customers (email, totalOrderCount, subscribed, source) VALUES (?, ?, ?, ?)").run(
-        email,
-        0,
-        1,
-      source
-    );
-
-
-    startCampaign(email);
-
-  }
-
-
-
-
-
-
-        }
+        
+        
 
         else {
 
@@ -120,15 +112,15 @@ const startCampaign = (email)=>{
           if(source==="checkout"){
             db.prepare("UPDATE customers SET totalOrderCount = totalOrderCount + 1, subscribed = 1 WHERE email = ?").run( email);    
             console.log('in source checkout,', result.subscribed)
-            if(!result.subscribed) startCampaign(email);
-
+            if(!result.subscribed) startCampaign();
+            sendThankYouEmail();
        
           }
 
           else  if(source==="checkout x"){ 
 
               db.prepare("UPDATE customers SET totalOrderCount = totalOrderCount + 1 WHERE email = ?").run(email);
-           
+              sendThankYouEmail();
           }
 
             else{
@@ -136,7 +128,7 @@ const startCampaign = (email)=>{
 
               db.prepare("UPDATE customers SET subscribed = 1 WHERE email = ?").run(email);
           
-              if(!result.subscribed) startCampaign(email);
+              if(!result.subscribed) startCampaign();
 
             }
 

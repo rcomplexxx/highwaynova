@@ -8,6 +8,7 @@ import EmailList from './EmailList/EmailList';
 export default function NewSequence({emailData, setEmailData}) {
 
   const [sequenceEmails, setSequenceEmails] = useState([]);
+  const [keySequenceType, setKeySequenceType] = useState();
   
   const titleRef = useRef();
 
@@ -16,6 +17,47 @@ export default function NewSequence({emailData, setEmailData}) {
 
 
   console.log('camp emails', sequenceEmails);
+
+
+  const getKeySequenceSelector = ()=>{
+
+    console.log('key sequences', emailData.keySequences)
+    let keySequencesSelectorExists=  false;
+    
+    
+
+    for (const key in emailData.keySequences) {
+      if(!emailData.keySequences[key])
+        keySequencesSelectorExists=true;
+      
+    }
+
+    if(keySequencesSelectorExists){
+
+      return <select
+      id="targetTrafficSelect"
+      className={styles.targetTrafficSelect}
+      value={keySequenceType}
+      onChange={(e) => {setKeySequenceType(e.target.value)}}
+      >
+        <option value={undefined}>Select key sequence type</option>
+        <option value={undefined}>Sequence is not key sequence</option>
+
+     { Object.keys(emailData.keySequences).map(keySequence => {
+      if(!emailData.keySequences[keySequence] && keySequence!="id" )
+        return <option value={keySequence}>{keySequence}</option>
+      })
+
+    }
+      
+      
+      </select>
+
+      
+    }
+    
+
+  }
 
 
 
@@ -84,7 +126,7 @@ export default function NewSequence({emailData, setEmailData}) {
       
 
        return {id:email.id, sendTimeGap:email.sendTimeGap}
-      }))
+      })), key_sequence_type: keySequenceType
       
       };
 
@@ -120,8 +162,12 @@ const filteredEmails = emailData?.emailsUnusedInSequences?.filter(email=>{
   return (
     <div className={styles.mainDiv}>
       <h1>New email sequence</h1>
-    
-    
+
+      <span className={styles.instructionSpan}>You can use [orderId] in thank you sequence, and it will be replaced with actualy orderId</span>
+
+
+
+
 
       <input ref={titleRef} className={styles.sequenceInput} placeholder='Sequence title'/>
       <input value={sequenceEmailsInputString} className={styles.sequenceInput} placeholder='Included emails'/>
