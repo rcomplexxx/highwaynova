@@ -57,8 +57,8 @@
  
     
     
-    height: auto ;
-    width: var(--size-12) !important; 
+    
+    width: var(--size-13) !important; 
   
 
     display: flex;
@@ -160,6 +160,13 @@
        
     
     }
+
+    .slide{
+
+        
+        width: var(--size-12) !important; 
+
+    }
   
 
 
@@ -182,6 +189,13 @@
        
        
     
+    }
+
+    .slide{
+
+        
+        width: var(--size-11) !important; 
+
     }
 
    
