@@ -410,7 +410,7 @@ Cormorant+Garamond */
  --mini-slider-arrow-bg:var(--main-color-1);
  --mini-slider-arrow-color: var(--neutral-9);
  --quantity-input-color: var(--main-color-0);
- --quantity-input-bg: var(--main-color-3);
+ --quantity-input-bg: var(--neutral-3);
  --quantity-button-border: var(--neutral-6);
  --quantity-button-hover: var(--accent-color-2);
 
