@@ -158,8 +158,8 @@
      height: var(--size-3);
     width: var(--size-3);
     border-radius: 100%;
-    background-color: green;
-    animation: pulse 2s ease infinite;
+    background-color: rgb(21, 142, 21);
+    animation: pulse 2.4s ease infinite;
   }
 
 
@@ -465,12 +465,12 @@
     }
    
     75% {
-      transform: scale(3); /* Return to initial size */
+      transform: scale(4); /* Return to initial size */
       opacity: 0; /* Return to initial opacity */
     }
 
     100% {
-      transform: scale(3); /* Return to initial size */
+      transform: scale(4); /* Return to initial size */
       opacity: 0; /* Return to initial opacity */
     }
   }

@@ -46,7 +46,7 @@
     justify-content: center;
     align-items: center;
   
-    border-bottom:1px solid var(--hero-image-border-bottom-color);
+    /* border-bottom:1px solid var(--hero-image-border-bottom-color); */
     /* #2e2e31 */  /* #2e2e31 */
        
         min-height: var(--size-13);

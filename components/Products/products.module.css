@@ -7,7 +7,7 @@
     flex-direction: column;
     align-items: center;
     border-radius: var(--size-2);
-    margin-bottom: var(--size-8);
+    margin-bottom: 0;
     contain: layout;
   
   }
@@ -21,13 +21,13 @@
   /* #030a08 */
   /* Mozda ovde staviti max width ili nesto */
   .title {
-  
-    margin-bottom: 40px;
+   
+    margin-bottom: var(--size-8);
   }
   
   .homeProductsTitle{
-    margin-top: var(--size-11-5);
-    margin-bottom: 32px;
+    margin-top: var(--size-9);
+    margin-bottom: var(--size-7);
   }
   
   .mainGridStyle {
@@ -38,7 +38,7 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr); /* 3 items per column by default */
     column-gap: var(--size-7);
-    margin-top: var(--size-3);
+    margin-top: 0;
  
     
   }
@@ -69,7 +69,8 @@
     }
 
     .homeProductsTitle{
-      margin-top: var(--size-9-5);
+      margin-top: var(--size-8);
+      margin-bottom: var(--size-7);
     }
     
   }
@@ -92,12 +93,10 @@
   @media (max-width: 600px)  {
     .toolbar{
       width: calc(100% - 40px);
-      margin-bottom: var(--size-5);
+      margin-bottom: 0;
     }
 
-    .homeProductsTitle{
-      margin-top: var(--size-10);
-    }
+  
 
     .mainGridStyle{
       /* grid-template-columns: repeat(1, 1fr); */

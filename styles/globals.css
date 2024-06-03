@@ -71,9 +71,10 @@ h1{
   color: var(--high-contrast-light-txt-color);
   text-align: center;
   font-size: var(--font-size-7);
-  margin-bottom: var(--size-8);
+ 
   margin-top: var(--size-7);
-  font-weight: 600;
+  margin-bottom: var(--size-8);
+  font-weight: 700;
 }
 
 
@@ -417,9 +418,10 @@ Cormorant+Garamond */
  --quantity-button-hover: var(--accent-color-2);
 
  --paypal-bg:#FFC439;
+ --paypal-wrapper-border: var(--accent-color-4);
 
  --buy-now-bg: transparent;
- --buy-now-border: var(--accent-color-5);
+ --buy-now-border: var(--accent-color-4);
  --buy-now-hover-box-shadow-border: var(--neutral-5);
  --buy-now-hover-bg: var(--accent-color-1);
 
@@ -570,7 +572,7 @@ Cormorant+Garamond */
  
   --express-checkout-bg: var(--payment-div-bg);
   --express-checkout-button-bg: var(--neutral-1);
-  --paypal-wrapper-border: var(--accent-color-5);
+  
   --google-pay-border-color: transparent;
 
  

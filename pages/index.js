@@ -66,7 +66,7 @@ const HomePage = ({ products }) => {
       <div className={styles.content}>
      
 
-        <Products showAll={false} products={products} productListTitle="Trending products" />
+        <Products showAll={false} products={products} productListTitle="Trending now" />
         <HomeReviews />
       </div>
     </>
