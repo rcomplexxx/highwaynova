@@ -63,20 +63,15 @@ color: var(--high-contrast-light-txt-color);
         height: min-content;
       }
 
-.media {
+      .productImage {
   position:relative;
   height: min-content;
   width:var(--size-11);
  aspect-ratio: 1;
- border-radius: 4px;
+ border-radius: 8px;
 
   }
 
-  .productImage{
-    height: 100%;
-    width: 100%;
-    
-  }
 
   .edgeDiv{
     height: auto;
@@ -200,7 +195,7 @@ color: var(--high-contrast-light-txt-color);
   }
   
   @media (max-width: 600px)  {
-    .media {
+    .productImage {
       width:112px;
       }
   

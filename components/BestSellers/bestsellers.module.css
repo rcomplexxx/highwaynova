@@ -84,6 +84,7 @@
     background-color: green;
     height: var(--size-12) !important;
     width: var(--size-12); 
+    border-radius: 8px;
     overflow: hidden;
     transition: all 0.005s ease-in;
 }

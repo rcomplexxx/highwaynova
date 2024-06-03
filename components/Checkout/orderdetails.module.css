@@ -77,7 +77,7 @@
     aspect-ratio: 1;
     margin-right: var(--size-5);
   
-    border-radius: 4px;
+    border-radius: 8px;
     user-select: none;
   }
 

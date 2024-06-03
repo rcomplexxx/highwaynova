@@ -42,7 +42,7 @@ const CartItem = ({ item }) => {
           <Image
             src={`/images/${item.image}`}
             alt={item.name}
-            className={styles.media}
+            className={styles.productImage}
             height={0} width={0} sizes="72px"
           />
        
