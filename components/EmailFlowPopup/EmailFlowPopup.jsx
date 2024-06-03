@@ -120,14 +120,7 @@ export default function EmailFlowPopup({setEmailPopup}){
     return <div className={styles.popupMainWrapper}>
          <div className={styles.popupWrapper}>
 
-         <Image 
-          src='/images/emailPopupBg3.jpeg'
-          height={0} width={0}
-          className={styles.emailPopupBg}
-          sizes='100vw'
-          priority={true}
-          loading={'eager'}
-          />
+    
 
        
 <div className={styles.contentWrapperDiv}>

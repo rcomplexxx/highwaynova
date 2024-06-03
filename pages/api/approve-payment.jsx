@@ -143,8 +143,8 @@ const approvePayment = async (req, res) => {
   try {
     const clientIp = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
 
-    // if (!(await limiterPerDay.rateLimiterGate(clientIp)))
-    //   return res.status(429).json({ error: "Too many requests." });
+    if (!(await limiterPerDay.rateLimiterGate(clientIp)))
+      return res.status(429).json({ error: "Too many requests." });
 
     if(paymentMethod.includes('PAYPAL')){
     const request = new paypal.orders.OrdersCaptureRequest(paymentId);
