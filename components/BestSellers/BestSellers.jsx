@@ -81,11 +81,16 @@ export default function BestSellers() {
   const settings = {
     speed: 400,
     slidesPerView: "auto",
-    spaceBetween: 16,
+    spaceBetween: 32,
     
     breakpoints: {
+
+      9800: {
+        spaceBetween: 24
+      },
+
       600: {
-        spaceBetween: 12
+        spaceBetween: 16
       },
      
     },

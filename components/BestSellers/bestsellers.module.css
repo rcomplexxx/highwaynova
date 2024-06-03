@@ -46,7 +46,7 @@
 
     display: flex;
     align-items: stretch;
-  height: 100% !important;
+  height: auto !important;
     width: 100%;
    
 
@@ -55,7 +55,7 @@
 .slide{
 
  
-    
+    height: auto !important;
     
     
     width: var(--size-13) !important; 
