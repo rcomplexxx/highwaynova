@@ -152,15 +152,17 @@ column-fill:balance;
   }
 
   .showMoreButton{
-    margin-top:  var(--size-4);
-    margin-bottom:  var(--size-6);
-    font-size: 24px;
+    margin-top:  var(--size-8);
+    margin-bottom:  var(--size-7);
+   
     padding: 0 var(--size-6);
     color: var(--light-txt-color);
     background-color: transparent;
     border: 1px solid var(--border-color-strong);
     border-radius: var(--size-2);
-    font-weight: 600;
+
+    font-size: 22px;
+    font-weight: 500;
 
     
   }
@@ -190,6 +192,15 @@ column-fill:balance;
     
     .mainDiv{
      margin-top: var(--size-9);
+    }
+
+    .showMoreButton{
+      margin-top:  var(--size-7);
+      margin-bottom:  var(--size-6);
+
+      padding: 0 var(--size-5);
+      font-size: 20px;
+
     }
   }
   
