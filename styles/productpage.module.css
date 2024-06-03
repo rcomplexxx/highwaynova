@@ -225,7 +225,8 @@
     background-color: var(--main-button-bg);
     
    
-    border: none;
+    
+    border: 1px solid var(--main-button-border-color);
  
     margin-top: var(--size-6);
     margin-bottom: var(--size-3);

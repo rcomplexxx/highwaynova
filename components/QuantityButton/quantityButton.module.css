@@ -86,8 +86,8 @@
     background-color: var(--quantity-input-bg);
     
    
-   
-    border: none;
+    box-sizing: border-box;
+    border: 1px solid var(--quantity-input-border-color);
     border-radius: 4px;
     padding: 0 var(--size-3);
 

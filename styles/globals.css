@@ -298,6 +298,7 @@ Cormorant+Garamond */
 
   --main-button-color: var(--neutral-0);
   --main-button-bg: var(--main-color-4);
+  --main-button-border-color: var(--neutral-3);
   --main-button-hover-color: var(--main-color-5);
 
   /* --main-light-color: #989898;
@@ -410,14 +411,15 @@ Cormorant+Garamond */
  --mini-slider-arrow-bg:var(--main-color-1);
  --mini-slider-arrow-color: var(--neutral-9);
  --quantity-input-color: var(--main-color-0);
+ --quantity-input-border-color: var(--neutral-2);
  --quantity-input-bg: var(--neutral-3);
- --quantity-button-border: var(--neutral-6);
+ --quantity-button-border: var(--neutral-3);
  --quantity-button-hover: var(--accent-color-2);
 
  --paypal-bg:#FFC439;
 
  --buy-now-bg: transparent;
- --buy-now-border: var(--accent-color-7);
+ --buy-now-border: var(--accent-color-5);
  --buy-now-hover-box-shadow-border: var(--neutral-5);
  --buy-now-hover-bg: var(--accent-color-1);
 
