@@ -113,27 +113,28 @@ if (window.innerWidth<980){
   <div id="invisibleDiv" ref={obtainDivHeight} className={styles.invisibleDiv}/>
   {/* </>} */}
    
-  {cartProducts.length === 0? <div className={styles.mainWrapper}>
+  {cartProducts.length === 0? 
   <div className={`${styles.containerStyle} ${styles.emptyCartMainDiv}`}>
   <h1 className={`${styles.title}  ${styles.emptyTitle}`}>Your cart is empty!</h1>
  
   {renderEmptyCart()}
-  </div>
-  <BestSellers/>
+ 
+ 
   </div>:
 
 
-    <div className={styles.mainWrapper} style={{minHeight:`${addressBarUp?"calc(100svh - 64px)":"calc(100vh - 64px)"}`}}>
     <div className={`${styles.containerStyle}`} style={{minHeight:`${addressBarUp?"calc(100svh - 64px)":"calc(100vh - 64px)"}`}}>
       
         <h1 className={styles.title}>Your shopping cart</h1>
         <FreeShippingSlider subtotal={subtotal}/>
       {renderCart()}
       
-    </div>
-    <BestSellers/>
+   
+   
     </div>
   }
+
+<BestSellers/>
     </>
   );
 };

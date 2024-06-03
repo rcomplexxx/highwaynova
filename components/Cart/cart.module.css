@@ -21,7 +21,7 @@ height : 100vh;
   display: flex;
   flex-direction: column;
   width: 100%;
-  min-height: calc(100svh - var(--size-9));
+  /* min-height: calc(100svh - var(--size-9)); */
 }
 
 .containerStyle{

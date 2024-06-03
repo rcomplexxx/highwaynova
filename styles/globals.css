@@ -15,6 +15,18 @@
 
 }
 
+.mainDiv{
+
+  width: 100%;
+ min-height: calc(100svh - var(--size-9));
+
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 html{
   /* margin: 0 auto; //*/
  
