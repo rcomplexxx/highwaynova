@@ -153,7 +153,7 @@ column-fill:balance;
 
   .showMoreButton{
     margin-top:  var(--size-8);
-    margin-bottom:  var(--size-7);
+  
    
     padding: 0 var(--size-6);
     color: var(--light-txt-color);
@@ -196,7 +196,7 @@ column-fill:balance;
 
     .showMoreButton{
       margin-top:  var(--size-7);
-      margin-bottom:  var(--size-6);
+    
 
       padding: 0 var(--size-5);
       font-size: 20px;

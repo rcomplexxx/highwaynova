@@ -22,7 +22,8 @@
   /* Mozda ovde staviti max width ili nesto */
   .title {
    
-    margin-bottom: var(--size-8);
+    margin-top: var(--size-9);
+    margin-bottom: var(--size-7);
   }
   
   .homeProductsTitle{
@@ -68,6 +69,10 @@
       width: calc(100% - var(--size-11));
     }
 
+    .title{
+      margin-top: var(--size-8);
+      margin-bottom: var(--size-7);
+    }
     .homeProductsTitle{
       margin-top: var(--size-8);
       margin-bottom: var(--size-7);

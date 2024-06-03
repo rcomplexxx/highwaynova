@@ -17,7 +17,7 @@ box-sizing: border-box;
   opacity: 0.9;
      overflow: auto;
      margin-top: 0;
-     margin-bottom:var(--size-9);
+  
     border-radius:var(--size-3);
  
     

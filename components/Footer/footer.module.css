@@ -11,7 +11,7 @@
     
     z-index: 4;
     contain: content;
-    margin-top: auto;
+    margin-top: var(--size-9);
     background-color: var(--footer-bg);
     
   }
@@ -247,6 +247,9 @@
 
   @media(min-width: 980px){
 
+
+   
+
     .mainDiv{
       width: calc(100% - var(--size-11));
       max-width: var(--size-18-5);
@@ -288,6 +291,14 @@
 
 
   }
+
+
+  @media(max-width: 980px){
+    .footer{
+      margin-top: var(--size-8);
+    }
+  }
+
 
 
   @media(max-width: 776px){
