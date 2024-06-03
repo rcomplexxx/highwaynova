@@ -80,33 +80,9 @@ export default function BestSellers() {
 
   const settings = {
     speed: 400,
-    slidesPerView: 7.4,
+    slidesPerView: "auto",
     spaceBetween: 8,
    
-    breakpoints: {
-      1480: {
-        slidesPerView: 7.4,
-        spaceBetween: 8,
-      
-      },
-      1280: {
-        slidesPerView:  6.2,
-        spaceBetween: 12,
-      },
-      1180: {
-        slidesPerView: 4.2,
-      
-      },
-      768: {
-        slidesPerView: 3.2,
-       
-      },
-     0: {
-        slidesPerView: 2.2,
-        spaceBetween: 16,
-      
-      },
-    },
     variableWidth: false,
     centeredSlides: false,
     loop: false,
@@ -115,19 +91,25 @@ export default function BestSellers() {
   return (
     <div className={`${styles.mainDiv}`}>
       <h1 className={styles.bestSellersTitle}>You might also like</h1>
+
+
       <Swiper {...settings} ref={sliderRef} className={styles.slider}>
         {bestSellerProducts.map((bsp, index) => (
-          <SwiperSlide key={index} className={styles.productImageDiv}>
-            <span className={styles.productTitle}>{bsp.product.name}</span>
-            <Link href={`/products/${bsp.product.name.toLowerCase().replace(/\s+/g, "-")}`} className={styles.productImageLink}>
+          <SwiperSlide key={index} className={styles.slide}>
             
-              <div className={styles.productImageDiv2}>
+            
+            <Link href={`/products/${bsp.product.name.toLowerCase().replace(/\s+/g, "-")}`} 
+            className={styles.productImageLink}>
+            
+              
                 <PicWithThumbnail product={bsp.product} />
              
-              </div>
+            
             </Link>
+
+            <span className={styles.productTitle}>{bsp.product.name}</span>
             <button onClick={()=>{ onAddToCart(1, bsp.product, bsp.variantName)}} className={styles.addToCartButton}>
-              <span>Add</span>
+            Add
             </button>
             
           </SwiperSlide>
