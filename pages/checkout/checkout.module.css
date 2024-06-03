@@ -108,7 +108,8 @@
         background-color: var(--main-button-bg);
        
         border-radius: 4px;
-        border: none;
+        box-sizing: border-box;
+        border: 1px solid var(--main-button-border-color);
         font-size: var(--font-size-3);   
         transition: background-color 0.2s ease;
  
