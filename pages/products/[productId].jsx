@@ -124,12 +124,12 @@ export default function ProductPage({ product, images, startReviews, ratingData 
             <span className={styles.inStockSpan}>In stock, ready to ship</span>
           </div>
           {product.variants && <div className={styles .variantDiv}>
-          <span className={styles.product_style_label}>Color: {variant}</span>
+          <span className={styles.variantLabel}>Color: {variant}</span>
           <div className={styles.product_style_options}>
             {product.variants.map((v, i)=>{
            return  <div
            key={i}
-              className={`${styles.product_style_span}`}
+              className={`${styles.productVariant}`}
               onClick={() => {
                 
                 setVariant(v.name);

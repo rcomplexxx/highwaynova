@@ -96,7 +96,7 @@
   align-items: center;
   font-size: var(--font-size-7);
  margin-top: 0;
- margin-bottom: var(--size-6);
+ /* margin-bottom: var(--size-6); */
 }
 
 .product_price_span{
@@ -131,6 +131,7 @@
     width: 100%;
     display: flex;
     align-items: center;
+    margin-top: var(--size-6);
     margin-bottom: var(--size-6);
 
   }
@@ -175,12 +176,13 @@
   .variantDiv{
     display: flex;
     flex-direction: column;
+    margin-left: 1px;
   }
 
-  .product_style_label{
+  .variantLabel{
    
     margin-bottom: var(--size-3);
-    font-size: var(--font-size-4);
+    font-size: var(--font-size-3);
   }
 
   .product_style_options {
@@ -190,7 +192,7 @@
   
   }
   
-  .product_style_span{
+  .productVariant{
     position:relative;
     width: var(--size-8);
     aspect-ratio: 1;
@@ -374,10 +376,10 @@
   
    
 
-    .product_style_span{
-      width: var(--size-8);
+    .productVariant{
+  
       
-      margin-right: var(--size-3);
+      margin-right: var(--size-4);
     }
 
     
