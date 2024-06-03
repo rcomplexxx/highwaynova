@@ -298,7 +298,7 @@ Cormorant+Garamond */
 
   --main-button-color: var(--neutral-0);
   --main-button-bg: var(--main-color-4);
-  --main-button-border-color: var(--neutral-5);
+  --main-button-border-color: var(--main-color-2);
   --main-button-hover-color: var(--main-color-5);
 
   /* --main-light-color: #989898;
