@@ -1,6 +1,6 @@
 .mainDiv{
 
-    height: auto;
+ 
     width: 100%;
     background-color: var(--best-sellers-bg);
 
@@ -57,7 +57,7 @@
  
     
     
-    height: 555px ;
+    height: auto ;
     width: var(--size-12) !important; 
   
 
@@ -92,10 +92,10 @@
 
 .productTitle{
    
-    font-size: var(--font-size-5);
-    font-weight: 400;
+    font-size: var(--font-size-4);
+    font-weight: 500;
    
-    
+    margin-top: var(--size-5);
      margin-bottom: var(--size-5);
 }
 
