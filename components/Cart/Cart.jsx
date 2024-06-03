@@ -107,35 +107,33 @@ if (window.innerWidth<980){
 
 
  
-  return (<>
-  {/* {invDivsPresent && <> */}
+  return ( <div className={`${styles.containerStyle}`} style={{minHeight:`${addressBarUp?"calc(100svh - 64px)":"calc(100vh - 64px)"}`}}>
+
+<div className={styles.cartContentWrapper}  style={{minHeight:`${cartProducts.length==0?'0':(addressBarUp?"calc(100svh - 64px)":"calc(100vh - 64px)")}`}}>
+ 
+ 
   <div id="invisibleDiv2" ref={obtainDiv2Height} className={`${styles.invisibleDiv2} ${styles.invisibleDiv}`}/>
   <div id="invisibleDiv" ref={obtainDivHeight} className={styles.invisibleDiv}/>
-  {/* </>} */}
+ 
+ 
+
+  
    
-  {cartProducts.length === 0? 
-  <div className={`${styles.containerStyle} ${styles.emptyCartMainDiv}`}>
-  <h1 className={`${styles.title}  ${styles.emptyTitle}`}>Your cart is empty!</h1>
- 
-  {renderEmptyCart()}
- 
- 
-  </div>:
-
-
-    <div className={`${styles.containerStyle}`} style={{minHeight:`${addressBarUp?"calc(100svh - 64px)":"calc(100vh - 64px)"}`}}>
-      
-        <h1 className={styles.title}>Your shopping cart</h1>
+  {cartProducts.length === 0? <><h1 className={`${styles.title}  ${styles.emptyTitle}`}>Your cart is empty!</h1>
+ {renderEmptyCart()}
+  </>:
+  <> <h1 className={styles.title}>Your shopping cart</h1>
         <FreeShippingSlider subtotal={subtotal}/>
       {renderCart()}
-      
-   
-   
-    </div>
+      </>
+ 
   }
 
+</div>
+
+
 <BestSellers/>
-    </>
+</div>
   );
 };
 

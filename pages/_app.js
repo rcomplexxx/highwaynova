@@ -178,10 +178,7 @@ const totalItems= useMemo(()=>{
 
       
       <AppContext.Provider value={{ cartProducts, setCartProducts, setNewProduct }}>
-     
-        <main className="mainDiv">
         <Component {...pageProps} />
-        </main>
       </AppContext.Provider>
       
       {!router.pathname.includes('admin') &&  <Footer />}

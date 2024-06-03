@@ -25,21 +25,44 @@ height : 100vh;
 }
 
 .containerStyle{
+
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
   width: 100%;
   min-width: 100%;
   /* transition: min-height 0.2s ease; */
-  padding: 0 var(--size-10);
-  padding-bottom: var(--size-6) ;
+  
+ 
+ 
+ 
+  
+}
+
+.cartContentWrapper{
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  
+
+  flex:1;
+
+  width: 100%;
   box-sizing: border-box;
+  padding: 0 var(--size-10);
 }
 
 
 
 .itemsDiv{
+  width: 100%;
   border-top: 1px solid var(--border-color-mid);
-  margin-bottom: var(--size-10);
+  box-sizing: border-box;
+
  
 }
 
@@ -79,8 +102,11 @@ height : 100vh;
  
      
      margin-top: var(--size-3);
+    
  
      border-radius: 4px;
+
+     
 
      box-sizing: border-box;
     
@@ -113,25 +139,18 @@ height : 100vh;
     align-items: center;
     width: 100%;
     margin-top: auto;
-    margin-bottom:0;
+    margin-bottom: var(--size-6);
   }
   
 
-  .emptyCartMainDiv{
-  
-   
-    min-height: 0;
 
-    margin-top: auto;
-     
-  }
 
 
 
   .emptyCartDiv{
-    min-height: 0;
-    min-height:0;
+
     
+   
     width: 100%;
     
     display: flex;
@@ -194,23 +213,30 @@ height : 100vh;
 
   
     .itemsDiv{
-      margin-bottom: var(--size-9);
+      padding-bottom: var(--size-9);
+    }
+
+    .cartContentWrapper{
+      padding: 0 var(--size-8);
+
     }
 
     
-.containerStyle{
-  padding: 0 var(--size-8);
-  padding-bottom: var(--size-5) ;
-}
+
 
 
     .cardDetails {
     
-      margin-left: var(--size-3);
+    
       width: calc(100% - var(--size-5));
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
+
+
+ margin-bottom: var(--size-5);
+      margin-left: var(--size-3);
+
     }
 
     .link {
@@ -229,21 +255,25 @@ height : 100vh;
   }
 
   @media(max-width: 600px){
-    .containerStyle{
-    padding: 0 var(--size-5);
-    padding-bottom: var(--size-5) ;
+ 
+
+    .cartContentWrapper{
+      padding: 0 var(--size-5);
+
     }
+
+
   }
 
   @media(max-width: 480px){
 
     .itemsDiv{
-      margin-bottom: var(--size-8);
+      padding-bottom: var(--size-8);
     }
 
-    .containerStyle{
+    .cartContentWrapper{
       padding: 0 var(--size-4);
-      padding-bottom: var(--size-5) ;
+
     }
   }
 
