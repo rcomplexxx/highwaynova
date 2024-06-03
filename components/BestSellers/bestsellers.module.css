@@ -81,9 +81,8 @@
 .productImageLink{
     position: relative;
 
-    background-color: green;
-    height: var(--size-12) !important;
-    width: var(--size-12); 
+    aspect-ratio: 1;
+    width: 100%; 
     border-radius: 8px;
     overflow: hidden;
     transition: all 0.005s ease-in;

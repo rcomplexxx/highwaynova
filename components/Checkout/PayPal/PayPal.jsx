@@ -159,7 +159,7 @@ const PayPalButton=({checkFields, organizeUserData, method='paypal',  type='norm
               createOrder={async()=>{return await handlePayPalOrder('PAYPAL')}}
               style={{
                 color: color,
-                height: type=="instant" || type=="express" ?48:55
+                height: 48
               }}
               
               className={`${styles.paypalButton} ${type==="instant" && styles.instantPaypalButton}`}
