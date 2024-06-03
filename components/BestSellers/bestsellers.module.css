@@ -7,18 +7,15 @@
     align-items: center;
     margin-top: auto;
    
-    margin-bottom: calc(-1 * var(--size-9));
-    padding-bottom: var(--size-8);
+    
+    padding-bottom: var(--size-7);
     contain: content;
    
 }
 
 .mainDivCloseToBottom{
-    margin-bottom: calc(-1 * var(--size-10));
- 
+    margin-bottom: var(--size-5);
 }
-
-
 
 
 
@@ -128,14 +125,6 @@
 
 @media(max-width: 980px){
 
-
-
-   
-    .mainDivCloseToBottom{
-        margin-bottom: calc(-1 * var(--size-9-5)) !important;
-     
-    }
-
     .bestSellersTitle{
         margin-left: var(--size-6);
     }
@@ -147,8 +136,6 @@
     
     }
   
-
- 
 
 
  
