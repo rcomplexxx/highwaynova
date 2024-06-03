@@ -116,7 +116,7 @@ export default function ProductPage({ product, images, startReviews, ratingData 
           <div className={styles.product_price}>
           ${product.price.toFixed(2)}
             {product.stickerPrice && <span className={styles.product_price_span}>${product.stickerPrice.toFixed(2)}</span>}
-           
+            {product.stickerPrice && <span className={styles.percentageDiscountSpan}>Sale</span>}
           </div>
 
           <div className={styles.inStockDiv}>

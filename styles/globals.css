@@ -342,7 +342,7 @@ Cormorant+Garamond */
   --mobile-nav-cancel-icon-color: var(--search-cancel-icon-color);
   --menu-icon-color: var(--neutral-8);
   --nav-links-color: var(--accent-color-7);
-  --navbar-current-link-color: var(--light-txt-colo);
+  --navbar-current-link-color: var(--light-txt-color);
   --navbar-arrow-color: var(--nav-links-color);
   --nav-select-search-link-color:var(--main-color-1);
 
@@ -403,6 +403,8 @@ Cormorant+Garamond */
  /*~ Product page ~*/
 
  --product-price: var(--accent-color-4);
+ --product-percentage-disc-color: var(--neutral-0);
+ --product-percentage-disc-bg: var(--accent-color-4);
 --in-stock-color: var(--neutral-7);
  --selected-product-image-border:var(--main-color-2);
  --mini-slider-arrow-bg:var(--main-color-1);
