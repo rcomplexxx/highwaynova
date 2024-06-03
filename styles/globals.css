@@ -404,7 +404,7 @@ Cormorant+Garamond */
 
  --product-price: var(--accent-color-4);
  --product-percentage-disc-color: var(--neutral-0);
- --product-percentage-disc-bg: var(--accent-color-4);
+ --product-percentage-disc-bg: var(--accent-color-3);
 --in-stock-color: var(--neutral-7);
  --selected-product-image-border:var(--main-color-2);
  --mini-slider-arrow-bg:var(--main-color-1);
