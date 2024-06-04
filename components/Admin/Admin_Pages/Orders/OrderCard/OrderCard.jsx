@@ -94,6 +94,9 @@ export default function OrderCard({
 
 
   const changePs = () => {
+   
+   if(packageStatus ==="3") return;
+
     packageStatus === "0"
       ? handlePackageStatusChange(id, "1")
       : packageStatus === "1"
@@ -114,7 +117,9 @@ export default function OrderCard({
           ? "Not Ordered"
           : packageStatus === "1"
           ? "Ordered"
-          : "Completed"}
+          : packageStatus === "2"? "Completed"
+          : packageStatus === "3" ? "Returned":
+          "Undefined"}
       </button>
       </div>
 

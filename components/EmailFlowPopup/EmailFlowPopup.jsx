@@ -19,18 +19,23 @@ export default function EmailFlowPopup({setEmailPopup}){
 
     useEffect(() => {
 
+
+
+   
+
    
     
        
   
-        const handlePopState = (event)=>{
-        
+      
+
+        const killPopup = ()=>{
+           
           backPressed.current=true;
           setEmailPopup(false);
-
         }
   
-  
+        router.events.on('routeChangeStart', killPopup);
    
        
   
@@ -38,15 +43,17 @@ export default function EmailFlowPopup({setEmailPopup}){
          window.history.pushState(null, null, router.asPath);
         history.go(1);
   
-          window?.addEventListener("popstate", handlePopState);
+        
 
 
         return () => {
 
           console.log('hello from email flow popup')
+         
 
-            if(!backPressed.current)router.back();
-            window?.removeEventListener("popstate", handlePopState);
+      
+
+            router.events.off('routeChangeStart', killPopup);
 
         };
       }, []);

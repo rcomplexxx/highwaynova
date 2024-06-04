@@ -6,7 +6,7 @@ import products from '@/data/products.json'
 import coupons from '@/data/coupons.json'
 
 
-export default function ProductReturns() {
+export default function ProductReturns({resetOrders}) {
 
 const [emailToFindOrders, setEmailToFindOrders] = useState();
 const [foundOrders, setFoundOrders] = useState();
@@ -47,6 +47,7 @@ const getProductReturns = async () => {
       }
     }).then((data) => {
       setMyProductReturns(data.data);
+      resetOrders();
     
       console.log('orders found',data.data);
     

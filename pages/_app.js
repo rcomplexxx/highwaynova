@@ -103,7 +103,7 @@ export default function App({ Component, pageProps }) {
       router.events.on('routeChangeStart', handleRouteChangeStart);
       }
 
-      else if(emailPopupTimeChecker<daysBetweenEmailPopups-1) router.events.off('routeChangeStart', handleRouteChangeStart);
+      
     }
     else{
       handleRouteChangeStart(router.pathname);

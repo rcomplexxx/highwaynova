@@ -306,7 +306,7 @@ export default function CustomerReviews({ product_id, ratingData, startReviews }
           className={styles.showMoreButton}
           onClick={handleShowMore}
         >
-          {isLoading?"Loading...":"Show more"}
+          {isLoading?"Loading...":"Show more reviews"}
         </button>
       )}
       {fullScreenReview && <FullScreenReview authorName={fullScreenReview.authorName} text={fullScreenReview.text} stars={fullScreenReview.stars} 

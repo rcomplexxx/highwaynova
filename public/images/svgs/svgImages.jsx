@@ -50,7 +50,7 @@ export const CorrectIcon = ({color, handleClick, styleClassName})=>{
 
 	console.log('cccorkir', color);
 	return <svg onClick={handleClick} fill={color?color:`var(--success-icon-color)`} className={styleClassName} xmlns="http://www.w3.org/2000/svg"  
-	viewBox="0 0 335.765 335.765" width="800" height="800" >
+	viewBox="0 0 335.765 335.765"  >
 
 	<path d="M311.757 41.803L107.573 245.96l-83.587-83.596L0 186.393l107.573 107.569L335.765 65.795z"/>
 	
@@ -59,7 +59,7 @@ export const CorrectIcon = ({color, handleClick, styleClassName})=>{
 
 export const CancelIcon = ({color, styleClassName, handleClick})=>{
 
-	return <svg onClick={handleClick} className={styleClassName} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="50" height="50">
+	return <svg onClick={handleClick} className={styleClassName} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" >
 	<path fill={color} d="M9.156 6.313L6.313 9.156 22.156 25 6.219 40.969l2.813 2.813L25 27.844l15.938 15.938 2.844-2.844L27.844 25 43.688 9.156l-2.844-2.844L25 22.156z"/>
 	</svg>
 }
@@ -351,6 +351,7 @@ export const LockIcon = ({styleClassName})=>{
 		<path strokeLinecap="round" strokeLinejoin="round" d="M3.5 6.3c0-2.298 1.131-4.9 3.5-4.9s3.5 2.602 3.5 4.9m-8.4.47v5.36c0 .26.21.47.47.47h8.86c.26 0 .47-.21.47-.47V6.77a.47.47 0 0 0-.47-.47H2.57a.47.47 0 0 0-.47.47">
 		</path></svg>
 }
+
 
 
 

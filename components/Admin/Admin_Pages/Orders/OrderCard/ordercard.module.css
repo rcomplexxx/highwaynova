@@ -89,6 +89,7 @@
 
 .orderId{
     opacity: 0.5;
+    align-self: center;
 }
 
 .itemsRow{

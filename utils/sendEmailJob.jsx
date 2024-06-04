@@ -5,7 +5,7 @@ const nodemailer = require("nodemailer");
 
 
 
- async function emailSendJob( dateInUnix, campaignId, insertCurrentCampaign = true, targetsWithoutCurrentCampaign=true) {
+ async function emailSendJob( dateInUnix, campaignId, insertCurrentCampaignInCustomers = true, targetCustomersWithoutCurrentCampaignActive=true) {
 
 
 //
@@ -53,8 +53,9 @@ console.log('All sequences:', allSequences);
 
 
 
-        const email = db.prepare(`SELECT * FROM emails WHERE id = ?`).get(sequenceEmailPointers[currentEmailIndex].id);
+        const email = db.prepare(`SELECT * FROM emails WHERE id = ?`).get(sequenceEmailPointers[currentEmailIndex]?.id);
 
+        if(!email) {console.log('campaign finished.'); return;}
 
         console.log('so here is my email', email, 'em pointers', sequenceEmailPointers )
         
@@ -111,7 +112,7 @@ console.log('All sequences:', allSequences);
               
 
 
-              if(insertCurrentCampaign){
+              if(insertCurrentCampaignInCustomers){
 
                 if(currentEmailIndex===0)
                 targets.forEach(target => {
@@ -136,14 +137,10 @@ console.log('All sequences:', allSequences);
 
 
 
-              if(targetsWithoutCurrentCampaign){
+              if(targetCustomersWithoutCurrentCampaignActive) targets =  targets.filter(target=>{return !db.prepare(`SELECT currentCampaignId FROM customers WHERE email = ?`).get(target.email);})
 
-                targets =  targets.filter(target=>{
-                  return !db.prepare(`SELECT currentCampaignId FROM customers WHERE email = ?`).get(target.email);
-                 
-  
-              })
-              }
+
+              
          
          
          
@@ -219,7 +216,7 @@ console.log('All sequences:', allSequences);
           {
             console.log(`SCHEDULING NEXT EMAIL!!!!!!!!`, new Date(finalSendingDate) , new Date())
 
-            await emailSendJob( finalSendingDate, campaignId, insertCurrentCampaign, targetsWithoutCurrentCampaign)
+            await emailSendJob( finalSendingDate, campaignId, insertCurrentCampaignInCustomers, targetCustomersWithoutCurrentCampaignActive)
           }
 
 
@@ -252,7 +249,7 @@ console.log('All sequences:', allSequences);
 
                   if( campaign.retryCounter<10)
               
-                await  emailSendJob( (campaign.retryCounter+1)%3===0?Date.now()+10800000:Date.now()+60000, campaignId, insertCurrentCampaign, targetsWithoutCurrentCampaign )
+                await  emailSendJob( (campaign.retryCounter+1)%3===0?Date.now()+10800000:Date.now()+60000, campaignId, insertCurrentCampaignInCustomers, targetCustomersWithoutCurrentCampaignActive )
         
            
               }

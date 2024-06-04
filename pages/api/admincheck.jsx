@@ -50,22 +50,28 @@ export default async function adminCheckHandler(req, res) {
 
       }
 
+     
+
 else{
 
 
       let queryString;
-      if (table === "orders" || table === `orders JOIN customers ON orders.customer_id = customers.id` || table === "messages JOIN customers ON messages.customer_id = customers.id" || table==="customers" || table==="product_returns") {
-        queryString = `SELECT ${selectVariables} FROM ${table} WHERE ${queryCondition}`;
 
-        console.log('my query selector is', queryString)
+      if(table==="reviews"){
+        queryString = `SELECT id, name, text, stars, imageNames, product_id FROM reviews WHERE ${queryCondition}`;
+
+      }
+
+     else{
+       queryString = `SELECT ${selectVariables} FROM ${table} WHERE ${queryCondition}`;
+
+      
       } 
 
- 
+      console.log('my query selector is', queryString)
 
     
-      else {
-        queryString = `SELECT id, name, text, stars, imageNames, product_id FROM ${table} WHERE ${queryCondition}`;
-      }
+ 
 
       // Fetching data from the specified table with the given query condition
      rows = db.prepare(queryString).all();
@@ -271,6 +277,9 @@ else{
       
        
         console.log('proso up db', 'should be created')
+        
+        if(db.prepare(`SELECT packageStatus FROM orders WHERE id = ?`).get(data.orderId).packageStatus==="4")return;
+
        
 
         db.prepare(`INSERT INTO 'product_returns' (orderId, items,couponCode, tip, cashReturned, createdDate) VALUES (?, ?, ?, ?, ?, ?)`).run(
@@ -281,6 +290,17 @@ else{
           data.cashReturned,
           Math.floor(Date.now() / 86400000)
         );
+
+        db.prepare(`UPDATE orders SET packageStatus = 3 WHERE id = ?`).run(data.orderId);
+
+
+        db.prepare(`UPDATE email_campaigns SET emailSentCounter = (
+          SELECT json_array_length(email_sequences.emails) 
+          FROM email_sequences 
+          WHERE email_campaigns.sequenceId = email_sequences.id
+      ) WHERE extraData IS NOT NULL AND extraData = ?`).run(JSON.stringify({orderId: data.orderId}))
+
+      console.log('campaign should be killed now using email_seuqnces', db.prepare(`SELECT * FROM email_campaigns WHERE extraData IS NOT NULL AND extraData = ?`).get(JSON.stringify({orderId: data.orderId})));
       
       }
 
@@ -712,7 +732,7 @@ else{
         else if (dataType === "get_unapproved_orders")
           return getFromDb(`orders JOIN customers ON orders.customer_id = customers.id`, `approved = '0'`, `orders.*, customers.email`);
         else if (dataType === "get_fulfilled_orders")
-          return getFromDb(`orders JOIN customers ON orders.customer_id = customers.id`, `packageStatus != '0'`, `orders.*, customers.email`);
+          return getFromDb(`orders JOIN customers ON orders.customer_id = customers.id`, `packageStatus != '0' AND packageStatus != '3'`, `orders.*, customers.email`);
 
         
         else if(dataType === "get_orders_by_email")

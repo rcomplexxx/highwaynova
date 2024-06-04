@@ -216,7 +216,7 @@ export default function Admin() {
 
             case "productreturns":
               content = (
-                <ProductReturns/>
+                <ProductReturns resetOrders = {()=>{setOrders(["reset_data"])}}/>
               );
             break;
 
