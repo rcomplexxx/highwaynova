@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "./xummpay.module.css";
 import Image from "next/image";
 import classNames from "classnames";

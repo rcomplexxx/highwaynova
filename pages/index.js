@@ -1,4 +1,3 @@
-import React from "react";
 import HomeReviews from "../components/HomeReviews/HomeReviews.jsx";
 import Products from "@/components/Products/Products.jsx";
 import products from "../data/products.json";

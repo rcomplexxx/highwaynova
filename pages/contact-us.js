@@ -1,5 +1,5 @@
 import PolicyCard from "@/components/Cards/PolicyCard/PolicyCard";
-import React, { useRef, useState } from "react";
+import  { useRef, useState } from "react";
 import Head from "next/head";
 import styles from '../styles/contactus.module.css'
 import Link from "next/link";

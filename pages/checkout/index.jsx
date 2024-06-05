@@ -1,6 +1,6 @@
 import CheckoutInfo from "@/components/Checkout/CheckoutInfo";
 import OrderDetails from "@/components/Checkout/OrderDetails";
-import React, {  useEffect, useState, } from "react";
+import {  useEffect, useState, } from "react";
 import styles from "./checkout.module.css";
 import {useCounterStore} from "@/contexts/AppContext";
 import CheckoutLogo from "@/components/Checkout/CheckoutLogo/CheckoutLogo";

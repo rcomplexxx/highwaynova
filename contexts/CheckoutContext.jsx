@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useMemo, useState } from 'react';
+import { createContext, useCallback, useMemo, useState } from 'react';
 
 import coupons from '@/data/coupons.json'
 import { useCounterStore } from './AppContext';

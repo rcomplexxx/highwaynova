@@ -1,7 +1,7 @@
 
 
 
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "./floatingbadge.module.css";
 import Image from "next/image";
 import { LockIcon } from "@/public/images/svgs/svgImages";

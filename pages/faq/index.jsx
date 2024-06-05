@@ -1,8 +1,4 @@
-import React from "react";
-import { useState, useRef } from "react";
-import Head from "next/head";
 
-import Image from "next/image";
 import PolicyCard from "@/components/Cards/PolicyCard/PolicyCard";
 import { NextSeo } from "next-seo";
 import { unimportantPageSeo } from "@/utils/SEO-configs/next-seo.config";

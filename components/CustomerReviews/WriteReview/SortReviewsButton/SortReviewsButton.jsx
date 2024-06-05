@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import styles from './sortreviewsbutton.module.css'
-import Image from 'next/image'
 import { SortButtonIcon } from '@/public/images/svgs/svgImages';
 
 export default function SortReviewsButton({sortingType, setSortingType}) {

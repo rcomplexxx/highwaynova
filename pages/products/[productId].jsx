@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef } from "react";
+import  { useCallback, useEffect, useMemo, useRef } from "react";
 import products from "../../data/products.json";
 import Image from "next/image";
 import {useCounterStore} from "@/contexts/AppContext";

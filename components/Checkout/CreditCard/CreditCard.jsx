@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import  { useState } from 'react';
 
 import styles from './creditcard.module.css'
 import CCInput from './CCInput/CCInput';

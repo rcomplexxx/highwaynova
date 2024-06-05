@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback, useContext } from "react";
+import { useState, useRef, useEffect, useCallback, useContext } from "react";
 import styles from "./checkoutinfo.module.css";
 import InputField from "./Input/InputField";
 import CountryInput from "./Input/CountryInput/CountryInput";

@@ -1,9 +1,9 @@
 import { useRouter } from "next/router";
 import CheckoutInfo from "@/components/Checkout/CheckoutInfo";
 import OrderDetails, {
-  OrderDetailsInfo,
+
 } from "@/components/Checkout/OrderDetails";
-import React, { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 
 import products from "../../../data/products.json";
 import Head from "next/head";

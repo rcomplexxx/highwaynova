@@ -1,11 +1,9 @@
-import React, { useEffect } from "react";
 import Products from "@/components/Products/Products.jsx";
 import collections from "@/data/collections.json";
 import products from "@/data/products.json";
-import Head from "next/head";
+
 
 import PageNumber from "@/components/PageNumbers/PageNumbers";
-import { useRouter } from "next/router";
 import styles from "./collectionpage.module.css";
 import Image from "next/image";
 import { NextSeo } from "next-seo";

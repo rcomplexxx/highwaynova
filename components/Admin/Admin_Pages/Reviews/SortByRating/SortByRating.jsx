@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import styles from './sortbyrating.module.css'
 import Image from 'next/image'
 

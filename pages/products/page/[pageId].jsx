@@ -1,4 +1,4 @@
-import React, { useEffect} from "react";
+import { useEffect} from "react";
 import { useRouter } from "next/router";
 import products from "../../../data/products.json";
 import Products from "@/components/Products/Products.jsx";

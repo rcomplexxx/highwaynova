@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import React from 'react';
 import styles from'./404.module.css'
 import { unimportantPageSeo } from '@/utils/SEO-configs/next-seo.config';
 import { NextSeo } from 'next-seo';

@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import styles from "./ratinginfo.module.css";
-import { STARPATH, Star, Stars } from "@/public/images/svgs/svgImages";
+import {  Star, Stars } from "@/public/images/svgs/svgImages";
 
 export default function RatingInfo({ratingData, openRatingInfo, setOpenRatingInfo}) {  
   

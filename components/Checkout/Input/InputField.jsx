@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "./inputfield.module.css";
 
 export default function InputField({

@@ -1,10 +1,12 @@
+import styles from './svgimages.module.css'
+
+
+
 
 
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ GENERAL ICONS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
-import React from 'react'
-import styles from './svgimages.module.css'
 
 
 export const MenuIcon = ({ styleClassName, handleClick})=>{

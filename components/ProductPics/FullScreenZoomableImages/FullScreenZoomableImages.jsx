@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import styles from "./fullscreenzoomableimage.module.css";
 import { Zoom } from "swiper/core";
 import { Swiper, SwiperSlide } from "swiper/react";

@@ -1,4 +1,3 @@
-import React from "react";
 import Products from "@/components/Products/Products.jsx";
 import products from "../../data/products.json";
 import PageNumber from "@/components/PageNumbers/PageNumbers";
