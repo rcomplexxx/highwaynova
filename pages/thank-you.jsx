@@ -1,13 +1,13 @@
 import Image from "next/image";
 import styles from "../styles/thankyou.module.css";
 import React, { useEffect, useContext } from "react";
-import AppContext from "@/contexts/AppContext";
 import Link from "next/link";
 import { NextSeo } from "next-seo";
 import { unimportantPageSeo } from "@/utils/SEO-configs/next-seo.config";
 
 export default function ThankYou() {
-  const {  setCartProducts } = useContext(AppContext);
+
+  const setCartProducts = useCounterStore(state =>  state.setCartProducts);
 
   useEffect(() => {
     setCartProducts([]);

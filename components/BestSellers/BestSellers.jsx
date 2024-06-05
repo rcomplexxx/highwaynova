@@ -6,22 +6,23 @@ import PicWithThumbnail from '../Products/Product/PicWithThumbnail/PicWithThumbn
 import bestSellerProductsInfo from '../../data/bestsellers.json';
 import styles from './bestsellers.module.css';
 import Link from 'next/link';
-import { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import {  useRef } from 'react';
 import products from '@/data/products.json'
 
 // Import Swiper styles
 import "swiper/css";
-import AppContext from '@/contexts/AppContext';
+import { useCounterStore } from '@/contexts/AppContext';
 
 export default function BestSellers() {
   const sliderRef = useRef();
 
 
 
-  const { cartProducts, setCartProducts } = useContext(AppContext);
-  
 
- 
+  const { cartProducts, setCartProducts } = useCounterStore(state => ({
+    cartProducts: state.cartProducts,
+    setCartProducts: state.setCartProducts,
+  }));
   
 
   const bestSellerProducts = bestSellerProductsInfo.map((bsp) => {

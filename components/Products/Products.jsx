@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import Product from "./Product/Product";
 import styles from "./products.module.css";
-import AppContext from "@/contexts/AppContext";
+
 
 const Products = ({ products, showAll, productListTitle }) => {
  

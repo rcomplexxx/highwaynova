@@ -5,11 +5,15 @@ import styles from "./cartitem.module.css";
 
 import classNames from "classnames";
 
-import AppContext from "@/contexts/AppContext";
+import { useCounterStore } from "@/contexts/AppContext";
 import { BinIcon } from "@/public/images/svgs/svgImages";
 
 const CartItem = ({ item }) => {
-  const { cartProducts, setCartProducts } = useContext(AppContext);
+  
+  const { cartProducts, setCartProducts } = useCounterStore(state => ({
+    cartProducts: state.cartProducts,
+    setCartProducts: state.setCartProducts,
+  }));
 
   console.log('it', item)
 

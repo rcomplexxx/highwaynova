@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import styles from "./navbar.module.css";
@@ -9,12 +9,13 @@ import Search from "./Search/Search";
 
 import dynamic from "next/dynamic";
 import { ArrowDown, MenuIcon } from "@/public/images/svgs/svgImages";
+import { useCounterStore } from "@/contexts/AppContext";
 
 // import MobileMenu from "./MobileMenu/MobileMenu";
 const MobileMenu = dynamic(() => import("./MobileMenu/MobileMenu"));
 const PopupCart = dynamic(() => import("./PopupCart/PopupCart"));
 
-const NavBar = ({ totalItems, newProduct, setNewProduct }) => {
+const NavBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [subMenu, setSubMenu] = useState(0);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -31,7 +32,21 @@ const NavBar = ({ totalItems, newProduct, setNewProduct }) => {
     setIsMenuOpen(true);
   };
 
+  const { cartProducts, newProduct, setNewProduct } = useCounterStore(state => ({
+    cartProducts: state.cartProducts,
+    newProduct: state.newProduct,
+    setNewProduct: state.setNewProduct,
+  }));
+
   console.log('nav change', isMenuOpen, newProduct)
+
+  const totalItems= useMemo(()=>{
+    let s=0;
+    cartProducts.forEach(cp=>{
+      s=s+cp.quantity;
+    })
+    return s
+  },[cartProducts])
 
   useEffect(() => {
 

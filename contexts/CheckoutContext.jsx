@@ -1,6 +1,7 @@
 import { createContext, useCallback, useContext, useMemo, useState } from 'react';
-import AppContext from './AppContext';
+
 import coupons from '@/data/coupons.json'
+import { useCounterStore } from './AppContext';
 
 
 
@@ -18,7 +19,7 @@ export const CheckoutContext = createContext({total:0,subTotal:0, couponCode:"",
       cartProducts= buyNowProduct;
     }
     else{
-      cartProducts = useContext(AppContext).cartProducts;
+      cartProducts = useCounterStore(state => state.cartProducts);
     }
    
 

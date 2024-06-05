@@ -27,11 +27,10 @@
   align-items: center;
 }
 
-html{
-  /* margin: 0 auto; //*/
- 
-  overflow-x: clip;
-}
+
+
+
+
 
 body{
 
@@ -201,18 +200,11 @@ p {
   --size-19: 1280px;
 
 
- /* Didot
-Baskervville
-Adore+Modern+Serif
-Playfair+Display
-Cormorant+Garamond */
 
-/*2b59c3
-#B49A67
-#CEB3AB
-*/
+  
 
---my-col: #829ee0;
+
+
   /* --hand-writing-font: var(--font-eb_garamond); */
   --hand-writing-font: "Times New Roman", serif;
   --font-neutral: var(--font-inter);
@@ -229,14 +221,10 @@ Cormorant+Garamond */
   --font-size-10: 60px;
   --font-size-11: 72px;
 
-  /* Main colors
-  #E3DFFF #090909 #4B5043
 
+  
 
- 
-  */
-
-  --test: #171425;
+  
 
 
   --main-color-0: #1B180E;
@@ -660,15 +648,17 @@ Cormorant+Garamond */
 
  --email-popup-bg: rgb(22, 42, 60);
 
---email-popup-light-color: black;
+--email-popup-button-color: black;
 
 
-
+--email-popup-input-color: var(--neutral-9);
 --email-popup-input-bg:var(--neutral-0);
 --email-popup-input-border: var(--neutral-4);
 
 --email-popup-send-button-bg:var(--main-color-2);
 --email-popup-send-button-border: var(--neutral-0);
+
+--email-popup-thank-you-msg-color: var(--neutral-7);
 
 --email-popup-cancel-button-bg: var(--neutral-3);
 --email-cancel-icon-color: var(--neutral-10);

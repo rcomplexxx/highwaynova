@@ -3,14 +3,15 @@ import Link from "next/link";
 
 import CartItem from "./CartItem/CartItem";
 import styles from "./cart.module.css";
-import AppContext from "@/contexts/AppContext";
+
 import BestSellers from "@/components/BestSellers/BestSellers";
 import FreeShippingSlider from "./FreeShippingSlider/FreeShippingSlider";
+import { useCounterStore } from "@/contexts/AppContext";
 
 
 
 const Cart = () => {
-  const { cartProducts } = useContext(AppContext);
+  const  cartProducts  = useCounterStore(state => state.cartProducts)
   const [addressBarUp, setAddressBarUp] = useState(false);
   // const [invDivsPresent, setInvDivsPresent] = useState(true);
   const firstHeightRef = useRef();

@@ -8,12 +8,14 @@
     left: 0;
     height: 100%;
     width: 100%;
+    
     display: flex;
     justify-content: center;
     align-items: center;
+
     z-index: 999;
-    background-color: rgba(0, 0, 0, 0.301);
-    animation: darkenScreen 0.5s ease forwards;
+    background-color: rgba(0, 0, 0, 0.300);
+    animation: darkenScreen 0.5s ease;
 }
 
 
@@ -29,8 +31,15 @@
     background-image: url('/images/emailPopupBg3.jpeg');
 
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+
+
+
+
+    box-sizing: border-box;
+    padding: 0 var(--size-7);
 
 
 
@@ -38,24 +47,12 @@
     overflow: clip;
   
    
-
-    animation: spawnPopup 0.5s ease forwards;
+    text-align: center;
+    animation: spawnPopup 0.5s ease;
 }
 
-.contentWrapperDiv{
 
-    width: 100%;
 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    /* background-color: var(--email-popup-cancel-button-bg); */
-   
-    margin-top: var(--size-3);
-
-    z-index: 3;
-}
 
 
 .emailPopupBg{
@@ -121,8 +118,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    box-sizing: border-box;
-    padding: 0 var(--size-7);
+   
     margin-top: var(--size-6);
     margin-bottom: var(--size-2);
    
@@ -132,7 +128,7 @@
 .emailField{
     width: 100%;
     min-width: 0;
-    color: var(--email-popup-light-color);
+    color: var(--email-popup-input-color);
     background-color: var(--email-popup-input-bg);
     height: 40px;
 
@@ -156,7 +152,7 @@
     height: 40px;
     width: 100%;
     min-width: var(--size-10);
-    color: var(--email-popup-light-color);
+    color: var(--email-popup-button-color);
     background-color: var(--email-popup-send-button-bg);
    
     box-sizing: border-box;
@@ -184,15 +180,24 @@
 
 
 .thankYouTitle{
+    margin-top: var(--size-2);
     margin-bottom: var(--size-2);
-    font-size: var(--font-size-5);
+    font-size: var(--font-size-9);
+    font-weight: 700;
 }
 
 .thankYouMessage{
+
+    color: var(--email-popup-thank-you-msg-color);
   
-    margin-bottom: var(--size-6);
-    opacity: 0.8;
+    margin-bottom: var(--size-7);
+
+    font-size: var(--font-size-3);
+    font-weight: 500;
+    
 }
+
+
 
 
 
@@ -201,7 +206,7 @@
  
 
 
-    .provideEmailDiv{
+    .popupWrapper{
         padding: 0 var(--size-6);
     }
 }
@@ -211,7 +216,7 @@
  
 
 
-    .provideEmailDiv{
+    .popupWrapper{
         padding: 0 var(--size-5);
     }
 }
@@ -221,10 +226,10 @@
 
 @keyframes darkenScreen{
     0%{
-        opacity: 0;
+        background-color: rgba(0, 0, 0, 0);
     }
     100%{
-        opacity: 1;
+        background-color: rgba(0, 0, 0, 0.300);
     }
 }
 

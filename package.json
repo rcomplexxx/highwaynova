@@ -84,7 +84,8 @@
     "stripe": "^14.10.0",
     "swiper": "^9.4.1",
     "xumm": "^1.7.6",
-    "xumm-sdk": "^1.11.0"
+    "xumm-sdk": "^1.11.0",
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@fullhuman/postcss-purgecss": "^5.0.0",

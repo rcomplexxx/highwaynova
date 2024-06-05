@@ -108,8 +108,7 @@ export default function EmailFlowPopup({setEmailPopup}){
         {/* <span>SIGN UP BELOW!</span>  */}
         <div className={styles.provideEmailDiv}>
           <input ref={emailFieldRef} placeholder='Enter email here' onChange={()=>{setError()}} className={styles.emailField} maxLength={127}/>
-          <button className={styles.sendEmailButton}
-          onClick={handleSignUp}>Sign up</button>
+          <button className={styles.sendEmailButton} onClick={handleSignUp}>Sign up</button>
            </div>
            {error && <span className={styles.emailError}><ErrorIcon/>{error}</span>}
            </>
@@ -118,8 +117,10 @@ export default function EmailFlowPopup({setEmailPopup}){
       const thankYouContent=()=>{
         return <>
         <span className={styles.thankYouTitle}>Welcome!</span>
-        <span className={styles.thankYouMessage}>You have successfully subscribed!</span>
+        <span className={styles.thankYouMessage}>You have successfully subscribed! Ps. check your email for discount.</span>
+       
         <button onClick={()=>{setEmailPopup(false)}} className={styles.sendEmailButton}>Continue shopping</button>
+     
         </>
       }
 
@@ -129,8 +130,7 @@ export default function EmailFlowPopup({setEmailPopup}){
 
     
 
-       
-<div className={styles.contentWrapperDiv}>
+
               <CancelIcon handleClick={()=>{history.back()}} color={"var(--email-cancel-icon-color)"} styleClassName={styles.cancelIcon}/>
 
         
@@ -138,7 +138,8 @@ export default function EmailFlowPopup({setEmailPopup}){
                { !successfullySignedUp ?popupRequestContent():thankYouContent()}
 
 
-               </div>
+               
+               
            
          </div>
     </div>
