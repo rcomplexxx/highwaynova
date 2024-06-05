@@ -4,6 +4,7 @@ import React, { useEffect, useContext } from "react";
 import Link from "next/link";
 import { NextSeo } from "next-seo";
 import { unimportantPageSeo } from "@/utils/SEO-configs/next-seo.config";
+import { useCounterStore } from "@/contexts/AppContext";
 
 export default function ThankYou() {
 
