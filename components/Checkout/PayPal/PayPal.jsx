@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import styles from './paypal.module.css'
 import { ErrorIcon } from "@/public/images/svgs/svgImages";
+import { useGlobalStore } from "@/contexts/AppContext";
 
 
 const PayPalButton=({checkFields, organizeUserData, method='paypal',  type='normal', color='blue'})=>{
@@ -12,7 +13,7 @@ const PayPalButton=({checkFields, organizeUserData, method='paypal',  type='norm
 
   const router = useRouter();
 
-
+  const setGiftDiscount = useGlobalStore(state =>  state.setGiftDiscount);
 
     const handlePayPalButtonClick =  async(data, actions) => {
       
@@ -118,7 +119,9 @@ const PayPalButton=({checkFields, organizeUserData, method='paypal',  type='norm
           if (response.ok) {
             console.log("Payment was successful");
             // Handle successful payment logic here
-            
+            const data = await response.json();
+           
+            setGiftDiscount(data.giftDiscount);
             
             router.push("/thank-you");
           } else {

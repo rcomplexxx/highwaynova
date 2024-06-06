@@ -2,7 +2,7 @@ import CheckoutInfo from "@/components/Checkout/CheckoutInfo";
 import OrderDetails from "@/components/Checkout/OrderDetails";
 import {  useEffect, useState, } from "react";
 import styles from "./checkout.module.css";
-import {useCounterStore} from "@/contexts/AppContext";
+import {useGlobalStore} from "@/contexts/AppContext";
 import CheckoutLogo from "@/components/Checkout/CheckoutLogo/CheckoutLogo";
 import Link from "next/link";
 import { NextSeo } from "next-seo";
@@ -10,7 +10,7 @@ import { unimportantPageSeo } from "@/utils/SEO-configs/next-seo.config";
 import CheckoutProvider from "@/contexts/CheckoutContext";
 
 const CheckoutPage = () => {
-  const cartProducts = useCounterStore(state=>state.cartProducts)
+  const cartProducts = useGlobalStore(state=>state.cartProducts)
   const [loaded, setLoaded] = useState(false);
  
 

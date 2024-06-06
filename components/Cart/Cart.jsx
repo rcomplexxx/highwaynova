@@ -6,12 +6,12 @@ import styles from "./cart.module.css";
 
 import BestSellers from "@/components/BestSellers/BestSellers";
 import FreeShippingSlider from "./FreeShippingSlider/FreeShippingSlider";
-import { useCounterStore } from "@/contexts/AppContext";
+import { useGlobalStore } from "@/contexts/AppContext";
 
 
 
 const Cart = () => {
-  const  cartProducts  = useCounterStore(state => state.cartProducts)
+  const  cartProducts  = useGlobalStore(state => state.cartProducts)
   const [addressBarUp, setAddressBarUp] = useState(false);
   // const [invDivsPresent, setInvDivsPresent] = useState(true);
   const firstHeightRef = useRef();

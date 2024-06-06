@@ -1,7 +1,7 @@
 import  { useCallback, useEffect, useMemo, useRef } from "react";
 import products from "../../data/products.json";
 import Image from "next/image";
-import {useCounterStore} from "@/contexts/AppContext";
+import {useGlobalStore} from "@/contexts/AppContext";
 import CustomerReviews from "@/components/CustomerReviews/CustomerReviews.jsx";
 // import Carousel from "react-gallery-carousel";
 // import "react-gallery-carousel/dist/index.css";
@@ -44,7 +44,7 @@ export default function ProductPage({ product, images, startReviews, ratingData 
 
 
 
-  const { setNewProduct,cartProducts, setCartProducts } = useCounterStore(state => ({
+  const { setNewProduct,cartProducts, setCartProducts } = useGlobalStore(state => ({
     setNewProduct: state.setNewProduct,
     cartProducts: state.cartProducts,
     setCartProducts: state.setCartProducts,

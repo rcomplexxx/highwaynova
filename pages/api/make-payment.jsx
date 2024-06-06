@@ -68,6 +68,10 @@ const makePayment = async (req, res) => {
   console.log('  reqdata BITNO ~!!!~).', req.body)
 
   const putInDatabase = (paymentMethod,paymentId, approved=0) => {
+
+
+    let giftDiscount = false;
+
     return new Promise((resolve, reject) => {
       try {
         const db = betterSqlite3(process.env.DB_PATH);
@@ -185,14 +189,19 @@ const makePayment = async (req, res) => {
         if(req.body.order.subscribe)
           subscribe(req.body.order.email, "checkout",  {orderId:uniqueId});
         else subscribe(req.body.order.email, "checkout x", {orderId:uniqueId});
-          
 
+        giftDiscount= db.prepare(`SELECT 1 AS valid FROM customers WHERE id = ? AND totalOrderCount = 1`).get(customerId)?.valid===1;
+          
+        console.log('giftD', giftDiscount);
 
         }
 
         db.close();
 
-        resolve("Order placed successfully.");
+        resolve({
+          message: "Order placed successfully.",
+          giftDiscount: giftDiscount
+        });
       } catch (error) {
         console.error("Error in database operations:", error);
         reject("Error in database operations.");
@@ -268,14 +277,9 @@ const makePayment = async (req, res) => {
 
   }
   else if(req.body.paymentMethod==='GPAY'){
-    // const tokenValid= await validateToken(req.body.paymentToken)
-    // if(tokenValid) res.status(200).json({ success: true, message:'Token validated' });
-    // else {
-    //   res
-    //   .status(400)
-    //   .json({ success: false, error: "Payment was not approved." });
-    // }
-    // await putInDatabase('GPAY',response.result.id);
+  
+    
+    
  
    
     const amount= req.body.amount;
@@ -309,11 +313,15 @@ const makePayment = async (req, res) => {
         allow_redirects: 'never',
       },
 		});
-    await putInDatabase('GPAY(STRIPE)',paymentIntent.client_secret, 1);
+    const giftDiscount = (await putInDatabase('GPAY(STRIPE)',paymentIntent.client_secret, 1)).giftDiscount;
+
+
+    console.log('giving back gdisc', giftDiscount)
 
   	return res.json({
 			
-			success: true
+			success: true,
+      giftDiscount: giftDiscount
 		})
 
 
@@ -357,10 +365,13 @@ const makePayment = async (req, res) => {
 
     
 		console.log("Payment client Secret", paymentIntent.client_secret)
-    await putInDatabase('STRIPE',paymentIntent.client_secret, 1);
+    const giftDiscount =  (await putInDatabase('STRIPE',paymentIntent.client_secret, 1))?.giftDiscount;
+
+    console.log('giving back gdisc', giftDiscount)
 		return res.json({
 			
-			success: true
+			success: true,
+      giftDiscount: giftDiscount
 		})
 
   }

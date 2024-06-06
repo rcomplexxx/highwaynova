@@ -1,7 +1,13 @@
+
+
+
+
+  
+
 import { createContext, useCallback, useMemo, useState } from 'react';
 
 import coupons from '@/data/coupons.json'
-import { useCounterStore } from './AppContext';
+import { useGlobalStore } from './AppContext';
 
 
 
@@ -13,15 +19,10 @@ export const CheckoutContext = createContext({total:0,subTotal:0, couponCode:"",
  const CheckoutProvider = ({ children, buyNowProduct }) => {
 
 
- let  cartProducts;
+ let  cartProducts=buyNowProduct?buyNowProduct:useGlobalStore(state => state.cartProducts);
 
-    if(buyNowProduct){
-      cartProducts= buyNowProduct;
-    }
-    else{
-      cartProducts = useCounterStore(state => state.cartProducts);
-    }
-   
+ 
+ 
 
     const [subscribe, setSubscribe] = useState(false);
     const [couponCode, setCouponCode] = useState('');
@@ -51,6 +52,21 @@ export const CheckoutContext = createContext({total:0,subTotal:0, couponCode:"",
 
 
 
+    const discount = useMemo(() => {
+      if (couponCode === "") {return 0;}
+      
+      const newCoupon = coupons.find((c) => {
+        return c.code.toUpperCase() === couponCode.toUpperCase();
+      });
+      if (newCoupon) {
+         
+       return newCoupon.discountPercentage;
+       
+      } else {setCouponCode("");return 0;}
+    },[couponCode])
+
+
+
 
 
 
@@ -71,18 +87,7 @@ export const CheckoutContext = createContext({total:0,subTotal:0, couponCode:"",
   
 
 
-    const discount = useMemo(() => {
-        if (couponCode === "") {return 0;}
-        
-        const newCoupon = coupons.find((c) => {
-          return c.code.toUpperCase() === couponCode.toUpperCase();
-        });
-        if (newCoupon) {
-           
-         return newCoupon.discountPercentage;
-         
-        } else {setCouponCode("");return 0;}
-      },[couponCode])
+   
 
 
 

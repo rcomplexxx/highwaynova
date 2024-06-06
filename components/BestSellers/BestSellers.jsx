@@ -11,7 +11,7 @@ import products from '@/data/products.json'
 
 // Import Swiper styles
 import "swiper/css";
-import { useCounterStore } from '@/contexts/AppContext';
+import { useGlobalStore } from '@/contexts/AppContext';
 
 export default function BestSellers() {
   const sliderRef = useRef();
@@ -19,7 +19,7 @@ export default function BestSellers() {
 
 
 
-  const { cartProducts, setCartProducts } = useCounterStore(state => ({
+  const { cartProducts, setCartProducts } = useGlobalStore(state => ({
     cartProducts: state.cartProducts,
     setCartProducts: state.setCartProducts,
   }));

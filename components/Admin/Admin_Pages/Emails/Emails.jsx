@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import GetDataButton from '../MagicButtons/GetDataButton'
 import Link from 'next/link';
 import EmailCard from './EmailCard/EmailCard';

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import styles from './datawiper.module.css'
 import AdminNavbar from '../../Admin_Login/AdminLogin';
 

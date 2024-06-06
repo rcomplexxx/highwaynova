@@ -4,15 +4,24 @@ import  { useEffect } from "react";
 import Link from "next/link";
 import { NextSeo } from "next-seo";
 import { unimportantPageSeo } from "@/utils/SEO-configs/next-seo.config";
-import { useCounterStore } from "@/contexts/AppContext";
+import { useGlobalStore } from "@/contexts/AppContext";
 
 export default function ThankYou() {
 
-  const setCartProducts = useCounterStore(state =>  state.setCartProducts);
+  const {giftDiscount, setCartProducts} = useGlobalStore(state =>  ({
+    
+    giftDiscount: state.giftDiscount,
+    setCartProducts:state.setCartProducts
+
+
+  }));
 
   useEffect(() => {
     setCartProducts([]);
   }, []);
+
+
+  const bonusMessage = giftDiscount?"Ps. We also left you a surprise in there 🎁":"";
 
   return (
     <div className={styles.thankYouWrapper}>
@@ -30,7 +39,7 @@ export default function ThankYou() {
           />
         </div>
       </div>
-      <p className={styles.mainPharagraph}>Thank you for shopping with us! Your order has been palced. Check your email for order information. Ps. We also left you a surprise in there 🎁</p>
+      <p className={styles.mainPharagraph}>Thank you for shopping with us! Your order has been palced. Check your email for order details. {bonusMessage}</p>
       <Link href='/' className={styles.continue}>Back to home</Link>
     </div>
     </div>

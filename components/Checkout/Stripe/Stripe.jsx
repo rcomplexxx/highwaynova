@@ -13,6 +13,7 @@ import swapCountryCode from '@/utils/countryList';
 import { CheckoutContext } from '@/contexts/CheckoutContext';
 import InputField from '../Input/InputField';
 import { CorrectIcon, ErrorIcon } from '@/public/images/svgs/svgImages';
+import { useGlobalStore } from '@/contexts/AppContext';
                
 
 const Stripe = ({organizeUserData, checkFields}) => {
@@ -35,6 +36,8 @@ const Stripe = ({organizeUserData, checkFields}) => {
     const router = useRouter();
 
     const {total} = useContext(CheckoutContext);
+
+    const setGiftDiscount = useGlobalStore(state =>  state.setGiftDiscount);
 
 
     const deleteError = (field) => {
@@ -271,6 +274,8 @@ const handleStripePay= async(event)=>{
                
                
                console.log('pay success');
+               
+               setGiftDiscount(data.giftDiscount);
                setPaymentProcessing(false);
                 router.push("/thank-you");
                   
@@ -469,7 +474,7 @@ const handleCCBlur= ()=>{
     <button className={styles.payNowButton} onClick={handleStripePay}>{paymentProcessing?
     <Image src='/images/spinner.png' height={0} width={0} className={styles.spinner}/>
     :'Pay now'}</button>
-    {stripeError?.stripeServerError && <span className={styles.paymentError}>{stripeError.stripeServerError}</span>}
+    {stripeError?.stripeServerError && <span className={styles.paymentError}><ErrorIcon/>{stripeError.stripeServerError}</span>}
     </div>
   );
 };

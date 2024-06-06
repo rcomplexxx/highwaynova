@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import  { useRef, useState } from 'react'
 import styles from './swapimgrevs.module.css'
 import Image from 'next/image'
 

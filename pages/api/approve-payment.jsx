@@ -31,6 +31,9 @@ const approvePayment = async (req, res) => {
 
   const updateDb = async (email) => {
     return new Promise((resolve, reject) => {
+
+      let giftDiscount = false;
+
       try {
         const db = betterSqlite3(process.env.DB_PATH);
 
@@ -53,10 +56,16 @@ const approvePayment = async (req, res) => {
           if(customerSubscribed)
             subscribe(email, "checkout", {orderId:orderId});
           else subscribe(email, "checkout x",  {orderId:orderId});
+
+          const customerId = db.prepare(`SELECT id FROM customers WHERE email = ?`).get(email)?.id;
         
 
-
-          resolve("Order approved successfully.");
+          giftDiscount= db.prepare(`SELECT 1 AS valid FROM customers WHERE id = ? AND totalOrderCount = 1`).get(customerId)?.valid===1;
+          
+          resolve({
+            message: "Order placed successfully.",
+            giftDiscount: giftDiscount
+          });
         } else {
           // If no changes were made, reject the promise with an error message
           reject("Error: Order not found or not updated.");
@@ -124,7 +133,7 @@ const approvePayment = async (req, res) => {
 
   const approvedConsequence= async(email)=>{
 
-    await updateDb(email);
+    return (await updateDb(email))?.giftDiscount;
 
 
     console.log('did customer subed', customerSubscribed);
@@ -164,8 +173,9 @@ const approvePayment = async (req, res) => {
 
         await updateAddress(response.result.payer.email_address,response.result.purchase_units[0].shipping);
         
-        await approvedConsequence(response.result.payer.email_address);
-        return res.status(200).json({ message: "Payment successful" });
+        const giftDiscount = await approvedConsequence(response.result.payer.email_address);
+        return res.status(200).json({ message: "Payment successful",
+          giftDiscount: giftDiscount });
       } else if (response.result.status === "INSTRUMENT_DECLINED") {
         res.status(500).json({ error: "INSTRUMENT_DECLINED" });
       } else {

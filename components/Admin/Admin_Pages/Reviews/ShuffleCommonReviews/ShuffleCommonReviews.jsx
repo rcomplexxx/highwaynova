@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import  { useState } from 'react'
 import styles from './shufflecommonreviews.module.css'
 import Image from 'next/image';
 

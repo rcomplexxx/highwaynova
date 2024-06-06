@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import styles from './sequences.module.css'
 import EmailCard from '../EmailCard/EmailCard'
 

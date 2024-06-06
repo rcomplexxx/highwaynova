@@ -234,9 +234,9 @@ export default function AdminStatistics(){
         )
         }
 
-       
+        lostInReturns=lostInReturns.toFixed(2);
 
-        console.log('lost in returns', lostInReturns.toFixed(2));
+        console.log('lost in returns', lostInReturns);
 
         customerCash=customerCash.toFixed(2);
         supplierCosts=supplierCosts.toFixed(2);

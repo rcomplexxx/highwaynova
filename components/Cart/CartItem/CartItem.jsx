@@ -5,12 +5,12 @@ import styles from "./cartitem.module.css";
 
 import classNames from "classnames";
 
-import { useCounterStore } from "@/contexts/AppContext";
+import { useGlobalStore } from "@/contexts/AppContext";
 import { BinIcon } from "@/public/images/svgs/svgImages";
 
 const CartItem = ({ item }) => {
   
-  const { cartProducts, setCartProducts } = useCounterStore(state => ({
+  const { cartProducts, setCartProducts } = useGlobalStore(state => ({
     cartProducts: state.cartProducts,
     setCartProducts: state.setCartProducts,
   }));

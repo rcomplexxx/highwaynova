@@ -63,6 +63,11 @@
 
 .paymentError{
   color: var(--error-color);
+
+
+  display: flex;
+  align-items: center;
+
   margin-top: calc(-1 * var(--size-3));
   margin-bottom: var(--size-5);
   margin-left: var(--size-2);

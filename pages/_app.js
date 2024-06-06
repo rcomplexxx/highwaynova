@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 
 import "../styles/globals.css";
 import Navbar from "../components/Navbar/Navbar.jsx";
-import {useCounterStore} from "@/contexts/AppContext";
+import {useGlobalStore} from "@/contexts/AppContext";
 import Footer from "@/components/Footer/Footer";
 import SEO from '@/utils/SEO-configs/next-seo.config.js'
 import Head from "next/head";
@@ -36,7 +36,7 @@ export default function App({ Component, pageProps }) {
 
 
 
-  const { cartProducts, setCartProducts } = useCounterStore(state => ({
+  const { cartProducts, setCartProducts } = useGlobalStore(state => ({
     cartProducts: state.cartProducts,
     setCartProducts: state.setCartProducts,
   }));
@@ -173,12 +173,8 @@ export default function App({ Component, pageProps }) {
       id="hronika"
       className={`hronika`}>
     
-    
-       {/* <Head>
-      <title>Gamebuff</title>
-        <link rel="icon" href="/images/favicon.ico" />
-     
-        </Head> */}
+   
+   
         <DefaultSeo {...SEO}/>
        
       

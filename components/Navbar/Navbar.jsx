@@ -9,7 +9,7 @@ import Search from "./Search/Search";
 
 import dynamic from "next/dynamic";
 import { ArrowDown, MenuIcon } from "@/public/images/svgs/svgImages";
-import { useCounterStore } from "@/contexts/AppContext";
+import { useGlobalStore } from "@/contexts/AppContext";
 
 // import MobileMenu from "./MobileMenu/MobileMenu";
 const MobileMenu = dynamic(() => import("./MobileMenu/MobileMenu"));
@@ -32,7 +32,7 @@ const NavBar = () => {
     setIsMenuOpen(true);
   };
 
-  const { cartProducts, newProduct, setNewProduct } = useCounterStore(state => ({
+  const { cartProducts, newProduct, setNewProduct } = useGlobalStore(state => ({
     cartProducts: state.cartProducts,
     newProduct: state.newProduct,
     setNewProduct: state.setNewProduct,

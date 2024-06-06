@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import styles from './campaigns.module.css'
 import EmailCard from '../EmailCard/EmailCard'
 
