@@ -4,6 +4,7 @@ import styles from './fullscreenreview.module.css';
 import ReactHtmlParser from "react-html-parser";
 import { STARPATH, Stars } from '@/public/images/svgs/svgImages';
 import { CancelIcon } from '@/public/images/svgs/svgImages';
+import { useGlobalStore } from '@/contexts/AppContext';
     
 
 export default function FullScreenReview({authorName, text, stars, imageSrc, setFullScreenReview}) {
@@ -14,8 +15,11 @@ export default function FullScreenReview({authorName, text, stars, imageSrc, set
   
 
   
-
-
+    const { deepLinkLevel, increaseDeepLinkLevel, decreaseDeepLinkLevel } = useGlobalStore((state) => ({
+      deepLinkLevel: state.deepLinkLevel,
+      increaseDeepLinkLevel: state.increaseDeepLinkLevel,
+      decreaseDeepLinkLevel: state.decreaseDeepLinkLevel,
+    }));
 
 
 
@@ -27,6 +31,9 @@ const mainReviewDiv= useRef();
 
 
 
+useEffect(()=>{
+  console.log('deep link updated', deepLinkLevel)
+},[deepLinkLevel])
 
 
 
@@ -48,11 +55,15 @@ useEffect(()=>{
   window.history.pushState(null, null, location.href);
   history.go(1);
 
+  console.log('should increase level', increaseDeepLinkLevel)
+  increaseDeepLinkLevel();
+
 
   const handlePopState = (event)=>{
     event.preventDefault();
     setFullScreenReview(false);
-
+    console.log('decreasing!!!')
+    decreaseDeepLinkLevel();
    
   
   }

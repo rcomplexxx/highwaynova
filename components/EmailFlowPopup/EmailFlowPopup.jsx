@@ -13,7 +13,6 @@ export default function EmailFlowPopup({setEmailPopup}){
 
     const emailFieldRef = useRef();
     const router = useRouter();
-    const backPressed = useRef(false);
    
 
 
@@ -29,13 +28,15 @@ export default function EmailFlowPopup({setEmailPopup}){
   
       
 
-        const killPopup = ()=>{
+        const handlePopState = ()=>{
            
-          backPressed.current=true;
           setEmailPopup(false);
         }
+
+        window?.addEventListener("popstate", handlePopState);
+        
   
-        router.events.on('routeChangeStart', killPopup);
+       
    
        
   
@@ -52,8 +53,7 @@ export default function EmailFlowPopup({setEmailPopup}){
          
 
       
-
-            router.events.off('routeChangeStart', killPopup);
+          window?.removeEventListener("popstate", handlePopState);
 
         };
       }, []);

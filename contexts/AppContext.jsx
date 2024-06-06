@@ -7,7 +7,11 @@ export const useGlobalStore = create((set) => {
     cartProducts: [],
     setCartProducts: (newCartProducts) => set({ cartProducts: newCartProducts }),
     giftDiscount: false,
-    setGiftDiscount: (newGiftDiscount) => set({ giftDiscount: newGiftDiscount })
+    setGiftDiscount: (newGiftDiscount) => set({ giftDiscount: newGiftDiscount }),
+    deepLinkLevel: 0,
+    increaseDeepLinkLevel: () => set((state) => ({ deepLinkLevel: state.deepLinkLevel + 1 })),
+    decreaseDeepLinkLevel: () => set((state) => ({ deepLinkLevel: state.deepLinkLevel - 1 })),
+    
   };
 });
 

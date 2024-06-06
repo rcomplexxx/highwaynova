@@ -7,6 +7,10 @@ import { useGlobalStore } from "./AppContext";
 
 
 
+//https://www.reddit.com/r/reactjs/comments/oho7nw/zustand_store_not_updating_in_real_time_from/
+//https://stackoverflow.com/questions/76729269/can-we-trigger-events-in-other-zustand-stores-react
+
+
 
 
 

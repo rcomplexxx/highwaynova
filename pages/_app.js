@@ -1,4 +1,4 @@
-import  { useState, useEffect } from "react";
+import  { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 
 
@@ -36,17 +36,31 @@ export default function App({ Component, pageProps }) {
 
 
 
-  const { cartProducts, setCartProducts } = useGlobalStore(state => ({
+  const { cartProducts, setCartProducts } = useGlobalStore((state) => ({
     cartProducts: state.cartProducts,
     setCartProducts: state.setCartProducts,
+ 
   }));
 
- 
-  
+
+  const deepLinkLevelRef = useRef(useGlobalStore.getState().deepLinkLevel);
+
 
   useEffect(() => {
+    const unsubscribe = useGlobalStore.subscribe(
+      (newState) => {
+        deepLinkLevelRef.current = newState.deepLinkLevel;
+      },
+      (state) => state.deepLinkLevel // Select the deepLinkLevel from the state
+    );
+
+    return unsubscribe;
+  }, []);
 
 
+
+  useEffect(()=>{
+    
     router.beforePopState((state) => {
       
       state.options.scroll = false;
@@ -61,6 +75,15 @@ export default function App({ Component, pageProps }) {
 
     const storedCartProducts = JSON.parse(localStorage.getItem("cartProducts"));
     setCartProducts(storedCartProducts || []);
+
+
+
+
+  },[])
+ 
+  
+
+  useEffect(() => {
 
 
 
@@ -82,11 +105,12 @@ export default function App({ Component, pageProps }) {
       
       popupTimeout= setTimeout(()=>{
 
+
    
-       
+       console.log('my deep link level is', deepLinkLevelRef.current)
    
 
-      if(  url!=='/404' && (url==='/' || (url.includes('/products') && !url.includes('#zoom')
+      if(  url!=='/404' && (url==='/' || (url.includes('/products') && deepLinkLevelRef.current===0 && !url.includes('#zoom')
       && !url.includes('#write-review')) || url.includes('/collection') || url==='/our-story' || url==='/faq')){
        
      
@@ -97,7 +121,7 @@ export default function App({ Component, pageProps }) {
       
       }
      
-      }, 10000);
+      }, 15000);
       
     };
 
@@ -107,7 +131,7 @@ export default function App({ Component, pageProps }) {
       
       const emailPopupTimeChecker = Math.floor(Date.now() / 86400000)-localStorage.getItem("popupShownDateInDays");
 
-      const daysBetweenEmailPopups = 2;
+      const daysBetweenEmailPopups = 0;
 
      
 
@@ -130,6 +154,7 @@ export default function App({ Component, pageProps }) {
    
 
   return () => {
+    clearTimeout(popupTimeout); 
       router.events.off('routeChangeStart', handleRouteChangeStart);
     };
 
