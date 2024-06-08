@@ -6,6 +6,7 @@ import products from '@/data/products.json'
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { CancelIcon, SearchIcon } from '@/public/images/svgs/svgImages';
+import { useGlobalStore } from '@/contexts/AppContext';
 
 
 
@@ -17,7 +18,7 @@ export default function Search({searchOpen, setSearchOpen}){
     
 
     const searchBoxRef = useRef();
-    const searchIconRef = useRef();
+    
     const searchInputRef = useRef();
     const nextLink= useRef();
 
@@ -28,7 +29,13 @@ export default function Search({searchOpen, setSearchOpen}){
 
   
 
+    const { increaseDeepLinkLevel, decreaseDeepLinkLevel } = useGlobalStore((state) => ({
+      increaseDeepLinkLevel: state.increaseDeepLinkLevel,
+      decreaseDeepLinkLevel: state.decreaseDeepLinkLevel,
+    }));
 
+
+    
 
 
 
@@ -52,7 +59,8 @@ export default function Search({searchOpen, setSearchOpen}){
         const handlePopState = (event)=>{
           if(nextLink.current){router.push(nextLink.current); nextLink.current=undefined;}
        
-          // history.go(1);
+     
+          
           setSearchOpen(false);
           window?.removeEventListener("popstate", handlePopState);
         
@@ -60,11 +68,16 @@ export default function Search({searchOpen, setSearchOpen}){
 
            
        const handleClickOutside = (event)=>{
-        if ((searchIconRef.current && !searchIconRef.current.contains(event.target)) &&(searchInputRef.current && !searchInputRef.current.contains(event.target)) && (searchBoxRef.current && !searchBoxRef.current.contains(event.target))) {
+       
+        
+        if (!(document.getElementById('searchIcon')?.contains(event.target) || searchInputRef.current?.contains(event.target) || searchBoxRef.current?.contains(event.target))) {
           // Clicked outside the floating div, so close the dialog
+          
+            
           
           setSearchOpen(false);
           history.back();
+          decreaseDeepLinkLevel();
         }
       };
 
@@ -80,6 +93,7 @@ export default function Search({searchOpen, setSearchOpen}){
        
         window.history.pushState(null, null, router.asPath);
         history.go(1);
+        increaseDeepLinkLevel();
 
 
         document.addEventListener('click', handleClickOutside);
@@ -154,7 +168,25 @@ export default function Search({searchOpen, setSearchOpen}){
           
           />
 
-          <SearchIcon handleClick={()=>{setSearchOpen(!searchOpen);}} styleClassName={styles.searchIcon}/>
+          <SearchIcon
+          
+          
+          handleClick={()=>{
+
+
+            if(searchOpen){
+              
+              decreaseDeepLinkLevel();
+
+              history.back();
+
+            }
+            else{
+              setSearchOpen(true);
+            }
+         
+            
+            }} styleClassName={styles.searchIcon}/>
        
           {/* Custom results section */}
           <div ref={searchBoxRef} className={`${styles.customResults} ${searchOpen && styles.itemsVisible}` }>
@@ -169,7 +201,7 @@ export default function Search({searchOpen, setSearchOpen}){
                 event.stopPropagation();
             nextLink.current=`/collection/${collection.name.toLowerCase().replace(/ /g, '-')}/page/1`;
            history.back();
-
+                decreaseDeepLinkLevel();
           setSearchTerm('');
               
               }}
@@ -195,7 +227,7 @@ export default function Search({searchOpen, setSearchOpen}){
                 event.stopPropagation();
             nextLink.current=`/products/${product.name.toLowerCase().replace(/\s+/g, "-")}`;
            history.back();
-
+           decreaseDeepLinkLevel();
           setSearchTerm('');
               
               }}
@@ -215,7 +247,9 @@ export default function Search({searchOpen, setSearchOpen}){
           <CancelIcon color={`var(--search-cancel-icon-color)`} styleClassName={styles.searchCancel} handleClick={()=>{  
             
             setSearchOpen(false);
-          history.back();}}/>
+          history.back();
+          decreaseDeepLinkLevel();
+        }}/>
         }
         </div>
     

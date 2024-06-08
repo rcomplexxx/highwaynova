@@ -5,6 +5,7 @@ import collections from '@/data/collections.json'
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowDown, CancelIcon } from "@/public/images/svgs/svgImages";
+import { useGlobalStore } from "@/contexts/AppContext";
 
 export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
 
@@ -22,7 +23,9 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
     const whiteButtonCancelRef= useRef(false);
 
 
-
+    const { emailPopupOn } = useGlobalStore((state) => ({
+      emailPopupOn: state.emailPopupOn,
+    }));
 
 
 
@@ -67,7 +70,7 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
       const handleClickOutside = (event) => {
 
        
-        
+        if( emailPopupOn)return;
 
          if(!document?.getElementById('mobileMenu').contains(event.target) && !document?.getElementById('mobileMenuSpawn').contains(event.target))
        { 
@@ -98,10 +101,11 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
         
         console.log('popon')
        
-
+        if( emailPopupOn)return;
       
 
        if(whiteButtonCancelRef.current){
+        
         closeMenu();
         if(subMenu!=0){
         history.back();
@@ -181,7 +185,7 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
          
         
       };
-    }, [subMenu]);
+    }, [subMenu, emailPopupOn]);
 
 
 

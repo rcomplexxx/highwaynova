@@ -1,4 +1,4 @@
-import  { useRef, useState } from 'react'
+import  { isValidElement, useRef, useState } from 'react'
 
 import ReactHtmlParser from "react-html-parser";
 
@@ -17,7 +17,7 @@ export default function DescriptionMaker() {
     const [previewDescription, setPreviewDescription]= useState();
     const [descriptionGetterProductId, setDescriptionGetterProductId]=useState("");
     const [productId, setProductId] = useState("");
-    const [productIdConnected, setProductIdConnected] = useState(false);
+    
     const [savedContent, setSavedContent] = useState();
     
 
@@ -63,7 +63,8 @@ export default function DescriptionMaker() {
         
           
             setProductId(descriptionGetterProductId)
-            setProductIdConnected(true);
+          
+            
        
 
        
@@ -85,7 +86,7 @@ export default function DescriptionMaker() {
             console.log(finalHtml);
             const parsedHtml = ReactHtmlParser(finalHtml);
         
-            if (Array.isArray(parsedHtml) && parsedHtml.every(React.isValidElement)) {
+            if (Array.isArray(parsedHtml) && parsedHtml.every(isValidElement)) {
                 setPreviewDescription(parsedHtml);
               } else {
                 // Handle the case where parsing did not result in valid React elements
@@ -109,6 +110,8 @@ export default function DescriptionMaker() {
         const answer = window.confirm('Do you want to proceed with replacing current description with new one?');
       if (!answer) {return;}
 
+      console.log('curr product id is', productId)
+
       const finalHtml= `<style>${descriptionCssTextRef.current.value}</style>${descriptionTextRef.current.value}`
         let newDescriptionData = { text:finalHtml, productId:productId };
 
@@ -124,7 +127,15 @@ export default function DescriptionMaker() {
           .then((response) => {
             if (response.ok) {
               console.log(response);
+
               setSavedContent(finalHtml);
+
+              descriptionTextRef.current.value="";
+              descriptionCssTextRef.current.value="";
+              setPreviewDescription("");
+              setDescriptionGetterProductId("")
+              setProductId("");
+              
               // router.push('/admin');
             }
           })
@@ -161,7 +172,7 @@ export default function DescriptionMaker() {
 
       <div className={styles.getCurrentDescriptionWrapper}>
 
-     {!productIdConnected ? <> <input
+     {productId==="" ? <> <input
             id="product_id"
             className={styles.inputProductId}
             value={descriptionGetterProductId}
@@ -186,7 +197,7 @@ export default function DescriptionMaker() {
             if (!answer) {return;}
           }
         
-          setProductIdConnected(false);
+          
           setProductId("");
         }}>Unlink product id</button>
         </>}
@@ -194,7 +205,7 @@ export default function DescriptionMaker() {
           <span>Handy options</span>
         <button className={`${styles.getCurrentDescrition} ${styles.featureButton}`} 
         onClick={(event)=>{ 
-          navigator.clipboard.writeText(`<div class="descriptionWrapper">\n\n<img alt="description image" class="descriptionImage" src="/images/description_images/1-3.png"/>\n\n<h1 class="descTitle">My title</h1>\n\n<span class="subText">This is my description text</span>\n\n</div>`);
+          navigator.clipboard.writeText(`<div class="descriptionWrapper">\n\n<img alt="description image" class="descriptionImage" loading="eager" src="/images/description_images/1-3.png"/>\n\n<h1 class="descTitle">My title</h1>\n\n<span class="subText">This is my description text</span>\n\n</div>`);
           event.target.innerText="Standard html content COPIED!"
         }}>Copy standard html description content</button>
          <button className={`${styles.getCurrentDescrition} ${styles.featureButton}`} 
@@ -251,13 +262,14 @@ export default function DescriptionMaker() {
         {previewDescription}
       </div> </>}
 
-     {!productIdConnected ? <input
+     {productId==="" ? <input
             id="product_id"
             className={styles.inputProductId}
             value={productId}
             placeholder="Enter product id to UPDATE description"
             onChange={(event) => {
               const inputNumber = event.target.value;
+              setDescriptionGetterProductId("")
                setProductId(inputNumber);
             }}
           />:<span className={styles.newDescWarning}>New description will affect product with ID: {descriptionGetterProductId}</span>

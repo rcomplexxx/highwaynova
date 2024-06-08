@@ -1,175 +1,124 @@
 import Image from "next/image";
 import DropCard from "./DropCard/DropCard";
 import styles from "./productPageCards.module.css";
-import { useRef, useState } from "react";
-import { ErrorIcon, GuaranteeIcon, PackageReturnIcon, TruckIcon } from "@/public/images/svgs/svgImages";
 
-export default function ProductPageCards() {
-  const [messageLoading, setMessageLoading]= useState(false);
-  const [messageSent, setMessageSent] = useState(false);
-  const [contactErrors, setContactErrors] = useState({name:false, email: false, message:false});
-  
-  const nameRef = useRef();
-  const emailRef = useRef();
-  const messageRef = useRef();
-  
-  const handleSubmit = async () => {
-    if(messageSent)return;
-    console.log("submite Starter.");
-    setMessageLoading(true);
-    try {
-      const name = nameRef.current.value;
-      const email = emailRef.current.value;
-      const message = messageRef.current.value;
 
-      let nameError=false;
-      let emailError=false;
-      let messageError=false;
+import ProductDescription from "../ProductDescription2/ProductDescription";
+import ContactUsCard from "./ContactUsCard/ContactUsCard";
+import TrustIcons from "./TrustIcons/TrustIcons";
+import { useEffect, useRef, useState } from "react";
 
-      const emailPattern = /^\w+@\w+\.\w+$/;
-      if (!emailPattern.test(email)) {
-        if(email.length==0)emailError='This field is required.'
-        else emailError='Please enter a valid email.'
-      
-        }
+export default function ProductPageCards({description}) {
 
-        if(name.length==0){
-          nameError='This field is required.'
-        }
+  const [selectedCard, setSelectedCard] = useState(0);
 
-      if (message.match(/ /g) < 2) {
-       if(message.length==0) messageError='This field is required.'
-        else if (message.match(/ /g) < 2) messageError='Please enter at least three words.'
-      }
+  const [firstDivStyle, setFirstDivStyle] = useState(true);
 
-      if(nameError || emailError || messageError){
-        setContactErrors({name:nameError, email: emailError, message: messageError});
-        return;
-      }
+  const cardDivRef = useRef();
+  const openCardTimeout = useRef();
 
-      const response = await fetch("/api/sqlliteapi", {
-        method: "POST",
-        body: JSON.stringify({
-          type: "messages",
-          message: { name, email, message },
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
 
-      if (response.ok) {
-        console.log("Question sent successfully.");
-        // Reset form fields if needed
-        setMessageSent(true)
-        nameRef.current.value = "";
-        emailRef.current.value = "";
-        messageRef.current.value = "";
-      } else {
-        console.error("Error sending question:", response.statusText);
-      }
-    } catch (error) {
-      console.error("Error sending question:", error);
-    } finally{setMessageLoading(false);}
-  };
+  useEffect(()=>{
 
-  return (
-    <>
-  
-      <DropCard dropCardId={'2'} title="Shipping & Returns">
-        <div className={styles.descriptionDiv}>
-          <p>
-            THIS PRODUCT SHIPS FREE TO CONTINENTAL USA. A SAVINGS OF OVER $75!
-          </p>
+    const cardDiv = cardDivRef.current;
 
-          <p>
-            Please Note: There is no restocking fee for this item. However,
-            customers interested in a return for a refund must pay for the
-            return shipping costs.
-          </p>
-        </div>
-      </DropCard>
-      <DropCard dropCardId={'3'} title="Ask a question"  contactCard={true}>
+
+
+
+    clearTimeout(openCardTimeout.current);
+
+    
+    cardDiv.style.maxHeight=`${cardDiv.scrollHeight}px`;
+    cardDiv.style.opacity = "1";
+
+   openCardTimeout.current = setTimeout(()=>{  cardDiv.style.maxHeight='none'}, 300)
+
+  },[selectedCard])
+
+
+
+
+
+  const handleCardChange = (cardNumber)=>{
+    
+   
+
+    const cardDiv = cardDivRef.current;
+
+
+
+
+    clearTimeout(openCardTimeout.current);
+
+
+
+
+     cardDiv.style.maxHeight=`${ cardDiv.scrollHeight}px`;
+
+
+    
+    setTimeout(()=>{
+      cardDiv.style.maxHeight="0";
+      cardDiv.style.opacity = "0";
+
+
+    
+      openCardTimeout.current= setTimeout(()=>{
+
+        setFirstDivStyle(false);
+
+        setSelectedCard(cardNumber);
+
+      },300);
+
+
+     }, 1)
+     
     
 
 
-      
-      <div className={styles.mainContactDiv}>
-        
-        
 
-        <p className={styles.getInTouch}>Please note, we will respond to you by email within 24-48 hours. Please include as much details as possible to help us understand your requirements.</p>
-        <div className={styles.contactInfoDiv}>
-          
-          
-            <div className={`${styles.inputGroup} ${contactErrors.name && styles.inputGroupErrorMargin}`}>
-             
-              <input
-                id="name"
-                placeholder=" "
-                ref={nameRef}
-                maxLength={127}
-                className={styles.contactInput}
-                onChange={()=>{ setContactErrors({...contactErrors, name: false})}}
-              />
-               <label htmlFor="name" className={styles.inputGroupLabel}>Name</label>
-               </div>
-               {contactErrors.name && <span className={styles.contactError}><ErrorIcon/>{contactErrors.name}</span>}
-          
-            <div className={`${styles.inputGroup} ${contactErrors.email && styles.inputGroupErrorMargin}`}>
-             
-              <input
-              placeholder=" "
-                id="email"
-                ref={emailRef}
-                className={styles.contactInput}
-                maxLength={127}
-                onChange={()=>{ setContactErrors({...contactErrors, email: false})}}
-              />
-               <label className={styles.inputGroupLabel}>Email</label>
-              </div>
-              {contactErrors.email && <span className={styles.contactError}><ErrorIcon/>{contactErrors.email}</span>}
-           
-        </div>
-        <div className={styles.messageField}>
-          
-          <textarea
-          placeholder=" "
-            ref={messageRef}
-            onChange={()=>{setMessageSent(false);
-             setContactErrors({...contactErrors, message: false})
-            }}
-            className={styles.messageTextArea}
-            rows={6}
-            maxLength={900}
-          />
-          <label className={styles.messageText}>Question</label>
-        </div>
-        {contactErrors.message && <span className={`${styles.contactError} ${styles.contactMessageError}`}><ErrorIcon/>{contactErrors.message}</span>}
-          
-          {messageSent && <span className={styles.messageSuccess}>Question sent successfully.</span>}
-       
-        <button onClick={handleSubmit} className={`${styles.sendButton} ${(messageLoading || messageSent) && styles.sendButtonDisabled}`}>
-          Send
-        </button>
-      </div>
-      
-      </DropCard>
 
-      <div className={styles.trustIcons}>
-        <div className={styles.trustIcon}>
-          <TruckIcon styleClassName={styles.trustIconImage} />
-          <span className={styles.iconText}>Free shipping</span>
-        </div>
-        <div className={styles.trustIcon}>
-         <PackageReturnIcon styleClassName={styles.trustIconImage}/>
-         <span className={styles.iconText}>Free returns</span>
-        </div>
-        <div className={styles.trustIcon}>
-          <GuaranteeIcon styleClassName={styles.trustIconImage}/>
-          <span className={styles.iconText}>Money back guarantee</span>
-        </div>
-      </div>
+
+  
+
+  }
+ 
+
+  return (
+    <>
+    <div className={styles.productInfoMenuDiv}>
+        <span onClick={()=>{handleCardChange(0)}} className={`${styles.productInfoMenuSpan} ${selectedCard === 0 && styles.menuSpanSelected}`}>Details</span>
+        <span onClick={()=>{handleCardChange(1)}} className={`${styles.productInfoMenuSpan} ${selectedCard === 1  && styles.menuSpanSelected}`}>Shipping info</span>
+        <span onClick={()=>{handleCardChange(2)}} className={`${styles.productInfoMenuSpan} ${selectedCard === 2  && styles.menuSpanSelected}`}>Contact us</span>
+    </div>
+    <div key={selectedCard} ref = {cardDivRef} className={`${styles.cardDiv} ${firstDivStyle && styles.cardDivFirstStyle}`}>
+
+
+    {selectedCard=== 0? <ProductDescription description = {description}/>:
+      selectedCard=== 1?
+        <div className={styles.shippingDiv}>
+          <span>
+            THIS PRODUCT SHIPS FREE TO CONTINENTAL USA. A SAVINGS OF OVER $75!
+          </span>
+
+          <span>
+            Please Note: There is no restocking fee for this item. However,
+            customers interested in a return for a refund must pay for the
+            return shipping costs.
+          </span>
+        </div>:
+    
+    <ContactUsCard/>
+
+      
+}
+
+
+
+</div>
+
+     <TrustIcons/>
     </>
   );
 }

@@ -3,6 +3,7 @@ import styles from './emailflowpopup.module.css'
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { CancelIcon, ErrorIcon } from '@/public/images/svgs/svgImages';
+import { useGlobalStore } from '@/contexts/AppContext';
 
 
 
@@ -15,22 +16,27 @@ export default function EmailFlowPopup({setEmailPopup}){
     const router = useRouter();
    
 
+  
+    
+    const { changeEmailPopupOn } = useGlobalStore((state) => ({
+      changeEmailPopupOn: state.changeEmailPopupOn,
+    }));
+
+
+
 
     useEffect(() => {
 
 
 
    
-
-   
-    
-       
-  
+      changeEmailPopupOn();
       
 
         const handlePopState = ()=>{
-           
+          
           setEmailPopup(false);
+          
         }
 
         window?.addEventListener("popstate", handlePopState);
@@ -54,6 +60,8 @@ export default function EmailFlowPopup({setEmailPopup}){
 
       
           window?.removeEventListener("popstate", handlePopState);
+
+          changeEmailPopupOn();
 
         };
       }, []);
@@ -119,7 +127,7 @@ export default function EmailFlowPopup({setEmailPopup}){
         <span className={styles.thankYouTitle}>Welcome!</span>
         <span className={styles.thankYouMessage}>You have successfully subscribed! Ps. check your email for discount.</span>
        
-        <button onClick={()=>{setEmailPopup(false)}} className={styles.sendEmailButton}>Continue shopping</button>
+        <button onClick={()=>{history.back();  }} className={styles.sendEmailButton}>Continue shopping</button>
      
         </>
       }

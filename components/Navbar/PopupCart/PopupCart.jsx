@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 import { CorrectIcon } from '@/public/images/svgs/svgImages';
+import { useGlobalStore } from '@/contexts/AppContext';
 
 
 
@@ -19,6 +20,12 @@ const popCartRef=useRef();
 const nextLink = useRef();
 
 
+
+
+const { increaseDeepLinkLevel, decreaseDeepLinkLevel } = useGlobalStore((state) => ({
+  increaseDeepLinkLevel: state.increaseDeepLinkLevel,
+  decreaseDeepLinkLevel: state.decreaseDeepLinkLevel,
+}));
 
 
 
@@ -40,6 +47,7 @@ useEffect(()=>{
 
   window.history.pushState(null, null, router.asPath);
   history.go(1);
+  increaseDeepLinkLevel();
 
 
   const handlePopState = (event)=>{
@@ -59,6 +67,7 @@ useEffect(()=>{
     if (!navBar.contains(event.target)) {
     
       history.back();
+      decreaseDeepLinkLevel();
       
     }
 
@@ -104,6 +113,7 @@ const handlePopCartLinkClick=(event, nextLinkHref)=>{
  
     nextLink.current= nextLinkHref;
   history.back();
+  decreaseDeepLinkLevel();
 
 }
 
@@ -143,7 +153,7 @@ const handlePopCartLinkClick=(event, nextLinkHref)=>{
   
     </Link>
     
-    <span className={styles.continue_shopping}  onClick={()=>{ history.back();}}>Continue shopping</span>
+    <span className={styles.continue_shopping}  onClick={()=>{ history.back();decreaseDeepLinkLevel();}}>Continue shopping</span>
     
 
  

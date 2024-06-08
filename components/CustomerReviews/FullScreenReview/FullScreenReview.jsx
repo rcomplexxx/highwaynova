@@ -15,11 +15,13 @@ export default function FullScreenReview({authorName, text, stars, imageSrc, set
   
 
   
-    const { deepLinkLevel, increaseDeepLinkLevel, decreaseDeepLinkLevel } = useGlobalStore((state) => ({
-      deepLinkLevel: state.deepLinkLevel,
+    const {increaseDeepLinkLevel, decreaseDeepLinkLevel } = useGlobalStore((state) => ({
+   
       increaseDeepLinkLevel: state.increaseDeepLinkLevel,
       decreaseDeepLinkLevel: state.decreaseDeepLinkLevel,
     }));
+
+    
 
 
 
@@ -31,9 +33,6 @@ const mainReviewDiv= useRef();
 
 
 
-useEffect(()=>{
-  console.log('deep link updated', deepLinkLevel)
-},[deepLinkLevel])
 
 
 

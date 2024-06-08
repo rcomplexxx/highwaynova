@@ -36,7 +36,7 @@ export default function App({ Component, pageProps }) {
 
 
 
-  const { cartProducts, setCartProducts } = useGlobalStore((state) => ({
+  const { cartProducts, setCartProducts} = useGlobalStore((state) => ({
     cartProducts: state.cartProducts,
     setCartProducts: state.setCartProducts,
  
@@ -87,9 +87,7 @@ export default function App({ Component, pageProps }) {
 
 
 
-
-
-    console.log('1111111112222222', Date.now())
+    
 
 
 
@@ -100,28 +98,58 @@ export default function App({ Component, pageProps }) {
 
       clearTimeout(popupTimeout); 
 
-      console.log('1111111112222222', url)
+   
+      
+
+
+      const handlePopupTurning = ()=>{
+
+
+   
+        console.log('my deep link level is', deepLinkLevelRef.current,"trying to turn on email popup")
+    
+ 
+       if(  url!=='/404' && (url==='/' || (url.includes('/products') && !url.includes('#zoom')
+       && !url.includes('#write-review')) || url.includes('/collection') || url==='/our-story' || url==='/faq')){
+ 
+         if(deepLinkLevelRef.current===0){
+        
+         setEmailPopup(true); 
+         localStorage.setItem("popupShownDateInDays", Math.floor(Date.now() / 86400000));
+         }
+ 
+         else{
+
+          const handlePopupTurningAfterDeepLink = ()=>{
+
+        
+                if(deepLinkLevelRef.current===0){
+
+                  setEmailPopup(true); 
+                  localStorage.setItem("popupShownDateInDays", Math.floor(Date.now() / 86400000));
+
+                }
+                else{
+                  popupTimeout = setTimeout( handlePopupTurningAfterDeepLink, 7000)
+                }
+
+              
+
+          }
+          
+          popupTimeout = setTimeout( handlePopupTurningAfterDeepLink, 5000)
+         
+         }
+       
+    
+       
+       }
+       
+      
+       }
     
       
-      popupTimeout= setTimeout(()=>{
-
-
-   
-       console.log('my deep link level is', deepLinkLevelRef.current)
-   
-
-      if(  url!=='/404' && (url==='/' || (url.includes('/products') && deepLinkLevelRef.current===0 && !url.includes('#zoom')
-      && !url.includes('#write-review')) || url.includes('/collection') || url==='/our-story' || url==='/faq')){
-       
-     
-        setEmailPopup(true); 
-        localStorage.setItem("popupShownDateInDays", Math.floor(Date.now() / 86400000));
-      
-   
-      
-      }
-     
-      }, 15000);
+      popupTimeout= setTimeout( handlePopupTurning, 30000);
       
     };
 

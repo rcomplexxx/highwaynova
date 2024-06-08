@@ -882,6 +882,11 @@ else{
         }
         else if(dataType === 'send_new_product_description'){
           console.log('send_new_product_description executed.');
+
+          if(data.productId==="") return res
+          .status(500)
+          .json({ descriptionUpdated: false });
+
           const newDescriptionIntegrated = makeNewDescription(data.text , data.productId);
 
           if(newDescriptionIntegrated){

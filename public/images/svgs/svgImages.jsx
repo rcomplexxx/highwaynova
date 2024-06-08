@@ -21,6 +21,7 @@ export const MenuIcon = ({ styleClassName, handleClick})=>{
 
 export const SearchIcon = ({styleClassName,handleClick})=>{
 	return <svg
+	id="searchIcon"
       onClick={handleClick}
       className={styleClassName}
       fill="var(--search-icon-color)"

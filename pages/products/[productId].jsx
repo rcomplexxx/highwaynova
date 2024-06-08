@@ -23,7 +23,7 @@ import PayPalButton from "@/components/Checkout/PayPal/PayPal";
 import { NextSeo } from "next-seo";
 import { productPageSeo } from "@/utils/SEO-configs/next-seo.config";
 import ProductDescription from "@/components/ProductDescription2/ProductDescription";
-import { STARPATH, Stars } from "@/public/images/svgs/svgImages";
+import { Stars } from "@/public/images/svgs/svgImages";
 import { Amex,Discover, Jcb, MasterCard, Visa } from "@/public/images/svgs/svgImages";
 
 //slickGoTo
@@ -243,9 +243,9 @@ export default function ProductPage({ product, images, startReviews, ratingData 
             onAddToCart={onAddToCart}
           />
 
-          {product.description && <ProductDescription description = {product.description}/>}
+          
 
-          <ProductPageCards />
+          <ProductPageCards description ={product.description}/>
         </div>
       </div>
       </div>

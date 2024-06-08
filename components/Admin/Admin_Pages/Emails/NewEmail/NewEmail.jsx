@@ -1,4 +1,4 @@
-import  { useRef, useState } from 'react'
+import  { isValidElement, useRef, useState } from 'react'
 
 import ReactHtmlParser from "react-html-parser";
 
@@ -24,7 +24,7 @@ export default function NewEmail() {
             const parsedHtml = ReactHtmlParser(finalHtml);
             
         
-            if (Array.isArray(parsedHtml) && parsedHtml.every(React.isValidElement)) {
+            if (Array.isArray(parsedHtml) && parsedHtml.every(isValidElement)) {
                 setPreviewEmailContent(parsedHtml);
               } else {
                 // Handle the case where parsing did not result in valid React elements

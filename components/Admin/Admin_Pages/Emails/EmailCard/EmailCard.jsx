@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { isValidElement, useEffect, useState } from 'react'
 
 import ReactHtmlParser from "react-html-parser";
 
@@ -73,7 +73,7 @@ export default function EmailCard({id,title, text, handleSaveEmail}) {
             // Attempt to parse the HTML
             const parsedHtml = ReactHtmlParser(text);
         
-            if (Array.isArray(parsedHtml) && parsedHtml.every(React.isValidElement)) {
+            if (Array.isArray(parsedHtml) && parsedHtml.every(isValidElement)) {
                 setPreviewEmailContent(parsedHtml);
               } else {
                 // Handle the case where parsing did not result in valid React elements
