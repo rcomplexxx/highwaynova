@@ -4,7 +4,7 @@
     display: flex;
     width: 100%;
     max-width: var(--size-15);
-    margin-top: var(--size-8);
+    margin-top: var(--size-7);
 }
 
 .iconText{
@@ -36,7 +36,7 @@
 @media(max-width: 600px){
 
     .trustIcons{
-        margin-top: 40px;
+        margin-top: var(--size-6);
     }
 }
 

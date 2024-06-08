@@ -7,12 +7,13 @@
     display: flex ;
     flex-direction: column;
     align-items: center;
-    margin-top: var(--size-10);
+    margin-top: var(--size-11);
   
    
 }
 
-.mainDiv h1{
+.happyCustomersTitle{
+  margin-top: var(--size-3);
   margin-bottom: 0;
 }
 
@@ -181,6 +182,9 @@ column-fill:balance;
   @media (max-width: 980px)  {
 
 
+  
+
+
     .masonry{
   
       width: calc(100% - var(--size-11));
@@ -190,9 +194,8 @@ column-fill:balance;
 
 
     
-    .mainDiv{
-     margin-top: var(--size-9);
-    }
+  
+  
 
     .showMoreButton{
       margin-top:  var(--size-7);
@@ -201,6 +204,13 @@ column-fill:balance;
       padding: 0 var(--size-5);
       font-size: 20px;
 
+    }
+  }
+
+
+  @media (max-width: 780px){
+    .happyCustomersTitle{
+      font-size: var(--font-size-6);
     }
   }
   
