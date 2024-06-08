@@ -24,11 +24,12 @@
 .productInfoMenuSpan{
 
 
+    color: var(--high-contrast-light-txt-color);
     padding: var(--size-3) 0;
    
 
     font-size: var(--font-size-5);
-    font-weight: 600;
+    font-weight: 700;
 
     cursor: pointer;
     
@@ -105,7 +106,7 @@
 
             gap:var(--size-5);
          
-            margin-bottom: var(--size-3);
+          
         }
     
       
