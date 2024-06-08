@@ -12,7 +12,7 @@
     
     padding-bottom: var(--size-5);
     
-    margin-top: var(--size-11);
+    margin-top: var(--size-10);
     margin-bottom: var(--size-5);
   
 }
@@ -115,7 +115,33 @@
 
 }
 
+@media(max-width: 350px){
 
+
+
+    .productInfoMenuDiv{
+
+        gap:var(--size-4);
+     
+      
+    }
+}
+
+
+@media(max-width: 320px){
+
+
+    .productInfoMenuSpan{
+
+
+        font-size: var(--font-size-2);
+
+    }
+
+
+
+  
+}
 
 
 

@@ -51,6 +51,10 @@
   height: 100%;
   object-fit: cover;
   cursor: pointer;
+
+  border-radius: 4px;
+
+
   z-index: 100;
   }
 
@@ -63,6 +67,13 @@
  
 
 
+  .selectedImage{
+    box-sizing: border-box;
+    border-radius: 4px;
+    border: 1px solid var(--selected-product-image-border);
+    
+    
+  }
 
 
 
@@ -127,12 +138,6 @@
   
 
 
-  .selectedImage{
-    box-sizing: border-box;
-    border: 1px solid var(--selected-product-image-border);
-    
-    
-  }
 
 
   .fixedAddToCartDiv{
@@ -228,6 +233,7 @@
     width: calc(100%  / 3 - var(--size-5)) !important;
     aspect-ratio: 1;
     overflow: hidden;
+   
     margin: var(--size-3) !important;
   }
 
