@@ -48,16 +48,50 @@ const approvePayment = async (req, res) => {
           // If changes were made, resolve the promise
 
 
-          const orderId = db.prepare(`SELECT id FROM orders WHERE paymentId = ? AND paymentMethod = ?`).get(paymentId, paymentMethod).id;
+          const orderData = db.prepare(`SELECT id, couponCode FROM orders WHERE paymentId = ? AND paymentMethod = ?`).get(paymentId, paymentMethod);
           
 
 
 
-          if(customerSubscribed)
-            subscribe(email, "checkout", {orderId:orderId});
-          else subscribe(email, "checkout x",  {orderId:orderId});
+        
 
-          const customerId = db.prepare(`SELECT id FROM customers WHERE email = ?`).get(email)?.id;
+          
+
+
+          const customerInfo = db.prepare("SELECT id, used_discounts FROM customers WHERE email = ?").get(email);
+
+          
+
+          const customerId = customerInfo.id;
+
+          if(customerInfo && JSON.parse(customerInfo.used_discounts).find(discountCode=>  discountCode===orderData.couponCode))
+            return res
+        .status(400)
+        .json({ success: false, error: "Discount has already been used." });
+
+
+
+
+        
+        if(customerSubscribed)
+          subscribe(email, "checkout", {orderId:orderData.id});
+        else subscribe(email, "checkout x",  {orderId:orderData.id});
+   
+
+
+
+          if(orderData.couponCode)
+         db.prepare(`
+          UPDATE customers
+          SET used_discounts = json_insert(
+           used_discounts, 
+            '$[#]', 
+            ?
+          )
+          WHERE id = ?
+        `).run(orderData.couponCode, customerId)
+
+        
         
 
           giftDiscount= db.prepare(`SELECT 1 AS valid FROM customers WHERE id = ? AND totalOrderCount = 1`).get(customerId)?.valid===1;
@@ -153,7 +187,7 @@ const approvePayment = async (req, res) => {
     const clientIp = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
 
     if (!(await limiterPerDay.rateLimiterGate(clientIp)))
-      return res.status(429).json({ error: "Too many requests." });
+      return res.status(429).json({ error: "Too many requests. Please try again later." });
 
     if(paymentMethod.includes('PAYPAL')){
     const request = new paypal.orders.OrdersCaptureRequest(paymentId);
@@ -188,10 +222,10 @@ const approvePayment = async (req, res) => {
   //   return res.status(200).json({ message: "Payment successful" });
   // }
 
-    res.status(500).json({ error: response.result });
+    res.status(500).json({ error: "Payment was not approved." });
   } catch (error) {
     console.error("Capture request failed:", error);
-    res.status(500).json({ error: "Verification error." });
+    res.status(500).json({ error: "Server error. Payment was not approved." });
   }
 };
 

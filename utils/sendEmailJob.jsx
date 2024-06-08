@@ -133,7 +133,7 @@ console.log('All sequences:', allSequences);
               }
 
 
-              
+              console.log(`customers check`, db.prepare(`SELECT * FROM customers`).all());
 
 
 

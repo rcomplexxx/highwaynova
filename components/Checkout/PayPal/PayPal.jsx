@@ -81,7 +81,7 @@ const PayPalButton=({checkFields, organizeUserData, method='paypal',  type='norm
               return order.paymentId;
             } else {
               console.log('myor', order);
-              setPaypalError('Error occured. Payment was not processed.')
+              setPaypalError(order.error)
               return;
             }
           } catch (error) {
@@ -120,6 +120,7 @@ const PayPalButton=({checkFields, organizeUserData, method='paypal',  type='norm
             console.log("Payment was successful");
             // Handle successful payment logic here
             const data = await response.json();
+            
            
             setGiftDiscount(data.giftDiscount);
             
@@ -132,6 +133,7 @@ const PayPalButton=({checkFields, organizeUserData, method='paypal',  type='norm
               return actions.restart();
             } else {
               console.log(data.error);
+              setPaypalError( data.error);
     
               // Handle other payment errors here
             }
@@ -145,7 +147,7 @@ const PayPalButton=({checkFields, organizeUserData, method='paypal',  type='norm
       };
 
       const cancelHandler = async () => { setPaypalError('Payment is canceled.') };
-      const errorHandler = async () => { setPaypalError('Error occured. Payment was not processed.') };
+      
 
 
     return  <PayPalScriptProvider

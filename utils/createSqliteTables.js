@@ -36,7 +36,8 @@ function createSqliteTables() {
           totalOrderCount INTEGER,
           subscribed INTEGER,
           source TEXT,
-          currentCampaignId INTEGER
+          currentCampaignId INTEGER,
+          used_discounts TEXT DEFAULT '[]'
         )
       `,
       ).run();

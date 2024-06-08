@@ -116,15 +116,32 @@ const makePayment = async (req, res) => {
 
     
 
-        let customerId = db.prepare("SELECT id FROM customers WHERE email = ?").get(req.body.order.email)?.id
+        const customerInfo = db.prepare("SELECT id, used_discounts FROM customers WHERE email = ?").get(req.body.order.email);
 
-        if(!customerId){
+        console.log('sooun checking', customerInfo);
+
+        if(customerInfo && JSON.parse(customerInfo.used_discounts).find(discountCode=>  discountCode===req.body.order.couponCode))
+          return res
+      .status(400)
+      .json({ success: false, error: "Discount has already been used." });
+
+        let customerId= customerInfo?.id;
+
+        if(!customerId &&  req.body.order.email !== ""){
+
+         
+       
+
          const inserCustomerInfo = db.prepare("INSERT INTO customers (email, totalOrderCount, subscribed, source) VALUES (?, ?, ?, ?)").run( req.body.order.email, 0, 0, 'make_payment' );
            
          customerId= inserCustomerInfo.lastInsertRowid;
 
 
         }
+
+
+
+
 
         const uniqueId = generateUniqueId();
 
@@ -190,6 +207,16 @@ const makePayment = async (req, res) => {
           subscribe(req.body.order.email, "checkout",  {orderId:uniqueId});
         else subscribe(req.body.order.email, "checkout x", {orderId:uniqueId});
 
+        if(couponCode!="")db.prepare(`
+    UPDATE customers
+    SET used_discounts = json_insert(
+     used_discounts, 
+      '$[#]', 
+      ?
+    )
+    WHERE id = ?
+  `).run(couponCode,customerId)
+
         giftDiscount= db.prepare(`SELECT 1 AS valid FROM customers WHERE id = ? AND totalOrderCount = 1`).get(customerId)?.valid===1;
           
         console.log('giftD', giftDiscount);
@@ -217,7 +244,7 @@ const makePayment = async (req, res) => {
     const clientIp = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
 
     if (!(await limiterPerDay.rateLimiterGate(clientIp)))
-      return res.status(429).json({ error: "Too many requests." });
+      return res.status(429).json({ error: "Too many requests. Please try again later." });
     console.log('ITEMS', req.body.order.items)
     let totalPrice = req.body.order.items
       .reduce((sum, product) => {
@@ -266,6 +293,7 @@ const makePayment = async (req, res) => {
     // Check if the payment is approved
     if (response.result.status === "CREATED") {
       console.log('status je creacted')
+     
       await putInDatabase(req.body.paymentMethod,response.result.id);
       res.status(200).json({ success: true, paymentId: response.result.id });
     } else {
@@ -282,12 +310,9 @@ const makePayment = async (req, res) => {
     
  
    
-    const amount= req.body.amount;
     
-    if(amount!= totalPrice)
-    return res
-      .status(400)
-      .json({ success: false, error: "amount_incorrect" });
+    
+  
 
       //Namontirati gresku ako je drzava van dozvoljenih drzava
 
@@ -301,10 +326,20 @@ const makePayment = async (req, res) => {
     });
 
     console.log('Proso stripe tokenizaciju')
-    console.log('amount je', amount);
+
+
+
+    
+ 
+  
+
+
+
+
+   
 
     const paymentIntent= await stripe.paymentIntents.create({
-			amount:parseInt(amount*100),
+			amount:parseInt(totalPrice*100),
 			currency: "USD",
       payment_method: paymentMethod.id, // Google Pay token
       confirm: true,
@@ -334,7 +369,8 @@ const makePayment = async (req, res) => {
   //check amount?
   else if(req.body.paymentMethod==='STRIPE'){
    
-    // stripeId amount totalPrice
+   
+    
     console.log('popusis ti meni STRIPE')
     const {stripeId} = req.body;
  

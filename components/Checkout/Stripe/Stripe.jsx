@@ -283,9 +283,9 @@ const handleStripePay= async(event)=>{
                 
              
               }
-              else{setStripeError({stripeServerError: 'Error occured. Payment was not processed.'});setPaymentProcessing(false);
+              else{setStripeError({stripeServerError: data.error});setPaymentProcessing(false);
               //Ovde izbaci gresku
-              setStripeError({stripeServerError: 'Error occured. Payment was not processed.'})
+              // setStripeError({stripeServerError: 'Error occured. Payment was not processed.'})
               }
   
           } catch (error) {

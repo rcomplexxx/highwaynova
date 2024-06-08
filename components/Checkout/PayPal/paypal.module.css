@@ -39,7 +39,7 @@ margin-bottom: 8px; */
     align-items: center;
 
     color: var(--error-color);
-     margin-top: var(--size-1);
+     margin-top: var(--size-3);
       margin-bottom: var(--size-2);
     margin-left: var(--size-1);
     font-size: var(--font-size-2);

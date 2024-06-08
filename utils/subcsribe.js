@@ -18,27 +18,51 @@ function subscribe(email, source, extraData) {
 
 
    
-    const sendThankYouEmail = ()=>{
+    const sendThankYouEmail = (totalOrderCount)=>{
 
-   
-    
-    
-      const result = db.prepare(`INSERT INTO email_campaigns (title, sequenceId, sendingDateInUnix, emailSentCounter, retryCounter, targetCustomers, extraData) VALUES (?, ?, ?, ?, ?, ?, ?)`)
-      .run(
-        `Thank you ${email}`,
-        process.env.THANK_YOU_SEQUENCE_ID,
-        Date.now()+60000,
-        0,
-        0,
-        JSON.stringify([email]),
-        JSON.stringify({orderId: extraData.orderId})
-        
-      );
+      console.log('checking totalOrderCount', totalOrderCount)
+
+     
+      let result;
+
+      if(totalOrderCount===1){
+
+        result = db.prepare(`INSERT INTO email_campaigns (title, sequenceId, sendingDateInUnix, emailSentCounter, retryCounter, targetCustomers, extraData) VALUES (?, ?, ?, ?, ?, ?, ?)`)
+        .run(
+          `Thank you ${email}`,
+          process.env.THANK_YOU_SEQUENCE_FIRST_ORDER_ID,
+          Date.now()+60000,
+          0,
+          0,
+          JSON.stringify([email]),
+          JSON.stringify({orderId: extraData.orderId})
+          
+        );
        
+
+      }
+
+      else{
+        result = db.prepare(`INSERT INTO email_campaigns (title, sequenceId, sendingDateInUnix, emailSentCounter, retryCounter, targetCustomers, extraData) VALUES (?, ?, ?, ?, ?, ?, ?)`)
+        .run(
+          `Thank you ${email}`,
+          process.env.THANK_YOU_SEQUENCE_ID,
+          Date.now()+60000,
+          0,
+          0,
+          JSON.stringify([email]),
+          JSON.stringify({orderId: extraData.orderId})
+          
+        );
+      }
+
+      
+    
+   
     
             const campaignId = result.lastInsertRowid;
     
-         console.log('in thank you', db.prepare(`SELECT * FROM email_sequences WHERE id = ?`).get(process.env.THANK_YOU_SEQUENCE_ID))
+         console.log('in thank you, thank you campaign set for email', email)
     
     
             emailSendJob(Date.now()+60000,campaignId);
@@ -89,14 +113,14 @@ const startCampaign = ()=>{
 
    
 
-       const result = db.prepare("SELECT * FROM customers WHERE email = ?").get(email);
+       const result = db.prepare("SELECT totalOrderCount FROM customers WHERE email = ?").get(email);
         
     
         if(!result){
 
           db.prepare("INSERT INTO customers (email, totalOrderCount, subscribed, source) VALUES (?, ?, ?, ?)").run( email, source.includes('checkout')?1:0, source==='checkout x'?0:1, source );
       
-          if(source.includes('checkout')) sendThankYouEmail();
+          if(source.includes('checkout')) sendThankYouEmail(1);
           if(source!='checkout x')startCampaign();
       
         }
@@ -113,14 +137,14 @@ const startCampaign = ()=>{
             db.prepare("UPDATE customers SET totalOrderCount = totalOrderCount + 1, subscribed = 1 WHERE email = ?").run( email);    
             console.log('in source checkout,', result.subscribed)
             if(!result.subscribed) startCampaign();
-            sendThankYouEmail();
+            sendThankYouEmail(result.totalOrderCount+1);
        
           }
 
           else  if(source==="checkout x"){ 
 
               db.prepare("UPDATE customers SET totalOrderCount = totalOrderCount + 1 WHERE email = ?").run(email);
-              sendThankYouEmail();
+              sendThankYouEmail(result.totalOrderCount+1);
           }
 
             else{

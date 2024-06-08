@@ -75,7 +75,7 @@ const GooglePay = ({
 
       const totalPrice =  parseFloat(document.getElementById('totalPrice').innerText.split('$')[1]).toFixed(2);
 
-      console.log('cr op',window?.getComputedStyle(document.getElementById('subscribeCorrectImage'))?.opacity );
+      console.log('cr op', document.getElementById('subscribeCheckbox')?.getAttribute('data-subscribe') );
       const requestData = {
         order: {
           email: paymentData.email,
@@ -93,7 +93,7 @@ const GooglePay = ({
           couponCode: disc,
           
           tip:tip,
-          subscribed: window?.getComputedStyle(document.getElementById('subscribeCorrectImage'))?.opacity == '1',
+          subscribed:  document.getElementById('subscribeCheckbox')?.getAttribute('data-subscribe'),
           
         },
         paymentMethod: "GPAY",
@@ -136,12 +136,13 @@ const GooglePay = ({
                   intent: "OFFER",
                 },
               };
+
             else
               return {
                 transactionState: "ERROR",
                 error: {
                   reason: "OTHER_ERROR",
-                  message: "Unknown error has occured.",
+                  message: validation.error,
                   intent: "PAYMENT_AUTHORIZATION",
                 },
               };
@@ -154,7 +155,7 @@ const GooglePay = ({
         });
     } catch (err) {
       console.log(err);
-      return { success: false, error: "Payment was not approved." };
+      return { success: false, error: {message: "Payment was not approved."} };
     }
   };
 
@@ -220,7 +221,7 @@ const GooglePay = ({
       }}
       onError={(reason) => {
         console.log(reason);
-        setGooglePayError('Error occured. Payment was not processed.')
+        setGooglePayError(reason.message)
       }}
     />
    {googlePayError && <p className={styles.googlePayError}><ErrorIcon/>{googlePayError}</p>}

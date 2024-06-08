@@ -226,6 +226,9 @@ else{
               
               db.prepare(`DELETE FROM messages`).run();
               db.prepare(`DROP TABLE IF EXISTS messages`).run();
+
+              db.prepare(`DELETE FROM email_campaigns`).run();
+              db.prepare(`DROP TABLE IF EXISTS email_campaigns`).run();
   
               }
               catch(error){}
