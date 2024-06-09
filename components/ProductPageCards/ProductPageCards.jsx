@@ -43,6 +43,7 @@ export default function ProductPageCards({description}) {
   const handleCardChange = (cardNumber)=>{
     
    
+    if(cardNumber=== selectedCard)return;
 
     const cardDiv = cardDivRef.current;
 
