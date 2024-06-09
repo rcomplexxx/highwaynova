@@ -89,8 +89,8 @@ export default function ProductPageCards({description}) {
     <>
     <div className={styles.productInfoMenuDiv}>
         <span onClick={()=>{handleCardChange(0)}} className={`${styles.productInfoMenuSpan} ${selectedCard === 0 && styles.menuSpanSelected}`}>Details</span>
-        <span onClick={()=>{handleCardChange(1)}} className={`${styles.productInfoMenuSpan} ${selectedCard === 1  && styles.menuSpanSelected}`}>Shipping info</span>
-        <span onClick={()=>{handleCardChange(2)}} className={`${styles.productInfoMenuSpan} ${selectedCard === 2  && styles.menuSpanSelected}`}>Contact us</span>
+        <span onClick={()=>{handleCardChange(1)}} className={`${styles.productInfoMenuSpan} ${selectedCard === 1  && styles.menuSpanSelected}`}>Free shipping</span>
+        <span onClick={()=>{handleCardChange(2)}} className={`${styles.productInfoMenuSpan} ${selectedCard === 2  && styles.menuSpanSelected}`}>Questions</span>
     </div>
     <div key={selectedCard} ref = {cardDivRef} className={`${styles.cardDiv} ${firstDivStyle && styles.cardDivFirstStyle}`}>
 
