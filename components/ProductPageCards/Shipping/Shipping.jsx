@@ -7,43 +7,43 @@ export default function Shipping() {
   return (
 
 
-    <div className={styles.shippingDiv}>
+  <>
    
   
 
     <div className={styles.gridTable}>
         <div className={styles.rowDiv}>
-    <span className={styles.firstRowSpan}>Region</span>
-    <span className={`${styles.firstRowSpan} ${styles.midRowSpan}`}>Free Tracked Shipping</span>
-    <span className={`${styles.firstRowSpan} ${styles.lastRowSpan}`}>Estimated Delivery Time</span>
+    <span className={`${styles.firstRowSpan} ${styles.header}`}>Region</span>
+    <span className={`${styles.firstRowSpan} ${styles.header}`}>Free Tracked Shipping</span>
+    <span className={`${styles.firstRowSpan} ${styles.header}`}>Estimated Delivery Time</span>
     </div>
 
     <div className={styles.rowDiv}>
-    <span className={styles.firstRowSpan}>UNITED STATES</span>
-    <span className={`${styles.firstRowSpan} ${styles.midRowSpan}`}>✓</span>
-    <span className={`${styles.firstRowSpan} ${styles.lastRowSpan}`}>7 - 20 days</span>
+    <span className={`${styles.firstRowSpan} ${styles.header}`}>UNITED STATES</span>
+    <span className={styles.firstRowSpan}>✓</span>
+    <span className={styles.firstRowSpan}>7 - 20 days</span>
     </div>
     <div className={styles.rowDiv}>
-    <span className={styles.firstRowSpan}>CANADA</span>
-    <span className={`${styles.firstRowSpan} ${styles.midRowSpan}`}>✓</span>
-    <span className={`${styles.firstRowSpan} ${styles.lastRowSpan}`}>7 - 20 days</span>
+    <span className={`${styles.firstRowSpan} ${styles.header}`}>CANADA</span>
+    <span className={styles.firstRowSpan}>✓</span>
+    <span className={styles.firstRowSpan}>7 - 20 days</span>
     </div>
     <div className={styles.rowDiv}>
-    <span className={styles.firstRowSpan}>EUROPE</span>
-    <span className={`${styles.firstRowSpan} ${styles.midRowSpan}`}>✓</span>
-    <span className={`${styles.firstRowSpan} ${styles.lastRowSpan}`}>7 - 20 days</span>
+    <span className={`${styles.firstRowSpan} ${styles.header}`}>EUROPE</span>
+    <span className={styles.firstRowSpan}>✓</span>
+    <span className={styles.firstRowSpan}>7 - 20 days</span>
     </div>
-    <div className={styles.rowDiv}>
-    <span className={styles.firstRowSpan}>AUSTRALIA</span>
-    <span className={`${styles.firstRowSpan} ${styles.midRowSpan}`}>✓</span>
-    <span className={`${styles.firstRowSpan} ${styles.lastRowSpan}`}>7 - 20 days</span>
+    <div className={`${styles.rowDiv} ${styles.lastRowDiv}`}>
+    <span className={`${styles.firstRowSpan} ${styles.header}`}>AUSTRALIA</span>
+    <span className={styles.firstRowSpan}>✓</span>
+    <span className={styles.firstRowSpan}>7 - 20 days</span>
     </div>
 
 
 
   </div>
 
-
+<div className={styles.shippingDiv}>
   <span>
       THIS PRODUCT SHIPS FREE TO CONTINENTAL USA. A SAVINGS OF OVER $75!
     </span>
@@ -56,5 +56,7 @@ export default function Shipping() {
 
 
   </div>
+
+  </>
   )
 }

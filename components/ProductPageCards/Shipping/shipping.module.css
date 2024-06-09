@@ -5,20 +5,31 @@
 
     display: flex;
    flex-direction: column;
-   gap: var(--size-8);
+ 
    
    
+   margin-bottom: var(--size-6);
     box-sizing: border-box;
     border-radius: 8px;
         border: 1px solid var(--neutral-4);
-        padding: var(--size-4);
+      
     font-size: var(--font-size-2);
   }
 
   .rowDiv{
     display: flex;
     justify-content: space-between;
+
+    padding: var(--size-5) var(--size-4);
+
+    border-bottom: 1px solid var(--neutral-1);
   }
+
+  .lastRowDiv{
+    border-bottom: none;
+  }
+
+  
 
   .firstRowSpan{
 
@@ -26,27 +37,20 @@
 
     display: flex;
  
-    justify-content: flex-start;
-    align-items: center;
-
-    font-weight: 600;
-
-  }
-
-  .midRowSpan{
-
     justify-content: center;
-  
+    align-items: center;
+    text-align: center;
 
-    font-weight: 400;
+    padding:0 var(--size-3);
+
+   
+
   }
 
-  .lastRowSpan{
-    justify-content: flex-end;
-  
-
-    font-weight: 400;
+  .header{
+    font-weight: 600;
   }
+  
   
   .gridTableSpan {
   
@@ -78,6 +82,7 @@
     flex-direction: column;
     gap: var(--size-4);
     margin-bottom: var(--size-5);
+    padding: 0 var(--size-3);
 
     
     box-sizing: border-box;
