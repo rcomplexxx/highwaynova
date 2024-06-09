@@ -76,9 +76,6 @@
 
 
 
-.contactInput:focus{
-    border: 2px solid var(--contact-input-outline-focused);
-}
 
 
 
@@ -105,9 +102,9 @@
   }
   
 
-
-
-
+  .contactInput:focus{
+    border: 2px solid var(--contact-input-outline-focused);
+}
 
 
 .inputGroupLabel{
@@ -124,12 +121,6 @@
   }
 
 
-.contactInput:focus{
-    border: 1px solid var(--border-color-strong);
-}
-
-
-
 .contactInput:focus + .inputGroupLabel,
 .contactInput:not(:placeholder-shown) + .inputGroupLabel {
     color: var(--checkout-input-placeholder-floating);
@@ -137,6 +128,19 @@ top: 6px;
 font-size: var(--font-size-1);
 
 }
+
+
+
+
+
+
+
+
+  
+
+
+
+
 
 
 
