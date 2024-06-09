@@ -74,7 +74,7 @@
   .product_price{
     display: flex;
     align-items: center;
-   margin-top: 0;
+    margin-top: auto;
    margin-bottom: var(--size-2);
   }
   
@@ -98,7 +98,7 @@
     display: inline-block;
     border: none;
   
-    margin-top: auto;
+    
     color: var(--main-button-color);
     background-color: var(--fbt-add-to-cart-bg);
     

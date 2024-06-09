@@ -96,14 +96,14 @@
     font-weight: 500;
    
     margin-top: var(--size-5);
-     margin-bottom: var(--size-5);
+     margin-bottom: var(--size-7);
 }
 
 
 .product_price{
     display: flex;
     align-items: center;
-   margin-top: var(--size-6);
+    margin-top: auto;
    margin-bottom: var(--size-2);
   }
   
@@ -132,7 +132,7 @@
     align-items: center;
 
     
-    margin-top: auto;
+    
    
     border: 1px solid var(--best-sellers-addtocart-border);
     font-size: var(--font-size-3);
