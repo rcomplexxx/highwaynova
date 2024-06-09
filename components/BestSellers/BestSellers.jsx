@@ -126,6 +126,16 @@ export default function BestSellers() {
             </Link>
 
             <span className={styles.productTitle}>{bsp.product.name}</span>
+            <div className={styles.product_price}>
+  ${bsp.product.price.toFixed(2)}
+    {bsp.product.stickerPrice && <span className={styles.product_price_span}>${bsp.product.stickerPrice.toFixed(2)}</span>}
+   
+  </div>
+
+
+ 
+
+
             <button onClick={()=>{ onAddToCart(1, bsp.product, bsp.variantName)}} className={styles.addToCartButton}>
             Add
             </button>
