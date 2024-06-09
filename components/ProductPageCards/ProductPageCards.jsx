@@ -7,6 +7,7 @@ import ProductDescription from "../ProductDescription2/ProductDescription";
 import ContactUsCard from "./ContactUsCard/ContactUsCard";
 import TrustIcons from "./TrustIcons/TrustIcons";
 import { useEffect, useRef, useState } from "react";
+import Shipping from "./Shipping/Shipping";
 
 export default function ProductPageCards({description}) {
 
@@ -97,17 +98,7 @@ export default function ProductPageCards({description}) {
 
     {selectedCard=== 0? <ProductDescription description = {description}/>:
       selectedCard=== 1?
-        <div className={styles.shippingDiv}>
-          <span>
-            THIS PRODUCT SHIPS FREE TO CONTINENTAL USA. A SAVINGS OF OVER $75!
-          </span>
-
-          <span>
-            Please Note: There is no restocking fee for this item. However,
-            customers interested in a return for a refund must pay for the
-            return shipping costs.
-          </span>
-        </div>:
+       <Shipping/>:
     
     <ContactUsCard/>
 
