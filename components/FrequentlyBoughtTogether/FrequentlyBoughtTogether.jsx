@@ -28,8 +28,11 @@ const FreqProduct = ({ productId, variantIndex, onAddToCart }) => {
           
         />
       </Link>
-      <div>
-        <p className={styles.product_title}>{product.name}</p>
+   
+   
+
+        <span className={styles.product_title}>{product.name}</span>
+
         <div className={styles.product_price}>
           ${product.price.toFixed(2)}
             {product.stickerPrice && <span className={styles.product_price_span}>${product.stickerPrice.toFixed(2)}</span>}
@@ -37,7 +40,8 @@ const FreqProduct = ({ productId, variantIndex, onAddToCart }) => {
           </div>
 
   
-      </div>
+     
+     
       <button
         className={styles.add_to_cart_button}
         onClick={(event) => {event.stopPropagation();onAddToCart(1,product, variantName)}}

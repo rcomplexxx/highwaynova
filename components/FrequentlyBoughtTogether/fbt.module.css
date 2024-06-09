@@ -2,24 +2,36 @@
 
 
 
-  .h2Title{
-    
-    margin-top: 0;
-    font-size: var(--font-size-5);
-    color: var(--fbt-title-color);
-    font-weight: 500;
-  }
+
 
   .freqMain{
     max-width: var(--size-15);
     width:100%;
     display: flex;
     flex-direction: column;
+    justify-content: stretch;
     align-items: flex-start;
     margin-top: 40px;
-    
+    border-radius: 8px;
+
+    border: 1px solid var(--neutral-4);
+
+    box-sizing: border-box;
+    padding: var(--size-4);
   
   }
+
+
+
+  .h2Title{
+    
+    margin-top: 0;
+    margin-bottom: var(--size-5);
+    font-size: var(--font-size-5);
+    color: var(--fbt-title-color);
+    font-weight: 500;
+  }
+
   .freqBought{
     display: flex;
    
@@ -48,11 +60,14 @@
     object-fit: cover;
     cursor: pointer;
     border-radius: 8px;
+
    
   }
 
   .product_title{
-    height: var(--size-8);
+    text-align: center;
+    margin-top: var(--size-2);
+  margin-bottom: var(--size-6);
   }
 
 
@@ -60,7 +75,7 @@
     display: flex;
     align-items: center;
    margin-top: 0;
-   margin-bottom: var(--size-6);
+   margin-bottom: var(--size-2);
   }
   
   .product_price_span{
@@ -83,7 +98,7 @@
     display: inline-block;
     border: none;
   
-    margin-top: var(--size-1);
+    margin-top: auto;
     color: var(--main-button-color);
     background-color: var(--fbt-add-to-cart-bg);
     
