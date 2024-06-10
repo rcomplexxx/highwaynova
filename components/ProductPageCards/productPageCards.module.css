@@ -18,7 +18,7 @@
 }
 
 .menuSpanSelected{
-    border-bottom: 2px solid var(--high-contrast-light-txt-color);
+    border-bottom: 2px solid var(--dropcard-selected-title-border);
 }
 
 
