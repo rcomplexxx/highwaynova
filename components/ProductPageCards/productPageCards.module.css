@@ -53,15 +53,6 @@
 }
 
 
-.shippingDiv{
-    display: flex;
-    flex-direction: column;
-    gap: var(--size-4);
-    margin-bottom: var(--size-5);
-
-    
-    box-sizing: border-box;
-}
 
 
 
@@ -69,16 +60,6 @@
 
 
 
-@media (max-width: 1080px){
-    .shippingDiv{
-       
-        margin-bottom: var(--size-7);
-    }
-
-  
-
-   
-}
 
 @media(max-width: 480px){
 
@@ -128,20 +109,7 @@
 }
 
 
-@media(max-width: 320px){
 
-
-    .productInfoMenuSpan{
-
-
-        font-size: var(--font-size-2);
-
-    }
-
-
-
-  
-}
 
 
 

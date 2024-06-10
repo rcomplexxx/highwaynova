@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import styles from './shipping.module.css'
 
 
@@ -9,6 +10,7 @@ export default function Shipping() {
 
   <>
    
+   <div className={styles.mainSpan}>Free Worldwide Shipping 🚚</div>
   
 
     <div className={styles.gridTable}>
@@ -44,15 +46,14 @@ export default function Shipping() {
   </div>
 
 <div className={styles.shippingDiv}>
-  <span>
-      THIS PRODUCT SHIPS FREE TO CONTINENTAL USA. A SAVINGS OF OVER $75!
-    </span>
+  <div>
+  Processing time 1 - 5 days.
+  Any items not received within 8 weeks qualify for our full refund or reship guarantee 🌟
+    </div>
 
-    <span>
-      Please Note: There is no restocking fee for this item. However,
-      customers interested in a return for a refund must pay for the
-      return shipping costs.
-    </span>
+    <div>
+    Please <Link href='/contact-us'>contact us</Link> with any further questions and our support team will be happy to help.
+    </div>
 
 
   </div>

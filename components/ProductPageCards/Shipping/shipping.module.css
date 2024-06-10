@@ -1,3 +1,16 @@
+
+
+
+.mainSpan{
+    color: var(--main-color-4);
+    font-size: var(--font-size-3);
+    font-weight: 600;
+    margin-bottom: var(--size-7);
+
+    text-align: center;
+}
+
+
 .gridTable {
 
 
@@ -8,7 +21,7 @@
  
    
    
-   margin-bottom: var(--size-6);
+   margin-bottom: var(--size-7);
     box-sizing: border-box;
     border-radius: 8px;
         border: 1px solid var(--neutral-4);
@@ -84,7 +97,8 @@
     margin-bottom: var(--size-5);
     padding: 0 var(--size-3);
 
-    
+    text-align: center;
+    font-size: var(--font-size-2);
     box-sizing: border-box;
 }
 
