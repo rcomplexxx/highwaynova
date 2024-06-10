@@ -7,7 +7,7 @@ import "swiper/css/zoom";
 
 import Image from "next/image";
 import ToastMessage from "./ToastMessage/ToastMessage";
-import { ArrowDown, CancelIcon } from "@/public/images/svgs/svgImages";
+import { ArrowDown, CancelIcon, ZoomInIcon, ZoomOutIcon } from "@/public/images/svgs/svgImages";
 
 
 
@@ -52,11 +52,11 @@ const FullScreenZoomableImage = ({
 
 
     const biggerWidth =
-    (window.innerHeight - 48) / window.innerWidth >
+    (window.innerHeight - 64) / window.innerWidth >
     fullImg.naturalHeight / fullImg.naturalWidth;
   const scaleRatio = biggerWidth
-    ? (window.innerWidth - 48) / window.innerWidth
-    : mainImg.getBoundingClientRect().height / (window.innerHeight - 48);
+    ? (window.innerWidth - 64) / window.innerWidth
+    : mainImg.getBoundingClientRect().height / (window.innerHeight - 64);
 
   // fixedZoomDiv.style.opacity = `0`;
 
@@ -75,19 +75,19 @@ const FullScreenZoomableImage = ({
     ? 0
     : mainImg.getBoundingClientRect().left -
       (window.innerWidth -
-        ((window.innerHeight - 48) / fullImg.naturalHeight) *
+        ((window.innerHeight - 64) / fullImg.naturalHeight) *
           fullImg.naturalWidth *
           scaleRatio) /
         2;
   const deltaY = biggerWidth
     ? mainImg.getBoundingClientRect().top -
-      48 -
+      64 -
       ((window.innerHeight -
-        48 -
+        64 -
         (window.innerWidth / fullImg.naturalWidth) * fullImg.naturalHeight) /
         2) *
         scaleRatio
-    : mainImg.getBoundingClientRect().top - 48;
+    : mainImg.getBoundingClientRect().top - 64;
 
 
     fullImg.style.opacity= 0;
@@ -290,7 +290,7 @@ const FullScreenZoomableImage = ({
 
       fixedZoomDiv.style.backgroundColor = getRgbValues( 1 -
         Math.abs(
-          (imgDiv.getBoundingClientRect().top - 48) / window.innerHeight
+          (imgDiv.getBoundingClientRect().top - 64) / window.innerHeight
         ) *
           2) ;
     }
@@ -404,7 +404,7 @@ const FullScreenZoomableImage = ({
         if(!fullImg)return;
         const mainImg = document.getElementById(`mainImage${imageIndex}`);
         const biggerWidth =
-          (window.innerHeight - 48) / window.innerWidth >
+          (window.innerHeight - 64) / window.innerWidth >
           fullImg.naturalHeight / fullImg.naturalWidth;
 
        
@@ -450,14 +450,14 @@ const FullScreenZoomableImage = ({
           mainImg.getBoundingClientRect().top -
           fullImg.getBoundingClientRect().top;
 
-          //48 + (window.innerHeight - 48 - (window.innerWidth * fullImg.naturalHeight / fullImg.naturalWidth))/2 Formula za izracunavanje mainImg topa minus fullImg Top
+          //64 + (window.innerHeight - 64 - (window.innerWidth * fullImg.naturalHeight / fullImg.naturalWidth))/2 Formula za izracunavanje mainImg topa minus fullImg Top
         const YTr = biggerWidth
           ? 
           
           mainImg.getBoundingClientRect().top -
-            48 -
+            64 -
             ((window.innerHeight -
-              48 -
+              64 -
               (window.innerWidth * fullImg.naturalHeight) /
                 fullImg.naturalWidth) /
               2) *
@@ -512,22 +512,23 @@ const FullScreenZoomableImage = ({
               {imageIndex + 1} / {swiper && swiper.slides?.length}
             </div>
             <div>
-              <Image
-                height={0}
-                width={0}
-                sizes="24px"
-                src={
-                  zoomed //zoomedChange
-                    ? "/images/zoomOutIconAw.png"
-                    : "/images/zoomIconAw.png"
-                }
-                alt="zoom"
-                onClick={(event) => {
-                  event.stopPropagation();
-                  swiper.zoom.toggle();
-                }}
-                className={styles.zoomButton}
-              />
+           {zoomed?<ZoomOutIcon
+               handleClick={(event) => {
+                event.stopPropagation();
+                swiper.zoom.toggle();
+              }}
+
+              styleClassName={styles.zoomButton}
+              />:<ZoomInIcon
+              handleClick={(event) => {
+               event.stopPropagation();
+               swiper.zoom.toggle();
+             }}
+
+             styleClassName={styles.zoomButton}
+             />
+
+            }
 
               <CancelIcon color={`var(--fullscreen-cancel-image-color)`} styleClassName={styles.close_button} handleClick={(event) => {
                   event.stopPropagation();

@@ -193,7 +193,8 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
               draggable="false"
             />
            {imageIndex==index && <Image
-           id={`zoomIn${index}`}
+          
+          
            alt="Zoom in"
               height={0}
               width={0}

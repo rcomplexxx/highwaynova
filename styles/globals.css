@@ -459,8 +459,10 @@ p {
   --fullscreen-bg: var(--bg-color);
   --toast-message-color: black;
  --toast-message-bg: var(--neutral-3);
- --fullscreen-nav-bg: var(--main-color-2);
- --fullscreen-cancel-image-color: var(--neutral-8);
+ --fullscreen-nav-color: var(--neutral-0);
+ --fullscreen-nav-bg: var(--neutral-4);
+ --fullscreen-zoomin-color: var(--neutral-0);
+ --fullscreen-cancel-image-color: var(--neutral-0);
  --fullscreen-arrow-color: var(--neutral-0);
  --fullscreen-arrow-bg:var(--fullscreen-nav-bg);
  --fullscreen-arrow-hover-bg:var(--main-color-4);

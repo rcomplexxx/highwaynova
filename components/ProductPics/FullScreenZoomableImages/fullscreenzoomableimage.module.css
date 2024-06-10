@@ -27,12 +27,13 @@
   
   
   .closeSuiter{
+    color: var(--fullscreen-nav-color);
     background-color: var(--fullscreen-nav-bg);
     position: fixed;
     top:0;
     left: 0;
     width: 100%;
-    height: var(--size-8);
+    height: var(--size-9);
     display: flex;
     
     justify-content: space-between;
@@ -171,14 +172,14 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: calc(100vh - var(--size-8));
-    height: calc(100svh - var(--size-8));
+    height: calc(100vh - var(--size-9));
+    height: calc(100svh - var(--size-9));
 
     
 
       touch-action: pan-y;
       cursor: zoom-in;
-      margin-top: var(--size-8);
+      margin-top: var(--size-9);
     
   }
 
