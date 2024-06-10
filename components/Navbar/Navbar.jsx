@@ -106,18 +106,17 @@ const NavBar = () => {
             
           
             <Link href="/" className={styles.logoLink}>
+         
+             
+             
               <Image
-                height={0}
-                width={0}
-                sizes="32px"
-                src="/images/commercebook.jpg"
-                alt={`${process.env.NEXT_PUBLIC_SITE_NAME} icon`}
-                className={styles.image}
-              />
-              <h1 className={styles.title}>
-                {/* {process.env.NEXT_PUBLIC_SITE_NAME} */}
-                Lightbook
-              </h1>
+               height={0}
+               width={0}
+               sizes="25%"
+               src="/images/lightbook-6.png"
+               alt={`logo`}
+               className={styles.title}/>
+
             </Link>
           </div>
 
