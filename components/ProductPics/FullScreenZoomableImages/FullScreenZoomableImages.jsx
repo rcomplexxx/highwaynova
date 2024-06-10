@@ -52,11 +52,11 @@ const FullScreenZoomableImage = ({
 
 
     const biggerWidth =
-    (window.innerHeight - 64) / window.innerWidth >
+    (window.innerHeight - 48) / window.innerWidth >
     fullImg.naturalHeight / fullImg.naturalWidth;
   const scaleRatio = biggerWidth
-    ? (window.innerWidth - 64) / window.innerWidth
-    : mainImg.getBoundingClientRect().height / (window.innerHeight - 64);
+    ? (window.innerWidth - 48) / window.innerWidth
+    : mainImg.getBoundingClientRect().height / (window.innerHeight - 48);
 
   // fixedZoomDiv.style.opacity = `0`;
 
@@ -75,19 +75,19 @@ const FullScreenZoomableImage = ({
     ? 0
     : mainImg.getBoundingClientRect().left -
       (window.innerWidth -
-        ((window.innerHeight - 64) / fullImg.naturalHeight) *
+        ((window.innerHeight - 48) / fullImg.naturalHeight) *
           fullImg.naturalWidth *
           scaleRatio) /
         2;
   const deltaY = biggerWidth
     ? mainImg.getBoundingClientRect().top -
-      64 -
+      48 -
       ((window.innerHeight -
-        64 -
+        48 -
         (window.innerWidth / fullImg.naturalWidth) * fullImg.naturalHeight) /
         2) *
         scaleRatio
-    : mainImg.getBoundingClientRect().top - 64;
+    : mainImg.getBoundingClientRect().top - 48;
 
 
     fullImg.style.opacity= 0;
@@ -290,7 +290,7 @@ const FullScreenZoomableImage = ({
 
       fixedZoomDiv.style.backgroundColor = getRgbValues( 1 -
         Math.abs(
-          (imgDiv.getBoundingClientRect().top - 64) / window.innerHeight
+          (imgDiv.getBoundingClientRect().top - 48) / window.innerHeight
         ) *
           2) ;
     }
@@ -404,7 +404,7 @@ const FullScreenZoomableImage = ({
         if(!fullImg)return;
         const mainImg = document.getElementById(`mainImage${imageIndex}`);
         const biggerWidth =
-          (window.innerHeight - 64) / window.innerWidth >
+          (window.innerHeight - 48) / window.innerWidth >
           fullImg.naturalHeight / fullImg.naturalWidth;
 
        
@@ -450,14 +450,14 @@ const FullScreenZoomableImage = ({
           mainImg.getBoundingClientRect().top -
           fullImg.getBoundingClientRect().top;
 
-          //64 + (window.innerHeight - 64 - (window.innerWidth * fullImg.naturalHeight / fullImg.naturalWidth))/2 Formula za izracunavanje mainImg topa minus fullImg Top
+          //48 + (window.innerHeight - 48 - (window.innerWidth * fullImg.naturalHeight / fullImg.naturalWidth))/2 Formula za izracunavanje mainImg topa minus fullImg Top
         const YTr = biggerWidth
           ? 
           
           mainImg.getBoundingClientRect().top -
-            64 -
+            48 -
             ((window.innerHeight -
-              64 -
+              48 -
               (window.innerWidth * fullImg.naturalHeight) /
                 fullImg.naturalWidth) /
               2) *

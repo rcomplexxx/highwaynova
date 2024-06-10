@@ -415,8 +415,12 @@ p {
  --product-percentage-disc-bg: var(--main-color-3);
 --in-stock-color: var(--neutral-7);
  --selected-product-image-border:var(--accent-color-4);
+
+ --swiper-zoomin-icon-color: var(--neutral-8);
  --mini-slider-arrow-bg:var(--main-color-1);
  --mini-slider-arrow-color: var(--neutral-9);
+
+
  --quantity-input-color: var(--main-color-0);
  --quantity-input-border-color: var(--neutral-2);
  --quantity-input-bg: var(--neutral-3);

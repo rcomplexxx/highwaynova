@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import "swiper/css";
 import FullScreenZoomableImage from "./FullScreenZoomableImages/FullScreenZoomableImages";
-import { ArrowDown } from "@/public/images/svgs/svgImages";
+import { ArrowDown, ZoomInIcon } from "@/public/images/svgs/svgImages";
 
 // const FullScreenZoomableImage = dynamic(() => import('@/components/ProductPics/FullScreenZoomableImages/FullScreenZoomableImages'));
 
@@ -192,18 +192,9 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
               loading={index==imageIndex?'eager':undefined}
               draggable="false"
             />
-           {imageIndex==index && <Image
-          
-          
-           alt="Zoom in"
-              height={0}
-              width={0}
-              sizes="20px"
-              
-              className={styles.zoomImg}
-              src={"/images/zoomIconAw.png"}
-              loading={'lazy'}
-            />}
+           {imageIndex==index && <ZoomInIcon 
+           color="var(--swiper-zoomin-icon-color)"
+           styleClassName={styles.zoomImg} handleClick={()=>{}}/>}
          
         </SwiperSlide>
        
