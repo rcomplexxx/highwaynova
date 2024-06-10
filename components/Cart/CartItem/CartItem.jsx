@@ -9,6 +9,10 @@ import { useGlobalStore } from "@/contexts/AppContext";
 import { BinIcon } from "@/public/images/svgs/svgImages";
 
 const CartItem = ({ item }) => {
+
+
+  
+
   
   const { cartProducts, setCartProducts } = useGlobalStore(state => ({
     cartProducts: state.cartProducts,
@@ -57,10 +61,15 @@ const CartItem = ({ item }) => {
           <span className={styles.productName}>{item.name}</span>
         </Link>
        
-     
-        <span className={styles.itemPrice}>${item.price}</span>
-        {item.variant && <span className={styles.variant}>{`Color: ${item.variant}`}</span>}
+       <div className={styles.priceDiv}>
+        {item.stickerPrice && <span className={styles.itemStickerPrice}>${item.stickerPrice}</span>}
+        <span className={`${styles.itemPrice} ${item.stickerPrice && styles.itemPriceCrossed}`}>${item.price}</span>
+        </div>
 
+
+
+        {item.variant && <span className={styles.variant}>{`Color: ${item.variant}`}</span>}
+       
 
 
         

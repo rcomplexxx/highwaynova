@@ -41,14 +41,31 @@ color: var(--high-contrast-light-txt-color);
 
 
 
+.priceDiv{
+  display: flex;
 
+  margin-top: var(--size-5);
+  margin-bottom: var(--size-4);
+}
 
       .itemPrice{
         color: var(--cart-weaker-color);
-        margin-top: var(--size-5);
-        margin-bottom: var(--size-4);
+       
         font-size: var(--font-size-5);
         font-weight: 400;
+      }
+
+      .itemPriceCrossed{
+
+        color: var(--cart-crossed-price);
+
+        margin-left: var(--size-3);
+        text-decoration: line-through;
+
+      }
+
+      .itemStickerPrice{
+        color: var(--cart-special-price);
       }
 
       .variant{
@@ -170,11 +187,12 @@ color: var(--high-contrast-light-txt-color);
         
       }
 
-      .itemPrice{
+      .priceDiv{
         margin-top: var(--size-4);
         margin-bottom: var(--size-3);
-     
       }
+
+     
 
       .variant{
        

@@ -53,6 +53,7 @@ export default function BestSellers() {
           name: addedProduct.name,
           image: addedProduct.images[0],
           price: addedProduct.price,
+          stickerPrice: addedProduct.stickerPrice,
           variant: addedVariant
         }]);
       }
@@ -71,6 +72,7 @@ export default function BestSellers() {
         name: addedProduct.name,
         image: addedProduct.images[0],
         price: addedProduct.price,
+        stickerPrice: addedProduct.stickerPrice,
         variant: addedVariant
       };
       setCartProducts([...cartProducts, newProduct]);

@@ -76,6 +76,7 @@ export default function ProductPage({ product, images, startReviews, ratingData 
         name: addedProduct.name,
         image: addedProduct.images[0],
         price: addedProduct.price,
+        stickerPrice: addedProduct.stickerPrice,
         variant: addedVariant
       };
       setNewProduct(newProduct);

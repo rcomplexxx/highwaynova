@@ -233,6 +233,9 @@
       justify-content: center;
       align-items: center;
       border-radius: 4px;
+
+      margin-left: 1px;
+
       border: 1px solid var(--input-outline-color);
       box-shadow: var(--checkbox-unchecked-box-shadow);
       transition: box-shadow 0.2s ease;
