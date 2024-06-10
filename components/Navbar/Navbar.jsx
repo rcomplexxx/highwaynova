@@ -112,7 +112,7 @@ const NavBar = () => {
               <Image
                height={0}
                width={0}
-               sizes="25%"
+               sizes="128px"
                src="/images/lightbook-6.png"
                alt={`logo`}
                className={styles.title}/>
