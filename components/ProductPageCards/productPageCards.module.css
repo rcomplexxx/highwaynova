@@ -26,12 +26,14 @@
 
 
     color: var(--high-contrast-light-txt-color);
-    padding: var(--size-3) 0;
+    padding-top: var(--size-3);
+    padding-bottom: var(--size-5);
    
 
     font-size: var(--font-size-5);
     font-weight: 700;
 
+    text-align: center;
     cursor: pointer;
     
 }
