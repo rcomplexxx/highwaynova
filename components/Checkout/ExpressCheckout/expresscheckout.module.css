@@ -42,18 +42,15 @@
     align-items: flex-start;
     width: calc(50% - var(--size-3));
     min-height: var(--size-8);
+
+    border-radius: 4px;
+
+    z-index: 2;
    
 
 }
 
-.paymentDivFront{
-    
-    z-index: 2;
-    width: 100%;
-    min-height: var(--size-8);
-  
-    border-radius: 4px;
-}
+
 
 
 
@@ -103,14 +100,7 @@
 
     .paymentDiv{
         width: 100%;
-        margin-bottom: var(--size-3);
-    
     }
-
-    .paymentDivLast{
-        margin-bottom: 0;
-    }
-
 
     .expressCheckoutTitle{
         margin-bottom: var(--size-5);
@@ -118,6 +108,7 @@
 
     .expressPaymentsWrapper{
         flex-direction: column;
+        gap:var(--size-3);
     }
 
 
