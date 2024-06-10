@@ -8,6 +8,7 @@ color: var(--high-contrast-light-txt-color);
  flex-direction: row;
  justify-content: flex-start;
  align-items: stretch;
+ box-sizing: border-box;
  padding: var(--size-5) var(--size-2);
  border-bottom: 1px solid var(--border-color-mid);
 }

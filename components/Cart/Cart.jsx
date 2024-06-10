@@ -5,7 +5,7 @@ import CartItem from "./CartItem/CartItem";
 import styles from "./cart.module.css";
 
 import BestSellers from "@/components/BestSellers/BestSellers";
-import FreeShippingSlider from "./FreeShippingSlider/FreeShippingSlider";
+
 import { useGlobalStore } from "@/contexts/AppContext";
 
 
@@ -124,7 +124,7 @@ if (window.innerWidth<980){
  {renderEmptyCart()}
   </>:
   <> <h1 className={styles.title}>Your shopping cart</h1>
-        <FreeShippingSlider subtotal={subtotal}/>
+   
       {renderCart()}
       </>
  

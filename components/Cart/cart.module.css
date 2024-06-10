@@ -115,7 +115,7 @@ height : 100vh;
 
     font-size: var(--font-size-3);  
     
-    font-family: var(--font-neutral);
+    
   font-weight:  700;
   
   
@@ -228,14 +228,14 @@ height : 100vh;
     .cardDetails {
     
     
-      width: calc(100% - var(--size-5));
+      
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
 
 
  margin-bottom: var(--size-5);
-      margin-left: var(--size-3);
+  
 
     }
 
