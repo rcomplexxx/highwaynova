@@ -38,8 +38,8 @@
 
 
 .logo{
-    height: var(--size-9-5);
-    width: var(--size-9-5);
+    height: var(--size-8);
+    width: auto;
     z-index: 9;
     border-radius: 100%;
 }
