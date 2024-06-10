@@ -69,8 +69,8 @@ height : 100vh;
   
   .title {
     color: var(--high-contrast-light-txt-color);
-      margin-bottom: var(--size-7);
-      margin-top: var(--size-5);
+  
+      
     font-weight: 600;
   }
   
