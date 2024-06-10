@@ -38,10 +38,10 @@
 
 
 .logo{
-    height: var(--size-8);
+    height: 40px;
     width: auto;
     z-index: 9;
-    border-radius: 100%;
+   
 }
 
 

@@ -18,7 +18,7 @@ export default function CheckoutLogo() {
 
       </Link>
       <Link href='/'>
-      <Image className={styles.logo} src="/images/lightbook7.png" height={0} width={0} sizes={'80px'}/>
+      <Image className={styles.logo} src="/images/lightbook10.png" height={0} width={0} sizes={'128px'}/>
       </Link>
 
     
