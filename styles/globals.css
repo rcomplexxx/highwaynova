@@ -441,7 +441,7 @@ p {
  --fbt-add-to-cart-border: var(--action-button-border-color);
 
  --dropcard-title-color: var(--high-contrast-light-txt-color);
- --dropcard-selected-title-border: var(--main-color-6);
+ --dropcard-selected-title-border: var(--main-color-5);
  --description-content-color: var(--neutral-6);
  
  --package-return-dropcard-icon-color: rgb(156, 144, 63);
