@@ -45,7 +45,8 @@ color: var(--high-contrast-light-txt-color);
 
       .itemPrice{
         color: var(--cart-weaker-color);
-        margin: var(--size-5) 0;
+        margin-top: var(--size-5);
+        margin-bottom: var(--size-3);
         font-size: var(--font-size-5);
         font-weight: 400;
       }
@@ -169,7 +170,8 @@ color: var(--high-contrast-light-txt-color);
       }
 
       .itemPrice{
-        margin:  var(--size-4) 0;
+        margin-top: var(--size-4);
+        margin-bottom: var(--size-3);
      
       }
 
@@ -254,7 +256,7 @@ color: var(--high-contrast-light-txt-color);
      
      
         font-size: var(--font-size-3);
-        margin: var(--size-4) 0;
+       
       }
 
       .variant{

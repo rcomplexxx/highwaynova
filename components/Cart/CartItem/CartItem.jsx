@@ -58,8 +58,8 @@ const CartItem = ({ item }) => {
         </Link>
        
      
-        <p className={styles.itemPrice}>${item.price}</p>
-        {item.variant && <p className={styles.variant}>{`Color: ${item.variant}`}</p>}
+        <span className={styles.itemPrice}>${item.price}</span>
+        {item.variant && <span className={styles.variant}>{`Color: ${item.variant}`}</span>}
 
 
 
