@@ -118,7 +118,7 @@
       box-sizing: border-box;
       padding-left: var(--size-3);
       border: none;
-      outline: solid 1px var(--input-outline-color);
+      border: solid 1px var(--input-outline-color);
      
       font-size: var(--font-size-2);
       overflow: hidden;
@@ -143,12 +143,12 @@
 
     .stripeFieldFocused { 
 
-      outline: 2px solid var(--input-outline-color-focused);
+      border: 2px solid var(--input-outline-color-focused);
   
   }
   
     .input_field:focus { 
-      outline: 2px solid var(--input-outline-color-focused);
+      border: 2px solid var(--input-outline-color-focused);
       border:none;
   }
   
@@ -160,7 +160,7 @@
    
     .input_error{
       border: none;
-      outline: 2px solid var(--error-box-shadow-color) !important;
+      border: 2px solid var(--error-box-shadow-color) !important;
     }
 
     .error{

@@ -144,9 +144,6 @@
     
 }
 
-.emailField:focus{
-    outline: none;
-}
 
 .sendEmailButton{
     height: 40px;

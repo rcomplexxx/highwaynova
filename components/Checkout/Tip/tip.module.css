@@ -198,7 +198,7 @@
       align-self: center;
       box-sizing: border-box;
       border: none;
-      outline: solid 1px var(--input-outline-color);
+      border: solid 1px var(--input-outline-color);
       font-size: var(--font-size-2);
 
       -webkit-appearance: none;
@@ -220,7 +220,7 @@
 
   
     .customTipInput:focus { 
-      outline: solid 2px var(--input-outline-color-focused);
+      border: solid 2px var(--input-outline-color-focused);
       
   }
   
@@ -307,7 +307,7 @@
     padding: 0 var(--size-5);
 
     border: none;
-    outline: 1px solid var( --add-tip-outline);
+    border: 1px solid var( --add-tip-outline);
     transition: background-color 0.1s ease;
 
     font-size: var(--font-size-3);

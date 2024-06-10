@@ -509,7 +509,7 @@
 
   .writeReviewText:focus{
     border-color: var(--input-outline-color-focused);
-    outline: none;
+ 
   }
 
   .personInfo{
@@ -531,7 +531,7 @@
    width: 100%;
     height: var(--size-8);
     background-color: transparent;
-    outline: none;
+   
 
     box-sizing: border-box;
     padding-left: var(--size-3);
@@ -566,7 +566,6 @@
     height: var(--size-8);
     background-color: transparent;
 
-    outline: none;
     box-sizing: border-box;
     border: 1px solid var(--writing-accent-color);
     padding-left: var(--size-3);
