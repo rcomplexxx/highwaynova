@@ -16,8 +16,8 @@ export default function ProductPageCards({description}) {
   const [firstDivStyle, setFirstDivStyle] = useState(true);
 
   const cardDivRef = useRef();
-  const openCardTimeout = useRef();
 
+  
 
   useEffect(()=>{
 
@@ -26,13 +26,15 @@ export default function ProductPageCards({description}) {
 
 
 
-    clearTimeout(openCardTimeout.current);
-
+   setTimeout(()=>{
     
-    cardDiv.style.maxHeight=`${cardDiv.scrollHeight}px`;
+    cardDiv.style.transform=`translateY(0)`;
     cardDiv.style.opacity = "1";
 
-   openCardTimeout.current = setTimeout(()=>{  cardDiv.style.maxHeight='none'}, 300)
+    },1);
+
+  
+    
 
   },[selectedCard])
 
@@ -50,32 +52,23 @@ export default function ProductPageCards({description}) {
 
 
 
-    clearTimeout(openCardTimeout.current);
+    
 
-
-
-
-     cardDiv.style.maxHeight=`${ cardDiv.scrollHeight}px`;
 
 
     
-    setTimeout(()=>{
-      cardDiv.style.maxHeight="0";
-      cardDiv.style.opacity = "0";
-
+    
 
     
-      openCardTimeout.current= setTimeout(()=>{
+
 
         setFirstDivStyle(false);
 
         setSelectedCard(cardNumber);
 
-      },300);
 
 
-     }, 1)
-     
+        
     
 
 

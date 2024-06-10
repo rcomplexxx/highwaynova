@@ -46,13 +46,14 @@ color: var(--high-contrast-light-txt-color);
       .itemPrice{
         color: var(--cart-weaker-color);
         margin-top: var(--size-5);
-        margin-bottom: var(--size-3);
+        margin-bottom: var(--size-4);
         font-size: var(--font-size-5);
         font-weight: 400;
       }
 
       .variant{
-        margin: 0;
+       
+        
         margin-bottom:  var(--size-5);
         color: var(--cart-weaker-color);
         font-size: var(--font-size-3);
@@ -261,7 +262,7 @@ color: var(--high-contrast-light-txt-color);
 
       .variant{
         font-size: var(--font-size-3);
-        margin-bottom: var(--size-4);
+       
        
       }
 

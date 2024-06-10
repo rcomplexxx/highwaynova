@@ -39,16 +39,15 @@
 
 .cardDiv{
 
-    max-height: 0;
+  
     opacity: 0;
-    transition: max-height 0.3s ease, opacity 0.3s ease;
-
-    overflow: hidden;
+    transform: translateY(-16px);
+    transition: transform 0.3s ease, opacity 0.3s ease;
 
 }
 
 .cardDivFirstStyle{
-    max-height: 1;
+    transform: translateY(0);
     opacity: 1;
 }
 
