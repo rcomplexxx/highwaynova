@@ -11,7 +11,7 @@
 .logoDiv{
     position: relative;
    
-    height: var(--size-10);
+    height: var(--size-9-5);
     max-width: 1080px;
     width: calc(100% - var(--size-11));
     
