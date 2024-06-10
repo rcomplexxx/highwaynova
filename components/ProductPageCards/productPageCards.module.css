@@ -40,7 +40,7 @@
 .cardDiv{
 
   
-    opacity: 0;
+    opacity: 0.3;
     transform: translateY(-16px);
     transition: transform 0.3s ease, opacity 0.3s ease;
 
