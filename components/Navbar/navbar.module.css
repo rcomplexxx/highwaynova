@@ -64,7 +64,7 @@
   
 
   .appBarMaterialize{
-    max-height: 0;
+   
     animation: expandHeight 0.18s ease forwards;
   }
 
