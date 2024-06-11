@@ -65,7 +65,7 @@
 
   .appBarMaterialize{
    
-    animation: expandHeight 0.18s ease forwards;
+    animation: expandHeight 0.18s ease;
   }
 
 
@@ -398,11 +398,11 @@
     @keyframes expandHeight {
       from {
        
-        max-height: 0;
+        transform: translateY(calc(-1 * var(--size-9)));
       }
       to {
        
-        max-height:  var(--size-9); /* Set your desired max height */
+        transform: translateY(0); /* Set your desired max height */
       }
     }
 
