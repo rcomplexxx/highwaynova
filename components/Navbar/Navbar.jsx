@@ -85,6 +85,7 @@ const NavBar = () => {
 
   return (
     <>
+    <div className={styles.headTrack}>Summer nights sale on now! 🌃✨</div>
       {(newProduct || searchOpen || isMenuOpen) && (
         <div className={styles.substituteDiv} />
       )}

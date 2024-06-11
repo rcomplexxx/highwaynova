@@ -1,3 +1,18 @@
+
+
+.headTrack{
+  height: 40px;
+  width: 100%;
+  color: var(--main-color-6);
+  background-color: var(--bg-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-weight: 500;
+}
+
+
 .appBar {
 
   position:relative;
