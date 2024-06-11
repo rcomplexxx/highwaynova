@@ -246,6 +246,7 @@
   }
 
   .addressTypeCheckerChecked{
+    border: 1px solid var(--checkbox-checked-bg-color);
     box-shadow: var(--checkbox-checked-box-shadow);
   }
 

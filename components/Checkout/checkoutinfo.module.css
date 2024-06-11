@@ -42,10 +42,8 @@
     
     margin-bottom: var(--size-5);
   }
-  .emailField > :first-child{
-    margin-left: 0;
-    margin-right: 0;
-  }
+
+  
   
   .emailSubscribeDiv{
    
@@ -83,6 +81,7 @@
 
   .emailSubscribeCheckerChecked{
     box-shadow: var( --checkbox-checked-box-shadow);
+    border: 1px solid var(--checkbox-checked-bg-color);
   }
 
   .emailSubscribeDiv:focus .emailSubscribeChecker{
