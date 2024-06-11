@@ -3,7 +3,7 @@
 .headTrack{
   height: 40px;
   width: 100%;
-  color: var(--main-color-6);
+  color: var(--main-color-4);
   background-color: var(--bg-color);
   display: flex;
   justify-content: center;
