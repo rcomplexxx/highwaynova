@@ -76,14 +76,26 @@ height : 100vh;
   
 
 
+ .subTotalSpan{
+
  
+
+  display: flex;
+  align-items: center;
+  color: var(--neutral-7);
+  font-size: var(--font-size-7); /* Adjust the font size as needed */
+  font-weight: 700;
+ }
 
   .subtotalNew{
     color: var(--high-contrast-light-txt-color);
-    font-size: var(--font-size-6); /* Adjust the font size as needed */
-    font-weight: 600; /* You can adjust the font weight */
-    padding:0;
     margin:0;
+    margin-left: var(--size-3);
+
+    
+    font-weight: 700; 
+    padding:0;
+   
    
   }
   
@@ -274,6 +286,10 @@ height : 100vh;
     .cartContentWrapper{
       padding: 0 var(--size-4);
 
+    }
+
+    .subTotalSpan{
+      font-size: var(--font-size-6);
     }
   }
 

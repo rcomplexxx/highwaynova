@@ -95,7 +95,7 @@ if (window.innerWidth<980){
         ))}
       </div>
       <div className={styles.cardDetails}>
-        <h4 className={styles.subtotalNew}>Subtotal: ${subtotal}</h4>
+       <span className={styles.subTotalSpan}>Subtotal:<h4 className={styles.subtotalNew}>${subtotal}</h4></span>
         <Link className={styles.checkoutButtonNew} href="/checkout">
          Checkout
         </Link>
