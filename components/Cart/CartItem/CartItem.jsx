@@ -62,8 +62,8 @@ const CartItem = ({ item }) => {
         </Link>
        
        <div className={styles.priceDiv}>
-        {item.stickerPrice && <span className={styles.itemPrice}>${item.stickerPrice}</span>}
-        <span className={`${styles.itemPrice} ${item.stickerPrice && styles.itemPriceCrossed}`}>${item.price}</span>
+        <span className={styles.itemPrice}>${item.price}</span>
+        {item.stickerPrice && <span className={`${styles.itemPrice} ${item.stickerPrice && styles.itemPriceCrossed}`}>${item.stickerPrice}</span>}
         </div>
 
 
