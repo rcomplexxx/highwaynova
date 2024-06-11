@@ -10,7 +10,7 @@ export default function Shipping() {
 
   <>
    
-   <div className={styles.mainSpan}>Free Worldwide Shipping 🚚</div>
+   <div className={styles.mainSpan}>Free Shipping</div>
   
 
     <div className={styles.gridTable}>
@@ -30,11 +30,8 @@ export default function Shipping() {
     <span className={styles.firstRowSpan}>✓</span>
     <span className={styles.firstRowSpan}>7 - 20 days</span>
     </div>
-    <div className={styles.rowDiv}>
-    <span className={`${styles.firstRowSpan} ${styles.header}`}>Europe</span>
-    <span className={styles.firstRowSpan}>✓</span>
-    <span className={styles.firstRowSpan}>7 - 20 days</span>
-    </div>
+ 
+ 
     <div className={`${styles.rowDiv} ${styles.lastRowDiv}`}>
     <span className={`${styles.firstRowSpan} ${styles.header}`}>Australia</span>
     <span className={styles.firstRowSpan}>✓</span>

@@ -8,6 +8,16 @@
 }
 
 
+.mainSpan{
+    color: var(--main-color-4);
+    font-size: var(--font-size-7);
+    font-weight: 600;
+    margin-bottom: var(--size-8);
+
+    text-align: center;
+}
+
+
 .contactInfoDiv{
     width: 100%;
     display: flex;

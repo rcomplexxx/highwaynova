@@ -32,6 +32,9 @@ export default function ProductDescription({description}) {
 
 
   return (
-    <div className={styles.descriptionDiv}>{ReactHtmlParser(description, options)}</div>
+    <div className={styles.descriptionDiv}>
+      <div className={styles.mainSpan}>Product details</div>
+
+      {ReactHtmlParser(description, options)}</div>
   )
 }
