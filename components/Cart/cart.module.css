@@ -82,7 +82,7 @@ height : 100vh;
 
   display: flex;
   align-items: center;
-  color: var(--neutral-6);
+  color: var(--neutral-5);
   font-size: var(--font-size-7); /* Adjust the font size as needed */
   font-weight: 600;
  }
