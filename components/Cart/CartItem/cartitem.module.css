@@ -160,7 +160,7 @@ color: var(--high-contrast-light-txt-color);
 
   .totalPrice{
    
-    color: var(--cart-special-price);
+    color: var(--high-contrast-light-txt-color);
       margin: 0 var(--size-2);
      
     
