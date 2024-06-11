@@ -200,7 +200,7 @@ p {
   --size-19: 1280px;
 
 
-
+  --navbar-height: 104px;
   
 
 
@@ -457,7 +457,7 @@ p {
  --fixed-add-to-cart-color: var(--neutral-10);
  --fixed-add-to-cart-bg: var(--neutral-0);
  --fixed-add-to-cart-border-top: var(--main-button-color);
- --fixed-add-to-cart-top-box-shadow:none;
+ --fixed-add-to-cart-top-box-shadow: 0 0 0 1px var(--neutral-4);
  /* 0 0px 8px var(--main-color-1) */
           /*~ Fullscreen product~*/
 
