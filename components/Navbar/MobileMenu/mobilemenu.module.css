@@ -9,20 +9,33 @@
     position: fixed;
     top: 0;
     left: 0;
+
     height: 100%;
     max-width: var(--size-13);
     width:var(--size-13);
+
     background-color: var(--navbar-bg);
-    border-top-right-radius: var(--size-3);
-    border-bottom-right-radius: var(--size-3);
+
+ 
     display: flex;
     flex-direction: column;
+
+    box-sizing: border-box;
+
+    padding-top: var(--size-7);
+
+    border-top-right-radius: var(--size-3);
+    border-bottom-right-radius: var(--size-3);
+
     border-right: 1px solid #2e2e31;
-    z-index: 1000;
+    
     transform: translateX(0);
      transition: transform 0.5s ease;
-     contain: content;
+     
      animation: spawnMobileMenu 0.5s ease forwards;
+
+     contain: content;
+     z-index: 1000;
 
   }
 
@@ -49,9 +62,11 @@
     height: var(--size-5);
     width: var(--size-5);
     
-    margin-top: var(--size-7);
-    margin-bottom: var(--size-5);
+ 
+   padding-bottom: var(--size-5);
     margin-right: var(--size-6);
+
+   
   
 
    
@@ -66,7 +81,8 @@
    
     
     
-   
+    
+    border-bottom: 1px solid var(--border-color-mid);
     padding: var(--size-4) var(--size-6);
 
     font-size: var(--font-size-4);
@@ -75,6 +91,10 @@
 
    
  
+  }
+
+  .firstMobileLink{
+    border-top: 1px solid var(--border-color-mid);
   }
 
 
