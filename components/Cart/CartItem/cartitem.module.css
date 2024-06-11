@@ -65,7 +65,8 @@ color: var(--high-contrast-light-txt-color);
       }
 
       .itemStickerPrice{
-        color: var(--cart-special-price);
+        color: var(--cart-weaker-color);
+        font-size: var(--font-size-5);
       }
 
       .variant{
@@ -159,6 +160,7 @@ color: var(--high-contrast-light-txt-color);
 
   .totalPrice{
    
+    color: var(--cart-special-price);
       margin: 0 var(--size-2);
      
     
