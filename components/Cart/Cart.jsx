@@ -108,9 +108,9 @@ if (window.innerWidth<980){
 
 
  
-  return ( <div className={`${styles.containerStyle}`} style={{minHeight:`${addressBarUp?"calc(100svh - 64px)":"calc(100vh - 64px)"}`}}>
+  return ( <div className={`${styles.containerStyle}`} style={{minHeight:`${addressBarUp?"calc(100svh - var(--navbar-height))":"calc(100vh - var(--navbar-height))"}`}}>
 
-<div className={styles.cartContentWrapper}  style={{minHeight:`${cartProducts.length==0?'0':(addressBarUp?"calc(100svh - 64px)":"calc(100vh - 64px)")}`}}>
+<div className={styles.cartContentWrapper}  style={{minHeight:`${cartProducts.length==0?'0':(addressBarUp?"calc(100svh - var(--navbar-height))":"calc(100vh - var(--navbar-height))")}`}}>
  
  
   <div id="invisibleDiv2" ref={obtainDiv2Height} className={`${styles.invisibleDiv2} ${styles.invisibleDiv}`}/>
