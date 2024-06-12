@@ -90,7 +90,7 @@
   .slider2Suiter{
     position: relative;
     width: 100%;
-    contain: paint;
+    contain: content;
   }
 
 
