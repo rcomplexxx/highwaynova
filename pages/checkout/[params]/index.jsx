@@ -36,7 +36,7 @@ const BuyNowPage = () => {
 
   
     const product = products.find((p) => {
-      return p.id == productid && p.variants.find((v)=>{return v.name==variant});
+      return p.id == productid && (variant ? p.variants.find((v)=>{return v.name==variant}): true);
     });
 
     if (product) {
@@ -65,37 +65,38 @@ const BuyNowPage = () => {
 
 
  
-    return <div className={styles.checkoutMainContainer}>
-
-<div className={styles.mainWrapper}>
-    <div className={`${styles.containerStyle} ${styles.emptyCartMainDiv}`}>
+    return <div className={styles.mainWrapper}>
+   
 
     {loaded && params?<>
 
     <h1 className={`${styles.title} ${styles.emptyTitle}`}>Product not found.</h1>
-    <div className={styles.emptyCartDiv}>
-      <p className={styles.emptyCartText}>
+    
+    
+      <span className={styles.emptyCartText}>
    Check url for type errors, or go to product page.
-      </p>
+      </span>
       <Link className={styles.shopNowLink} href="/products">
             <button className={styles.shopNow}>Shop Now</button>
           </Link>
-      </div>
+   
+   
       </>:<h1 className={`${styles.title} ${styles.emptyTitle}`}>Loading checkout...</h1>
       }
-    </div>
-    </div>
+
+   
+   
  
     </div>;
   }
 
   return (
-    <CheckoutProvider buyNowProduct={cartProducts}>
-      
+    
+    <div className={styles.checkoutMainContainer}>
       <NextSeo {...unimportantPageSeo('/checkout')}/>
-      <div className={styles.checkoutMainContainer}>
-        {params != "buynow" || cartProducts.length == 0?renderFail():
-        <>
+    
+        {params !== "buynow" || cartProducts.length === 0?renderFail():
+       <CheckoutProvider buyNowProduct={cartProducts}>
       <CheckoutLogo/>
       <div className={styles.checkout_container}>
         <OrderDetails products={cartProducts} />
@@ -103,10 +104,10 @@ const BuyNowPage = () => {
         <CheckoutInfo products={cartProducts} setCartProducts={setCartProducts}/>
        
         </div>
-        </>
+        </CheckoutProvider>
       }
       </div>
-    </CheckoutProvider>
+   
   );
 };
 

@@ -25,20 +25,12 @@
  
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
 }
 
 
-  .productInfo{
-    
-   
-   width: 100%;
-  
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  
-  }
+
+
   
 /* .mediaWrapper{
   height: auto;
@@ -142,7 +134,7 @@
     height: var(--size-3);
     width: var(--size-3);
     border-radius: 100%;
-    background-color: green;
+    background-color: rgb(21, 142, 21);
 
     
   }
@@ -190,32 +182,30 @@
   .product_style_options {
     display: flex;
     align-items: center;
-    margin-top: 0;
+    gap:var(--size-4);
   
   }
   
-  .productVariant{
-    position:relative;
-    width: var(--size-8);
-    aspect-ratio: 1;
-    
-    margin-right: var(--size-4);
-    cursor: pointer;
 
+
+  .productVariantImage{
+    width: var(--size-8);
+    height: var(--size-8);
+    
+    box-sizing: border-box;
+    border-radius: 4px;
+
+    object-fit: cover;
+    cursor: pointer;
   }
+
 
   .productVariantSelected{
-    box-sizing: border-box;
+    
     border: 1px solid var(--selected-product-image-border);
   }
   
-  .productVariantImage{
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-    border-radius: 2px;
-  
-  }
+
 
   .add_to_cart_button {
     
@@ -248,7 +238,17 @@
 
 
 
-  .but_now_button{
+  .buy_now_button{
+
+    height: var(--size-8);
+
+   
+    
+    
+   
+    
+
+
   
     color: var(--high-contrast-light-txt-color);
     background-color: var(--buy-now-bg);
@@ -257,18 +257,29 @@
     width:100%;
    
    
-    
+    box-sizing: border-box;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s ease;
+   
     border: 1px solid var(--buy-now-border);
+
+    border-radius: 4px;
 
     margin-top: var(--size-2);
     margin-bottom: var(--size-3);
-   
+
+
+    font-family: var(--font-neutral);
+    font-weight:  700;
     font-size: var(--font-size-3);
    
   }
 
 
-  .but_now_button:hover {
+  .buy_now_button:hover {
     /* box-shadow: 0 0 3px var(--buy-now-hover-box-shadow-border); */
     background-color: var(--buy-now-hover-bg);
   }
@@ -379,11 +390,7 @@
   
    
 
-    .productVariant{
-  
-      
-      margin-right: var(--size-4);
-    }
+    
 
     
 

@@ -24,21 +24,25 @@ const CheckoutPage = () => {
 
    const renderEmptyCartCheckout = ()=> { return <div className={styles.mainWrapper}>
      
-    <div className={`${styles.containerStyle} ${styles.emptyCartMainDiv}`}>
+
+
     {loaded?<>
     <h1 className={`${styles.title}  ${styles.emptyTitle}`}>Your cart is empty</h1>
-    <div className={styles.emptyCartDiv}>
-      <p className={styles.emptyCartText}>
+  
+  
+      <span className={styles.emptyCartText}>
       Add your favorite items to your cart.
-      </p>
+      </span>
       <Link className={styles.shopNowLink} href="/products">
             <button className={styles.shopNow}>Shop Now</button>
           </Link>
-      </div>
+     
+     
       </>:<h1 className={`${styles.title} ${styles.emptyTitle}`}>Loading checkout...</h1>
     
       }
-    </div>
+ 
+ 
    
     
    
@@ -48,24 +52,26 @@ const CheckoutPage = () => {
   
 
   return (
-    <CheckoutProvider>
+   
+
       <div className={styles.checkoutMainContainer}>
         <NextSeo {...unimportantPageSeo('/checkout')}/>
       {cartProducts.length===0 ?renderEmptyCartCheckout():
-      <>
+       <CheckoutProvider>
       <CheckoutLogo/>
-      <div className={`${styles.checkout_container} ${styles.checkoutAbsolute}`}>
+      <div className={styles.checkout_container}>
         <OrderDetails  products={cartProducts} />
 
         <CheckoutInfo  products={cartProducts} />
           
        
       </div>
-      </>
+      </CheckoutProvider>
 } 
 
 </div>
-</CheckoutProvider>
+
+
   );
 };
 

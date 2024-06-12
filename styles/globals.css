@@ -50,6 +50,7 @@ body{
   font-weight: 400;
   overflow-x: clip;
 
+
   overscroll-behavior: contain;
   overflow-anchor: none;
 }
@@ -64,9 +65,10 @@ button{
   
   
   box-sizing: border-box;
-
+  transition: background-color 0.3s ease;
   border-radius: 4px;
   cursor: pointer;
+
 }
 
 input{

@@ -60,9 +60,9 @@ if (window.innerWidth<980){
 
   const renderEmptyCart = useCallback(() => {
     return <div className={styles.emptyCartDiv}>
-    <p className={styles.emptyCartText}>
+    <span className={styles.emptyCartText}>
     Add your favorite items to your cart.
-    </p>
+    </span>
     <Link className={styles.shopNow} href="/products">Shop Now</Link>
     </div>
   },[cartProducts]);

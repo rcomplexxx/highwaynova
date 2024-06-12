@@ -227,37 +227,7 @@ return false;
 
     </div>
 
-{/* .tipShowCheckboxDiv{
- 
-  display: flex;
-  align-items: flex-start;
-  width: 100%;
 
-  box-sizing: border-box;
-  padding: var(--size-6) var(--size-5) ;
-  font-size: var(--font-size-3);
-  cursor: pointer;
-  user-select: none;
-}
-
-
-.tipShowCheckboxDiv *{
-  cursor: pointer;
-}
-
-.tipShowChecker{
-  
-  height:  var(--size-5);
-  width:  var(--size-5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 4px;
-  border: 1px solid var(--border-color-strong);
-  flex-shrink: 0;
-}
-
- */}
 
 
    

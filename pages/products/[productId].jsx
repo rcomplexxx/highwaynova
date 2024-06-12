@@ -25,6 +25,7 @@ import { productPageSeo } from "@/utils/SEO-configs/next-seo.config";
 import ProductDescription from "@/components/ProductDescription2/ProductDescription";
 import { Stars } from "@/public/images/svgs/svgImages";
 import { Amex,Discover, Jcb, MasterCard, Visa } from "@/public/images/svgs/svgImages";
+import Link from "next/link";
 
 //slickGoTo
 //afterChange(index)=>{}
@@ -84,11 +85,7 @@ export default function ProductPage({ product, images, startReviews, ratingData 
     }
   },[cartProducts, product, variant, ]);
 
-  const buyNow = () => {
-    router.push(
-      `/checkout/buynow?productid=${product.id}${product.variants && `&variant=${variant}`}&quantity=${quantity}`,
-    );
-  };
+  
 
   const variantImageIndex = useMemo(()=>{
     if(stopVariantImageChange.ref){stopVariantImageChange.ref=false; return;}
@@ -104,7 +101,8 @@ export default function ProductPage({ product, images, startReviews, ratingData 
           <ProductPics productId={product.id} onAddToCart ={ onAddToCart } images={images} variantImageIndex={variantImageIndex} />
       
           <div className={styles.productInfoWrapper}>
-        <div className={styles.productInfo}>
+       
+       
           
           <h1 className={styles.product_title}>{product.name}</h1>
           <div
@@ -123,8 +121,14 @@ export default function ProductPage({ product, images, startReviews, ratingData 
           </div>
           <div className={styles.product_price}>
           ${product.price.toFixed(2)}
-            {product.stickerPrice && <span className={styles.product_price_span}>${product.stickerPrice.toFixed(2)}</span>}
-            {product.stickerPrice && <span className={styles.percentageDiscountSpan}>Sale</span>}
+            {product.stickerPrice &&
+            <>
+            <span className={styles.product_price_span}>${product.stickerPrice.toFixed(2)}</span>
+            <span className={styles.percentageDiscountSpan}>Sale</span>
+            </>
+            }
+         
+         
           </div>
 
           <div className={styles.inStockDiv}>
@@ -135,24 +139,21 @@ export default function ProductPage({ product, images, startReviews, ratingData 
           <span className={styles.variantLabel}>Color: {variant}</span>
           <div className={styles.product_style_options}>
             {product.variants.map((v, i)=>{
-           return  <div
-           key={i}
-              className={`${styles.productVariant}`}
-              onClick={() => {
-                
-                setVariant(v.name);
-              }}
-            >
-              <Image
+           return   <Image
+               key={i}
                 src={"/images/" + v.image}
                 alt={v.name}
                 sizes="(max-width: 980px) 48px, 64px"
-                className={`${styles.productVariantImage} ${v.name==variant && styles.productVariantSelected}`}
+                className={`${styles.productVariantImage} ${v.name===variant && styles.productVariantSelected}`}
+                onClick={() => {
+                
+                  setVariant(v.name);
+                }}
                
                 height={0}
                 width={0}
               />
-            </div>
+           
             })
 
 }
@@ -221,9 +222,10 @@ export default function ProductPage({ product, images, startReviews, ratingData 
         
 
 
-          <button className={styles.but_now_button} onClick={() => buyNow()}>
+          <Link className={styles.buy_now_button} 
+          href={`/checkout/buynow?productid=${product.id}${variant?`&variant=${variant}`:""}&quantity=${quantity}`}>
             Buy it now
-          </button>
+          </Link>
 
 
         
@@ -249,7 +251,8 @@ export default function ProductPage({ product, images, startReviews, ratingData 
           <ProductPageCards description ={product.description}/>
         </div>
       </div>
-      </div>
+      
+      
       <CustomerReviews product_id={product.id} startReviews={startReviews} ratingData={ratingData} />
     </>
   );
