@@ -4,19 +4,18 @@
 /*Ovako je postavljena margin-left, padding i width da bi popravilo glitch
 gde je input outline sa strane isecen kada se max height podize*/
 .billingAddressWrapper{
-    width: calc(100% + var(--size-7));
+    width: 100%;
     box-sizing: border-box;
-    padding: 0 var(--size-5);
-    margin-left: calc(-1 * var(--size-5));
+    padding: 0 var(--size-3);
+    padding-bottom: var(--size-2);
+   
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.5s ease;
     max-height: 0;
 }
 
-.billingAddressWrapper > :last-child{
-    margin-bottom: var(--size-2);
-}
+
 
 
 
@@ -38,6 +37,7 @@ gde je input outline sa strane isecen kada se max height podize*/
     display: flex;
     flex-direction: row;
    
+    gap: var(--size-5);
 
     /* box-sizing: border-box;
     padding: 0 var(--size-3); */
@@ -68,12 +68,18 @@ gde je input outline sa strane isecen kada se max height podize*/
 
 @media(max-width: 980px){
 
+    .billingAddressWrapper{
+        padding: 0;
+    }
+
     .billingAddressTitle{
         margin: var(--size-4) 0;
     }
     .InputFieldRow{
         flex-direction: column;
         margin-bottom: 0;
+        
+    gap: 0;
       }
 
       .aptAdder{

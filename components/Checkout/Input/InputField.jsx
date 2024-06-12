@@ -25,7 +25,9 @@ export default function InputField({
 <label htmlFor={id} className={styles.label}>
         {placeHolder}
       </label>
+
       </div>
+      
      
       {children && children}
     </div>

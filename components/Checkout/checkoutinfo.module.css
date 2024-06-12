@@ -128,17 +128,14 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+
+    gap: var(--size-5);
+
     margin-bottom: var(--size-5);
   }
 
-  .input_row > :first-child{
-    margin-left: 0;
-  }
 
-  .input_row > :last-child{
-    margin-right: 0;
-  }
-
+  
   
   .aptAdder{
     color: var(--apt-adder-color);
@@ -266,14 +263,8 @@
 
   @media (max-width: 980px)  {
 
-    .input_row > :first-child{
-      margin-left: 0;
-    }
-  
-    .input_row > :last-child{
-      margin-right: 0;
-    }
-  
+
+    
 
    
 
@@ -301,6 +292,7 @@
 
     .input_row{
     flex-direction: column;
+    gap: 0;
     margin-bottom: 0;
   }
 
