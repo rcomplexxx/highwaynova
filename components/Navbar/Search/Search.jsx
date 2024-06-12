@@ -29,7 +29,8 @@ export default function Search({searchOpen, setSearchOpen}){
 
   
 
-    const { increaseDeepLinkLevel, decreaseDeepLinkLevel } = useGlobalStore((state) => ({
+    const { deepLinkLevel, increaseDeepLinkLevel, decreaseDeepLinkLevel } = useGlobalStore((state) => ({
+      deepLinkLevel: state.deepLinkLevel,
       increaseDeepLinkLevel: state.increaseDeepLinkLevel,
       decreaseDeepLinkLevel: state.decreaseDeepLinkLevel,
     }));
@@ -38,6 +39,9 @@ export default function Search({searchOpen, setSearchOpen}){
     
 
 
+    useEffect(()=>{
+      console.log('deep link level', deepLinkLevel)
+    },[deepLinkLevel])
 
 
    
@@ -57,10 +61,15 @@ export default function Search({searchOpen, setSearchOpen}){
      
 
         const handlePopState = (event)=>{
-          if(nextLink.current){router.push(nextLink.current); nextLink.current=undefined;}
+          if(nextLink.current){
+            router.push(nextLink.current); 
+            nextLink.current=undefined;
+
+
+          }
        
      
-          
+          decreaseDeepLinkLevel();
           setSearchOpen(false);
           window?.removeEventListener("popstate", handlePopState);
         
@@ -75,9 +84,10 @@ export default function Search({searchOpen, setSearchOpen}){
           
             
           
-          setSearchOpen(false);
+     
+          
           history.back();
-          decreaseDeepLinkLevel();
+        
         }
       };
 
@@ -176,7 +186,7 @@ export default function Search({searchOpen, setSearchOpen}){
 
             if(searchOpen){
               
-              decreaseDeepLinkLevel();
+             
 
               history.back();
 
@@ -201,7 +211,7 @@ export default function Search({searchOpen, setSearchOpen}){
                 event.stopPropagation();
             nextLink.current=`/collection/${collection.name.toLowerCase().replace(/ /g, '-')}/page/1`;
            history.back();
-                decreaseDeepLinkLevel();
+              
           setSearchTerm('');
               
               }}
@@ -227,7 +237,8 @@ export default function Search({searchOpen, setSearchOpen}){
                 event.stopPropagation();
             nextLink.current=`/products/${product.name.toLowerCase().replace(/\s+/g, "-")}`;
            history.back();
-           decreaseDeepLinkLevel();
+        
+           
           setSearchTerm('');
               
               }}
@@ -244,12 +255,9 @@ export default function Search({searchOpen, setSearchOpen}){
           </div>
           {searchOpen && 
           
-          <CancelIcon color={`var(--search-cancel-icon-color)`} styleClassName={styles.searchCancel} handleClick={()=>{  
-            
-            setSearchOpen(false);
-          history.back();
-          decreaseDeepLinkLevel();
-        }}/>
+          <CancelIcon color={`var(--search-cancel-icon-color)`} styleClassName={styles.searchCancel} 
+         
+          />
         }
         </div>
     

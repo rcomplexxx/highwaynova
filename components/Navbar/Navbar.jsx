@@ -88,19 +88,19 @@ const NavBar = () => {
     <div className={styles.headTrack}>Summer nights sale on now! ✨</div>
      
 
-      <nav
+      <nav id="navBar"
         className={`${styles.appBar} ${
           (newProduct || searchOpen || isMenuOpen) && styles.appBarFixed
         } ${newProduct && window.scrollY > 0 && styles.appBarMaterialize}`}
       
-        id="navBar"
+       
       >
         <div className={styles.toolbarDiv}>
+
+
           <div className={styles.growAlt}>
 
-            <MenuIcon
-             
-             handleClick={handleMobileMenuOpen} styleClassName={styles.smallMenuImage}/>
+            <MenuIcon handleClick={handleMobileMenuOpen} styleClassName={styles.smallMenuImage}/>
           
             
           
@@ -139,9 +139,7 @@ const NavBar = () => {
 
             <Link
               href="/collection/sale/page/1"
-              className={`${styles.linkStyle} ${
-                pathname === "/collection/sale/page/1" && styles.currentLink
-              }`}
+              className={`${styles.linkStyle} ${ pathname === "/collection/sale/page/1" && styles.currentLink}`}
             >
               Sale
             </Link>
@@ -288,8 +286,9 @@ const NavBar = () => {
 
           <div className={styles.rightOptions}>
             <Search searchOpen={searchOpen} setSearchOpen={setSearchOpen} />
-            <Link id="cart" href="/cart">
-              <div className={styles.cartStyle}>
+            <Link id="cart" href="/cart" className={styles.cartStyle}>
+              
+              
                 <Image
                   height={0}
                   width={0}
@@ -301,7 +300,8 @@ const NavBar = () => {
                 {totalItems > 0 && (
                   <div className={styles.badgeDiv}>{totalItems}</div>
                 )}
-              </div>
+              
+              
             </Link>
           </div>
         </div>
