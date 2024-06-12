@@ -12,8 +12,12 @@ const Product = ({ product}) => {
           <PicWithThumbnail product={product} />
         </div>
       </Link>
+
+
       <div className={styles.cardContent}>
-      <Link href={"/products/" + product.name.toLowerCase().replace(/\s+/g, "-")} className={styles.cardContentText}>{product.name}</Link>
+      <Link href={"/products/" + product.name.toLowerCase().replace(/\s+/g, "-")} className={styles.cardContentText}>
+      {product.name}
+      </Link>
         <div className={styles.starDiv}>
 
         <Stars ratingNumber={product.raiting?product.raiting:4.7} starWrapperClassName={styles.starWrapperClassName} starClassName={styles.starClassName}/>
