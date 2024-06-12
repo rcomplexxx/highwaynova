@@ -12,7 +12,7 @@
     align-items: center;
     contain: content;
 
-    transition: background-color 0.2s 0.01s ease;
+    transition: background-color 0.2s 0.01s linear;
     user-select: none;
     z-index: 12;
   }
@@ -52,7 +52,7 @@
    
     z-index: 11;
     opacity: 0;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.3s linear;
 
     
     
@@ -69,7 +69,7 @@
   
     .navInactive{
       
-      animation: killNav 0.3s ease forwards;
+      animation: killNav 0.3s linear forwards;
     }
   }
  
@@ -116,9 +116,9 @@
     transform: translateY(-50%) rotate(90deg);
     z-index: 8;
     cursor: pointer;
-    transition: opacity 0.2s 0.01s ease;
+    transition: opacity 0.2s 0.01s linear;
     opacity: 0;
-    /* animation: spawnArrow 0.2s 0.01s ease forwards; */
+    /* animation: spawnArrow 0.2s 0.01s linear forwards; */
   }
 
   .spawnArrow{
@@ -165,7 +165,7 @@
 
  
  /* .arrowSpawnReverse{
-  animation: killArrow 0.2s 0.01s ease forwards;
+  animation: killArrow 0.2s 0.01s linear forwards;
  } */
 
  .productImageSwiper{

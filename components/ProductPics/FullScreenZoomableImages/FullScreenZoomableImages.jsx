@@ -91,10 +91,10 @@ const FullScreenZoomableImage = ({
 
 
     fullImg.style.opacity= 0;
-  fullImg.style.transition = "transform 0s ease";
+  fullImg.style.transition = "transform 0s linear";
   fullImg.style.transform = `translateX(${deltaX}px) translateY(${deltaY}px) scale(${scaleRatio})`;
 
-  fullImg.style.transition = "transform 0.3s ease";
+  fullImg.style.transition = "transform 0.3s linear";
  
  
      
@@ -152,7 +152,7 @@ const FullScreenZoomableImage = ({
       },210)
 
     
-      fullImg.style.transition = "left 0.3s ease, top 0.3s ease, transform 0.3s ease";
+      fullImg.style.transition = "left 0.3s linear, top 0.3s linear, transform 0.3s linear";
       
       fullImg.style.left = `0`;
       fullImg.style.top = `0`;
@@ -254,7 +254,7 @@ const FullScreenZoomableImage = ({
 
      
 
-      imgDiv.style.transition = "transform 0s ease";
+      imgDiv.style.transition = "transform 0s linear";
 
       startingTouchCoordinates = {
         x: event.touches[0].clientX,
@@ -320,7 +320,7 @@ const FullScreenZoomableImage = ({
           
             if (!zoomed) {
               imgDiv.style.transition =
-                "transform 0.3s ease, background-color 0.3s ease";
+                "transform 0.3s linear, background-color 0.3s linear";
               imgDiv.style.transform = `translateY(${0}px)`;
 
               fixedZoomDiv.style.backgroundColor = getRgbValues(1);
@@ -473,7 +473,7 @@ const FullScreenZoomableImage = ({
 
         fullImg.style.transform = `translateX(${XTr}px) translateY(${YTr}px) scale(${scaleRatio})`;
 
-        fixedZoomDivRef.current.style.transition = "background-color 0.2s 0.01s ease";
+        fixedZoomDivRef.current.style.transition = "background-color 0.2s 0.01s linear";
         fixedZoomDivRef.current.style.backgroundColor = `rgba(0, 0, 0, 0)`;
 
        
