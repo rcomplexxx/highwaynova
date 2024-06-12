@@ -128,8 +128,8 @@
 
   .productImage2Div{
     width: calc(25% - 9px);
-    aspect-ratio: 1;
-    overflow: hidden;
+   
+    
   
  
   }

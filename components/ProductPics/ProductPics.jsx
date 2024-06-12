@@ -273,18 +273,14 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
  <div className={styles.grid_container}>
             {images.map((img, index) => {
               return (
-                <div
-                  key={index}
-                  onClick={() => {
-                    swiper.slideTo(index, 0);
-                    setImageIndex(index);
-                  }}
-                  className={`${styles.productImage2Div}`}
-                >
+             
+                
                   <Image
-                    className={`${styles.productImage} ${
+                  key={index}
+                    className={`${styles.productImage} ${styles.productImage2Div} ${
                       imageIndex == index && styles.selectedImage
                     }`}
+                    onClick={() => {handleChangeImage(index, true) }}
                     src={img.src}
                     alt={img.alt}
                     sizes="20vw"
@@ -293,7 +289,8 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
                     loading={'lazy'}
                     draggable="false"
                   />
-                </div>
+              
+                  
               );
             })}
           </div>
