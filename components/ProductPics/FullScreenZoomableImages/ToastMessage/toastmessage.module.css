@@ -45,7 +45,7 @@
     }
   }
 
-  @media(min-width: 980px){
+  @media (pointer:coarse) {
     .toast{
       display: none;
     }

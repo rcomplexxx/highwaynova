@@ -637,12 +637,13 @@ const FullScreenZoomableImage = ({
                   >
                     <Image
                       id={`fullImage${index}`}
-                      ref={index==imageIndex?fullImageRef:undefined}
+                      ref={index===imageIndex?fullImageRef:undefined}
                       height={0}
                       width={0}
                       sizes="100vw"
+                      priority={index===imageIndex}
                       loading={"eager"}
-                      onLoad={()=>{if(index==imageIndex)setImageLoaded(true);}}
+                      onLoad={()=>{if(index===imageIndex)setImageLoaded(true);}}
                       src={image.src}
                       alt="Zoomable"
                       className={`${styles.productImage}`}
