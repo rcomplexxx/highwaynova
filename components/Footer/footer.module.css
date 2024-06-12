@@ -1,30 +1,35 @@
 .footer {
+
+  background-color: var(--footer-bg);
  
   width:100%;
-  max-width: 100%;
+
+  
+
   display: flex;
   justify-content: center;
   align-content: center;
-    padding: var(--size-5) 0;
-    padding-top: 0;
+ 
+  margin-top: auto;
+    padding-bottom: var(--size-5);
     border-top: 1px solid var(--border-color-weak);
     
     z-index: 4;
     contain: content;
-    margin-top: auto;
-    background-color: var(--footer-bg);
+    
+   
     
   }
 
   /* background: linear-gradient(to right, #101B2D, #233D5E); */
   
-  .hideFooter{
-    display: none;
-  }
+
+  
 
   .mainDiv{
     max-width: var(--size-15);
     width: calc(100% - var(--size-7));
+    
     box-sizing: border-box;
     
     display: flex;
@@ -34,19 +39,73 @@
   }
 
   
-  .subscribeTitle{
-    margin:0;
-    padding:0;
-    margin-top:var(--size-7);
-    margin-bottom: var(--size-4);
+
+  
+
+
+  
+  .footerLinks {
+ 
+  
     
+   
+   display: flex;
+   flex-direction: column;
+  
+   
+   padding-bottom: var(--size-5);
   }
+
+
+  .connectdiv{
+    
+    
+    
+    padding-bottom: var(--size-6);
+   
+  }
+  
+  
+  .footerLink {
+    color: var(--footer-txt-color);
+    
+    margin-top: var(--size-3);
+    
+    font-size: var(--font-size-2);
+   
+  }
+  
+  .footerLink:hover {
+    text-decoration: underline;
+  }
+  
+  .footerLink:active {
+    color: var(--footer-link-active-color);
+  }
+
+
+  .linkCards{
+    width: 100%;
+    margin-top: var(--size-3);
+  }
+
+
+
+
+
+
+
+
+
+
+
 
   .subscribePharagraph{
     color: var(--footer-txt-color);
     margin:0;
-    padding:0;
-    margin-bottom: var(--size-3);
+    padding-top: var(--size-4);
+    padding-bottom: var(--size-3);
+   
     font-size: var(--font-size-2);
   }
 
@@ -148,52 +207,23 @@
     color: var(--disabled-email-button-color);
     background-color: var(--disabled-email-button-bg);
   }
-  
-  .footerLinks {
- 
-   width: 100%;
-   display: flex;
-   flex-direction: column;
-   margin-top: 0;
-   margin-bottom: var(--size-5);
-  }
-  
-  
-  .footerLink {
-    color: var(--footer-txt-color);
-    
-    margin-top: var(--size-3);
-    
-    font-size: var(--font-size-2);
-   
-  }
-  
-  .footerLink:hover {
-    text-decoration: underline;
-  }
-  
-  .footerLink:active {
-    color: var(--footer-link-active-color);
-  }
 
 
-  .linkCards{
-    width: 100%;
-    margin-top: var(--size-3);
-  }
+
+
+
+
   
 
-  .connectWrapper{
-    width: 100%;
-    margin-top: var(--size-4);
-    margin-bottom: var(--size-6);
-   
-  }
+
+  
+
+
 
   .getInTouch{
     color: var(--footer-txt-color);
-    margin-top: var(--size-4);
-    margin-bottom: var(--size-6);
+    padding-top: var(--size-4);
+    padding-bottom: var(--size-6);
     font-size: var(--font-size-2);
   }
 
@@ -240,8 +270,8 @@
 
   .reservedRightsPharagraph{
     color: var(--footer-txt-color);
-    margin: 0;
-    padding: 0;
+
+    
     font-size: var(--font-size-2);
   }
 

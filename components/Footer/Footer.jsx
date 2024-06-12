@@ -98,10 +98,10 @@ export default function Footer() {
    
 
       <LinkCard title={"Stay connected"}>
-          <div className={styles.connectWrapper}>
-        <p className={styles.subscribePharagraph}>
+          <div className={`${styles.footerLinks} ${styles.connectdiv}`}>
+        <span className={styles.subscribePharagraph}>
           Sign up for discounts & special updates
-        </p>
+        </span>
         <div className={styles.subscribeWrapper}>
         <input
           id="subscribe"
@@ -130,10 +130,10 @@ export default function Footer() {
           </LinkCard>
 
           <LinkCard title={"Get in touch"}>
-     <p className={styles.getInTouch}>
+     <span className={styles.getInTouch}>
          
      To get in touch with our helpful Customer Service team, please <Link aria-label="Contact customer service" href='/contact-us'>click here</Link>. They will respond to all your questions and enquiries ASAP.
-       </p>
+       </span>
       </LinkCard>
 
 
@@ -153,9 +153,9 @@ export default function Footer() {
             <GPay styleClassName={styles.payments}/>
         </div>
         </div>
-        <p className={styles.reservedRightsPharagraph}>
+        <span className={styles.reservedRightsPharagraph}>
           © 2024, Lightbook All Rights Reserved.
-        </p>
+        </span>
       </div>
     </footer>
   );
