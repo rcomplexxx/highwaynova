@@ -136,15 +136,20 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
 
 
 
- 
 
-  
 
 
   const handleChangeImage = useCallback((imageIndex)=>{
             
     swiper.slideTo(imageIndex, 0, false);
     setImageIndex(imageIndex)},[swiper])
+
+
+
+
+    
+
+
 
   return (
     <>
@@ -186,13 +191,14 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
               className={styles.productImage}
               src={img.src}
               alt={img.alt}
-              sizes="(max-width: 980px) 100vw, 576px"
+
+              sizes="(max-width: 980px) 100vw, 768px"
              
-              priority={index == imageIndex}
-              loading={index==imageIndex?'eager':undefined}
+              priority={index === 0}
+              loading={'eager'}
               draggable="false"
             />
-           {imageIndex==index && <ZoomInIcon 
+           {imageIndex===index && <ZoomInIcon 
            color="var(--swiper-zoomin-icon-color)"
            styleClassName={styles.zoomImg} handleClick={()=>{}}/>}
          
@@ -200,6 +206,8 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
        
       ))}
     </Swiper>
+
+    
         <div className={styles.slider2Suiter}>
 
 
@@ -231,8 +239,7 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
             <SwiperSlide key={index}  className={`carousel-item ${styles.slide2}`}
             
             onClick={() => {
-              swiper.slideTo(index);
-              setImageIndex(index);
+              handleChangeImage(index)
             }}
             >
               
@@ -252,6 +259,12 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
         </Swiper>
       
     </div>
+
+
+
+
+
+
  <div className={styles.grid_container}>
             {images.map((img, index) => {
               return (
@@ -279,6 +292,10 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
               );
             })}
           </div>
+
+
+
+
           
         </div>
       </div>
