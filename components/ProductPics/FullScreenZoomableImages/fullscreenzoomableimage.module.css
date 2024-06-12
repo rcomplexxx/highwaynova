@@ -27,17 +27,25 @@
   
   
   .closeSuiter{
-    color: var(--fullscreen-nav-color);
-    background-color: var(--fullscreen-nav-bg);
+
+
     position: fixed;
     top:0;
     left: 0;
+
+
+    color: var(--fullscreen-nav-color);
+    background-color: var(--fullscreen-nav-bg);
+  
     width: 100%;
     height: var(--size-8);
+
+
     display: flex;
-    
     justify-content: space-between;
     align-items: center;
+
+
     box-sizing: border-box;
     padding: 0 var(--size-5);
     
@@ -51,7 +59,7 @@
   }
 
   .navActive{
-    opacity: 1 !important;
+    opacity: 1;
   }
 
  
@@ -66,9 +74,8 @@
   }
  
   .pagination{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    
+    
    
     font-size: var(--font-size-4);
    
@@ -161,25 +168,40 @@
   animation: killArrow 0.2s 0.01s ease forwards;
  } */
 
+ .productImageSwiper{
+
+  margin-top: var(--size-8);
+  height: calc(100% - var(--size-8));
+
+ }
+
+ .slide{
+ 
+  
+ }
+
+ 
 
   
 
 
 
   .productImageDiv{
-    position: relative;
+    height: 100%;
+    width: 100%;
+   
+  
+    
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
-    height: calc(100vh - var(--size-8));
-    height: calc(100svh - var(--size-8));
+    
 
     
 
       touch-action: pan-y;
       cursor: zoom-in;
-      margin-top: var(--size-8);
+     
     
   }
 

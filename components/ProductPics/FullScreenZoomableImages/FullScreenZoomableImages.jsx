@@ -511,6 +511,7 @@ const FullScreenZoomableImage = ({
             <div className={styles.pagination}>
               {imageIndex + 1} / {swiper && swiper.slides?.length}
             </div>
+
             <div>
            {zoomed?<ZoomOutIcon
                handleClick={(event) => {
@@ -537,6 +538,8 @@ const FullScreenZoomableImage = ({
               
             </div>
           </div>
+
+          
 
           <ArrowDown color={'var(--fullscreen-arrow-color)'}
           handleClick={() => {
