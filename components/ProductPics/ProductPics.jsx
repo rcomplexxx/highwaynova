@@ -207,7 +207,7 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
         <ArrowDown color={'var(--mini-slider-arrow-color)'}
         handleClick={()=>{ swiper.slideTo(imageIndex-1);}} 
             
-            styleClassName={`${styles.leftArrowDiv} ${imageIndex===images.length-1 && styles.disabledArrow}`}/>
+            styleClassName={`${styles.leftArrowDiv} ${imageIndex===0 && styles.disabledArrow}`}/>
           
    
 
