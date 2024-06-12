@@ -115,6 +115,7 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
       
     }
     variantImageIndexMountedRef.current=true;
+    
   },[variantImageIndex])
 
   
@@ -129,8 +130,8 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
     
     const index = swiper.activeIndex;
     setImageIndex(index);
-    if (index < imageIndex) swiperMini.slideTo(index);
-    else swiperMini.slideTo(index - 1);
+    swiperMini.slideTo(index);
+ 
   }, [imageIndex, swiperMini]);
 
 
@@ -152,33 +153,32 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
       
 
     
-      <div id="productPics" className={styles.productPicsWrapper}>
-        <div
-          id="productImages"
-          className={styles.productImagesWrapper}
-        >
+      <div className={styles.productPicsWrapper}>
+        <div className={styles.productImagesWrapper}>
         
         <Swiper  onSwiper={setSwiper} speed={400} slidesPerView='auto' onSlideChange={handleSlideChange}
        
-
-   
- 
+       
         preventClicks={false}
         // preventClicksPropagation={false}
         touchStartPreventDefault={false}
      
 
         >
+
+
       {images.map((img, index) => (
        
-        <SwiperSlide key={index}  onClick={() => {
-              setZoomed(true);
-            }}  className={`carousel-item ${styles.slide} ${index==images.length-1 && styles.lastSlide}`}
+        <SwiperSlide key={index}   
+        className={`carousel-item ${styles.slide} ${index==images.length-1 && styles.lastSlide}`}
        >
          
             <Image
             id={`mainImage${index}`}
             
+            onClick={() => {
+              setZoomed(true);
+            }}
            
 
             height={0}
