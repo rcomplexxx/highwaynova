@@ -61,9 +61,7 @@ export default function PicWithThumbnail({ product }) {
         src={`/images/` + images[0]} // Path to your image from the `public` directory
         alt="Product Image"
         className={`${styles.productImage} ${styles.productImage1} ${
-          images.length > 1
-            ? styles.doubleImgMain
-            : styles.singleImgMain
+          images.length > 1? styles.doubleImgMain: styles.singleImgMain
         }`}
         sizes="(max-width: 480px) 90vw,(max-width: 600px) 80vw, (max-width: 900px) 45vw, 25vw"
         priority={true}

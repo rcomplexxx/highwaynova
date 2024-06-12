@@ -8,7 +8,7 @@ import {Amex, Discover, Jcb, MasterCard, UntionPay, Visa} from '@/public/images/
 export default function PaymentSection({ checkFields, organizeUserData, setErrors, products,setCartProducts}) {
     const [paymentMethod, setPaymentMethod] = useState("creditcard");
     const [moreCardsPopupOpen, setMoreCardsPopupOpen] = useState(false);
-    const [showOnlyTwoCards, setShowOnlyTwoCards] = useState(false);
+    
     const maxHeightTimoutAdj = useRef();
     const moreCardsPopupRef = useRef();
     const mounted= useRef(false);
@@ -22,7 +22,7 @@ export default function PaymentSection({ checkFields, organizeUserData, setError
    
     if(!mounted.current){
       lastSelectedPaymentRef.current= creditCardPaymentFieldsRef.current;
-      lastSelectedPaymentRef.current.style.overflow = 'visible';
+      
       mounted.current=true;
       return;
     }
@@ -31,17 +31,16 @@ export default function PaymentSection({ checkFields, organizeUserData, setError
 
     let selectedPaymentFields;
     let nonSelectedPaymentFields;
-    if(paymentMethod=='creditcard'){
-      
-    selectedPaymentFields = creditCardPaymentFieldsRef.current;
-    nonSelectedPaymentFields=  lastSelectedPaymentRef.current;
-    }
-  else if(paymentMethod=='paypal'){
-  selectedPaymentFields = paypalPaymentFieldsRef.current;
-  nonSelectedPaymentFields = lastSelectedPaymentRef.current;
-  }
 
+
+    if(paymentMethod=='creditcard') selectedPaymentFields = creditCardPaymentFieldsRef.current;
+    else if(paymentMethod=='paypal')selectedPaymentFields = paypalPaymentFieldsRef.current;
   
+
+
+
+
+  nonSelectedPaymentFields=  lastSelectedPaymentRef.current;
 
 
  
@@ -56,7 +55,7 @@ export default function PaymentSection({ checkFields, organizeUserData, setError
      }, 1)
    
      maxHeightTimoutAdj.current=setTimeout(()=>{
-      selectedPaymentFields.style.maxHeight=`1999px`;
+      selectedPaymentFields.style.maxHeight=`none`;
       selectedPaymentFields.style.overflow = `visible`
      }, 600);
 
@@ -67,23 +66,10 @@ export default function PaymentSection({ checkFields, organizeUserData, setError
   },[paymentMethod]);
 
 
-  useEffect(() => {
-    const handleResize = () => {
-      if(window.innerWidth<372)
-      setShowOnlyTwoCards(true);
-    else setShowOnlyTwoCards(false);
-    };
 
-    handleResize();
 
-    // Set up an event listener for window resize
-    window.addEventListener('resize', handleResize);
 
-    // Clean up the event listener on component unmount
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
+
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -123,25 +109,31 @@ export default function PaymentSection({ checkFields, organizeUserData, setError
       
         <div className={`${styles.paymentOptionDiv} ${paymentMethod=="creditcard" && styles.selectedOption}`} 
         onClick={(event)=>{if(!document.getElementById("moreCards")?.contains(event.target))setPaymentMethod("creditcard")}}>
+           
+           
            <div className={styles.pickOption}>
             <div className={`${styles.pickCheck} ${paymentMethod=="creditcard" && styles.pickCheckSelected}`}>
-                <div className={`${paymentMethod=="creditcard" && styles.ringEffectDiv}`}></div>
+                <div className={`${paymentMethod=="creditcard" && styles.ringEffectDiv}`}/>
             </div>
             <span className={styles.optionSpan}>Credit Card</span>
            </div>
+
+
            <div className={styles.CCSolutions}>
             <Visa styleClassName={styles.creditCardLogo}/>
             <MasterCard styleClassName={styles.creditCardLogo}/>
-            {!showOnlyTwoCards && <Amex styleClassName={styles.creditCardLogo}/>}
+            <Amex styleClassName={`${styles.creditCardLogo} ${styles.lastInLineCard}`}/>
            
             <div id="moreCards" className={styles.moreCards} onMouseEnter={()=>{if(window.matchMedia('(pointer: fine)').matches) setMoreCardsPopupOpen(true)}}
             onMouseLeave={()=>{if(window.matchMedia('(pointer: fine)').matches) setMoreCardsPopupOpen(false)}}
             onClick={(event)=>{  if(!moreCardsPopupOpen)moreCardsPopupRef.current=event.target; setMoreCardsPopupOpen(!moreCardsPopupOpen)}}
-            ><span>+{showOnlyTwoCards?"4":"3"}</span>
+            >
+           
+           
            
             <div className={`${styles.moreCardsPopupWrapper} ${moreCardsPopupOpen && styles.moreCardsPopupOpen}`}>
             <div onClick={(event)=>{event.stopPropagation();setMoreCardsPopupOpen(false);}} className={styles.moreCardsPopup}>
-            {showOnlyTwoCards && <Amex styleClassName={styles.creditCardLogo}/>}
+            <Amex styleClassName={`${styles.creditCardLogo} ${styles.firstCloudCard}`}/>
             <Discover styleClassName={styles.creditCardLogo}/>
             <Jcb styleClassName={styles.creditCardLogo}/>
             <UntionPay styleClassName={styles.creditCardLogo}/>
@@ -154,7 +146,9 @@ export default function PaymentSection({ checkFields, organizeUserData, setError
            </div>
         </div>
 
-        <div id='creditCardFields' ref={creditCardPaymentFieldsRef}  className={`${styles.paymentFields} ${styles.creditCardField} ${paymentMethod=="creditcard" && styles.selectedField}`}>
+
+        <div id='creditCardFields' ref={creditCardPaymentFieldsRef}  className={`${styles.paymentFields} ${styles.creditCardField} 
+        ${paymentMethod=="creditcard" && styles.selectedField}`}>
             <div className={styles.paymentFieldsSpaceAdjuster}> 
           <StripeWrapper
             setCartProducts={setCartProducts}
@@ -171,16 +165,23 @@ export default function PaymentSection({ checkFields, organizeUserData, setError
 
 
         <div className={`${styles.paymentOptionDiv} ${paymentMethod=="paypal" && styles.selectedOption}`} onClick={()=>{setPaymentMethod("paypal")}} >
+
+
            <div className={styles.pickOption}>
             <div className={`${styles.pickCheck} ${paymentMethod=="paypal" && styles.pickCheckSelected}`}>
-                <div className={`${paymentMethod=="paypal" && styles.ringEffectDiv}`}></div>
+                <div className={`${paymentMethod=="paypal" && styles.ringEffectDiv}`}/>
             </div>
             <span>Paypal</span>
            </div>
-           <Image src={'/images/paypalTextLogo2.png'} className={styles.paypalLogo} height={24} width={96} />
+
+
+           <Image src={'/images/paypalTextLogo2.png'} alt={`paypal logo`} className={styles.paypalLogo} height={24} width={96} />
         </div>
 
-        <div id='paypalFields' ref={paypalPaymentFieldsRef} className={`${styles.paymentFields} ${styles.paypalField} ${paymentMethod=="paypal" && styles.selectedField}`}>
+        
+
+        <div id='paypalFields' ref={paypalPaymentFieldsRef} 
+        className={`${styles.paymentFields} ${styles.paypalField} ${paymentMethod=="paypal" && styles.selectedField}`}>
        
         <div className={styles.paypalFieldWrapper}>
           <PayPalButton
@@ -191,7 +192,9 @@ export default function PaymentSection({ checkFields, organizeUserData, setError
             setErrors={setErrors}
           />
          
-        </div>  </div>
+        </div>  
+        
+        </div>
 
 
       </div>
