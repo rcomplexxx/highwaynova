@@ -57,8 +57,8 @@ const CartItem = ({ item }) => {
       </Link>
      
       <div className={styles.mainItemInfo}>
-        <Link className={styles.link} href={`/products/${item.name.toLowerCase().replace(/\s+/g, "-")}`}>
-          <span className={styles.productName}>{item.name}</span>
+        <Link className={styles.productName} href={`/products/${item.name.toLowerCase().replace(/\s+/g, "-")}`}>
+      {item.name}
         </Link>
        
        <div className={styles.priceDiv}>

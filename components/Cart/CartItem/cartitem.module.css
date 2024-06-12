@@ -30,6 +30,7 @@ color: var(--high-contrast-light-txt-color);
 }
 
 .productName{
+  color: var(--high-contrast-light-txt-color);
   font-size: var(--font-size-7);
   font-weight: 400;
   margin: 0;
@@ -169,10 +170,8 @@ color: var(--high-contrast-light-txt-color);
     
   }
 
-  .link {
-    color: var(--high-contrast-light-txt-color);
-    
-  }
+ 
+  
 
 
   @media (max-width: 980px)  {

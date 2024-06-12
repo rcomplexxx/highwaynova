@@ -7,7 +7,7 @@ import { CheckoutContext } from '@/contexts/CheckoutContext';
 import { CorrectIcon } from '@/public/images/svgs/svgImages';
 
 
-export default function Tip({products}){
+export default function Tip(){
 
     const [tipShow, setTipShow] = useState(false);
     const [selectedField, setSelectedField] =useState();
@@ -117,7 +117,7 @@ export default function Tip({products}){
         onChange={(event)=>{
             const tipValue= event.target.value;
 
-            const tipValueFloat = (tipValue=="" || tipValue=='.')?0:parseFloat(tipValue);
+            const tipValueFloat = (tipValue==="" || tipValue==='.')?0:parseFloat(tipValue);
             
             setTipError();
 

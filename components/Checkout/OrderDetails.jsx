@@ -132,7 +132,7 @@ const handleCouponApply = () => {
                   alt={`${cp.name}`}
                   height={0}
                   width={0}
-                  sizes="25vw"
+                  sizes="64px"
                 />
                 <div className={styles.productTitleDiv}>
                 <span>

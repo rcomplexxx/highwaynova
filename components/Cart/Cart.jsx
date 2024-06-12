@@ -13,8 +13,9 @@ import { useGlobalStore } from "@/contexts/AppContext";
 const Cart = () => {
   const  cartProducts  = useGlobalStore(state => state.cartProducts)
   const [addressBarUp, setAddressBarUp] = useState(false);
-  // const [invDivsPresent, setInvDivsPresent] = useState(true);
-  const firstHeightRef = useRef();
+  
+
+  
   const [invisibleDivHeight, setInvisibleDivHeight] = useState();
   const [invisibleDiv2Height, setInvisibleDiv2Height] = useState();
 //
@@ -31,7 +32,8 @@ const obtainDiv2Height = useCallback((node) => {
   useLayoutEffect(()=>{
    
     if(!invisibleDivHeight || !invisibleDiv2Height){return}
-  firstHeightRef.current= invisibleDivHeight;
+
+    
 
 
 
@@ -46,22 +48,6 @@ if (window.innerWidth<980){
 
 
 
-  //     const updateSize=()=>{
-  //       if (window.innerWidth<980){
-  //         const divHeight = Math.round(document.getElementById('invisibleDiv').getBoundingClientRect().height);
-  //  const div2Height = Math.round(document.getElementById('invisibleDiv2').getBoundingClientRect().height);
-
-  //         console.log('sizes', divHeight, div2Height)
-          
-  //       if(divHeight < div2Height){
-  //         setAddressBarUp(true);
-  //         window.removeEventListener('resize', updateSize);
-  //       }
-  //     }
-  //     }
-  //     if(invisibleDivHeight==invisibleDiv2Height)
-  //     window.addEventListener('resize', updateSize);
-  //     return () => window.removeEventListener('resize', updateSize);
 
 
   },[invisibleDivHeight,invisibleDiv2Height]);
@@ -77,9 +63,7 @@ if (window.innerWidth<980){
     <p className={styles.emptyCartText}>
     Add your favorite items to your cart.
     </p>
-    <Link className={styles.shopNowLink} href="/products">
-          <button className={styles.shopNow}>Shop Now</button>
-        </Link>
+    <Link className={styles.shopNow} href="/products">Shop Now</Link>
     </div>
   },[cartProducts]);
 
