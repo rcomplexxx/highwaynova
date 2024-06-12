@@ -139,9 +139,14 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
 
 
 
-  const handleChangeImage = useCallback((imageIndex)=>{
+  const handleChangeImage = useCallback((imageIndex, smooth=false)=>{
             
+    if(smooth)
+      swiper.slideTo(imageIndex);
+   else
     swiper.slideTo(imageIndex, 0, false);
+   
+   
     setImageIndex(imageIndex)},[swiper])
 
 
@@ -213,7 +218,7 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
 
 
         <ArrowDown color={'var(--mini-slider-arrow-color)'}
-        handleClick={()=>{ swiper.slideTo(imageIndex-1);}} 
+         handleClick={()=>{handleChangeImage(imageIndex - 1, true)}} 
             
             styleClassName={`${styles.leftArrowDiv} ${imageIndex===0 && styles.disabledArrow}`}/>
           
@@ -222,7 +227,7 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
 
 
             <ArrowDown color={'var(--mini-slider-arrow-color)'}
-            handleClick={()=>{swiper.slideTo(imageIndex+1)}} 
+            handleClick={()=>{handleChangeImage(imageIndex+1, true)}} 
             
             styleClassName={`${styles.leftArrowDiv} ${styles.rightArrowDiv} ${imageIndex===images.length-1 && styles.disabledArrow}`}/>
            
@@ -239,7 +244,7 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
             <SwiperSlide key={index}  className={`carousel-item ${styles.slide2}`}
             
             onClick={() => {
-              handleChangeImage(index)
+              handleChangeImage(index, true)
             }}
             >
               
