@@ -22,7 +22,7 @@ export default function BillingInfo({isOpen, errors, setErrors}){
         }, [showApt]);
 
         useEffect(()=>{
-          if(!mounted.current)return;
+          if(!mounted.current){ mounted.current=true; return;}
 
           clearTimeout(visibilityTimeout.current);
           const billingInfoDiv= billingInfoDivRef.current
@@ -53,9 +53,8 @@ export default function BillingInfo({isOpen, errors, setErrors}){
           }
         },[isOpen])
 
-        useEffect(()=>{
-          mounted.current=true;
-        },[])
+       
+        
         
         const handleChange = (event) => {
          if (errors.hasOwnProperty(event.target.id)) {
@@ -67,11 +66,14 @@ export default function BillingInfo({isOpen, errors, setErrors}){
        };
     
 
-    return <div id='billingInfo' ref={billingInfoDivRef} className={`${styles.billingAddressWrapper}`}> 
+    return <div ref={billingInfoDivRef} className={`${styles.billingAddressWrapper}`}> 
         
             <h3 className={styles.billingAddressTitle}>Billing address</h3>
 
-            <div className={styles.InputFieldRow}>
+            <div className={styles.inputFields}>
+
+      
+      
     <InputField
            id="billingEmail"
            placeHolder='Email'
@@ -85,16 +87,17 @@ export default function BillingInfo({isOpen, errors, setErrors}){
             />
     
 
-          </div>
 
-        <div className={`${styles.InputFieldRow} ${styles.billingCountry}`}>
+
+
         <CountryInput
                   id="billingCountry"
                   setErrors={setErrors}
                   error={errors.billingCountry}
                   inputNumber={9}
                 />
-</div>
+
+
         
        
 
@@ -105,7 +108,6 @@ export default function BillingInfo({isOpen, errors, setErrors}){
 
 
 
-          <div className={styles.InputFieldRow}>
     <InputField
            id="billingAddress"
            placeHolder='Address'
@@ -119,7 +121,8 @@ export default function BillingInfo({isOpen, errors, setErrors}){
             />
     
 
-          </div>
+      
+      
 
 
           
@@ -127,7 +130,7 @@ export default function BillingInfo({isOpen, errors, setErrors}){
                
                
 
-{ showApt ?  <div className={styles.InputFieldRow}> <InputField
+{ showApt ? <InputField
                        id="billingApt"
                        placeHolder='Apartment, suite, etc. (Optional)'
                           type="text"
@@ -137,7 +140,7 @@ export default function BillingInfo({isOpen, errors, setErrors}){
                    
                         //   if(event.target.value==='') setErrors({ ...errors, cardHolderName: 'Enter a valid card number' });}}
                          error={errors.billingApt}
-                        /> </div>:<p className={styles.aptAdder} onClick={()=>{setShowApt(true);}}>+ Add apartment, suite etc.</p>}
+                        />:<span className={styles.aptAdder} onClick={()=>{setShowApt(true);}}>+ Add apartment, suite etc.</span>}
                 
             
                      
@@ -186,7 +189,7 @@ export default function BillingInfo({isOpen, errors, setErrors}){
 
 
 
-          <div className={styles.InputFieldRow}>
+
     <InputField
            id="billingPhone"
            placeHolder='Phone (optional)'
@@ -201,8 +204,10 @@ export default function BillingInfo({isOpen, errors, setErrors}){
             />
        
 
-          </div>
 
+
+          
+          </div>
 
 
 

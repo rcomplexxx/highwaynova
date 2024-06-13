@@ -250,14 +250,24 @@ return false;
               </h2>
            
 
-<div className={styles.input_row}>
+
+
+
+
+              <div className={styles.inputFields}>
+
+
+
+
+
 <CountryInput
                   id="country"
                   setErrors={setErrors}
                   error={errors.country}
                   inputNumber={9}
                 />
-   </div>
+
+
               <div className={styles.input_row}>
                 <InputField
                   id="firstName"
@@ -274,7 +284,8 @@ return false;
                   error={errors.lastName}
                 />
               </div>
-              <div className={styles.input_row}>
+            
+            
                 <InputField
                   id="address"
                   placeHolder="Address"
@@ -282,18 +293,21 @@ return false;
                   handleChange={handleChange}
                   error={errors.address}
                 />
-                 </div>
-  <div className={styles.input_row}>
+           
+           
+
+
     { 
     showApt ? <InputField
                   id="apt"
                   placeHolder="Apartment, suite, etc. (Optional)"
                   type="text"
-                />:<p onClick={()=>{setShowApt(true);}}
+                />:<span onClick={()=>{setShowApt(true);}}
                 
-                className={styles.aptAdder}>+ Add apartment, suite etc.</p>
+                className={styles.aptAdder}>+ Add apartment, suite etc.</span>
                 }
-              </div>
+            
+            
               <div className={styles.input_row}>
               <InputField
                   id="city"
@@ -318,7 +332,8 @@ return false;
                   error={errors.zipcode}
                 />
               </div>
-              <div className={styles.input_row}>
+            
+            
               
                 <InputField
                   id="phone"
@@ -328,7 +343,8 @@ return false;
                   error={errors.phone}
                   children={<FloatingBadge message={'In case we need to contact you about your order'}/>}
                 />
-              </div>
+         
+         
             
     
     
@@ -349,6 +365,10 @@ return false;
                   <Link className={styles.footerLink} href='/shipping-policy'>Shipping policy</Link>
                   <Link className={styles.footerLink} href='/privacy-policy'>Privacy policy</Link>
                   <Link className={styles.footerLink} href='/terms-of-service'>Terms of service</Link>
+                </div>
+
+
+
                 </div>
         </div>
       </div>
