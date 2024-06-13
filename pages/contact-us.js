@@ -1,6 +1,8 @@
-import PolicyCard from "@/components/Cards/PolicyCard/PolicyCard";
+
+
 import  { useRef, useState } from "react";
-import Head from "next/head";
+
+
 import styles from '../styles/contactus.module.css'
 import Link from "next/link";
 import { unimportantPageSeo } from "@/utils/SEO-configs/next-seo.config";

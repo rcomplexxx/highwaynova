@@ -1,13 +1,13 @@
 import {
     useState,
-    useMemo,
+    
     useEffect,
     useRef,
     useContext,
   } from "react";
   import styles from "./orderdetails.module.css";
   import Image from "next/image";
-  import coupons from "@/data/coupons.json";
+  
 import { CheckoutContext } from "@/contexts/CheckoutContext";
 import { ArrowDown, CancelIcon, DiscountIcon, DiscountIconTotal, ErrorIcon } from "@/public/images/svgs/svgImages";
   
@@ -95,7 +95,8 @@ const handleCouponApply = () => {
            
               <div className={styles.title_div} onClick={()=>{ setShowAnswer(!showAnswer);}}>
                
-                  <div className={styles.titleWrapper}>
+                  
+                  
                     <div className={styles.mobileTitle}>
                       Order summery
               
@@ -107,7 +108,8 @@ const handleCouponApply = () => {
 
 
                     </div>
-                  </div>
+                
+                
   
                   <div className={styles.mainPriceDiv}>
                   {couponCode!="" && <span className={styles.mainPriceSub}>${subTotal}</span>}
@@ -121,10 +123,11 @@ const handleCouponApply = () => {
               ref={summeryDivRef}
                 className={styles.emerge}
               >
-                <div className={styles.orderDiv}>
+                
                  
                  {products.map((cp, i) => (
             <div className={styles.order_pair} key={i}>
+
               <div className={styles.productImageDiv}>
                 <Image
                   className={styles.productImage}
@@ -143,7 +146,9 @@ const handleCouponApply = () => {
                 </span>
                 </div>
               </div>
+
               <span>${(cp.quantity * cp.price).toFixed(2)}</span>
+
             </div>
           ))}
                   <div className={styles.coupon_code}>
@@ -246,11 +251,11 @@ const handleCouponApply = () => {
                       
                       </div>
   }
-                </div>
+              
+              
               </div>
             
-  
-          {/* sacuvaj client id vrednost i ostale bitne informacije u .env fajlu */}
+            
         </div>
       </div>
     );

@@ -1,9 +1,6 @@
 
   
-  .submittedReview{
-    color: #43a047;
-    margin: var(--size-7) 0;
-  }
+
   
 
 
@@ -21,7 +18,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
+   
+    
    
     z-index: 11;
   }
@@ -32,8 +30,10 @@
     position: relative;
     max-width: var(--size-17);
     max-height: var(--size-17);
+
     height: calc(100% - var(--size-7));
     width: calc(100% - var(--size-7));
+
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -185,11 +185,17 @@
   }
 
 
+  
+
+
   .centerButtons{
     width: 100%;
     box-sizing: border-box;
+
     display: flex;
     flex-direction: column;
+    gap: var(--size-3);
+
     padding: var(--size-4);
     margin: var(--size-9);
     border-radius: 4px;
@@ -198,22 +204,32 @@
 
   .mediaButton{
 
-    width: 100%;
+
     position: relative;
-    /* color: var(--writing-accent-color); */
+
+    width: 100%;
+   
+
+    
     background-color: var(--writing-media-button);
    
     border: none;
     border-radius: 8px;
-    margin: var(--size-2) 0;
+   
+
+    transition: background-color 0.1s ease;
+    
     font-size: var(--font-size-3);
     font-weight: 600;
+
+
+
   }
   
   @media (hover: hover) {
     .mediaButton:hover{
      
-      transition: background-color 0.1s ease;
+     
       background-color: var(--writing-next-button-bg)
     }
    }
@@ -229,6 +245,97 @@
     height: 100%;
     cursor: pointer;
   }
+
+
+
+
+  .userImagesDivWrapper{
+   
+    width: 100%;
+   
+   
+  }
+
+  .userImagesDiv{
+    position: relative;
+   
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap:wrap;
+   
+    margin: var(--size-9) 0;
+    padding: var(--size-3);
+    box-sizing: border-box;
+    border: 1px solid var(--writing-accent-color);
+   
+  }
+
+
+  
+
+
+
+
+  .userImageDiv{
+
+    display: flex;
+    align-items: center;
+  
+    width: calc(100% / 5 - var(--size-4));
+    aspect-ratio: 1;
+    margin: 6px;
+    position: relative;
+   
+  }
+
+
+  .userImage{
+    height: 100%;
+    width: 100%;
+    border-radius: 4px;
+
+    user-select: none;
+
+    
+  }
+
+    
+  .cancelImage{
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    height: 20px;
+    width: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    box-sizing: border-box;
+    border: 1px solid var(--writing-accent-color);
+    padding: var(--size-1);
+
+    background-color: var(--cancel-image-button-bg);
+    border-radius: 100%;
+    
+    cursor: pointer;
+  
+  }
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   
 
@@ -320,77 +427,7 @@
     aspect-ratio: 1;
    }
 
-  .userImagesDivWrapper{
-   
-    width: 100%;
-    padding: var(--size-9);
-   
-  }
 
-  .userImagesDiv{
-    position: relative;
-   
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    flex-wrap:wrap;
-   
-    padding: 8px;
-    box-sizing: border-box;
-    border: 1px solid var(--writing-accent-color);
-   
-  }
-
-
-  
-
-
-
-
-  .userImageDiv{
-
-    display: flex;
-    align-items: center;
-  
-    width: calc(100% / 5 - var(--size-4));
-    aspect-ratio: 1;
-    margin: 6px;
-    position: relative;
-   
-  }
-
-
-  .userImage{
-    height: 100%;
-    width: 100%;
-    border-radius: 4px;
-
-    
-  }
-
-    
-  .cancelImage{
-    position: absolute;
-    top: -6px;
-    right: -6px;
-    height: 20px;
-    width: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    box-sizing: border-box;
-    border: 1px solid var(--writing-accent-color);
-    padding: var(--size-1);
-
-    background-color: var(--cancel-image-button-bg);
-    border-radius: 100%;
-    
-    cursor: pointer;
-  
-  }
-
- 
 
 
 
@@ -635,6 +672,12 @@
       font-weight: 700;
       border-radius: 6px;
       
+  }
+
+
+  .submittedReview{
+    color: #43a047;
+    margin: var(--size-7) 0;
   }
 
   @media(hover:hover){

@@ -1,5 +1,6 @@
-import PolicyCard from "@/components/Cards/PolicyCard/PolicyCard";
-import Head from "next/head";
+
+
+
 import Image from "next/image";
 import styles from '../styles/ourstory.module.css'
 

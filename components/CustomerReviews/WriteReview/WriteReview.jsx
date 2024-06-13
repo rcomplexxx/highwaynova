@@ -31,7 +31,10 @@ export default function WriteReview({ setInfoDivOpen }) {
   
 
 
-    const handlePopState=(event)=>{  event.preventDefault(); global.stopRouteExecution=true; setInfoDivOpen(false);}
+    const handlePopState=(event)=>{  
+      event.preventDefault(); 
+      global.stopRouteExecution=true; 
+      setInfoDivOpen(false);}
 
  
 
@@ -137,6 +140,8 @@ export default function WriteReview({ setInfoDivOpen }) {
               </div>
             )}
 
+            
+
             <div
               className={`${styles.reviewPageDiv} ${
                 animation == "swipeOutLeft"
@@ -150,7 +155,7 @@ export default function WriteReview({ setInfoDivOpen }) {
                   
               }`}
             >
-              {ratingPage == 0 ? (
+              {ratingPage === 0 ? (
                 <>
                   <span className={styles.rateQuestion}>
                     How would you rate this product?
@@ -170,7 +175,7 @@ export default function WriteReview({ setInfoDivOpen }) {
                     starSpacing="12px"
                   />
                 </>
-              ) : ratingPage == 1 ? (
+              ) : ratingPage === 1 ? (
                 <>
                  
                     <h1 className={styles.showImageTitle}>Show it off!</h1>
@@ -208,7 +213,8 @@ export default function WriteReview({ setInfoDivOpen }) {
                             }}
                             className={styles.mediaButtonImgInput}
                             multiple
-                          ></input>
+                         / >
+                            
                       <span>+</span></div>}
                       
                       
@@ -231,7 +237,7 @@ export default function WriteReview({ setInfoDivOpen }) {
                             }}
                             className={styles.mediaButtonImgInput}
                             multiple
-                          ></input>
+                          />
                         </button>
                         <button className={styles.mediaButton}>
                           Add video
@@ -240,7 +246,7 @@ export default function WriteReview({ setInfoDivOpen }) {
                             accept="video/*"
                             onChange={handleNext}
                             className={styles.mediaButtonImgInput}
-                          ></input>
+                          />
                         </button>
                       </div>
                       <button
@@ -252,7 +258,7 @@ export default function WriteReview({ setInfoDivOpen }) {
                     </>
                   )}
                 </>
-              ) : ratingPage == 2 ? (
+              ) : ratingPage === 2 ? (
                 <>
                   <h1 className={styles.tellUsMore}>Tell us more!</h1>
                   <textarea
@@ -266,10 +272,11 @@ export default function WriteReview({ setInfoDivOpen }) {
                     rows={8}
                   />
                 </>
-              ) : ratingPage == 3 ? (
+              ) : ratingPage === 3 ? (
                 <>
                   <h1>About you</h1>
                   <div className={styles.personInfo}>
+
                     <div className={styles.personInfoDiv}>
                       <label>
                         First Name <span className={styles.required}>*</span>
@@ -284,6 +291,7 @@ export default function WriteReview({ setInfoDivOpen }) {
                       />
                       
                     </div>
+
                     <div className={styles.personInfoDiv}>
                       <label>Last Name</label>
                       <input
@@ -294,6 +302,7 @@ export default function WriteReview({ setInfoDivOpen }) {
                         }}
                       />
                     </div>
+
                   </div>
 
                   <div className={styles.personEmailDiv}>
@@ -312,7 +321,7 @@ export default function WriteReview({ setInfoDivOpen }) {
                     />
                     {errors.email && (
                       <p className={styles.requiredError}>
-                        <ErrorIcon/>{reviewInfo.email == ""
+                        <ErrorIcon/>{reviewInfo.email === ""
                           ? "Required field"
                           : "Please fill a valid email address"}
                       </p>
@@ -333,7 +342,7 @@ export default function WriteReview({ setInfoDivOpen }) {
               )}
             </div>
 
-            {ratingPage == 0 || ratingPage == 4 ? (
+            {ratingPage === 0 || ratingPage === 4 ? (
               
 
               <CancelIcon color={"var(--cancel-write-review-color)"}
@@ -350,15 +359,15 @@ export default function WriteReview({ setInfoDivOpen }) {
             ) : (
               <div
                 className={`${styles.writeReviewFooter} ${
-                  ratingPage == 1
-                    ? animation == "swipeInRight"
+                  ratingPage === 1
+                    ? animation === "swipeInRight"
                       ? styles.writeReviewFooterSpawn
-                      : animation == "swipeOutRight"
+                      : animation === "swipeOutRight"
                       ? styles.swipeOutRightFooterAnimation
-                      : animation == "swipeOutLeft" &&
+                      : animation === "swipeOutLeft" &&
                         styles.nextButtonMobileAnim
-                    : ratingPage == 3 &&
-                      animation == "swipeOutLeft" &&
+                    : ratingPage === 3 &&
+                      animation === "swipeOutLeft" &&
                       styles.swipeOutLeftFooterAnimation
                 }`}
               >
@@ -377,7 +386,7 @@ export default function WriteReview({ setInfoDivOpen }) {
                 <div
                   className={`${styles.progressDiv} 
                    ${(ratingPage > 1 ||
-                      (ratingPage == 1 && animation == "swipeOutLeft")) &&
+                      (ratingPage === 1 && animation === "swipeOutLeft")) &&
                     styles.progressDivMobileControl
                   }`}
                 >
@@ -388,8 +397,8 @@ export default function WriteReview({ setInfoDivOpen }) {
                   <div className={styles.progressBar}>
                     <div
                       className={`${styles.progressBarFiller} ${
-                        ((ratingPage == 0 &&
-                        animation == "swipeOutLeft") || (ratingPage == 1 && animation != "swipeOutRight") || ratingPage>1) &&
+                        ((ratingPage === 0 &&
+                        animation === "swipeOutLeft") || (ratingPage === 1 && animation !== "swipeOutRight") || ratingPage>1) &&
                         styles.fillProgressBarFiller
                       }`}
                     />
@@ -398,7 +407,7 @@ export default function WriteReview({ setInfoDivOpen }) {
                   <div className={styles.progressBar}>
                     <div
                       className={`${styles.progressBarFiller} ${
-                        ((ratingPage == 1 && animation == "swipeOutLeft") ||  (ratingPage == 2 && animation != "swipeOutRight") || (ratingPage>2)) &&
+                        ((ratingPage === 1 && animation === "swipeOutLeft") ||  (ratingPage === 2 && animation !== "swipeOutRight") || (ratingPage>2)) &&
                          
                         styles.fillProgressBarFiller
                       }`}
@@ -407,7 +416,7 @@ export default function WriteReview({ setInfoDivOpen }) {
                   <div className={styles.progressBar}>
                     <div
                       className={`${styles.progressBarFiller} 
-                      ${ ((ratingPage == 2 && animation == "swipeOutLeft") ||  (ratingPage == 3 && animation != "swipeOutRight")) &&
+                      ${ ((ratingPage === 2 && animation === "swipeOutLeft") ||  (ratingPage === 3 && animation !== "swipeOutRight")) &&
                         styles.fillProgressBarFiller
                       }`}
                     />
@@ -417,7 +426,7 @@ export default function WriteReview({ setInfoDivOpen }) {
 
                 {
 
-                (ratingPage==1 &&  animation != "swipeOutLeft") ?
+                (ratingPage===1 &&  animation !== "swipeOutLeft") ?
 
                 <button
                 onClick={handleNext}
@@ -430,22 +439,22 @@ export default function WriteReview({ setInfoDivOpen }) {
                 
                 
                 
-                :(ratingPage==1 || (ratingPage==2 &&  animation != "swipeOutLeft")) ?
+                :(ratingPage===1 || (ratingPage===2 &&  animation !== "swipeOutLeft")) ?
               
                 <button
                       
-                      onClick={()=>{if( !reviewInfo.text || reviewInfo.text == "")return; handleNext();}}
+                      onClick={()=>{if( !reviewInfo.text || reviewInfo.text === "")return; handleNext();}}
                       className={`${styles.nextButton} ${
-                        (!reviewInfo.text || reviewInfo.text == "") && styles.nextButtonDisabled
+                        (!reviewInfo.text || reviewInfo.text === "") && styles.nextButtonDisabled
                       }`}
                     >
                       Next
-                    </button>: (ratingPage==2 || ratingPage==3) &&
+                    </button>: (ratingPage===2 || ratingPage===3) &&
 
                       <button
                       onClick={() => {
 
-                        if(!reviewInfo.firstName || reviewInfo.firstName == "" ||
+                        if(!reviewInfo.firstName || reviewInfo.firstName === "" ||
                           !reviewInfo.email || reviewInfo.firstName ===""
                         )return;
 
@@ -464,7 +473,7 @@ export default function WriteReview({ setInfoDivOpen }) {
                         handleNext();
                       }}
                       className={`${styles.nextButton} ${
-                        (!reviewInfo.firstName || reviewInfo.firstName=="" || !reviewInfo.email || reviewInfo.email=="") && styles.nextButtonDisabled}`}
+                        (!reviewInfo.firstName || reviewInfo.firstName==="" || !reviewInfo.email || reviewInfo.email==="") && styles.nextButtonDisabled}`}
                       >
                       Done
                       </button>
@@ -475,7 +484,7 @@ export default function WriteReview({ setInfoDivOpen }) {
               </div>
             )}
 
-            {ratingPage == 4 && (
+            {ratingPage === 4 && (
               <div
                 className={`${styles.writeReviewFooter}`}
               >

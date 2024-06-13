@@ -1,27 +1,20 @@
 import styles from "./policyCard.module.css";
 
-export function PolicyMiniCard(props) {
-  return (
-    <div
-      className={`${styles.policy_main_div} ${
-        props.homeCard ? styles.homeCard : ""
-      }`}
-    >
-      {props.children}
-    </div>
-  );
-}
+
+
+
+
 
 export default function PolicyCard(props) {
   return (
     <div
-      className={`${styles.policy_background_div} ${
-        props.smallContent && styles.bigBackDiv
-      }`}
+      className={styles.policy_background_div}
     >
-      <PolicyMiniCard homeCard={props.homeCard}>
+      <div
+      className={styles.policy_main_div}
+    >
         {props.children}
-      </PolicyMiniCard>
+        </div>
     </div>
   );
 }
