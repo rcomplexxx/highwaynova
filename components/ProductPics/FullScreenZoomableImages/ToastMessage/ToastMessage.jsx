@@ -14,7 +14,7 @@ export default function ToastMessage({showToastMessage, setShowToastMessage}) {
         
 
        
-        if(showToastMessage==1){
+        if(showToastMessage===1){
        
 
         toastTimeout.current= setTimeout(()=> {
@@ -38,7 +38,7 @@ export default function ToastMessage({showToastMessage, setShowToastMessage}) {
 
 
 
-        else if(showToastMessage==2){
+        else if(showToastMessage===2){
 
             clearTimeout(toastTimeout.current);
           
@@ -52,7 +52,7 @@ export default function ToastMessage({showToastMessage, setShowToastMessage}) {
             
         }
 
-        else if(showToastMessage==3){
+        else if(showToastMessage===3){
             clearTimeout(toastTimeout.current);
           
               if(toast){

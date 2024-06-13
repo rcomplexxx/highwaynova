@@ -29,17 +29,17 @@ export default function ContactUsCard() {
   
         const emailPattern = /^\w+@\w+\.\w+$/;
         if (!emailPattern.test(email)) {
-          if(email.length==0)emailError='This field is required.'
+          if(email.length===0)emailError='This field is required.'
           else emailError='Please enter a valid email.'
         
           }
   
-          if(name.length==0){
+          if(name.length===0){
             nameError='This field is required.'
           }
   
         if (message.match(/ /g) < 2) {
-         if(message.length==0) messageError='This field is required.'
+         if(message.length===0) messageError='This field is required.'
           else if (message.match(/ /g) < 2) messageError='Please enter at least three words.'
         }
   

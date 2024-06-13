@@ -46,7 +46,7 @@ export default function BestSellers() {
     console.log('context check', cartProducts,setCartProducts)
     if(!cartProducts ){ return;}
 
-      if(cartProducts.length==0){
+      if(cartProducts.length===0){
         setCartProducts([{
           id: addedProduct.id,
           quantity: quantity,

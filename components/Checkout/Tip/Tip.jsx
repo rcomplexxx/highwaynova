@@ -125,7 +125,7 @@ export default function Tip(){
             setApplyDisabled(tipValueFloat==tip);
 
 
-            if(tipInputValue!=0 && tipValueFloat==0) {
+            if(tipInputValue!==0 && tipValueFloat===0) {
               setTipInputValue("")
             }
             else{
@@ -170,7 +170,7 @@ export default function Tip(){
           if(parseFloat(tipInputValue, 2) > fullProductCost) {setTipInputValue(""); setTipError(true); return;}
             setSelectedField(0);
             setApplyDisabled(true);
-            if(tipInputValue=="")setTip(0);
+            if(tipInputValue==="")setTip(0);
             else setTip(parseFloat(tipInputValue, 2));
         }}    >{tip==0?"Add tip":"Update tip"}</button>
       

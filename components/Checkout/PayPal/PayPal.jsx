@@ -17,13 +17,13 @@ const PayPalButton=({checkFields, organizeUserData, method='paypal',  type='norm
 
     const handlePayPalButtonClick =  async(data, actions) => {
       
-        // if(type=='express') return actions.resolve();
+        // if(type==='express') return actions.resolve();
         //Ako je type==express i address i city field vec provajdovan, mogu ici sa normal checkout.
         //Ako nije, i type=='express' ici sa epress checkut, tj zatraziti shipping od usera na paypal client
 
         setPaypalError();
     
-        if(type=='instant' || (type=='express' && document.getElementById("address").value == "" && document.getElementById("city").value == "") )
+        if(type=='instant' || (type==='express' && document.getElementById("address").value === "" && document.getElementById("city").value == "") )
         return actions.resolve();
         try {
           const fieldsCorrect=checkFields();

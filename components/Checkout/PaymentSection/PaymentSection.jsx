@@ -33,8 +33,8 @@ export default function PaymentSection({ checkFields, organizeUserData  }) {
     let nonSelectedPaymentFields;
 
 
-    if(paymentMethod=='creditcard') selectedPaymentFields = creditCardPaymentFieldsRef.current;
-    else if(paymentMethod=='paypal')selectedPaymentFields = paypalPaymentFieldsRef.current;
+    if(paymentMethod==='creditcard') selectedPaymentFields = creditCardPaymentFieldsRef.current;
+    else if(paymentMethod==='paypal')selectedPaymentFields = paypalPaymentFieldsRef.current;
   
 
 

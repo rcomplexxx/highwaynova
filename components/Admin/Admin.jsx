@@ -187,7 +187,7 @@ export default function Admin() {
           );
           break;
           case "emails":
-            if(adminroute.length==2){
+            if(adminroute.length===2){
                 if(adminroute[1]=='new-email')content= <NewEmail/>
                 else if(adminroute[1]=='campaigns')content = <Campaigns emails={emailData?.emails} sequences={emailData?.sequences} campaignData={emailData?.campaigns}/>
                 else if(adminroute[1]=='sequences')content = <Sequences emails={emailData?.emails} sequences={emailData?.sequences}/>

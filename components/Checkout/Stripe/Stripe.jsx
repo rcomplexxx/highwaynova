@@ -14,6 +14,27 @@ import { CheckoutContext } from '@/contexts/CheckoutContext';
 import InputField from '../Input/InputField';
 import { CorrectIcon, ErrorIcon } from '@/public/images/svgs/svgImages';
 import { useGlobalStore } from '@/contexts/AppContext';
+
+
+
+
+
+
+
+export default function StripeWrapper({organizeUserData, checkFields}){
+  const stripePromise = loadStripe('pk_test_51OR1EhAom3KfH7oBf5QRKboVHPrFIrZ3nwmtwS30uSDtrHbpgwsFzf19Np73RjxFiAqUy0tjPi5BIYdDmSPDExya00m4ZFZoI1');
+  
+  return (
+    <Elements stripe={stripePromise}>
+    <Stripe organizeUserData={organizeUserData}  checkFields={checkFields}/>
+    </Elements>
+  );
+  }
+
+
+
+
+
                
 
 const Stripe = ({organizeUserData, checkFields}) => {
@@ -398,7 +419,14 @@ const handleCCBlur= ()=>{
     <span className={`${styles.label} ${floatingLabels.expiryDate && styles.labelFloating}`}>Expiration Date (MM / YY)</span>
    
     </div>
+
+
+    
     {errors.expiryDate && <p className={styles.stripeError}><ErrorIcon/>{errors.expiryDate}</p>}
+
+
+
+
     </div>
      <div className={styles.form_group}>
 
@@ -482,22 +510,6 @@ const handleCCBlur= ()=>{
 
 
 
-export default function StripeWrapper({organizeUserData, checkFields}){
-const stripePromise = loadStripe('pk_test_51OR1EhAom3KfH7oBf5QRKboVHPrFIrZ3nwmtwS30uSDtrHbpgwsFzf19Np73RjxFiAqUy0tjPi5BIYdDmSPDExya00m4ZFZoI1');
-
-return (
-  <Elements stripe={stripePromise}>
-  <Stripe organizeUserData={organizeUserData}  checkFields={checkFields}/>
-  </Elements>
-);
-}
 
 
 
-// {/* <Cards
-// number={cardNumber}
-// name={name}
-// expiry={expiry}
-// cvc={cvc}
-// focused={focus}
-// /> */}

@@ -5,7 +5,7 @@
     min-height: 100svh;
   
     
-    
+
     align-items: flex-end;
     padding-top: var(--size-8);
     box-sizing: border-box;
@@ -294,9 +294,8 @@
     
   }
 
-  .aptAdder{
-    margin-bottom: var(--size-4);
-  }
+
+  
 
   .checkoutFooter{
     margin-right: 20px;

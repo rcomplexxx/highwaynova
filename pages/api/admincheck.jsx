@@ -21,7 +21,7 @@ export default async function adminCheckHandler(req, res) {
       const db = betterSqlite3(process.env.DB_PATH);
       let rows;
 
-      if(table=="emails"){
+      if(table==="emails"){
         
        let queryString = `SELECT * FROM emails`;
        const rows1 = db.prepare(queryString).all();
@@ -311,7 +311,7 @@ else{
 
 
 
-      else if(table=='emails'){
+      else if(table==='emails'){
 
         if(queryCondition=== 'newEmail'){
 
@@ -346,7 +346,7 @@ else{
 
 
 
-      else if(table=='email_sequences'){
+      else if(table==='email_sequences'){
 
 
         console.log('in table email_sequences');

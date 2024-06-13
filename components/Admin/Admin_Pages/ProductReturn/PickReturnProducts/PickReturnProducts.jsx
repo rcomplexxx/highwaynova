@@ -90,7 +90,7 @@ export default function PickReturnProducts({orderProducts, returnProducts, setRe
 
 
     const newReturnProductsArray= returnProducts.map((rp, i)=>{
-        if(index==i) return {id: event.target.value, quantity: 1};
+        if(index===i) return {id: event.target.value, quantity: 1};
         else return rp;
     });
 
