@@ -16,7 +16,7 @@ import FrequentlyBoughtTogether from "@/components/FrequentlyBoughtTogether/Freq
 import ProductPageCards from "@/components/ProductPageCards/ProductPageCards";
 
 import ProductPics from "@/components/ProductPics/ProductPics";
-import { useRouter } from "next/router";
+
 import { getReviewsData } from "@/utils/getStartReviews";
 import getRatingData from "@/utils/getRatingData";
 import PayPalButton from "@/components/Checkout/PayPal/PayPal";
@@ -39,7 +39,8 @@ export default function ProductPage({ product, images, startReviews, ratingData 
 
   const [quantity, setQuantity] = useState(1);
   const [variant, setVariant]=useState(product.variants && product.variants[0].name);
-  const router = useRouter();
+
+  
   const stopVariantImageChange = useRef(false);
 
 
@@ -63,13 +64,17 @@ export default function ProductPage({ product, images, startReviews, ratingData 
 
 
   const onAddToCart = useCallback(( quantity = 1,addedProduct=product, addedVariant=variant) => {
+
+    let updatedCartProducts = [...cartProducts];
+
     const productIndex = cartProducts.findIndex((cp) => cp.id === addedProduct.id && cp.variant===addedVariant);
 
     if (productIndex !== -1) {
-      const updatedCartProducts = [...cartProducts];
+     
+      
       updatedCartProducts[productIndex].quantity += quantity;
-      setNewProduct(updatedCartProducts[productIndex]);
-      setCartProducts(updatedCartProducts);
+      setNewProduct(addedProduct);
+  
     } else {
       const newProduct = {
         id: addedProduct.id,
@@ -80,10 +85,14 @@ export default function ProductPage({ product, images, startReviews, ratingData 
         stickerPrice: addedProduct.stickerPrice,
         variant: addedVariant
       };
-      setNewProduct(newProduct);
-      setCartProducts([...cartProducts, newProduct]);
+      updatedCartProducts.push(newProduct);
     }
-  },[cartProducts, product, variant, ]);
+
+  
+      setCartProducts( updatedCartProducts);
+      setNewProduct(addedProduct);
+
+    },[cartProducts, product, variant, ]);
 
   
 

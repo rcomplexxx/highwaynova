@@ -7,6 +7,8 @@ import Image from 'next/image';
 
 export default function ProductDescription({description}) {
 
+  console.log(`this is description!`, description)
+
 
   const options = {
     transform: (node) => {
@@ -20,7 +22,7 @@ export default function ProductDescription({description}) {
             layout='responsive'
             width={0} // set your desired width
             height={0} // set your desired height
-            sizes="(max-width: 980px) 40vw, 100vw"
+            sizes="(max-width: 980px) 20vw, 100vw"
           />
         );
       }

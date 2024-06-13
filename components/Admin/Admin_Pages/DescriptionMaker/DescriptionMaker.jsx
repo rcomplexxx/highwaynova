@@ -205,13 +205,13 @@ export default function DescriptionMaker() {
           <span>Handy options</span>
         <button className={`${styles.getCurrentDescrition} ${styles.featureButton}`} 
         onClick={(event)=>{ 
-          navigator.clipboard.writeText(`<div class="descriptionWrapper">\n\n<img alt="description image" class="descriptionImage" loading="eager" src="/images/description_images/1-3.png"/>\n\n<h1 class="descTitle">My title</h1>\n\n<span class="subText">This is my description text</span>\n\n</div>`);
+          navigator.clipboard.writeText(`<div class="descriptionWrapper">\n\n<img alt="description image" class="descriptionImage firstChild" loading="eager" src="/images/description_images/1-3.png"/>\n\n<h1 class="descTitle">My title</h1>\n\n<span class="subText">This is my description text</span>\n\n</div>`);
           event.target.innerText="Standard html content COPIED!"
         }}>Copy standard html description content</button>
          <button className={`${styles.getCurrentDescrition} ${styles.featureButton}`} 
         onClick={(event)=>{ 
           navigator.clipboard.writeText(
-            `.descriptionWrapper{\ndisplay:flex;\nflex-direction: column;\nfont-size: 16px;\n}\n\n.descriptionWrapper > :first-child{\nmargin-top:0;\n}\n\n.descriptionImage{\nwidth: 100%;\nborder-radius: 16px;\nmargin-top: 32px;\nalign-self:center;\n}\n\n.descTitle{\nmargin: 32px 0;\nmargin-bottom: 32px;\nfont-weight: 600;\n}\n\n.subText{\ncolor: var(--description-content-color);\n margin: 0 32px;\nfont-size: 18px;\ntext-align: center;\n}`
+            `.descriptionWrapper{\ndisplay:flex;\nflex-direction: column;\nfont-size: 16px;\n}\n\n.descriptionImage{\nwidth: 100%;\nborder-radius: 16px;\nmargin-top: 32px;\nalign-self:center;\n}\n\n.firstChild{\nmargin-top:0;\n}\n\n.descTitle{\nmargin: 32px 0;\nmargin-bottom: 32px;\nfont-weight: 600;\n}\n\n.subText{\ncolor: var(--description-content-color);\n margin: 0 32px;\nfont-size: 18px;\ntext-align: center;\n}`
       );
           event.target.innerText="Standard css content COPIED!"
         

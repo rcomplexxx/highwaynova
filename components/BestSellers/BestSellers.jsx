@@ -43,28 +43,16 @@ export default function BestSellers() {
   console.log('context check main', cartProducts,setCartProducts)
 
   const onAddToCart = ( quantity = 1,addedProduct, addedVariant) => {
-    console.log('context check', cartProducts,setCartProducts)
-    if(!cartProducts ){ return;}
-
-      if(cartProducts.length===0){
-        setCartProducts([{
-          id: addedProduct.id,
-          quantity: quantity,
-          name: addedProduct.name,
-          image: addedProduct.images[0],
-          price: addedProduct.price,
-          stickerPrice: addedProduct.stickerPrice,
-          variant: addedVariant
-        }]);
-      }
+    let updatedCartProducts = [...cartProducts];
 
     const productIndex = cartProducts.findIndex((cp) => cp.id === addedProduct.id && cp.variant===addedVariant);
 
-    if (productIndex !== -1 ) {
-      const updatedCartProducts = [...cartProducts];
-      updatedCartProducts[productIndex].quantity += quantity;
+    if (productIndex !== -1) {
      
-      setCartProducts(updatedCartProducts);
+      
+      updatedCartProducts[productIndex].quantity += quantity;
+      setNewProduct(addedProduct);
+  
     } else {
       const newProduct = {
         id: addedProduct.id,
@@ -75,8 +63,12 @@ export default function BestSellers() {
         stickerPrice: addedProduct.stickerPrice,
         variant: addedVariant
       };
-      setCartProducts([...cartProducts, newProduct]);
+      updatedCartProducts.push(newProduct);
     }
+
+  
+      setCartProducts( updatedCartProducts);
+    
   };
 
  
