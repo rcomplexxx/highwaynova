@@ -114,7 +114,8 @@
     @media (max-width: 980px)  {
 
         .form_group{
-          margin-bottom: var(--size-4);
+    
+          
           margin-left: 0;
           margin-right: 0;
         }

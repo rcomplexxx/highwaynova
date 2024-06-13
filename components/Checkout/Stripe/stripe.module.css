@@ -90,7 +90,7 @@
     color: var(--checkout-input-placeholder);
     position: absolute;
     left: var(--size-3);
-    top: var(--size-4);
+    top: var(--size-5);
     transition: all 0.3s ease;
     pointer-events: none;
  
@@ -191,7 +191,7 @@
     .labelFloating {
       color: var(--checkout-input-placeholder-floating);
     top: 8px;
-    font-size: var(--size-4);
+    font-size: var(--size-5);
     
   }
 
@@ -215,6 +215,7 @@
   .billingCheckboxDiv{
     display: flex;
      padding: 0 var(--size-3);
+     margin-top: var(--size-5);
     margin-bottom: var(--size-5);
     cursor: pointer;
     user-select: none;
@@ -292,7 +293,7 @@
 
   
       .form_group{
-        margin-bottom: var(--size-4);
+        margin-bottom: var(--size-5);
         margin-left: 0;
         margin-right: 0;
       }

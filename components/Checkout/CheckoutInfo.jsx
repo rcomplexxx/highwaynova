@@ -359,6 +359,8 @@ return false;
                 
                 <Tip products={products} />
         </div>
+
+        </div>
         <div className={styles.checkoutFooterWrapper}>
                 <div className={styles.checkoutFooter}>
                   <Link className={styles.footerLink} href='/refund-policy'>Refund policy</Link>
@@ -370,7 +372,7 @@ return false;
 
 
                 </div>
-        </div>
+       
       </div>
  
   );

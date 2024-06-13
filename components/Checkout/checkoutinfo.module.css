@@ -4,11 +4,16 @@
     flex-direction: column;
     min-height: 100svh;
   
+    
+    
     align-items: flex-end;
     padding-top: var(--size-8);
     box-sizing: border-box;
     flex: 1 1 auto;
     contain: layout;
+
+
+  
  
  }
 
@@ -20,6 +25,8 @@
     margin-right: 40px;
     margin-left: 40px;
     margin-bottom: var(--size-7);
+
+    
   } 
  
   
@@ -125,6 +132,8 @@
     flex-direction: column;
     gap: var(--size-5);
     
+   
+    
 }
   
 
@@ -168,24 +177,6 @@
 
 
   
-  .shipping_method {
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: var(--size-2);
-    font-size:  var(--size-5);
-    margin-right: var(--size-3);
-  }
-  
- 
-
-  .shipping_method_sp {
-    margin:0;
-    margin-top:0;
-    font-size: var(--font-size-2);
-    align-self: flex-end;
-  }
-
 
  
  
@@ -294,10 +285,13 @@
 
    
 
+
+    
+
     .input_row{
     flex-direction: column;
-    gap: 0;
-    margin-bottom: 0;
+   
+    
   }
 
   .aptAdder{

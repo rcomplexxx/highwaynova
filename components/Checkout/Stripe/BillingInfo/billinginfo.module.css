@@ -63,7 +63,7 @@ gde je input outline sa strane isecen kada se max height podize*/
     color: var(--apt-adder-color);
     margin: 0 var(--size-4) ;
    
-    
+
 
  
         
@@ -85,20 +85,13 @@ gde je input outline sa strane isecen kada se max height podize*/
     }
     .InputFieldRow{
         flex-direction: column;
-        margin-bottom: 0;
-        
-    gap: 0;
+    
       }
 
-      .aptAdder{
       
-        margin-bottom: var(--size-4);
-      
-      }
 
-      .InputFieldRow{
-         /*  padding: 0; */
-      }
+   
+      
 }
 
 
