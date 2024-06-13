@@ -7,27 +7,29 @@ import Image from 'next/image';
 
 export default function ProductDescription({description}) {
 
-  console.log(`this is description!`, description)
+  
 
 
-  const options = {
-    transform: (node) => {
-      // Replace <img> tags with Next.js <Image> components
-      if (node.type === 'tag' && node.name === 'img' && node.attribs) {
-        return (
-          <Image
-            src={node.attribs.src}
-            alt={node.attribs.alt || ''}
-            className={node.attribs.class || ''}
-            layout='responsive'
-            width={0} // set your desired width
-            height={0} // set your desired height
-            sizes="(max-width: 980px) 20vw, 100vw"
-          />
-        );
-      }
-    }
-  };
+  // const options = {
+  //   transform: (node) => {
+  //     // Replace <img> tags with Next.js <Image> components
+  //     if (node.type === 'tag' && node.name === 'img' && node.attribs) {
+  //       return (
+  //         <Image
+  //           src={node.attribs.src}
+  //           alt={node.attribs.alt || ''}
+  //           className={node.attribs.class || ''}
+  //           layout='responsive'
+  //           width={0} // set your desired width
+  //           height={0} // set your desired height
+  //           sizes="(max-width: 980px) 10px, 100vw"
+  //         />
+  //       );
+  //     }
+  //   }
+  // };
+
+  //, options
 
 
 
@@ -37,6 +39,6 @@ export default function ProductDescription({description}) {
     <div className={styles.descriptionDiv}>
       <div className={styles.mainSpan}>Product details</div>
 
-      {ReactHtmlParser(description, options)}</div>
+      {ReactHtmlParser(description)}</div>
   )
 }
