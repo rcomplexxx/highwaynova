@@ -4,7 +4,7 @@
     display: flex;
     width: 100%;
     max-width: var(--size-15);
-    margin-top: var(--size-7);
+    margin-top: var(--size-6);
 }
 
 .iconText{
@@ -33,10 +33,22 @@
     width: 40px;
 }
 
+@media(max-width: 980px){
+    .trustIcons{
+        margin-top: var(--size-5);
+    }
+}
+
 @media(max-width: 600px){
 
+
+    
+}
+
+@media (max-width: 480px) {
+    
     .trustIcons{
-        margin-top: var(--size-6);
+        margin-top: var(--size-4);
     }
 }
 
@@ -52,9 +64,8 @@
 
 @media( max-width: 320px){
 
-    .trustIcon{
-        margin-top: var(--size-4);
-    }
+    
+    
 
     .trustIconImage{
         height: 40px;

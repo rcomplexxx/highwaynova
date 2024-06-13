@@ -72,6 +72,8 @@ export default function WriteReview({ setInfoDivOpen }) {
   },[images]);
 
   const handleNext = useCallback(() => {
+
+    
     const outAnimationTime = 500;
     const inAnimationTime = 200;
     if (animation) return;
@@ -83,7 +85,7 @@ export default function WriteReview({ setInfoDivOpen }) {
 
       setAnimation("swipeInRight");
       setTimeout(() => {
-        setAnimation(undefined);
+        setAnimation();
       }, inAnimationTime);
     }, outAnimationTime);
   },[ratingPage, animation]);

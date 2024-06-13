@@ -182,6 +182,13 @@ column-fill:balance;
   @media (max-width: 980px)  {
 
 
+
+    .mainDiv{
+    
+      
+      margin-top:  var(--size-7)
+
+    }
   
 
 
@@ -215,6 +222,15 @@ column-fill:balance;
   }
   
   @media (max-width: 600px)  {
+
+
+    .mainDiv{
+    
+      
+      margin-top: var(--size-6);
+
+    }
+
 
     .masonry{
   
