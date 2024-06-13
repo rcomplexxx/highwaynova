@@ -187,7 +187,8 @@ export default function PaymentSection({ checkFields, organizeUserData  }) {
           <PayPalButton
             checkFields={checkFields}
             organizeUserData={organizeUserData}
-            method="paypal"
+        
+            
            
             
           />

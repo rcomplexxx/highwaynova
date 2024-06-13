@@ -23,7 +23,8 @@ export default function ExpressCheckout({
           type='express'
              checkFields={checkFields}
              organizeUserData={organizeUserData}
-             method="paypal"
+          
+             
            
              
              
