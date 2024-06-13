@@ -116,9 +116,11 @@ export default function EmailFlowPopup({setEmailPopup}){
         {/* <span>SIGN UP BELOW!</span>  */}
         <div className={styles.provideEmailDiv}>
           <input ref={emailFieldRef} placeholder='Enter email here' onChange={()=>{setError()}} className={styles.emailField} maxLength={127}/>
+          {error && <span className={styles.emailError}><ErrorIcon/>{error}</span>}
+         
           <button className={styles.sendEmailButton} onClick={handleSignUp}>Sign up</button>
            </div>
-           {error && <span className={styles.emailError}><ErrorIcon/>{error}</span>}
+        
            </>
       }
 

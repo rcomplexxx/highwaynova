@@ -133,7 +133,8 @@
     height: 40px;
 
     /* margin-right: var(--size-3); */
-    margin-bottom: var(--size-3);
+   
+    
     box-sizing: border-box;
     text-indent: var(--size-2);
     border: 1px solid var(--email-popup-input-border);
@@ -144,6 +145,28 @@
     
 }
 
+.emailError{
+    background-color: var(--email-popup-input-bg);
+    color: var(--error-color);
+ 
+    
+  
+   
+    
+    margin-top: var(--size-2);
+    margin-bottom: var(--size-2);
+
+    border-radius: 8px;
+    padding: var(--size-1) var(--size-2);
+    font-size: var(--font-size-1);
+    align-self: flex-start;
+}
+
+
+
+
+
+
 
 .sendEmailButton{
     height: 40px;
@@ -152,6 +175,9 @@
     color: var(--email-popup-button-color);
     background-color: var(--email-popup-send-button-bg);
    
+
+    margin-top: var(--size-3);
+    
     box-sizing: border-box;
     border: 1px solid var(--email-popup-send-button-border);
     border-radius: 8px;
@@ -160,17 +186,7 @@
     white-space: nowrap;
 }
 
-.emailError{
-    background-color: var(--neutral-0);
-    color: var(--error-color);
-    align-self: flex-start;
-    font-size: var(--font-size-2);
-  
-    margin: var(--size-2) var(--size-5);
 
-    border-radius: 8px;
-    padding: var(--size-1) var(--size-2);
-}
 
 
 
