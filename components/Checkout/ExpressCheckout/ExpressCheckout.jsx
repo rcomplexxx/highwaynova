@@ -4,12 +4,13 @@ import styles from "./expresscheckout.module.css";
 
 export default function ExpressCheckout({
   products,
-  tip,
-  discount,
+  
+  
   checkFields,
   organizeUserData,
-  setCartProducts,
-  setErrors,
+ 
+  
+  
 }) {
   return (
     <div className={styles.expressCheckoutWrapper}>
@@ -23,8 +24,9 @@ export default function ExpressCheckout({
              checkFields={checkFields}
              organizeUserData={organizeUserData}
              method="paypal"
-             setCartProducts={setCartProducts}
-             setErrors={setErrors}
+           
+             
+             
           />
          
         </div>
@@ -33,12 +35,11 @@ export default function ExpressCheckout({
        
           <GooglePay
             products={products}
-            setCartProducts={setCartProducts}
-            discount={discount}
-            tip={tip}
-            organizeUserData={(paymentToken) => {
-              return organizeUserData("GPAY", paymentToken);
-            }}
+          
+            
+            
+          
+            
           />
         
         </div>

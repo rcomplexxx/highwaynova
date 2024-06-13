@@ -14,7 +14,7 @@ import { CorrectIcon, ErrorIcon, correctIcon } from "@/public/images/svgs/svgIma
 import Image from "next/image";
 
 
-export default function CheckoutInfo({ products,  setCartProducts }) {
+export default function CheckoutInfo({ products }) {
   const [showApt, setShowApt] = useState(false);
   const [errors, setErrors] = useState({});
   // const [shippingType, setShippingType] = useState("free");
@@ -195,11 +195,17 @@ return false;
   return (
       <div className={styles.leftWrapper}>
         <div className={styles.checkout_left}>
-          <ExpressCheckout products={products} checkFields={checkFields} organizeUserData={organizeUserData} setCartProducts={setCartProducts } setErrors={setErrors}/>
-          <div className={styles.checkout_section}>
+          <ExpressCheckout products={products} checkFields={checkFields} organizeUserData={organizeUserData}
+          />
+
+
+
+     
+     
             <h2 className={styles.contactTitle}>Contact</h2>
           
-              <div className={styles.emailField}>
+            
+            
                 <InputField
                   id="email"
                   placeHolder="Email"
@@ -216,7 +222,8 @@ return false;
 
 
                 <div tabIndex={0} className={styles.emailSubscribeDiv} onClick={()=>{ setSubscribe(!subscribe);}}>
-      <div id='subscribeCheckbox' data-subscribe={subscribe} className={`${styles.emailSubscribeChecker} ${subscribe && styles.emailSubscribeCheckerChecked}`}>
+      <div id='subscribeCheckbox' data-subscribe={subscribe} 
+      className={`${styles.emailSubscribeChecker} ${subscribe && styles.emailSubscribeCheckerChecked}`}>
         <CorrectIcon styleClassName={styles.checkImage}/>
       </div>
      
@@ -230,15 +237,11 @@ return false;
 
 
 
-   
 
 
 
-   
 
 
-
-              </div>
 
               <h2
                 className={styles.deliveryTitle}
@@ -327,68 +330,16 @@ return false;
                 />
               </div>
             
-          </div>
+    
+    
 
-          {/* <div className={styles.checkout_section}>
-            <h2>Shipping Method</h2>
-            <label className={styles.shipping_method}>
-              <input
-                type="radio"
-                id="freeShipping"
-                name="shippingMethod"
-                checked={shippingType === "free"}
-                className={styles.radioButton}
-                onChange={() => {
-                  setShippingType("free");
-                }}
-              />
-              <span
-                className={`${styles.checkmark} ${
-                  shippingType !== "free" && styles.unselectedCheckmark
-                }`}
-              ></span>
-              <span
-                className={
-                  shippingType === "free"
-                    ? styles.checkMarkText
-                    : styles.unselectedCheckmarkText
-                }
-              >
-                {" "}
-                FREE Shipping (Tracked & Insured){" "}
-                <span className={styles.shipping_method_sp}>Free</span>
-              </span>
-            </label>
-            <label className={styles.shipping_method}>
-              <input
-                type="radio"
-                id="expressShipping"
-                name="shippingMethod"
-                checked={shippingType === "express"}
-                className={styles.radioButton}
-                onChange={() => {
-                  setShippingType("express");
-                }}
-              />
-              <span
-                className={`${styles.checkmark}  ${
-                  shippingType === "free" && styles.unselectedCheckmark
-                }`}
-              ></span>
-              <span
-                className={
-                  shippingType !== "free"
-                    ? styles.checkMarkText
-                    : styles.unselectedCheckmarkText
-                }
-              >
-                Express Shipping (2-3 days){" "}
-                <span className={styles.shipping_method_sp}>$9.99</span>
-              </span>
-            </label>
-          </div> */}
+
+
+
+
+
          
-         <PaymentSection  checkFields={checkFields} organizeUserData={organizeUserData} products={products} setCartProducts={setCartProducts } setErrors={setErrors} />
+         <PaymentSection  checkFields={checkFields} organizeUserData={organizeUserData} />
                 
                 <Tip products={products} />
         </div>

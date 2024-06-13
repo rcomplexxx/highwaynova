@@ -482,12 +482,12 @@ const handleCCBlur= ()=>{
 
 
 
-export default function StripeWrapper({organizeUserData,  products, setCartProducts, checkFields}){
+export default function StripeWrapper({organizeUserData, checkFields}){
 const stripePromise = loadStripe('pk_test_51OR1EhAom3KfH7oBf5QRKboVHPrFIrZ3nwmtwS30uSDtrHbpgwsFzf19Np73RjxFiAqUy0tjPi5BIYdDmSPDExya00m4ZFZoI1');
 
 return (
   <Elements stripe={stripePromise}>
-  <Stripe organizeUserData={organizeUserData}  products={ products} setCartProducts={setCartProducts } checkFields={checkFields}/>
+  <Stripe organizeUserData={organizeUserData}  checkFields={checkFields}/>
   </Elements>
 );
 }

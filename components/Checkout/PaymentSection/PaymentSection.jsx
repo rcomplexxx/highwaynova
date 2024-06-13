@@ -5,7 +5,7 @@ import styles from "./paymentmethodwrapper.module.css";
 import Image from "next/image";
 import {Amex, Discover, Jcb, MasterCard, UntionPay, Visa} from '@/public/images/svgs/svgImages.jsx'
 
-export default function PaymentSection({ checkFields, organizeUserData, setErrors, products,setCartProducts}) {
+export default function PaymentSection({ checkFields, organizeUserData  }) {
     const [paymentMethod, setPaymentMethod] = useState("creditcard");
     const [moreCardsPopupOpen, setMoreCardsPopupOpen] = useState(false);
     
@@ -151,8 +151,8 @@ export default function PaymentSection({ checkFields, organizeUserData, setError
         ${paymentMethod=="creditcard" && styles.selectedField}`}>
             <div className={styles.paymentFieldsSpaceAdjuster}> 
           <StripeWrapper
-            setCartProducts={setCartProducts}
-            products={products}
+       
+       
             organizeUserData={organizeUserData}
             checkFields={checkFields}
           />
@@ -188,8 +188,8 @@ export default function PaymentSection({ checkFields, organizeUserData, setError
             checkFields={checkFields}
             organizeUserData={organizeUserData}
             method="paypal"
-            setCartProducts={setCartProducts}
-            setErrors={setErrors}
+           
+            
           />
          
         </div>  

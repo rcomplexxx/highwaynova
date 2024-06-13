@@ -15,7 +15,7 @@ const GooglePay = ({
   const [googlePayError, setGooglePayError] = useState();
 
 
-  const {subscribed, subTotal, discount, tip} = useContext(CheckoutContext);
+  const { subTotal, discount, tip} = useContext(CheckoutContext);
 
   const totalPrice = useMemo(()=>{
     return (subTotal - discount*subTotal/100 + parseFloat(tip)).toFixed(2)
