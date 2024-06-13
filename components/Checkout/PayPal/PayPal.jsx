@@ -147,6 +147,8 @@ const PayPalButton=({checkFields, organizeUserData, method='paypal',  type='norm
       };
 
       const cancelHandler = async () => { setPaypalError('Payment is canceled.') };
+
+      return <></>;
       
 
 
