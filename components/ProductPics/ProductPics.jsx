@@ -53,12 +53,6 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
 
   
 
-  useEffect(()=>{
-    if(!mounted.current){mounted.current = true; return;}
-    swiper && swiper.slideTo(0, 400);
-  },[images])
- 
-
 
 
 
@@ -115,19 +109,28 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
   
   
 
+
   useEffect(()=>{
 
-    if(!variantImageIndexMountedRef.current){variantImageIndexMountedRef.current=true;return;}
-    
-    if(variantImageIndex && variantImageIndex>=-1 && variantImageIndex < images.length && variantImageIndexMountedRef.current){
-      swiper?.slideTo(variantImageIndex,window.innerWidth<980?400:0);
+    if(!mounted.current){return;}
       
-    }
-    
-    
-  },[variantImageIndex])
+      if(variantImageIndex && variantImageIndex>=-1 && variantImageIndex < images.length && variantImageIndexMountedRef.current){
+        swiper?.slideTo(variantImageIndex,window.innerWidth<980?400:0);
+        
+      }
+      
+      
+    },[variantImageIndex])
+
 
   
+
+  useEffect(()=>{
+    if(!mounted.current){mounted.current = true; return;}
+    swiper && swiper.slideTo(0, 400);
+  },[images])
+ 
+
 
 
  
