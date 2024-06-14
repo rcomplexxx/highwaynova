@@ -51,7 +51,8 @@ export default function BestSellers() {
      
       
       updatedCartProducts[productIndex].quantity += quantity;
-      setNewProduct(addedProduct);
+     
+      
   
     } else {
       const newProduct = {
