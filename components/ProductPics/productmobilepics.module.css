@@ -32,7 +32,7 @@
     top: var(--size-2);
     bottom: 100%;
 
-    contain: content;
+    contain: content style paint size;
   }
   
 
@@ -59,7 +59,7 @@
 
   user-select: none;
   cursor: pointer;
- 
+  contain: content style paint size;
   }
 
 
