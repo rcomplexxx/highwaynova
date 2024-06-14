@@ -1,4 +1,3 @@
-import  { useLayoutEffect, useState } from 'react'
 
 import styles from './productdescription.module.css'
 
