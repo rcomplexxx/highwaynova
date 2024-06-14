@@ -73,7 +73,7 @@ export default function ProductPage({ product, images, startReviews, ratingData 
      
       
       updatedCartProducts[productIndex].quantity += quantity;
-      setNewProduct(addedProduct);
+      setNewProduct(updatedCartProducts[productIndex]);
   
     } else {
       const newProduct = {
@@ -86,11 +86,13 @@ export default function ProductPage({ product, images, startReviews, ratingData 
         variant: addedVariant
       };
       updatedCartProducts.push(newProduct);
+      setNewProduct(newProduct);
     }
 
   
       setCartProducts( updatedCartProducts);
-      setNewProduct(addedProduct);
+    
+      
 
     },[cartProducts, product, variant, ]);
 

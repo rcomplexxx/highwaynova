@@ -104,7 +104,7 @@ useEffect(()=>{
 },[])
 
 
-
+console.log('my new product', newProduct)
 
 // useEffect(()=>{ popupCart.focus();},[])
 
