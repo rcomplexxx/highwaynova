@@ -275,8 +275,8 @@ font-size: var(--font-size-1);
  
     border-radius: 12px;
     border: 1px solid var(--contact-send-btn-outline);
-    margin: var(--size-6) 0;
-    margin-bottom: 40px;
+    margin-top: var(--size-6);
+  
     font-size: var(--font-size-4);
 
     transition: background-color 0.2s ease;

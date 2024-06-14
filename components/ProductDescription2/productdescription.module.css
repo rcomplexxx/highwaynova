@@ -1,8 +1,7 @@
 .descriptionDiv{
     display: flex;
     flex-direction: column;
-    margin-top: var(--size-5);
-    margin-bottom: var(--size-7);
+   
      max-width: var(--size-15);
     /* align-self: center; */
 }
