@@ -222,7 +222,7 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
       ))}
     </Swiper>
 
-    
+{/*     
         <div className={styles.slider2Suiter}>
 
 
@@ -274,7 +274,7 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
           ))}
         </Swiper>
       
-    </div>
+    </div> */}
 
 
 

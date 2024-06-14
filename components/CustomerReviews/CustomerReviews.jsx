@@ -5,18 +5,18 @@ import ReactHtmlParser from "react-html-parser";
 
 import WriteReviewVisible from "./WriteReview/WriteReviewVisible";
 import FullScreenReview from "./FullScreenReview/FullScreenReview";
-import { CustomerStars, STARPATH, Stars } from "@/public/images/svgs/svgImages";
+import { CustomerStars} from "@/public/images/svgs/svgImages";
 
 function Review({  name, text,  stars,  reviewImgSrc, setFullScreenReview, shrinkReview}) {
 
-    const reviewRef= useRef();
+  
 
 
 
 
  
   return (
-    <div ref={reviewRef}  onClick={()=>{setFullScreenReview({authorName:name, text:text, stars:stars, 
+    <div onClick={()=>{setFullScreenReview({authorName:name, text:text, stars:stars, 
     imageSrc:reviewImgSrc
   
   })}} 
