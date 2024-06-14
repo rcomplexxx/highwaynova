@@ -31,6 +31,8 @@
     position: sticky;
     top: var(--size-2);
     bottom: 100%;
+
+    contain: content;
   }
   
 

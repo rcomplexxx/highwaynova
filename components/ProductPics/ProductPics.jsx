@@ -22,6 +22,7 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
   const [swiperMini, setSwiperMini] = useState(null);
 
   const router = useRouter();
+  const mounted= useRef();
   const variantImageIndexMountedRef=useRef(false);
   const fixedAddToCartRef= useRef();
 
@@ -51,15 +52,21 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
 
 
   
+
+  useEffect(()=>{
+    if(!mounted.current){mounted.current = true; return;}
+    swiper && swiper.slideTo(0, 400);
+  },[images])
  
+
+
+
 
   useEffect(() => {
    
     
 
-
-
-
+    
     
     const AddToCartEl = document.getElementById("addToCart");
     const  masonryEl = document.getElementById("masonry");
@@ -109,19 +116,19 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
   
 
   useEffect(()=>{
+
+    if(!variantImageIndexMountedRef.current){variantImageIndexMountedRef.current=true;return;}
     
     if(variantImageIndex && variantImageIndex>=-1 && variantImageIndex < images.length && variantImageIndexMountedRef.current){
       swiper?.slideTo(variantImageIndex,window.innerWidth<980?400:0);
       
     }
-    variantImageIndexMountedRef.current=true;
+    
     
   },[variantImageIndex])
 
   
-  useEffect(()=>{
-    swiper && swiper.slideTo(0, 400);
-  },[images])
+
 
  
  
