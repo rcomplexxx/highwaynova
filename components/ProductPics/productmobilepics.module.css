@@ -38,8 +38,9 @@
 
   .slide{
     position: relative;
-    aspect-ratio: 1;
     width: var(--size-17);
+    aspect-ratio: 1;
+   
     
    
   }
