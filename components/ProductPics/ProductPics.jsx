@@ -176,7 +176,7 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
       <div className={styles.productPicsWrapper}>
         <div className={styles.productImagesWrapper}>
         
-        <Swiper  onSwiper={setSwiper} speed={400} slidesPerView='auto' onSlideChange={handleSlideChange}
+        {/* <Swiper  onSwiper={setSwiper} speed={400} slidesPerView='auto' onSlideChange={handleSlideChange}
        
        
         preventClicks={false}
@@ -220,9 +220,9 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
         </SwiperSlide>
        
       ))}
-    </Swiper>
+    </Swiper> */}
 
-{/*     
+    
         <div className={styles.slider2Suiter}>
 
 
@@ -274,7 +274,7 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
           ))}
         </Swiper>
       
-    </div> */}
+    </div>
 
 
 
