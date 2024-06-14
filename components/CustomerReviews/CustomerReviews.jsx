@@ -7,7 +7,7 @@ import WriteReviewVisible from "./WriteReview/WriteReviewVisible";
 import FullScreenReview from "./FullScreenReview/FullScreenReview";
 import { CustomerStars, STARPATH, Stars } from "@/public/images/svgs/svgImages";
 
-function Review({ product_id,  name, text,  stars, imageNames, setFullScreenReview, shrinkReview}) {
+function Review({  name, text,  stars,  reviewImgSrc, setFullScreenReview, shrinkReview}) {
 
     const reviewRef= useRef();
 
@@ -17,33 +17,33 @@ function Review({ product_id,  name, text,  stars, imageNames, setFullScreenRevi
  
   return (
     <div ref={reviewRef}  onClick={()=>{setFullScreenReview({authorName:name, text:text, stars:stars, 
-    imageSrc:(imageNames && JSON.parse(imageNames).length!==0) && 
-    `/images/review_images/productId_${product_id}/${JSON.parse(imageNames)[0]}`
+    imageSrc:reviewImgSrc
   
   })}} 
     
     className={`${styles.reviewDiv} ${shrinkReview && styles.reviewDivShrinked}`}>
-      {imageNames && JSON.parse(imageNames).length!==0 &&
+      {reviewImgSrc &&
             <Image
             
               height={0}
               width={0}
-              src={`/images/review_images/productId_${product_id}/${JSON.parse(imageNames)[0]}`}
+              src={reviewImgSrc}
               alt="review image"
             
               
               
-              sizes="(max-width: 580px) 100vw, (max-width: 700px) 50vw, (max-width: 1200px) 33vw, 25vw"
+              sizes="(max-width: 700px) 50vw, (max-width: 1200px) 33vw, 25vw"
               className={styles.reviewImage}
             />
         }
 
-        <div className={styles.starDiv}>
+       
+       
 
         <CustomerStars ratingNumber={parseInt(stars, 10)}/>
 
         
-    </div>
+        
       <p className={styles.reviewText}>{ReactHtmlParser(text)}</p>
       <p className={styles.reviewAuthor}>{name}</p>
     </div>
@@ -293,8 +293,13 @@ export default function CustomerReviews({ product_id, ratingData, startReviews }
                 name={review.name}
                 text={review.text}
                 stars={review.stars}
-                product_id={product_id}
-                imageNames={review.imageNames} //popravi ovo
+               
+                
+               
+
+                reviewImgSrc={review.imageNames && JSON.parse(review.imageNames).length!==0 && 
+                  `/images/review_images/productId_${product_id}/${JSON.parse(review.imageNames)[0]}`
+                }
                 shrinkReview={shrinkReview}
               />
             );

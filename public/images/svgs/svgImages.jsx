@@ -259,7 +259,7 @@ export const CustomerStars = ({ratingNumber}) =>{
 
 
 
-	return <div className={styles.starsWrapper}>
+	return <div className={`${styles.starsWrapper} ${styles.customerStars}`}>
 		{stars}
 		</div>;
 

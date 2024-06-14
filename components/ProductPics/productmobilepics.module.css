@@ -32,7 +32,7 @@
     top: var(--size-2);
     bottom: 100%;
 
-    contain: content style paint size;
+    contain: content style size;
   }
   
 

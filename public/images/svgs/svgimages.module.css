@@ -6,6 +6,16 @@
   gap: 4px;
 }
 
+.customerStars{
+  
+  box-sizing: border-box;
+
+  margin-bottom: var(--size-2);
+
+  padding: 0 var(--size-4);
+  padding-top: var(--size-5);
+}
+
 .star{
 margin-bottom: var(--size-2);
 }

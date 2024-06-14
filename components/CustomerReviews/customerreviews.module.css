@@ -59,7 +59,7 @@
 column-fill:balance;
 
  column-gap: var(--size-5);
- contain:layout;
+ contain:content style;
 
  
  user-select: none;
@@ -123,12 +123,17 @@ column-fill:balance;
 }
 
   .starDiv{
-    margin-bottom: 0;
   
-    padding: 0 var(--size-4);
+    
+  
+   
     box-sizing: border-box;
-    padding-top: var(--size-5);
+
     margin-bottom: var(--size-2);
+
+    padding: 0 var(--size-4);
+    padding-top: var(--size-5);
+
   }
 
   

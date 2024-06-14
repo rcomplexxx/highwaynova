@@ -264,7 +264,7 @@ export default function ProductPage({ product, images, startReviews, ratingData 
       </div>
       
       
-      {/* <CustomerReviews product_id={product.id} startReviews={startReviews} ratingData={ratingData} /> */}
+      <CustomerReviews product_id={product.id} startReviews={startReviews} ratingData={ratingData} />
     </>
   );
 }
