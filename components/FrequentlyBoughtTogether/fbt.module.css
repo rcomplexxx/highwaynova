@@ -11,7 +11,7 @@
     flex-direction: column;
     justify-content: stretch;
     align-items: center;
-    margin-top: var(--size-7);
+    margin-top: var(--size-8);
     border-radius: 8px;
 
     border: 1px solid var(--neutral-4);

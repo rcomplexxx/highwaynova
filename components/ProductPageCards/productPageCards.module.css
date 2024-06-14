@@ -12,7 +12,7 @@
     
     padding-bottom: var(--size-5);
     
-    margin-top: var(--size-7);
+    margin-top: var(--size-8);
     margin-bottom: var(--size-5);
   
 }
@@ -26,7 +26,8 @@
 
 
     color: var(--high-contrast-light-txt-color);
-    padding-top: var(--size-3);
+    
+    
     padding-bottom: var(--size-5);
    
 
