@@ -38,7 +38,7 @@
     
     box-sizing: border-box;
     border: 1px solid var(--floating-badge-border-color);
-    padding: var(--size-3);
+   
    
     font-size: var(--font-size-1);
 

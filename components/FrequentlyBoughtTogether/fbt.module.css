@@ -119,9 +119,18 @@
     font-size: var(--font-size-2);
   }
 
+
+  @media(hover:hover){
   .add_to_cart_button:hover {
     background-color: var(--fbt-add-to-cart-hover-bg);
   }
+}
+.add_to_cart_button:active {
+  background-color: var(--fbt-add-to-cart-hover-bg);
+}
+  
+  
+
 
 
 
