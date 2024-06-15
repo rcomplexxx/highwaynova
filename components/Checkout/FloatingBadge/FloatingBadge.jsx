@@ -1,7 +1,7 @@
 
 
 
-import { useEffect, useState } from "react";
+import { useRef, useState } from "react";
 import styles from "./floatingbadge.module.css";
 
 import { LockIcon } from "@/public/images/svgs/svgImages";
@@ -9,13 +9,14 @@ import { LockIcon } from "@/public/images/svgs/svgImages";
 export default function FloatingBadge({makeLockBadge, message}) {
 
   const [allowDialog, setAllowDialog] = useState(true);
+  const blockNextMobileClick = useRef(true);
 
   
 
   
   
 
-  useEffect(()=>{console.log('heyo!', allowDialog)},[allowDialog])
+  
     
 
   
@@ -27,11 +28,15 @@ export default function FloatingBadge({makeLockBadge, message}) {
 
     
     <div className={`${styles.floatingBadge} ${styles.floatingDiv}`} 
+
+
     
   
-     onMouseLeave={()=>{ setAllowDialog(window.matchMedia('(pointer: fine)').matches) }}
+     onMouseLeave={()=>{blockNextMobileClick.current=true; setAllowDialog(true) }}
 
-     onClick={(event)=>{  setAllowDialog(!allowDialog)}}
+     onClick={()=>{ 
+      if(!window.matchMedia('(pointer: fine)').matches && blockNextMobileClick.current)blockNextMobileClick.current=false;
+       else  setAllowDialog(!allowDialog)}}
 
      >?</div> 
 

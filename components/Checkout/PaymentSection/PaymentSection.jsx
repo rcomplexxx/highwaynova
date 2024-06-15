@@ -16,7 +16,7 @@ export default function PaymentSection({ checkFields, organizeUserData  }) {
     const lastSelectedPaymentRef = useRef();
     const creditCardPaymentFieldsRef = useRef();
     const paypalPaymentFieldsRef = useRef();
-
+    const blockNextMoreCardsMobileClick = useRef(true);
 
     
   useEffect(()=>{
@@ -105,9 +105,10 @@ export default function PaymentSection({ checkFields, organizeUserData  }) {
            
             <div id="moreCards" className={styles.moreCards} 
          
-            onMouseLeave={()=>{ setAllowMoreCardsPopup(window.matchMedia('(pointer: fine)').matches) }}
+            onMouseLeave={()=>{ blockNextMoreCardsMobileClick.current= true;setAllowMoreCardsPopup(true) }}
           
-            onClick={(event)=>{  setAllowMoreCardsPopup(!allowMoreCardsPopup)}}
+            onClick={(event)=>{ if(!window.matchMedia('(pointer: fine)').matches && blockNextMoreCardsMobileClick.current) blockNextMoreCardsMobileClick.current=false;
+              else setAllowMoreCardsPopup(!allowMoreCardsPopup);}}
            
            >
            
