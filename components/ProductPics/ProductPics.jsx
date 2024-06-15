@@ -114,7 +114,7 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
 
     if(!mounted.current){return;}
       
-      if(variantImageIndex && variantImageIndex>=-1 && variantImageIndex < images.length && variantImageIndexMountedRef.current){
+      if(variantImageIndex && variantImageIndex>=-1 && variantImageIndex < images.length){
         swiper?.slideTo(variantImageIndex,window.innerWidth<980?400:0);
         
       }
