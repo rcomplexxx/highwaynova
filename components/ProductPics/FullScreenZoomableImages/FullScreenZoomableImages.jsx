@@ -8,6 +8,7 @@ import "swiper/css/zoom";
 import Image from "next/image";
 import ToastMessage from "./ToastMessage/ToastMessage";
 import { ArrowDown, CancelIcon, ZoomInIcon, ZoomOutIcon } from "@/public/images/svgs/svgImages";
+import { useGlobalStore } from "@/contexts/AppContext";
 
 
 
@@ -36,6 +37,11 @@ const FullScreenZoomableImage = ({
 
   const fixedZoomDivRef= useRef();
   const fullImageRef= useRef();
+
+  const { increaseDeepLinkLevel, decreaseDeepLinkLevel } = useGlobalStore((state) => ({
+    increaseDeepLinkLevel: state.increaseDeepLinkLevel,
+    decreaseDeepLinkLevel: state.decreaseDeepLinkLevel,
+  }));
 
 
 
@@ -95,6 +101,17 @@ const FullScreenZoomableImage = ({
   fullImg.style.transform = `translateX(${deltaX}px) translateY(${deltaY}px) scale(${scaleRatio})`;
 
   fullImg.style.transition = "transform 0.3s ease";
+
+
+
+
+
+  increaseDeepLinkLevel();
+
+
+  return ()=>{
+    decreaseDeepLinkLevel();
+  }
  
  
      

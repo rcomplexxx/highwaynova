@@ -109,8 +109,7 @@ export default function App({ Component, pageProps }) {
         console.log('my deep link level is', deepLinkLevelRef.current,"trying to turn on email popup")
     
  
-       if(  url!=='/404' && (url==='/' || (url.includes('/products') && !url.includes('#zoom')
-       && !url.includes('#write-review')) || url.includes('/collection') || url==='/our-story' || url==='/faq')){
+       if(  url!=='/404' && (url==='/' || url.includes('/products') || url.includes('/collection') || url==='/our-story' || url==='/faq')){
  
          if(deepLinkLevelRef.current===0){
         

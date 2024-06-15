@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { ErrorIcon, STARPATH } from "@/public/images/svgs/svgImages";
 import { BackIcon, CancelIcon } from "@/public/images/svgs/svgImages";
+import { useGlobalStore } from "@/contexts/AppContext";
 
 export default function WriteReview({ setInfoDivOpen }) {
  
@@ -19,7 +20,10 @@ export default function WriteReview({ setInfoDivOpen }) {
   });
   const [errors, setErrors] = useState({  email: false, images5: false });
   
-
+  const { increaseDeepLinkLevel, decreaseDeepLinkLevel } = useGlobalStore((state) => ({
+    increaseDeepLinkLevel: state.increaseDeepLinkLevel,
+    decreaseDeepLinkLevel: state.decreaseDeepLinkLevel,
+  }));
   
  
 
@@ -39,9 +43,11 @@ export default function WriteReview({ setInfoDivOpen }) {
  
 
     window?.addEventListener("popstate", handlePopState);
+    increaseDeepLinkLevel();
 
    return ()=>{
     window?.removeEventListener("popstate", handlePopState);
+    decreaseDeepLinkLevel();
    }
   },[])
 

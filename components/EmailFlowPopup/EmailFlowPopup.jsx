@@ -36,7 +36,7 @@ export default function EmailFlowPopup({setEmailPopup}){
         const handlePopState = ()=>{
           
           setEmailPopup(false);
-          
+          window?.removeEventListener("popstate", handlePopState);
         }
 
         window?.addEventListener("popstate", handlePopState);
@@ -57,11 +57,11 @@ export default function EmailFlowPopup({setEmailPopup}){
 
           console.log('hello from email flow popup')
          
-
+          changeEmailPopupOn();
       
           window?.removeEventListener("popstate", handlePopState);
 
-          changeEmailPopupOn();
+        
 
         };
       }, []);
