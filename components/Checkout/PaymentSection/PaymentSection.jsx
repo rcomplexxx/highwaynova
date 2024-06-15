@@ -7,10 +7,11 @@ import {Amex, Discover, Jcb, MasterCard, UntionPay, Visa} from '@/public/images/
 
 export default function PaymentSection({ checkFields, organizeUserData  }) {
     const [paymentMethod, setPaymentMethod] = useState("creditcard");
-    const [moreCardsPopupOpen, setMoreCardsPopupOpen] = useState(false);
+    
+    const [allowMoreCardsPopup, setAllowMoreCardsPopup] = useState(true);
     
     const maxHeightTimoutAdj = useRef();
-    const moreCardsPopupRef = useRef();
+    
     const mounted= useRef(false);
     const lastSelectedPaymentRef = useRef();
     const creditCardPaymentFieldsRef = useRef();
@@ -71,29 +72,7 @@ export default function PaymentSection({ checkFields, organizeUserData  }) {
 
 
 
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (moreCardsPopupRef.current && !moreCardsPopupRef.current.contains(event.target)) {
-        // Clicked outside the floating div, so close the dialog
-        setMoreCardsPopupOpen(false);
-      }
-    };
-
-    if(moreCardsPopupOpen){
-      document.addEventListener('click', handleClickOutside);
-    }
-    else{
-      document.removeEventListener('click', handleClickOutside);
-    }
-
   
-
-    return () => {
-      if(moreCardsPopupOpen) document.removeEventListener('click', handleClickOutside);
-    };
-  }, [moreCardsPopupOpen]);
-
-
   
 
 
@@ -124,15 +103,18 @@ export default function PaymentSection({ checkFields, organizeUserData  }) {
             <MasterCard styleClassName={styles.creditCardLogo}/>
             <Amex styleClassName={`${styles.creditCardLogo} ${styles.lastInLineCard}`}/>
            
-            <div id="moreCards" className={styles.moreCards} onMouseEnter={()=>{if(window.matchMedia('(pointer: fine)').matches) setMoreCardsPopupOpen(true)}}
-            onMouseLeave={()=>{if(window.matchMedia('(pointer: fine)').matches) setMoreCardsPopupOpen(false)}}
-            onClick={(event)=>{  if(!moreCardsPopupOpen)moreCardsPopupRef.current=event.target; setMoreCardsPopupOpen(!moreCardsPopupOpen)}}
-            >
+            <div id="moreCards" className={styles.moreCards} 
+         
+            onMouseLeave={()=>{ setAllowMoreCardsPopup(window.matchMedia('(pointer: fine)').matches) }}
+          
+            onClick={(event)=>{  setAllowMoreCardsPopup(!allowMoreCardsPopup)}}
+           
+           >
            
            
            
-            <div className={`${styles.moreCardsPopupWrapper} ${moreCardsPopupOpen && styles.moreCardsPopupOpen}`}>
-            <div onClick={(event)=>{event.stopPropagation();setMoreCardsPopupOpen(false);}} className={styles.moreCardsPopup}>
+            <div className={`${styles.moreCardsPopupWrapper} ${allowMoreCardsPopup && styles.moreCardsPopupOpen}`}>
+            <div className={styles.moreCardsPopup}>
             <Amex styleClassName={`${styles.creditCardLogo} ${styles.firstCloudCard}`}/>
             <Discover styleClassName={styles.creditCardLogo}/>
             <Jcb styleClassName={styles.creditCardLogo}/>
