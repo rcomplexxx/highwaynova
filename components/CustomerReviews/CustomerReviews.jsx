@@ -58,7 +58,9 @@ export default function CustomerReviews({ product_id, ratingData, startReviews }
   const newReviews = useRef(startReviews ? startReviews : []);
   const [loadButtonExists, setLoadButtonExists] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  
   const [sortingType, setSortingType] = useState("featured");
+
   const [shrinkReview, setShrinkReview] = useState(false)
 
   const [fullScreenReview, setFullScreenReview] = useState();

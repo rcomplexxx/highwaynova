@@ -18,9 +18,9 @@ function subscribe(email, source, extraData) {
 
 
    
-    const sendThankYouEmail = (totalOrderCount)=>{
+    const sendPostBuyingSequence = (totalOrderCount)=>{
 
-      console.log('checking totalOrderCount', totalOrderCount)
+     
 
      
       let result;
@@ -74,7 +74,7 @@ function subscribe(email, source, extraData) {
 
 
     
-const startCampaign = ()=>{
+const sendNewSubscriberSequence = ()=>{
 
 
 
@@ -120,8 +120,8 @@ const startCampaign = ()=>{
 
           db.prepare("INSERT INTO customers (email, totalOrderCount, subscribed, source) VALUES (?, ?, ?, ?)").run( email, source.includes('checkout')?1:0, source==='checkout x'?0:1, source );
       
-          if(source.includes('checkout')) sendThankYouEmail(1);
-          if(source!='checkout x')startCampaign();
+          if(source.includes('checkout')) sendPostBuyingSequence(1);
+          if(source!='checkout x')sendNewSubscriberSequence();
       
         }
 
@@ -132,27 +132,38 @@ const startCampaign = ()=>{
 
         else {
 
+            if(source.includes("checkout")){
 
+              sendPostBuyingSequence(result.totalOrderCount+1);
+              
           if(source==="checkout"){
+
+            
+
+
+
             db.prepare("UPDATE customers SET totalOrderCount = totalOrderCount + 1, subscribed = 1 WHERE email = ?").run( email);    
-            console.log('in source checkout,', result.subscribed)
-            if(!result.subscribed) startCampaign();
-            sendThankYouEmail(result.totalOrderCount+1);
+           
+            
+            if(!result.subscribed) sendNewSubscriberSequence();
+           
        
           }
 
-          else  if(source==="checkout x"){ 
+          else db.prepare("UPDATE customers SET totalOrderCount = totalOrderCount + 1 WHERE email = ?").run(email);
+              
+          
 
-              db.prepare("UPDATE customers SET totalOrderCount = totalOrderCount + 1 WHERE email = ?").run(email);
-              sendThankYouEmail(result.totalOrderCount+1);
-          }
+          
+
+        }
 
             else{
 
 
               db.prepare("UPDATE customers SET subscribed = 1 WHERE email = ?").run(email);
           
-              if(!result.subscribed) startCampaign();
+              if(!result.subscribed) sendNewSubscriberSequence();
 
             }
 

@@ -91,26 +91,26 @@ else{
   };
 
 
-  function deleteImage(product_id, imageName) {
-    const fs = require('fs');
+//   function deleteImage(product_id, imageName) {
+//     const fs = require('fs');
 
-    // Construct the file path
-    const filePath = `${process.cwd()}/public/images/review_images/productId_${product_id}/${imageName}`;
+//     // Construct the file path
+//     const filePath = `${process.cwd()}/public/images/review_images/productId_${product_id}/${imageName}`;
   
 
-    try {
-        // Check if the file exists
-        if (fs.existsSync(filePath)) {
-            // Delete the file
-            fs.unlinkSync(filePath);
-            console.log(`File '${imageName}' deleted successfully.`);
-        } else {
-            console.log(`File '${imageName}' not found.`);
-        }
-    } catch (error) {
-        console.error(`Error deleting file '${imageName}':`, error);
-    }
-}
+//     try {
+//         // Check if the file exists
+//         if (fs.existsSync(filePath)) {
+//             // Delete the file
+//             fs.unlinkSync(filePath);
+//             console.log(`File '${imageName}' deleted successfully.`);
+//         } else {
+//             console.log(`File '${imageName}' not found.`);
+//         }
+//     } catch (error) {
+//         console.error(`Error deleting file '${imageName}':`, error);
+//     }
+// }
 
 
 

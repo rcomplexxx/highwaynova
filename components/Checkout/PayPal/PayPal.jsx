@@ -102,6 +102,8 @@ const PayPalButton=({checkFields, organizeUserData, method='paypal',  type='norm
           console.log("mail to be sent:" + document.getElementById("email").value);
         
 
+          console.log('detecting subscribe data', document.getElementById('subscribeCheckbox')?.getAttribute('data-subscribe')==='true')
+
      
           const response = await fetch("/api/approve-payment", {
             method: "POST",
@@ -111,7 +113,7 @@ const PayPalButton=({checkFields, organizeUserData, method='paypal',  type='norm
             body: JSON.stringify({
               paymentMethod: type=="normal"?"PAYPAL":(type=="express"?"PAYPAL(EXPRESS)":"PAYPAL(INSTANT)"),
               paymentId: data.orderID,
-              customerSubscribed: document.getElementById('subscribeCheckbox')?.getAttribute('data-subscribe')
+              customerSubscribed: document.getElementById('subscribeCheckbox')?.getAttribute('data-subscribe')==='true'
             }),
           });
           // Parse the JSON response

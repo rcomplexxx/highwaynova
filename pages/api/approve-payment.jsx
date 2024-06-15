@@ -23,8 +23,12 @@ const environment =
 const client = new paypal.core.PayPalHttpClient(environment);
 
 const approvePayment = async (req, res) => {
+
+  let giftDiscount = false;
+
   const { paymentId, paymentMethod, customerSubscribed } = req.body;
-  console.log(paymentId);
+
+  
 
 
 
@@ -32,7 +36,7 @@ const approvePayment = async (req, res) => {
   const updateDb = async (email) => {
     return new Promise((resolve, reject) => {
 
-      let giftDiscount = false;
+    
 
       try {
         const db = betterSqlite3(process.env.DB_PATH);
@@ -44,11 +48,10 @@ const approvePayment = async (req, res) => {
           .run(1, paymentId, paymentMethod);
 
         // Check the result of the update operation
+         // If changes were made, resolve the promise
         if (result.changes > 0) {
-          // If changes were made, resolve the promise
-
-
-          const orderData = db.prepare(`SELECT id, couponCode FROM orders WHERE paymentId = ? AND paymentMethod = ?`).get(paymentId, paymentMethod);
+         
+ const orderData = db.prepare(`SELECT id, couponCode FROM orders WHERE paymentId = ? AND paymentMethod = ?`).get(paymentId, paymentMethod);
           
 
 
@@ -59,15 +62,12 @@ const approvePayment = async (req, res) => {
 
 
           const customerInfo = db.prepare("SELECT id, used_discounts FROM customers WHERE email = ?").get(email);
+          const customerId = customerInfo?.id || db.prepare("INSERT INTO customers (email, totalOrderCount, subscribed, source) VALUES (?, ?, ?, ?)").run(email, 0, 0, 'make_payment').lastInsertRowid ;
 
-          
-
-          const customerId = customerInfo.id;
+        
 
           if(customerInfo && JSON.parse(customerInfo.used_discounts).find(discountCode=>  discountCode===orderData.couponCode))
-            return res
-        .status(400)
-        .json({ success: false, error: "Discount has already been used." });
+            return res.status(400).json({ success: false, error: "Discount has already been used." });
 
 
 
@@ -81,24 +81,18 @@ const approvePayment = async (req, res) => {
 
 
           if(orderData.couponCode)
-         db.prepare(`
-          UPDATE customers
-          SET used_discounts = json_insert(
-           used_discounts, 
-            '$[#]', 
-            ?
-          )
-          WHERE id = ?
-        `).run(orderData.couponCode, customerId)
+         db.prepare(`UPDATE customers SET used_discounts = json_insert(used_discounts, '$[#]', ?) WHERE id = ? `).run(orderData.couponCode, customerId)
 
         
         
 
-          giftDiscount= db.prepare(`SELECT 1 AS valid FROM customers WHERE id = ? AND totalOrderCount = 1`).get(customerId)?.valid===1;
+          giftDiscount= db.prepare(`SELECT 1 FROM customers WHERE id = ? AND totalOrderCount = 1`).get(customerId);
+
+     
           
           resolve({
             message: "Order placed successfully.",
-            giftDiscount: giftDiscount
+          
           });
         } else {
           // If no changes were made, reject the promise with an error message
@@ -124,12 +118,18 @@ const approvePayment = async (req, res) => {
 
   const paypalExpressChecker=  db.prepare(`SELECT address, city FROM orders WHERE paymentId = ? AND paymentMethod = ?` ).get(paymentId, paymentMethod);
           if(!paypalExpressChecker)throw new Error('Something went wrong. No data found in the database for the specified paymentId and paymentMethod.');
+
+
           if(paypalExpressChecker.address!="" && paypalExpressChecker.city!="")return resolve();
-  console.log('Paypal express!', paypalExpressChecker);
+          
+          
  
         const fullName=shippingAddress.name.full_name;
+        const address =  shippingAddress.address;
 
-        console.log("Here is my data!",email, fullName.slice(0, fullName.indexOf(" ")), fullName.slice(fullName.indexOf(" "), fullName.length), shippingAddress.address.address_line_1, shippingAddress.address.address_line_2,shippingAddress.address.country_code, shippingAddress.address.postal_code, shippingAddress.address.admin_area_1,shippingAddress.address.admin_area_2 , paymentId, paymentMethod)
+        console.log("Here is my data!",email, fullName.slice(0, fullName.indexOf(" ")),  fullName.slice(fullName.indexOf(" "), fullName.length), 
+        address.address_line_1,  address.address_line_2,address.country_code, address.postal_code, address.admin_area_1,address.admin_area_2 , 
+        paymentId, paymentMethod)
         
 
     
@@ -144,7 +144,8 @@ const approvePayment = async (req, res) => {
 
         const result = db
           .prepare("UPDATE orders SET customer_id = ?, firstName = ?, lastName = ?, address = ?, apt = ?, country = ?, zipcode =?, state = ?, city=? WHERE paymentId = ? AND paymentMethod = ?")
-          .run(myCustomerId, fullName.slice(0, fullName.indexOf(" ")), fullName.slice(fullName.indexOf(" "), fullName.length), shippingAddress.address.address_line_1, shippingAddress.address.address_line_2,shippingAddress.address.country_code, shippingAddress.address.postal_code, shippingAddress.address.admin_area_1,shippingAddress.address.admin_area_2 , paymentId, paymentMethod);
+          .run(myCustomerId, fullName.slice(0, fullName.indexOf(" ")), fullName.slice(fullName.indexOf(" "), fullName.length), 
+          address.address_line_1, address.address_line_2,address.country_code, address.postal_code, address.admin_area_1,address.admin_area_2 , paymentId, paymentMethod);
           // , phone=?
         // Check the result of the update operation
         console.log('result',result);
@@ -165,19 +166,8 @@ const approvePayment = async (req, res) => {
   };
 
 
-  const approvedConsequence= async(email)=>{
 
-    return (await updateDb(email))?.giftDiscount;
-
-
-    console.log('did customer subed', customerSubscribed);
-    
- 
-
-
-
-
-  }
+  
 
 
 
@@ -207,7 +197,8 @@ const approvePayment = async (req, res) => {
 
         await updateAddress(response.result.payer.email_address,response.result.purchase_units[0].shipping);
         
-        const giftDiscount = await approvedConsequence(response.result.payer.email_address);
+        await updateDb(response.result.payer.email_address);
+     
         return res.status(200).json({ message: "Payment successful",
           giftDiscount: giftDiscount });
       } else if (response.result.status === "INSTRUMENT_DECLINED") {
@@ -217,10 +208,8 @@ const approvePayment = async (req, res) => {
       }
     }
   } 
-  // else if(paymentMethod==='STRIPE'){
-  //   await approvedConsequence();
-  //   return res.status(200).json({ message: "Payment successful" });
-  // }
+
+  
 
     res.status(500).json({ error: "Payment was not approved." });
   } catch (error) {

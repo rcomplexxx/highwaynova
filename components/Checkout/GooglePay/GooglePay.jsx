@@ -75,7 +75,7 @@ const GooglePay = ({
 
       const totalPrice =  parseFloat(document.getElementById('totalPrice').innerText.split('$')[1]).toFixed(2);
 
-      console.log('cr op', document.getElementById('subscribeCheckbox')?.getAttribute('data-subscribe') );
+      
       const requestData = {
         order: {
           email: paymentData.email,
@@ -93,7 +93,7 @@ const GooglePay = ({
           couponCode: disc,
           
           tip:tip,
-          subscribed:  document.getElementById('subscribeCheckbox')?.getAttribute('data-subscribe'),
+          subscribed:  document.getElementById('subscribeCheckbox')?.getAttribute('data-subscribe')==='true',
           
         },
         paymentMethod: "GPAY",

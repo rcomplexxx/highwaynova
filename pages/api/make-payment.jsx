@@ -67,10 +67,12 @@ const paypalPay=async(totalPrice)=>{
 const makePayment = async (req, res) => {
   console.log('  reqdata BITNO ~!!!~).', req.body)
 
+  let giftDiscount = false;
+
   const putInDatabase = (paymentMethod,paymentId, approved=0) => {
 
 
-    let giftDiscount = false;
+   
 
     return new Promise((resolve, reject) => {
       try {
@@ -116,34 +118,7 @@ const makePayment = async (req, res) => {
 
     
 
-        const customerInfo = db.prepare("SELECT id, used_discounts FROM customers WHERE email = ?").get(req.body.order.email);
-
-        console.log('sooun checking', customerInfo);
-
-        if(customerInfo && JSON.parse(customerInfo.used_discounts).find(discountCode=>  discountCode===req.body.order.couponCode))
-          return res
-      .status(400)
-      .json({ success: false, error: "Discount has already been used." });
-
-        let customerId= customerInfo?.id;
-
-        if(!customerId &&  req.body.order.email !== ""){
-
-         
-       
-
-         const inserCustomerInfo = db.prepare("INSERT INTO customers (email, totalOrderCount, subscribed, source) VALUES (?, ?, ?, ?)").run( req.body.order.email, 0, 0, 'make_payment' );
-           
-         customerId= inserCustomerInfo.lastInsertRowid;
-
-
-        }
-
-
-
-
-
-        const uniqueId = generateUniqueId();
+  
 
 
       
@@ -162,8 +137,47 @@ const makePayment = async (req, res) => {
           couponCode,
           tip,
           items,
+          subscribe:subscribed,
+          email
         } = req.body.order;
-        console.log(' and items!!!!!!!!!',  items);
+
+
+
+
+
+
+
+        const customerInfo = db.prepare("SELECT id, used_discounts FROM customers WHERE email = ?").get(email);
+
+        console.log('sooun checking', customerInfo);
+
+        if(customerInfo && JSON.parse(customerInfo.used_discounts).find(discountCode=>discountCode===couponCode))
+          return res.status(400).json({ success: false, error: "Discount has already been used." });
+
+        let customerId= customerInfo?.id;
+
+        if(!customerId &&  email !== ""){
+
+         
+       
+
+         const inserCustomerInfo = db.prepare("INSERT INTO customers (email, totalOrderCount, subscribed, source) VALUES (?, ?, ?, ?)").run(email, 0, 0, 'make_payment' );
+           
+         customerId= inserCustomerInfo.lastInsertRowid;
+
+
+        }
+
+
+
+
+
+        const uniqueId = generateUniqueId();
+
+
+
+
+        
       
         
         db.prepare(
@@ -203,9 +217,9 @@ const makePayment = async (req, res) => {
           
 
            
-        if(req.body.order.subscribe)
-          subscribe(req.body.order.email, "checkout",  {orderId:uniqueId});
-        else subscribe(req.body.order.email, "checkout x", {orderId:uniqueId});
+        if(subscribed)
+          subscribe(email, "checkout",  {orderId:uniqueId});
+        else subscribe(email, "checkout x", {orderId:uniqueId});
 
         if(couponCode!="")db.prepare(`
     UPDATE customers
@@ -219,15 +233,14 @@ const makePayment = async (req, res) => {
 
         giftDiscount= db.prepare(`SELECT 1 AS valid FROM customers WHERE id = ? AND totalOrderCount = 1`).get(customerId)?.valid===1;
           
-        console.log('giftD', giftDiscount);
+        
 
         }
 
         db.close();
 
         resolve({
-          message: "Order placed successfully.",
-          giftDiscount: giftDiscount
+          message: "Order placed successfully."
         });
       } catch (error) {
         console.error("Error in database operations:", error);
@@ -243,9 +256,11 @@ const makePayment = async (req, res) => {
   try {
     const clientIp = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
 
-    if (!(await limiterPerDay.rateLimiterGate(clientIp)))
-      return res.status(429).json({ error: "Too many requests. Please try again later." });
-    console.log('ITEMS', req.body.order.items)
+    // if (!(await limiterPerDay.rateLimiterGate(clientIp)))
+    //   return res.status(429).json({ error: "Too many requests. Please try again later." });
+
+    
+    
     let totalPrice = req.body.order.items
       .reduce((sum, product) => {
         const productInfo = productsData.find((item) => item.id === product.id);
@@ -283,16 +298,22 @@ const makePayment = async (req, res) => {
         }
     console.log('Total price on server is', totalPrice)
     console.log('tip je:', req.body.order.tip);
+
+
+    
     
     if(req.body.paymentMethod.includes('PAYPAL')){
-      console.log('popusis ti meni',req.body.paymentMethod)
+    
+      
     const request = await paypalPay(totalPrice);
-    console.log('popusen request', request)
+  
+    
     const response = await client.execute(request);
       console.log('Vidi response bato',response);
     // Check if the payment is approved
     if (response.result.status === "CREATED") {
-      console.log('status je creacted')
+     
+      
      
       await putInDatabase(req.body.paymentMethod,response.result.id);
       res.status(200).json({ success: true, paymentId: response.result.id });
@@ -348,10 +369,10 @@ const makePayment = async (req, res) => {
         allow_redirects: 'never',
       },
 		});
-    const giftDiscount = (await putInDatabase('GPAY(STRIPE)',paymentIntent.client_secret, 1)).giftDiscount;
+    await putInDatabase('GPAY(STRIPE)',paymentIntent.client_secret, 1);
 
 
-    console.log('giving back gdisc', giftDiscount)
+    
 
   	return res.json({
 			
@@ -371,7 +392,7 @@ const makePayment = async (req, res) => {
    
    
     
-    console.log('popusis ti meni STRIPE')
+    console.log('STRIPE')
     const {stripeId} = req.body;
  
 
@@ -400,10 +421,10 @@ const makePayment = async (req, res) => {
     // },
 
     
-		console.log("Payment client Secret", paymentIntent.client_secret)
-    const giftDiscount =  (await putInDatabase('STRIPE',paymentIntent.client_secret, 1))?.giftDiscount;
+    
+    await putInDatabase('STRIPE',paymentIntent.client_secret, 1);
 
-    console.log('giving back gdisc', giftDiscount)
+    
 		return res.json({
 			
 			success: true,
@@ -413,7 +434,7 @@ const makePayment = async (req, res) => {
   }
   
 
-console.log('jos napreduje');
+  
 
 
   } catch (error) {
