@@ -92,7 +92,7 @@ export default function CustomerReviews({ product_id, ratingData, startReviews }
 
       const data = await response.json();
 
-      console.log('response ok, ', data)
+      
 
 
       
@@ -110,10 +110,6 @@ export default function CustomerReviews({ product_id, ratingData, startReviews }
 
 
   
-
-
-
-
 
 
     setTimeout(async()=>{
@@ -221,7 +217,7 @@ export default function CustomerReviews({ product_id, ratingData, startReviews }
         {
           setReviews([
             ...reviews,
-            ...newReviews.current.slice(index+1, newReviews.current.length)
+            newReviews.current.slice(index+1, newReviews.current.length)
           ]);
           setLoadButtonExists(false);
         
@@ -239,7 +235,7 @@ export default function CustomerReviews({ product_id, ratingData, startReviews }
 
       
 
-        newReviews.current = [...data.reviews.slice(8,data.reviews.length)]; // Load 6 more reviews
+        newReviews.current = [data.reviews.slice(8,data.reviews.length)]; // Load 6 more reviews
 
    
 
@@ -284,7 +280,7 @@ export default function CustomerReviews({ product_id, ratingData, startReviews }
     
 
 
-      <div  id='masonry'  className={styles.masonry}>
+      <div  id='masonry' className={styles.masonry}>
           {reviews.map((review, index) => {
             return (
               <Review
@@ -332,18 +328,3 @@ export default function CustomerReviews({ product_id, ratingData, startReviews }
 
 
 
-// {imageNames &&
-//   JSON.parse(imageNames).map((image, index) => {
-//     return (
-//       <Image
-//         key={index}
-//         height={0}
-//         width={0}
-//         src={`/images/review_images/productId_${product_id}/${image}`}
-//         alt="review image"
-//         loading={"lazy"}
-//         sizes="(max-width: 580px) 100vw, (max-width: 700px) 50vw, (max-width: 1200px) 33vw, 25vw"
-//         className={styles.reviewImage}
-//       />
-//     );
-//   })}

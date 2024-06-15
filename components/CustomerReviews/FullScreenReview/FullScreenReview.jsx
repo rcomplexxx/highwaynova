@@ -86,7 +86,7 @@ useEffect(()=>{
 
 
 useEffect(()=>{
-  if(imageLoaded && imageSrc && reviewImageRef && window.innerWidth>600) {
+  if(imageLoaded && imageSrc  && window.innerWidth>600) {
     const { naturalWidth, naturalHeight, clientWidth, clientHeight } = reviewImageRef.current;
     const widthIsBigger = naturalWidth > naturalHeight;
     const imageClientSmallerSize = widthIsBigger ? clientWidth/naturalWidth * naturalHeight : clientHeight/naturalHeight * naturalWidth;
@@ -145,12 +145,16 @@ ${(imageSrc?imageLoaded:true) && styles.spawnFullScreenReview}`}>
     <div className={`${styles.reviewDiv} ${!imageSrc && styles.reviewDivNoImg}`}>
         <div className={styles.authorDiv}>
         <span className={styles.authorName}>{authorName}</span>
+        
        
         {/* <div className={styles.verifiedPurchaseDiv}>
         <Image src='/images/correct.png' height={0} width={0} sizes='24px'
         className={styles.verifiedImage}/>
         <span>Verified purchase</span>
         </div> */}
+
+
+
         </div>
        
 

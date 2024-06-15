@@ -276,6 +276,9 @@ height : 100vh;
     }
 
 
+   
+
+
   }
 
   @media(max-width: 480px){
@@ -288,6 +291,15 @@ height : 100vh;
       padding: 0 var(--size-4);
 
     }
+
+    .cardDetails {
+    
+
+  
+      margin-bottom: var(--size-4);
+       
+     
+         }
 
     .subTotalSpan{
       font-size: var(--font-size-6);
