@@ -22,7 +22,7 @@ export default function PaymentSection({ checkFields, organizeUserData  }) {
    
     if(!mounted.current){
       lastSelectedPaymentRef.current= creditCardPaymentFieldsRef.current;
-      
+      lastSelectedPaymentRef.current.style.overflow = `visible`
       mounted.current=true;
       return;
     }
