@@ -82,6 +82,8 @@
     user-select: none;
     z-index: 99;
     overflow-y: auto;
+    
+  overscroll-behavior: contain;
   }
 
   .itemsVisible{

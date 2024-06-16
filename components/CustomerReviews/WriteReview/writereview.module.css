@@ -22,6 +22,8 @@
     
    
     z-index: 11;
+    
+  overscroll-behavior: contain;
   }
 
  
