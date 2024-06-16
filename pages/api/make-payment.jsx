@@ -256,8 +256,8 @@ const makePayment = async (req, res) => {
   try {
     const clientIp = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
 
-    // if (!(await limiterPerDay.rateLimiterGate(clientIp)))
-    //   return res.status(429).json({ error: "Too many requests. Please try again later." });
+    if (!(await limiterPerDay.rateLimiterGate(clientIp)))
+      return res.status(429).json({ error: "Too many requests. Please try again later." });
 
     
     

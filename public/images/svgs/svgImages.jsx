@@ -207,6 +207,7 @@ export const Stars = ({ ratingNumber, starWrapperClassName, starClassName, fillC
 	  } else {
 		stars.push(
 		  <Star
+		  key = {i}
 			color={i < ratingNumber ? fillColor : 'var(--star-empty-color)'}
 			starClassName={starClassName}
 			
@@ -247,7 +248,7 @@ export const CustomerStars = ({ratingNumber}) =>{
   
 	for (let i = 1; i < 6; i++) {
 		stars.push(
-		  <CustomerStar
+		  <CustomerStar key = {i}
 		  isEmpty={i > ratingNumber}
 			
 			

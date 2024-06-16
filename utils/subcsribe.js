@@ -22,15 +22,12 @@ function subscribe(email, source, extraData) {
 
      
 
+      const sequenceId = totalOrderCount===1?process.env.THANK_YOU_SEQUENCE_FIRST_ORDER_ID:process.env.THANK_YOU_SEQUENCE_ID
      
-      let result;
-
-      if(totalOrderCount===1){
-
-        result = db.prepare(`INSERT INTO email_campaigns (title, sequenceId, sendingDateInUnix, emailSentCounter, retryCounter, targetCustomers, extraData) VALUES (?, ?, ?, ?, ?, ?, ?)`)
+      const result = db.prepare(`INSERT INTO email_campaigns (title, sequenceId, sendingDateInUnix, emailSentCounter, retryCounter, targetCustomers, extraData) VALUES (?, ?, ?, ?, ?, ?, ?)`)
         .run(
           `Thank you ${email}`,
-          process.env.THANK_YOU_SEQUENCE_FIRST_ORDER_ID,
+          sequenceId,
           Date.now()+60000,
           0,
           0,
@@ -40,25 +37,9 @@ function subscribe(email, source, extraData) {
         );
        
 
-      }
-
-      else{
-        result = db.prepare(`INSERT INTO email_campaigns (title, sequenceId, sendingDateInUnix, emailSentCounter, retryCounter, targetCustomers, extraData) VALUES (?, ?, ?, ?, ?, ?, ?)`)
-        .run(
-          `Thank you ${email}`,
-          process.env.THANK_YOU_SEQUENCE_ID,
-          Date.now()+60000,
-          0,
-          0,
-          JSON.stringify([email]),
-          JSON.stringify({orderId: extraData.orderId})
-          
-        );
-      }
-
       
-    
-   
+
+        
     
             const campaignId = result.lastInsertRowid;
     
@@ -113,15 +94,16 @@ const sendNewSubscriberSequence = ()=>{
 
    
 
-       const result = db.prepare("SELECT totalOrderCount FROM customers WHERE email = ?").get(email);
+       const result = db.prepare("SELECT totalOrderCount, subscribed FROM customers WHERE email = ?").get(email);
         
     
         if(!result){
 
-          db.prepare("INSERT INTO customers (email, totalOrderCount, subscribed, source) VALUES (?, ?, ?, ?)").run( email, source.includes('checkout')?1:0, source==='checkout x'?0:1, source );
+          db.prepare("INSERT INTO customers (email, totalOrderCount, subscribed, source) VALUES (?, ?, ?, ?)")
+          .run( email, source.includes('checkout')?1:0, source!=='checkout x'?1:0, source );
       
           if(source.includes('checkout')) sendPostBuyingSequence(1);
-          if(source!='checkout x')sendNewSubscriberSequence();
+          if(source!=='checkout x')sendNewSubscriberSequence();
       
         }
 
@@ -132,25 +114,32 @@ const sendNewSubscriberSequence = ()=>{
 
         else {
 
+
+            const newSubscribe = !result.subscribed && source!=="checkout x"
+
+
+
             if(source.includes("checkout")){
 
-              sendPostBuyingSequence(result.totalOrderCount+1);
               
-          if(source==="checkout"){
 
             
 
+             
+              
+              if(newSubscribe)
+              db.prepare("UPDATE customers SET totalOrderCount = totalOrderCount + 1, subscribed = 1 WHERE email = ?").run( email); 
+              
+              else db.prepare("UPDATE customers SET totalOrderCount = totalOrderCount + 1 WHERE email = ?").run( email); 
 
-
-            db.prepare("UPDATE customers SET totalOrderCount = totalOrderCount + 1, subscribed = 1 WHERE email = ?").run( email);    
+              
            
-            
-            if(!result.subscribed) sendNewSubscriberSequence();
+              sendPostBuyingSequence(result.totalOrderCount+1);
+            if(newSubscribe) sendNewSubscriberSequence();
            
        
-          }
+          
 
-          else db.prepare("UPDATE customers SET totalOrderCount = totalOrderCount + 1 WHERE email = ?").run(email);
               
           
 
@@ -158,27 +147,30 @@ const sendNewSubscriberSequence = ()=>{
 
         }
 
-            else{
+            else if(newSubscribe){
 
 
               db.prepare("UPDATE customers SET subscribed = 1 WHERE email = ?").run(email);
-          
-              if(!result.subscribed) sendNewSubscriberSequence();
+            sendNewSubscriberSequence();
 
-            }
+          }
 
-        
-        }
-
-    console.log("Successfully subscribed.");
+    console.log("Successfully subscribed. Is person new subscriber?", newSubscribe, email );
    
 
-    // Close the database connection when done
+ 
+
+      }
+
+
+         // Close the database connection when done
     db.close();
 
     return true;
 
-      }
+
+
+    }
 
       catch(error){
         console.log('subscribe error', error)

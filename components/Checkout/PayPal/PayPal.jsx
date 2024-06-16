@@ -23,7 +23,7 @@ const PayPalButton=({checkFields, organizeUserData, method='paypal',  type='norm
 
         setPaypalError();
     
-        if(type=='instant' || (type==='express' && document.getElementById("address").value === "" && document.getElementById("city").value == "") )
+        if(type==='instant' || (type==='express' && document.getElementById("address").value === "" && document.getElementById("city").value == "") )
         return actions.resolve();
         try {
           const fieldsCorrect=checkFields();
@@ -99,7 +99,7 @@ const PayPalButton=({checkFields, organizeUserData, method='paypal',  type='norm
 
       const handlePayPalButtonApprove = async (data, actions) => {
         try {
-          console.log("mail to be sent:" + document.getElementById("email").value);
+          console.log("mail to be sent:" + document.getElementById("email")?.value);
         
 
           console.log('detecting subscribe data', document.getElementById('subscribeCheckbox')?.getAttribute('data-subscribe')==='true')

@@ -10,11 +10,12 @@ export default function ProductDescription({description}) {
 
 
   const options = {
-    transform: (node) => {
+    transform: (node, index) => {
       // Replace <img> tags with Next.js <Image> components
       if (node.name === 'img') {
         return (
           <Image
+          key={index}
             src={node.attribs.src}
             alt={node.attribs.alt}
             className={node.attribs.class}
