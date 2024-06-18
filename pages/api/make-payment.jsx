@@ -67,6 +67,14 @@ const paypalPay=async(totalPrice)=>{
 const makePayment = async (req, res) => {
   console.log('  reqdata BITNO ~!!!~).', req.body)
 
+
+  const db = betterSqlite3(process.env.DB_PATH);
+
+
+
+
+  let totalPrice;
+
   let giftDiscount = false;
 
   const putInDatabase = (paymentMethod,paymentId, approved=0) => {
@@ -76,7 +84,7 @@ const makePayment = async (req, res) => {
 
     return new Promise((resolve, reject) => {
       try {
-        const db = betterSqlite3(process.env.DB_PATH);
+      
         //  db.prepare(`DROP TABLE IF EXISTS orders`).run();
 
 
@@ -181,7 +189,7 @@ const makePayment = async (req, res) => {
       
         
         db.prepare(
-          `INSERT INTO orders (id, customer_id, firstName, lastName, address, apt, country, zipcode, state, city, phone, couponCode, tip, items, paymentMethod, paymentId, packageStatus, approved, createdDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, '0', ?, ?)`,
+          `INSERT INTO orders (id, customer_id, firstName, lastName, address, apt, country, zipcode, state, city, phone, couponCode, tip, items, total, paymentMethod, paymentId, packageStatus, approved, createdDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, '0', ?, ?)`,
         ).run(
           uniqueId,
           customerId,
@@ -197,6 +205,7 @@ const makePayment = async (req, res) => {
           couponCode,
           tip,
           JSON.stringify(items),
+          totalPrice,
           paymentMethod,
           paymentId,
           approved,
@@ -214,12 +223,14 @@ const makePayment = async (req, res) => {
 
          
 
-          
+          db.prepare("UPDATE customers SET totalOrderCount = totalOrderCount + 1, money_spent = money_spent + ? WHERE id = ?").run(totalPrice, customerId); 
 
            
-        if(subscribed)
-          subscribe(email, "checkout",  {orderId:uniqueId});
-        else subscribe(email, "checkout x", {orderId:uniqueId});
+          const subscribeSource = subscribed?"checkout":"checkout x"
+       
+          subscribe(email, subscribeSource,  {orderId:uniqueId}, db);
+
+        
 
         if(couponCode!="")db.prepare(`
     UPDATE customers
@@ -227,9 +238,9 @@ const makePayment = async (req, res) => {
      used_discounts, 
       '$[#]', 
       ?
-    )
+    ), money_spent = money_spent + ?
     WHERE id = ?
-  `).run(couponCode,customerId)
+  `).run(couponCode,customerId, totalPrice)
 
         giftDiscount= db.prepare(`SELECT 1 AS valid FROM customers WHERE id = ? AND totalOrderCount = 1`).get(customerId)?.valid===1;
           
@@ -237,7 +248,7 @@ const makePayment = async (req, res) => {
 
         }
 
-        db.close();
+      
 
         resolve({
           message: "Order placed successfully."
@@ -256,21 +267,21 @@ const makePayment = async (req, res) => {
   try {
     const clientIp = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
 
-    if (!(await limiterPerDay.rateLimiterGate(clientIp)))
+    if (!(await limiterPerDay.rateLimiterGate(clientIp, db))){
+      db.close();
       return res.status(429).json({ error: "Too many requests. Please try again later." });
+    }
 
     
     
-    let totalPrice = req.body.order.items
+    totalPrice = parseFloat(req.body.order.items
       .reduce((sum, product) => {
         const productInfo = productsData.find((item) => item.id === product.id);
         if (productInfo) {
           sum += productInfo.price * product.quantity;
         }
-
-        return sum;
-      }, 0)
-      .toFixed(2);
+         return sum;
+      }, 0) .toFixed(2));
 
     console.log('TOTALPRICE!',totalPrice);
     const couponCode = req.body.order.couponCode;
@@ -283,7 +294,7 @@ const makePayment = async (req, res) => {
       const discountFloat = parseFloat(discount);
 
       totalPrice = totalPrice - totalPrice*discountFloat/100;
-      totalPrice= totalPrice.toFixed(2);
+      totalPrice= parseFloat(totalPrice.toFixed(2));
       }
 
     }
@@ -293,8 +304,8 @@ const makePayment = async (req, res) => {
       
         const tipFloat = parseFloat(tip);
   
-        totalPrice = parseFloat(totalPrice) + tipFloat;
-        totalPrice= totalPrice.toFixed(2);
+        totalPrice = totalPrice + tipFloat;
+        totalPrice= parseFloat(totalPrice.toFixed(2));
         }
     console.log('Total price on server is', totalPrice)
     console.log('tip je:', req.body.order.tip);
@@ -316,9 +327,13 @@ const makePayment = async (req, res) => {
       
      
       await putInDatabase(req.body.paymentMethod,response.result.id);
+
+      db.close();
       res.status(200).json({ success: true, paymentId: response.result.id });
     } else {
       // Payment was not successful
+
+      db.close();
       res
         .status(400)
         .json({ success: false, error: "Payment was not approved." });
@@ -360,7 +375,7 @@ const makePayment = async (req, res) => {
    
 
     const paymentIntent= await stripe.paymentIntents.create({
-			amount:parseInt(totalPrice*100),
+			amount: Math.round(totalPrice*100),
 			currency: "USD",
       payment_method: paymentMethod.id, // Google Pay token
       confirm: true,
@@ -371,7 +386,7 @@ const makePayment = async (req, res) => {
 		});
     await putInDatabase('GPAY(STRIPE)',paymentIntent.client_secret, 1);
 
-
+    db.close();
     
 
   	return res.json({
@@ -399,7 +414,7 @@ const makePayment = async (req, res) => {
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
       
     const paymentIntent = await stripe.paymentIntents.create({
-      amount:parseInt(totalPrice*100),
+      amount:Math.round(totalPrice*100),
 			currency: "USD",
       payment_method: stripeId, 
 			automatic_payment_methods: {
@@ -409,21 +424,13 @@ const makePayment = async (req, res) => {
       confirm: true
 		});
 
-    // billing_details: {
-    //   name: 'John Doe',
-    //   email: 'john.doe@example.com',
-    //   address: {
-    //     line1: '123 Main Street',
-    //     city: 'Anytown',
-    //     postal_code: '12345',
-    //     country: 'US',
-    //   },
-    // },
+  
 
     
     
     await putInDatabase('STRIPE',paymentIntent.client_secret, 1);
 
+    db.close();
     
 		return res.json({
 			
@@ -441,6 +448,7 @@ const makePayment = async (req, res) => {
     // Handle errors
 
     console.error("Error verifying payment:", error);
+    db.close();
     res.status(500).json({ success: false, error: "Error occured. Payment was not approved." });
   }
 };

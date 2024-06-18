@@ -32,20 +32,6 @@ export default function ProductDescription({description}) {
  
 
 
-  
-  // import parse from 'html-react-parser';
-  // import Image from 'next/image';
-  // const replaceImgWithNextImage = () => {
-  //   return parse(description, {
-  //     replace: (domNode) => {
-  //       if (domNode.name === 'img') {
-  //         const { src, alt, class: className } = domNode.attribs;
-  //         return <Image src={src} alt={alt} className={className} width={0} height={0} sizes="(max-width: 600px) 100vw, 512px" />;
-  //       }
-  //     },
-  //   });
-  // };
-
 
 
 

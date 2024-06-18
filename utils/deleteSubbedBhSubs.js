@@ -19,7 +19,7 @@ const db = betterSqlite3(process.env.DB_PATH);
 
    
     db.prepare(
-      `DELETE FROM customers WHERE subscribed = false`).run(
+      `DELETE FROM customers WHERE subscribed = 0`).run(
     
     );
   

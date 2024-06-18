@@ -9,11 +9,8 @@ class RateLimiter {
 
 
     constructor({apiNumberArg, tokenNumberArg, expireDurationArg}) {
-        const db = betterSqlite3(process.env.DB_PATH);
-
-    
-
-        db.close();
+     
+        
             this.apiNumber=apiNumberArg;
             this.tokenNumber = tokenNumberArg;
             this.expireDuration = expireDurationArg;
@@ -22,12 +19,12 @@ class RateLimiter {
         
     }
 
-    async rateLimiterGate (ipArg )  {
+    async rateLimiterGate (ipArg, passedDbConnection )  {
 
   
 
       return new Promise((resolve, reject) => {
-        const db= betterSqlite3(process.env.DB_PATH);
+        const db= passedDbConnection?passedDbConnection:betterSqlite3(process.env.DB_PATH);
           try {
          
   
@@ -79,7 +76,7 @@ class RateLimiter {
               console.error('Error in database operations:', error);
               reject('Error in database operations.');
           } finally {
-              db.close();
+              if(!passedDbConnection)db.close();
           }
       });
 }

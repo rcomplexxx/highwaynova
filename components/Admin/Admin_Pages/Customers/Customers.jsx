@@ -65,7 +65,7 @@ export default function Customers({ customers, setCustomers }) {
         {[0,1,2,3,4].map((number) => {
           return customersLength>index+number?<div className={styles.customerPair}>
           <p key={index+number} className={styles.emailP}>Email: {customers[index+number]?.email}</p>
-          <p key={index+number} className={styles.emailP}>Number of orders: {customers[index+number]?.totalOrderCount}</p>
+          <p key={index+number} className={styles.emailP}>Order number/Money spent: {customers[index+number]?.totalOrderCount}/{customers[index+number]?.money_spent}</p>
           <p key={index+number} className={styles.source}>Source: {customers[index+number]?.source}</p>
           </div> :<></>
         })}

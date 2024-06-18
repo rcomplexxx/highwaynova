@@ -26,10 +26,18 @@ export default async function handler(req, res) {
 
     // Perform rate limiting checks
 
-    // if (!(await limiterPerMinute.rateLimiterGate(clientIp)))
-    //   return res.status(429).json({ error: "Too many requests." });
-    // if (!(await limiterPerWeek.rateLimiterGate(clientIp)))
-    //   return res.status(429).json({ error: "Too many requests." });
+    const db = betterSqlite3(process.env.DB_PATH);
+
+    if (!(await limiterPerMinute.rateLimiterGate(clientIp, db)))
+      {
+        db.close();
+      return res.status(429).json({ error: "Too many requests." })
+      };
+    if (!(await limiterPerWeek.rateLimiterGate(clientIp, db)))
+      {
+        db.close();
+      return res.status(429).json({ error: "Too many requests." });
+      }
 
     // Rate limiting checks passed, proceed with API logic
 
@@ -41,16 +49,26 @@ export default async function handler(req, res) {
         if (req.body.type === "customers") {
           // Create a new SQLite database connection
 
-          if(subscribe(req.body.email, req.body.source))
+          if(subscribe(req.body.email, req.body.source, db)){
+            
+              db.close();
+         
           res.status(201).json({ message: "Successfully subscribed." });
+            
+
+        }
         } else if (req.body.type === "messages") {
           // Create a new SQLite database connection
 
 
-          if (!(await dailyMessageLimit.rateLimiterGate(clientIp)))
+          if (!(await dailyMessageLimit.rateLimiterGate(clientIp, db)))
+            {
+              db.close();
           return res.status(429).json({ error: "Too many messages sent." });
+            
+        }
 
-          const db = betterSqlite3(process.env.DB_PATH);
+         
 
           // Ensure the messages table exists
 
@@ -89,12 +107,15 @@ export default async function handler(req, res) {
       } catch (error) {
         console.error("Error handling POST request:", error);
         res.status(500).json({ error: "Internal Server Error" });
+        db.close();
       }
     } else {
       res.status(405).json({ error: "Method Not Allowed" });
+      db.close();
     }
   } catch (error) {
     console.error("Error handling request:", error);
     res.status(500).json({ error: "Internal Server Error" });
+    db.close();
   }
 }

@@ -39,25 +39,30 @@ const craftShuffledArrayQuery = (array)=>{
 
 
 
-const getReviews = (req, res) => {
+const getReviews = async (req, res) => {
   const { product_id, starting_position, limit = 40 ,sortingType} = req.body;
 
 
   try {
-    const clientIp = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
-
-    limiterPerDay
-      .rateLimiterGate(clientIp)
-      .then((result) => {
-        if (!result)
-          return res.status(429).json({ error: "Too many requests." });
-      })
-      .catch((error) => {
-        console.error(error);
-        return res.status(500).json({ error: "Too many requests." });
-      });
+    
 
     const db = betterSqlite3(process.env.DB_PATH);
+
+
+    const clientIp = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
+
+
+    // if(!(await limiterPerDay.rateLimiterGate(clientIp)))
+
+  
+
+      if (!(await  limiterPerDay.rateLimiterGate(clientIp, db)))
+        {
+          db.close();
+        return res.status(429).json({ error: "Too many requests." })
+        };
+
+   
 
     let query;
 
@@ -83,12 +88,14 @@ const getReviews = (req, res) => {
 
 
 
-    
-    const { id: lowestId } = db.prepare('SELECT id FROM reviews WHERE product_id = ? LIMIT 1').get(product_id);
-    const { count } = db.prepare(`SELECT COUNT(*) AS count FROM reviews WHERE product_id = ?`).get(product_id);
+    const { lowestId, highestId } = db.prepare(`
+      SELECT MIN(id) AS lowestId, MAX(id) AS highestId
+      FROM reviews
+      WHERE product_id = ?
+    `).get(product_id);
 
-   
-    const highestId = lowestId + count;
+
+    
    
     
       const array = Array.from({ length: highestId - lowestId + 1 }, (_, i) => lowestId + i);
@@ -114,7 +121,7 @@ const getReviews = (req, res) => {
 
   }
   
-  else if ( sortingType === "highest_ratings" || sortingType === "lowest_ratings"){
+  else {
    
   
 
@@ -138,15 +145,18 @@ const getReviews = (req, res) => {
 
  
 
-    db.close();
+    
 
     if(sortingType === "lowest_ratings"){
       highestRatingsArray=highestRatingsArray.reverse();
     }
 
-    console.log('h or l ratings, ', starting_position, limit)
+  
+    
     const highestRatingsArraySliced= highestRatingsArray.slice(starting_position, starting_position+limit)
 
+
+    db.close();
     return res.status(200).json({ reviews: highestRatingsArraySliced });
 
    
@@ -165,8 +175,11 @@ const getReviews = (req, res) => {
   
    
   } catch (error) {
-    console.error("Capture request failed:", error);
+    
+
+    db.close();
     res.status(500).json({ error: "Verification error." });
+
   }
 };
 

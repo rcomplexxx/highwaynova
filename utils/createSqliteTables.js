@@ -32,8 +32,9 @@ function createSqliteTables() {
         `
         CREATE TABLE IF NOT EXISTS customers (
           id INTEGER PRIMARY KEY,
-          email TEXT,
-          totalOrderCount INTEGER,
+          email TEXT UNIQUE,
+          totalOrderCount INTEGER DEFAULT 0,
+          money_spent REAL DEFAULT 0,
           subscribed INTEGER,
           source TEXT,
           currentCampaignId INTEGER,
@@ -68,6 +69,7 @@ function createSqliteTables() {
           couponCode TEXT,
           tip TEXT,
           items TEXT,
+          total REAL DEFAULT 0,
           paymentMethod TEXT,
           paymentId TEXT,
           packageStatus TEXT,

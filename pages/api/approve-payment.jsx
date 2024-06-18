@@ -24,6 +24,8 @@ const client = new paypal.core.PayPalHttpClient(environment);
 
 const approvePayment = async (req, res) => {
 
+  const db = betterSqlite3(process.env.DB_PATH);
+
   let giftDiscount = false;
 
   const { paymentId, paymentMethod, customerSubscribed } = req.body;
@@ -39,7 +41,7 @@ const approvePayment = async (req, res) => {
     
 
       try {
-        const db = betterSqlite3(process.env.DB_PATH);
+       
 
         // Updating the 'approved' field in the 'orders' table using prepared statements
 
@@ -51,7 +53,7 @@ const approvePayment = async (req, res) => {
          // If changes were made, resolve the promise
         if (result.changes > 0) {
          
- const orderData = db.prepare(`SELECT id, couponCode FROM orders WHERE paymentId = ? AND paymentMethod = ?`).get(paymentId, paymentMethod);
+ const orderData = db.prepare(`SELECT id, total, couponCode FROM orders WHERE paymentId = ? AND paymentMethod = ?`).get(paymentId, paymentMethod);
           
 
 
@@ -71,17 +73,18 @@ const approvePayment = async (req, res) => {
 
 
 
+          db.prepare("UPDATE customers SET totalOrderCount = totalOrderCount + 1, money_spent = money_spent + ? WHERE id = ?").run(orderData.total, customerId); 
 
         
-        if(customerSubscribed)
-          subscribe(email, "checkout", {orderId:orderData.id});
-        else subscribe(email, "checkout x",  {orderId:orderData.id});
+          const subscribeSource = customerSubscribed? "checkout": "checkout x";
+      
+          subscribe(email, subscribeSource, {orderId:orderData.id}, db);
    
 
 
 
           if(orderData.couponCode)
-         db.prepare(`UPDATE customers SET used_discounts = json_insert(used_discounts, '$[#]', ?) WHERE id = ? `).run(orderData.couponCode, customerId)
+         db.prepare(`UPDATE customers SET used_discounts = json_insert(used_discounts, '$[#]', ?), money_spent = money_spent + ? WHERE id = ? `).run(orderData.couponCode, orderData.total, customerId)
 
         
         
@@ -100,7 +103,7 @@ const approvePayment = async (req, res) => {
         }
 
         // Closing the database connection
-        db.close();
+       
       } catch (error) {
         reject("Error in database operations." + error);
       }
@@ -112,7 +115,7 @@ const approvePayment = async (req, res) => {
   const updateAddress = async (email,shippingAddress) => {
     return new Promise((resolve, reject) => {
       try {
-        const db = betterSqlite3(process.env.DB_PATH);
+       
 
         // Updating the 'approved' field in the 'orders' table using prepared statements
 
@@ -158,7 +161,7 @@ const approvePayment = async (req, res) => {
         }
 
         // Closing the database connection
-        db.close();
+       
       } catch (error) {
         reject("Error in database operations." + error);
       }
@@ -176,8 +179,11 @@ const approvePayment = async (req, res) => {
   try {
     const clientIp = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
 
-    if (!(await limiterPerDay.rateLimiterGate(clientIp)))
+    if (!(await limiterPerDay.rateLimiterGate(clientIp, db)))
+      {
+        db.close();
       return res.status(429).json({ error: "Too many requests. Please try again later." });
+      }
 
     if(paymentMethod.includes('PAYPAL')){
     const request = new paypal.orders.OrdersCaptureRequest(paymentId);
@@ -199,21 +205,26 @@ const approvePayment = async (req, res) => {
         
         await updateDb(response.result.payer.email_address);
      
+
+        db.close();
         return res.status(200).json({ message: "Payment successful",
           giftDiscount: giftDiscount });
       } else if (response.result.status === "INSTRUMENT_DECLINED") {
+        db.close();
         res.status(500).json({ error: "INSTRUMENT_DECLINED" });
       } else {
+        db.close();
         res.status(500).json({ error: response.result.status });
       }
     }
   } 
 
-  
+  db.close();
 
     res.status(500).json({ error: "Payment was not approved." });
   } catch (error) {
     console.error("Capture request failed:", error);
+    db.close();
     res.status(500).json({ error: "Server error. Payment was not approved." });
   }
 };

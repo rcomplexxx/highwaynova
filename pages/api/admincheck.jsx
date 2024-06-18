@@ -16,9 +16,11 @@ const limiterPerTwoMins = new RateLimiter({
 export default async function adminCheckHandler(req, res) {
   const { token } = req.cookies;
 
+  const db = betterSqlite3(process.env.DB_PATH);
+
   const getFromDb = (table, queryCondition=true, selectVariables='*') => {
     try {
-      const db = betterSqlite3(process.env.DB_PATH);
+     
       let rows;
 
       if(table==="emails"){
@@ -81,9 +83,10 @@ else{
       // Closing the database connection
       db.close();
 
-      res.status(200).json({ data: rows });
+      return res.status(200).json({ data: rows });
     } catch (error) {
       console.error("Error fetching data from database:", error);
+      db.close();
       return res
         .status(500)
         .json({ successfulLogin: false, error: "No data to send" });
@@ -143,7 +146,7 @@ else{
     try {
 
     console.log('deleting data row from', tableName, deleteId)
-    const db = betterSqlite3(process.env.DB_PATH);
+  
     
 
     if(tableName==='email_sequences')
@@ -173,7 +176,8 @@ else{
     try {
 
       console.log('reviews wipiong', tableName, product_id)
-    const db = betterSqlite3(process.env.DB_PATH);
+  
+      
 
       if(tableName==='reviews'){
 
@@ -254,14 +258,17 @@ else{
           createSqliteTables();
 
         }
-        db.close();
+       
 
 
         createSqliteTables();
 
+        db.close();
+
         return res.status(200).json({ data_wiped: true });
       } catch (error) {
         console.error(error);
+        db.close();
         return res
           .status(500)
           .json({ successfulLogin: false, error: "Database update error" });
@@ -270,7 +277,8 @@ else{
 
   const updateDb = async (table, data, queryCondition) => {
     try {
-      const db = betterSqlite3(process.env.DB_PATH);
+    
+      
 
      
 
@@ -699,22 +707,25 @@ else{
      
     } catch (error) {
       console.error(error);
+      db.close();
       return res
         .status(500)
         .json({ successfulLogin: false, error: "Database update error" });
     }
   };
 
-  //   } catch (error) {
-  //     console.error('Error handling GET request:', error);
-  //     res.status(500).json({ error: 'Internal Server Error' });
-  //   }
-  // }
+
+  
 
   try {
     const clientIp = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
-    if (!(await limiterPerTwoMins.rateLimiterGate(clientIp)))
+    if (!(await limiterPerTwoMins.rateLimiterGate(clientIp, db))){
+
+      db.close();
+
       return res.status(429).json({ error: "Too many requests." });
+
+    }
 
     // Verify the token
     const userIsAdmin = verifyToken(token);
@@ -724,9 +735,26 @@ else{
     if (userIsAdmin) {
       const { dataType, data } = req.body;
       console.log('data', data);
-      console.log(dataType);
-      if (!dataType) return res.status(200).json({ successfulLogin: true });
+     
+      
+      if (!dataType){
+        db.close();
+         return res.status(200).json({ successfulLogin: true });
+      }
+
       else {
+
+        
+
+        if(dataType.startsWith("send_")){
+        if (!data)
+          return res
+            .status(500)
+            .json({ successfulLogin: false, error: "No data to send" });
+
+}
+
+
         if(dataType === "get_order_cash_info")  return getFromDb("orders", `approved = '1'`, "createdDate, items, tip, couponCode");
         //Ovde approved
         else if(dataType === "get_order_cash_info_only_fulfilled_orders") return getFromDb("orders", `packageStatus != '0'`, "createdDate, items, tip, couponCode");
@@ -768,27 +796,22 @@ else{
           return getFromDb("email_campaigns");
         else if(dataType === "get_product_returns")
         return getFromDb("product_returns");
+
+
         else if (dataType === "send_unfulfilled_orders") {
-          if (!data)
-            return res
-              .status(500)
-              .json({ successfulLogin: false, error: "No data to send" });
+         
 
           await updateDb("orders", data, `SET packageStatus = ? WHERE id = ?`);
         } else if (dataType === "send_unanswered_messages") {
-          if (!data)
-            return res
-              .status(500)
-              .json({ successfulLogin: false, error: "No data to send" });
+        
+
 
           await updateDb("messages", data, `SET msgStatus = ? WHERE id = ?`);
         } else if (dataType === "send_reviews") {
 
 
-          if (!data)
-            return res
-              .status(500)
-              .json({ successfulLogin: false, error: "No data to send" });
+       
+          
 
           await updateDb(
             "reviews",
@@ -800,14 +823,13 @@ else{
         else if (dataType === "send_reviews_reorder") {
 
 
-          if (!data)
-            return res
-              .status(500)
-              .json({ successfulLogin: false, error: "No data to send" });
+      
 
 
               const successfulReorder= await reorderReviewsByRatingAndImages(data.product_id);
 
+
+              db.close();
              if(successfulReorder)return res.status(200).json({ success: true });
              else return res.status(500).json({ success: false });
               
@@ -816,10 +838,7 @@ else{
       
         else if (dataType === "send_email_data") {
           console.log('started email send');
-          if (!data)
-            return res
-              .status(500)
-              .json({ successfulLogin: false, error: "No data to send" });
+     
 
            
           await updateDb(
@@ -831,12 +850,8 @@ else{
         
         else if (dataType === "send_new_email") {
           console.log('started email send');
-          if (!data)
-            return res
-              .status(500)
-              .json({ successfulLogin: false, error: "No data to send" });
-
-              console.log('No data crossed', data);
+      
+          
 
           await updateDb(
             "emails",
@@ -847,12 +862,7 @@ else{
         
         else if(dataType==='send_new_sequence'){
 
-          if (!data)
-            return res
-              .status(500)
-              .json({ successfulLogin: false, error: "No data to send" });
-
-              console.log('No data crossed', data);
+     
 
           await updateDb(
             "email_sequences",
@@ -865,13 +875,8 @@ else{
         
         
         else if(dataType === 'send_new_capaign'){
-          console.log('started campaign send');
-          if (!data)
-            return res
-              .status(500)
-              .json({ successfulLogin: false, error: "No data to send" });
-
-              console.log('No data crossed', data);
+         
+          
 
           await updateDb(
             "email_campaigns",
@@ -890,8 +895,8 @@ else{
           const newDescriptionIntegrated = makeNewDescription(data.text , data.productId);
 
           if(newDescriptionIntegrated){
-
-            res.status(200).json({ descriptionUpdated: true });
+            db.close();
+           return res.status(200).json({ descriptionUpdated: true });
              
              
             
@@ -909,13 +914,8 @@ else{
         }
 
         else if (dataType === 'send_new_return'){
-          if (!data)
-          return res
-            .status(500)
-            .json({ successfulLogin: false, error: "No data to send" });
 
-            console.log('No data crossed', data);
-
+          
         await updateDb(
           "product_returns",
           data
@@ -964,13 +964,16 @@ else{
         
         else {
           console.error("Wrong data type");
-          res
+          db.close();
+          return res
             .status(500)
             .json({ successfulLogin: false, error: "Wrong data type" });
         }
       }
     } else {
-      res
+
+      db.close();
+      return res
         .status(400)
         .json({
           successfulLogin: false,
@@ -979,7 +982,8 @@ else{
     }
   } catch (error) {
     console.error(error);
-    res
+    db.close();
+    return res
       .status(500)
       .json({ successfulLogin: false, error: "Internal Server Error" });
   }

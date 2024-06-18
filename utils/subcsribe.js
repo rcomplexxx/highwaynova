@@ -2,7 +2,7 @@ import betterSqlite3 from "better-sqlite3";
 import emailSendJob from "./sendEmailJob";
 
 
-function subscribe(email, source, extraData) {
+function subscribe(email, source, extraData, passedDbConnection) {
 
 
 
@@ -11,7 +11,7 @@ function subscribe(email, source, extraData) {
 
 
 
-    const db = betterSqlite3(process.env.DB_PATH);
+    const db = passedDbConnection?passedDbConnection:betterSqlite3(process.env.DB_PATH);
 
 
     
@@ -28,7 +28,7 @@ function subscribe(email, source, extraData) {
         .run(
           `Thank you ${email}`,
           sequenceId,
-          Date.now()+60000,
+          Date.now()+120000,
           0,
           0,
           JSON.stringify([email]),
@@ -46,7 +46,7 @@ function subscribe(email, source, extraData) {
          console.log('in thank you, thank you campaign set for email', email)
     
     
-            emailSendJob(Date.now()+60000,campaignId);
+            emailSendJob(Date.now()+120000,campaignId);
     }
 
 
@@ -66,7 +66,7 @@ const sendNewSubscriberSequence = ()=>{
   .run(
     `Welcome ${email}`,
     process.env.WELCOME_SEQUENCE_ID,
-    Date.now()+60000,
+    Date.now()+120000,
     0,
     0,
     JSON.stringify([email])
@@ -80,7 +80,7 @@ const sendNewSubscriberSequence = ()=>{
      
 
 
-        emailSendJob(Date.now()+60000,campaignId);
+        emailSendJob(Date.now()+120000,campaignId);
 }
 
 
@@ -100,10 +100,12 @@ const sendNewSubscriberSequence = ()=>{
         if(!result){
 
           db.prepare("INSERT INTO customers (email, totalOrderCount, subscribed, source) VALUES (?, ?, ?, ?)")
-          .run( email, source.includes('checkout')?1:0, source!=='checkout x'?1:0, source );
+          .run( email, 0, 1, source );
       
-          if(source.includes('checkout')) sendPostBuyingSequence(1);
-          if(source!=='checkout x')sendNewSubscriberSequence();
+        
+          sendNewSubscriberSequence();
+
+          //ovde se ne pominju uslovi za checkout jer kad je checkout, customer je vec kreiran i !result nikad nije true
       
         }
 
@@ -128,13 +130,13 @@ const sendNewSubscriberSequence = ()=>{
              
               
               if(newSubscribe)
-              db.prepare("UPDATE customers SET totalOrderCount = totalOrderCount + 1, subscribed = 1 WHERE email = ?").run( email); 
+              db.prepare("UPDATE customers SET subscribed = 1 WHERE email = ?").run(email); 
               
-              else db.prepare("UPDATE customers SET totalOrderCount = totalOrderCount + 1 WHERE email = ?").run( email); 
+            
 
               
            
-              sendPostBuyingSequence(result.totalOrderCount+1);
+              sendPostBuyingSequence(result.totalOrderCount);
             if(newSubscribe) sendNewSubscriberSequence();
            
        
@@ -164,7 +166,7 @@ const sendNewSubscriberSequence = ()=>{
 
 
          // Close the database connection when done
-    db.close();
+    if(!passedDbConnection)db.close();
 
     return true;
 

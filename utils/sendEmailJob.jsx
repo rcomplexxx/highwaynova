@@ -29,65 +29,10 @@ cron.schedule(date, async() => {
 
 
 
-        function getTargets(campaignTargets){
-  
+       
 
 
-          let targets;
-         
-          if(campaignTargets==='cold_traffic'){
-            targets = db.prepare(`SELECT email FROM customers WHERE subscribed = ? AND totalOrderCount <= 1`).all(1);
-        
-          }
-            else if(campaignTargets==='warm_traffic'){
-              targets = db.prepare(`SELECT email FROM customers WHERE subscribed = ? AND totalOrderCount = 2`).all(1);
-        
-            }
-              else if(campaignTargets==='hot_traffic') {
-                targets = db.prepare(`SELECT email FROM customers WHERE subscribed = ? AND totalOrderCount >= 3 AND totalOrderCount <5`).all(1);
-        
-              } 
-              else if(campaignTargets==='loyal_traffic'){
-        
-                targets = db.prepare(`SELECT email FROM customers WHERE subscribed = ? AND totalOrderCount >= 5`).all(1);
-        
-              }
-        
-              else  if(campaignTargets==='all'){
-                targets = db.prepare(`SELECT email FROM customers WHERE subscribed = ?`).all(1);
-              }
-              else if(campaignTargets==='bh_customers'){
-             
-                targets = db.prepare(`SELECT email FROM customers WHERE subscribed = ?`).all(0);
-              }
-              else{
-                targets = JSON.parse(campaignTargets);
-              }
-
-
-              if(targetCustomersWithoutCurrentCampaign) targets =  
-              targets.filter(target=>{return !db.prepare(`SELECT currentCampaignId FROM customers WHERE email = ?`).get(target.email);})
-
-              return targets;
-         }
-
-
-         function finalizeEmailText(emailText, sequenceId, campaignExtraData){
-
-          let transformedEmailText;
-
-         if(sequenceId.toString() === process.env.THANK_YOU_SEQUENCE_ID || sequenceId.toString() === process.env.THANK_YOU_SEQUENCE_FIRST_ORDER_ID){
-           console.log('thank you campaign detected!!' );
-           transformedEmailText = emailText.replace(/\[order_id\]/g, JSON.parse(campaignExtraData).orderId)
-           
-         }
-         else{
-          transformedEmailText = emailText;
-         }
-         return transformedEmailText;
-         
-
-        }
+     
 
 
 
@@ -123,7 +68,7 @@ console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@this is campaign data.', cam
 
         console.log('so here is my email', email, 'em pointers', sequenceEmailPointers )
         
-        let targets= getTargets(campaign.targetCustomers);
+        let targets= getTargets(campaign.targetCustomers, targetCustomersWithoutCurrentCampaign, db);
 
 
 
@@ -137,16 +82,16 @@ console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@this is campaign data.', cam
 
                 if(currentEmailIndex===0)
                 targets.forEach(target => {
-                  db.prepare(`UPDATE customers SET currentCampaignId = ? WHERE email = ?`).run(
-                    campaignId,
+                  db.prepare(`UPDATE customers SET currentCampaign = ? WHERE email = ?`).run(
+                    JSON.stringify({id: campaignId, finishedDate: null}),
                     target.email,
                 );
                 });
 
                 else if(currentEmailIndex===sequenceEmailPointers.lenght-1 || campaign.retryCounter>=10)
                   targets.forEach(target => {
-                    db.prepare(`UPDATE customers SET currentCampaignId = ? WHERE email = ?`).run(
-                      null,
+                    db.prepare(`UPDATE customers SET currentCampaign = ? WHERE email = ?`).run(
+                      JSON.stringify( {id: campaignId, finishedDate: Date.now()}),
                       target.email,
                   );
                   });
@@ -253,7 +198,7 @@ console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@this is campaign data.', cam
 
                   if( campaign.retryCounter<10)
               
-                await  emailSendJob( (campaign.retryCounter+1)%3===0?Date.now()+10800000:Date.now()+60000, campaignId, markAsCurrentCampaignInCustomers, targetCustomersWithoutCurrentCampaign )
+                await  emailSendJob( (campaign.retryCounter+1)%3===0?Date.now()+10800000:Date.now()+120000, campaignId, markAsCurrentCampaignInCustomers, targetCustomersWithoutCurrentCampaign )
         
            
               }
@@ -282,6 +227,74 @@ console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@this is campaign data.', cam
 
  }
 
+
+
+
+ function getTargets(campaignTargets, targetCustomersWithoutCurrentCampaign, db){
+  
+
+
+  let targets;
+ 
+  if(campaignTargets==='cold_traffic'){
+    targets = db.prepare(`SELECT email FROM customers WHERE subscribed = ? AND totalOrderCount <= 1`).all(1);
+
+  }
+    else if(campaignTargets==='warm_traffic'){
+      targets = db.prepare(`SELECT email FROM customers WHERE subscribed = ? AND totalOrderCount = 2`).all(1);
+
+    }
+      else if(campaignTargets==='hot_traffic') {
+        targets = db.prepare(`SELECT email FROM customers WHERE subscribed = ? AND totalOrderCount >= 3 AND totalOrderCount <5`).all(1);
+
+      } 
+      else if(campaignTargets==='loyal_traffic'){
+
+        targets = db.prepare(`SELECT email FROM customers WHERE subscribed = ? AND totalOrderCount >= 5`).all(1);
+
+      }
+
+      else  if(campaignTargets==='all'){
+        targets = db.prepare(`SELECT email FROM customers WHERE subscribed = ?`).all(1);
+      }
+      else if(campaignTargets==='bh_customers'){
+     
+        targets = db.prepare(`SELECT email FROM customers WHERE subscribed = ?`).all(0);
+      }
+      else{
+        targets = JSON.parse(campaignTargets);
+      }
+
+
+      if(targetCustomersWithoutCurrentCampaign) targets =  
+      targets.filter(target=>{
+        const currTargetCamp = db.prepare(`SELECT currentCampaign FROM customers WHERE email = ?`).get(target.email);
+
+        return !currTargetCamp || (JSON.parse(currTargetCamp.currentCampaign).finishedDate && Date.now() - JSON.parse(currTargetCamp.currentCampaign).finishedDate > 5 * 24 * 60 * 60 * 1000)
+
+
+      })
+
+      return targets;
+ }
+
+
+ function finalizeEmailText(emailText, sequenceId, campaignExtraData){
+
+  let transformedEmailText;
+
+ if(sequenceId.toString() === process.env.THANK_YOU_SEQUENCE_ID || sequenceId.toString() === process.env.THANK_YOU_SEQUENCE_FIRST_ORDER_ID){
+   console.log('thank you campaign detected!!' );
+   transformedEmailText = emailText.replace(/\[order_id\]/g, JSON.parse(campaignExtraData).orderId)
+   
+ }
+ else{
+  transformedEmailText = emailText;
+ }
+ return transformedEmailText;
+ 
+
+}
 
 
 
