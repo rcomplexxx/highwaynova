@@ -8,7 +8,7 @@ const Products = ({ products, showAll, productListTitle }) => {
 
   return (
     <div className={styles.toolbar}>
-     {productListTitle && <h1 className={`${styles.title} ${!showAll && styles.homeProductsTitle}`}>{productListTitle}</h1>}
+     {productListTitle && <h1>{productListTitle}</h1>}
       <div className={styles.mainGridStyle}>
         {products.map((product, i) => (
           <Product

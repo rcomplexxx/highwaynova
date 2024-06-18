@@ -3,6 +3,7 @@ const betterSqlite3 = require('better-sqlite3');
 
 // Schedule the cron job to run every day at midnight
  function dbCleaner() {
+  //every day
 cron.schedule('0 0 * * *', async () => {
   console.log('Running the task to delete rows from the database...');
 
@@ -28,6 +29,7 @@ const db = betterSqlite3(process.env.DB_PATH);
     // db.exec(cleanOrdersQuery);
     // db.exec(cleanMessagesQuery);
     db.exec(cleanRateLimiterQuery);
+    db.exec('VACUUM;');
     console.log('Rows deleted successfully!');
   } catch (error) {
     console.error('Error deleting rows:', error.message);

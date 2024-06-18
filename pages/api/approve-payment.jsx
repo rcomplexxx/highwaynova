@@ -24,6 +24,16 @@ const client = new paypal.core.PayPalHttpClient(environment);
 
 const approvePayment = async (req, res) => {
 
+
+
+  const resReturn = (statusNumber, jsonObject, db)=>{
+
+     
+    res.status(statusNumber).json(jsonObject)
+    if(db)db.close();
+ }
+  
+
   const db = betterSqlite3(process.env.DB_PATH);
 
   let giftDiscount = false;
@@ -69,7 +79,7 @@ const approvePayment = async (req, res) => {
         
 
           if(customerInfo && JSON.parse(customerInfo.used_discounts).find(discountCode=>  discountCode===orderData.couponCode))
-            return res.status(400).json({ success: false, error: "Discount has already been used." });
+           return resReturn(400, { success: false, error: "Discount has already been used."}, db)
 
 
 
@@ -180,10 +190,9 @@ const approvePayment = async (req, res) => {
     const clientIp = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
 
     if (!(await limiterPerDay.rateLimiterGate(clientIp, db)))
-      {
-        db.close();
-      return res.status(429).json({ error: "Too many requests. Please try again later." });
-      }
+      return resReturn(429, {error: "Too many requests. Please try again later." }, db)
+  
+    
 
     if(paymentMethod.includes('PAYPAL')){
     const request = new paypal.orders.OrdersCaptureRequest(paymentId);
@@ -196,7 +205,7 @@ const approvePayment = async (req, res) => {
    
     //Nadgledam adresu
     if (response.result && response.result.status) {
-      let status = response.result.status;
+      // let status = response.result.status;
       // Check if the capture was successful
       if (response.result.status === "COMPLETED") {
         console.log('hello!', response.result.purchase_units[0].shipping)
@@ -206,26 +215,38 @@ const approvePayment = async (req, res) => {
         await updateDb(response.result.payer.email_address);
      
 
-        db.close();
-        return res.status(200).json({ message: "Payment successful",
-          giftDiscount: giftDiscount });
+        return resReturn(200, { message: "Payment successful",
+          giftDiscount: giftDiscount }, db)
+
+     
+          
       } else if (response.result.status === "INSTRUMENT_DECLINED") {
-        db.close();
-        res.status(500).json({ error: "INSTRUMENT_DECLINED" });
+
+        return resReturn(500, {  error: "INSTRUMENT_DECLINED"  }, db)
+
+ 
       } else {
-        db.close();
-        res.status(500).json({ error: response.result.status });
+        
+
+        return resReturn(500, { error: response.result.status }, db)
+
+        
       }
     }
   } 
 
-  db.close();
+  
+  return resReturn(500, { error: "Payment was not approved." }, db)
 
-    res.status(500).json({ error: "Payment was not approved." });
+ 
+  
   } catch (error) {
+
+
     console.error("Capture request failed:", error);
-    db.close();
-    res.status(500).json({ error: "Server error. Payment was not approved." });
+    return resReturn(500, { error: "Server error. Payment was not approved." }, db)
+
+    
   }
 };
 

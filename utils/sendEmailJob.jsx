@@ -123,6 +123,7 @@ console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@this is campaign data.', cam
 
                console.log('My final email text is', finalEmailText);
 
+               
               
 
               const transporter = nodemailer.createTransport({
@@ -171,11 +172,22 @@ console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@this is campaign data.', cam
             await emailSendJob( finalSendingDate, campaignId, markAsCurrentCampaignInCustomers, targetCustomersWithoutCurrentCampaign)
           }
 
+          else if(campaign.sequenceId.toString() === process.env.THANK_YOU_SEQUENCE_ID || campaign.sequenceId.toString() === process.env.THANK_YOU_SEQUENCE_FIRST_ORDER_ID ||
+            campaign.sequenceId.toString() === process.env.WELCOME_SEQUENCE_ID) {
+
+          db.prepare(`DELETE FROM email_campaigns WHERE id = ?`).run(campaignId);
+          
+          db.close();
+          return;
+
+         }
+          
+
 
 
 
       db.prepare(`UPDATE email_campaigns SET emailSentCounter = ?, retryCounter = ? WHERE id = ?`).run(
-        campaign.emailSentCounter + 1,
+        currentEmailIndex + 1,
         0,
           campaign.id,
         );

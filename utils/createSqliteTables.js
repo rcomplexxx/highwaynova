@@ -32,12 +32,12 @@ function createSqliteTables() {
         `
         CREATE TABLE IF NOT EXISTS customers (
           id INTEGER PRIMARY KEY,
-          email TEXT UNIQUE,
+          email TEXT,
           totalOrderCount INTEGER DEFAULT 0,
           money_spent REAL DEFAULT 0,
           subscribed INTEGER,
           source TEXT,
-          currentCampaignId INTEGER,
+          currentCampaign TEXT,
           used_discounts TEXT DEFAULT '[]'
         )
       `,

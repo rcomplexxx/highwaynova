@@ -9,7 +9,9 @@ const limiterPerHour = new RateLimiter({
 });
 
 export default async function logHandler(req, res) {
+  
   try {
+
     const clientIp = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
 
     if (!(await limiterPerHour.rateLimiterGate(clientIp)))

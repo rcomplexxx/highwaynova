@@ -40,6 +40,17 @@ const craftShuffledArrayQuery = (array)=>{
 
 
 const getReviews = async (req, res) => {
+
+
+
+  const resReturn = (statusNumber, jsonObject, db)=>{
+
+     
+    res.status(statusNumber).json(jsonObject)
+    if(db)db.close();
+ }
+
+
   const { product_id, starting_position, limit = 40 ,sortingType} = req.body;
 
 
@@ -57,10 +68,11 @@ const getReviews = async (req, res) => {
   
 
       if (!(await  limiterPerDay.rateLimiterGate(clientIp, db)))
-        {
-          db.close();
-        return res.status(429).json({ error: "Too many requests." })
-        };
+        
+          return resReturn(429,{ error: "Too many requests." }, db )
+     
+          
+        
 
    
 
@@ -77,9 +89,10 @@ const getReviews = async (req, res) => {
     const result = stmt.all(product_id, limit, starting_position);
     // console.log('rs', result)
 
-    db.close();
+    return resReturn(200, { reviews: result }, db )
 
-    return res.status(200).json({ reviews: result });
+
+    
   
   }
 
@@ -114,9 +127,10 @@ const getReviews = async (req, res) => {
 
     const result = stmt.all();
 
-    db.close();
+    return resReturn(200, { reviews: result }, db )
 
-    return res.status(200).json({ reviews: result });
+  
+    
   
 
   }
@@ -156,8 +170,10 @@ const getReviews = async (req, res) => {
     const highestRatingsArraySliced= highestRatingsArray.slice(starting_position, starting_position+limit)
 
 
-    db.close();
-    return res.status(200).json({ reviews: highestRatingsArraySliced });
+    return resReturn(200, { reviews: highestRatingsArraySliced }, db )
+
+  
+    
 
    
     
@@ -175,10 +191,11 @@ const getReviews = async (req, res) => {
   
    
   } catch (error) {
+
+    return resReturn(500, {error: "Verification error." }, db )
     
 
-    db.close();
-    res.status(500).json({ error: "Verification error." });
+    
 
   }
 };

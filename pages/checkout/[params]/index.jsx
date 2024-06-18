@@ -70,7 +70,7 @@ const BuyNowPage = () => {
 
     {loaded && params?<>
 
-    <h1 className={`${styles.title} ${styles.emptyTitle}`}>Product not found.</h1>
+    <h1>Product not found.</h1>
     
     
       <span className={styles.emptyCartText}>
@@ -81,7 +81,7 @@ const BuyNowPage = () => {
           </Link>
    
    
-      </>:<h1 className={`${styles.title} ${styles.emptyTitle}`}>Loading checkout...</h1>
+      </>:<h1>Loading checkout...</h1>
       }
 
    

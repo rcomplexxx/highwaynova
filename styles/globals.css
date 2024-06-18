@@ -30,6 +30,16 @@
 
 
 
+.mainButton{
+  background-color: var(--main-color-4);
+}
+
+.mainButton:hover{
+  background-color: var(--main-color-5);
+}
+
+
+
 
 
 body{
@@ -71,7 +81,16 @@ button{
 }
 
 input{
+  min-width: 0;
+
+  box-sizing: border-box;
+  padding: var(--size-3);
+
+  border-radius: 2px;
+  
   outline: none;
+  font-family: var(--font-neutral);
+ 
 }
 
 input::placeholder{

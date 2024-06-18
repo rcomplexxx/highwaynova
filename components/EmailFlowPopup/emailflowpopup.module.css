@@ -127,7 +127,7 @@
 
 .emailField{
     width: 100%;
-    min-width: 0;
+    
     color: var(--email-popup-input-color);
     background-color: var(--email-popup-input-bg);
     height: 40px;
@@ -135,7 +135,7 @@
     /* margin-right: var(--size-3); */
    
     
-    box-sizing: border-box;
+    
     text-indent: var(--size-2);
     border: 1px solid var(--email-popup-input-border);
     border-radius: 8px;

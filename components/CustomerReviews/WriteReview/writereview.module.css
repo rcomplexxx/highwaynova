@@ -215,6 +215,7 @@
     
     background-color: var(--writing-media-button);
    
+    padding: 0;
     border: none;
     border-radius: 8px;
    
@@ -246,6 +247,7 @@
     width: 100%;
     height: 100%;
     cursor: pointer;
+  
   }
 
 
@@ -572,12 +574,14 @@
     background-color: transparent;
    
 
-    box-sizing: border-box;
-    padding-left: var(--size-3);
+    
+    
     border: 1px solid var(--writing-accent-color);
-    border-radius: 8px;
+
+    border-radius: 4px;
     margin-top: var(--size-2);
-    box-sizing: border-box;
+   
+    font-size: var(--font-size-2);
   }
 
   .personInfoInput:focus{
@@ -605,12 +609,15 @@
     height: var(--size-8);
     background-color: transparent;
 
-    box-sizing: border-box;
-    border: 1px solid var(--writing-accent-color);
-    padding-left: var(--size-3);
-    border-radius: 8px;
+    
     margin-top: var(--size-2);
-    box-sizing: border-box;
+    border-radius: 8px;
+    border: 1px solid var(--writing-accent-color);
+   
+    
+   
+   
+    font-size: var(--font-size-2);
   }
 
   .personEmail:focus{

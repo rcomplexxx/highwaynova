@@ -14,11 +14,8 @@
     overflow: hidden;
   }
 
-  .title {
-    margin-top: var(--size-7);
-    margin-bottom: var(--size-8);
 
-  }
+  
 
  
   
@@ -163,11 +160,7 @@ width: 100vw ;
 
  
 
-  .title {
-    margin-top: var(--size-7);
-    margin-bottom: var(--size-7);
-
-  }
+  
 
 
   .reviewDiv{

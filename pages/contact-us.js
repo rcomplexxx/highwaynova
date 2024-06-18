@@ -86,7 +86,7 @@ export default function ContactUs() {
 
     <div className={styles.mainDiv}>
       <NextSeo {...unimportantPageSeo('/contact-us')}/>
-        <h1 className={styles.contactUsTitle}>Contact Us</h1>
+        <h1>Contact Us</h1>
         <div className={styles.contactUsTextDiv}>
 
         <span className={`${styles.contactUsText} ${styles.contactUsTextFirst}`}>Before contacting us, check if your question/concern has been answered on our <Link href={'/faq'}>FAQ PAGE</Link>.</span>

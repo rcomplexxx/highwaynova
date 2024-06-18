@@ -84,7 +84,7 @@ export default function HomeReviews() {
 
   return (
     <div className={styles.mainReviewDiv}>
-      <h1 className={styles.title}>Customer reviews</h1>
+      <h1>Customer reviews</h1>
       <div className={styles.mainDiv}>
         {windowWidth > 980 ? (
           reviews.map((review, index) => (

@@ -47,7 +47,7 @@ export default function Faq({ questionData }) {
         <title>FAQ - Gamesmoke shop</title>
       </Head>
       <div className={styles.mainDiv}>
-        <h1 className={styles.title}>FAQ</h1>
+        <h1>FAQ</h1>
         <p>
           Here are a few of the frequently asked questions. To provide you with
           the best customer experience, your feedback is greatly encouraged. If

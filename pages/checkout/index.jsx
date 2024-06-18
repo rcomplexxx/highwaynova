@@ -27,7 +27,7 @@ const CheckoutPage = () => {
 
 
     {loaded?<>
-    <h1 className={`${styles.title}  ${styles.emptyTitle}`}>Your cart is empty</h1>
+    <h1>Your cart is empty</h1>
   
   
       <span className={styles.emptyCartText}>

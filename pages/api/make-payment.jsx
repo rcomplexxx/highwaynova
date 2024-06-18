@@ -67,8 +67,18 @@ const paypalPay=async(totalPrice)=>{
 const makePayment = async (req, res) => {
   console.log('  reqdata BITNO ~!!!~).', req.body)
 
+  
+
 
   const db = betterSqlite3(process.env.DB_PATH);
+
+
+  const resReturn = (statusNumber, jsonObject, db)=>{
+
+     
+    res.status(statusNumber).json(jsonObject)
+    if(db)db.close();
+ }
 
 
 
@@ -160,7 +170,9 @@ const makePayment = async (req, res) => {
         console.log('sooun checking', customerInfo);
 
         if(customerInfo && JSON.parse(customerInfo.used_discounts).find(discountCode=>discountCode===couponCode))
-          return res.status(400).json({ success: false, error: "Discount has already been used." });
+    
+          return resReturn(400, { success: false, error: "Discount has already been used." }, db);
+
 
         let customerId= customerInfo?.id;
 
@@ -268,8 +280,9 @@ const makePayment = async (req, res) => {
     const clientIp = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
 
     if (!(await limiterPerDay.rateLimiterGate(clientIp, db))){
-      db.close();
-      return res.status(429).json({ error: "Too many requests. Please try again later." });
+      
+      
+      return resReturn(429, { error: "Too many requests. Please try again later." }, db);
     }
 
     
@@ -328,15 +341,17 @@ const makePayment = async (req, res) => {
      
       await putInDatabase(req.body.paymentMethod,response.result.id);
 
-      db.close();
-      res.status(200).json({ success: true, paymentId: response.result.id });
+     
+      return resReturn(200, { success: true, paymentId: response.result.id }, db);
     } else {
       // Payment was not successful
 
-      db.close();
-      res
-        .status(400)
-        .json({ success: false, error: "Payment was not approved." });
+
+      return resReturn(400, { success: false, error: "Payment was not approved." }, db);
+
+ 
+      
+
     }
 
   }
@@ -386,14 +401,17 @@ const makePayment = async (req, res) => {
 		});
     await putInDatabase('GPAY(STRIPE)',paymentIntent.client_secret, 1);
 
-    db.close();
+
     
 
-  	return res.json({
+    return resReturn(200, {
 			
 			success: true,
       giftDiscount: giftDiscount
-		})
+		}, db);
+    
+
+  
 
 
 
@@ -430,13 +448,16 @@ const makePayment = async (req, res) => {
     
     await putInDatabase('STRIPE',paymentIntent.client_secret, 1);
 
-    db.close();
+   
+   
+   
     
-		return res.json({
+
+    return resReturn(200, {
 			
 			success: true,
       giftDiscount: giftDiscount
-		})
+		}, db);
 
   }
   
@@ -448,8 +469,13 @@ const makePayment = async (req, res) => {
     // Handle errors
 
     console.error("Error verifying payment:", error);
-    db.close();
-    res.status(500).json({ success: false, error: "Error occured. Payment was not approved." });
+
+    return resReturn(500, {
+			
+      success: false, error: "Error occured. Payment was not approved." 
+		}, db);
+
+    
   }
 };
 

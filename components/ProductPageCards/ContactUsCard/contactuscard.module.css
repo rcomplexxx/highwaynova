@@ -71,14 +71,15 @@
     /* font-family: var(--font-neutral); */
    
     
-    border-radius: 4px;
+    
 
-      padding: var(--size-4) var(--size-3);
-      padding-bottom: 0;
-      box-sizing: border-box;
+   
+      padding-top: 20px;
+      
       border: 1px solid var(--contact-input-outline);
+
     font-size: var(--font-size-3);
-    font-family: var(--font-neutral);
+    
    
 
     
@@ -190,8 +191,6 @@ font-size: var(--font-size-1);
   
     
    
-   
-    border-radius: 8px;
 }
 
 
@@ -203,14 +202,17 @@ font-size: var(--font-size-1);
     background-color: var(--contact-input-color);
     flex-grow: 1;
 
+    
+    border-radius: 4px;
+   
+    box-sizing: border-box;
+    padding: var(--size-3);
+    padding-top: 20px;
+    border: 1px solid var(--contact-input-outline);
     resize: none;
-    border-radius: 8px;
+
     font-family: var(--font-neutral);
     font-size: var(--font-size-3);
-    box-sizing: border-box;
-    padding: 0 var(--size-3);
-    padding-top: 22px;
-    border: 1px solid var(--contact-input-outline);
 }
 
 .messageTextArea::placeholder{

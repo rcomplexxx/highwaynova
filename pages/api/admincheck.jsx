@@ -16,6 +16,16 @@ const limiterPerTwoMins = new RateLimiter({
 export default async function adminCheckHandler(req, res) {
   const { token } = req.cookies;
 
+
+  const resReturn = (statusNumber, jsonObject, db)=>{
+
+    console.log('returning res', statusNumber, jsonObject);
+
+     
+    res.status(statusNumber).json(jsonObject)
+    if(db)db.close();
+ }
+
   const db = betterSqlite3(process.env.DB_PATH);
 
   const getFromDb = (table, queryCondition=true, selectVariables='*') => {
@@ -81,15 +91,16 @@ else{
     }
 
       // Closing the database connection
-      db.close();
 
-      return res.status(200).json({ data: rows });
+      return resReturn(200, { data: rows }, db)
+   
+      
     } catch (error) {
       console.error("Error fetching data from database:", error);
-      db.close();
-      return res
-        .status(500)
-        .json({ successfulLogin: false, error: "No data to send" });
+
+      return resReturn(500, { successfulLogin: false, error: "No data to send" }, db)
+      
+      
     }
   };
 
@@ -154,15 +165,19 @@ else{
 
 
    db.prepare(`DELETE FROM ${tableName} WHERE id = ?`).run(deleteId);
-  
-    db.close();
 
-    return res.status(200).json({ row_deleted: true });
+   return resReturn(200, { row_deleted: true }, db)
+  
+
+   
   } catch (error) {
     console.error(error);
-    return res
-      .status(500)
-      .json({ successfulLogin: false, error: "Database update error" });
+
+    return resReturn(500, { successfulLogin: false, error: "Database update error" }, db)
+   
+    
+
+    
   }
     
   }
@@ -263,15 +278,17 @@ else{
 
         createSqliteTables();
 
-        db.close();
+        return resReturn(200, { data_wiped: true }, db)
+   
 
-        return res.status(200).json({ data_wiped: true });
+     
       } catch (error) {
-        console.error(error);
-        db.close();
-        return res
-          .status(500)
-          .json({ successfulLogin: false, error: "Database update error" });
+      
+        
+        return resReturn(500, {successfulLogin: false, error: "Database update error" }, db)
+   
+ 
+        
       }
   }
 
@@ -698,19 +715,20 @@ else{
 
     
 
+        return resReturn(200, { data_saved: true }, db)
+   
+
     
-
-        db.close();
-
-       return res.status(200).json({ data_saved: true });
+        
 
      
     } catch (error) {
       console.error(error);
-      db.close();
-      return res
-        .status(500)
-        .json({ successfulLogin: false, error: "Database update error" });
+
+      return resReturn(500, { successfulLogin: false, error: "Database update error" }, db)
+   
+   
+      
     }
   };
 
@@ -719,13 +737,12 @@ else{
 
   try {
     const clientIp = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
-    if (!(await limiterPerTwoMins.rateLimiterGate(clientIp, db))){
+    if (!(await limiterPerTwoMins.rateLimiterGate(clientIp, db))) return resReturn(429, { error: "Too many requests." }, db)
+   
 
-      db.close();
+      
 
-      return res.status(429).json({ error: "Too many requests." });
-
-    }
+    
 
     // Verify the token
     const userIsAdmin = verifyToken(token);
@@ -738,21 +755,21 @@ else{
      
       
       if (!dataType){
-        db.close();
-         return res.status(200).json({ successfulLogin: true });
+
+        return resReturn(200, { successfulLogin: true }, db)
+
+        
       }
 
       else {
 
         
 
-        if(dataType.startsWith("send_")){
-        if (!data)
-          return res
-            .status(500)
-            .json({ successfulLogin: false, error: "No data to send" });
+        if(dataType.startsWith("send_") && !data) return resReturn(500, { successfulLogin: false, error: "No data to send" }, db)
+        
+        
 
-}
+
 
 
         if(dataType === "get_order_cash_info")  return getFromDb("orders", `approved = '1'`, "createdDate, items, tip, couponCode");
@@ -829,9 +846,11 @@ else{
               const successfulReorder= await reorderReviewsByRatingAndImages(data.product_id);
 
 
-              db.close();
-             if(successfulReorder)return res.status(200).json({ success: true });
-             else return res.status(500).json({ success: false });
+          
+             
+             if(successfulReorder) return resReturn(200, { success: true }, db)
+              else  return resReturn(500, { success: false }, db)
+         
               
          
         } 
@@ -888,25 +907,32 @@ else{
         else if(dataType === 'send_new_product_description'){
           console.log('send_new_product_description executed.');
 
-          if(data.productId==="") return res
-          .status(500)
-          .json({ descriptionUpdated: false });
+          if(data.productId==="") {
+            return resReturn(500, { descriptionUpdated: false }, db)
+         
+         
+            
+          }
 
           const newDescriptionIntegrated = makeNewDescription(data.text , data.productId);
 
           if(newDescriptionIntegrated){
-            db.close();
-           return res.status(200).json({ descriptionUpdated: true });
+ 
+            
+            
              
+           return resReturn(200, { descriptionUpdated: true }, db)
+         
              
             
           
         }
 
         else{
-          res
-          .status(500)
-          .json({ descriptionUpdated: false });
+
+          return resReturn(500, { descriptionUpdated: false }, db)
+
+       
         }
 
           //return true u res ako je uspesno revritowan fajl.
@@ -964,27 +990,29 @@ else{
         
         else {
           console.error("Wrong data type");
-          db.close();
-          return res
-            .status(500)
-            .json({ successfulLogin: false, error: "Wrong data type" });
+
+
+          return resReturn(500, { successfulLogin: false, error: "Wrong data type" }, db)
+
+
+          
         }
       }
     } else {
 
-      db.close();
-      return res
-        .status(400)
-        .json({
-          successfulLogin: false,
-          error: "You do not have access to this sector. Get lost noob.",
-        });
+      return resReturn(400, { successfulLogin: false,
+        error: "You do not have access to this sector. Get lost noob.", }, db)
+
+
+   
     }
   } catch (error) {
     console.error(error);
-    db.close();
-    return res
-      .status(500)
-      .json({ successfulLogin: false, error: "Internal Server Error" });
+
+    return resReturn(500, { successfulLogin: false, error: "Internal Server Error" }, db)
+
+
+ 
+    
   }
 } //

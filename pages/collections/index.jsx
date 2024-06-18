@@ -25,7 +25,7 @@ export default function Collections({ collections}) {
 
 
       <div className={styles.toolbar}>
-      <h1 className={styles.title}>Collections</h1>
+      <h1>Collections</h1>
       <div className={styles.mainGridStyle}>
         {collections.map((collection, i) => (
         

@@ -28,7 +28,7 @@ export default function ThankYou() {
      <NextSeo {...unimportantPageSeo('/thank-you')}/>
     <div className={styles.mainDiv}>
       <div className={styles.titleDiv}>
-        <h1 className={styles.title}>Thank you</h1>
+        <h1>Thank you</h1>
         <div className={styles.correctDiv}>
           <Image
             className={styles.correctImg}

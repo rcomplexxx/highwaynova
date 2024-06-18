@@ -119,11 +119,14 @@
       height: var(--size-8);
       background-color: var(--input-color);
       color: var(--high-contrast-light-txt-color);
-      padding: var(--size-3);
+    
+      
       padding-top: 24px;
-      border-radius: 2px;
+    
+      
       align-self: center;
-      box-sizing: border-box;
+     
+      
       border: solid 1px var(--input-outline-color);
  
       font-size: var(--font-size-2);

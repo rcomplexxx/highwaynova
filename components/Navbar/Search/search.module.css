@@ -26,12 +26,13 @@
     
     background-color: var(--search-bg);
     color: var(--light-txt-color);
-    padding: var(--size-3);
+
+    
   
     border-radius: 2px;
     align-self: center;
-    box-sizing: border-box;
-    border: none;
+   
+    
     border: solid 1px var( --input-outline-color);
     font-size: var(--font-size-1);
   }

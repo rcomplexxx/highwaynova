@@ -21,6 +21,16 @@ const limiterPerWeek = new RateLimiter({
 });
 
 export default async function handler(req, res) {
+
+  
+  const resReturn = (statusNumber, jsonObject, db)=>{
+
+     
+    res.status(statusNumber).json(jsonObject)
+    if(db)db.close();
+ }
+
+  
   try {
     const clientIp = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
 
@@ -28,16 +38,14 @@ export default async function handler(req, res) {
 
     const db = betterSqlite3(process.env.DB_PATH);
 
+
     if (!(await limiterPerMinute.rateLimiterGate(clientIp, db)))
-      {
-        db.close();
-      return res.status(429).json({ error: "Too many requests." })
-      };
+   return resReturn(429, { error: "Too many requests." }, db)
+
+
+     
     if (!(await limiterPerWeek.rateLimiterGate(clientIp, db)))
-      {
-        db.close();
-      return res.status(429).json({ error: "Too many requests." });
-      }
+      return resReturn(429, { error: "Too many requests." }, db)
 
     // Rate limiting checks passed, proceed with API logic
 
@@ -49,24 +57,23 @@ export default async function handler(req, res) {
         if (req.body.type === "customers") {
           // Create a new SQLite database connection
 
-          if(subscribe(req.body.email, req.body.source, db)){
+          if(subscribe(req.body.email, req.body.source, db))
+            return resReturn(201, { message: "Successfully subscribed." }, db)
             
-              db.close();
-         
-          res.status(201).json({ message: "Successfully subscribed." });
-            
+          
 
-        }
+        
         } else if (req.body.type === "messages") {
           // Create a new SQLite database connection
 
 
           if (!(await dailyMessageLimit.rateLimiterGate(clientIp, db)))
-            {
-              db.close();
-          return res.status(429).json({ error: "Too many messages sent." });
             
-        }
+              return resReturn(429, { error: "Too many messages sent." }, db)
+           
+     
+            
+        
 
          
 
@@ -99,23 +106,34 @@ export default async function handler(req, res) {
           ).run(customerId, name, message);
 
           console.log("Message sent successfully.");
-          res.status(201).json({ message: "Message sent successfully." });
 
-          // Close the database connection when done
-          db.close();
+          return resReturn(201, { message: "Message sent successfully." }, db)
+
+     
+          
+        
         }
       } catch (error) {
         console.error("Error handling POST request:", error);
-        res.status(500).json({ error: "Internal Server Error" });
-        db.close();
+
+        return resReturn(500, { error: "Internal Server Error" }, db)
+
+        
+       
       }
     } else {
-      res.status(405).json({ error: "Method Not Allowed" });
-      db.close();
+
+      return resReturn(405, { error: "Method Not Allowed" }, db)
+
+      
+     
     }
   } catch (error) {
     console.error("Error handling request:", error);
-    res.status(500).json({ error: "Internal Server Error" });
-    db.close();
+
+    return resReturn(500, { error: "Internal Server Error"  }, db)
+
+    
+    
   }
 }

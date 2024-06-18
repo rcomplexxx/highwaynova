@@ -17,10 +17,7 @@
    
 }
 
-.contactUsTitl{
 
-    margin-bottom:var(--size-7);
-}
 
 /* iz nekog razloga racunica se ne podadudara kad stavim size-8, pa sam stavio size-7 */
 
@@ -125,17 +122,17 @@
     color: var(--high-contrast-light-txt-color);
     background-color: var(--contact-input-color);
     /* font-family: var(--font-neutral); */
-    border: none;
+    border: 1px solid var(--contact-input-outline);
     border-radius: 4px;
 
-    box-sizing: border-box;
+    
 
-    padding: 0 var(--size-3);
-    padding-top: var(--size-4);
+    
+    padding-top: 20px;
 
-    border: 1px solid var(--contact-input-outline);
+  
     font-size: var(--font-size-3);
-    font-family: var(--font-neutral);
+    
    
 
     
@@ -219,7 +216,7 @@ font-size: var(--font-size-1);
     padding: var(--size-2) 0;
     padding-bottom: 0;
    
-    border-radius: 8px;
+    
 }
 
 
@@ -233,13 +230,17 @@ font-size: var(--font-size-1);
     flex-grow: 1;
   
     resize: none;
-    border-radius: 8px;
+   
+   
+    box-sizing: border-box;
+    border-radius: 4px;
+    padding: var(--size-3);
+    padding-top: 20px;
+    border: 1px solid var(--contact-input-outline);
+
     font-family: var(--font-neutral);
     font-size: var(--font-size-3);
-    box-sizing: border-box;
-    padding: var(--size-3);
-    padding-top: 22px;
-    border: 1px solid var(--contact-input-outline);
+
 }
 
 .messageTextArea::placeholder{
