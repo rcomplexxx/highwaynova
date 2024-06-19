@@ -231,14 +231,12 @@ font-size: var(--font-size-1);
   
     resize: none;
    
-   
-    box-sizing: border-box;
-    border-radius: 4px;
-    padding: var(--size-3);
+  
+    
     padding-top: 20px;
     border: 1px solid var(--contact-input-outline);
 
-    font-family: var(--font-neutral);
+    
     font-size: var(--font-size-3);
 
 }

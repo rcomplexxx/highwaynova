@@ -542,9 +542,13 @@
     margin-top:var(--size-7);
    
     
-    box-sizing: border-box;
-    padding: var(--size-3) var(--size-3);
+   
+    
     border: 1px solid var(--writing-accent-color);
+
+    
+    font-size: var(--font-size-2);
+    
     
   }
 

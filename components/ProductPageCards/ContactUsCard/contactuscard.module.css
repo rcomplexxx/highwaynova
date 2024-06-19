@@ -202,22 +202,19 @@ font-size: var(--font-size-1);
     background-color: var(--contact-input-color);
     flex-grow: 1;
 
-    
-    border-radius: 4px;
+ 
    
-    box-sizing: border-box;
-    padding: var(--size-3);
+  
+    
     padding-top: 20px;
     border: 1px solid var(--contact-input-outline);
     resize: none;
 
-    font-family: var(--font-neutral);
+    
     font-size: var(--font-size-3);
 }
 
-.messageTextArea::placeholder{
-    font-family: var(--font-neutral);
-}
+
 
 .messageTextArea:focus{
     border: 2px solid var(--contact-input-outline-focused);
