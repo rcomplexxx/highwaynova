@@ -41,7 +41,7 @@ export default function ProductPage({ product, images, startReviews, ratingData 
   const [variant, setVariant]=useState(product.variants && product.variants[0].name);
 
   
-  const stopVariantImageChange = useRef(false);
+  
 
 
 
@@ -56,7 +56,7 @@ export default function ProductPage({ product, images, startReviews, ratingData 
 
 
   useEffect(()=>{
-    stopVariantImageChange.ref = true;
+    
       setVariant(product.variants && product.variants[0].name);
       setQuantity(1);
   },[product])
@@ -99,7 +99,8 @@ export default function ProductPage({ product, images, startReviews, ratingData 
   
 
   const variantImageIndex = useMemo(()=>{
-    if(stopVariantImageChange.ref){stopVariantImageChange.ref=false; return;}
+    
+    
     return product.variants && product.variants.find((v)=>{return v.name==variant})?.variantProductImageIndex;
   },[variant])
   
