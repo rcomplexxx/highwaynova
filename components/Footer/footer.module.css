@@ -114,6 +114,7 @@
     width: 100%;
     display:flex;
     align-items: center;
+    gap: var(--size-3);
   }
 
   .subscribeInput{
@@ -178,26 +179,21 @@
   }
 
   .subscribeButton{
-    color: var(--action-button-txt-color);
-    background-color: var(--action-button-bg-color);
 
+    
     width: var(--size-10);
     height: 40px;
-    box-sizing: border-box;
-
-    border-radius: 4px;
+  
     
-    border: 1px solid var( --action-button-border-color);
-    margin-left: var(--size-3);
-    transition: background-color 0.1s ease, color 0.1s ease;
+    
+ 
+    
     font-size: var(--font-size-2);
     
   }
 
-  .subscribeButton:hover{
-    color: var(--action-button-hover-footer-txt-color);
-    background-color: var(--action-button-bg-color-hover);
-  }
+ 
+  
 
   .disabledEmailButton{
     color: var(--disabled-email-button-color);
@@ -302,8 +298,8 @@
 
     
 
-    .subscribeButton{
-    }
+  
+    
 
     .getInTouch{
       max-width: var(--size-13);

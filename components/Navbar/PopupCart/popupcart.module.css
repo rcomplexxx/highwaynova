@@ -92,14 +92,15 @@
 
 
   .add_to_cart_button {
-    flex-shrink: 0;
+   
     
-    height: var(--size-8);
+    
+    
     width:100%;
     max-width: var(--size-15);
 
-    color: var(--main-button-color);
-    background-color: var(--main-button-bg);
+   
+    
    
 
     display: flex;
@@ -108,14 +109,14 @@
  
     
 
-    border: 1px solid var(--main-button-border-color);
+   
     
     margin-top: var(--size-7);
     margin-bottom: var(--size-3);
     
 
-    font-weight: 800;
-    border-radius: 4px;
+    
+    
 
    
 

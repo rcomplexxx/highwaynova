@@ -113,7 +113,7 @@ export default function Footer() {
             if (successful) setSuccessful(false);
           }}
         />
- <button className={styles.subscribeButton} onClick={handleSubscribe}>
+ <button className={`${styles.subscribeButton} accentButton`} onClick={handleSubscribe}>
           Subscribe
         </button>
         </div>

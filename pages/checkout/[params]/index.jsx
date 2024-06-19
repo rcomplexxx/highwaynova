@@ -76,9 +76,7 @@ const BuyNowPage = () => {
       <span className={styles.emptyCartText}>
    Check url for type errors, or go to product page.
       </span>
-      <Link className={styles.shopNowLink} href="/products">
-            <button className={styles.shopNow}>Shop Now</button>
-          </Link>
+      <Link className={`${styles.shopNow} mainButton`} href="/products">Shop Now </Link>
    
    
       </>:<h1>Loading checkout...</h1>

@@ -103,11 +103,10 @@ height : 100vh;
 
   .checkoutButtonNew{
 
-    height: var(--size-8);
+    
     min-width: var(--size-12);
-    color: var(--main-button-color);
-    background-color: var(--main-button-bg);
-     /* var(--main-button-hover-color);  */
+    
+    
      display:flex;
      justify-content: center;
      align-items: center;
@@ -116,32 +115,14 @@ height : 100vh;
      margin-top: var(--size-3);
     
  
-     border-radius: 4px;
 
-     
-
-     box-sizing: border-box;
-    
-     border: 1px solid var(--main-button-border-color);
-
-
-    font-size: var(--font-size-3);  
-    
-    
-  font-weight:  700;
-  
-  
     
    
     
    
   }
 
-  .checkoutButtonNew:hover{
-  
-    background-color: var(--main-button-hover-color);
-  }
-  
+
  
   
   .cardDetails {
@@ -194,10 +175,9 @@ height : 100vh;
   .shopNow{
   
 
-      height: var(--size-8);
+    
       min-width: var(--size-12);
-      color: var(--main-button-color);
-      background-color: var(--main-button-bg);
+      
 
       display: flex;
       justify-content: center;
@@ -205,20 +185,15 @@ height : 100vh;
 
       margin-top: var(--size-5);
      
-      border-radius: 4px;
-      border: 1px solid var(--main-button-border-color);
+     
+      
 
-      font-family: var(--font-neutral);
-      font-weight:  700;
-
-      transition: background-color 0.3s ease;
+      
     
   }
 
-.shopNow:hover{
+
   
-  background-color: var(--main-button-hover-color);
-}
 
 
 

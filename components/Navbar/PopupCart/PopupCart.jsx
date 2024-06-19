@@ -133,7 +133,7 @@ const handlePopCartLinkClick=(event, nextLinkHref)=>{
 
  
 
-  <Link href='/cart'  className={styles.add_to_cart_button}
+  <Link href='/cart'  className={`${styles.add_to_cart_button} mainButton`}
   onClick={(event)=>{
     handlePopCartLinkClick(event, '/cart')
   }}

@@ -74,35 +74,21 @@
      
     }
   
-    .shopNowLink{
+    .shopNow{
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      min-width: var(--size-12);
     
       display: flex;
       justify-content: center;
       margin-top: var(--size-5);
       
     }
-  
-    .shopNow{
-    
-  
- 
-        min-width: var(--size-12);
-        color: var(--main-button-color);
-        background-color: var(--main-button-bg);
-       
-        border-radius: 4px;
-        box-sizing: border-box;
-        border: 1px solid var(--main-button-border-color);
-        font-size: var(--font-size-3);   
-        transition: background-color 0.2s ease;
- 
-  
-    }
-  
-  .shopNow:hover{
-    
-    background-color: var(--main-button-hover-color);;
-  }
+
+
   
   
 

@@ -31,12 +31,49 @@
 
 
 .mainButton{
-  background-color: var(--main-color-4);
+  
+
+  height: var(--size-8);
+  flex-shrink: 0;
+  color: var(--main-button-color);
+   background-color: var(--main-button-bg);
+  
+
+    box-sizing: border-box;
+        border: 1px solid var(--main-button-border-color);
+
+        border-radius: 4px;
+
+        
+        transition: background-color 0.2s ease;
+        font-size: var(--font-size-3); 
+        font-weight: 800;
 }
 
 .mainButton:hover{
-  background-color: var(--main-color-5);
+  background-color: var(--main-button-hover-color);
 }
+
+.accentButton{
+  color: var( --action-button-txt-color);
+  background-color: var(--action-button-bg-color);
+
+  box-sizing: border-box;
+
+  border-radius: 4px;
+    
+  border: 1px solid var( --action-button-border-color);
+
+
+  transition: background-color 0.2s ease;
+  font-size: var(--font-size-3);
+}
+
+.accentButton:hover{
+  
+  background-color: var(--action-button-bg-color-hover);
+}
+
 
 
 
@@ -56,7 +93,7 @@ body{
   
   margin: 0;
   padding: 0;
-  font-family: var(--font-neutral), sans-serif;
+  font-family: var(--font-neutral);
   font-weight: 400;
   overflow-x: clip;
 
@@ -73,6 +110,7 @@ h1{
   margin-top: var(--size-9);
   margin-bottom: var(--size-7);
 
+
   font-size: var(--font-size-7);
   font-weight: 700;
 }
@@ -86,6 +124,10 @@ h1{
 h2{
   
   font-size:var(--font-size-6);
+
+  margin-top: var(--size-8);
+  margin-bottom: var(--size-6);
+  font-weight: 600;
 }
 
 
@@ -148,10 +190,17 @@ a{
 
 
 
+
 p {
+
   margin: var(--size-3) 0;
+
   padding: 0;
+ 
   font-size:var(--font-size-3);
+
+  font-family: var(--font-neutral);
+  
 
 }
 
@@ -195,9 +244,7 @@ p {
 
 
 
-.object_fit_cover{
-  object-fit: cover;
-}
+
 
 
 

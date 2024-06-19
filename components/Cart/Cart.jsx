@@ -63,7 +63,7 @@ if (window.innerWidth<980){
     <span className={styles.emptyCartText}>
     Add your favorite items to your cart.
     </span>
-    <Link className={styles.shopNow} href="/products">Shop Now</Link>
+    <Link className={`${styles.shopNow} mainButton`} href="/products">Shop Now</Link>
     </div>
   },[cartProducts]);
 
@@ -80,7 +80,7 @@ if (window.innerWidth<980){
       </div>
       <div className={styles.cardDetails}>
        <span className={styles.subTotalSpan}>Subtotal:<h4 className={styles.subtotalNew}>${subtotal}</h4></span>
-        <Link className={styles.checkoutButtonNew} href="/checkout">
+        <Link className={`${styles.checkoutButtonNew} mainButton`} href="/checkout">
          Checkout
         </Link>
       </div>

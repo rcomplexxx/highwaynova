@@ -33,9 +33,7 @@ const CheckoutPage = () => {
       <span className={styles.emptyCartText}>
       Add your favorite items to your cart.
       </span>
-      <Link className={styles.shopNowLink} href="/products">
-            <button className={styles.shopNow}>Shop Now</button>
-          </Link>
+      <Link className={`${styles.shopNow} mainButton`} href="/products">Shop Now</Link>
      
      
       </>:<h1 className={`${styles.title} ${styles.emptyTitle}`}>Loading checkout...</h1>

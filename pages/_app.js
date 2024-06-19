@@ -145,7 +145,9 @@ export default function App({ Component, pageProps }) {
        }
 
        else{
+
         setEmailPopup(false);
+        
        }
        
       

@@ -213,17 +213,15 @@
     max-width: var(--size-15);
     width:100%;
 
-    color: var(--main-button-color);
-    background-color: var(--main-button-bg);
     
    
     
-    border: 1px solid var(--main-button-border-color);
+    
  
    
     margin-bottom: var(--size-3);
     
-    font-size:var(--font-size-3);
+    
    
   
   }
@@ -231,9 +229,8 @@
  
 
 
-  .add_to_cart_button:hover {
-    background-color: var(--main-button-hover-color);
-  }
+ 
+  
 
  
 

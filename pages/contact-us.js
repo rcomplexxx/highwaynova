@@ -145,7 +145,7 @@ export default function ContactUs() {
           {errors.message &&  <span className={`${styles.contactError} ${styles.contactMessageError}`}><ErrorIcon/>{errors.message}</span>}
            {messageSent && <span className={styles.messageSuccess}>Message sent successfully.</span>}
           </div>
-          <button onClick={handleSubmit} className={`${styles.sendButton} ${(messageLoading || messageSent) && styles.sendButtonDisabled}`}>
+          <button onClick={handleSubmit} className={`${styles.sendButton} accentButton ${(messageLoading || messageSent) && styles.sendButtonDisabled}`}>
             Send
           </button>
         </div>

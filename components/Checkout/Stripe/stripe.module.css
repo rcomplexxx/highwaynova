@@ -37,7 +37,7 @@
     height: 48px;
     width: calc(100% -  var(--size-5));
     background-color: var(--paynow-stripe-button);
-    color: var(--action-button-txt-color);
+    color: var(--main-button-color);
     margin-top: var(--size-6) ;
     margin-bottom: var(--size-5);
     margin-left: var(--size-3);

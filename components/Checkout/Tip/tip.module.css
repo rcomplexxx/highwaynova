@@ -298,41 +298,39 @@
  
 
   .addTip{
-    color: var( --action-button-txt-color);
-    background-color: var(--action-button-bg-color);
-   
-    display: flex;
-    justify-content: center;
-    align-items: center;
+
+    
+
+
+    
     
    
-    border: 1px solid var(--border-color-mid);
     padding: 0 var(--size-5);
 
-    border: none;
-    border: 1px solid var( --add-tip-outline);
-    transition: background-color 0.1s ease;
+    
+   
 
-    font-size: var(--font-size-3);
+    
+    
    
    
    
   }
 
-  .addTip:hover{
-    background-color: var(--action-button-bg-color-hover);
 
-  }
+  
 
   .addTipDisabled{
     color: var(--add-tip-button-disabled-txt-color);
     background-color: var(--add-tip-button-disabled);
+    border: 1px solid var( --add-tip-outline);
    
     cursor:auto;
   }
 
   .addTipDisabled:hover{
-    /* background-color: var(--action-button-bg-color); */
+
+    
     background-color: var(--add-tip-button-disabled);
 
   }

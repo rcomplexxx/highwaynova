@@ -37,27 +37,21 @@
 
 
 
-.policy_main_div p{
-  font-size: var(--font-size-3);
-}
 
-.policy_main_div strong{
-  font-family: var(--font-neutral);
- 
-}
 
-.policy_main_div li{
-  font-family: var(--hand-writing-font);
-}
+
+
+
+
 
 .policy_main_div h1{
   align-self: center;
-  margin-bottom: var(--size-7);
+  
 }
 
-.policy_main_div h2{
-  margin-top: var(--size-7);
-}
+
+
+
 
 
 

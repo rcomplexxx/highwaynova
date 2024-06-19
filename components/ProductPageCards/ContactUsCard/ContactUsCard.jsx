@@ -135,7 +135,7 @@ export default function ContactUsCard() {
       
       {messageSent && <span className={styles.messageSuccess}>Question sent successfully.</span>}
    
-    <button onClick={handleSubmit} className={`${styles.sendButton} ${(messageLoading || messageSent) && styles.sendButtonDisabled}`}>
+    <button onClick={handleSubmit} className={`${styles.sendButton} accentButton ${(messageLoading || messageSent) && styles.sendButtonDisabled}`}>
       Send
     </button>
   </div>
