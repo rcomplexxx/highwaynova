@@ -3,8 +3,8 @@ import products from "../../data/products.json";
 import Image from "next/image";
 import {useGlobalStore} from "@/contexts/AppContext";
 import CustomerReviews from "@/components/CustomerReviews/CustomerReviews.jsx";
-// import Carousel from "react-gallery-carousel";
-// import "react-gallery-carousel/dist/index.css";
+
+
 
 import { useState} from "react";
 import styles from "../../styles/productpage.module.css";
@@ -22,7 +22,7 @@ import getRatingData from "@/utils/getRatingData";
 import PayPalButton from "@/components/Checkout/PayPal/PayPal";
 import { NextSeo } from "next-seo";
 import { productPageSeo } from "@/utils/SEO-configs/next-seo.config";
-import ProductDescription from "@/components/ProductDescription2/ProductDescription";
+
 import { Stars } from "@/public/images/svgs/svgImages";
 import { Amex,Discover, Jcb, MasterCard, Visa } from "@/public/images/svgs/svgImages";
 import Link from "next/link";
@@ -34,14 +34,30 @@ import Link from "next/link";
 //onUpdated={(e) => { e.item je index
 
 export default function ProductPage({ product, images, startReviews, ratingData }) {
-  if (!product) return <p className={styles.notFound}>Product not found.</p>;
+
+
+  
+  if (!product) return   <div className={styles.notFoundDiv}>
+    
+  
+  <h1 className={styles.title404}>We don't sell that product anymore</h1>
+  <span className={styles.notification404}>But we have many cool things we'd love you to see.</span>
+  
+  <Link href='/collections' className={`${styles.shopNow} mainButton`}>Check some cool stuff</Link>
+  
+  </div>
+
+
+
+  
+
  
 
   const [quantity, setQuantity] = useState(1);
   const [variant, setVariant]=useState(product.variants && product.variants[0].name);
 
   
-  
+  const variantIndexToZeroRef = useRef(true);
 
 
 
@@ -56,7 +72,7 @@ export default function ProductPage({ product, images, startReviews, ratingData 
 
 
   useEffect(()=>{
-    
+    variantIndexToZeroRef.current = true;
       setVariant(product.variants && product.variants[0].name);
       setQuantity(1);
   },[product])
@@ -94,13 +110,12 @@ export default function ProductPage({ product, images, startReviews, ratingData 
     
       
 
-    },[cartProducts, product, variant, ]);
+    },[cartProducts, product, variant ]);
 
   
 
   const variantImageIndex = useMemo(()=>{
-    
-    
+    if(variantIndexToZeroRef.current){return -1;}
     return product.variants && product.variants.find((v)=>{return v.name==variant})?.variantProductImageIndex;
   },[variant])
   
@@ -158,7 +173,7 @@ export default function ProductPage({ product, images, startReviews, ratingData 
                 sizes="(max-width: 980px) 48px, 64px"
                 className={`${styles.productVariantImage} ${v.name===variant && styles.productVariantSelected}`}
                 onClick={() => {
-                
+                  variantIndexToZeroRef.current = false;
                   setVariant(v.name);
                 }}
                

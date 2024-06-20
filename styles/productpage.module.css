@@ -309,10 +309,63 @@
 
 
 
-  .notFound{
-    margin-top: 100px;
-  }
+  .notFoundDiv{
+    width: 100%;
+    min-height: calc(100vh - var(--navbar-height));
+    min-height: calc(100svh - var(--navbar-height));
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
+    box-sizing: border-box;
+    padding: 0 var(--size-6);
+   padding-bottom: var(--size-8);
+  
+}
+
+.title404{
+  
+  margin-top: 0;
+  margin-bottom: var(--size-5);
+}
+
+.notification404{
+  text-align: center;
+  
+}
+
+
+
+
+
+
+
+  .shopNow{
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: var(--size-6);
+  
+   
+    
+      min-width: var(--size-13);
+      
+      
+     
+    
+      
+   
+      
+      
+
+  };
+
+
+
+
+ 
 
 
 

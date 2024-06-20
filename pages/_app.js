@@ -94,12 +94,27 @@ export default function App({ Component, pageProps }) {
     let popupTimeout;
 
 
+
+
+
+
+
+
+
+
+
     const handleRouteChangeStart = (url) => {
 
       clearTimeout(popupTimeout); 
 
    
+
       
+
+
+
+
+
 
 
       const handlePopupTurning = ()=>{
@@ -115,6 +130,7 @@ export default function App({ Component, pageProps }) {
         
          setEmailPopup(true); 
          localStorage.setItem("popupShownDateInDays", Math.floor(Date.now() / 86400000));
+         router.events.off('routeChangeStart', handleRouteChangeStart);
          }
  
          else{
@@ -126,7 +142,8 @@ export default function App({ Component, pageProps }) {
 
                   setEmailPopup(true); 
                   localStorage.setItem("popupShownDateInDays", Math.floor(Date.now() / 86400000));
-
+                  router.events.off('routeChangeStart', handleRouteChangeStart);
+                  
                 }
                 else{
                   popupTimeout = setTimeout( handlePopupTurningAfterDeepLink, 7000)
@@ -153,10 +170,23 @@ export default function App({ Component, pageProps }) {
       
        }
     
+
+
+
+
+
+
       
       popupTimeout= setTimeout( handlePopupTurning, 30000);
       
     };
+
+
+
+
+
+
+
 
 
   
