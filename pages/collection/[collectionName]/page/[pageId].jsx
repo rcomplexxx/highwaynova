@@ -27,11 +27,12 @@ export default function Collection({
       <div className={styles.collectionInfo}>
         <div className={styles.collectionText}>
           <h1 className={styles.collectionName}>{collectionFullName}</h1>
-          <p className={styles.collectionDescription}>
+          <span className={styles.collectionDescription}>
             {collectionDescription}
-          </p>
+          </span>
         </div>
-        <div className={styles.collectionImageDiv}>
+     
+     
           <Image
             src={`/images/${collectionImage}`}
             priority={true}
@@ -42,10 +43,12 @@ export default function Collection({
             width={0}
             height={0}
           />
-        </div>
+       
+       
       </div>
 
-      <div className={`${styles.mainDiv} ${styles.mainDivSecond}`}>
+     
+     
       
         <Products showAll={true} products={products} />
         <PageNumber
@@ -53,7 +56,8 @@ export default function Collection({
           links={links}
           pageId={pageId}
         />
-      </div>
+     
+     
     </div>
   );
 }

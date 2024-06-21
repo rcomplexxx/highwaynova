@@ -21,7 +21,8 @@
   
   .reviewDiv { 
 
-    color: var(--home-review-color);
+  
+    
     background-color: var(--home-review-bg);
     min-height: max-content;
     height: var(--size-13-5);
@@ -83,11 +84,13 @@
 
   .authorDiv{
 
+    
+
     display: flex;
     align-items: center;
 
     margin-top: auto;
-    margin-bottom:0;
+    gap: var(--size-4);
 
 
     font-size: var(--font-size-4);
@@ -103,17 +106,17 @@
 
 
   .authorName{
-    margin-left: var(--size-4);
-   
+    color: var(--home-review-author-color);
   }
 
   
   
   .reviewText{
+
+    color: var(--home-review-txt-color);
     text-align: left;
-    /* text-indent:var(--size-3); */
-    /* font-style: italic; */
-    /* font-family: var(--hand-writing-font); */
+ 
+    
    }
  
   

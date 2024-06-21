@@ -7,27 +7,51 @@
     align-items: center;
   justify-content: center;
   padding-top: var(--size-7); 
+
 }
 
-.mainDivSecond{
-  padding-top: var(--size-5);
-}
+
+
+
 
 .collectionInfo{
+
   width: 100%;
+
   display: flex;
   justify-content: center;
+  align-items: center;
+  gap: var(--size-9);
+
   padding: var(--size-7);
+  margin-bottom: var(--size-5);
   background-color: var(--collection-info-bg);
+
   box-sizing: border-box;
-  border-radius: 4px;
+  
+  
   contain: content;
+}
+
+
+.collectionText{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  
+  max-width: var(--size-15);
+  width: calc(50% - var(--size-5));
+  box-sizing: border-box;
+
+
+  
+  
 }
 
 .collectionName{
   margin-top: 0;
 
-  margin-bottom: var(--size-2);
+  margin-bottom: var(--size-3);
   font-size: var(--font-size-7);
   font-weight: 400;
  
@@ -42,67 +66,49 @@
   line-height: var(--size-6);
 }
 
-.collectionText{
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  
-  max-width: var(--size-15);
-  width: calc(50% - var(--size-5));
-  box-sizing: border-box;
-  padding: var(--size-9);
-  padding-left: 0;
-  
-  
-}
-
-.collectionImageDiv{
-
-  display: flex;
-  align-items: center;
 
 
-  max-width: var(--size-15);
-  width: calc(50% - var(--size-5));
-}
+
 
 .collectionImage{
 
+  max-width: var(--size-15);
+  width: calc(50% - var(--size-5));
+
   aspect-ratio: 16/9;
   height: max-content;
- width: 100%;
+
  object-fit: cover;
   border-radius: 4px;
 }
 
 @media (max-width: 756px){
 
-  .collectionInfo{
-    
-  }
-
+  
 
   .collectionInfo{
-    padding: var(--size-4) var(--size-6);
-    width: calc(100% - var(--size-11));
+    padding: var(--size-5) var(--size-4);
+    width: calc(100% - var(--size-10));
     flex-direction: column;
     align-items: center;
-   
+    gap: var(--size-7);
+    border-radius: 4px;
   }
 
-  .collectionImageDiv{
+  .collectionImage{
 
-    display: flex;
-    align-items: center;
-  
-    padding: var(--size-5) 0;
     max-width: none;
     width: 100%;
+
+
   }
+
+
 
   .collectionText{
   
-    padding: var(--size-5) 0;
+    /* padding: var(--size-5) 0; */
+  
     max-width: none;
     width: 100%;
   }
@@ -110,19 +116,13 @@
 
 }
 
-@media (max-width: 756px){
-  .collectionInfo{
-    padding: var(--size-4) var(--size-6);
-    width: calc(100% - var(--size-11));
 
-  }
 
-}
 
 
 @media (max-width: 600px){
   .collectionInfo{
-    padding: var(--size-1) var(--size-5);
+    padding: var(--size-2) var(--size-5);
     width: calc(100% - 40px);
 
   }
