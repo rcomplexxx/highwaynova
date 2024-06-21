@@ -18,7 +18,13 @@ function startEmailJobs(){
   try{
   const db = betterSqlite3(process.env.DB_PATH);
 
-const campaigns= db.prepare(`SELECT * FROM email_campaigns`).all();
+const campaigns= db.prepare(` SELECT 
+    email_campaigns.id, 
+    email_campaigns.emailSentCounter, 
+    email_campaigns.sendingDateInUnix,
+    email_sequences.emails
+  FROM email_campaigns
+  JOIN email_sequences ON email_campaigns.sequenceId = email_sequences.id`).all();
 
 
 
@@ -34,24 +40,31 @@ campaigns.forEach(campaign=>{
 
  
 
-  const campaignEmails = JSON.parse(db.prepare(`SELECT emails FROM email_sequences WHERE id = ?`).get(campaign.sequenceId)?.emails);
 
-
-
+  
   const currentEmailIndex = campaign.emailSentCounter;
 
 
 
-  if(currentEmailIndex < campaignEmails.length ){
+  if(currentEmailIndex < campaign.emails.length ){
 
 
+
+    const emailPointers =  campaign.emails && JSON.parse(campaign.emails);
+
+    console.log('em pointers', emailPointers)
 
     
-    let sendTimeGap = parseInt(campaignEmails[currentEmailIndex]?.sendTimeGap);
-      if(!sendTimeGap || isNaN(sendTimeGap)) sendTimeGap = 0;
+   
+    
+     
+    
 
     let dateCalculated = campaign.sendingDateInUnix;
-    campaignEmails.forEach((emailPointer, index) =>{
+
+  
+
+    emailPointers.forEach((emailPointer, index) =>{
     
       if(index!==0 && index < currentEmailIndex+1)
       dateCalculated = dateCalculated + parseInt(emailPointer.sendTimeGap);
@@ -59,16 +72,16 @@ campaigns.forEach(campaign=>{
 
     })
 
-    console.log('date now', new Date(Date.now()), 'calculated date', new Date(dateCalculated))
+    
 
-    let   finalSendingDate=(Date.now() - dateCalculated >  0)?
-    Date.now()+60000: dateCalculated+sendTimeGap;
+    let   finalSendingDate=(Date.now() - dateCalculated) >  0?
+    Date.now()+120000: dateCalculated;
 
 
 
 
       // const altSendDate= new Date(new Date().getTime() + 1000 * 60 * 30).getTime();
-      console.log('My send time is', sendTimeGap, new Date(finalSendingDate));
+      // console.log('My send time is', new Date(finalSendingDate));
 
 
       

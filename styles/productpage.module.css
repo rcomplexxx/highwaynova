@@ -248,7 +248,7 @@
 
 
   
-    color: var(--high-contrast-light-txt-color);
+    color: var(--high-contrast-txt-color);
     background-color: var(--buy-now-bg);
 
     max-width: var(--size-15);

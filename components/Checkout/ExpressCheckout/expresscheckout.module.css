@@ -10,7 +10,7 @@
 
 .expressCheckoutTitle{
 
-    color: var(--high-contrast-light-txt-color);
+    color: var(--high-contrast-txt-color);
 
     margin-top: var(--size-2);
     margin-bottom: var(--size-6);

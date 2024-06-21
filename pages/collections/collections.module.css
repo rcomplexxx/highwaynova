@@ -36,7 +36,7 @@
     /* maxWidth: 345, original width style */
     width: 33.33% ;
   
-    color: var(--light-txt-color);
+    color: var(--txt-color);
     box-sizing: border-box;
     margin-bottom:  var(--size-7);
     padding-left: var(--size-7);

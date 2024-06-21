@@ -18,7 +18,7 @@
 
   position:relative;
 
-  color: var(--nav-txt-color);
+  
   background-color: var(--navbar-bg);
 
 
@@ -40,17 +40,8 @@
 
   
 
-  .substituteDiv{
-   
-      
-      display: block;
-    
-    width:100%;
-    max-width: 100%;
-    height: var(--size-9);
-    border-bottom: 1px solid var(--nav-bottom-border-color);
-    background-color: var(--navbar-bg);
-  }
+
+  
 
 
   .appBarFixed{

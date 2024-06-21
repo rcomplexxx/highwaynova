@@ -68,7 +68,7 @@ height : 100vh;
 
   
   .title {
-    color: var(--high-contrast-light-txt-color);
+    color: var(--high-contrast-txt-color);
   
       
     font-weight: 600;
@@ -88,7 +88,7 @@ height : 100vh;
  }
 
   .subtotalNew{
-    color: var(--high-contrast-light-txt-color);
+    color: var(--high-contrast-txt-color);
     margin:0;
     margin-left: var(--size-3);
 

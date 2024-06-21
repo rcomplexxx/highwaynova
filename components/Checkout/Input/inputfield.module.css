@@ -22,7 +22,7 @@
   
    
     background-color: var(--input-color);
-    color: var(--high-contrast-light-txt-color);
+    color: var(--high-contrast-txt-color);
   
     
     padding-top: 24px;
@@ -47,7 +47,7 @@
 .input_field:-webkit-autofill {
   background-color: var(--input-autofill-color);
   -webkit-box-shadow: 0 0 0 30px var(--input-autofill-color) inset !important;
-  -webkit-text-fill-color: var(--high-contrast-light-txt-color) !important;
+  -webkit-text-fill-color: var(--high-contrast-txt-color) !important;
   
   padding: var(--size-3);
   padding-top: 24px;
@@ -58,7 +58,7 @@
 .input_field:-moz-autofill {
   background-color: var(--input-autofill-color);
   -webkit-box-shadow: 0 0 0 30px var(--input-autofill-color) inset !important;
-  -webkit-text-fill-color: var(--high-contrast-light-txt-color) !important;
+  -webkit-text-fill-color: var(--high-contrast-txt-color) !important;
   
   padding: var(--size-3);
   padding-top: 24px;

@@ -50,7 +50,7 @@ export default function LinkCard({title, children}) {
     <div className={styles.footerLinksWrapper}>
         <div onClick={handleCardExpend} className={styles.linksCard}>
         <span className={styles.title}>{title}</span>
-        <ArrowDown color='var(--footer-arrow-down-color)' styleClassName={`${styles.dropMenuSign} ${cardOpen && styles.dropMenuOpen}`}/>
+        <ArrowDown color='var(--footer-title-color)' styleClassName={`${styles.dropMenuSign} ${cardOpen && styles.dropMenuOpen}`}/>
        
         </div>
         <div ref={cardContentRef} className={styles.linksContent}>

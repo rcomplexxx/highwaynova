@@ -190,7 +190,7 @@
       height: var(--size-8);
      
       background-color: var(--input-color);
-      color: var(--high-contrast-light-txt-color);
+      color: var(--high-contrast-txt-color);
      
       
       padding-left: var(--size-6);

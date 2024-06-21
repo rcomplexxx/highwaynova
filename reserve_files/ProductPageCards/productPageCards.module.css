@@ -80,7 +80,7 @@
 .contactInput{
     height: 28px;
     width: 100%;
-    color: var(--high-contrast-light-txt-color); 
+    color: var(--high-contrast-txt-color); 
   
     background-color: var(--contact-input-color);
     font-family: var(--font-for-writing);
@@ -127,7 +127,7 @@
 
 .messageTextArea{
     border: none;
-    color: var(--high-contrast-light-txt-color); 
+    color: var(--high-contrast-txt-color); 
     background-color: var(--contact-input-color);
  
    

@@ -16,7 +16,7 @@
   width: 100%;
     background-color: transparent;
     border: none;
-    color: var(--high-contrast-light-txt-color); 
+    color: var(--high-contrast-txt-color); 
     box-sizing: border-box;
     padding: var(--size-5) var(--size-2);
    

@@ -68,7 +68,7 @@
   
     
     .emptyCartText {
-      color: var(--light-txt-color);
+      color: var(--txt-color);
       font-size: var(--font-size-5);
       margin: var(--size-3) 0;
      

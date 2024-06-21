@@ -82,8 +82,9 @@ const approvePayment = async (req, res) => {
            return resReturn(400, { success: false, error: "Discount has already been used."}, db)
 
 
+          
 
-          db.prepare("UPDATE customers SET totalOrderCount = totalOrderCount + 1, money_spent = money_spent + ? WHERE id = ?").run(orderData.total, customerId); 
+          db.prepare("UPDATE customers SET totalOrderCount = totalOrderCount + 1, money_spent = (ROUND(money_spent + ?, 2) WHERE id = ?").run(orderData.total, customerId); 
 
         
           const subscribeSource = customerSubscribed? "checkout": "checkout x";

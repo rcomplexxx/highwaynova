@@ -23,7 +23,9 @@ function createSqliteTables() {
     )
 `).run();
 
-
+db.prepare(`
+  CREATE INDEX IF NOT EXISTS idx_ip ON rateLimiter(ip);
+`).run();
 
 
 
@@ -37,14 +39,16 @@ function createSqliteTables() {
           money_spent REAL DEFAULT 0,
           subscribed INTEGER,
           source TEXT,
-          currentCampaign TEXT,
+          
           used_discounts TEXT DEFAULT '[]'
         )
       `,
       ).run();
 
 
-   
+      db.prepare(`
+        CREATE INDEX IF NOT EXISTS idx_email ON customers(email);
+    `).run();
 
 
 
@@ -179,7 +183,10 @@ function createSqliteTables() {
           emailSentCounter INTEGER,
           retryCounter INTEGER,
           targetCustomers TEXT,
-          extraData TEXT
+          extraData TEXT,
+          reserveTargetedCustomers INTEGER DEFAULT 0,
+          finished INTEGER DEFAULT 0
+
         )
       `).run();
 

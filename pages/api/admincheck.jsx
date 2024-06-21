@@ -6,6 +6,9 @@ import emailSendJob from '@/utils/sendEmailJob.jsx';
 import makeNewDescription from "../../utils/makeNewDescription.js"
 import reorderReviewsByRatingAndImages from '@/utils/reorderReviews.jsx';
 import createSqliteTables from '@/utils/createSqliteTables.js';
+import getTargets from '@/utils/getTargets.js';
+
+
 
 const limiterPerTwoMins = new RateLimiter({
   apiNumberArg: 5,
@@ -306,9 +309,14 @@ else{
        
         console.log('proso up db', 'should be created')
         
-        if(db.prepare(`SELECT packageStatus FROM orders WHERE id = ?`).get(data.orderId).packageStatus==="4")return;
+        const orderData = db.prepare(`
+          SELECT o.customer_id, o.packageStatus, c.id AS customer_id
+          FROM orders o
+          JOIN customers c ON o.customer_id = c.id
+          WHERE o.id = ?
+      `).get(data.orderId);
 
-       
+        if(orderData.packageStatus ==="4")return;
 
         db.prepare(`INSERT INTO 'product_returns' (orderId, items,couponCode, tip, cashReturned, createdDate) VALUES (?, ?, ?, ?, ?, ?)`).run(
           data.orderId,
@@ -321,6 +329,8 @@ else{
 
         db.prepare(`UPDATE orders SET packageStatus = 3 WHERE id = ?`).run(data.orderId);
 
+        db.prepare(`UPDATE customers SET totalOrderCount = totalOrderCount - 1, money_spent = ROUND(money_spent - ?, 2) WHERE id = ?`).run(data.cashReturned, orderData.customer_id)
+
 
         db.prepare(`UPDATE email_campaigns SET emailSentCounter = (
           SELECT json_array_length(email_sequences.emails) 
@@ -329,7 +339,7 @@ else{
       ) WHERE extraData IS NOT NULL AND extraData = ?`).run(JSON.stringify({orderId: data.orderId}))
 
       console.log('campaign should be killed now using email_seuqnces', db.prepare(`SELECT * FROM email_campaigns WHERE extraData IS NOT NULL AND extraData = ?`).get(JSON.stringify({orderId: data.orderId})));
-      
+          //killCampaign here
       }
 
 
@@ -417,17 +427,27 @@ else{
       else if(table==='email_campaigns'){
 
         console.log('in table email_campaigns');
+
+        if(data.sequenceId.toString()=== process.env.WELCOME_SEQUENCE_ID || data.sequenceId.toString()=== process.env.THANK_YOU_SEQUENCE_ID
+      || data.sequenceId.toString()=== process.env.THANK_YOU_SEQUENCE_FIRST_ORDER_ID)
+      return resReturn(500, { success: false }, db)
+ 
       
 
+        const targets = JSON.stringify(getTargets(data.targetCustomers, false, db))
+      
+        console.log('targets for campaign are ', targets)
 
-        const result = db.prepare(`INSERT INTO email_campaigns (title, sequenceId, sendingDateInUnix, emailSentCounter,  retryCounter, targetCustomers) VALUES (?, ?, ?, ?, ?, ?)`)
+        const result = db.prepare(`INSERT INTO email_campaigns (title, sequenceId, sendingDateInUnix, emailSentCounter,  retryCounter, targetCustomers, reserveTargetedCustomers) VALUES (?, ?, ?, ?, ?, ?, ?)`)
         .run(
           data.title,
           data.sequenceId,
           data.sendingDateInUnix,
           0,
           0,
-          data.targetCustomers
+          targets,
+          data.markTraffic==="mark_with_current_campaign"?1:0
+          
           
         );
 
@@ -438,6 +458,10 @@ else{
         console.log('sending date in unix!!', data.sendingDateInUnix)
 
         const campaignId = result.lastInsertRowid;
+
+
+     
+        
 
 
         await emailSendJob(data.sendingDateInUnix,campaignId);

@@ -83,7 +83,7 @@ body{
 
 
 
-  color:var(--light-txt-color);
+  color:var(--txt-color);
  background-color: var(--bg-color);
 
   min-height: 100%;
@@ -103,7 +103,7 @@ body{
 
 
 h1{
-  color: var(--high-contrast-light-txt-color);
+  color: var(--high-contrast-txt-color);
   text-align: center;
   
  
@@ -380,39 +380,18 @@ p {
 
   /* General */
 
-  --high-contrast-light-txt-color: var(--neutral-10);
-  --light-txt-color: var(--neutral-9);
+  --high-contrast-txt-color: var(--neutral-10);
+  --txt-color: var(--neutral-9);
   --weak-txt-color: var(--neutral-7);
+  
   --bg-color: var(--neutral-0); /*hsl(81, 7%, 92%)*/
   --dim-bg: rgba(0, 0, 0, 0.5);
+
+
   --surround-cancel-bg: var(--neutral-5);
   --surround-cancel-bg-hover: var(--neutral-4);
   /*#e5e5e6   rgba(50, 50, 50, 0.7)*/
 
-  --main-button-color: var(--neutral-0);
-  --main-button-bg: var(--main-color-4);
-  --main-button-border-color: var(--main-color-2);
-  --main-button-hover-color: var(--main-color-5);
-
-  /* --main-light-color: #989898;
-  --main-dark-color: #323232; */
-
-
- 
-  --action-button-txt-color: var(--neutral-0);
-  --action-button-bg-color: var(--accent-color-4);
-  --action-button-bg-color-hover:var(--accent-color-3);
-  --action-button-border-color: var(--neutral-1);
-  /* txt-Alt:white; bg-Alt #202020 */
-
- 
-  /* //#43A146 //#42A147 */
-
-  --success-icon-color: black;
-
-  --success-color: #43A146;
-  --error-color: red;
-  --error-box-shadow-color: rgb(158, 49, 6);
 
   --border-color-weak: var(--neutral-1);
   --border-color-mid: var(--neutral-2);
@@ -420,11 +399,37 @@ p {
 
 
 
+  --main-button-color: var(--neutral-0);
+  --main-button-bg: var(--main-color-4);
+  --main-button-border-color: var(--main-color-2);
+  --main-button-hover-color: var(--main-color-5);
+
+
+  
+
+
+ 
+  --action-button-txt-color: var(--neutral-0);
+  --action-button-bg-color: var(--accent-color-4);
+  --action-button-bg-color-hover:var(--accent-color-3);
+  --action-button-border-color: var(--neutral-1);
+
+  
+  --success-icon-color: black;
+
+  --success-color: #43A146;
+  --error-color: red;
+  --error-box-shadow-color: rgb(158, 49, 6);
+
+
+
+
+
 
   /*~ Navbar ~*/
 
-  --nav-site-title-color: var(--main-color-4);
-  --nav-txt-color: var(--light-txt-color);
+ 
+  
   --navbar-bg: var(--neutral-0-5);
   --nav-bottom-border-color: transparent;
 
@@ -435,16 +440,17 @@ p {
   --search-cancel-icon-color: var(--neutral-5);
   --mobile-nav-cancel-icon-color: var(--search-cancel-icon-color);
   --menu-icon-color: var(--neutral-8);
-  --nav-links-color: var(--accent-color-7);
-  --navbar-current-link-color: var(--light-txt-color);
+  --nav-links-color: var(--main-color-4);
+  --navbar-current-link-color: var(--main-color-5);
   --navbar-arrow-color: var(--nav-links-color);
   --nav-select-search-link-color:var(--main-color-1);
 
-  --popcart-bg: var(--navbar-bg);
-  --popcart-correct-icon-color: var(--neutral-10);
-  --cart-button-items-number-color: var(--main-color-0);
-  --cart-button-items-number-bg: var(--main-color-4);
-  --checkout-button-border: var(--accent-color-5);
+ 
+  
+  --popcart-correct-icon-color: var(--success-color);
+  --cart-button-items-number-color: black;
+  --cart-button-items-number-bg: var(--main-color-5);
+  --popcart-checkout-button-border: var(--accent-color-4);
 
 
 
@@ -452,7 +458,6 @@ p {
 
    --footer-bg: var(--neutral-0-5);
    --footer-title-color: var(--neutral-10);
-   --footer-arrow-down-color: var(--neutral-10);
   --footer-txt-color: var(--neutral-9);
   --footer-link-active-color: var(--neutral-9);
   --footer-email-placeholder-color: var(--neutral-5);
@@ -460,15 +465,18 @@ p {
   --subscribe-input-border: var( --input-outline-color);
   --action-button-footer-txt-color: var(--action-button-txt-color);
   --action-button-hover-footer-txt-color: var(--action-button-footer-txt-color);
+
+  --footer-reserved-rights-color: var(--neutral-8);
   
 
  /*~ Home page ~*/
 
 
- --shop-now-hero-button-color: var(--neutral-1);
+ --shop-now-hero-button-color:black;
  --shop-now-hero-button-bg: var(--main-color-8);
  --shop-now-hero-button-box-shadow: 0 2px 6px var(--neutral-9);
- --hero-image-border-bottom-color: var(--main-color-2);
+
+ 
 
 
  --home-review-color: var(--neutral-10);
@@ -526,7 +534,7 @@ p {
  --fbt-add-to-cart-hover-bg: var(--action-button-bg-color-hover);
  --fbt-add-to-cart-border: var(--action-button-border-color);
 
- --dropcard-title-color: var(--high-contrast-light-txt-color);
+ --dropcard-title-color: var(--high-contrast-txt-color);
  --dropcard-selected-title-border: var(--main-color-5);
  --description-content-color: var(--neutral-6);
  
@@ -649,8 +657,8 @@ p {
   /*~ Checkout ~*/
 
 
-  --checkout-high-contrast-color: var(--high-contrast-light-txt-color);
-  --checkout-color: var(--light-txt-color);
+  --checkout-high-contrast-color: var(--high-contrast-txt-color);
+  --checkout-color: var(--txt-color);
   --checkout-bg: var(--bg-color);
 
   --input-color: transparent;
@@ -701,8 +709,8 @@ p {
 
               /*Order summery*/
   
-  --summery-color: var(--high-contrast-light-txt-color);
-  --summery-light-color: var(--high-contrast-light-txt-color);
+  --summery-color: var(--high-contrast-txt-color);
+  --summery-light-color: var(--high-contrast-txt-color);
   --checkout-order-summery-bg-mobile: var(--main-color-0);
   /* #0e2438*/
   --checkout-order-summery-bg: var(--main-color-0);
@@ -769,6 +777,7 @@ p {
 
 
   /*~Admin sector colors*/
+  --nav-site-title-color: var(--main-color-4);
   --admin-txt-color-weak: rgb(120, 120, 131);
   --admin-txt-color-mid: rgb(149, 149, 161);
   --admin-txt-color: rgb(178, 178, 194);

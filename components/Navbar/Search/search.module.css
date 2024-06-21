@@ -25,7 +25,7 @@
     height: var(--size-7);
     
     background-color: var(--search-bg);
-    color: var(--light-txt-color);
+    color: var(--txt-color);
 
     
   
@@ -48,7 +48,7 @@
   .customSearchBarInput:-webkit-autofill {
     background-color: var(--search-autofill-color);
     -webkit-box-shadow: 0 0 0 30px var(--search-autofill-color) inset !important;
-    -webkit-text-fill-color: var(--light-txt-color);
+    -webkit-text-fill-color: var(--txt-color);
    
   }
   
@@ -56,7 +56,7 @@
   .customSearchBarInput:-moz-autofill {
     background-color: var(--search-autofill-color);
     -webkit-box-shadow: 0 0 0 30px var(--search-autofill-color) inset !important;
-    -webkit-text-fill-color: var(--light-txt-color);
+    -webkit-text-fill-color: var(--txt-color);
   }
   
 
@@ -94,7 +94,7 @@
 }
   
 .resultItem{
-  color: var(--light-txt-color);
+  color: var(--txt-color);
   
   width: 100%;
   padding: var(--size-3);

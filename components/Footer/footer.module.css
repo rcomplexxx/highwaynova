@@ -268,7 +268,7 @@
   }
 
   .reservedRightsPharagraph{
-    color: var(--footer-txt-color);
+    color: var(--footer-reserved-rights-color);
 
     
     font-size: var(--font-size-2);

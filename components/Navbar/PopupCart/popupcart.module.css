@@ -7,7 +7,7 @@
     top: 100%;
     right: var(--size-7);
 
-    background-color: var(--popcart-bg);
+    background-color: var(--navbar-bg);
 
 
     /* max-height: 0; */
@@ -132,7 +132,7 @@
     max-width: var(--size-15);
     width:100%;
 
-    color:  var(--high-contrast-light-txt-color);
+    color:  var(--high-contrast-txt-color);
   
 
 
@@ -146,7 +146,7 @@
     
    
    
-    border: 1px solid var(--checkout-button-border);
+    border: 1px solid var(--popcart-checkout-button-border);
     border-radius: 4px;
    
     font-weight: 800;
@@ -156,7 +156,7 @@
 
   .continue_shopping{
     flex-shrink: 0;
-    color: var(--high-contrast-light-txt-color);
+    color: var(--high-contrast-txt-color);
    
    
 

@@ -5,7 +5,8 @@ const nodemailer = require("nodemailer");
 
 
 
- async function emailSendJob( dateInUnix, campaignId, markAsCurrentCampaignInCustomers = true, targetCustomersWithoutCurrentCampaign=true) {
+
+ async function emailSendJob( dateInUnix, campaignId) {
 
 
 //
@@ -17,7 +18,7 @@ const nodemailer = require("nodemailer");
   
 
 
-const date =formatDateToCron(new Date(dateInUnix));
+const date =formatDateToCron(dateInUnix);
 console.log('setting email cron scheduler', date)
 
 cron.schedule(date, async() => {
@@ -68,41 +69,26 @@ console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@this is campaign data.', cam
 
         console.log('so here is my email', email, 'em pointers', sequenceEmailPointers )
         
-        let targets= getTargets(campaign.targetCustomers, targetCustomersWithoutCurrentCampaign, db);
+        let targets= JSON.parse(campaign.targetCustomers);
 
 
-
+        console.log('targets', targets)
 
          
          
               
        
+      //odraditi neku foru da izvucem da li ova kampanja markuje iz campaigne
+             
+          
 
-              if(markAsCurrentCampaignInCustomers){
-
-                if(currentEmailIndex===0)
-                targets.forEach(target => {
-                  db.prepare(`UPDATE customers SET currentCampaign = ? WHERE email = ?`).run(
-                    JSON.stringify({id: campaignId, finishedDate: null}),
-                    target.email,
-                );
-                });
-
-                else if(currentEmailIndex===sequenceEmailPointers.lenght-1 || campaign.retryCounter>=10)
-                  targets.forEach(target => {
-                    db.prepare(`UPDATE customers SET currentCampaign = ? WHERE email = ?`).run(
-                      JSON.stringify( {id: campaignId, finishedDate: Date.now()}),
-                      target.email,
-                  );
-                  });
-
-              }
+              
 
             
          
          
          
-              console.log('targets', targets)
+           
 
          
          
@@ -143,6 +129,15 @@ console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@this is campaign data.', cam
               });
 
 
+              if(currentEmailIndex===sequenceEmailPointers.lenght-1)
+                targets.forEach(target => {
+                  db.prepare(`UPDATE customers SET currentCampaign = ? WHERE email = ?`).run(
+                    null,
+                    target.email,
+                );
+                });
+
+
 
               let sendTimeGap = parseInt(sequenceEmailPointers[currentEmailIndex+1]?.sendTimeGap);
               if(!sendTimeGap || isNaN(sendTimeGap)) sendTimeGap = 0;
@@ -169,7 +164,7 @@ console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@this is campaign data.', cam
           {
             console.log(`SCHEDULING NEXT EMAIL FOR`, new Date(finalSendingDate))
 
-            await emailSendJob( finalSendingDate, campaignId, markAsCurrentCampaignInCustomers, targetCustomersWithoutCurrentCampaign)
+            await emailSendJob( finalSendingDate, campaignId)
           }
 
           else if(campaign.sequenceId.toString() === process.env.THANK_YOU_SEQUENCE_ID || campaign.sequenceId.toString() === process.env.THANK_YOU_SEQUENCE_FIRST_ORDER_ID ||
@@ -179,6 +174,16 @@ console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@this is campaign data.', cam
           
           db.close();
           return;
+
+         }
+
+         else{
+          
+
+           
+          db.prepare(`UPDATE email_campaigns SET finished = 1 WHERE id = ?`).run(
+            campaign.id
+        );
 
          }
           
@@ -210,8 +215,21 @@ console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@this is campaign data.', cam
 
                   if( campaign.retryCounter<10)
               
-                await  emailSendJob( (campaign.retryCounter+1)%3===0?Date.now()+10800000:Date.now()+120000, campaignId, markAsCurrentCampaignInCustomers, targetCustomersWithoutCurrentCampaign )
+                await  emailSendJob( (campaign.retryCounter+1)%3===0?Date.now()+10800000:Date.now()+120000, campaignId)
         
+                else {
+                  
+                  // reserveTargetedCustomers INTEGER DEFAULT 0,
+                  // targetEvenReservedCustomers INTEGER DEFAULT 1,
+                  // finished INTEGER DEFAULT 0
+                  
+               
+                    db.prepare(`UPDATE email_campaigns SET finished = 1 WHERE id = ?`).run(
+                      campaign.id
+                  );
+                
+
+                }
            
               }
          
@@ -224,6 +242,8 @@ console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@this is campaign data.', cam
             
     }
     catch(error){
+
+
         console.log('cron error', error)
     }
  
@@ -242,53 +262,12 @@ console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@this is campaign data.', cam
 
 
 
- function getTargets(campaignTargets, targetCustomersWithoutCurrentCampaign, db){
-  
 
 
-  let targets;
- 
-  if(campaignTargets==='cold_traffic'){
-    targets = db.prepare(`SELECT email FROM customers WHERE subscribed = ? AND totalOrderCount <= 1`).all(1);
-
-  }
-    else if(campaignTargets==='warm_traffic'){
-      targets = db.prepare(`SELECT email FROM customers WHERE subscribed = ? AND totalOrderCount = 2`).all(1);
-
-    }
-      else if(campaignTargets==='hot_traffic') {
-        targets = db.prepare(`SELECT email FROM customers WHERE subscribed = ? AND totalOrderCount >= 3 AND totalOrderCount <5`).all(1);
-
-      } 
-      else if(campaignTargets==='loyal_traffic'){
-
-        targets = db.prepare(`SELECT email FROM customers WHERE subscribed = ? AND totalOrderCount >= 5`).all(1);
-
-      }
-
-      else  if(campaignTargets==='all'){
-        targets = db.prepare(`SELECT email FROM customers WHERE subscribed = ?`).all(1);
-      }
-      else if(campaignTargets==='bh_customers'){
-     
-        targets = db.prepare(`SELECT email FROM customers WHERE subscribed = ?`).all(0);
-      }
-      else{
-        targets = JSON.parse(campaignTargets);
-      }
 
 
-      if(targetCustomersWithoutCurrentCampaign) targets =  
-      targets.filter(target=>{
-        const currTargetCamp = db.prepare(`SELECT currentCampaign FROM customers WHERE email = ?`).get(target.email);
-
-        return !currTargetCamp || (JSON.parse(currTargetCamp.currentCampaign).finishedDate && Date.now() - JSON.parse(currTargetCamp.currentCampaign).finishedDate > 5 * 24 * 60 * 60 * 1000)
 
 
-      })
-
-      return targets;
- }
 
 
  function finalizeEmailText(emailText, sequenceId, campaignExtraData){
@@ -313,12 +292,22 @@ console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@this is campaign data.', cam
 
 
  function formatDateToCron(date) {
-    console.log('date is', date)
-    const minutes = date.getMinutes();
-    const hours = date.getHours();
-    const dayOfMonth = date.getDate();
-    const month = date.getMonth() + 1; // Note: Months are zero-indexed in JavaScript
-    const dayOfWeek = date.getDay();
+
+  console.log('here are dates', Date.now(), date)
+
+
+  let   finalSendingDate=(Date.now() - date) > 10000?
+              Date.now()+60000: date;
+
+              finalSendingDate = new Date(finalSendingDate);
+
+
+    console.log('finalSendingDate is', finalSendingDate)
+    const minutes = finalSendingDate.getMinutes();
+    const hours = finalSendingDate.getHours();
+    const dayOfMonth = finalSendingDate.getDate();
+    const month = finalSendingDate.getMonth() + 1; // Note: Months are zero-indexed in JavaScript
+    const dayOfWeek = finalSendingDate.getDay();
 
     return `${minutes} ${hours} ${dayOfMonth} ${month} ${dayOfWeek}`;
 }

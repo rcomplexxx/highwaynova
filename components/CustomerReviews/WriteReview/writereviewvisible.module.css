@@ -53,7 +53,7 @@
 
 
       .writeReviewButton{
-        color: var(--light-txt-color);
+        color: var(--txt-color);
         height: 40px;
         width: var(--size-11);
         background-color: transparent;

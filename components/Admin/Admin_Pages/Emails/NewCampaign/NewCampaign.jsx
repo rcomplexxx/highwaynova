@@ -24,6 +24,8 @@ export default function NewCampaign({sequences, setEmailData}) {
 
 
   const [explainTargetTraffic, setExplainTargetTraffic] = useState(false);
+
+  const [markTraffic, setMarkTraffic] = useState("mark_with_current_campaign"); 
   const [targetTraffic, setTargetTraffic]= useState();
   const [sendDate, setSendDate] = useState();
   const [linkedSequenceId, setLinkedSequenceId] = useState();
@@ -89,7 +91,7 @@ export default function NewCampaign({sequences, setEmailData}) {
    
 
       let newCampaignData = {title:title, sequenceId: linkedSequenceId, sendingDateInUnix:sendDate,
-        targetCustomers: targetTraffic
+        targetCustomers: targetTraffic, markTraffic: markTraffic
       };
 
     
@@ -145,8 +147,22 @@ export default function NewCampaign({sequences, setEmailData}) {
         <option value="bh_customers">Bh customers</option>
       </select>
 
-      <button onClick={()=>{setExplainTargetTraffic(!explainTargetTraffic)}} className={styles.explainTargetTrafficButton}>Explain target traffics</button>
 
+
+      <select
+        id="markTargetsSelect"
+        className={styles.targetTrafficSelect}
+        value={markTraffic}
+        onChange={(e) => {setMarkTraffic(e.target.value)}}
+      >
+         <option value={undefined}>Select mark on targets</option>
+        <option value={undefined}>No mark</option>
+        <option value="mark_with_current_campaign">Mark with current campaign</option>
+     
+     
+      </select>
+
+   
 
       </div>
 
@@ -183,6 +199,11 @@ export default function NewCampaign({sequences, setEmailData}) {
    </div>
 
    </div>
+
+   <div className={styles.explainDivWrapper}>
+
+   <button onClick={()=>{setExplainTargetTraffic(!explainTargetTraffic)}} className={styles.explainTargetTrafficButton}>Explain target traffics</button>
+
    
              {explainTargetTraffic && <div className={styles.targetTrafficExplanationWrapper}>
 
@@ -195,6 +216,8 @@ export default function NewCampaign({sequences, setEmailData}) {
            
               </div>
             }
+
+</div>
 
      {/* <div className={styles.linkedSequenceDiv}>Please link the sequence to create campaign</div> */}
      {linkedSequenceId ?<div className={styles.linkedSequenceDiv}>

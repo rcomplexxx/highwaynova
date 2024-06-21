@@ -70,7 +70,7 @@
     max-width: calc(var(--size-16) - var(--size-9));
     width: calc(100% - var(--size-9));
 
-    color: var(--high-contrast-light-txt-color);
+    color: var(--high-contrast-txt-color);
 
     display: flex;
     justify-content: center;

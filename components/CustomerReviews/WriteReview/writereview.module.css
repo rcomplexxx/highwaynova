@@ -401,7 +401,7 @@
     width: max-content;
     height: var(--size-8);
 
-    color: var(--high-contrast-light-txt-color);
+    color: var(--high-contrast-txt-color);
     background-color:transparent;
     
     display: flex;
@@ -535,7 +535,7 @@
  
 
   .writeReviewText{
-    color:var(--light-txt-color);
+    color:var(--txt-color);
     background-color: transparent;
     height: var(--size-11);
     width: 100%;
@@ -572,7 +572,7 @@
 
 
   .personInfoInput{
-    color: var(--high-contrast-light-txt-color);
+    color: var(--high-contrast-txt-color);
    width: 100%;
     height: var(--size-8);
     background-color: transparent;
@@ -608,7 +608,7 @@
   }
 
   .personEmail{
-    color:var(--high-contrast-light-txt-color);
+    color:var(--high-contrast-txt-color);
     width: 100%;
     height: var(--size-8);
     background-color: transparent;
@@ -660,14 +660,14 @@
   }
 
   .writeReviewTerms a{
-    color:var(--high-contrast-light-txt-color);
+    color:var(--high-contrast-txt-color);
   }
 
   
   .continueLink{
 
 
-    color:var(--high-contrast-light-txt-color);
+    color:var(--high-contrast-txt-color);
 
 
     display: flex;

@@ -112,7 +112,7 @@
      
     
       background-color: var(--input-color);
-      color: var(--high-contrast-light-txt-color);
+      color: var(--high-contrast-txt-color);
       border-radius: 2px;
       align-self: center;
       box-sizing: border-box;

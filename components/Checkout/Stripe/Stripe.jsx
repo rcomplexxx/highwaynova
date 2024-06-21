@@ -71,7 +71,7 @@ const Stripe = ({organizeUserData, checkFields}) => {
     };
 
     const getInputColor =  useCallback(()=>{
-      return getComputedStyle(document.documentElement).getPropertyValue('--high-contrast-light-txt-color');
+      return getComputedStyle(document.documentElement).getPropertyValue('--high-contrast-txt-color');
     },[])
 
 
