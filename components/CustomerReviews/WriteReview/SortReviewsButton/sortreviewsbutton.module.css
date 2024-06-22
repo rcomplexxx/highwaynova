@@ -88,12 +88,15 @@
 
 
     .sortingImg{
-        height: 40px;
-        width: 40px;
+     
+
+        height: 32px;
+        width: 32px;
+        padding: 6px;
         }
 
     .mainButton{
-        transform: translateY(-4px);
+        transform: translateY(1px);
     }
 }
 

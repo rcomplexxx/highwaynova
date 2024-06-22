@@ -95,7 +95,7 @@ export default function WriteReviewVisible({ratingData, sortingType, setSortingT
             {ratingData.reviewsNumber} reviews
           </span>
 
-          <ArrowDown color={'var(--rating-arrow-color)'} styleClassName={`${styles.plusStyle} ${
+          <ArrowDown color={'var(--rating-show-title-color)'} styleClassName={`${styles.plusStyle} ${
             openRatingInfo && styles.plusStyleRotate
           }`}/>
         

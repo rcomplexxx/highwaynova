@@ -5,10 +5,16 @@
       justify-content: space-between;
       align-items: center;
       margin: var(--size-7) 0;
+
+     
     
     }
 
     .ratingDiv{
+      
+
+      color: var(--rating-show-title-color);
+
         position: relative;
         display: flex;
         align-items: center;

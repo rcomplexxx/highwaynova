@@ -307,8 +307,8 @@
     
   .cancelImage{
     position: absolute;
-    top: -6px;
-    right: -6px;
+    top: -8px;
+    right: -8px;
     height: 20px;
     width: 20px;
     display: flex;
@@ -316,7 +316,7 @@
     align-items: center;
 
     box-sizing: border-box;
-    border: 1px solid var(--writing-accent-color);
+    
     padding: var(--size-1);
 
     background-color: var(--cancel-image-button-bg);
@@ -384,24 +384,19 @@
 
   
     .arrowBackMob:hover{
-    background-color: var(--writing-next-button-hover-bg);
+    background-color: var(--writing-button-hover-bg);
     border-radius: 6px;
     }
 
   }
 
-
-
-
-
-  .remindMeLater{
-  
+  .writingActionButton{
 
     min-width: 80px;
     width: max-content;
     height: var(--size-8);
 
-    color: var(--high-contrast-txt-color);
+    color: var(--writing-button-txt-color);
     background-color:transparent;
     
     display: flex;
@@ -415,12 +410,30 @@
     border-radius: 6px;
     font-size: var(--font-size-3);
     cursor: pointer;
+
+  }
+
+  @media (hover: hover) {
+    .writingActionButton:hover{
+    
+      background-color: var(--writing-button-hover-bg);
+    }
+   }
+
+
+
+
+
+  .remindMeLater{
+  
+    color: var(--remind-me-later-color);
+
   }
 
   @media (hover: hover) {
     .remindMeLater:hover{
     
-      background-color: var(--writing-next-button-hover-bg);
+      background-color: var(--writing-button-hover-bg);
     }
    }
    
@@ -775,7 +788,7 @@
       animation: spawnNextFooter 0.5s ease forwards;
     }
 
-    .remindMeLaterMobileControl{
+    .writingActionButtonMobileControl{
       display: none;
     }
 

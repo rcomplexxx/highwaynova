@@ -135,13 +135,13 @@ export default function WriteReview({ setInfoDivOpen }) {
                 className={`${styles.writeReviewFooter} ${styles.writeReviewFooterMobile}`}
               >
                 
-                <BackIcon color={`var(--write-review-back-button-color)`} styleClassName={`${styles.arrowBack} ${styles.arrowBackMob}`}
+                <BackIcon color={`var(--writing-button-txt-color)`} styleClassName={`${styles.arrowBack} ${styles.arrowBackMob}`}
                 handleClick={handleBack}/>
               
               
                 {/* //doraditi uslov */}
                 {ratingPage == 1 && (
-                  <button onClick={handleNext} className={`${styles.remindMeLater} ${styles.skipInFooter}`}>
+                  <button onClick={handleNext} className={`${styles.writingActionButton} ${styles.skipInFooter}`}>
                     {images.length===0?'Skip':'Continue'}
                   </button>
                 )}
@@ -199,7 +199,7 @@ export default function WriteReview({ setInfoDivOpen }) {
                         
                       {images.map((image, i) => {
                        return <div key={i} className={styles.userImageDiv}>
-                          <CancelIcon color={"var(--cancel-image-color)"}
+                          <CancelIcon color={"var(--writing-cancel-added-image-color)"}
               styleClassName={styles.cancelImage} handleClick={() => {
                 let newImages= images.filter(img=>{return img!=image});
                             setImages(newImages);
@@ -258,7 +258,7 @@ export default function WriteReview({ setInfoDivOpen }) {
                         </button>
                       </div>
                       <button
-                        className={styles.remindMeLater}
+                        className={`${styles.writingActionButton} ${styles.remindMeLater}`}
                         onClick={handleNext}
                       >
                         Remind me later
@@ -381,9 +381,9 @@ export default function WriteReview({ setInfoDivOpen }) {
               >
                 <button
                   onClick={handleBack}
-                  className={`${styles.remindMeLater} ${styles.remindMeLaterMobileControl}`}
+                  className={`${styles.writingActionButton} ${styles.writingActionButtonMobileControl}`}
                 >
-            <BackIcon color={`var(--write-review-back-button-color)`} styleClassName={`${styles.arrowBack}`}
+            <BackIcon color={`var(--writing-button-txt-color)`} styleClassName={`${styles.arrowBack}`}
                 /> Back
                 </button>
 
@@ -438,7 +438,7 @@ export default function WriteReview({ setInfoDivOpen }) {
 
                 <button
                 onClick={handleNext}
-                className={`${styles.remindMeLater} ${styles.remindMeLaterMobileControl}`}
+                className={`${styles.writingActionButton} ${styles.writingActionButtonMobileControl}`}
                 >
                 {images.length!=0?'Continue':'Skip'}
                 </button>

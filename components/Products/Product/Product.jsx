@@ -23,7 +23,9 @@ const Product = ({ product}) => {
         <Stars ratingNumber={product.raiting?product.raiting:4.7} starWrapperClassName={styles.starWrapperClassName} starClassName={styles.starClassName}/>
 
 
- <span className={styles.product_rating_reviews_number}>({product.reviewNumber})</span></div>
+ <span className={styles.product_rating_reviews_number}>({product.reviewNumber})</span>
+ </div>
+ 
 <div className={styles.product_price}>
           ${product.price.toFixed(2)}
             {product.stickerPrice && <span className={styles.product_price_span}>${product.stickerPrice.toFixed(2)}</span>}
