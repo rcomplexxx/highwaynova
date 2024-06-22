@@ -4,6 +4,9 @@
     background-color: var(--product-card-bg);
     color: var(--txt-color);
 
+    display: flex;
+    flex-direction: column;
+
   
 
 
@@ -38,6 +41,11 @@
   
 
   .cardContent {
+
+  
+    flex-grow: 1;
+
+    
     
     display: flex;
     flex-direction: column;
@@ -64,6 +72,7 @@
   .starDiv{
     display: flex;
     align-items: center;
+    gap: var(--size-4);
    margin: var(--size-3) 0; 
   }
   
@@ -76,7 +85,8 @@
   
     .product_rating_reviews_number{
       color: var(--weak-txt-color);
-      margin-left: var(--size-4);
+      
+
       font-size: var(--font-size-2);
       font-weight: 300;
     }
@@ -88,7 +98,8 @@
       display: flex;
       align-items: center;
       font-size: var(--font-size-7);
-     margin-top: 0;
+     
+     margin-top: auto;
      margin-bottom: var(--size-6);
     }
     
@@ -167,14 +178,24 @@
     padding: 0;
   }
 
+  .cardContent{
+    padding: 0 var(--size-3);
+    padding-top: var(--size-5);
+  }
+
 
   .cardContentText{
     font-size: var(--font-size-3);
   }
 
+  .starDiv{
+    gap: var(--size-3);
+  }
+
 
   .product_rating_reviews_number{
-    margin-left: var(--size-3);
+ 
+    
     font-size: 10px;
   }
 
@@ -206,6 +227,11 @@
 }
 
 @media (max-width: 440px) {
+
+  .cardContent{
+    padding: 0 var(--size-2);
+    padding-top: var(--size-5);
+  }
 
   .cardContentText{
     font-size: var(--font-size-3);
