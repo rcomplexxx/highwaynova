@@ -84,15 +84,23 @@
 
 @media (max-width: 756px){
 
+
+
+
   
 
   .collectionInfo{
-    padding: var(--size-5) var(--size-4);
+    padding: var(--size-4) var(--size-4);
     width: calc(100% - var(--size-10));
     flex-direction: column;
     align-items: center;
     gap: var(--size-7);
     border-radius: 4px;
+  }
+
+
+  .collectionName{
+    margin-top: var(--size-2);
   }
 
   .collectionImage{
@@ -122,9 +130,14 @@
 
 @media (max-width: 600px){
   .collectionInfo{
-    padding: var(--size-5) var(--size-4);
+    padding: var(--size-3) var(--size-3);
     width: calc(100% - 40px);
 
+  }
+
+
+  .collectionName{
+    margin-top: var(--size-3);
   }
 
 }
@@ -136,6 +149,11 @@
   
     
 
+  }
+
+
+  .collectionName{
+    margin-top: 0;
   }
 
 }
