@@ -102,8 +102,8 @@
 }
 
 .percentageDiscountSpan{
-  color: var(--product-percentage-disc-color);
-  background-color: var(--product-percentage-disc-bg);
+  color: var(--product-sale-txt-color);
+  background-color: var(--product-sale-bg);
   margin-left: var(--size-4);
   padding: var(--size-2) var(--size-3);
   border-radius: 8px;

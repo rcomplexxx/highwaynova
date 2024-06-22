@@ -399,7 +399,7 @@ p {
 
 
 
-  --main-button-color: var(--neutral-0);
+  --main-button-color: black;
   --main-button-bg: var(--main-color-4);
   --main-button-border-color: var(--main-color-2);
   --main-button-hover-color: var(--main-color-5);
@@ -496,8 +496,9 @@ p {
    --collection-description-txt-color: var(--neutral-9);
    --collection-info-bg: var(--main-color-1);
    --product-card-bg: var(--neutral-0-5);
-   --product-on-sale-bg: var(--accent-color-2);
-   --product-box-shadow: 0 1px 4px var(--neutral-0);
+   --product-on-sale-txt-color: black;
+   --product-on-sale-bg: var(--main-color-2);
+   --product-box-shadow: 0 1px 4px var(--neutral-0-5);
 
 
 
@@ -505,20 +506,20 @@ p {
 
  /*~ Product page ~*/
 
- --product-price: var(--accent-color-4);
- --product-percentage-disc-color: var(--neutral-0);
- --product-percentage-disc-bg: var(--main-color-3);
+ --product-price: var(--main-color-7);
+ --product-sale-txt-color: black;
+ --product-sale-bg: var(--main-color-3);
 --in-stock-color: var(--neutral-7);
- --selected-product-image-border:var(--accent-color-4);
+ --selected-product-image-border:var(--accent-color-3);
 
  --swiper-zoomin-icon-color: var(--neutral-8);
- --mini-slider-arrow-bg:var(--main-color-1);
+ --mini-slider-arrow-bg:var(--main-color-2);
  --mini-slider-arrow-color: var(--neutral-9);
 
 
- --quantity-input-color: var(--main-color-0);
- --quantity-input-border-color: var(--neutral-2);
- --quantity-input-bg: var(--neutral-3);
+ --quantity-input-color: black;
+ --quantity-input-border-color: var(--neutral-3);
+ --quantity-input-bg: var(--neutral-4);
  --quantity-button-border: var(--neutral-3);
  --quantity-button-hover: var(--accent-color-2);
 
