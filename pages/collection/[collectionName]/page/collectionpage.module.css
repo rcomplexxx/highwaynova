@@ -24,7 +24,7 @@
   gap: var(--size-9);
 
   padding: var(--size-7);
-  margin-bottom: var(--size-5);
+  margin-bottom: var(--size-8);
   background-color: var(--collection-info-bg);
 
   box-sizing: border-box;
@@ -75,7 +75,7 @@
   max-width: var(--size-15);
   width: calc(50% - var(--size-5));
 
-  aspect-ratio: 16/9;
+  
   height: max-content;
 
  object-fit: cover;
@@ -122,9 +122,30 @@
 
 @media (max-width: 600px){
   .collectionInfo{
-    padding: var(--size-2) var(--size-5);
+    padding: var(--size-5) var(--size-4);
     width: calc(100% - 40px);
 
   }
+
+}
+
+
+@media (max-width: 480px){
+  .collectionInfo{
+    padding: var(--size-5) var(--size-4);
+  
+    
+
+  }
+
+}
+
+@media (max-width: 420px) {
+  
+  .collectionInfo{
+
+    margin-bottom: var(--size-7);
+  }
+
 
 }
