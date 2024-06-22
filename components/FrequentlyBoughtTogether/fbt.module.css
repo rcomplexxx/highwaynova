@@ -27,11 +27,13 @@
 
 
   .h2Title{
+
+    color: var(--fbt-title-color);
     
     margin-top: 0;
     margin-bottom: var(--size-7);
     font-size: var(--font-size-6);
-    color: var(--fbt-title-color);
+    
     font-weight: 500;
     text-align: center;
   }
@@ -108,7 +110,7 @@
     border: none;
   
     
-    color: var(--main-button-color);
+    color: var(--fbt-add-to-cart-color);
     background-color: var(--fbt-add-to-cart-bg);
     
     font-size: var(--size-5);

@@ -409,7 +409,7 @@ p {
 
 
  
-  --action-button-txt-color: var(--neutral-0);
+  --action-button-txt-color: black;
   --action-button-bg-color: var(--accent-color-4);
   --action-button-bg-color-hover:var(--accent-color-3);
   --action-button-border-color: var(--neutral-1);
@@ -521,24 +521,25 @@ p {
  --quantity-input-border-color: var(--neutral-3);
  --quantity-input-bg: var(--neutral-4);
  --quantity-button-border: var(--neutral-3);
- --quantity-button-hover: var(--accent-color-2);
+ --quantity-button-hover: var(--neutral-1);
 
  --paypal-bg:#FFC439;
- --paypal-wrapper-border: var(--accent-color-4);
+ --paypal-wrapper-border: var(--accent-color-6);
 
  --buy-now-bg: transparent;
- --buy-now-border: var(--accent-color-4);
+ --buy-now-border: var(--neutral-5);
  --buy-now-hover-box-shadow-border: var(--neutral-5);
- --buy-now-hover-bg: var(--accent-color-1);
+ --buy-now-hover-bg: var(--main-color-0);
 
-  --fbt-title-color: var(--neutral-9);
+  --fbt-title-color: var(--neutral-10);
+  --fbt-add-to-cart-color: var(--action-button-txt-color);
  --fbt-add-to-cart-bg: var(--action-button-bg-color);
  --fbt-add-to-cart-hover-bg: var(--action-button-bg-color-hover);
  --fbt-add-to-cart-border: var(--action-button-border-color);
 
- --dropcard-title-color: var(--high-contrast-txt-color);
+
+ --pageCards-title-color: var(--main-color-7);
  --dropcard-selected-title-border: var(--main-color-5);
- --description-content-color: var(--neutral-6);
  
  --package-return-dropcard-icon-color: rgb(156, 144, 63);
  --chat-icon-color: rgb(53, 144, 248);

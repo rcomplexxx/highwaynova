@@ -74,7 +74,9 @@ export default function DropCard(props) {
 
 
 
-
+ /* --dropcard-title-color: var(--high-contrast-txt-color);
+ --dropcard-selected-title-border: var(--main-color-5);
+ --description-content-color: var(--neutral-6); */
 
 
   return (
@@ -104,3 +106,6 @@ export default function DropCard(props) {
     </div>
   );
 }
+ /* --dropcard-title-color: var(--high-contrast-txt-color);
+ --dropcard-selected-title-border: var(--main-color-5);
+ --description-content-color: var(--neutral-6); */

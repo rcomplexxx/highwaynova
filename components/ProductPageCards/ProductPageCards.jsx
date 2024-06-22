@@ -1,5 +1,5 @@
 import Image from "next/image";
-import DropCard from "./DropCard/DropCard";
+import DropCard from "../../reserve_files/DropCard/DropCard";
 import styles from "./productPageCards.module.css";
 
 
