@@ -133,7 +133,7 @@
     width: calc(25% - 9px);
    
   
-    filter: blur(0.5px) brightness(60%);
+    filter: blur(0.5px) brightness(50%);
  
   }
 
@@ -197,7 +197,7 @@
 
   
     .productMiniSwiperImage{
-      filter: blur(0.5px) brightness(60%);
+      filter: blur(0.5px) brightness(50%);
     }
  
    
