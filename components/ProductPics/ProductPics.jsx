@@ -263,7 +263,7 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
             >
               
                 <Image
-                  className={`${styles.productImage} ${imageIndex === index && styles.selectedImage}`}
+                  className={`${styles.productImage} ${styles.productMiniSwiperImage} ${imageIndex === index && styles.selectedImage}`}
                   src={img.src}
                   alt={img.alt}
                   sizes="25vw"

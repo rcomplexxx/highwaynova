@@ -73,7 +73,7 @@
    
     
     border: 1px solid var(--selected-product-image-border);
-    
+    filter: none !important;
     
   }
 
@@ -132,8 +132,8 @@
   .productImage2Div{
     width: calc(25% - 9px);
    
-    
   
+    filter: blur(0.5px) brightness(60%);
  
   }
 
@@ -196,7 +196,9 @@
   
 
   
-
+    .productMiniSwiperImage{
+      filter: blur(0.5px) brightness(60%);
+    }
  
    
    
