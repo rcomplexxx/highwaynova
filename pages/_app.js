@@ -263,9 +263,7 @@ export default function App({ Component, pageProps }) {
     
    
    
-        <DefaultSeo {...SEO}  additionalMetaTags={[
-          { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        ]}/>
+        <DefaultSeo {...SEO}/>
        
       
       {emailPopup && <EmailFlowPopup setEmailPopup={setEmailPopup}/>}
