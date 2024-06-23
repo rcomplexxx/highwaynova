@@ -267,7 +267,7 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
                   src={img.src}
                   alt={img.alt}
                   sizes="25vw"
-                  loading={index>2?'lazy':undefined}
+                  // loading={index>2?'lazy':undefined}
                  
                   height={0}
                   width={0}
