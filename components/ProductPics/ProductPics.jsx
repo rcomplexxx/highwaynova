@@ -214,7 +214,7 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
               sizes="(max-width: 980px) 100vw, 768px"
              
               priority={index === 0}
-              loading={index === 0?'eager':'lazy'}
+              loading={index === 0?'eager':undefined}
               draggable="false"
             />
            {imageIndex===index && <ZoomInIcon 
