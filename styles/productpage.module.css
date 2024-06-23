@@ -374,21 +374,20 @@
 
 
 
-
-  @media(max-width: 1280px){
-
+  @media (max-width: 1280px)  {
 
 
-    .productInfoWrapper{
+  
 
-      width: var(--size-14);
-       
-      margin-left: var(--size-5);
 
+    .productInfoWrapper {
+
+      max-width: var(--size-14);
+      background-color: red;
+     
     }
 
 
-   
   }
 
 
@@ -414,7 +413,7 @@
 
     .productInfoWrapper{
       width: calc(100% - var(--size-11));
-     
+    
       
     }
  

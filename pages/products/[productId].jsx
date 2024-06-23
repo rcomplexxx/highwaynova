@@ -7,7 +7,7 @@ import CustomerReviews from "@/components/CustomerReviews/CustomerReviews.jsx";
 
 
 import { useState} from "react";
-import styles from "../../styles/productpage.module.css";
+
 
 
 import QuantityButton from "@/components/QuantityButton/QuantityButton";
@@ -26,6 +26,8 @@ import { productPageSeo } from "@/utils/SEO-configs/next-seo.config";
 import { Stars } from "@/public/images/svgs/svgImages";
 import { Amex,Discover, Jcb, MasterCard, Visa } from "@/public/images/svgs/svgImages";
 import Link from "next/link";
+
+import styles from "../../styles/productpage.module.css";
 
 //slickGoTo
 //afterChange(index)=>{}

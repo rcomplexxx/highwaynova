@@ -45,6 +45,11 @@ margin-bottom: 8px; */
     font-size: var(--font-size-2);
 }
 
+.instantPaypalError{
+    margin-top: var(--size-2);
+    margin-bottom: var(--size-3);
+}
+
 
 @media (max-width: 980px){
     .paypalButton{
