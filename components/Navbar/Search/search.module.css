@@ -33,7 +33,7 @@
     align-self: center;
    
     
-    border: solid 1px var( --input-outline-color);
+    border: solid 1px var( --input-border-color);
     font-size: var(--font-size-1);
   }
 
@@ -41,7 +41,7 @@
 
   .customSearchBarInput:focus{
    
-    border: solid 2px var(--input-outline-color-focused);
+    border: solid 2px var(--input-border-color-focused);
   }
 
 

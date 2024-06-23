@@ -86,13 +86,13 @@ export default function PaymentSection({ checkFields, organizeUserData  }) {
       <div className={styles.mainWrapper}>
        
       
-        <div className={`${styles.paymentOptionDiv} ${paymentMethod=="creditcard" && styles.selectedOption}`} 
+        <div className={`${styles.paymentOptionDiv} ${paymentMethod==="creditcard" && styles.selectedOption}`} 
         onClick={(event)=>{if(!document.getElementById("moreCards")?.contains(event.target))setPaymentMethod("creditcard")}}>
            
            
            <div className={styles.pickOption}>
-            <div className={`${styles.pickCheck} ${paymentMethod=="creditcard" && styles.pickCheckSelected}`}>
-                <div className={`${paymentMethod=="creditcard" && styles.ringEffectDiv}`}/>
+            <div className={`${styles.pickCheck} ${paymentMethod==="creditcard" && styles.pickCheckSelected}`}>
+                <div className={`${paymentMethod==="creditcard" && styles.ringEffectDiv}`}/>
             </div>
             <span className={styles.optionSpan}>Credit Card</span>
            </div>
@@ -131,7 +131,7 @@ export default function PaymentSection({ checkFields, organizeUserData  }) {
 
 
         <div id='creditCardFields' ref={creditCardPaymentFieldsRef}  className={`${styles.paymentFields} ${styles.creditCardField} 
-        ${paymentMethod=="creditcard" && styles.selectedField}`}>
+        ${paymentMethod==="creditcard" && styles.selectedField}`}>
             <div className={styles.paymentFieldsSpaceAdjuster}> 
           <StripeWrapper
        
@@ -147,12 +147,12 @@ export default function PaymentSection({ checkFields, organizeUserData  }) {
 
 
 
-        <div className={`${styles.paymentOptionDiv} ${paymentMethod=="paypal" && styles.selectedOption}`} onClick={()=>{setPaymentMethod("paypal")}} >
+        <div className={`${styles.paymentOptionDiv} ${styles.lastPaymentOptionField} ${paymentMethod==="paypal" && styles.selectedOption +" "+ styles.lastOptionSelected}`} onClick={()=>{setPaymentMethod("paypal")}} >
 
 
            <div className={styles.pickOption}>
-            <div className={`${styles.pickCheck} ${paymentMethod=="paypal" && styles.pickCheckSelected}`}>
-                <div className={`${paymentMethod=="paypal" && styles.ringEffectDiv}`}/>
+            <div className={`${styles.pickCheck} ${paymentMethod==="paypal" && styles.pickCheckSelected}`}>
+                <div className={`${paymentMethod==="paypal" && styles.ringEffectDiv}`}/>
             </div>
             <span>Paypal</span>
            </div>
@@ -164,7 +164,7 @@ export default function PaymentSection({ checkFields, organizeUserData  }) {
         
 
         <div id='paypalFields' ref={paypalPaymentFieldsRef} 
-        className={`${styles.paymentFields} ${styles.paypalField} ${paymentMethod=="paypal" && styles.selectedField}`}>
+        className={`${styles.paymentFields} ${styles.paypalField} ${paymentMethod==="paypal" && styles.selectedField}`}>
        
         <div className={styles.paypalFieldWrapper}>
           <PayPalButton

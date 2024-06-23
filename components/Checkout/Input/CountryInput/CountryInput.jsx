@@ -43,7 +43,7 @@ export default function CountryInput({ id, setErrors, error }) {
         tabIndex={1000}
         disabled={false}
       />
-      <ArrowDown color={'var(--country-input-arrow-color)'} styleClassName={styles.arrowDown}/>
+      <ArrowDown color={'var(--checkout-input-placeholder)'} styleClassName={styles.arrowDown}/>
      
       <label
         htmlFor={id}

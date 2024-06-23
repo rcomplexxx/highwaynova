@@ -28,7 +28,8 @@
     aspect-ratio: 1;
    
     background-size: contain;
-    background-image: url('/images/emailPopupBg3.jpeg');
+    /* background-image: url('/images/emailPopupBg3.jpeg'); */
+   
 
     display: flex;
     flex-direction: column;
@@ -62,10 +63,10 @@
     height: 100%;
     width: 100%;
 
-   
+    background-color: var(--email-popup-bg);
     z-index: -1;
 
-   
+    filter: blur(1px) brightness(70%); 
 }
 
 
@@ -210,7 +211,11 @@
     
 }
 
-
+.thankYouMessage2{
+    color: var(--email-popup-thank-you-msg-color-2);
+    font-size: var(--font-size-5);
+    font-weight: 500;
+}
 
 
 
@@ -234,6 +239,12 @@
     }
 }
 
+@media (max-width: 380px) {
+    .thankYouMessage2{
+        font-size: var(--font-size-4);
+    }
+    
+}
 
 
 

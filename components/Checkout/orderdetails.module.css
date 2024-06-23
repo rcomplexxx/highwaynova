@@ -127,7 +127,7 @@
       align-self: center;
      
       
-      border: solid 1px var(--input-outline-color);
+      border: solid 1px var(--input-border-color);
  
       font-size: var(--font-size-2);
   }
@@ -139,7 +139,7 @@
 
   .coupon_code_input:focus { 
     
-    border: solid 2px var(--input-outline-color-focused);
+    border: solid 2px var(--input-border-color-focused);
    
 }
 
@@ -170,7 +170,7 @@
     border-radius: 4px;
    
    
-    border: 1px solid var(--apply-outline-color);
+    border: 1px solid var(--apply-border-color);
     margin-left: var(--size-3);
     font-size: var(--font-size-3);
     
@@ -213,13 +213,13 @@
   }
   
 
-  .discountPair span{
-    opacity: 0.7;
+  .discountPair{
+    color: var(--discount-order-pair-color);
   }
 
 
   .mainCouponCode {
-    color: var(--high-contrast-txt-color);
+    color: var(--coupon-code-color);
     background-color: var(--coupon-code-bg);
     width:min-content;
     display: flex;
@@ -230,6 +230,7 @@
     margin-top: var(--size-4);
     margin-bottom: 0;
     border-radius: 4px;
+    font-weight: 500;
   }
 
   
@@ -261,7 +262,7 @@
     align-items: center;
   }
 
-  .discountImg{
+  .discountIcon{
     height: var(--size-5);
     width: var(--size-5);
     margin-left: var(--size-2);
@@ -431,7 +432,8 @@
    
    
    .rightWrapper{
-    /* background-color: var(--checkout-order-summery-bg-light); */
+   
+    
     background-color:var(--checkout-order-summery-bg-mobile);
 
     width: 100%;
@@ -461,7 +463,7 @@
     max-width: var(--size-16);
    width: calc(100% - var(--size-11));
 
-    color: var(--summery-light-color);
+   
 
     display: flex;
     justify-content: space-between;
@@ -493,7 +495,7 @@
 
    .mobileTitle{
     display: block;
-    color: var(--summery-color);
+    color: var(--summery-title-color);
     user-select: none;
     font-size: var(--font-size-4);
     font-weight: 400;
@@ -537,7 +539,7 @@
 
    .mainPrice{
 
-    color: var(--summery-light-color);
+    color: var(--summery-title-price-color);
     
     user-select: none;
     font-size: var(--font-size-4);

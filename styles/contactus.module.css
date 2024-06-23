@@ -122,7 +122,7 @@
     color: var(--high-contrast-txt-color);
     background-color: var(--contact-input-color);
     /* font-family: var(--font-neutral); */
-    border: 1px solid var(--contact-input-outline);
+    border: 1px solid var(--contact-input-border);
     border-radius: 4px;
 
     
@@ -141,7 +141,7 @@
 
 
 .contactInput:focus{
-    border: 2px solid var(--contact-input-outline-focused);
+    border: 2px solid var(--contact-input-border-focused);
 
 }
 
@@ -234,7 +234,7 @@ font-size: var(--font-size-1);
   
     
     padding-top: 20px;
-    border: 1px solid var(--contact-input-outline);
+    border: 1px solid var(--contact-input-border);
 
     
     font-size: var(--font-size-3);
@@ -246,7 +246,7 @@ font-size: var(--font-size-1);
 }
 
 .messageTextArea:focus{
-    border: 2px solid var(--contact-input-outline-focused);
+    border: 2px solid var(--contact-input-border-focused);
 }
 
 

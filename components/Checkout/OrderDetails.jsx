@@ -101,7 +101,7 @@ const handleCouponApply = () => {
                       Order summery
               
 
-          <ArrowDown color={'var(--summery-color)'} styleClassName={`${styles.arrowImg} ${
+          <ArrowDown color={'var(--summery-title-color)'} styleClassName={`${styles.arrowImg} ${
                           !showAnswer && styles.arrowDown
                         }`}/>
                    
@@ -214,7 +214,7 @@ const handleCouponApply = () => {
 
                     <div className={`${styles.order_pair} ${styles.discountPair}`}>
                     <div className={styles.couponCodeDiv}>
-                      <DiscountIcon color={`var(--discount-icon-faded-color)`} styleClassName={styles.discountImg}/>
+                      <DiscountIcon color={`var(--discount-order-pair-color)`} styleClassName={styles.discountIcon}/>
                         <span id="couponCode">{couponCode}</span>
                         </div>
                     <span id="discountPrice">- ${(subTotal*discount/100).toFixed(2)}</span>

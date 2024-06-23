@@ -462,7 +462,7 @@ p {
   --footer-link-active-color: var(--neutral-9);
   --footer-email-placeholder-color: var(--neutral-5);
   --footer-subscribe-input-txt-color: var(--neutral-9);
-  --subscribe-input-border: var( --input-outline-color);
+  --subscribe-input-border: var( --input-border-color);
   --action-button-footer-txt-color: var(--action-button-txt-color);
   --action-button-hover-footer-txt-color: var(--action-button-footer-txt-color);
 
@@ -641,11 +641,13 @@ p {
   --cart-special-price: var(--main-color-6);
   --cart-crossed-price: var(--neutral-4);
   --bin-icon-color: var(--neutral-4);
-  --free-shipping-txt-color: var(--neutral-7);
+  /* --free-shipping-txt-color: var(--neutral-7);
   --free-shipping-slider-empty-color: var(--neutral-1);
-  --free-shipping-slider-fill-color: var(--accent-color-5);
-  --best-sellers-addtocart-color: var(--neutral-0);
+  --free-shipping-slider-fill-color: var(--accent-color-5); */
+ 
   --best-sellers-bg: var(--accent-color-1);
+  --best-sellers-slide-bg: transparent;
+  --best-sellers-addtocart-color: black;
   --best-sellers-addtocart-bg: var(--action-button-bg-color);
   --best-sellers-addtocart-bg-hover: var(--action-button-bg-color-hover);
   --best-sellers-addtocart-border: var(--action-button-border-color);
@@ -655,9 +657,9 @@ p {
 
  /*~ Contact us ~*/
  --contact-input-color: transparent;
- --contact-input-outline: var(--neutral-3);
- --contact-input-outline-focused: var(--neutral-3); 
- --contact-send-btn-outline: var(--action-button-border-color);
+ --contact-input-border: var(--neutral-3);
+ --contact-input-border-focused: var(--neutral-3); 
+
  /*#0c212b --input-color*/
 
 
@@ -668,38 +670,46 @@ p {
   /*~ Checkout ~*/
 
 
-  --checkout-high-contrast-color: var(--high-contrast-txt-color);
-  --checkout-color: var(--txt-color);
+  /* --checkout-high-contrast-color: var(--high-contrast-txt-color);
+  --checkout-color: var(--txt-color); */
   --checkout-bg: var(--bg-color);
 
+
+  --express-checkout-bg: var(--payment-div-bg);
+  --express-checkout-button-bg: var(--neutral-1);
+  --google-pay-border-color: transparent;
+
+
   --input-color: transparent;
-     /* rgb(191, 209, 208); rgb(74, 85, 187) #202020; rgba(53, 60, 110, 0.459); rgb(134, 110, 114); var(--input-autofill-color);*/
- 
-  --input-outline-color: var(--neutral-3);
-  --checkbox-checked-bg-color: var(--main-color-4);
-  --input-outline-color-focused: var(--main-color-4);
+  --input-border-color: var(--neutral-3);
+  --input-border-color-focused: var(--main-color-4);
+  --input-autofill-color: var(--bg-color);
+
+  
   --checkout-input-placeholder: var(--neutral-6);
   --checkout-input-placeholder-floating: var(--neutral-7);
-  --input-autofill-color: var(--bg-color);
-  --country-input-arrow-color: var(--checkout-input-placeholder);
+ 
+  
   --country-options-bg: var(--checkout-bg);
 
+  --checkbox-checked-bg-color: var(--main-color-4);
   --checkbox-unchecked-box-shadow: 0 0 0 0 var(--border-color-strong) inset;
   --checkbox-checked-box-shadow: 0 0 0 var(--size-3) var(--main-color-4) inset;
 
   --apt-adder-color: var(--accent-color-4);
   --apt-adder-color-hover: var(--accent-color-5);
+
+
+
  
-  --express-checkout-bg: var(--payment-div-bg);
-  --express-checkout-button-bg: var(--neutral-1);
-  
-  --google-pay-border-color: transparent;
+
 
  
   --select-payment-circle-ring-color: var(--main-color-4);
-  --select-payment-circle-color: var(--input-outline-color);
+  --select-payment-circle-color: var(--input-border-color);
 
-  --payment-div-bg: var(--neutral-0-5);
+  --payment-option-bg: black;
+  --payment-div-bg: var(--neutral-0);
 
   --paynow-stripe-button: var(--main-button-bg);
   --paynow-stripe-button-hover: var(--main-button-hover-color);
@@ -720,31 +730,34 @@ p {
 
               /*Order summery*/
   
-  --summery-color: var(--high-contrast-txt-color);
-  --summery-light-color: var(--high-contrast-txt-color);
+  --summery-title-color: var(--high-contrast-txt-color);
+  --summery-title-price-color: var(--high-contrast-txt-color);
   --checkout-order-summery-bg-mobile: var(--main-color-0);
   /* #0e2438*/
   --checkout-order-summery-bg: var(--main-color-0);
-  --checkout-order-summery-bg-light: var(--main-color-0);
+  
+  
 
-  --apply-outline-color: var(--action-button-border-color);
+  --apply-border-color: var(--action-button-border-color);
   --apply-coupon-color: var(--accent-color-4);
   --apply-coupon-hover-color: var(--accent-color-5);
   --apply-coupon-txt-color: var(--action-button-txt-color);
  
-  --coupon-code-bg: var(--neutral-5);
-  --discount-icon-color: var(--neutral-0-5);
-  --discount-icon-faded-color: var(--neutral-6);
+  --coupon-code-color: black;
+  --coupon-code-bg: var(--neutral-4);
+  --discount-cancel-icon-color: var(--neutral-0);
+  --discount-icon-color: black;
+  --discount-order-pair-color: var(--neutral-6);
   --discount-icon-total-color: var(--neutral-10);
 
-  --discount-cancel-icon-color: var(--neutral-0-5);
+ 
 
 
                   /*Tip*/
 
 
   --tip-selected: var(--main-color-5);
-  --add-tip-outline: var(--action-button-border-color);
+  --add-tip-border: var(--action-button-border-color);
   --add-tip-button-disabled-txt-color: var(--neutral-0);
   --add-tip-button-disabled: var(--neutral-3);
   --tip-thank-you-txt-color: var(--neutral-9);
@@ -752,39 +765,44 @@ p {
 
 
 
+              /*Thank you page*/
+
   --thank-you-pharagraph-color:var(--neutral-8);
   
 
 
 
 
- color-scheme: light only;
+
 
 
 /* Email popup */
 
  
 
- --email-popup-bg: rgb(22, 42, 60);
+ --email-popup-bg: var(--neutral-0);
 
 --email-popup-button-color: black;
 
 
 --email-popup-input-color: var(--neutral-9);
---email-popup-input-bg:var(--neutral-0);
---email-popup-input-border: var(--neutral-4);
+--email-popup-input-bg: black;
+--email-popup-input-border: var(--neutral-2);
 
---email-popup-send-button-bg:var(--main-color-2);
---email-popup-send-button-border: var(--neutral-0);
+--email-popup-send-button-bg:var(--main-color-3);
+--email-popup-send-button-border: black;
 
 --email-popup-thank-you-msg-color: var(--neutral-7);
+--email-popup-thank-you-msg-color-2: var(--neutral-8);
 
 --email-popup-cancel-button-bg: var(--neutral-3);
---email-cancel-icon-color: var(--neutral-10);
+--email-cancel-icon-color: var(--neutral-6);
 
 
 
 
+
+color-scheme: light only;
 
 
   /*~Admin sector colors*/

@@ -54,6 +54,7 @@
 
 .slide{
 
+    background-color: var(--best-sellers-slide-bg);
  
     height: auto !important;
     
@@ -69,6 +70,7 @@
 
     text-align: center;
     box-sizing: border-box;
+    border-radius: 8px;
  
     user-select: none;
   

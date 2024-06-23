@@ -118,6 +118,13 @@ export default function EmailFlowPopup({setEmailPopup}){
           
 
           <input ref={emailFieldRef} placeholder='Enter email here' 
+          onKeyDown={(e)=>{
+   
+              if (e.key === 'Enter') {
+                handleSignUp();
+              }
+           
+          }}
           onChange={()=>{setError()}} className={styles.emailField} maxLength={127}/>
           {error && <span className={styles.emailError}><ErrorIcon/>{error}</span>}
           
@@ -130,10 +137,12 @@ export default function EmailFlowPopup({setEmailPopup}){
 
       const thankYouContent=()=>{
         return <>
-        <span className={styles.thankYouTitle}>Welcome!</span>
+        {/* <span className={styles.thankYouTitle}>Welcome!</span>
         <span className={styles.thankYouMessage}>You have successfully subscribed! Ps. check your email for discount.</span>
        
-        <button onClick={()=>{history.back();  }} className={styles.sendEmailButton}>Continue shopping</button>
+        <button onClick={()=>{history.back();  }} className={styles.sendEmailButton}>Continue shopping</button> */}
+
+        <span className={styles.thankYouMessage2}>Thank you for signing up!</span>
      
         </>
       }
@@ -142,6 +151,7 @@ export default function EmailFlowPopup({setEmailPopup}){
     return <div className={styles.popupMainWrapper}>
          <div className={styles.popupWrapper}>
 
+      <Image src ="/images/emailPopupBg3.jpeg" className={styles.emailPopupBg} height={0} width={0} sizes='(max-width: 428px) calc(100vw - 32px), 384px' loading='eager' priority={true}/>
     
 
 

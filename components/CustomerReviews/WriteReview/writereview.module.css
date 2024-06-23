@@ -272,6 +272,7 @@
     padding: var(--size-3);
     box-sizing: border-box;
     border: 1px solid var(--writing-accent-color);
+    
    
   }
 
@@ -290,6 +291,7 @@
     aspect-ratio: 1;
     margin: 6px;
     position: relative;
+  
    
   }
 

@@ -7,7 +7,7 @@
     opacity: 0;
     /* box-shadow: 0 0 4px #749ac2; */
     border-radius: 2px;
-    border: solid 1px var( --input-outline-color);
+    border: solid 1px var( --input-border-color);
     box-sizing: border-box;
     appearance: none; /* Remove default arrow in some browsers */
     -webkit-appearance: none; /* For Safari */
@@ -19,7 +19,7 @@
   .countryFocused{
    
     
-     border: 2px solid var(--input-outline-color-focused) !important;
+     border: 2px solid var(--input-border-color-focused) !important;
    
   }
 
@@ -46,7 +46,7 @@
     width: 100%;
     border-radius: 2px;
     background-color: var(--input-color);
-    border: solid 1px var( --input-outline-color);
+    border: solid 1px var( --input-border-color);
    
     
       flex-grow: 1;

@@ -76,7 +76,7 @@
    
       padding-top: 20px;
       
-      border: 1px solid var(--contact-input-outline);
+      border: 1px solid var(--contact-input-border);
 
     font-size: var(--font-size-3);
     
@@ -114,7 +114,7 @@
   
 
   .contactInput:focus{
-    border: 2px solid var(--contact-input-outline-focused);
+    border: 2px solid var(--contact-input-border-focused);
 }
 
 
@@ -207,7 +207,7 @@ font-size: var(--font-size-1);
   
     
     padding-top: 20px;
-    border: 1px solid var(--contact-input-outline);
+    border: 1px solid var(--contact-input-border);
     resize: none;
 
     
@@ -217,7 +217,7 @@ font-size: var(--font-size-1);
 
 
 .messageTextArea:focus{
-    border: 2px solid var(--contact-input-outline-focused);
+    border: 2px solid var(--contact-input-border-focused);
 }
 
 
