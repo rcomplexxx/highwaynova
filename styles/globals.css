@@ -413,6 +413,8 @@ p {
   --action-button-bg-color: var(--accent-color-4);
   --action-button-bg-color-hover:var(--accent-color-3);
   --action-button-border-color: var(--neutral-1);
+  --action-button-disabled-txt-color: var(--neutral-0);
+  --action-button-disabled-bg: var(--neutral-3);
 
   
   --success-icon-color: black;
@@ -758,8 +760,8 @@ p {
 
   --tip-selected: var(--main-color-5);
   --add-tip-border: var(--action-button-border-color);
-  --add-tip-button-disabled-txt-color: var(--neutral-0);
-  --add-tip-button-disabled: var(--neutral-3);
+
+  
   --tip-thank-you-txt-color: var(--neutral-9);
 
 

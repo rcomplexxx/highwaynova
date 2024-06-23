@@ -181,15 +181,22 @@
   }
 
   .applyDisabled{
+
+    color: var(--action-button-disabled-txt-color);
+    background-color: var(--action-button-disabled-bg);
+
     cursor: auto;
+    
+  }
+
+  .applyDisabled:hover{
+    background-color: var(--action-button-disabled-bg);
   }
   
  
 
-  .applyDisabled:hover{
-    background-color: var(--apply-coupon-color);
-   
-  }
+
+  
 
 
 

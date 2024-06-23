@@ -44,7 +44,7 @@ export const CheckoutContext = createContext({total:0,subTotal:0, couponCode:"",
           return true;
         } else if(!couponCode) return false;
 
-        return true;
+        return false;
 
 
 

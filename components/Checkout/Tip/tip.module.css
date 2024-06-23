@@ -321,8 +321,8 @@
   
 
   .addTipDisabled{
-    color: var(--add-tip-button-disabled-txt-color);
-    background-color: var(--add-tip-button-disabled);
+    color: var(--action-button-disabled-txt-color);
+    background-color: var(--action-button-disabled-bg);
     border: 1px solid var( --add-tip-border);
    
     cursor:auto;
@@ -331,7 +331,7 @@
   .addTipDisabled:hover{
 
     
-    background-color: var(--add-tip-button-disabled);
+    background-color: var(--action-button-disabled-bg);
 
   }
   
