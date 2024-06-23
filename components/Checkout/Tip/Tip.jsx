@@ -1,8 +1,7 @@
 
 import { useContext, useEffect, useMemo, useRef, useState } from 'react'
-import InputField from '../Input/InputField'
+
 import styles from './tip.module.css'
-import Image from 'next/image';
 import { CheckoutContext } from '@/contexts/CheckoutContext';
 import { CorrectIcon } from '@/public/images/svgs/svgImages';
 
@@ -64,6 +63,14 @@ export default function Tip(){
 
 
        
+        const handleUpdateTip= ()=>{
+            if(parseFloat(tipInputValue, 2) > fullProductCost) {setTipInputValue(""); setTipError(true); return;}
+              setSelectedField(0);
+              setApplyDisabled(true);
+              if(tipInputValue==="")setTip(0);
+              else setTip(parseFloat(tipInputValue, 2));
+          
+        }
 
     
       
@@ -134,6 +141,11 @@ export default function Tip(){
             
         
         }}
+        onKeyDown={(e)=>{
+          if(e.key === "Enter")
+            handleUpdateTip();
+
+        }}
       
         placeholder=" "
         className={`${styles.customTipInput}`}
@@ -166,13 +178,7 @@ export default function Tip(){
 
         </div>
         <button className={`${styles.addTip} accentButton ${applyDisabled && styles.addTipDisabled}`}
-        onClick={()=>{
-          if(parseFloat(tipInputValue, 2) > fullProductCost) {setTipInputValue(""); setTipError(true); return;}
-            setSelectedField(0);
-            setApplyDisabled(true);
-            if(tipInputValue==="")setTip(0);
-            else setTip(parseFloat(tipInputValue, 2));
-        }}    >{tip==0?"Add tip":"Update tip"}</button>
+        onClick={handleUpdateTip}    >{tip==0?"Add tip":"Update tip"}</button>
       
 
 

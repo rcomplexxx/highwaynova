@@ -508,7 +508,7 @@ p {
 
  /*~ Product page ~*/
 
- --product-price: var(--main-color-7);
+ --product-price: var(--accent-color-5);
  --product-sale-txt-color: black;
  --product-sale-bg: var(--main-color-3);
 --in-stock-color: var(--neutral-7);
@@ -732,11 +732,14 @@ p {
 
               /*Order summery*/
   
-  --summery-title-color: var(--high-contrast-txt-color);
+
+
+  --summery-title-color: var(--main-color-6);
   --summery-title-price-color: var(--high-contrast-txt-color);
-  --checkout-order-summery-bg-mobile: var(--main-color-0);
-  /* #0e2438*/
+ 
   --checkout-order-summery-bg: var(--main-color-0);
+  --checkout-order-summery-bg-mobile: var(--main-color-0);
+ 
   
   
 

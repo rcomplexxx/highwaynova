@@ -107,6 +107,11 @@ export default function ContactUs() {
                   className={styles.contactInput}
                   maxLength={127}
                   onChange={()=>{setErrors({...errors, name: false})}}
+                  onKeyDown={(e)=>{
+                    if(e.key === "Enter")
+                      handleSubmit();
+        
+                  }}
                 />
                   <label className={`${styles.inputGroupLabel} ${errors.name && styles.inputGroupLabelErrorCorrection}`}>Name</label>
                  
@@ -122,6 +127,11 @@ export default function ContactUs() {
                 className={styles.contactInput}
                 maxLength={127}
                 onChange={()=>{setErrors({...errors, email: false})}}
+                onKeyDown={(e)=>{
+                  if(e.key === "Enter")
+                    handleSubmit();
+      
+                }}
                 />
                      <label className={styles.inputGroupLabel}>Email</label>
                 
@@ -136,6 +146,7 @@ export default function ContactUs() {
               onChange={()=>{setMessageSent(false);
              setErrors({...errors, message: false})
               }}
+            
               className={styles.messageTextArea}
               
               maxLength={900}

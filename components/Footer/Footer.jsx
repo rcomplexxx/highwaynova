@@ -108,6 +108,13 @@ export default function Footer() {
           className={styles.subscribeInput}
           placeholder="Enter your email address"
           maxLength={127}
+
+          onKeyDown={(e)=>{
+            if(e.key === "Enter")
+              handleSubscribe();
+
+          }}
+
           onChange={() => {
             if (error) setError();
             if (successful) setSuccessful(false);

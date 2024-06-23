@@ -97,6 +97,11 @@ export default function ContactUsCard() {
             maxLength={127}
             className={styles.contactInput}
             onChange={()=>{ setContactErrors({...contactErrors, name: false})}}
+            onKeyDown={(e)=>{
+              if(e.key === "Enter")
+                handleSubmit();
+  
+            }}
           />
            <label htmlFor="name" className={styles.inputGroupLabel}>Name</label>
            </div>
@@ -111,6 +116,11 @@ export default function ContactUsCard() {
             className={styles.contactInput}
             maxLength={127}
             onChange={()=>{ setContactErrors({...contactErrors, email: false})}}
+            onKeyDown={(e)=>{
+              if(e.key === "Enter")
+                handleSubmit();
+  
+            }}
           />
            <label className={styles.inputGroupLabel}>Email</label>
           </div>
