@@ -357,12 +357,7 @@
     
       min-width: var(--size-13);
       
-      
      
-    
-      
-   
-      
       
 
   };
@@ -374,20 +369,76 @@
 
 
 
-  @media (max-width: 1280px)  {
+  @media (max-width: 880px)  {
 
 
   
 
 
-    .productInfoWrapper {
 
+  }
+
+
+  @media (max-width: 1280px)  {
+
+
+    .productPageDiv{
+   
+      
+
+      gap: var(--size-7);
+      
+
+        
+   }
+    
+
+   
+
+    /* .productInfoWrapper{
       max-width: var(--size-14);
-      background-color: red;
-     
+      
+      
+    } */
+ 
+
+
+
+
+   
+  }
+
+
+  @media (max-width: 1220px) {
+
+
+
+   
+
+    .productInfoWrapper{
+      max-width: var(--size-14);
+      
+      
     }
+    
+  }
 
 
+  @media (max-width: 1120px) {
+
+    .productPageDiv{
+   
+      
+
+      gap: var(--size-7);
+      
+
+        
+   }
+    
+
+   
+    
   }
 
 
