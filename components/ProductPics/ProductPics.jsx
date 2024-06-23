@@ -194,7 +194,7 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
       {images.map((img, index) => (
        
         <SwiperSlide key={index}   
-        className={`carousel-item ${styles.slide} ${index==images.length-1 && styles.lastSlide}`}
+        className={`carousel-item ${styles.slide} ${index===images.length-1 && styles.lastSlide}`}
        >
          
             <Image
@@ -207,7 +207,7 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
 
             height={0}
             width={0}
-              className={styles.productImage}
+              className={`${styles.productImage} ${index===imageIndex && styles.selectedMainImage}`}
               src={img.src}
               alt={img.alt}
 
@@ -263,7 +263,7 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
             >
               
                 <Image
-                  className={`${styles.productImage} ${styles.productMiniSwiperImage} ${imageIndex === index && styles.selectedImage}`}
+                  className={`${styles.productImage} ${imageIndex === index && styles.selectedImage}`}
                   src={img.src}
                   alt={img.alt}
                   sizes="25vw"

@@ -59,7 +59,15 @@
 
   user-select: none;
   cursor: pointer;
+  filter: blur(0.5px) brightness(50%);
+    
+}
+
+
  
+.selectedMainImage{
+
+  filter: none !important;
   }
 
 
@@ -133,7 +141,7 @@
     width: calc(25% - 9px);
    
   
-    filter: blur(0.5px) brightness(50%);
+    
  
   }
 
@@ -196,9 +204,8 @@
   
 
   
-    .productMiniSwiperImage{
-      filter: blur(0.5px) brightness(50%);
-    }
+  
+    
  
    
    
@@ -312,7 +319,7 @@
       
     
       }
-  
+
       .grid_container{
         display:none;
       }
