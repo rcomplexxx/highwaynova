@@ -40,7 +40,7 @@ const PayPalButton=({checkFields, organizeUserData, method='paypal',  type='norm
       };
 
 
-      async function handlePayPalOrder(paymentMethod) {
+      async function handlePayPalOrder() {
 
         try {
 
@@ -167,7 +167,7 @@ const PayPalButton=({checkFields, organizeUserData, method='paypal',  type='norm
               onClick={handlePayPalButtonClick}
               onApprove={handlePayPalButtonApprove}
               onCancel={cancelHandler}
-              createOrder={async()=>{return await handlePayPalOrder('PAYPAL')}}
+              createOrder={async()=>{return await handlePayPalOrder()}}
               style={{
                 color: color,
                 height: 48

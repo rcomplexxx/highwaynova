@@ -117,45 +117,26 @@ const sendNewSubscriberSequence = ()=>{
         else {
 
 
-            const newSubscribe = !result.subscribed && source!=="checkout x"
-
-
 
             if(source.includes("checkout")){
 
               
-
-            
-
-             
-              
-              if(newSubscribe)
-              db.prepare("UPDATE customers SET subscribed = 1 WHERE email = ?").run(email); 
-              
-            
-
-              
            
               sendPostBuyingSequence(result.totalOrderCount);
-            if(newSubscribe) sendNewSubscriberSequence();
-           
-       
-          
 
+            }
               
-          
+              
+        
+               const newSubscribe = !result.subscribed && source!=="checkout x"
+       
+      
 
-          
-
-        }
-
-            else if(newSubscribe){
-
-
-              db.prepare("UPDATE customers SET subscribed = 1 WHERE email = ?").run(email);
-            sendNewSubscriberSequence();
-
-          }
+            if(newSubscribe) {
+              db.prepare("UPDATE customers SET subscribed = 1 WHERE email = ?").run(email); 
+              sendNewSubscriberSequence();
+             
+            }
 
     console.log("Successfully subscribed. Is person new subscriber?", newSubscribe, email );
    

@@ -105,6 +105,7 @@ export default function Footer() {
         <div className={styles.subscribeWrapper}>
         <input
           id="subscribe"
+          autocomplete="email"
           className={styles.subscribeInput}
           placeholder="Enter your email address"
           maxLength={127}

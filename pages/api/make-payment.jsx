@@ -25,8 +25,10 @@ const environment =
 
 const client = new paypal.core.PayPalHttpClient(environment);
 
-const paypalPay=async(totalPrice)=>{
+const paypalPay=async(totalPrice, requestShipping)=>{
   let request =  new paypal.orders.OrdersCreateRequest();
+
+
   request.requestBody({
     intent: "CAPTURE",
     purchase_units: [
@@ -42,7 +44,8 @@ const paypalPay=async(totalPrice)=>{
       payment_method: {
         payer_selected: "PAYPAL",
         payee_preferred: "UNRESTRICTED",
-     
+
+         shipping_preference: requestShipping?"GET_FROM_FILE":"NO_SHIPPING"
     
         
           // shipping_preference: 'SET_PROVIDED_ADDRESS', // This sets the shipping address to the one provided by the buyer
@@ -327,9 +330,12 @@ const makePayment = async (req, res) => {
     
     
     if(req.body.paymentMethod.includes('PAYPAL')){
+
+      console.log('order ship info', req.body.order, req.body.paymentMethod)
     
-      
-    const request = await paypalPay(totalPrice);
+      const requestShipping = (req.body.paymentMethod==='PAYPAL(EXPRESS)' &&  req.body.order.city==="" &&  req.body.order.address==="") || req.body.paymentMethod==='PAYPAL(INSTANT)';
+    
+    const request = await paypalPay(totalPrice, requestShipping);
   
     
     const response = await client.execute(request);

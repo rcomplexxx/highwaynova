@@ -117,7 +117,7 @@ export default function EmailFlowPopup({setEmailPopup}){
         <div className={styles.provideEmailDiv}>
           
 
-          <input ref={emailFieldRef} placeholder='Enter email here' 
+          <input ref={emailFieldRef} placeholder='Enter email here'  autocomplete="email"
           onKeyDown={(e)=>{
    
               if (e.key === 'Enter') {

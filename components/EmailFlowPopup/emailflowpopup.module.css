@@ -166,6 +166,19 @@
 
 
 
+.emailField:-webkit-autofill {
+    background-color: var(--email-popup-input-bg);
+    -webkit-box-shadow: 0 0 0 30px var(--email-popup-input-bg) inset !important;
+    -webkit-text-fill-color: var(--email-popup-input-color);
+   
+  }
+  
+  /* For Firefox */
+  .emailField:-moz-autofill {
+    background-color: var(--email-popup-input-bg);
+    -webkit-box-shadow: 0 0 0 30px var(--email-popup-input-bg) inset !important;
+    -webkit-text-fill-color: var(--email-popup-input-color);
+  }
 
 
 

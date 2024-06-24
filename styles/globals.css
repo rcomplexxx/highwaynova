@@ -433,7 +433,7 @@ p {
  
   
   --navbar-bg: var(--neutral-0-5);
-  --nav-bottom-border-color: transparent;
+  --nav-bottom-border-color: var(--neutral-1);
 
 
   --search-icon-color: var(--neutral-7);
