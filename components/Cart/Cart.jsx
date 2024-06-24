@@ -74,8 +74,8 @@ if (window.innerWidth<980){
   const renderCart = useCallback(() => {
    return  <>
       <div className={styles.itemsDiv}>
-        {cartProducts.map((lineItem) => (
-          <CartItem item={lineItem} key={lineItem.id} />
+        {cartProducts.map((lineItem, index) => (
+          <CartItem key={index} item={lineItem}  />
         ))}
       </div>
       <div className={styles.cardDetails}>

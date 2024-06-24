@@ -29,11 +29,8 @@ import Link from "next/link";
 
 import styles from "../../styles/productpage.module.css";
 
-//slickGoTo
-//afterChange(index)=>{}
-//Alice~~!
-//activeIndex : Number, default 0 - Set carousel at the specified position.
-//onUpdated={(e) => { e.item je index
+
+
 
 export default function ProductPage({ product, images, startReviews, ratingData }) {
 

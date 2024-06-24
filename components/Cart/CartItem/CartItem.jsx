@@ -22,6 +22,7 @@ const CartItem = ({ item }) => {
   console.log('it', item)
 
   const handleUpdateCartQty = (quantity) => {
+    
     setCartProducts(
       cartProducts
         .map((cp) => {
@@ -35,10 +36,11 @@ const CartItem = ({ item }) => {
     );
   };
 
-  const handleRemoveFromCart =  (lineItemId, lineItemVariant) => {
-    const newCartProducts = cartProducts.filter((cp) => cp.id != lineItemId || cp.variant != lineItemVariant);
-    console.log(lineItemId);
-    console.log(newCartProducts);
+  const handleRemoveFromCart =  () => {
+    
+    const newCartProducts = cartProducts.filter((cp) => cp.id !== item.id || cp.variant !== item.variant);
+  
+    
     setCartProducts(newCartProducts);
   };
 
@@ -97,7 +99,7 @@ const CartItem = ({ item }) => {
       <div className={styles.edgeDiv}>
         
 
-      <BinIcon styleClassName={styles.removeButton} handleClick={() => handleRemoveFromCart(item.id, item.variant)}/>
+      <BinIcon styleClassName={styles.removeButton} handleClick={handleRemoveFromCart}/>
 
 
 
