@@ -676,6 +676,8 @@ p {
   --checkout-color: var(--txt-color); */
   --checkout-bg: var(--bg-color);
 
+  --checkout-spinner-2-color: var(--neutral-10);
+
 
   --express-checkout-bg: var(--payment-div-bg);
   --express-checkout-button-bg: var(--neutral-1);
@@ -713,8 +715,11 @@ p {
   --payment-option-bg: black;
   --payment-div-bg: var(--neutral-0);
 
-  --paynow-stripe-button: var(--main-button-bg);
-  --paynow-stripe-button-hover: var(--main-button-hover-color);
+  --paynow-stripe-button-color: var(--main-button-color);
+  --paynow-stripe-button-bg: var(--main-button-bg);
+  --paynow-stripe-button-hover-bg: var(--main-button-hover-color);
+
+  --payment-spinner-color: var(--paynow-stripe-button-color);
  
 
   --more-cards-card-color: var(--neutral-0);

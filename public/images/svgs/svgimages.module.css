@@ -27,6 +27,26 @@ margin-bottom: var(--size-2);
   margin-bottom: var(--size-2);
 }
 
+.paymentSpinner{
+
+  
+  height: var(--size-6);
+  width: var(--size-6);
+
+  transform-origin:center;
+  animation: rotateSpinnerAnimation 0.6s infinite linear;
+  
+
+}
+
+.spinner2{
+  height: var(--size-9);
+  width: var(--size-9);
+
+  transform-origin:center;
+  animation: rotateSpinnerAnimation 0.6s infinite linear;
+}
+
  .error{
     color: var(--error-color);
     margin-top: var(--size-3);
@@ -34,8 +54,28 @@ margin-bottom: var(--size-2);
     font-size: var(--font-size-2);
   }
 
+  @media (max-width: 600px) {
+
+    .spinner2{
+      height: var(--size-8);
+      width: var(--size-8);
+    
+
+      
+    }
+    
+  }
+
 
   @media (max-width: 420px){
+
+    .spinner2{
+      height: 40px;
+      width: 40px;
+    
+
+      
+    }
 
     .customerStar{
       height: 16px;
@@ -43,3 +83,15 @@ margin-bottom: var(--size-2);
     }
 
   }
+
+
+  @keyframes rotateSpinnerAnimation{
+
+   
+    
+
+    100%  {
+      transform:rotate(360deg)
+    }
+    
+    }

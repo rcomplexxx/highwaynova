@@ -8,6 +8,7 @@ import Link from "next/link";
 import { NextSeo } from "next-seo";
 import { unimportantPageSeo } from "@/utils/SEO-configs/next-seo.config";
 import CheckoutProvider from "@/contexts/CheckoutContext";
+import { Spinner2 } from "@/public/images/svgs/svgImages";
 
 const CheckoutPage = () => {
   const cartProducts = useGlobalStore(state=>state.cartProducts)
@@ -36,7 +37,7 @@ const CheckoutPage = () => {
       <Link className={`${styles.shopNow} mainButton`} href="/products">Shop Now</Link>
      
      
-      </>:<h1 className={`${styles.title} ${styles.emptyTitle}`}>Loading checkout...</h1>
+      </>:<Spinner2/>
     
       }
  

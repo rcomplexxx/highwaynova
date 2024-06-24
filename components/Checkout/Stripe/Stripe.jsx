@@ -7,12 +7,11 @@ import FloatingBadge from '../FloatingBadge/FloatingBadge';
 import { Elements, useElements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import { useRouter } from "next/router";
-import Image from 'next/image';
 import BillingInfo from './BillingInfo/BillingInfo';
 import swapCountryCode from '@/utils/countryList';
 import { CheckoutContext } from '@/contexts/CheckoutContext';
 import InputField from '../Input/InputField';
-import { CorrectIcon, ErrorIcon } from '@/public/images/svgs/svgImages';
+import { CorrectIcon, ErrorIcon, Spinner} from '@/public/images/svgs/svgImages';
 import { useGlobalStore } from '@/contexts/AppContext';
 
 
@@ -500,7 +499,7 @@ const handleCCBlur= ()=>{
 
 
     <button className={styles.payNowButton} onClick={handleStripePay}>{paymentProcessing?
-    <Image src='/images/spinner.png' height={0} width={0} className={styles.spinner}/>
+    <Spinner/>
     :'Pay now'}</button>
     {stripeError?.stripeServerError && <span className={styles.paymentError}><ErrorIcon/>{stripeError.stripeServerError}</span>}
     </div>
