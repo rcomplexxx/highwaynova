@@ -71,10 +71,11 @@ export default function ProductPage({ product, images, startReviews, ratingData 
 
 
   useEffect(()=>{
+    console.log('use effect reactivated')
     variantIndexToZeroRef.current = true;
       setVariant(product.variants && product.variants[0].name);
       setQuantity(1);
-  },[product])
+  },[product.id])
 
 
 
