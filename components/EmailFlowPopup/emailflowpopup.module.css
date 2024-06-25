@@ -200,6 +200,22 @@
     white-space: nowrap;
 }
 
+.sendEmailButton:hover{
+    background-color: var(--email-popup-button-hover-bg);
+}
+
+.emailButtonLoading{
+    
+    background-color: var(--email-popup-button-loading-bg);
+
+    cursor: auto;
+}
+
+.emailButtonLoading:hover{
+    
+    background-color: var(--email-popup-button-loading-bg);
+}
+
 
 
 

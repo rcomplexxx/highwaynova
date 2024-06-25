@@ -5,7 +5,7 @@ import ReactHtmlParser from "react-html-parser";
 
 import WriteReviewVisible from "./WriteReview/WriteReviewVisible";
 import FullScreenReview from "./FullScreenReview/FullScreenReview";
-import { CustomerStars} from "@/public/images/svgs/svgImages";
+import { CustomerStars, Spinner} from "@/public/images/svgs/svgImages";
 
 function Review({  name, text,  stars,  reviewImgSrc, setFullScreenReview, shrinkReview}) {
 
@@ -310,7 +310,8 @@ export default function CustomerReviews({ product_id, ratingData, startReviews }
           className={styles.showMoreButton}
           onClick={handleShowMore}
         >
-          {isLoading?"Loading...":"Show more"}
+          
+          {isLoading?<Spinner color={'var(--load-more-reviews-spinner-color)'}/>:"Show more"}
         </button>
       )}
       {fullScreenReview && <FullScreenReview authorName={fullScreenReview.authorName} text={fullScreenReview.text} stars={fullScreenReview.stars} 

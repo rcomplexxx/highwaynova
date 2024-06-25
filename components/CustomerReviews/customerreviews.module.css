@@ -160,12 +160,22 @@ column-fill:balance;
   }
 
   .showMoreButton{
-    margin-top:  var(--size-8);
-    margin-bottom:  var(--size-7);
-   
-    padding: 0 var(--size-6);
+
     color: var(--txt-color);
     background-color: transparent;
+  
+   
+    width: var(--size-11-5);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
+
+    margin-top:  var(--size-8);
+    margin-bottom:  var(--size-7);
+
     border: 1px solid var(--border-color-strong);
     border-radius: var(--size-2);
 
@@ -215,7 +225,6 @@ column-fill:balance;
       margin-top:  var(--size-7);
       margin-bottom:  var(--size-6);
 
-      padding: 0 var(--size-5);
       font-size: 20px;
 
     }

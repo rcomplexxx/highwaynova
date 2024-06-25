@@ -42,6 +42,7 @@ const Stripe = ({organizeUserData, checkFields}) => {
     const [floatingLabels, setFloatingLabels]= useState({});
     const [focusedField, setFocusedField]= useState();
     const [paymentProcessing, setPaymentProcessing]= useState(false);
+    const [paymentProcessed, setPaymentProcessed] = useState(false);
     const [cardHolderName, setCardHolderName]= useState('');
     const [cardStatesEntered, setCardStatesEntered]= useState({
       cardNumber:false, expiryDate:false, cvv:false, cardHolderName:false
@@ -299,8 +300,11 @@ const handleStripePay= async(event)=>{
                console.log('pay success');
                
                setGiftDiscount(data.giftDiscount);
-               setPaymentProcessing(false);
-                router.push("/thank-you");
+               setPaymentProcessed(true);
+              //  setPaymentProcessing(false);
+
+              setTimeout(()=>{router.push("/thank-you");},500)
+                
                   
                   
                 
@@ -504,9 +508,10 @@ const handleCCBlur= ()=>{
 
 
 
-    <button className={`${styles.payNowButton} ${paymentProcessing && styles.payNowButtonPaying}`} onClick={handleStripePay}>{paymentProcessing?
+    <button className={`${styles.payNowButton} ${(paymentProcessed || paymentProcessing) && styles.payNowButtonPaying}`} onClick={handleStripePay}>{paymentProcessed?<CorrectIcon styleClassName={styles.correctIcon}/>:
+    paymentProcessing?
     <Spinner/>
-    :'Pay now'}</button>
+    :"Pay now"}</button>
     {stripeError?.stripeServerError && <span className={styles.paymentError}><ErrorIcon/>{stripeError.stripeServerError}</span>}
     </div>
   );

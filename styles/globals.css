@@ -604,7 +604,7 @@ p {
  
  --fullscreen-customer-cancel-hover: var(--neutral-0-5);
 
-
+--load-more-reviews-spinner-color: var(--neutral-7);
 
 
 
@@ -792,15 +792,20 @@ p {
 
  --email-popup-bg: var(--neutral-0);
 
---email-popup-button-color: black;
+
 
 
 --email-popup-input-color: var(--neutral-9);
 --email-popup-input-bg: black;
 --email-popup-input-border: var(--neutral-2);
 
+
+--email-popup-button-color: black;
+--email-popup-button-hover-bg: var(--main-color-5);
 --email-popup-send-button-bg:var(--main-color-3);
 --email-popup-send-button-border: black;
+--email-popup-button-loading-bg: var(--main-color-2);
+
 
 --email-popup-thank-you-msg-color: var(--neutral-7);
 --email-popup-thank-you-msg-color-2: var(--neutral-8);

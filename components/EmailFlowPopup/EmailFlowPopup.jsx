@@ -11,6 +11,7 @@ import { useGlobalStore } from '@/contexts/AppContext';
 export default function EmailFlowPopup({setEmailPopup}){
     const [error, setError] = useState();
     const [successfullySignedUp, setSuccessfullySugnedUp] = useState(false);
+    const [subscribeLoading, setSubscribeLoading] = useState(false);
 
     const emailFieldRef = useRef();
     const router = useRouter();
@@ -73,11 +74,16 @@ export default function EmailFlowPopup({setEmailPopup}){
  
 
     const handleSignUp=async () => {
+
+      if(subscribeLoading)return;
         const emailPattern = /^\w+@\w+\.\w+$/;
         if (!emailPattern.test(emailFieldRef.current.value)) {
           setError("Please enter a valid email address.");
           return;
         } else {
+
+          setSubscribeLoading(true);
+
           fetch("/api/sqlliteapi", {
             method: "POST",
             headers: {
@@ -104,6 +110,7 @@ export default function EmailFlowPopup({setEmailPopup}){
             })
             .finally(() => {
                 emailFieldRef.current.value = "";
+                setSubscribeLoading(false);
             });
         }
       };
@@ -117,7 +124,7 @@ export default function EmailFlowPopup({setEmailPopup}){
         <div className={styles.provideEmailDiv}>
           
 
-          <input ref={emailFieldRef} placeholder='Enter email here'  autocomplete="email"
+          <input ref={emailFieldRef} placeholder='Enter email here'  autoComplete="email"
           onKeyDown={(e)=>{
    
               if (e.key === 'Enter') {
@@ -129,7 +136,7 @@ export default function EmailFlowPopup({setEmailPopup}){
           {error && <span className={styles.emailError}><ErrorIcon/>{error}</span>}
           
          
-          <button className={styles.sendEmailButton} onClick={handleSignUp}>Sign up</button>
+          <button className={`${styles.sendEmailButton} ${subscribeLoading && styles.emailButtonLoading}`} onClick={handleSignUp}>Sign up</button>
            </div>
         
            </>

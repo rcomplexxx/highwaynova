@@ -194,7 +194,7 @@ export default function App({ Component, pageProps }) {
       
       const emailPopupTimeChecker = Math.floor(Date.now() / 86400000)-localStorage.getItem("popupShownDateInDays");
 
-      const daysBetweenEmailPopups = 2;
+      const daysBetweenEmailPopups = 0;
 
      
 
