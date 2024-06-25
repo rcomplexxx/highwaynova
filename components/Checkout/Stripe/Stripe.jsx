@@ -179,8 +179,8 @@ const handleStripePay= async(event)=>{
  
   errorhelperRef.current={...errors};
   if (!errors.hasOwnProperty('cardNumber')){errorhelperRef.current={...errorhelperRef.current, cardNumber:'Enter a valid card number'}}
-  if (!errors.hasOwnProperty('expiryDate')){errorhelperRef.current={...errorhelperRef.current, expiryDate:'Enter a valid card number'}}
-  if (!errors.hasOwnProperty('cvv')){errorhelperRef.current={...errorhelperRef.current, cvv:'Enter a valid card number'}}
+  if (!errors.hasOwnProperty('expiryDate')){errorhelperRef.current={...errorhelperRef.current, expiryDate:'Enter a valid expiry date'}}
+  if (!errors.hasOwnProperty('cvv')){errorhelperRef.current={...errorhelperRef.current, cvv:'Enter a valid security number'}}
   if(cardHolderName==='') {errorhelperRef.current={...errorhelperRef.current, cardHolderName:'Enter your name exactly as it\'s written on the card'}}
   
   
@@ -331,18 +331,21 @@ const handleCCChange=   (event) => {
   // Access the value from the CardElement when it changes
   //elementType - cardExpiry - cardCvc
   //  cardNumber expiryDate cvv
+
+  
   const errorField= event.elementType==='cardNumber'?'cardNumber':(event.elementType==='cardExpiry'?'expiryDate':'cvv')
-  const errorName = `Enter a valid ${event.elementType==='cardNumber'?'card number':(event.elementType==='expiry date'?'expiryDate':'security number')}`
+  const errorName = `Enter a valid ${errorField==='cardNumber'?'card number':(errorField==='expiryDate'?'expiry date':'security number')}`
   setErrors({...errors, [errorField]: undefined});
-  const cardValue = event;
-  errorhelperRef.current[errorField]=(!cardValue.complete || cardValue.error)?errorName:undefined;
-  floatingLabelsHelper.current[errorField]=!cardValue.empty;
+ 
+  
+  errorhelperRef.current[errorField]=(!event.complete || event.error)?errorName:undefined;
+  floatingLabelsHelper.current[errorField]=!event.empty;
 };
 
 const handleCCBlur= ()=>{
   console.log('b',floatingLabelsHelper.current);
   setErrors(errorhelperRef.current);
-  setFloatingLabels({...floatingLabelsHelper.current});
+  setFloatingLabels(floatingLabelsHelper.current);
   setFocusedField(undefined);
 }
   
