@@ -64,14 +64,7 @@ const Stripe = ({organizeUserData, checkFields}) => {
   
 
 
-    const deleteError = (field) => {
-      if (errors.hasOwnProperty(field)) {
-        const newErrors = { ...errors };
-      
-        delete newErrors[field];
-        setErrors(newErrors);
-      }
-    };
+    
 
     const getInputColor =  useCallback(()=>{
       return getComputedStyle(document.documentElement).getPropertyValue('--high-contrast-txt-color');
@@ -184,22 +177,47 @@ const handleStripePay= async(event)=>{
 
   
  
-  errorhelperRef.current={...errors};
-  if (!errors.hasOwnProperty('cardNumber')){errorhelperRef.current={...errorhelperRef.current, cardNumber:'Enter a valid card number'}}
-  if (!errors.hasOwnProperty('expiryDate')){errorhelperRef.current={...errorhelperRef.current, expiryDate:'Enter a valid expiry date'}}
-  if (!errors.hasOwnProperty('cvv')){errorhelperRef.current={...errorhelperRef.current, cvv:'Enter a valid security number'}}
-  if(cardHolderName==='') {errorhelperRef.current={...errorhelperRef.current, cardHolderName:'Enter your name exactly as it\'s written on the card'}}
+  
+  
   
   
   if(!checkFields()){
     setPaymentProcessing(false);return;
   }
   
-  setErrors(errorhelperRef.current);
- 
-  const clickPass=   !errors.cardNumber && !errors.expiryDate && !errors.cvv && !errors.cardHolderName;
+
+  
+
+  const clickPass= !errors.cardNumber && !errors.expiryDate && !errors.cvv && !errors.cardHolderName ;
  
   if(!clickPass) { setPaymentProcessing(false);return;}
+
+  if(!nonEmptyFields.cardNumber){
+    setErrors({...errors, cardNumber:"Enter a valid card number"});
+    setPaymentProcessing(false);
+    return;
+
+  }
+  if(!nonEmptyFields.expiryDate){
+    setErrors({...errors, expiryDate:"Enter a valid expiry date"});
+    setPaymentProcessing(false);
+    return;
+
+  }
+
+  if(!nonEmptyFields.cvv){
+    setErrors({...errors, cvv:"Enter a valid security number"});
+    setPaymentProcessing(false);
+    return;
+
+  }
+
+  if(cardHolderName ===""){
+    setErrors({...errors, cardHolderName:"Enter a valid card name"});
+    setPaymentProcessing(false);
+    return;
+   }
+
   if(!checkBillingFields()){setPaymentProcessing(false);return;}
 
   const cardElement = elements.getElement(CardNumberElement);
@@ -259,7 +277,8 @@ const handleStripePay= async(event)=>{
       }
   });
 
-  transactionError= error; transactionPaymentMethod= paymentMethod;
+  transactionError= error; 
+  transactionPaymentMethod= paymentMethod;
   }
 
        
@@ -328,27 +347,28 @@ const handleStripePay= async(event)=>{
         if(transactionError.code==='incomplete_number' || transactionError.code==='invalid_number')setErrors({...errors,cardNumber:'Enter a valid card number'})
         else if( transactionError.code === 'incomplete_expiry') setErrors({...errors,expiryDate:'Enter a valid exipry date'})
         else if( transactionError.code === 'incomplete_cvc') setErrors({...errors,cvv:'Enter a valid security code'})
-        else if( transactionError.code === 'incorrect_address' || transactionError.code === "account_number_invalid") stripeError('Billing address invalid. Please check provided information.')
-        else setErrors({...errors,payment:'Error occured. Payment was not processed.'})
+        else if( transactionError.code === 'incorrect_address' || transactionError.code === "account_number_invalid") 
+      setStripeError('Billing address invalid. Please check provided information.')
+       else setStripeError({stripeServerError: 'Error occured. Payment was not processed.'});
         setPaymentProcessing(false);
         // Enter your name exactly as it’s written on your card
+
+        
+       errorhelperRef.current={...errors};
       }
 
 
 }
 
 const handleCCChange=   (event) => {
-  // Access the value from the CardElement when it changes
-  //elementType - cardExpiry - cardCvc
-  //  cardNumber expiryDate cvv
 
-  // useState({cardNumber:false, expiryDate:false, cvv:false})
+  
   const stripeField= event.elementType==='cardNumber'?'cardNumber':(event.elementType==='cardExpiry'?'expiryDate':'cvv')
   const errorName = `Enter a valid ${stripeField==='cardNumber'?'card number':(stripeField==='expiryDate'?'expiry date':'security number')}`
   setErrors({...errors, [stripeField]: undefined});
  
   
-  errorhelperRef.current[stripeField]=(!event.complete || event.error)?errorName:undefined;
+  errorhelperRef.current[stripeField]=(!event.complete || event.error || event.empty) && errorName;
 
   setNonEmptyFields({...nonEmptyFields, [stripeField]: !event.empty})
 
@@ -361,7 +381,7 @@ const handleCCBlur= ()=>{
   
   setErrors(errorhelperRef.current);
   
-  setFocusedField(undefined);
+  setFocusedField();
 }
   
     
@@ -489,14 +509,17 @@ const handleCCBlur= ()=>{
          value={cardHolderName}
          handleChange={(event)=>{
           
-          deleteError(event.target.id);
+          setErrors({...errors, "cardHolderName": undefined});
+          
           setCardHolderName(event.target.value)}
+
         
         }
+
+
          
      
-   
-        //   if(event.target.value==='') setErrors({ ...errors, cardHolderName: 'Enter a valid card number' });}}
+        
          error={errors.cardHolderName}
         />
       </div>
