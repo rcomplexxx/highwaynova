@@ -170,8 +170,11 @@ const Stripe = ({organizeUserData, checkFields}) => {
 
 
 const handleStripePay= async(event)=>{
-  console.log('billErr', billingErrors);
+ 
   event.preventDefault();
+  if(paymentProcessing)return;
+
+  console.log('billErr', billingErrors);
   setPaymentProcessing(true);
   setStripeError();
 
@@ -501,7 +504,7 @@ const handleCCBlur= ()=>{
 
 
 
-    <button className={styles.payNowButton} onClick={handleStripePay}>{paymentProcessing?
+    <button className={`${styles.payNowButton} ${paymentProcessing && styles.payNowButtonPaying}`} onClick={handleStripePay}>{paymentProcessing?
     <Spinner/>
     :'Pay now'}</button>
     {stripeError?.stripeServerError && <span className={styles.paymentError}><ErrorIcon/>{stripeError.stripeServerError}</span>}

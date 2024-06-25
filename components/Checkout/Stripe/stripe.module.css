@@ -56,6 +56,16 @@
    
 }
 
+.payNowButtonPaying{
+  transition: none;
+  background-color: var(--paynow-stripe-button-paying-bg);
+  cursor: auto;
+}
+
+.payNowButtonPaying:hover{
+  background-color: var(--paynow-stripe-button-paying-bg);
+}
+
 
 .spinner{
   height: var(--size-5);

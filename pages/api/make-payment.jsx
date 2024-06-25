@@ -238,7 +238,7 @@ const makePayment = async (req, res) => {
 
          
 
-          db.prepare("UPDATE customers SET totalOrderCount = totalOrderCount + 1, money_spent = (ROUND(money_spent + ?, 2) WHERE id = ?").run(totalPrice, customerId); 
+          db.prepare("UPDATE customers SET totalOrderCount = totalOrderCount + 1, money_spent = ROUND(money_spent + ?, 2) WHERE id = ?").run(totalPrice, customerId); 
 
            
           const subscribeSource = subscribed?"checkout":"checkout x"

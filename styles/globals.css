@@ -718,7 +718,7 @@ p {
   --paynow-stripe-button-color: var(--main-button-color);
   --paynow-stripe-button-bg: var(--main-button-bg);
   --paynow-stripe-button-hover-bg: var(--main-button-hover-color);
-
+  --paynow-stripe-button-paying-bg: var(--main-color-3);
   --payment-spinner-color: var(--paynow-stripe-button-color);
  
 
