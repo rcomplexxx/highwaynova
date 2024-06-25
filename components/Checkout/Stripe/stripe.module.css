@@ -188,6 +188,19 @@
 
 
     
+  .stripeFieldFocused { 
+
+    border: 2px solid var(--input-border-color-focused);
+
+}
+
+  .input_field:focus { 
+    border: 2px solid var(--input-border-color-focused);
+    border:none;
+}
+
+
+    
   
   
     .label{
@@ -200,13 +213,18 @@
   
     }
   
-  
-    .labelFloating {
-      color: var(--checkout-input-placeholder-floating);
-    top: 8px;
-    font-size: var(--size-4);
-    
-  }
+
+
+.stripeFieldFocused ~ .label {
+  color: var(--checkout-input-placeholder-floating);
+top: 8px;
+font-size: var(--size-4);
+
+}
+
+
+
+
 
   
   .inputWrapper{

@@ -39,7 +39,6 @@ export default function StripeWrapper({organizeUserData, checkFields}){
 const Stripe = ({organizeUserData, checkFields}) => {
     const [billingAddressSameAsShipping, setBillingAddressSameAsShipping] = useState(true);
     const [billingErrors, setBillingErrors]= useState({});
-    const [floatingLabels, setFloatingLabels]= useState({});
     const [focusedField, setFocusedField]= useState();
     const [paymentProcessing, setPaymentProcessing]= useState(false);
     const [paymentProcessed, setPaymentProcessed] = useState(false);
@@ -50,7 +49,7 @@ const Stripe = ({organizeUserData, checkFields}) => {
     const [stripeError, setStripeError]= useState();
     const [errors, setErrors] = useState({});
     const errorhelperRef=useRef({});
-    const floatingLabelsHelper=useRef({cardNumber:false, expiryDate:false, cvv:false});
+    
     const stripe = useStripe();
     const elements= useElements();
 
@@ -346,13 +345,14 @@ const handleCCChange=   (event) => {
  
   
   errorhelperRef.current[errorField]=(!event.complete || event.error)?errorName:undefined;
-  floatingLabelsHelper.current[errorField]=!event.empty;
+ 
+  
 };
 
 const handleCCBlur= ()=>{
-  console.log('b',floatingLabelsHelper.current);
+  
   setErrors(errorhelperRef.current);
-  setFloatingLabels(floatingLabelsHelper.current);
+  
   setFocusedField(undefined);
 }
   
@@ -370,7 +370,7 @@ const handleCCBlur= ()=>{
     onChange={handleCCChange}
     onFocus={()=>{
       setFocusedField('cardNumber');
-      setFloatingLabels({...floatingLabelsHelper.current, cardNumber:true});
+      
     
       }}
     options={{placeholder:'',  style: {
@@ -388,7 +388,7 @@ const handleCCBlur= ()=>{
         className={`${styles.input_field} ${errors.cardNumber && styles.input_error} ${focusedField==='cardNumber' && styles.stripeFieldFocused}`}
       /> 
       <FloatingBadge makeLockBadge={true}/>
-      <span className={`${styles.label} ${floatingLabels.cardNumber && styles.labelFloating}`}>Card number</span>
+      <span className={`${styles.label}`}>Card number</span>
 
 </div>
 {/* defaultValues */}
@@ -410,7 +410,7 @@ const handleCCBlur= ()=>{
  onBlur={handleCCBlur}
  onFocus={()=>{
   setFocusedField('expiryDate');
-  setFloatingLabels({...floatingLabelsHelper.current, expiryDate:true});
+  
   }}
  onChange={handleCCChange}
       options={{placeholder:'',  style: {
@@ -425,7 +425,9 @@ const handleCCBlur= ()=>{
       }}}
       className={`${styles.input_field} ${errors.expiryDate && styles.input_error} ${focusedField==='expiryDate' && styles.stripeFieldFocused}`}
     />
-    <span className={`${styles.label} ${floatingLabels.expiryDate && styles.labelFloating}`}>Expiration Date (MM / YY)</span>
+
+    
+    <span className={`${styles.label}`}>Expiration Date (MM / YY)</span>
    
     </div>
 
@@ -445,7 +447,7 @@ const handleCCBlur= ()=>{
    onChange={handleCCChange}
   onFocus={()=>{
     setFocusedField('cvv');
-  setFloatingLabels({...floatingLabelsHelper.current, cvv:true});
+    
   }}
    options={{placeholder:'',  style: {
     base: {
@@ -459,7 +461,7 @@ const handleCCBlur= ()=>{
   }}}
   className={`${styles.input_field} ${errors.cvv && styles.input_error} ${focusedField==='cvv' && styles.stripeFieldFocused}`}/>
   <FloatingBadge message={'3-digit security code usually found on the back of your card. American Express cards have a 4-digit code located on the front.'}/>
-  <span className={`${styles.label} ${floatingLabels.cvv && styles.labelFloating}`}>Security code</span>
+  <span className={`${styles.label}`}>Security code</span>
    </div>
  
   {errors.cvv && <p className={styles.stripeError}><ErrorIcon/>{errors.cvv}</p>}
