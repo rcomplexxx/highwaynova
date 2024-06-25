@@ -215,14 +215,18 @@
   
 
 
-.stripeFieldFocused ~ .label {
+     .stripeFieldFocused ~ .label {
   color: var(--checkout-input-placeholder-floating);
 top: 8px;
 font-size: var(--size-4);
 
 }
 
-
+.floatingLabel{
+  color: var(--checkout-input-placeholder-floating);
+  top: 8px;
+  font-size: var(--size-4);
+}
 
 
 

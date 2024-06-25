@@ -43,21 +43,25 @@ const Stripe = ({organizeUserData, checkFields}) => {
     const [paymentProcessing, setPaymentProcessing]= useState(false);
     const [paymentProcessed, setPaymentProcessed] = useState(false);
     const [cardHolderName, setCardHolderName]= useState('');
-    const [cardStatesEntered, setCardStatesEntered]= useState({
-      cardNumber:false, expiryDate:false, cvv:false, cardHolderName:false
-    });
+    const [nonEmptyFields, setNonEmptyFields] = useState({cardNumber:false, expiryDate:false, cvv:false})
+   
+    
     const [stripeError, setStripeError]= useState();
     const [errors, setErrors] = useState({});
     const errorhelperRef=useRef({});
-    
-    const stripe = useStripe();
-    const elements= useElements();
+
 
     const router = useRouter();
 
     const {total} = useContext(CheckoutContext);
 
     const setGiftDiscount = useGlobalStore(state =>  state.setGiftDiscount);
+
+    
+    const stripe = useStripe();
+    const elements= useElements();
+
+  
 
 
     const deleteError = (field) => {
@@ -338,13 +342,17 @@ const handleCCChange=   (event) => {
   //elementType - cardExpiry - cardCvc
   //  cardNumber expiryDate cvv
 
-  
-  const errorField= event.elementType==='cardNumber'?'cardNumber':(event.elementType==='cardExpiry'?'expiryDate':'cvv')
-  const errorName = `Enter a valid ${errorField==='cardNumber'?'card number':(errorField==='expiryDate'?'expiry date':'security number')}`
-  setErrors({...errors, [errorField]: undefined});
+  // useState({cardNumber:false, expiryDate:false, cvv:false})
+  const stripeField= event.elementType==='cardNumber'?'cardNumber':(event.elementType==='cardExpiry'?'expiryDate':'cvv')
+  const errorName = `Enter a valid ${stripeField==='cardNumber'?'card number':(stripeField==='expiryDate'?'expiry date':'security number')}`
+  setErrors({...errors, [stripeField]: undefined});
  
   
-  errorhelperRef.current[errorField]=(!event.complete || event.error)?errorName:undefined;
+  errorhelperRef.current[stripeField]=(!event.complete || event.error)?errorName:undefined;
+
+  setNonEmptyFields({...nonEmptyFields, [stripeField]: !event.empty})
+
+  console.log('changed field', nonEmptyFields)
  
   
 };
@@ -388,7 +396,7 @@ const handleCCBlur= ()=>{
         className={`${styles.input_field} ${errors.cardNumber && styles.input_error} ${focusedField==='cardNumber' && styles.stripeFieldFocused}`}
       /> 
       <FloatingBadge makeLockBadge={true}/>
-      <span className={`${styles.label}`}>Card number</span>
+      <span className={`${styles.label} ${nonEmptyFields.cardNumber && styles.floatingLabel}`}>Card number</span>
 
 </div>
 {/* defaultValues */}
@@ -427,7 +435,7 @@ const handleCCBlur= ()=>{
     />
 
     
-    <span className={`${styles.label}`}>Expiration Date (MM / YY)</span>
+    <span className={`${styles.label} ${nonEmptyFields.expiryDate && styles.floatingLabel}`}>Expiration Date (MM / YY)</span>
    
     </div>
 
@@ -461,7 +469,7 @@ const handleCCBlur= ()=>{
   }}}
   className={`${styles.input_field} ${errors.cvv && styles.input_error} ${focusedField==='cvv' && styles.stripeFieldFocused}`}/>
   <FloatingBadge message={'3-digit security code usually found on the back of your card. American Express cards have a 4-digit code located on the front.'}/>
-  <span className={`${styles.label}`}>Security code</span>
+  <span className={`${styles.label} ${nonEmptyFields.cvv && styles.floatingLabel}`}>Security code</span>
    </div>
  
   {errors.cvv && <p className={styles.stripeError}><ErrorIcon/>{errors.cvv}</p>}
@@ -479,9 +487,14 @@ const handleCCBlur= ()=>{
           type="text"
           name="name"
          value={cardHolderName}
-         handleChange={(event)=>{deleteError(event.target.id);setCardStatesEntered({...cardStatesEntered,cardHolderName:true});setCardHolderName(event.target.value)}}
+         handleChange={(event)=>{
+          
+          deleteError(event.target.id);
+          setCardHolderName(event.target.value)}
+        
+        }
          
-        //  handleBlur={(event)=>{if(!cardStatesEntered.cardHolderName) return;
+     
    
         //   if(event.target.value==='') setErrors({ ...errors, cardHolderName: 'Enter a valid card number' });}}
          error={errors.cardHolderName}
