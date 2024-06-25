@@ -28,8 +28,8 @@ export default function ThankYou() {
      <NextSeo {...unimportantPageSeo('/thank-you')}/>
     <div className={styles.mainDiv}>
       <div className={styles.titleDiv}>
-        <h1>Thank you</h1>
-        <div className={styles.correctDiv}>
+        <h1 className={styles.title}>Thank you</h1>
+       
           <Image
             className={styles.correctImg}
             src="/images/correct.png"
@@ -37,9 +37,9 @@ export default function ThankYou() {
             height={40}
             width={40}
           />
-        </div>
+       
       </div>
-      <p className={styles.mainPharagraph}>Thank you for shopping with us! Your order has been palced. Check your email for order details. {bonusMessage}</p>
+      <span className={styles.mainPharagraph}>Thank you for shopping with us! Your order has been palced. Check your email for order details. {bonusMessage}</span>
       <Link href='/' className={styles.continue}>Back to home</Link>
     </div>
     </div>

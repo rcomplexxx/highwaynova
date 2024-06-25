@@ -34,6 +34,11 @@ export default function CountryInput({ id, setErrors, error }) {
         priorityOptions={["CA", "US", "GB"]}
         onChange={(c) => {
           handleChange(c);
+          if(c!==""){
+            if(id==="country")  document.getElementById('firstName').focus();
+            else document.getElementById('billingAddress').focus();
+          }
+          
         }}
         onFocus={()=>{setIsFocused(true);}}
         onBlur={()=>{setIsFocused(false)}}

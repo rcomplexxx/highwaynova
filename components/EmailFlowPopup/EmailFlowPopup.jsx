@@ -32,6 +32,10 @@ export default function EmailFlowPopup({setEmailPopup}){
 
    
       changeEmailPopupOn();
+
+      
+
+  document.documentElement.classList.add("hideScroll");
       
 
         const handlePopState = ()=>{
@@ -56,7 +60,7 @@ export default function EmailFlowPopup({setEmailPopup}){
 
         return () => {
 
-          console.log('hello from email flow popup')
+          document.documentElement.classList.remove("hideScroll");
          
           changeEmailPopupOn();
       
