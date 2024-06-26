@@ -75,7 +75,7 @@ export default function App({ Component, pageProps }) {
 
     const storedCartProducts = JSON.parse(localStorage.getItem("cartProducts"));
     setCartProducts(storedCartProducts || []);
-    setCartProductsInitialized();
+    setCartProductsInitialized(true);
 
 
 
