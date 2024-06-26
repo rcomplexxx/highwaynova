@@ -54,8 +54,8 @@ export default function CountryInput({ id, setErrors, error }) {
         defaultOptionLabel="Country *"
         classes={`${styles.countrySelectStyle} ${
           country !== "" && styles.countryColoredPlaceholder}`}
-        tabIndex={1000}
-        disabled={false}
+        
+       
       />
       <ArrowDown color={'var(--checkout-input-placeholder)'} styleClassName={styles.arrowDown}/>
      
@@ -65,14 +65,14 @@ export default function CountryInput({ id, setErrors, error }) {
       >
         Country
       </label>
-      <label
-        htmlFor={id}
+      <span
+        
         className={`${styles.countryNameLabel} ${
           country != "" && styles.countryNameLabelEnabled
         }`}
       >
         {country != "" ? country : ""}
-      </label>
+      </span>
     </div>
   );
 }

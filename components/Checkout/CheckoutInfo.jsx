@@ -21,9 +21,7 @@ export default function CheckoutInfo({ products }) {
 
   const {couponCode, tip, subscribe, setSubscribe} = useContext(CheckoutContext);
 
-  useEffect(()=>{
-   showApt && document.getElementById("apt").focus();
-   }, [showApt]);
+
 
    useEffect(()=>{
    const emailInput = document.getElementById("email");
@@ -31,6 +29,10 @@ export default function CheckoutInfo({ products }) {
     emailInput.focus();
     emailInput.readOnly = false;
    },[])
+
+   useEffect(()=>{
+    showApt && document.getElementById("apt").focus();
+    }, [showApt]);
 
   const handleChange = (event) => {
     if (errors.hasOwnProperty(event.target.id)) {

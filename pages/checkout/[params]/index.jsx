@@ -13,6 +13,7 @@ import Link from "next/link";
 import { NextSeo } from "next-seo";
 import { unimportantPageSeo } from "@/utils/SEO-configs/next-seo.config";
 import CheckoutProvider from "@/contexts/CheckoutContext";
+import { Spinner2 } from "@/public/images/svgs/svgImages";
 
 const BuyNowPage = () => {
   const router = useRouter();
@@ -79,7 +80,7 @@ const BuyNowPage = () => {
       <Link className={`${styles.shopNow} mainButton`} href="/products">Shop Now </Link>
    
    
-      </>:<h1>Loading checkout...</h1>
+      </>:<Spinner2/>
       }
 
    
