@@ -12,7 +12,7 @@ import { Spinner2 } from "@/public/images/svgs/svgImages";
 
 
 const Cart = () => {
-  const  {cartProducts, cartProductsInitialized}  = useGlobalStore(state => {return {cartProducts: state.cartProducts, cartProductsInitialized:state.cartProductsInitialized}})
+  const  {cartProducts, cartProductsInitialized}  = useGlobalStore(state => ({cartProducts: state.cartProducts, cartProductsInitialized: state.cartProductsInitialized}))
   const [addressBarUp, setAddressBarUp] = useState(false);
   
 
@@ -118,7 +118,7 @@ if (window.innerWidth<980){
 </div>
 
 
-<BestSellers/>
+{cartProductsInitialized && <BestSellers/>}
 </div>
   );
 };
