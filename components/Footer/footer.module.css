@@ -192,21 +192,26 @@
     
   }
 
+
+  .loadingSubscribe{
+
+    
+    background-color: var(--loading-email-button-bg);
+    cursor:auto;
+    
+  }
+
+  .loadingSubscribe:hover{
+    
+    background-color: var(--loading-email-button-bg);
+
+  }
+
  
   
 
-  .disabledEmailButton{
-    color: var(--disabled-email-button-color);
-    background-color: var(--disabled-email-button-bg);
-    cursor:auto;
+
   
-  }
-
-  .disabledEmailButton:hover{
-    color: var(--disabled-email-button-color);
-    background-color: var(--disabled-email-button-bg);
-  }
-
 
 
 

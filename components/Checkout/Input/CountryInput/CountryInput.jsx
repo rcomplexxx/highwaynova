@@ -1,8 +1,7 @@
-import { useEffect } from "react";
 import { useState } from "react";
 import { CountryDropdown } from "react-country-region-selector";
 import styles from "./countryinput.module.css";
-import Image from "next/image";
+
 import { ArrowDown } from "@/public/images/svgs/svgImages";
 
 export default function CountryInput({ id, setErrors, error }) {

@@ -468,6 +468,8 @@ p {
   --action-button-footer-txt-color: var(--action-button-txt-color);
   --action-button-hover-footer-txt-color: var(--action-button-footer-txt-color);
 
+  --loading-email-button-bg: var(--action-button-bg-color-hover);
+  
   --footer-reserved-rights-color: var(--neutral-5);
   
 

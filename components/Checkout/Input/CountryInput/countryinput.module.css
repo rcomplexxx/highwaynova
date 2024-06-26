@@ -37,6 +37,7 @@
 
 
   .countrySelectStyle option{
+    background-color: var(--bg-color);
     color: var(--txt-color);
   }
 

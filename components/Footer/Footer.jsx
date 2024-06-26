@@ -11,14 +11,23 @@ export default function Footer() {
  
   const [error, setError] = useState();
   const [successful, setSuccessful] = useState(false);
+  const [loadingSubscribe, setLoadingSubscribe] = useState(false);
 
   const handleSubscribe = useCallback(async () => {
+
+
+    if(loadingSubscribe) return;
+
     const email= document.getElementById('subscribe');
     const emailPattern = /^\w+@\w+\.\w+$/;
     if (!emailPattern.test(email.value)) {
       setError("Please enter a valid email address.");
       return;
     } else {
+
+
+      setLoadingSubscribe(true);
+
       fetch("/api/sqlliteapi", {
         method: "POST",
         headers: {
@@ -43,6 +52,7 @@ export default function Footer() {
         })
         .finally(() => {
           email.value = "";
+          setLoadingSubscribe(false);
         });
     }
   });
@@ -121,7 +131,7 @@ export default function Footer() {
             if (successful) setSuccessful(false);
           }}
         />
- <button className={`${styles.subscribeButton} accentButton`} onClick={handleSubscribe}>
+ <button className={`${styles.subscribeButton} accentButton ${loadingSubscribe && styles.loadingSubscribe}`} onClick={handleSubscribe}>
           Subscribe
         </button>
         </div>
