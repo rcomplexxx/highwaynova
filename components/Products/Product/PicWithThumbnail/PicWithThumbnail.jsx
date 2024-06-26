@@ -42,7 +42,7 @@ export default function PicWithThumbnail({ product }) {
     }
 
    
-    
+     
     
 
    
