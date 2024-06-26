@@ -117,6 +117,9 @@ export default function BestSellers() {
   };
 
 
+  console.log('bsp final', bestSellerProducts)
+
+
   if(bestSellerProducts?.length===0) return <></>;
 
   return (
