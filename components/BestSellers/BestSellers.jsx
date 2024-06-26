@@ -6,7 +6,7 @@ import PicWithThumbnail from '../Products/Product/PicWithThumbnail/PicWithThumbn
 import bestSellerProductsInfo from '../../data/bestsellers.json';
 import styles from './bestsellers.module.css';
 import Link from 'next/link';
-import {  useRef } from 'react';
+import {  useEffect, useRef, useState } from 'react';
 import products from '@/data/products.json'
 
 // Import Swiper styles
@@ -15,18 +15,33 @@ import { useGlobalStore } from '@/contexts/AppContext';
 
 export default function BestSellers() {
   const sliderRef = useRef();
+  const [initialProductNames, setInitialProductNames] = useState([]);
 
 
 
 
-  const { cartProducts, setCartProducts } = useGlobalStore(state => ({
+  const { cartProducts, setCartProducts} = useGlobalStore(state => ({
     cartProducts: state.cartProducts,
-    setCartProducts: state.setCartProducts,
+    setCartProducts: state.setCartProducts
   }));
+
+
+  useEffect(()=>{
+   setInitialProductNames(cartProducts.map(product=> product.id));
+  },[])
   
 
   const bestSellerProducts = bestSellerProductsInfo.map((bsp) => {
+
+    
+
+
     const product= products.find(p=>{return p.id== bsp.id});
+
+    if(initialProductNames?.includes(product.id))return;
+
+    console.log('item escaped condition', product.id, 'inprnames', initialProductNames);
+
     let variantName;
     if(bsp.variantIndex){
     variantName =   bsp.variantIndex>0 && bsp.variantIndex<product.variants.length-1? product.variants[bsp.variantIndex].name:product?.variants[0].name;
@@ -36,9 +51,9 @@ export default function BestSellers() {
     else{
       variantName= product?.variants ? product?.variants[0].name: undefined;
     }
-     const newBsp = {product:product,variantName:variantName};
-    return newBsp;
-  });
+     return {product:product,variantName:variantName};
+   
+  }).filter(Boolean).slice(0, 4);
 
   console.log('context check main', cartProducts,setCartProducts)
 
@@ -101,14 +116,19 @@ export default function BestSellers() {
     loop: false,
   };
 
+
+  if(bestSellerProducts?.length===0) return <></>;
+
   return (
     <div className={`${styles.mainDiv}`}>
       <h1 className={styles.bestSellersTitle}>You might also like</h1>
 
 
       <Swiper {...settings} ref={sliderRef} className={styles.slider}>
-        {bestSellerProducts.map((bsp, index) => (
-          <SwiperSlide key={index} className={styles.slide}>
+        {bestSellerProducts.map((bsp, index) => {
+
+         
+         return <SwiperSlide key={index} className={styles.slide}>
             
             
             <Link href={`/products/${bsp.product.name.toLowerCase().replace(/\s+/g, "-")}`} 
@@ -137,7 +157,7 @@ export default function BestSellers() {
             </button>
             
           </SwiperSlide>
-        ))}
+})}
     
       </Swiper>
     </div>
