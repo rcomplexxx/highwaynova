@@ -2,6 +2,8 @@ import { create } from "zustand";
 
 export const useGlobalStore = create((set) => {
   return {
+    cartProductsInitialized: false,
+    setCartProductsInitialized: () => set({ cartProductsInitialized: true }),
     newProduct:undefined,
     setNewProduct: (newNewProduct) => set({newProduct: newNewProduct}),
     cartProducts: [],

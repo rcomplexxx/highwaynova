@@ -7,11 +7,12 @@ import styles from "./cart.module.css";
 import BestSellers from "@/components/BestSellers/BestSellers";
 
 import { useGlobalStore } from "@/contexts/AppContext";
+import { Spinner2 } from "@/public/images/svgs/svgImages";
 
 
 
 const Cart = () => {
-  const  cartProducts  = useGlobalStore(state => state.cartProducts)
+  const  {cartProducts, cartProductsInitialized}  = useGlobalStore(state => { return {cartProducts:state.cartProducts, cartProductsInitialized: state.cartProductsInitialized}})
   const [addressBarUp, setAddressBarUp] = useState(false);
   
 
@@ -104,7 +105,7 @@ if (window.innerWidth<980){
 
   
    
-  {cartProducts.length === 0? <><h1 className={`${styles.title}  ${styles.emptyTitle}`}>Your cart is empty!</h1>
+  {!cartProductsInitialized?<Spinner2/>:cartProducts.length === 0? <><h1 className={`${styles.title}  ${styles.emptyTitle}`}>Your cart is empty!</h1>
  {renderEmptyCart()}
   </>:
   <> <h1 className={styles.title}>Your shopping cart</h1>

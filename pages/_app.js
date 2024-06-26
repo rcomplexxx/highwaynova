@@ -36,10 +36,10 @@ export default function App({ Component, pageProps }) {
 
 
 
-  const { cartProducts, setCartProducts} = useGlobalStore((state) => ({
+  const { cartProducts, setCartProducts, setCartProductsInitialized} = useGlobalStore((state) => ({
     cartProducts: state.cartProducts,
     setCartProducts: state.setCartProducts,
- 
+    setCartProductsInitialized: state.setCartProductsInitialized
   }));
 
 
@@ -75,7 +75,7 @@ export default function App({ Component, pageProps }) {
 
     const storedCartProducts = JSON.parse(localStorage.getItem("cartProducts"));
     setCartProducts(storedCartProducts || []);
-
+    setCartProductsInitialized();
 
 
 

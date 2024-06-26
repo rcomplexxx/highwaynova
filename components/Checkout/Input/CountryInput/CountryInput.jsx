@@ -25,7 +25,7 @@ export default function CountryInput({ id, setErrors, error }) {
 
    
 
-    if(c!==""){
+    if(c!=="" && isFocused){
 
       const nextInputNode = id==="country"?document.getElementById('firstName'):document.getElementById('billingAddress')
      

@@ -11,7 +11,7 @@ import styles from './svgimages.module.css'
 
 export const MenuIcon = ({ styleClassName, handleClick})=>{
 
-	return <svg id="mobileMenuSpawn" onClick={handleClick} className={styleClassName} viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" 
+	return <svg id="mobileMenuSpawn" onClick={handleClick} className={styleClassName} height={20} width={20}  viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" 
 	fill={"var(--menu-icon-color)"}>
 	<path  fillRule="evenodd" 
 	d="M19 4a1 1 0 01-1 1H2a1 1 0 010-2h16a1 1 0 011 1zm0 6a1 1 0 01-1 1H2a1 1 0 110-2h16a1 1 0 011 1zm-1 7a1 1 0 100-2H2a1 1 0 100 2h16z"/>
@@ -26,6 +26,7 @@ export const SearchIcon = ({styleClassName,handleClick})=>{
       className={styleClassName}
       fill="var(--search-icon-color)"
       xmlns="http://www.w3.org/2000/svg"
+	  height={24} width={24} 
       viewBox="0 0 24 24"
     >
       <path d="M10.08 1.44c-4.51 0-8.16 3.65-8.16 8.16s3.65 8.16 8.16 8.16c1.61 0 3.1-0.47 4.44-1.36l6.0 6.0 2.04-2.04-5.92-5.81c1.06-1.4 1.7-3.12 1.7-5.02 0-4.51-3.65-8.16-8.16-8.16zm0 1.92c3.45 0 6.24 2.79 6.24 6.24s-2.79 6.24-6.24 6.24-6.24-2.79-6.24-6.24 2.79-6.24 6.24-6.24z" />
@@ -36,7 +37,7 @@ export const SearchIcon = ({styleClassName,handleClick})=>{
 export const ZoomInIcon = ({color="var(--fullscreen-zoomin-color)", styleClassName, handleClick})=>{
 
 	return <svg fill="transparent" className={styleClassName} onClick={handleClick} version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" 
-	viewBox="0 0 24 24" xmlSpace="preserve">
+	height={24} width={24}  viewBox="0 0 24 24" xmlSpace="preserve">
 <g id="Complete">
     <g id="zoom-in">
       <g>
@@ -59,7 +60,7 @@ export const ZoomInIcon = ({color="var(--fullscreen-zoomin-color)", styleClassNa
 export const ZoomOutIcon = ({styleClassName, handleClick})=>{
 
 	return <svg fill="transparent" className={styleClassName} onClick={handleClick} version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" 
-	viewBox="0 0 24 24" xmlSpace="preserve">
+	height={24} width={24}  viewBox="0 0 24 24" xmlSpace="preserve">
 <g id="Complete">
 
 <g id="zoom-out">
@@ -89,7 +90,9 @@ export const ArrowDown = ({color,styleClassName, handleClick})=>{
 	fill={color}
 	xmlns="http://www.w3.org/2000/svg"
 	xmlnsXlink="http://www.w3.org/1999/xlink"
+	height={8} width={8} 
 	viewBox="0 0 8 8"
+	
 	xmlSpace="preserve"
   >
 	<path d="M7.811 1.985c-0.143-0.143-0.374-0.143-0.517 0L4 5.279 0.707 1.985c-0.143-0.143-0.374-0.143-0.517 0-0.143 0.143-0.143 0.374 0 0.517l3.655 3.655c0.068 0.068 0.161 0.107 0.258 0.107s0.19-0.039 0.258-0.107l3.655-3.655c0.143-0.143 0.143-0.374 0-0.517z"/>
@@ -100,7 +103,8 @@ export const ArrowDown = ({color,styleClassName, handleClick})=>{
 
 
 export const ErrorIcon = ()=>{
-	return <svg style={{height:'12px', width: '12px', marginTop:'var(--size-1)', marginRight: 'var(--size-2)', flexShrink:'0', alignSelf:"flex-start"}} xmlns="http://www.w3.org/2000/svg" fill="none" width="16" height="16" viewBox="0 0 16 16" role="img" data-icon="CircleXSmall" aria-hidden="true">
+	return <svg style={{height:'12px', width: '12px', marginTop:'var(--size-1)', marginRight: 'var(--size-2)', flexShrink:'0', alignSelf:"flex-start"}} xmlns="http://www.w3.org/2000/svg" fill="none" 
+	width={16} height={16} viewBox="0 0 16 16" role="img" data-icon="CircleXSmall" aria-hidden="true">
 	<path fillRule="evenodd" clipRule="evenodd" d="M14.5 8C14.5 11.5899 11.5899 14.5 8 14.5C4.41015 14.5 1.5 11.5899 1.5 8C1.5 4.41015 4.41015 1.5 8 1.5C11.5899 1.5 14.5 4.41015 14.5 8ZM16 8C16 12.4183 12.4183 16 8 16C3.58172 16 0 12.4183 0 8C0 3.58172 3.58172 0 8 0C12.4183 0 16 3.58172 16 8ZM4.46967 5.53033L6.93934 8L4.46967 10.4697L5.53033 11.5303L8 9.06066L10.4697 11.5303L11.5303 10.4697L9.06066 8L11.5303 5.53033L10.4697 4.46967L8 6.93934L5.53033 4.46967L4.46967 5.53033Z" fill="var(--error-color)">
 	</path></svg>
 }
@@ -112,7 +116,7 @@ export const CorrectIcon = ({color, handleClick, styleClassName})=>{
 
 	
 	return <svg onClick={handleClick} fill={color || "var(--success-icon-color)"}
-	className={styleClassName} viewBox="0 0 50 50"  stroke={color || "var(--success-icon-color)"}
+	className={styleClassName} height={0} width={0}  viewBox="0 0 50 50"  stroke={color || "var(--success-icon-color)"}
 	strokeWidth={6}>
 
 
@@ -122,7 +126,7 @@ export const CorrectIcon = ({color, handleClick, styleClassName})=>{
 
 export const CancelIcon = ({color, styleClassName, handleClick})=>{
 
-	return <svg onClick={handleClick} className={styleClassName} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" >
+	return <svg onClick={handleClick} className={styleClassName} xmlns="http://www.w3.org/2000/svg" height={0} width={0}  viewBox="0 0 50 50" >
 	<path fill={color} d="M9.156 6.313L6.313 9.156 22.156 25 6.219 40.969l2.813 2.813L25 27.844l15.938 15.938 2.844-2.844L27.844 25 43.688 9.156l-2.844-2.844L25 22.156z"/>
 	</svg>
 }
@@ -135,13 +139,13 @@ export const CancelIcon = ({color, styleClassName, handleClick})=>{
 
 
 export const Spinner = ({color})=>{
-	return <svg className={styles.paymentSpinner} fill={color || 'var(--payment-spinner-color)'} height={0} width={0} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+	return <svg className={styles.paymentSpinner} fill={color || 'var(--payment-spinner-color)'} height={24} width={24} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 		
 		<path d="M10.72,19.9a8,8,0,0,1-6.5-9.79A7.77,7.77,0,0,1,10.4,4.16a8,8,0,0,1,9.49,6.52A1.54,1.54,0,0,0,21.38,12h.13a1.37,1.37,0,0,0,1.38-1.54,11,11,0,1,0-12.7,12.39A1.54,1.54,0,0,0,12,21.34h0A1.47,1.47,0,0,0,10.72,19.9Z"/></svg>
 }
 
 export const Spinner2 =()=>{
-	return <svg className={styles.spinner2} fill='var(--checkout-spinner-2-color)' viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+	return <svg className={styles.spinner2} fill='var(--checkout-spinner-2-color)' height={24} width={24} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 		<path d="M2,12A10.94,10.94,0,0,1,5,4.65c-.21-.19-.42-.36-.62-.55h0A11,11,0,0,0,12,23c.34,0,.67,0,1-.05C6,23,2,17.74,2,12Z"/>
 	</svg>
 }
@@ -163,7 +167,7 @@ c-1.532-1.494-0.687-4.096,1.431-4.403l12.091-1.757c0.841-0.122,1.568-0.65,1.944-
 C22.602,0.567,25.338,0.567,26.285,2.486z`;
 
 export const Star =({color,starClassName})=>{
-	return <svg className={`${styles.star} ${starClassName}`} stroke={`var(--star-stroke-color)`} strokeWidth={2} viewBox="0 0 48 48" fill={color}  xmlns="http://www.w3.org/2000/svg" >
+	return <svg className={`${styles.star} ${starClassName}`} stroke={`var(--star-stroke-color)`} strokeWidth={2} height={24} width={24} viewBox="0 0 48 48" fill={color}  xmlns="http://www.w3.org/2000/svg" >
 	<path  d="M26.285,2.486l5.407,10.956c0.376,0.762,1.103,1.29,1.944,1.412l12.091,1.757
 c2.118,0.308,2.963,2.91,1.431,4.403l-8.749,8.528c-0.608,0.593-0.886,1.448-0.742,2.285l2.065,12.042
 c0.362,2.109-1.852,3.717-3.746,2.722l-10.814-5.685c-0.752-0.395-1.651-0.395-2.403,0l-10.814,5.685
@@ -179,7 +183,7 @@ export const PartFilledStar =({fillPercentage, starClassName})=>{
 	return  <svg
 	stroke={`var(--star-stroke-color)`}  strokeWidth={2}
 	className={`${styles.star} ${starClassName}`}
-	
+	height={24} width={24}
 	viewBox="0 0 48 48"
 	xmlns="http://www.w3.org/2000/svg"
   >
@@ -242,7 +246,7 @@ export const Stars = ({ ratingNumber, starWrapperClassName, starClassName, fillC
 const CustomerStar = ({isEmpty})=>{
 
 	return <svg className={`${styles.customerStar}`} stroke={`var(--star-stroke-color)`} strokeWidth={2} 
-	viewBox="0 0 48 48" fill={isEmpty?`var(--empty-star-color)`:`var(--star-color)`}  xmlns="http://www.w3.org/2000/svg" >
+	height={20} width={20} viewBox="0 0 48 48" fill={isEmpty?`var(--empty-star-color)`:`var(--star-color)`}  xmlns="http://www.w3.org/2000/svg" >
 	<path  d="M26.285,2.486l5.407,10.956c0.376,0.762,1.103,1.29,1.944,1.412l12.091,1.757
 c2.118,0.308,2.963,2.91,1.431,4.403l-8.749,8.528c-0.608,0.593-0.886,1.448-0.742,2.285l2.065,12.042
 c0.362,2.109-1.852,3.717-3.746,2.722l-10.814-5.685c-0.752-0.395-1.651-0.395-2.403,0l-10.814,5.685
@@ -284,7 +288,7 @@ export const CustomerStars = ({ratingNumber}) =>{
 
 export const ChatIcon = ({styleClassName})=>{
 
-	return <svg className={styleClassName} width="16px" height="16px" viewBox="0 0 24 24" fill="var(--chat-icon-color)" xmlns="http://www.w3.org/2000/svg">
+	return <svg className={styleClassName} height={16} width={16} viewBox="0 0 24 24" fill="var(--chat-icon-color)" xmlns="http://www.w3.org/2000/svg">
 	<path d="M13.0867 21.3877L13.7321 21.7697L13.0867 21.3877ZM13.6288 20.4718L12.9833 20.0898L13.6288 20.4718ZM10.3712 20.4718L9.72579 20.8539H9.72579L10.3712 20.4718ZM10.9133 21.3877L11.5587 21.0057L10.9133 21.3877ZM2.3806 15.9134L3.07351 15.6264V15.6264L2.3806 15.9134ZM7.78958 18.9915L7.77666 19.7413L7.78958 18.9915ZM5.08658 18.6194L4.79957 19.3123H4.79957L5.08658 18.6194ZM21.6194 15.9134L22.3123 16.2004V16.2004L21.6194 15.9134ZM16.2104 18.9915L16.1975 18.2416L16.2104 18.9915ZM18.9134 18.6194L19.2004 19.3123H19.2004L18.9134 18.6194ZM19.6125 2.7368L19.2206 3.37628L19.6125 2.7368ZM21.2632 4.38751L21.9027 3.99563V3.99563L21.2632 4.38751ZM4.38751 2.7368L3.99563 2.09732V2.09732L4.38751 2.7368ZM2.7368 4.38751L2.09732 3.99563H2.09732L2.7368 4.38751ZM9.40279 19.2098L9.77986 18.5615L9.77986 18.5615L9.40279 19.2098ZM13.7321 21.7697L14.2742 20.8539L12.9833 20.0898L12.4412 21.0057L13.7321 21.7697ZM9.72579 20.8539L10.2679 21.7697L11.5587 21.0057L11.0166 20.0898L9.72579 20.8539ZM12.4412 21.0057C12.2485 21.3313 11.7515 21.3313 11.5587 21.0057L10.2679 21.7697C11.0415 23.0767 12.9585 23.0767 13.7321 21.7697L12.4412 21.0057ZM10.5 2.75H13.5V1.25H10.5V2.75ZM21.25 10.5V11.5H22.75V10.5H21.25ZM2.75 11.5V10.5H1.25V11.5H2.75ZM1.25 11.5C1.25 12.6546 1.24959 13.5581 1.29931 14.2868C1.3495 15.0223 1.45323 15.6344 1.68769 16.2004L3.07351 15.6264C2.92737 15.2736 2.84081 14.8438 2.79584 14.1847C2.75041 13.5189 2.75 12.6751 2.75 11.5H1.25ZM7.8025 18.2416C6.54706 18.2199 5.88923 18.1401 5.37359 17.9265L4.79957 19.3123C5.60454 19.6457 6.52138 19.7197 7.77666 19.7413L7.8025 18.2416ZM1.68769 16.2004C2.27128 17.6093 3.39066 18.7287 4.79957 19.3123L5.3736 17.9265C4.33223 17.4951 3.50486 16.6678 3.07351 15.6264L1.68769 16.2004ZM21.25 11.5C21.25 12.6751 21.2496 13.5189 21.2042 14.1847C21.1592 14.8438 21.0726 15.2736 20.9265 15.6264L22.3123 16.2004C22.5468 15.6344 22.6505 15.0223 22.7007 14.2868C22.7504 13.5581 22.75 12.6546 22.75 11.5H21.25ZM16.2233 19.7413C17.4786 19.7197 18.3955 19.6457 19.2004 19.3123L18.6264 17.9265C18.1108 18.1401 17.4529 18.2199 16.1975 18.2416L16.2233 19.7413ZM20.9265 15.6264C20.4951 16.6678 19.6678 17.4951 18.6264 17.9265L19.2004 19.3123C20.6093 18.7287 21.7287 17.6093 22.3123 16.2004L20.9265 15.6264ZM13.5 2.75C15.1512 2.75 16.337 2.75079 17.2619 2.83873C18.1757 2.92561 18.7571 3.09223 19.2206 3.37628L20.0044 2.09732C19.2655 1.64457 18.4274 1.44279 17.4039 1.34547C16.3915 1.24921 15.1222 1.25 13.5 1.25V2.75ZM22.75 10.5C22.75 8.87781 22.7508 7.6085 22.6545 6.59611C22.5572 5.57256 22.3554 4.73445 21.9027 3.99563L20.6237 4.77938C20.9078 5.24291 21.0744 5.82434 21.1613 6.73809C21.2492 7.663 21.25 8.84876 21.25 10.5H22.75ZM19.2206 3.37628C19.7925 3.72672 20.2733 4.20752 20.6237 4.77938L21.9027 3.99563C21.4286 3.22194 20.7781 2.57144 20.0044 2.09732L19.2206 3.37628ZM10.5 1.25C8.87781 1.25 7.6085 1.24921 6.59611 1.34547C5.57256 1.44279 4.73445 1.64457 3.99563 2.09732L4.77938 3.37628C5.24291 3.09223 5.82434 2.92561 6.73809 2.83873C7.663 2.75079 8.84876 2.75 10.5 2.75V1.25ZM2.75 10.5C2.75 8.84876 2.75079 7.663 2.83873 6.73809C2.92561 5.82434 3.09223 5.24291 3.37628 4.77938L2.09732 3.99563C1.64457 4.73445 1.44279 5.57256 1.34547 6.59611C1.24921 7.6085 1.25 8.87781 1.25 10.5H2.75ZM3.99563 2.09732C3.22194 2.57144 2.57144 3.22194 2.09732 3.99563L3.37628 4.77938C3.72672 4.20752 4.20752 3.72672 4.77938 3.37628L3.99563 2.09732ZM11.0166 20.0898C10.8136 19.7468 10.6354 19.4441 10.4621 19.2063C10.2795 18.9559 10.0702 18.7304 9.77986 18.5615L9.02572 19.8582C9.07313 19.8857 9.13772 19.936 9.24985 20.0898C9.37122 20.2564 9.50835 20.4865 9.72579 20.8539L11.0166 20.0898ZM7.77666 19.7413C8.21575 19.7489 8.49387 19.7545 8.70588 19.7779C8.90399 19.7999 8.98078 19.832 9.02572 19.8582L9.77986 18.5615C9.4871 18.3912 9.18246 18.3215 8.87097 18.287C8.57339 18.2541 8.21375 18.2487 7.8025 18.2416L7.77666 19.7413ZM14.2742 20.8539C14.4916 20.4865 14.6287 20.2564 14.7501 20.0898C14.8622 19.936 14.9268 19.8857 14.9742 19.8582L14.2201 18.5615C13.9298 18.7304 13.7204 18.9559 13.5379 19.2063C13.3646 19.4441 13.1864 19.7468 12.9833 20.0898L14.2742 20.8539ZM16.1975 18.2416C15.7862 18.2487 15.4266 18.2541 15.129 18.287C14.8175 18.3215 14.5129 18.3912 14.2201 18.5615L14.9742 19.8582C15.0192 19.832 15.096 19.7999 15.2941 19.7779C15.5061 19.7545 15.7842 19.7489 16.2233 19.7413L16.1975 18.2416Z"/>
 	<path d="M8 9H16" stroke='var(--chat-icon-color)' strokeWidth="1.5" strokeLinecap="round"/>
 	<path d="M8 12.5H13.5" stroke='var(--chat-icon-color)' strokeWidth="1.5" strokeLinecap="round"/>
@@ -295,7 +299,7 @@ export const ChatIcon = ({styleClassName})=>{
 export const TruckIcon = ({styleClassName})=>{
 
 	return <svg fill="var(--truck-icon-color)" className={styleClassName} version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" 
-    viewBox="0 0 32 32" xmlSpace="preserve">
+	height={0} width={0} viewBox="0 0 32 32" xmlSpace="preserve">
 <path transform="scale(0.065)" d="M488.56,226.977l-83.433-83.433c-2.157-2.156-5.082-3.368-8.132-3.368H337.13V96.312c0-11.544-9.982-21.297-21.797-21.297
    L21.297,75.015C9.554,75.015,0,84.568,0,96.312v243.949c0,11.744,9.554,21.298,21.297,21.298h34.987
    c5.263,31.369,32.593,55.354,65.434,55.354s60.171-23.984,65.434-55.354h152.27c5.263,31.369,32.593,55.354,65.434,55.354
@@ -313,7 +317,7 @@ export const TruckIcon = ({styleClassName})=>{
 export const PackageReturnIcon = ({styleClassName, isDropCardIcon})=>{
 
 	return <svg fill={isDropCardIcon?"var(--package-return-dropcard-icon-color)":"var(--package-return-icon-color)"} style={isDropCardIcon ?{}: {scale:'0.9'}} className={styleClassName} xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" 
-    viewBox="0 0 32 32" xmlSpace="preserve" >
+    height={0} width={0} viewBox="0 0 32 32" xmlSpace="preserve" >
 
     <path transform="scale(0.065)" d="M456,128.3c0-0.1,0-0.3,0-0.4c0-0.3,0-0.5-0.1-0.8c0-0.1,0-0.2,0-0.4c0-0.4-0.1-0.7-0.2-1c0-0.1-0.1-0.3-0.1-0.4
        c-0.1-0.3-0.1-0.6-0.2-0.8c0-0.1-0.1-0.2-0.1-0.3c-0.1-0.4-0.3-0.7-0.4-1.1c0-0.1-0.1-0.2-0.1-0.3c-0.3-0.7-0.7-1.4-1.2-2.1
@@ -336,7 +340,7 @@ export const PackageReturnIcon = ({styleClassName, isDropCardIcon})=>{
 
 export const GuaranteeIcon = ({styleClassName})=>{
 
-	return <svg fill="var(--guarantee-icon-color)" className={styleClassName} viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+	return <svg fill="var(--guarantee-icon-color)" className={styleClassName} height={0} width={0} viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
 
 
 
@@ -357,7 +361,7 @@ export const GuaranteeIcon = ({styleClassName})=>{
 
 export const SortButtonIcon = ({styleClassName, handleClick})=>{
 
-	return <svg className={styleClassName} onClick={handleClick} fill='var(--sorting-svg-color)'  viewBox="0 0 20 21" xmlns="http://www.w3.org/2000/svg">
+	return <svg className={styleClassName} onClick={handleClick} fill='var(--sorting-svg-color)' height={32} width={32} viewBox="0 0 20 21" xmlns="http://www.w3.org/2000/svg">
 	<path 
 	d="M4.17 16.096C4.3766 15.5104 4.75974 15.0034 5.2666 14.6447C5.77346 14.2861 6.37909 14.0935 7 14.0935C7.62091 14.0935 8.22654 14.2861 8.7334 14.6447C9.24026 15.0034 9.6234 15.5104 9.83 16.096H20V18.096H9.83C9.6234 18.6815 9.24026 19.1885 8.7334 19.5472C8.22654 19.9058 7.62091 20.0984 7 20.0984C6.37909 20.0984 5.77346 19.9058 5.2666 19.5472C4.75974 19.1885 4.3766 18.6815 4.17 18.096H0V16.096H4.17ZM10.17 9.09596C10.3766 8.51042 10.7597 8.00339 11.2666 7.64475C11.7735 7.2861 12.3791 7.09351 13 7.09351C13.6209 7.09351 14.2265 7.2861 14.7334 7.64475C15.2403 8.00339 15.6234 8.51042 15.83 9.09596H20V11.096H15.83C15.6234 11.6815 15.2403 12.1885 14.7334 12.5472C14.2265 12.9058 13.6209 13.0984 13 13.0984C12.3791 13.0984 11.7735 12.9058 11.2666 12.5472C10.7597 12.1885 10.3766 11.6815 10.17 11.096H0V9.09596H10.17ZM4.17 2.09596C4.3766 1.51042 4.75974 1.00339 5.2666 0.644746C5.77346 0.286102 6.37909 0.0935059 7 0.0935059C7.62091 0.0935059 8.22654 0.286102 8.7334 0.644746C9.24026 1.00339 9.6234 1.51042 9.83 2.09596H20V4.09596H9.83C9.6234 4.68149 9.24026 5.18852 8.7334 5.54717C8.22654 5.90581 7.62091 6.09841 7 6.09841C6.37909 6.09841 5.77346 5.90581 5.2666 5.54717C4.75974 5.18852 4.3766 4.68149 4.17 4.09596H0V2.09596H4.17ZM7 4.09596C7.26522 4.09596 7.51957 3.9906 7.70711 3.80306C7.89464 3.61553 8 3.36117 8 3.09596C8 2.83074 7.89464 2.57639 7.70711 2.38885C7.51957 2.20131 7.26522 2.09596 7 2.09596C6.73478 2.09596 6.48043 2.20131 6.29289 2.38885C6.10536 2.57639 6 2.83074 6 3.09596C6 3.36117 6.10536 3.61553 6.29289 3.80306C6.48043 3.9906 6.73478 4.09596 7 4.09596ZM13 11.096C13.2652 11.096 13.5196 10.9906 13.7071 10.8031C13.8946 10.6155 14 10.3612 14 10.096C14 9.83074 13.8946 9.57639 13.7071 9.38885C13.5196 9.20131 13.2652 9.09596 13 9.09596C12.7348 9.09596 12.4804 9.20131 12.2929 9.38885C12.1054 9.57639 12 9.83074 12 10.096C12 10.3612 12.1054 10.6155 12.2929 10.8031C12.4804 10.9906 12.7348 11.096 13 11.096ZM7 18.096C7.26522 18.096 7.51957 17.9906 7.70711 17.8031C7.89464 17.6155 8 17.3612 8 17.096C8 16.8307 7.89464 16.5764 7.70711 16.3888C7.51957 16.2013 7.26522 16.096 7 16.096C6.73478 16.096 6.48043 16.2013 6.29289 16.3888C6.10536 16.5764 6 16.8307 6 17.096C6 17.3612 6.10536 17.6155 6.29289 17.8031C6.48043 17.9906 6.73478 18.096 7 18.096Z">
 	</path>
@@ -369,7 +373,7 @@ export const SortButtonIcon = ({styleClassName, handleClick})=>{
 export const BackIcon = ({color, styleClassName,handleClick})=>{
 	
 	return <svg  className={styleClassName} fill={color} onClick={handleClick} xmlns="http://www.w3.org/2000/svg" 
-	 width="800px" height="800px" viewBox="0 0 52 52" enableBackground="new 0 0 52 52" xmlSpace="preserve">
+	 width="800px" height="800px" height={0} width={0} viewBox="0 0 52 52" enableBackground="new 0 0 52 52" xmlSpace="preserve">
 <path d="M48.6,23H15.4c-0.9,0-1.3-1.1-0.7-1.7l9.6-9.6c0.6-0.6,0.6-1.5,0-2.1l-2.2-2.2c-0.6-0.6-1.5-0.6-2.1,0
 	L2.5,25c-0.6,0.6-0.6,1.5,0,2.1L20,44.6c0.6,0.6,1.5,0.6,2.1,0l2.1-2.1c0.6-0.6,0.6-1.5,0-2.1l-9.6-9.6C14,30.1,14.4,29,15.3,29
 	h33.2c0.8,0,1.5-0.6,1.5-1.4v-3C50,23.8,49.4,23,48.6,23z"/>
@@ -389,7 +393,7 @@ export const BackIcon = ({color, styleClassName,handleClick})=>{
 
 export const BinIcon = ({styleClassName, handleClick}) =>{
 
-	return <svg onClick={handleClick} className={styleClassName} stroke="var(--bin-icon-color)" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+	return <svg onClick={handleClick} className={styleClassName} stroke="var(--bin-icon-color)" height={24} width={24} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 	<path d="M3 6H21M5 6V20C5 21.1046 5.89543 22 7 22H17C18.1046 22 19 21.1046 19 20V6M8 6V4C8 2.89543 8.89543 2 10 2H14C15.1046 2 16 2.89543 16 4V6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
 	<path d="M14 11V17"  strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
 	<path d="M10 11V17"  strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -410,14 +414,14 @@ export const BinIcon = ({styleClassName, handleClick}) =>{
 
 
 export const DiscountIcon = ({color, styleClassName })=>{
-	return <svg className={styleClassName} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14">
+	return <svg className={styleClassName} xmlns="http://www.w3.org/2000/svg" height={12} width={12} viewBox="0 0 14 14">
 	<path fill="transparent" stroke={color} d="M7.284 1.402h4.964a.35.35 0 0 1 .35.35v4.964a.7.7 0 0 1-.205.495L7.49 12.115a.7.7 0 0 1-.99 0L1.885 7.5a.7.7 0 0 1 0-.99L6.79 1.607a.7.7 0 0 1 .495-.205Z"/>
 	<circle fill={color} cx="9.1" cy="4.9" r="1"/>
 	</svg>
 }
 
 export const DiscountIconTotal = ({color, styleClassName})=>{
-	return <svg className={styleClassName} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
+	return <svg className={styleClassName} xmlns="http://www.w3.org/2000/svg" height={16} width={16} viewBox="0 0 18 18">
 <path strokeLinecap="round" strokeLinejoin="round" fill="transparent" stroke={color} d="m10.802 15.686 5.367-5.368a.15.15 0 0 0 .046-.109V4.144m-2.998-.95h-5.67a.16.16 0 0 0-.11.046L1.779 8.897a.154.154 0 0 0 0 .219l5.594 5.593c.06.06.158.06.218 0l5.658-5.657a.15.15 0 0 0 .045-.11v-5.67a.077.077 0 0 0-.077-.077Zm-3.06 3.749a.643.643 0 1 1-1.286 0 .643.643 0 0 1 1.286 0m-.648-.005h.01v.01h-.01z"/>
 </svg>
 }
@@ -426,7 +430,7 @@ export const DiscountIconTotal = ({color, styleClassName})=>{
 
 export const LockIcon = ({styleClassName})=>{
 
-	return <svg className={styleClassName} stroke="var(--lock-icon-color)" fill="transparent" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" focusable="false">
+	return <svg className={styleClassName} stroke="var(--lock-icon-color)" fill="transparent" xmlns="http://www.w3.org/2000/svg" height={12} width={12} viewBox="0 0 14 14" focusable="false">
 		<path strokeLinecap="round" strokeLinejoin="round" d="M3.5 6.3c0-2.298 1.131-4.9 3.5-4.9s3.5 2.602 3.5 4.9m-8.4.47v5.36c0 .26.21.47.47.47h8.86c.26 0 .47-.21.47-.47V6.77a.47.47 0 0 0-.47-.47H2.57a.47.47 0 0 0-.47.47">
 		</path></svg>
 }
