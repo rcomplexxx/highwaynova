@@ -23,7 +23,19 @@ export default function CountryInput({ id, setErrors, error }) {
       });
     }
 
-    document.getElementById(id).blur();
+
+   
+
+    if(c!==""){
+
+      const nextInputNode = id==="country"?document.getElementById('firstName'):document.getElementById('billingAddress')
+     
+      if(nextInputNode.value==="")nextInputNode.focus();
+      else  document.getElementById(id).blur();
+    }
+    else   document.getElementById(id).blur();
+
+  
   };
 
   return (
@@ -34,10 +46,7 @@ export default function CountryInput({ id, setErrors, error }) {
         priorityOptions={["CA", "US", "GB"]}
         onChange={(c) => {
           handleChange(c);
-          if(c!==""){
-            if(id==="country")  document.getElementById('firstName').focus();
-            else document.getElementById('billingAddress').focus();
-          }
+        
           
         }}
         onFocus={()=>{setIsFocused(true);}}
