@@ -38,8 +38,8 @@
     color: var(--high-contrast-txt-color);
     font-size: var(--font-size-6);
     font-weight: 600;
-    margin-top: var(--size-7);
-    margin-bottom: var(--size-4);
+    margin-top: var(--size-8);
+    margin-bottom: var(--size-5);
   }
 
 
@@ -119,8 +119,13 @@
     color: var(--high-contrast-txt-color);
     font-size: var(--font-size-6);
     font-weight: 600;
-    margin-top: var(--size-7);
+    margin-top: var(--size-8);
     margin-bottom: var(--size-5);
+  }
+
+
+  .checkoutFieldsDiv{
+    
   }
 
   

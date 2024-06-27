@@ -353,14 +353,14 @@ return false;
 
 
 
-
+         </div>
 
 
          
          <PaymentSection  checkFields={checkFields} organizeUserData={organizeUserData} />
                 
                 <Tip products={products} />
-        </div>
+      
 
         </div>
         <div className={styles.checkoutFooterWrapper}>

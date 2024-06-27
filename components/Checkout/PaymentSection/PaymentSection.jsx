@@ -77,11 +77,11 @@ export default function PaymentSection({ checkFields, organizeUserData  }) {
 
 
   return (
-    <>
+    <div className={styles.paymentFieldsDiv}>
       <h2 className={styles.paymentTitle}>Payment</h2>
-      <p className={styles.paymentNotification}>
+      <span className={styles.paymentNotification}>
         All transactions are secure and encrypted.
-      </p>
+      </span>
 
       <div className={styles.mainWrapper}>
        
@@ -182,6 +182,6 @@ export default function PaymentSection({ checkFields, organizeUserData  }) {
 
 
       </div>
-    </>
+      </div>
   );
 }
