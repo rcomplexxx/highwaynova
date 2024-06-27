@@ -220,7 +220,8 @@
     
     object-fit: contain;
 
-    
+    object-position: top center;
+
  
     transform-origin: top center;
     transition: transform 0.3s ease, left 0.3s ease, top 0.3s ease;
