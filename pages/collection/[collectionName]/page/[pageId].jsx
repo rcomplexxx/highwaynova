@@ -32,7 +32,7 @@ export default function Collection({
           </span>
         </div>
      
-     
+     <div className={styles.collectionImageDiv}>
           <Image
             src={`/images/${collectionImage}`}
             priority={true}
@@ -44,7 +44,7 @@ export default function Collection({
             height={0}
           />
        
-       
+       </div>
       </div>
 
      

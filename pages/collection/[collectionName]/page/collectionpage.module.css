@@ -16,6 +16,7 @@
 
 .collectionInfo{
 
+  height: var(--size-14);
   width: 100%;
 
   display: flex;
@@ -67,18 +68,21 @@
 }
 
 
+.collectionImageDiv{
 
+  max-width: var(--size-15);
+  width: calc(50% - var(--size-5));
+  height: 100%;
+
+}
 
 
 .collectionImage{
 
-  max-width: var(--size-15);
-  width: calc(50% - var(--size-5));
+height: 100%;
+width: 100%;
 
-  
-  height: max-content;
-
- object-fit: cover;
+ object-fit: contain;
   border-radius: 4px;
 }
 
@@ -91,6 +95,7 @@
 
   .collectionInfo{
     padding: var(--size-4) var(--size-4);
+    height: auto;
     width: calc(100% - var(--size-10));
     flex-direction: column;
     align-items: center;
@@ -103,7 +108,7 @@
     margin-top: var(--size-2);
   }
 
-  .collectionImage{
+  .collectionImageDiv{
 
     max-width: none;
     width: 100%;
