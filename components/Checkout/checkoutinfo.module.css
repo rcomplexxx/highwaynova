@@ -39,7 +39,7 @@
     font-size: var(--font-size-6);
     font-weight: 600;
     margin-top: var(--size-8);
-    margin-bottom: var(--size-5);
+    margin-bottom: 20px;
   }
 
 
@@ -71,6 +71,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
+
+    
+    margin-right: var(--size-3);
     border-radius: 4px;
     border: 1px solid var(--input-border-color);
     flex-shrink: 0;
@@ -79,7 +83,6 @@
 
     transition: box-shadow 0.2s ease;
 
-    margin-right: var(--size-3);
   }
   
 
@@ -120,13 +123,12 @@
     font-size: var(--font-size-6);
     font-weight: 600;
     margin-top: var(--size-8);
-    margin-bottom: var(--size-5);
+    margin-bottom: 20px;
   }
 
 
-  .checkoutFieldsDiv{
-    
-  }
+
+  
 
   
   
