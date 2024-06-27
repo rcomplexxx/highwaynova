@@ -498,7 +498,7 @@ p {
 
    --product-list-arrow-bg: var(--neutral-1);
    --collection-description-txt-color: var(--neutral-9);
-   --collection-info-bg: var(--main-color-1);
+   --collection-info-bg: var(--neutral-0-5);
    --product-card-bg: var(--neutral-0-5);
    --product-on-sale-txt-color: black;
    --product-on-sale-bg: var(--main-color-2);
