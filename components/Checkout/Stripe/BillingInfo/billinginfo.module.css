@@ -21,7 +21,7 @@ gde je input outline sa strane isecen kada se max height podize*/
 
 
 .billingAddressTitle{
-    margin: var(--size-4) var(--size-3);
+    margin: var(--size-4) 0;
     opacity: 0.9;
     font-size: var(--font-size-5);
     font-weight: 600;
@@ -84,9 +84,8 @@ gde je input outline sa strane isecen kada se max height podize*/
         padding: 0;
     }
 
-    .billingAddressTitle{
-        margin: var(--size-4) 0;
-    }
+
+    
     .InputFieldRow{
         flex-direction: column;
     
