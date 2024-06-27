@@ -1,8 +1,8 @@
 [
-    {"code":"gamerules", "discountPercentage": 10},
-    {"code":"player98", "discountPercentage": 15},
-    {"code":"outplay", "discountPercentage": 20},
-    {"code":"headshot", "discountPercentage": 25}
+    {"code":"book10", "discountPercentage": 10},
+    {"code":"library15", "discountPercentage": 15},
+    {"code":"cute20", "discountPercentage": 20},
+    {"code":"glow25", "discountPercentage": 25}
     
  ]
   
