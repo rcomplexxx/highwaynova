@@ -9,10 +9,9 @@ import "swiper/css";
 import FullScreenZoomableImage from "./FullScreenZoomableImages/FullScreenZoomableImages";
 import { ArrowDown, ZoomInIcon } from "@/public/images/svgs/svgImages";
 
-// const FullScreenZoomableImage = dynamic(() => import('@/components/ProductPics/FullScreenZoomableImages/FullScreenZoomableImages'));
 
 
-export default function ProductPics({ images, onAddToCart, variantImageIndex }) {
+export default function ProductPics({ productId, images, onAddToCart, variantImageIndex }) {
   const [imageIndex, setImageIndex] = useState(0);
   const [zoomed, setZoomed] = useState(undefined);
   
@@ -23,7 +22,7 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
 
   const router = useRouter();
   const mounted= useRef();
-  const variantImageIndexMountedRef=useRef(false);
+  
   const fixedAddToCartRef= useRef();
 
   useEffect(() => {
@@ -112,8 +111,8 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
   useEffect(()=>{
     if(!mounted.current){ mounted.current=true;return;}
     swiper && swiper.slideTo(0, window.innerWidth<980?400:0);
-    variantImageIndexMountedRef.current= false;
-  },[images])
+    
+  },[productId])
   
 
 
