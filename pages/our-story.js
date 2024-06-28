@@ -32,18 +32,19 @@ export default function OurStory() {
           </p>
 
           <p>
-            Books and cozy atmosphere are everything for me, and I would like for everyone to feel the late-night reads in cozy room enriched by cute dimmed night lights.
-            For people who are not familiar with feelings I described, I hope my story and my brand inspires curiosity to discover cozy room, late-night reading vibes.
+            Books and cozy atmosphere are everything for me, and I would like for everyone to feel the late-night reads in cozy room enriched by cute dimmed night lights atmosphere.
+            For people who are not familiar with feelings I described, I hope my story and my brand inspires curiosity to discover atmosphere by yourself.
 
           </p>
 
           <p>
             This is probably not the ordinary brand story you expected, but I felt like expressing myself on this section of Lightbook,
-            like a writer allowing his readers to get a glimps of the depth of his soul. But also, I hope you understand more Lightbook origins,
-            as well as the mission of Lightbook.
+            like a writer allowing her readers to get a glimps of the depth of her soul. 
+            And also, I hope correctly presented Lightbook origins,
+            as well as our mission.
           </p>
 
-        <p>Thank you for taking time for reading our story.</p>
+        <p>Thank you for taking time of your day for reading my story.</p>
         </div>
       </div>
       </div>
