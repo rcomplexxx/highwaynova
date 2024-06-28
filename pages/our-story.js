@@ -16,35 +16,36 @@ export default function OurStory() {
         <p>Hi. Welcome to my website, Lightbook.</p>
 
         <p>Growing up as a 'weird' and 'nerdy' girl, I didn't have a lot of friends. 
-          I wouldn't spend nights hanging out, nor enjoying conversations in coffee shops like other people did. 
+          I didnt't spend nights hanging out, nor I enjoyed conversations in coffee shops like other people did. 
           You need friends for that.</p>
 
-          <p>But it's okay, I spent nights reading. Diving deep into stories, being opsessed with all these different characters, going through
-            their own circumstances, handling problems in their own way. For me, it was the place where my imagination could freely thrive as I explore unlimited number of new worlds.
-            Better then any night club I could have ever gone to. But I needed to have at least one true friend to share my passions with...
+          <p>But it's okay, I spent my nights reading. Diving deep into stories, being obsessed with all these different characters, navigating
+            their own challenges in their own circumstances, handling problems in their own way. For me, it was the place where my imagination could freely thrive as I explored countless new worlds.
+            Better then any night club I could have ever gone to. But, I missed having at least one true friend to share my passions with...
           </p>
 
           <p>
-            Finally, when I started university, I got accepted for who I am for the first time in my life.
-            The people who accepted me were book lovers as well. We shared passion for books, cute things, and cozy, comfortable atmosphere.
-            We go to the library together, buy cute things, and explore convoluted journeies of many different, unique characters.
-            We also like to go to coffee shop from time to time to drink coffee, tell stories, and discuss variaty of topics.
+            Finally, when I started university, I got accepted for who I am and made friends with a group of book lovers — the best people I could have met! We shared passion for books, cute things, and cozy atmosphere.
+            We go to the library together, shop for cute items, and discuss convoluted journeys of unique characters we read about.
+            Sometimes, we even enjoy coffee shop conversations.
           </p>
 
           <p>
-            Books and cozy atmosphere are everything for me, and I would like for everyone to feel the late-night reads in cozy room enriched with cute dimmed night light vibes.
-            For people who are not familiar yet, I hope my story inspires your curiosity to discover atmosphere by yourself.
+            Books and cozy atmospheres are everything to me, and I want everyone to experience late-night reads in cozy room enriched with cute dimmed night lights.
+            For those who are not familiar yet, I hope my story inspires your curiosity to discover this atmosphere for yourself.
+            That's why I started Lightbook, a place where you can get the best and cutest items to enhance your reading experience.
+
 
           </p>
 
           <p>
-            This is probably not the ordinary brand story you expected to read, but I felt like expressing myself on this section of my website,
-            like a writer allowing her readers to get a glimps of the depth of her soul. 
-            And also, I hope that I correctly presented origin, values, and mission of Lightbook.
+            This is probably not the ordinary brand story you expected to read, but I felt the need to express myself here, like a writer, 
+            letting you get a glimpse into my soul, revealing the personal journey and heartfelt inspiration behind Lightbook.
+            
        
           </p>
 
-        <p>Thank you for taking time of your day for reading my story.</p>
+        <p>Thank you for taking time to read my story.</p>
         </div>
       </div>
       </div>
