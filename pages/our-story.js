@@ -16,32 +16,32 @@ export default function OurStory() {
         <p>Hi. Welcome to my website, Lightbook.</p>
 
         <p>Growing up as a 'weird' and 'nerdy' girl, I didn't have a lot of friends. 
-          I wouldn't spend nights hanging out, nor enjoying coffee talks in cafes like other people did. 
+          I wouldn't spend nights hanging out, nor enjoying conversations in coffee shops like other people did. 
           You need friends for that.</p>
 
           <p>But it's okay, I spent nights reading. Diving deep into stories, being opsessed with all these different characters, going through
             their own circumstances, handling problems in their own way. For me, it was the place where my imagination could freely thrive as I explore unlimited number of new worlds.
-            Better then any night club I could have ever gone to.
+            Better then any night club I could have ever gone to. But I needed to have at least one true friend to share my passions with...
           </p>
 
           <p>
-            Finally, when I started university, I got accepted for the first time in my life.
+            Finally, when I started university, I got accepted for who I am for the first time in my life.
             The people who accepted me were book lovers as well. We shared passion for books, cute things, and cozy, comfortable atmosphere.
-            We go to the library together, buy cute things, and explore awesome jorneies of different interesting characters from stories.
-            Ps. We also sometimes go to cafe to drink coffee and talk.
+            We go to the library together, buy cute things, and explore convoluted journeies of many different, unique characters.
+            We also like to go to coffee shop from time to time to drink coffee, tell stories, and discuss variaty of topics.
           </p>
 
           <p>
-            Books and cozy atmosphere are everything for me, and I would like for everyone to feel the late-night reads in cozy room enriched by cute dimmed night lights atmosphere.
-            For people who are not familiar with feelings I described, I hope my story and my brand inspires curiosity to discover atmosphere by yourself.
+            Books and cozy atmosphere are everything for me, and I would like for everyone to feel the late-night reads in cozy room enriched with cute dimmed night light vibes.
+            For people who are not familiar yet, I hope my story inspires your curiosity to discover atmosphere by yourself.
 
           </p>
 
           <p>
-            This is probably not the ordinary brand story you expected, but I felt like expressing myself on this section of Lightbook,
+            This is probably not the ordinary brand story you expected to read, but I felt like expressing myself on this section of my website,
             like a writer allowing her readers to get a glimps of the depth of her soul. 
-            And also, I hope correctly presented Lightbook origins,
-            as well as our mission.
+            And also, I hope that I correctly presented origin, values, and mission of Lightbook.
+       
           </p>
 
         <p>Thank you for taking time of your day for reading my story.</p>
