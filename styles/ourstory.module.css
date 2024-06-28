@@ -14,6 +14,7 @@
    
     display: flex;
     flex-direction: row-reverse;
+    align-items: center;
     border-bottom: none;
     border-radius: 8px;
     margin-bottom:var(--size-9);
@@ -26,6 +27,10 @@
    
 }
 
+.mainDiv p{
+    margin: var(--size-5) 0;
+}
+
 
 .ourStoryImage{
     height: max-content;
@@ -34,13 +39,16 @@
     object-fit: contain;
     margin-left: var(--size-7);
     margin-bottom: var(--size-7);
+    border-radius: 8px;
 }
 
 .ourStoryText{
     max-width: var(--size-15-5);
    
-    font-size: var(--font-size-4);
-    font-family: var(--hand-writing-font);
+
+    
+    font-size: var(--font-size-3);
+    
 }
 
 .ourStoryText > :first-child{

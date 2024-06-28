@@ -160,7 +160,7 @@ export default function ProductPics({ productId, images, onAddToCart, variantIma
     swiper.slideTo(imageIndex, 0, false);
    
    
-    setImageIndex(imageIndex)},[swiper])
+   },[swiper])
 
 
 

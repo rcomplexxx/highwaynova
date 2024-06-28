@@ -11,25 +11,39 @@ export default function OurStory() {
       <div className={styles.mainDiv}>
         <h1>Our story</h1>
         <div className={styles.mainContent}>
-        <Image src='/images/gamingFriends2.jpg' className={styles.ourStoryImage} sizes="100vw" height={0} width={0}/>
+        <Image src='/images/our_story1.jpeg' className={styles.ourStoryImage} sizes="100vw" height={0} width={0}/>
         <div className={styles.ourStoryText}>
-        
-        <p>
-        In our tight-knit group of four, our profound connection centered around a shared passion for gaming. From the early consoles of our childhood to the intricate worlds of adulthood, our bond deepened through countless nights spent in front of screens, navigating virtual landscapes together. Victories and defeats wove into the fabric of our connection, creating enduring memories.
+        <p>Hi. Welcome to my website, Lightbook.</p>
 
-       </p>
-        <p>
-        Facing the challenges of growing up, gaming became more than an escape – it became a vessel for self-discovery. Each of us brought a unique flair to the gaming table – the strategist, the creative soul, the quick reflexes, and the meticulous attention to detail.
-        </p>
-        <p>
-        Our shared experiences in virtual realms spilled into our real lives. As graduation loomed, we collectively decided to channel our passion into something greater, the Gamebuff! Our mission is promoting the amazing gaming night experience with friends, and enhancing that experience by providing exceptional gaming equipment. 
-         </p>
-         <p>
-         Join us in utilizing technology to create the sureally joyful experience noone has ever had a chance to experience throughout history.
-         </p>
-         <p>
-          Happy shopping!
-           </p>
+        <p>Growing up as a 'weird' and 'nerdy' girl, I didn't have a lot of friends. 
+          I wouldn't spend nights hanging out, nor enjoying coffee talks in cafes like other people did. 
+          You need friends for that.</p>
+
+          <p>But it's okay, I spent nights reading. Diving deep into stories, being opsessed with all these different characters, going through
+            their own circumstances, handling problems in their own way. For me, it was the place where my imagination could freely thrive as I explore unlimited number of new worlds.
+            Better then any night club I could have ever gone to.
+          </p>
+
+          <p>
+            Finally, when I started university, I got accepted for the first time in my life.
+            The people who accepted me were book lovers as well. We shared passion for books, cute things, and cozy, comfortable atmosphere.
+            We go to the library together, buy cute things, and explore awesome jorneies of different interesting characters from stories.
+            Ps. We also sometimes go to cafe to drink coffee and talk.
+          </p>
+
+          <p>
+            Books and cozy atmosphere are everything for me, and I would like for everyone to feel the late-night reads in cozy room enriched by cute dimmed night lights.
+            For people who are not familiar with feelings I described, I hope my story and my brand inspires curiosity to discover cozy room, late-night reading vibes.
+
+          </p>
+
+          <p>
+            This is probably not the ordinary brand story you expected, but I felt like expressing myself on this section of Lightbook,
+            like a writer allowing his readers to get a glimps of the depth of his soul. But also, I hope you understand more Lightbook origins,
+            as well as the mission of Lightbook.
+          </p>
+
+        <p>Thank you for taking time for reading our story.</p>
         </div>
       </div>
       </div>
