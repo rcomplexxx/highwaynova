@@ -6,11 +6,11 @@ import {
   MenuItem,
   Typography,
 } from "@mui/material";
-import { ShoppingCart, Menu as MenuIcon } from "@mui/icons-material";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import styles from "./navbaradmin.module.css";
 import Image from "next/image";
+import { MenuIcon } from "@/public/images/svgs/svgImages";
 
 const AdminNavbar = ({ setIsAdmin }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -204,9 +204,7 @@ const AdminNavbar = ({ setIsAdmin }) => {
       {isMenuOpen && (
         <div
           className={
-            styles.mobileMenu +
-            " " +
-            (isMenuClosing ? styles.menuCoverDissapear : "")
+            `${styles.mobileMenu} ${isMenuClosing && styles.menuCoverDissapear}`
           }
           onClick={handleMobileMenuClose}
         >

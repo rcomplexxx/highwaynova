@@ -1,0 +1,22 @@
+
+
+
+
+
+.templateButtons{
+
+    background-color: rgb(31, 62, 47);
+    width: 100%;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.continueToPreviewButton{
+
+
+    margin-top: var(--size-6);
+
+    align-self: flex-end;
+}

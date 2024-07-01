@@ -760,8 +760,8 @@ else{
   
 
   try {
-    const clientIp = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
-    if (!(await limiterPerTwoMins.rateLimiterGate(clientIp, db))) return resReturn(429, { error: "Too many requests." }, db)
+    // const clientIp = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
+    // if (!(await limiterPerTwoMins.rateLimiterGate(clientIp, db))) return resReturn(429, { error: "Too many requests." }, db)
    
 
       
