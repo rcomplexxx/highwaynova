@@ -343,6 +343,24 @@ else{
       }
 
 
+      else if(table === "email_template"){
+
+
+        //delete template with id = 1 here
+
+
+        db.prepare(`DELETE FROM email_template WHERE id = 1`).run();
+
+     
+
+        db.prepare(`INSERT INTO email_template (id, designJson) VALUES (?, ?)`).run(
+          1,
+          data.designJson
+        );
+
+      }
+
+
 
 
 
@@ -829,6 +847,8 @@ else{
           return getFromDb("customers", 'subscribed = 1');
         else if(dataType === "get_customers_bh")
         return getFromDb("customers", 'subscribed = 0');
+        else if(dataType === "get_main_email_template")
+          return getFromDb("email_template", 'id = 1')
           else if (dataType === "get_emails")
           {return getFromDb("emails");}
           else if (dataType === "get_email_sequences")
@@ -887,6 +907,15 @@ else{
           await updateDb(
             "emails",
             data,
+          );
+
+        }
+
+        else if(dataType=== "send_new_main_email_template"){
+
+          await updateDb(
+            "email_template",
+            data
           );
 
         }

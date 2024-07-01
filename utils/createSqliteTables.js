@@ -119,7 +119,15 @@ db.prepare(`
 
 
 
+      
+      db.prepare(`
+            CREATE TABLE IF NOT EXISTS email_template (
+          id INTEGER PRIMARY KEY,
+          designJson TEXT
+      )
+        `).run();
 
+        
 
 
 

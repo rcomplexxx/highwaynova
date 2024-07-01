@@ -17,6 +17,12 @@ const handleSaveMainTemplate = async() => {
 
   await emailEditorRef.current?.editor?.exportHtml(async(data) => {
 
+    const userResponse = confirm('Current main template will be overriden. Proceed?');
+
+    if (!userResponse) {
+     return;
+    } 
+
 
     const { design } = data;
 
@@ -28,7 +34,7 @@ const handleSaveMainTemplate = async() => {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ dataType: 'send_new_main_email_template', data: newEmailData }),
+    body: JSON.stringify({ dataType: 'send_new_main_email_template', data: {designJson: JSON.stringify(design)} }),
   })
     .then((response) => {
       if (response.ok) {
@@ -48,6 +54,14 @@ const handleSaveMainTemplate = async() => {
 const handleLoadMainTemplate = async() => {
 
 
+  
+  const userResponse = confirm('Current progress will be lost. Proceed?');
+
+  if (!userResponse) {
+   return;
+  } 
+
+
 
 try{
 
@@ -56,15 +70,17 @@ try{
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ dataType: 'send_new_main_email_template', data: newEmailData }),
+    body: JSON.stringify({ dataType: 'get_main_email_template'}),
   })
 
   if(response.ok){
     console.log(response);
-    const data = response.json();
-    console.log("Editor design data!", data);
+    const data = await response.json();
+    
 
-    emailEditorRef.current?.editor.loadDesign(data.editorLoadJson)
+    const editorDesign = data?.data[0].designJson && JSON.parse(data?.data[0].designJson);
+
+    emailEditorRef.current?.editor.loadDesign(editorDesign)
   }
   
 
@@ -120,8 +136,8 @@ catch(error){
    return <>
    
    <div className={styles.templateButtons}>
-    <button>Save as main template</button>
-    <button>Load main template</button>
+    <button onClick={handleSaveMainTemplate}>Save as main template</button>
+    <button onClick={handleLoadMainTemplate}>Load main template</button>
    </div>
    <EmailEditor style={{ maxWidth:"none", minHeight: '980px', border: '1px solid #ccc' }} ref={emailEditorRef} 
 
