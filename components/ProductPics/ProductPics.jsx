@@ -294,7 +294,7 @@ export default function ProductPics({ productId, images, onAddToCart, variantIma
                     className={`${styles.productImage} ${styles.productImage2Div} ${
                       imageIndex == index && styles.selectedImage
                     }`}
-                    onClick={() => {handleChangeImage(index, true) }}
+                    onClick={() => {handleChangeImage(index, window.innerWidth<980) }}
                     src={img.src}
                     alt={img.alt}
                     sizes="20vw"
