@@ -7,7 +7,6 @@ import Navbar from "../components/Navbar/Navbar.jsx";
 import {useGlobalStore} from "@/contexts/AppContext";
 import Footer from "@/components/Footer/Footer";
 import SEO from '@/utils/SEO-configs/next-seo.config.js'
-import Head from "next/head";
 import EmailFlowPopup from "@/components/EmailFlowPopup/EmailFlowPopup";
 import { inter, eb_Garamond } from "@/utils/fonts";
 import { DefaultSeo } from "next-seo";
@@ -194,7 +193,7 @@ export default function App({ Component, pageProps }) {
       
       const emailPopupTimeChecker = Math.floor(Date.now() / 86400000)-localStorage.getItem("popupShownDateInDays");
 
-      const daysBetweenEmailPopups = 2;
+      const daysBetweenEmailPopups = 14;
 
      
 

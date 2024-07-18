@@ -11,96 +11,86 @@
     "export": "next export"
   },
   "dependencies": {
-    "@brail/react": "^1.0.0-beta.34",
+   
     "@emotion/react": "^11.11.0",
     "@emotion/styled": "^11.11.0",
     "@google-pay/button-react": "^3.0.10",
-    "@kost927/react-flags-select": "^1.0.6",
-    "@mui/icons-material": "^5.6.0",
-    "@mui/lab": "^5.0.0-alpha.169",
+    
+   
+   
     "@mui/material": "^5.6.0",
     "@next/font": "^14.1.0",
-    "@node-rs/xxhash": "^1.7.3",
+    
     "@paypal/checkout-server-sdk": "^1.0.3",
     "@paypal/react-paypal-js": "^8.1.4",
-    "@react-email/components": "^0.0.19",
-    "@smastrom/react-rating": "^1.5.0",
+    
+    
     "@stripe/react-stripe-js": "^1.16.5",
     "@stripe/stripe-js": "^1.54.2",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
-    "@trendyol-js/react-carousel": "^3.0.2",
-    "@types/react-slider": "^1.3.6",
-    "@usewaypoint/email-builder": "^0.0.8",
+   
+    
+    
+    
     "better-sqlite3": "^8.7.0",
-    "brail": "^1.0.0-beta.34",
-    "canvas": "^2.11.2",
+   
     "chart.js": "^4.4.1",
     "chartjs-adapter-moment": "^1.0.1",
-    "cheerio": "^1.0.0-rc.12",
+    
     "classnames": "^2.3.2",
-    "compression-next": "^1.0.3",
-    "easy-email-core": "^4.16.0",
-    "easy-email-editor": "^4.16.0",
-    "easy-email-extensions": "^4.16.0",
+    
+    "depcheck": "^1.4.7",
+    
     "eslint": "^6.8.0",
     "farmhash": "^3.3.1",
-    "file-type": "^19.0.0",
+    
     "formidable": "^3.5.1",
-    "grapesjs": "^0.21.11",
-    "grapesjs-blocks-basic": "^1.0.2",
-    "html-react-parser": "^5.1.10",
-    "image-size": "^1.1.1",
+   
+   
+   
     "jsonwebtoken": "^9.0.2",
-    "less": "^4.2.0",
-    "masonic": "^3.7.0",
-    "masonry-layout": "^4.2.2",
-    "mime": "^4.0.3",
+   
+   
+ 
     "moment": "^2.30.1",
     "mysql2": "^3.10.1",
-    "net": "^1.0.2",
+    
     "next": "^14.1.0",
-    "next-auth": "^4.23.1",
+    
     "next-seo": "^6.5.0",
-    "next-with-less": "^3.0.1",
+   
     "node-cron": "^3.0.3",
     "nodemailer": "^6.9.5",
-    "probe-image-size": "^7.2.3",
-    "rate-limiter-flexible": "^3.0.0",
-    "rating-star": "^1.1.0",
+   
+    
+    
     "react": "^18.2.0",
-    "react-autosuggest": "^10.1.0",
+ 
     "react-chartjs-2": "^5.2.0",
     "react-color": "^2.19.3",
     "react-country-region-selector": "^3.6.1",
-    "react-date-range": "^2.0.0-alpha.4",
+   
     "react-dom": "^18.2.0",
     "react-email-editor": "^1.7.11",
-    "react-final-form": "^6.5.9",
-    "react-grapesjs": "^0.1.15",
+   
+   
     "react-html-parser": "^2.0.2",
-    "react-masonry-css": "^1.0.16",
-    "react-measure": "^2.5.2",
-    "react-medium-image-zoom": "^5.1.8",
+    
+   
+   
     "react-multi-date-picker": "^4.4.1",
-    "react-pick-color": "^2.0.0",
-    "react-plock": "^3.1.0",
-    "react-rating": "^2.0.5",
-    "react-ratings-declarative": "^3.4.1",
-    "react-responsive-masonry": "^2.2.0",
-    "react-router": "^5.2.0",
+  
+
+
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.3",
-    "react-select": "^5.7.4",
-    "react-select-country-list": "^2.2.3",
-    "react-select-plus": "^1.0.0-rc.3.patch12",
-    "react-simple-star-rating": "^5.1.7",
+    
+    
+  
     "react-slick": "^0.29.0",
-    "react-slider": "^2.0.6",
-    "react-star-rating-component": "^1.4.1",
+    
+    
     "react-star-ratings": "^2.3.0",
-    "react-stripe-elements": "^6.1.2",
-    "react-ticker": "^1.3.2",
+    
+   
     "slick-carousel": "^1.8.1",
     "stripe": "^14.10.0",
     "swiper": "^9.4.1",
