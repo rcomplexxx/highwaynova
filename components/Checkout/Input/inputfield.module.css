@@ -21,8 +21,8 @@
 
   
    
-    background-color: var(--input-color);
-    color: var(--high-contrast-txt-color);
+    background-color: var(--checkout-input-bg);
+    color: var(--checkout-input-color);
   
     
     padding-top: 24px;
@@ -31,7 +31,7 @@
     align-self: center;
    
     
-    border: solid 1px var(--input-border-color);
+    border: solid 1px var(--checkout-input-border-color);
   
     font-size: var(--font-size-2);
     
@@ -39,31 +39,35 @@
 
 
   .input_field:focus { 
-    border: solid 2px var(--input-border-color-focused);
+    border: solid 2px var(--checkout-input-border-color-focused);
     
 }
 
 
 .input_field:-webkit-autofill {
-  background-color: var(--input-autofill-color);
-  -webkit-box-shadow: 0 0 0 30px var(--input-autofill-color) inset !important;
-  -webkit-text-fill-color: var(--high-contrast-txt-color) !important;
   
+  -webkit-box-shadow: 0 0 0 30px var(--checkout-input-autofill-bg) inset !important;
+  -webkit-text-fill-color: var(--checkout-input-color) !important;
+  caret-color: var(--checkout-input-color);
+  
+  padding: var(--size-3);
+  padding-top: 24px;
+  border-radius: 2px;
+}
+
+.input_field:-moz-autofill{
+  caret-color: var(--checkout-input-autofill-bg);
+  
+  -webkit-box-shadow: 0 0 0 30px var(--checkout-input-autofill-bg) inset !important;
+  -webkit-text-fill-color: var(--checkout-input-color) !important;
+  caret-color: var(--checkout-input-color);
   padding: var(--size-3);
   padding-top: 24px;
   border-radius: 2px;
 }
 
 /* For Firefox */
-.input_field:-moz-autofill {
-  background-color: var(--input-autofill-color);
-  -webkit-box-shadow: 0 0 0 30px var(--input-autofill-color) inset !important;
-  -webkit-text-fill-color: var(--high-contrast-txt-color) !important;
-  
-  padding: var(--size-3);
-  padding-top: 24px;
-  border-radius: 2px;
-}
+
 
 
 
@@ -89,7 +93,7 @@ font-size: var(--size-4);
 
 }
 
-.input_field:-webkit-autofill + .label {
+.input_field:-webkit-autofill + .label  {
   color: var(--checkout-input-placeholder-floating);
 position: absolute;
 left: var(--size-3);
@@ -99,16 +103,15 @@ pointer-events: none;
 
 }
 
-/* For Firefox */
-.input_field:-moz-autofill + .label {
+.input_field:-moz-autofill + .label{
   color: var(--checkout-input-placeholder-floating);
 position: absolute;
 left: var(--size-3);
 top: 8px;
 transition: none;
 pointer-events: none;
-
 }
+
 
 
 

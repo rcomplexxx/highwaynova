@@ -74,8 +74,8 @@ campaigns.forEach(campaign=>{
 
     
 
-    let   finalSendingDate=(Date.now() - dateCalculated) >  0?
-    Date.now()+120000: dateCalculated;
+    let   finalSendingDate=(Date.now() - dateCalculated) >  -5000?
+    Date.now()+5000: dateCalculated;
 
 
 

@@ -3,7 +3,7 @@ import RateLimiter from "@/utils/rateLimiter.js";
 import jwt from "jsonwebtoken";
 
 const limiterPerHour = new RateLimiter({
-  apiNumberArg: 4,
+  apiNumberArg: 7,
   tokenNumberArg: 8,
   expireDurationArg: 3600, //secs
 });

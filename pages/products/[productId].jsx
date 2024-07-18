@@ -268,14 +268,16 @@ export default function ProductPage({ product, images, startReviews, ratingData 
            <Discover styleClassName={styles.creditCardLogo}/>
           </div>
 
-          <FrequentlyBoughtTogether
-            fbtProductInfo={product.fbt}
-            onAddToCart={onAddToCart}
-          />
+        
 
           
 
           <ProductPageCards description ={product.description}/>
+
+          <FrequentlyBoughtTogether
+            fbtProductInfo={product.fbt}
+            onAddToCart={onAddToCart}
+          />
         </div>
       </div>
       

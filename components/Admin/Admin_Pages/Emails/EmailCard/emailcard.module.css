@@ -4,6 +4,8 @@
     padding-bottom: var(--size-8);
     padding-top: var(--size-8);
     border-bottom: 1px solid green;
+
+   
 }
 
 
@@ -82,6 +84,12 @@
     box-shadow: 0 0 8px #4fabe0;
 } */
 
+.buttonBar{
+    width: 100%;
+    display: flex;
+
+}
+
 .previewButton{
     margin: var(--size-4) var(--size-5);
     margin-top: var(--size-7);
@@ -94,6 +102,11 @@
     user-select: none;
 }
 
+
+
+.deleteEmail{
+  margin-left: auto;
+}
 
 
 

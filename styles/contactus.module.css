@@ -119,8 +119,8 @@
     height: var(--size-8);
     width: 100%;
     
-    color: var(--high-contrast-txt-color);
-    background-color: var(--contact-input-color);
+    color: var(--contact-input-color);
+    background-color: var(--contact-input-bg);
     /* font-family: var(--font-neutral); */
     border: 1px solid var(--contact-input-border);
     border-radius: 4px;
@@ -146,10 +146,21 @@
 }
 
 
-.contactInput:-webkit-autofill {
-    background-color: var(--input-autofill-color);
-    -webkit-box-shadow: 0 0 0 30px var(--input-autofill-color) inset !important;
-    -webkit-text-fill-color: var(--high-contrast-txt-color) !important;
+.contactInput:-webkit-autofill{
+    
+    -webkit-box-shadow: 0 0 0 30px var(--contact-input-autofill-bg) inset !important;
+    -webkit-text-fill-color: var(--contact-input-color)!important;
+    caret-color:  var(--contact-input-color);
+    
+    padding: var(--size-3);
+    padding-top: 24px;
+}
+
+.contactInput:-moz-autofill {
+    
+    -webkit-box-shadow: 0 0 0 30px var(--contact-input-autofill-bg) inset !important;
+    -webkit-text-fill-color: var(--contact-input-color) !important;
+    caret-color: var(--contact-input-color);
     
     padding: var(--size-3);
     padding-top: 24px;
@@ -157,24 +168,14 @@
   
   }
   
-  /* For Firefox */
-  .contactInput:-moz-autofill {
-    background-color: var(--input-autofill-color);
-    -webkit-box-shadow: 0 0 0 30px var(--input-autofill-color) inset !important;
-    -webkit-text-fill-color: var(--high-contrast-txt-color) !important;
-    
-    padding: var(--size-3);
-    padding-top: 24px;
-  
-  }
-  
+
 
 
 
 
 
 .inputGroupLabel{
-    color: var(--checkout-input-placeholder);
+    color: var(--contact-input-placeholder);
     position: absolute;
     left: var(--size-3);
     top: calc(50% - 10px);
@@ -192,7 +193,7 @@
 
 .contactInput:focus + .inputGroupLabel,
 .contactInput:not(:placeholder-shown) + .inputGroupLabel {
-    color: var(--checkout-input-placeholder-floating);
+    color: var(--contact-input-placeholder-floating);
 top: 6px;
 font-size: var(--font-size-1);
 
@@ -225,8 +226,8 @@ font-size: var(--font-size-1);
     
     height: var(--size-13);
     border: none;
-    color: var(--high-contrast-txt-color);
-    background-color: var(--contact-input-color);
+    color: var(--contact-input-color);
+    background-color: var(--contact-input-bg);
     flex-grow: 1;
   
     resize: none;
@@ -259,7 +260,7 @@ font-size: var(--font-size-1);
 
 
 .messageText{
-    color: var(--checkout-input-placeholder);
+    color: var(--contact-input-placeholder);
     position: absolute;
     left: var(--size-3);
     top: var(--size-4);
@@ -277,7 +278,7 @@ font-size: var(--font-size-1);
 
   .messageTextArea:focus + .messageText,
   .messageTextArea:not(:placeholder-shown) + .messageText {
-    color: var(--checkout-input-placeholder-floating);
+    color: var(--contact-input-placeholder-floating);
 top: 10px;
 font-size: var(--font-size-1);
 

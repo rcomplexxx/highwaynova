@@ -5,7 +5,7 @@ import subscribe from '@/utils/subcsribe'
 
 
 const limiterPerDay = new RateLimiter({
-  apiNumberArg: 3,
+  apiNumberArg: 5,
   tokenNumberArg: 24,
   expireDurationArg: 86400, //secs
 });
@@ -61,13 +61,14 @@ const approvePayment = async (req, res) => {
 
         // Check the result of the update operation
          // If changes were made, resolve the promise
+
         if (result.changes > 0) {
          
  const orderData = db.prepare(`SELECT id, total, couponCode FROM orders WHERE paymentId = ? AND paymentMethod = ?`).get(paymentId, paymentMethod);
           
 
 
-
+       
         
 
           
@@ -82,17 +83,18 @@ const approvePayment = async (req, res) => {
            return resReturn(400, { success: false, error: "Discount has already been used."}, db)
 
 
-          
 
-          db.prepare("UPDATE customers SET totalOrderCount = totalOrderCount + 1, money_spent = (ROUND(money_spent + ?, 2) WHERE id = ?").run(orderData.total, customerId); 
+          db.prepare("UPDATE customers SET totalOrderCount = totalOrderCount + 1, money_spent = ROUND(money_spent + ?, 2) WHERE id = ?").run(orderData.total, customerId); 
 
         
           const subscribeSource = customerSubscribed? "checkout": "checkout x";
+
+       
       
           subscribe(email, subscribeSource, {orderId:orderData.id}, db);
    
 
-
+         
 
           if(orderData.couponCode)
          db.prepare(`UPDATE customers SET used_discounts = json_insert(used_discounts, '$[#]', ?), money_spent = money_spent + ? WHERE id = ? `).run(orderData.couponCode, orderData.total, customerId)
@@ -190,8 +192,8 @@ const approvePayment = async (req, res) => {
   try {
     const clientIp = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
 
-    if (!(await limiterPerDay.rateLimiterGate(clientIp, db)))
-      return resReturn(429, {error: "Too many requests. Please try again later." }, db)
+    // if (!(await limiterPerDay.rateLimiterGate(clientIp, db)))
+    //   return resReturn(429, {error: "Too many requests. Please try again later." }, db)
   
     
 

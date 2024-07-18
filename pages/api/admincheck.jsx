@@ -11,7 +11,7 @@ import getTargets from '@/utils/getTargets.js';
 
 
 const limiterPerTwoMins = new RateLimiter({
-  apiNumberArg: 5,
+  apiNumberArg: 6,
   tokenNumberArg: 20,
   expireDurationArg: 120, //secs
 });
@@ -165,6 +165,28 @@ else{
 
     if(tableName==='email_sequences')
     db.prepare(`DELETE FROM email_campaigns WHERE sequenceId = ?`).run(deleteId);
+
+    if(tableName === 'emails'){
+
+      const allSequences = db.prepare(`SELECT id, emails FROM email_sequences`).all();
+
+
+      const sequenceToDeleteIdArray = allSequences.filter((seq)=>{
+
+        const seqEmails = JSON.parse(seq.emails);
+
+        return seqEmails.find(seqEmail => seqEmail.id === deleteId)
+      })
+
+
+      sequenceToDeleteIdArray.map(seq =>{
+        db.prepare(`DELETE FROM email_campaigns WHERE sequenceId = ?`).run(seq.id);
+        db.prepare(`DELETE FROM email_sequences WHERE id = ?`).run(deleteId);
+      })
+
+     
+
+    }
 
 
    db.prepare(`DELETE FROM ${tableName} WHERE id = ?`).run(deleteId);
@@ -343,23 +365,36 @@ else{
       }
 
 
-      else if(table === "email_template"){
+      else if(table === "email_templates"){
 
+        
 
         //delete template with id = 1 here
 
 
-        db.prepare(`DELETE FROM email_template WHERE id = 1`).run();
 
-     
 
-        db.prepare(`INSERT INTO email_template (id, designJson) VALUES (?, ?)`).run(
-          1,
-          data.designJson
+
+      const template_id = data.templateType==="main"?1:2;
+
+      db.prepare(`DELETE FROM email_templates WHERE id = ?`).run(template_id);
+  
+
+       
+
+        db.prepare(`INSERT INTO email_templates (id, designJson, emailFontValue, emailFontSize, emailWidthModeValue, mainBackgroundColor, templateType) VALUES (?, ?, ?, ?, ?, ?, ?)`).run(
+          template_id,
+          data.designJson,
+          data.emailFontValue,
+          data.emailFontSize,
+          data.emailWidthModeValue,
+          data.mainBackgroundColor,
+          data.templateType
         );
 
       }
 
+     
 
 
 
@@ -373,7 +408,15 @@ else{
 
         console.log('should be created');
 
-        db.prepare(`INSERT INTO emails (title, text) VALUES (?, ?)`).run(
+        let email_with_id_1_exists = db.prepare(`SELECT 1 FROM emails WHERE id = 1`).get()?1:0;
+
+        let insert_id = !email_with_id_1_exists?1:db.prepare('SELECT MIN(id + 1) AS insert_id FROM emails WHERE id + 1 NOT IN (SELECT id FROM emails)').get().insert_id;
+      
+       
+        console.log('insert id is', insert_id)
+
+        db.prepare(`INSERT INTO emails (id, title, text) VALUES (?, ?, ?)`).run(
+          insert_id,
           data.title,
           data.text,
         );
@@ -847,8 +890,9 @@ else{
           return getFromDb("customers", 'subscribed = 1');
         else if(dataType === "get_customers_bh")
         return getFromDb("customers", 'subscribed = 0');
-        else if(dataType === "get_main_email_template")
-          return getFromDb("email_template", 'id = 1')
+        else if(dataType === "get_email_templates"){
+          return getFromDb("email_templates")
+        }
           else if (dataType === "get_emails")
           {return getFromDb("emails");}
           else if (dataType === "get_email_sequences")
@@ -911,14 +955,16 @@ else{
 
         }
 
-        else if(dataType=== "send_new_main_email_template"){
+        else if(dataType=== "send_new_email_template"){
 
           await updateDb(
-            "email_template",
+            "email_templates",
             data
           );
 
         }
+
+    
         
         else if (dataType === "send_new_email") {
           console.log('started email send');
@@ -1006,6 +1052,10 @@ else{
            deleteRow('email_sequences', data.deleteId)
         
           
+          }
+
+          else if(dataType === "delete_email"){
+            deleteRow('emails', data.deleteId)
           }
         
         else if(dataType === `wipe_orders`){

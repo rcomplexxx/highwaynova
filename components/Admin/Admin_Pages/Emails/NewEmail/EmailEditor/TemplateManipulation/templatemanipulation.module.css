@@ -1,0 +1,70 @@
+
+
+.saveButton{
+
+    margin-left: auto;
+    margin-right: var(--size-3);
+    
+}
+
+
+
+.templateManipulationWrapper{
+
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+
+    background-color: rgba(0, 0, 0, 0.3);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    
+   margin-left: auto;
+
+}
+
+
+.templateManipulationWrapper2{
+
+    position: relative;
+
+    background-color: black;
+
+
+    height: var(--size-14);
+    width: var(--size-14);
+
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    gap: var(--size-5);
+
+
+}
+
+
+
+.cancelTemplateManipulation{
+    position: absolute;
+    top: var(--size-2);
+    right: var(--size-2);
+        height: var(--size-6);
+        width: var(--size-6);
+
+        cursor: pointer;
+
+}
+
+
+.manipulateTemplateButton{
+    display: flex;
+    align-items: center;
+}

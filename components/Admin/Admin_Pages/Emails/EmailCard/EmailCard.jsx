@@ -1,4 +1,4 @@
-import { isValidElement, useEffect, useState } from 'react'
+import {useEffect, useState } from 'react'
 
 import ReactHtmlParser from "react-html-parser";
 
@@ -10,7 +10,7 @@ export default function EmailCard({id,title, text, handleSaveEmail}) {
 
     const [emailTitle, setEmailTitle] = useState()
     const [emailTextHtml, setemailTextHtmlHtml] = useState();
-    const [emailTextCss, setEmailTextCss] = useState();
+    
     const [previewEmailContent, setPreviewEmailContent]= useState();
 
 
@@ -29,26 +29,12 @@ export default function EmailCard({id,title, text, handleSaveEmail}) {
 
 
 
-      
-      if(text?.split("</style>").length>1){
-
-        
 
     
 
-        setemailTextHtmlHtml(text.split("</style>")[1]);
 
-        setEmailTextCss(text.substring(text.indexOf('<style>')+ '<style>'.length,
-        text.indexOf("</style>")));
-
-
-
-
-      }
-
-      else{
         setemailTextHtmlHtml(text)
-      }
+      
 
 
 
@@ -70,15 +56,13 @@ export default function EmailCard({id,title, text, handleSaveEmail}) {
 
     const handlePreviewEmail = ()=>{
         try {
-            // Attempt to parse the HTML
-            const parsedHtml = ReactHtmlParser(text);
+          
+
+
+            const parsedHtml = ReactHtmlParser(emailTextHtml);
         
-            if (Array.isArray(parsedHtml) && parsedHtml.every(isValidElement)) {
                 setPreviewEmailContent(parsedHtml);
-              } else {
-                // Handle the case where parsing did not result in valid React elements
-                setPreviewEmailContent(<div>An error occurred while parsing the HTML.</div>);
-              }
+            
           } catch (error) {
             // Handle the error (e.g., log it, display an error message, etc.)
             console.error('Error parsing HTML:', error);
@@ -86,6 +70,46 @@ export default function EmailCard({id,title, text, handleSaveEmail}) {
             // Perform a specific action when there is an error in HTML text
             setPreviewEmailContent(<div>An error occurred while parsing the HTML.</div>);
           }
+    }
+
+
+
+    const handleDeleteEmail = async()=>{
+
+
+      if (!window.confirm("Are you sure you want to delete this email?")) return;
+
+
+      try {
+        const response = await fetch("/api/admincheck", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(
+           { dataType:'delete_email', data:{deleteId: id }} 
+          ),
+        });
+  
+        if (response.ok) {
+          const data = await response.json();
+          console.log("Maine DATA!", data);
+         
+          
+  
+         
+         
+        } else {
+          throw new Error("Network response was not ok.");
+        }
+      } catch (error) {
+        console.error(
+          "There has been a problem with your fetch operation:",
+          error
+        );
+      }
+
+
     }
 
 
@@ -125,22 +149,13 @@ export default function EmailCard({id,title, text, handleSaveEmail}) {
         }}
         />
 
-<textarea
-        value={emailTextCss}
-        onChange={(event)=>{setemailTextHtmlHtml(event.target.value)}}
-        tabIndex={0}
-        contentEditable={true}
-        suppressContentEditableWarning={true}
-        className={`${styles.textArea} ${styles.textAreaCss}`}
-        
-        placeholder='Email css content...'
-        onFocus={(event) => {
-          event.target.style.height = event.target.scrollHeight + "px";
-        }}
-        />
+
+        <div className={styles.buttonBar}>
         <button className={styles.previewButton} onClick={handlePreviewEmail}>Preview Email</button>
         {handleSaveEmail && <button onClick={()=>{handleSaveEmail(id, emailTitle, emailTextHtml)}} className={`${styles.previewButton} ${styles.saveButton}`}>Save Email</button> }
-     
+        <button className={`${styles.previewButton} ${styles.deleteEmail}`} onClick={handleDeleteEmail}>Delete Email</button>
+       
+        </div>
         { previewEmailContent && <><div className={styles.previewContent}>
         {previewEmailContent}
       </div> 

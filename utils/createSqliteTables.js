@@ -28,6 +28,17 @@ db.prepare(`
 `).run();
 
 
+db.prepare(`
+  CREATE TABLE IF NOT EXISTS reviews (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT,
+      text TEXT,
+  stars INTEGER,
+      imageNames TEXT,
+      product_id INTEGER
+  )
+`).run();
+
 
 
     db.prepare(
@@ -118,12 +129,16 @@ db.prepare(`
       ).run();
 
 
-
-      
+ 
       db.prepare(`
-            CREATE TABLE IF NOT EXISTS email_template (
+            CREATE TABLE IF NOT EXISTS email_templates (
           id INTEGER PRIMARY KEY,
-          designJson TEXT
+          designJson TEXT,
+          emailFontSize INTEGER,
+          emailFontValue TEXT,
+          emailWidthModeValue TEXT,
+          mainBackgroundColor TEXT,
+          templateType TEXT
       )
         `).run();
 

@@ -22,7 +22,7 @@
       width: 100%;
       height: 40px;
      
-      background-color: var(--input-color);
+      background-color: var(--checkout-input-bg);
       color: var(--high-contrast-txt-color);
   
       
@@ -32,7 +32,7 @@
       align-self: center;
 
       
-      border: solid 1px var( --input-border-color);
+      border: solid 1px var( --checkout-input-border-color);
       border: none;
       font-size: var(--font-size-2);
     }
@@ -40,7 +40,7 @@
  
   
     .input_field:focus { 
-      border: 2px solid var(--input-border-color-focused);
+      border: 2px solid var(--checkout-input-border-color-focused);
   }
   
   
@@ -67,7 +67,7 @@
   
 }
 
-.input_field:-webkit-autofill + .label {
+.input_field:-webkit-autofill + .label{
   color: var(--checkout-input-placeholder-floating);
   position: absolute;
   left: var(--size-3);
@@ -77,7 +77,7 @@
 
 }
 
-/* For Firefox */
+
 .input_field:-moz-autofill + .label {
   color: var(--checkout-input-placeholder-floating);
   position: absolute;
@@ -85,9 +85,8 @@
   top: 3px;
   transition: none;
   pointer-events: none;
- 
-}
 
+}
 
 
   

@@ -37,56 +37,23 @@
 }
 
 
+.instructionsWrapper{
+    display: flex;
+    flex-direction: column;
+
+    padding: var(--size-5) 0;
+}
+
+
 .emailMakerInstructionSpan{
     align-self: flex-start;
     margin-bottom: var(--size-5);
-    padding: var(--size-5) 0;
+   
     font-size: var(--font-size-3);
 }
 
 
-.featuresWrapper{
 
-    width: min-content;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    padding: var(--size-5) var(--size-3);
-    border: 1px solid rgb(72, 96, 126);
-    margin-left: auto;
-
-
-
-}
-
-.featureButton{
-
-    color: var(--admin-txt-color);
-    background-color: transparent;
-
- 
-    margin-top: var(--size-3);
-
-    
-   
-    padding: var(--size-3) var(--size-2) !important;
-    border-radius: 2px;
-    border: 1px solid var(--border-color-strong);
-    font-size: 12px;
-
-
-    
-    
-  
-    
-    text-wrap: nowrap;
-    cursor: pointer;
-    user-select: none;
- 
-}
 
 
 
@@ -190,3 +157,15 @@
     padding: var(--size-7);
 }
 
+.previewContent h1{
+    margin: unset;
+    padding: unset;
+
+    font-size: unset;
+}
+
+.previewContent p{
+    margin: unset;
+    padding: unset;
+    font-size: unset;
+}

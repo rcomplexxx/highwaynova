@@ -82,7 +82,7 @@
     width: 100%;
     color: var(--high-contrast-txt-color); 
   
-    background-color: var(--contact-input-color);
+    background-color: var(--contact-input-bg);
     font-family: var(--font-for-writing);
     font-size: var(--font-size-2);
     border: none;
@@ -128,7 +128,7 @@
 .messageTextArea{
     border: none;
     color: var(--high-contrast-txt-color); 
-    background-color: var(--contact-input-color);
+    background-color: var(--contact-input-bg);
  
    
    

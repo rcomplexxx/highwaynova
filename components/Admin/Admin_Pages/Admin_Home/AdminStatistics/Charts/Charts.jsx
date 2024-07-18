@@ -36,12 +36,7 @@ useEffect(()=>{
     //chart starts here
 
     const chartCalculatedData = [];
-
-    const startDate = Math.floor(Math.min(
-        chartData.map(data=> {return data.createdDate})
-      
-      )
-      );
+const startDate = Math.floor(Math.min(...chartData.map(data => data.createdDate)));
 
      
     const currentDate = Math.floor(Date.now() / (1000 * 60 * 60 * 24));
@@ -100,7 +95,9 @@ useEffect(()=>{
           backgroundColor: 'rgba(21, 23, 27, 0.507)',
           borderColor: 'rgba(63, 96, 79, 0.85)',
           responsive: true,
-          tension: 0.1
+          tension: 0.1,
+          pointHoverBorderWidth: 2,
+          pointHitRadius: 40,
         },
       ];
 

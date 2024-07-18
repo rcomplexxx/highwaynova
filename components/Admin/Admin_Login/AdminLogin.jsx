@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import styles from "./adminlogin.module.css";
 
-const AdminNavbar = ({ checkAdminStatus }) => {
+const AdminLogin = ({ checkAdminStatus }) => {
   const usernameRef = useRef();
   const passwordRef = useRef();
 
@@ -50,4 +50,4 @@ const AdminNavbar = ({ checkAdminStatus }) => {
   );
 };
 
-export default AdminNavbar;
+export default AdminLogin;

@@ -7,7 +7,7 @@
 
 
 .paymentTitle{
-    color: var(--high-contrast-txt-color);
+    color: var(--checkout-title);
     
     font-weight: 600;
     margin-top: var(--size-8);
@@ -35,7 +35,7 @@
     margin: 1px 0;
     margin-left: 1px;
     
-    box-shadow: 0 0 0 1px var(--input-border-color);
+    box-shadow: 0 0 0 1px var(--checkout-input-border-color);
     border-radius: 8px;
     
 }

@@ -3,20 +3,18 @@
 
 import React, { useRef, useEffect } from 'react';
 
-import  { isValidElement,  useState } from 'react'
+import  { useState } from 'react'
 
 import ReactHtmlParser from "react-html-parser";
 
-import { Router, useRouter } from 'next/router';
+import {useRouter } from 'next/router';
 
 import styles from './newemail.module.css'
 
 
-const EmailPreview = ({previewHtml, setFinalPreview}) => {
-
+const EmailPreview = ({previewHtml, setFinalPreview, emailTitle, setEmailTitle}) => {
 
     
-  const titleRef = useRef();
   const emailTextRef=useRef();
   const [previewEmailContent, setPreviewEmailContent]= useState();
 
@@ -40,13 +38,9 @@ const EmailPreview = ({previewHtml, setFinalPreview}) => {
             const parsedHtml = ReactHtmlParser(finalHtml);
             
         
-            // if (Array.isArray(parsedHtml) && parsedHtml.every(isValidElement)) 
-            //   {
+          
                 setPreviewEmailContent(parsedHtml);
-              // } else {
-              //   // Handle the case where parsing did not result in valid React elements
-              //   setPreviewEmailContent(<div>An error occurred while parsing the HTML.</div>);
-              // }
+          
           } catch (error) {
             // Handle the error (e.g., log it, display an error message, etc.)
             console.error('Error parsing HTML:', error);
@@ -60,12 +54,12 @@ const EmailPreview = ({previewHtml, setFinalPreview}) => {
     const handleSaveEmail = async()=>{
 
 
-      if(titleRef.current.value=='' || emailTextRef.current.value=='')return;
+      if(emailTitle === '' || emailTextRef.current.value=='')return;
 
 
       const finalHtml= emailTextRef.current.value;
 
-      let newEmailData = {title:titleRef.current.value, text:finalHtml };
+      let newEmailData = {title:emailTitle, text:finalHtml };
 
     
      
@@ -77,6 +71,8 @@ const EmailPreview = ({previewHtml, setFinalPreview}) => {
           body: JSON.stringify({ dataType: 'send_new_email', data: newEmailData }),
         })
           .then((response) => {
+
+            console.log('save resp', response)
             if (response.ok) {
               console.log(response);
               router.push('/admin/emails');
@@ -105,32 +101,28 @@ if (userResponse) {
    
    <button onClick={backToEditor} className={styles.backToEditorButton}>Back to editor</button>
    <div className={styles.emailHelperWrapper}>
-   <span className={styles.emailMakerInstructionSpan}>{`Must do: Add your own font!!!`}
+    <div className={styles.instructionsWrapper}>
+
+
+    <span className={styles.emailMakerInstructionSpan}>{`- You can code fixed width or height where needed(like on buttons).`}
+    </span>
+
+   <span className={styles.emailMakerInstructionSpan}>{`- You can code additional css properties like box-shadow.`}
    </span>
 
-   <span className={styles.emailMakerInstructionSpan}>{`Must do: Oslobodi se max-widthova!!!`}
+   <span className={styles.emailMakerInstructionSpan}>{`- You can code additional support for different @media screen sizes(like font-size).`}
    </span>
-      <span className={styles.emailMakerInstructionSpan}>{`Note: It's suggested to put images in /public/images/email/email_$emailId.`}
-      </span>
-      <div className={styles.featuresWrapper}>
-          <span>Handy options</span>
-        <button className={`${styles.getCurrentDescrition} ${styles.featureButton}`} 
-        onClick={(event)=>{ 
-          navigator.clipboard.writeText(`
-            <html>\n\n<head>\n<style>\n.descriptionWrapper{\nwidth:100%;\ndisplay:flex;\nflex-direction: column;\nfont-size: 16px;\n}\n</style>\n</head>
-            \n\n<body>\n\n<div class="descriptionWrapper">\n\n</div>\n\n</body>\n\n</html>`);
-          event.target.innerText="Standard html content COPIED!"
-        }}>Copy standard html description content</button>
-        
 
-       
-        </div>
 
+   </div>
+
+  
+     
         </div>
         
         
         <div className={styles.emailContentDiv}>
-        <input ref={titleRef} className={styles.titleInput} placeholder='Email title...'/>
+        <input value={emailTitle} onChange={(event)=>{setEmailTitle(event.target.value)}} className={styles.titleInput} placeholder='Email title...'/>
 
         <textArea
         ref={emailTextRef}

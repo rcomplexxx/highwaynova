@@ -1,9 +1,9 @@
-import  { isValidElement, useRef, useState } from 'react'
+import  { useRef, useState } from 'react'
 
 import ReactHtmlParser from "react-html-parser";
 
 import styles from './newemail.module.css'
-import { Router, useRouter } from 'next/router';
+import {  useRouter } from 'next/router';
 
 export default function NewEmail() {
 
@@ -24,12 +24,8 @@ export default function NewEmail() {
             const parsedHtml = ReactHtmlParser(finalHtml);
             
         
-            if (Array.isArray(parsedHtml) && parsedHtml.every(isValidElement)) {
                 setPreviewEmailContent(parsedHtml);
-              } else {
-                // Handle the case where parsing did not result in valid React elements
-                setPreviewEmailContent(<div>An error occurred while parsing the HTML.</div>);
-              }
+           
           } catch (error) {
             // Handle the error (e.g., log it, display an error message, etc.)
             console.error('Error parsing HTML:', error);

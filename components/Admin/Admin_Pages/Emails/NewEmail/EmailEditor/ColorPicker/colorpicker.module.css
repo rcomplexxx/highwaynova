@@ -1,0 +1,20 @@
+
+
+.colorPickerWrapper{
+position: relative;
+margin-left: var(--size-6);
+align-self: center;
+}
+
+.pickedColorSpan{
+    padding: var(--size-2) var(--size-4);
+    border-radius: 16px;
+}
+
+.colorPickerDiv{
+    position:absolute;
+    left: 0;
+    top: 100%;
+}
+
+

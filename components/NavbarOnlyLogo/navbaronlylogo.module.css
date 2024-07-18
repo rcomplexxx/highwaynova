@@ -1,0 +1,20 @@
+.logoWrapper{
+
+    height: var(--size-9);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--navbar-bg);
+    
+}
+
+
+.logo{
+    height: 40px;
+    width: auto;
+    z-index: 9;
+   
+}
+
+

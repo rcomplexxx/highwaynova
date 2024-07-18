@@ -28,35 +28,33 @@ export default function Footer() {
 
       setLoadingSubscribe(true);
 
-      fetch("/api/sqlliteapi", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          type: "customers",
-          email: email.value,
-          source: "footer"
-        }), // Send the form data as JSON
-      })
-        .then((response) => {
-          if (response.ok) {
-            setSuccessful(true);
-            setError();
-          } else {
-            setError("Server error");
-          }
-        })
-        .catch((error) => {
-          setError("Server error");
-        })
-        .finally(() => {
-          email.value = "";
-          setLoadingSubscribe(false);
+      try {
+        const response = await fetch("/api/sqlliteapi", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            type: "customers",
+            email: email.value,
+            source: "footer",
+          }),
         });
+    
+        if (response.ok) {
+          setSuccessful(true);
+          setError();
+        } else {
+          setError("Server error");
+        }
+      } catch (error) {
+        setError("Server error");
+      } finally {
+        email.value = "";
+        setLoadingSubscribe(false);
+      }
     }
   });
-
 
 
   return (

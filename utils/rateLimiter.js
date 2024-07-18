@@ -29,7 +29,7 @@ class RateLimiter {
          
   
               const existingRecord = db.prepare(`
-                  SELECT * FROM rateLimiter WHERE ip = ? AND apiNumber = ?
+                  SELECT id, tokenNumber, expireDate  FROM rateLimiter WHERE ip = ? AND apiNumber = ?
               `).get(ipArg, this.apiNumber);
   
               if (existingRecord) {

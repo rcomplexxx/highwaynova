@@ -1,6 +1,10 @@
 const cron = require('node-cron');
 const betterSqlite3 = require('better-sqlite3');
 const nodemailer = require("nodemailer");
+const hashData = require('./hashData');
+const products = require('../data/products.json')
+const coupons = require('../data/coupons.json')
+
 
 
 
@@ -48,7 +52,9 @@ cron.schedule(date, async() => {
 `).get(campaignId);
 
 
-console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@this is campaign data.', campaign)
+console.log('This is campaign data.', campaign);
+
+if(!campaign) throw new Error('campaign_deleted')
 
 
 
@@ -63,11 +69,11 @@ console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@this is campaign data.', cam
 
 
 
-        const email = db.prepare(`SELECT * FROM emails WHERE id = ?`).get(sequenceEmailPointers[currentEmailIndex]?.id);
+        const email = db.prepare(`SELECT title, text FROM emails WHERE id = ?`).get(sequenceEmailPointers[currentEmailIndex]?.id);
 
         if(!email) {console.log('campaign finished.'); return;}
 
-        console.log('so here is my email', email, 'em pointers', sequenceEmailPointers )
+        console.log( 'em pointers', sequenceEmailPointers )
         
         let targets= JSON.parse(campaign.targetCustomers);
 
@@ -104,16 +110,20 @@ console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@this is campaign data.', cam
 
             try {
 
-          
-              const finalEmailText = finalizeEmailText(email.text, campaign.sequenceId, campaign.extraData)
 
-               console.log('My final email text is', finalEmailText);
+              targets.forEach(async(target) => {
+
+          
+              const finalEmailText = finalizeEmailText(email.text, target, campaign.extraData, db)
+
+               console.log('Sending email! _______________________________________________________');
 
                
               
 
               const transporter = nodemailer.createTransport({
-                service: "hotmail",
+                host: process.env.EMAIL_HOST,
+                port: Number(process.env.EMAIL_PORT),
                 auth: {
                   user: process.env.EMAIL_USER,
                   pass: process.env.EMAIL_PASSWORD,
@@ -123,10 +133,13 @@ console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@this is campaign data.', cam
               await transporter.sendMail({
                 //   from: 'orderconfirmed@selling-game-items-next.com',
                 from: process.env.EMAIL_USER,
-                to: targets,
+                to: target,
                 subject: email.title,
                 html: finalEmailText,
               });
+
+
+            });
 
 
               if(currentEmailIndex===sequenceEmailPointers.lenght-1)
@@ -243,8 +256,11 @@ console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@this is campaign data.', cam
     }
     catch(error){
 
+      if (error.message === 'campaign_deleted') {
+        console.error('Error: Campaign has been deleted');
+      }
 
-        console.log('cron error', error)
+        else { console.log('cron error', error)}
     }
  
        
@@ -270,18 +286,193 @@ console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@this is campaign data.', cam
 
 
 
- function finalizeEmailText(emailText, sequenceId, campaignExtraData){
+ function finalizeEmailText(emailText, customerEmail, campaignExtraData, db){
 
-  let transformedEmailText;
+  if(!emailText.match(/\{\{[^\s\]]+\}\}/)) return emailText;
 
- if(sequenceId.toString() === process.env.THANK_YOU_SEQUENCE_ID || sequenceId.toString() === process.env.THANK_YOU_SEQUENCE_FIRST_ORDER_ID){
-   console.log('thank you campaign detected!!' );
-   transformedEmailText = emailText.replace(/\[order_id\]/g, JSON.parse(campaignExtraData).orderId)
+  let transformedEmailText = emailText;
+
+
+
+  
+  if(emailText.match(/\{\{order_id\}\}/)) {
+
+    //Prepoznata je post_purchase sekvenca, replacovati sve order_ promenljive
+
+    const orderId= JSON.parse(campaignExtraData).orderId;
+
+   transformedEmailText = transformedEmailText.replace(/\{\{order_id\}\}/g, `#${orderId}` );
+
+
    
- }
- else{
-  transformedEmailText = emailText;
- }
+
+   const order = db.prepare(`SELECT total, items, tip, couponCode, paymentMethod FROM orders WHERE id = ?`).get(orderId);
+   
+
+   const items = JSON.parse(order.items);
+  //[ { id: 0, quantity: '1', variant: 'Wood grain' } ]
+
+   let subTotal = 0;
+
+    let itemsHtml= ``;
+
+
+    const fontFamily =  transformedEmailText.match(/font-family:[^;]*;/);
+
+    let orderDetailsColors ;
+
+
+    const match = emailText.match(/{{order_details\[(.*?)\]}}/)
+
+
+    if (match && match[1]) {
+      // Split the string by comma and trim whitespace
+      orderDetailsColors = match[1].split(',');
+
+    }
+
+
+
+    items.forEach((item=>{
+
+      console.log('item',item)
+
+    const itemSource = products.find((p)=>p.id===item.id)
+
+    const itemPrice = parseFloat((item.quantity * itemSource.price).toString(),2);
+    
+
+    subTotal = subTotal + itemPrice;
+
+
+    itemsHtml= itemsHtml + `<tr>
+    
+    <td style="padding: 8px 16px;
+     width: 1%;
+    white-space: nowrap;
+   
+    ">
+    <img
+      style='border-radius: 4px;'
+  src="${process.env.WEBSITE_ROOT_URL}/images/${itemSource.images[0]}"
+  alt=${itemSource.name}
+  height="48px"
+  width="48px"
+  sizes="48px"
+/>
+  </td>
+ <td colspan="2" style="padding: 12px 0; vertical-align: middle;${fontFamily}">
+ <span style="display: block; ">${item.quantity} ${`${itemSource.name}${item.quantity>1?'s':''}`}</span>
+    ${item.variant?`<span style="display: block; padding-left: 2px; padding-top: 2px; font-size: 14px; color: ${orderDetailsColors[0]};">Color: ${item.variant}</span>`:""}
+ 
+ </td>
+
+    
+     <td style="padding: 12px 16px 12px 0; vertical-align: middle; text-align: right;white-space: nowrap;${fontFamily}">$${itemPrice}</td>
+    
+    </tr>`
+   }))
+
+
+
+
+
+
+   
+
+  console.log(order);
+  console.log(coupons)
+
+  const discount = coupons.find(c=> {return c.code.toLowerCase()===order.couponCode.toLowerCase()})?.discountPercentage;
+
+
+
+
+
+   
+   const orderDetailsHtml = `<table border="0" role="presentation"> <tbody>
+
+  
+   <tr> 
+   <td colspan="4"> <div style="height: 24px; width: 100%;"></div> 
+   </td> 
+   </tr>
+
+   ${itemsHtml}
+
+  <tr> <td colspan="4" style="width: 100%; padding: 12px 16px 12px 16px;">
+   <div style="height: 1px; width: 100%; background-color: #292929; "/>
+  </td>
+
+  <tr>
+    
+    <td  colspan='3'  style="padding: 12px 16px; text-align: left;width: 1%;
+            white-space: nowrap;${fontFamily}">Subtotal</td>
+    <td style="padding: 12px 16px 8px 0;text-align: right;white-space: nowrap;${fontFamily}">$${subTotal}</td>
+  </tr>
+
+   ${discount ? `<tr>
+  
+    <td colspan='3' style="padding: 12px 16px;text-align: left;width: 1%;
+            white-space: nowrap;${fontFamily}">Coupon(${order.couponCode})</td>
+    <td style="padding: 12px 16px 8px 0;text-align: right;white-space: nowrap;${fontFamily}">- $${(subTotal*discount/100).toFixed(2)}</td>
+  
+  </tr>`:""
+   }
+  
+  <tr>
+
+     <td colspan='3'  style="padding: 12px 16px;text-align: left;width: 1%;
+            white-space: nowrap;${fontFamily}">Shipping</td>
+    <td  style="padding: 12px 16px 8px 0;text-align: right;white-space: nowrap;${fontFamily}">Free</td>
+  </tr>
+
+   ${(order.tip && order.tip!=='0.00') ? `<tr>
+   
+    <td colspan='3' style="padding: 12px 16px;text-align:left; width: 1%;
+            white-space: nowrap;${fontFamily}">Tip</td>
+    <td style="padding: 12px 16px 8px 0;text-align: right;${fontFamily}">$${order.tip}</td>
+  
+  </tr>`:""
+   }
+
+     <tr> <td colspan="4" style="width: 100%; padding: 12px 16px 12px 16px;">
+   <div style="height: 1px; width: 100%; background-color: #292929; "/>
+  </td>
+
+  <tr>
+
+     <td colspan='3' style="padding: 13px 16px 12px;text-align: left;width: 1%;
+            white-space: nowrap;${fontFamily}">Total</td>
+    <td  style="padding: 12px 16px 16px 0;white-space: nowrap;text-align: right;${fontFamily}font-size: 18px;font-weight: 700;color: ${orderDetailsColors[1]};">$${order.total} USD</td>
+  </tr>
+  </tbody>
+</table>`
+
+
+console.log('my order details html', orderDetailsHtml)
+   transformedEmailText = transformedEmailText.replace(/<table[^>]*>(?:(?!<\/table>)[\s\S])*{{order_details\[[^\]]*\]}}[\s\S]*?<\/table>/g, orderDetailsHtml);
+
+  
+  }
+
+  // Opsta zamena promenljivih primenljivih u svaki e-mail
+
+  const customerId = db.prepare(`SELECT id FROM customers WHERE email = ?`).get(customerEmail);
+
+  transformedEmailText = transformedEmailText.replace(/\{\{customer_id\}\}/g, customerId.id)
+   
+
+  const saltedTokenInput = customerEmail+ customerId.id;
+  const customer_hash = hashData(saltedTokenInput);
+
+  console.log('customers hash is', customer_hash)
+
+  
+  transformedEmailText = transformedEmailText.replace(/\{\{customer_hash\}\}/g, customer_hash)
+
+
+
  return transformedEmailText;
  
 
@@ -296,20 +487,21 @@ console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@this is campaign data.', cam
   console.log('here are dates', Date.now(), date)
 
 
-  let   finalSendingDate=(Date.now() - date) > 10000?
-              Date.now()+60000: date;
+  let   finalSendingDate=(Date.now() - date) > -5000?
+  Date.now()+5000: date;
 
               finalSendingDate = new Date(finalSendingDate);
 
 
     console.log('finalSendingDate is', finalSendingDate)
+    const seconds = finalSendingDate.getSeconds();
     const minutes = finalSendingDate.getMinutes();
     const hours = finalSendingDate.getHours();
     const dayOfMonth = finalSendingDate.getDate();
     const month = finalSendingDate.getMonth() + 1; // Note: Months are zero-indexed in JavaScript
     const dayOfWeek = finalSendingDate.getDay();
 
-    return `${minutes} ${hours} ${dayOfMonth} ${month} ${dayOfWeek}`;
+    return `${seconds} ${minutes} ${hours} ${dayOfMonth} ${month} ${dayOfWeek}`;
 }
 
 

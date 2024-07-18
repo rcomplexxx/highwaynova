@@ -3,6 +3,8 @@
    margin-left: var(--size-5);
     height: var(--size-9);
     width: var(--size-9);
+
+    align-self: center;
   
     
 }

@@ -246,7 +246,7 @@ export const Stars = ({ ratingNumber, starWrapperClassName, starClassName, fillC
 const CustomerStar = ({isEmpty})=>{
 
 	return <svg className={`${styles.customerStar}`} stroke={`var(--star-stroke-color)`} strokeWidth={2} 
-	height={20} width={20} viewBox="0 0 48 48" fill={isEmpty?`var(--empty-star-color)`:`var(--star-color)`}  xmlns="http://www.w3.org/2000/svg" >
+	height={20} width={20} viewBox="0 0 48 48" fill={isEmpty?`var(--star-empty-color)`:`var(--star-color)`}  xmlns="http://www.w3.org/2000/svg" >
 	<path  d="M26.285,2.486l5.407,10.956c0.376,0.762,1.103,1.29,1.944,1.412l12.091,1.757
 c2.118,0.308,2.963,2.91,1.431,4.403l-8.749,8.528c-0.608,0.593-0.886,1.448-0.742,2.285l2.065,12.042
 c0.362,2.109-1.852,3.717-3.746,2.722l-10.814-5.685c-0.752-0.395-1.651-0.395-2.403,0l-10.814,5.685
@@ -548,4 +548,13 @@ export const ApplePay = ({styleClassName}) =>{
 	</g></svg>
 }
 
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ADMIN ICONS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
+
+
+export const Atom = ()=>{
+	return <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24">
+  <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M8.737 8.737a21.49 21.49 0 0 1 3.308-2.724m0 0c3.063-2.026 5.99-2.641 7.331-1.3 1.827 1.828.026 6.591-4.023 10.64-4.049 4.049-8.812 5.85-10.64 4.023-1.33-1.33-.736-4.218 1.249-7.253m6.083-6.11c-3.063-2.026-5.99-2.641-7.331-1.3-1.827 1.828-.026 6.591 4.023 10.64m3.308-9.34a21.497 21.497 0 0 1 3.308 2.724m2.775 3.386c1.985 3.035 2.579 5.923 1.248 7.253-1.336 1.337-4.245.732-7.295-1.275M14 12a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z"/>
+</svg>
+
+}

@@ -1,0 +1,113 @@
+
+
+
+
+.mainDiv{
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+
+    background-color: var(--subscription-bg);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 9999;
+}
+
+
+.subscribedDiv{
+    color: var(--subscrition-txt-color);
+    background-color: var(--subscrition-main-div-bg);
+
+    width: calc(100% - var(--size-7));
+    max-width: var(--size-15);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    margin-top: var(--size-9);
+    box-sizing: border-box;
+    padding: var(--size-8);
+    align-self: flex-start;
+
+}
+
+.title{
+    color: var(--subscription-title-color);
+
+    margin: 0;
+    margin-bottom: var(--size-7);
+
+    font-size: var(--font-size-7);
+    align-self: center;
+}
+
+.instruction{
+    margin: 0;
+    font-weight: 500;
+}
+
+.subscribeButton{
+
+ 
+
+    width: var(--size-11);
+
+    border: 1px solid black;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+        margin-top: var(--size-6);
+
+}
+
+
+
+.errorWrapper{
+    max-width: var(--size-15-5);
+
+    margin-top: var(--size-7);
+
+    align-items: flex-start;
+    background-color: transparent;
+}
+
+.errorUl{
+    margin: var(--size-6) 0;
+    font-weight: 500;
+}
+
+
+
+@media (max-width: 420px) {
+
+
+    .subscribedDiv{
+
+        width: calc(100% - var(--size-6));
+        padding: var(--size-8) var(--size-7);
+    }
+
+  
+    
+}
+
+@media (max-width: 320px) {
+
+
+    .subscribedDiv{
+        width: calc(100% - 20px);
+    }
+
+
+  
+    
+}

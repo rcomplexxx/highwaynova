@@ -2,7 +2,7 @@ import betterSqlite3 from "better-sqlite3";
 import RateLimiter from "@/utils/rateLimiter.js";
 
 const limiterPerDay = new RateLimiter({
-  apiNumberArg: 7,
+  apiNumberArg: 4,
   tokenNumberArg: 35,
   expireDurationArg: 1800, //secs
 });
@@ -41,6 +41,7 @@ const craftShuffledArrayQuery = (array)=>{
 
 const getReviews = async (req, res) => {
 
+ 
 
 
   const resReturn = (statusNumber, jsonObject, db)=>{
@@ -51,13 +52,15 @@ const getReviews = async (req, res) => {
  }
 
 
+ 
+ const db = betterSqlite3(process.env.DB_PATH);
+
   const { product_id, starting_position, limit = 40 ,sortingType} = req.body;
 
 
   try {
     
 
-    const db = betterSqlite3(process.env.DB_PATH);
 
 
     const clientIp = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
@@ -139,22 +142,22 @@ const getReviews = async (req, res) => {
    
   
 
-    let highestRatingsArray = [];
+    let ratingArrayIds = [];
 
     for(let stars = 5; stars >0; stars--){
 
 
 
-    const currarr= db.prepare(`SELECT * FROM reviews WHERE product_id = ? AND stars = ?`).all(product_id, stars);
+    const currarr= db.prepare(`SELECT id FROM reviews WHERE product_id = ? AND stars = ?`).all(product_id, stars).map(revIdPacked=>revIdPacked.id);
 
    
 
-    const currarrShuffled =  fisherYatesShuffle(currarr, 42);
+    const currarrShuffled =  fisherYatesShuffle(currarr, 33);
     
       
     
 
-    highestRatingsArray=highestRatingsArray.concat(currarrShuffled);
+    ratingArrayIds=ratingArrayIds.concat(currarrShuffled);
   }
 
  
@@ -162,15 +165,19 @@ const getReviews = async (req, res) => {
     
 
     if(sortingType === "lowest_ratings"){
-      highestRatingsArray=highestRatingsArray.reverse();
+      ratingArrayIds=ratingArrayIds.reverse();
     }
 
   
     
-    const highestRatingsArraySliced= highestRatingsArray.slice(starting_position, starting_position+limit)
+    const ratingArrayIdsSlicedQuery= craftShuffledArrayQuery(ratingArrayIds.slice(starting_position, starting_position+limit))
 
 
-    return resReturn(200, { reviews: highestRatingsArraySliced }, db )
+
+    const myReviews= db.prepare(ratingArrayIdsSlicedQuery).all();
+
+
+    return resReturn(200, { reviews: myReviews }, db )
 
   
     
@@ -191,6 +198,8 @@ const getReviews = async (req, res) => {
   
    
   } catch (error) {
+
+    console.log('error', error)
 
     return resReturn(500, {error: "Verification error." }, db )
     

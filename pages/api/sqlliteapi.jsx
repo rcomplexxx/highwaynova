@@ -3,19 +3,19 @@ import RateLimiter from "@/utils/rateLimiter.js";
 import subscribe from '@/utils/subcsribe.js'
 
 const limiterPerMinute = new RateLimiter({
-  apiNumberArg: 8,
+  apiNumberArg: 0,
   tokenNumberArg: 6,
   expireDurationArg: 86400, //secs
 });
 
 const dailyMessageLimit = new RateLimiter({
-  apiNumberArg: 0,
+  apiNumberArg: 1,
   tokenNumberArg: 4,
   expireDurationArg: 60, //secs
 });
 
 const limiterPerWeek = new RateLimiter({
-  apiNumberArg: 1,
+  apiNumberArg: 2,
   tokenNumberArg: 40,
   expireDurationArg: 604800, //secs
 });
@@ -39,13 +39,13 @@ export default async function handler(req, res) {
     const db = betterSqlite3(process.env.DB_PATH);
 
 
-    if (!(await limiterPerMinute.rateLimiterGate(clientIp, db)))
-   return resReturn(429, { error: "Too many requests." }, db)
+  //   if (!(await limiterPerMinute.rateLimiterGate(clientIp, db)))
+  //  return resReturn(429, { error: "Too many requests." }, db)
 
 
      
-    if (!(await limiterPerWeek.rateLimiterGate(clientIp, db)))
-      return resReturn(429, { error: "Too many requests." }, db)
+  //   if (!(await limiterPerWeek.rateLimiterGate(clientIp, db)))
+  //     return resReturn(429, { error: "Too many requests." }, db)
 
     // Rate limiting checks passed, proceed with API logic
 

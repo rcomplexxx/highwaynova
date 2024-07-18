@@ -28,7 +28,7 @@ function subscribe(email, source, extraData, passedDbConnection) {
         .run(
           `Thank you ${email}`,
           sequenceId,
-          Date.now()+120000,
+          Date.now()+5000,
           0,
           0,
           JSON.stringify([email]),
@@ -46,7 +46,7 @@ function subscribe(email, source, extraData, passedDbConnection) {
          console.log('in thank you, thank you campaign set for email', email)
     
     
-            emailSendJob(Date.now()+120000,campaignId);
+            emailSendJob(Date.now()+5000,campaignId);
     }
 
 
@@ -66,7 +66,7 @@ const sendNewSubscriberSequence = ()=>{
   .run(
     `Welcome ${email}`,
     process.env.WELCOME_SEQUENCE_ID,
-    Date.now()+120000,
+    Date.now()+5000,
     0,
     0,
     JSON.stringify([email])
@@ -80,7 +80,7 @@ const sendNewSubscriberSequence = ()=>{
      
 
 
-        emailSendJob(Date.now()+120000,campaignId);
+        emailSendJob(Date.now()+5000,campaignId);
 }
 
 
@@ -109,6 +109,13 @@ const sendNewSubscriberSequence = ()=>{
       
         }
 
+        else  if(source === 're_subscribe'){
+          db.prepare("UPDATE customers SET subscribed = 1 WHERE email = ?").run(email); 
+          if(!passedDbConnection)db.close();
+
+          return true;
+        }
+
 
 
         
@@ -116,7 +123,7 @@ const sendNewSubscriberSequence = ()=>{
 
         else {
 
-
+           
 
             if(source.includes("checkout")){
 

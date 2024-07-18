@@ -33,7 +33,7 @@
     align-self: center;
    
     
-    border: solid 1px var( --input-border-color);
+    border: solid 1px var( --checkout-input-border-color);
     font-size: var(--font-size-1);
   }
 
@@ -41,24 +41,25 @@
 
   .customSearchBarInput:focus{
    
-    border: solid 2px var(--input-border-color-focused);
+    border: solid 2px var(--checkout-input-border-color-focused);
   }
 
 
-  .customSearchBarInput:-webkit-autofill {
-    background-color: var(--search-autofill-color);
+  .customSearchBarInput:-webkit-autofill{
+    
     -webkit-box-shadow: 0 0 0 30px var(--search-autofill-color) inset !important;
     -webkit-text-fill-color: var(--txt-color);
-   
+    caret-color: var(--txt-color);
   }
-  
-  /* For Firefox */
+
   .customSearchBarInput:-moz-autofill {
-    background-color: var(--search-autofill-color);
+    
     -webkit-box-shadow: 0 0 0 30px var(--search-autofill-color) inset !important;
     -webkit-text-fill-color: var(--txt-color);
+    caret-color: var(--txt-color);
   }
   
+ 
 
 
 

@@ -7,7 +7,7 @@
     opacity: 0;
     /* box-shadow: 0 0 4px #749ac2; */
     border-radius: 2px;
-    border: solid 1px var( --input-border-color);
+    border: solid 1px var( --checkout-input-border-color);
     box-sizing: border-box;
     appearance: none; /* Remove default arrow in some browsers */
     -webkit-appearance: none; /* For Safari */
@@ -19,7 +19,7 @@
   .countryFocused{
    
     
-     border: 2px solid var(--input-border-color-focused) !important;
+     border: 2px solid var(--checkout-input-border-color-focused) !important;
    
   }
 
@@ -33,7 +33,6 @@
 
  
 
-  .countryColoredPlaceholder{ color: var(--high-contrast-txt-color);}
 
 
   .countrySelectStyle option{
@@ -46,8 +45,8 @@
     position: relative;
     width: 100%;
     border-radius: 2px;
-    background-color: var(--input-color);
-    border: solid 1px var( --input-border-color);
+    background-color: var(--checkout-input-bg);
+    border: solid 1px var( --checkout-input-border-color);
    
     
       flex-grow: 1;
@@ -90,7 +89,7 @@
     }
 
     .countryNameLabel{
-      color: var(--high-contrast-txt-color);
+      color: var(--checkout-input-color);
       position: absolute;
       left: var(--size-3);
       top: 24px;

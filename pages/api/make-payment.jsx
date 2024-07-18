@@ -5,10 +5,9 @@ import betterSqlite3 from "better-sqlite3";
 import RateLimiter from "@/utils/rateLimiter.js";
 import coupons from '../../data/coupons.json'
 import subscribe from '@/utils/subcsribe.js'
-import emailSendJob from "@/utils/sendEmailJob";
 
 const limiterPerDay = new RateLimiter({
-  apiNumberArg: 2,
+  apiNumberArg: 3,
   tokenNumberArg: 24,
   expireDurationArg: 86400, //secs
 });
@@ -282,11 +281,11 @@ const makePayment = async (req, res) => {
   try {
     const clientIp = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
 
-    if (!(await limiterPerDay.rateLimiterGate(clientIp, db))){
+    // if (!(await limiterPerDay.rateLimiterGate(clientIp, db))){
       
       
-      return resReturn(429, { error: "Too many requests. Please try again later." }, db);
-    }
+    //   return resReturn(429, { error: "Too many requests. Please try again later." }, db);
+    // }
 
     
     

@@ -51,8 +51,7 @@ export default function CountryInput({ id, setErrors, error }) {
         onFocus={()=>{setIsFocused(true);}}
         onBlur={()=>{setIsFocused(false)}}
         defaultOptionLabel="Country *"
-        classes={`${styles.countrySelectStyle} ${
-          country !== "" && styles.countryColoredPlaceholder}`}
+        classes={`${styles.countrySelectStyle}`}
         
        
       />

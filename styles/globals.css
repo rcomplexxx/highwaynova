@@ -464,7 +464,7 @@ p {
   --footer-link-active-color: var(--neutral-9);
   --footer-email-placeholder-color: var(--neutral-5);
   --footer-subscribe-input-txt-color: var(--neutral-9);
-  --subscribe-input-border: var( --input-border-color);
+  --subscribe-input-border: var( --checkout-input-border-color);
   --action-button-footer-txt-color: var(--action-button-txt-color);
   --action-button-hover-footer-txt-color: var(--action-button-footer-txt-color);
 
@@ -660,11 +660,15 @@ p {
   
 
  /*~ Contact us ~*/
- --contact-input-color: transparent;
+
+ --contact-input-color: var(--checkout-input-color); 
+ --contact-input-bg: transparent;
  --contact-input-border: var(--neutral-3);
  --contact-input-border-focused: var(--neutral-3); 
-
- /*#0c212b --input-color*/
+ --contact-input-autofill-bg: var(--bg-color);
+ --contact-input-placeholder: var(--neutral-6);
+ --contact-input-placeholder-floating: var(--neutral-7);
+ /*#0c212b --checkout-input-bg*/
 
 
 
@@ -686,10 +690,12 @@ p {
   --google-pay-border-color: transparent;
 
 
-  --input-color: transparent;
-  --input-border-color: var(--neutral-3);
-  --input-border-color-focused: var(--main-color-4);
-  --input-autofill-color: var(--bg-color);
+  --checkout-title: var(--high-contrast-txt-color);
+  --checkout-input-color: var(--txt-color);
+  --checkout-input-bg: transparent;
+  --checkout-input-border-color: var(--neutral-3);
+  --checkout-input-border-color-focused: var(--main-color-4);
+  --checkout-input-autofill-bg: var(--bg-color);
 
   
   --checkout-input-placeholder: var(--neutral-6);
@@ -712,7 +718,7 @@ p {
 
  
   --select-payment-circle-ring-color: var(--main-color-4);
-  --select-payment-circle-color: var(--input-border-color);
+  --select-payment-circle-color: var(--checkout-input-border-color);
 
   --payment-option-bg: black;
   --payment-div-bg: var(--neutral-0);
@@ -747,7 +753,7 @@ p {
   --checkout-order-summery-bg: var(--main-color-0);
   --checkout-order-summery-bg-mobile: var(--main-color-0);
  
-  
+  --summery-variant-color: var(--neutral-7);
   
 
   --apply-border-color: var(--action-button-border-color);
@@ -814,6 +820,29 @@ p {
 
 --email-popup-cancel-button-bg: var(--neutral-3);
 --email-cancel-icon-color: var(--neutral-6);
+
+
+/* Subscription management UI */
+
+
+--subscription-bg: var(--bg-color);
+--subscrition-main-div-bg: var(--neutral-0-5);
+--subscription-title-color: var(--neutral-9);
+--subscrition-txt-color: var(--neutral-6);
+
+
+
+--subscription-input-color:var(--txt-color);
+--subscription-input-bg:transparent;
+--subscrition-input-border:var(--neutral-3);
+--contact-input-autofill-bg: var(--neutral-0-5);
+--subscrition-input-placeholder:var(--neutral-6);
+--subscription-input-placeholder-floating: var(--neutral-7);
+
+/* Email colors */
+
+--email-order-summery-weak: var(--neutral-6);
+--email-order-summery-total: var(--neutral-9);
 
 
 

@@ -145,20 +145,23 @@
   }
 
 
-  .subscribeInput:-webkit-autofill {
-    background-color: var(--footer-bg);
+  .subscribeInput:-webkit-autofill{
+    
     -webkit-box-shadow: 0 0 0 30px var(--footer-bg) inset !important;
     -webkit-text-fill-color: var(--footer-txt-color);
+    caret-color: var(--footer-txt-color);
+  }
+
+
+  .subscribeInput:-moz-autofill {
+    
+    -webkit-box-shadow: 0 0 0 30px var(--footer-bg) inset !important;
+    -webkit-text-fill-color: var(--footer-txt-color);
+    caret-color: var(--footer-txt-color);
    
   }
   
-  /* For Firefox */
-  .subscribeInput:-moz-autofill {
-    background-color: var(--footer-bg);
-    -webkit-box-shadow: 0 0 0 30px var(--footer-bg) inset !important;
-    -webkit-text-fill-color: var(--footer-txt-color);
-  }
-  
+
 
 
   .subscribeValidationMessage{
