@@ -1,7 +1,8 @@
 import paypal from "@paypal/checkout-server-sdk";
-import betterSqlite3 from "better-sqlite3";
 import RateLimiter from "@/utils/rateLimiter.js";
 import subscribe from '@/utils/subcsribe'
+const getPool = require('../../utils/mariaDbPool');
+
 
 
 const limiterPerDay = new RateLimiter({
@@ -26,15 +27,19 @@ const approvePayment = async (req, res) => {
 
 
 
-  const resReturn = (statusNumber, jsonObject, db)=>{
 
-     
+
+  let dbConnection = await getPool().getConnection();
+
+
+
+  const resReturn = async(statusNumber, jsonObject)=>{
+
+    if(dbConnection) await dbConnection.release();
     res.status(statusNumber).json(jsonObject)
-    if(db)db.close();
+   
  }
   
-
-  const db = betterSqlite3(process.env.DB_PATH);
 
   let giftDiscount = false;
 
@@ -46,7 +51,7 @@ const approvePayment = async (req, res) => {
 
 
   const updateDb = async (email) => {
-    return new Promise((resolve, reject) => {
+    return new Promise(async(resolve, reject) => {
 
     
 
@@ -55,16 +60,14 @@ const approvePayment = async (req, res) => {
 
         // Updating the 'approved' field in the 'orders' table using prepared statements
 
-        const result = db
-          .prepare("UPDATE orders SET approved = ? WHERE paymentId = ? AND paymentMethod = ?")
-          .run(1, paymentId, paymentMethod);
+      const result = await dbConnection.query(
+      `UPDATE orders SET approved = ? WHERE paymentId = ? AND paymentMethod = ?`,
+      [1, paymentId, paymentMethod]
+    );
 
-        // Check the result of the update operation
-         // If changes were made, resolve the promise
-
-        if (result.changes > 0) {
+        if (result.affectedRows > 0) {
          
- const orderData = db.prepare(`SELECT id, total, couponCode FROM orders WHERE paymentId = ? AND paymentMethod = ?`).get(paymentId, paymentMethod);
+ const orderData = (await dbConnection.query(`SELECT id, total, couponCode FROM orders WHERE paymentId = ? AND paymentMethod = ?`, [paymentId, paymentMethod]))[0];
           
 
 
@@ -74,35 +77,37 @@ const approvePayment = async (req, res) => {
           
 
 
-          const customerInfo = db.prepare("SELECT id, used_discounts FROM customers WHERE email = ?").get(email);
-          const customerId = customerInfo?.id || db.prepare("INSERT INTO customers (email, totalOrderCount, subscribed, source) VALUES (?, ?, ?, ?)").run(email, 0, 0, 'make_payment').lastInsertRowid ;
+          const customerInfo = (await dbConnection.query("SELECT id, used_discounts FROM customers WHERE email = ?", [email]))[0];
+          const customerId = customerInfo?.id || (await dbConnection.query("INSERT INTO customers (email, totalOrderCount, subscribed, source) VALUES (?, ?, ?, ?)", [email, 0, 0, 'make_payment'])).insertId;
 
         
 
           if(customerInfo && JSON.parse(customerInfo.used_discounts).find(discountCode=>  discountCode===orderData.couponCode))
-           return resReturn(400, { success: false, error: "Discount has already been used."}, db)
+           return await resReturn(400, { success: false, error: "Discount has already been used."})
 
 
 
-          db.prepare("UPDATE customers SET totalOrderCount = totalOrderCount + 1, money_spent = ROUND(money_spent + ?, 2) WHERE id = ?").run(orderData.total, customerId); 
+
+          await dbConnection.query("UPDATE customers SET totalOrderCount = totalOrderCount + 1, money_spent = ROUND(money_spent + ?, 2) WHERE id = ?", [orderData.total, customerId]); 
+
 
         
           const subscribeSource = customerSubscribed? "checkout": "checkout x";
 
        
       
-          subscribe(email, subscribeSource, {orderId:orderData.id}, db);
+          subscribe(email, subscribeSource, {orderId:orderData.id}, dbConnection);
    
 
          
 
           if(orderData.couponCode)
-         db.prepare(`UPDATE customers SET used_discounts = json_insert(used_discounts, '$[#]', ?), money_spent = money_spent + ? WHERE id = ? `).run(orderData.couponCode, orderData.total, customerId)
+        await dbConnection.query(`UPDATE customers SET used_discounts = json_insert(used_discounts, '$[#]', ?), money_spent = money_spent + ? WHERE id = ? `, [orderData.couponCode, orderData.total, customerId])
 
         
         
 
-          giftDiscount= db.prepare(`SELECT 1 FROM customers WHERE id = ? AND totalOrderCount = 1`).get(customerId);
+          giftDiscount=  (await dbConnection.query(`SELECT 1 FROM customers WHERE id = ? AND totalOrderCount = 1`, [customerId]))[0];
 
      
           
@@ -126,13 +131,13 @@ const approvePayment = async (req, res) => {
 
 
   const updateAddress = async (email,shippingAddress) => {
-    return new Promise((resolve, reject) => {
+    return new Promise(async(resolve, reject) => {
       try {
        
 
         // Updating the 'approved' field in the 'orders' table using prepared statements
 
-  const paypalExpressChecker=  db.prepare(`SELECT address, city FROM orders WHERE paymentId = ? AND paymentMethod = ?` ).get(paymentId, paymentMethod);
+  const paypalExpressChecker=  (await dbConnection.query(`SELECT address, city FROM orders WHERE paymentId = ? AND paymentMethod = ?`, [paymentId, paymentMethod]))[0];
           if(!paypalExpressChecker)throw new Error('Something went wrong. No data found in the database for the specified paymentId and paymentMethod.');
 
 
@@ -154,18 +159,17 @@ const approvePayment = async (req, res) => {
 
 
 
-        const myCustomerId = db.prepare(`SELECT id FROM customers WHERE email = ?`).get(email)?.id;
+        const myCustomerId = (await dbConnection.query(`SELECT id FROM customers WHERE email = ?`, [email]))[0]?.id;
         
 
 
-        const result = db
-          .prepare("UPDATE orders SET customer_id = ?, firstName = ?, lastName = ?, address = ?, apt = ?, country = ?, zipcode =?, state = ?, city=? WHERE paymentId = ? AND paymentMethod = ?")
-          .run(myCustomerId, fullName.slice(0, fullName.indexOf(" ")), fullName.slice(fullName.indexOf(" "), fullName.length), 
-          address.address_line_1, address.address_line_2,address.country_code, address.postal_code, address.admin_area_1,address.admin_area_2 , paymentId, paymentMethod);
+        const result = await dbConnection.query("UPDATE orders SET customer_id = ?, firstName = ?, lastName = ?, address = ?, apt = ?, country = ?, zipcode =?, state = ?, city=? WHERE paymentId = ? AND paymentMethod = ?"
+          , [myCustomerId, fullName.slice(0, fullName.indexOf(" ")), fullName.slice(fullName.indexOf(" "), fullName.length), 
+          address.address_line_1, address.address_line_2,address.country_code, address.postal_code, address.admin_area_1,address.admin_area_2 , paymentId, paymentMethod]);
           // , phone=?
         // Check the result of the update operation
         console.log('result',result);
-        if (result.changes > 0) {
+        if (result.affectedRows > 0) {
           // If changes were made, resolve the promise
           resolve("Order approved successfully.");
         } else {
@@ -192,8 +196,8 @@ const approvePayment = async (req, res) => {
   try {
     const clientIp = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
 
-    // if (!(await limiterPerDay.rateLimiterGate(clientIp, db)))
-    //   return resReturn(429, {error: "Too many requests. Please try again later." }, db)
+    if (!(await limiterPerDay.rateLimiterGate(clientIp, dbConnection)))
+      return await resReturn(429, {error: "Too many requests. Please try again later." })
   
     
 
@@ -218,20 +222,20 @@ const approvePayment = async (req, res) => {
         await updateDb(response.result.payer.email_address);
      
 
-        return resReturn(200, { message: "Payment successful",
-          giftDiscount: giftDiscount }, db)
+        return await resReturn(200, { message: "Payment successful",
+          giftDiscount: giftDiscount })
 
      
           
       } else if (response.result.status === "INSTRUMENT_DECLINED") {
 
-        return resReturn(500, {  error: "INSTRUMENT_DECLINED"  }, db)
+        return await resReturn(500, {  error: "INSTRUMENT_DECLINED"  })
 
  
       } else {
         
 
-        return resReturn(500, { error: response.result.status }, db)
+        return await resReturn(500, { error: response.result.status })
 
         
       }
@@ -239,7 +243,7 @@ const approvePayment = async (req, res) => {
   } 
 
   
-  return resReturn(500, { error: "Payment was not approved." }, db)
+  return await resReturn(500, { error: "Payment was not approved." })
 
  
   
@@ -247,7 +251,7 @@ const approvePayment = async (req, res) => {
 
 
     console.error("Capture request failed:", error);
-    return resReturn(500, { error: "Server error. Payment was not approved." }, db)
+    return await resReturn(500, { error: "Server error. Payment was not approved." })
 
     
   }

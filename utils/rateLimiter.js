@@ -1,4 +1,7 @@
-import betterSqlite3 from 'better-sqlite3';
+const getPool = require('./mariaDbPool');
+
+
+
 
 class RateLimiter {
 
@@ -19,18 +22,22 @@ class RateLimiter {
         
     }
 
-    async rateLimiterGate (ipArg, passedDbConnection )  {
+    async rateLimiterGate (ipArg, dbConnectionArg )  {
 
   
 
-      return new Promise((resolve, reject) => {
-        const db= passedDbConnection?passedDbConnection:betterSqlite3(process.env.DB_PATH);
+        const dbConnection= dbConnectionArg?dbConnectionArg:await getPool().getConnection();
+
+
+
+    
+      
           try {
          
   
-              const existingRecord = db.prepare(`
+              const existingRecord = (await dbConnection.query(`
                   SELECT id, tokenNumber, expireDate  FROM rateLimiter WHERE ip = ? AND apiNumber = ?
-              `).get(ipArg, this.apiNumber);
+              LIMIT 1`,[ipArg, this.apiNumber]))[0];
   
               if (existingRecord) {
                   if (existingRecord.tokenNumber === 0) {
@@ -41,44 +48,45 @@ class RateLimiter {
                      
   
                      
-                      db.prepare(`
+                      await dbConnection.query(`
                       UPDATE rateLimiter 
                               SET tokenNumber = ?, expireDate = ? 
                               WHERE id = ?
-                  `).run(this.tokenNumber - 1, Math.floor(Date.now() / 1000) + this.expireDuration, existingRecord.id);
-                  resolve(true);
+                  `, [this.tokenNumber - 1, Math.floor(Date.now() / 1000) + this.expireDuration, existingRecord.id]);
+                  
+                  return true;
                       
   
   
                     }
   
   
-                     resolve(false);
+                     return false;
                   } else {
   
                     
-                      db.prepare(`
+                      await dbConnection.query(`
                           UPDATE rateLimiter SET tokenNumber = ? WHERE ip = ? AND apiNumber = ?
-                      `).run(existingRecord.tokenNumber - 1, ipArg, this.apiNumber);
-                      resolve(true);
+                      `, [existingRecord.tokenNumber - 1, ipArg, this.apiNumber]);
+                      return true;
                   }
               } else {
   
   
               
   
-                  db.prepare(`
+                 await dbConnection.query(`
                       INSERT INTO rateLimiter (ip, tokenNumber, apiNumber, expireDate) VALUES (?, ?, ?, ?)
-                  `).run(ipArg, this.tokenNumber - 1, this.apiNumber, Math.floor(Date.now() / 1000) + this.expireDuration);
-                  resolve(true);
+                  `,[ipArg, this.tokenNumber - 1, this.apiNumber, Math.floor(Date.now() / 1000) + this.expireDuration]);
+                  return true;
               }
           } catch (error) {
               console.error('Error in database operations:', error);
-              reject('Error in database operations.');
+              return false;
           } finally {
-              if(!passedDbConnection)db.close();
+              if(!dbConnectionArg && dbConnection)await dbConnection.release();
           }
-      });
+     
 }
 }
 

@@ -217,7 +217,40 @@ return <div className={styles.productReturnInfoPair}>
 
    })
   }
+<button onClick={async()=>{
 
+const result = window.confirm('Are you sure you want to proceed?');
+if (result) {
+
+  
+
+    try {
+      const response = await fetch("/api/admincheck", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ dataType:"delete_product_return", data: {deleteId: product.id} }),
+      });
+
+      if(response.ok){
+        setMyProductReturns(myProductReturns.filter(pr=>{return pr.id!==product.id}));
+      }
+
+
+    } catch (error) {
+   
+      
+
+      console.error("Error deleting return:", error);
+    }
+
+
+    
+}
+
+
+}}>Delete return</button>
      
 
       </div>

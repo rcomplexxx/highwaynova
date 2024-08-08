@@ -1,7 +1,8 @@
 // Import necessary functions for token generation and password verification
 import hashData from "@/utils/hashData";
 import RateLimiter from "@/utils/rateLimiter.js";
-import betterSqlite3 from "better-sqlite3";
+
+const getPool = require('../../utils/mariaDbPool');
 
 const limiterPerHour = new RateLimiter({
   apiNumberArg: 9,
@@ -12,19 +13,27 @@ const limiterPerHour = new RateLimiter({
 export default async function unsubscribe(req, res) {
 
 
-  const resReturn = (statusNumber, jsonObject, db)=>{
+
+
+
+  let dbConnection = await getPool().getConnection();
+
+
+
+
+  const resReturn = async(statusNumber, jsonObject, db)=>{
 
     console.log('returning res', statusNumber, jsonObject);
 
-     
+    if(dbConnection) await dbConnection.release();
     res.status(statusNumber).json(jsonObject)
-    if(db)db.close();
+  
  }
 
 
 const {customer_id, customer_hash} = req.body;
 
- const db = betterSqlite3(process.env.DB_PATH);
+
  
 
   
@@ -32,14 +41,14 @@ const {customer_id, customer_hash} = req.body;
 
     const clientIp = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
 
-    // if (!(await limiterPerHour.rateLimiterGate(clientIp)))
-    //   return resReturn(429, { success: true, error: "server_error" } ,db)
+    if (!(await limiterPerHour.rateLimiterGate(clientIp)))
+      return await resReturn(429, { success: true, error: "server_error" })
      
 
     console.log(Number(customer_id), 'welcome')
-      const customer = db.prepare(`SELECT email FROM customers WHERE id = ?`).get(Number(customer_id));
+      const customer = (await  dbConnection.query(`SELECT email FROM customers WHERE id = ?`, [Number(customer_id)]))[0];
 
-      if(!customer.email) return resReturn(400, { success: false, error: "customer_not_found" } ,db)
+      if(!customer?.email) return await resReturn(400, { success: false, error: "customer_not_found" })
 
         
 
@@ -52,20 +61,20 @@ const {customer_id, customer_hash} = req.body;
 
       if(hashVerified !== customer_hash){
         
-        return resReturn(400, { success: false, error: 'customer_unverified' } ,db)
+        return await resReturn(400, { success: false, error: 'customer_unverified' })
       
       }
 
   
 
-    db.prepare('UPDATE customers SET subscribed = 0 WHERE id = ?').run(customer_id);
+   await  dbConnection.query('UPDATE customers SET subscribed = 0 WHERE id = ?', [customer_id]);
  
   
 
 
 
 
-       const allCampaigns = db.prepare(`SELECT id, targetCustomers FROM email_campaigns`).all();
+       const allCampaigns = await dbConnection.query(`SELECT id, targetCustomers FROM email_campaigns`);
 
        let customersCampaigns = allCampaigns.filter(campaign => 
          campaign.targetCustomers.includes(customer.email)
@@ -81,14 +90,16 @@ const {customer_id, customer_hash} = req.body;
         }
         return true;
        });
+
+
+       for(const campaign of customersCampaigns){
+        await  dbConnection.query(`UPDATE email_campaigns SET targetCustomers = ? WHERE id = ?`, [campaign.targetCustomers, campaign.id]);
+       }
        
-       customersCampaigns.forEach(campaign => {
-         db.prepare(`UPDATE email_campaigns SET targetCustomers = ? WHERE id = ?`).run(campaign.targetCustomers, campaign.id);
-       });
-      
+    
 
 
-      return resReturn(200, { success: true, message: "Unsubscribed successfuly" } ,db)
+      return await resReturn(200, { success: true, message: "Unsubscribed successfuly" })
    
   
 
@@ -107,6 +118,6 @@ const {customer_id, customer_hash} = req.body;
 
 
   } catch (e) {
-    return resReturn(500, { success: false, error: e } ,db)
+    return await resReturn(500, { success: false, error: e } )
   }
 }

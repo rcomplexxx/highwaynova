@@ -1,10 +1,11 @@
+
 const next = require('next');
 const express = require('express');
 const createSqliteTables = require('./utils/createSqliteTables.js')
 const dbCleaner = require('./utils/dbCleaner.jsx');
 const sendEmailJob = require('./utils/sendEmailJob.jsx');
-const betterSqlite3 = require ("better-sqlite3");
 
+const getPool = require('./utils/mariaDbPool');
 
 
 
@@ -13,18 +14,32 @@ const app = next({ dev });
 const handle = app.getRequestHandler();
 const server = express();
 
-function startEmailJobs(){
+async function startEmailJobs(){
+
+
+  let dbConnection = await getPool().getConnection();
+
 
   try{
-  const db = betterSqlite3(process.env.DB_PATH);
 
-const campaigns= db.prepare(` SELECT 
+
+ 
+
+
+
+
+
+ 
+
+
+
+const campaigns= await dbConnection.query(` SELECT 
     email_campaigns.id, 
     email_campaigns.emailSentCounter, 
     email_campaigns.sendingDateInUnix,
     email_sequences.emails
   FROM email_campaigns
-  JOIN email_sequences ON email_campaigns.sequenceId = email_sequences.id`).all();
+  JOIN email_sequences ON email_campaigns.sequenceId = email_sequences.id`);
 
 
 
@@ -35,7 +50,7 @@ const campaigns= db.prepare(` SELECT
 
 console.log('campaigns', campaigns);
 
-campaigns.forEach(campaign=>{
+for(const campaign of campaigns){
 
 
  
@@ -60,7 +75,7 @@ campaigns.forEach(campaign=>{
      
     
 
-    let dateCalculated = campaign.sendingDateInUnix;
+    let dateCalculated = parseInt(campaign.sendingDateInUnix);
 
   
 
@@ -85,12 +100,20 @@ campaigns.forEach(campaign=>{
 
 
       
-      sendEmailJob(finalSendingDate, campaign.id);
+      await sendEmailJob(finalSendingDate, campaign.id);
   }
-})
+}
+
+
   }
   catch(error){
     console.log('server start error', error);
+  }
+
+  finally{
+    
+    if(dbConnection) await dbConnection.release();
+
   }
 
 //mozda dodati i retry numbers i pokusati da posaljem mejl kroz 30 min. Tipa 5 retryja
@@ -104,15 +127,17 @@ console.log('Additional code.');
 
 
 
-app.prepare().then(() => {
+app.prepare().then(async() => {
+
+  BigInt.prototype.toJSON = function() { return this.toString() }
 
 
-  createSqliteTables();
+ await createSqliteTables();
 
 
-  dbCleaner();
+  await dbCleaner();
   //Here start email crons
-  startEmailJobs();
+  await startEmailJobs();
   
 
   server.all('*', (req, res) => {

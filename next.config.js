@@ -1,6 +1,7 @@
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const purgecss = require('@fullhuman/postcss-purgecss')
+const path = require('path');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -24,7 +25,19 @@ const nextConfig = {
         experimental: {
           optimizeCss: true,
         },
-      }
+      },
+      webpack: (config, { isServer }) => {
+
+        config.resolve.alias['@'] = path.join(__dirname);
+        
+        return config;
+      },
+
+      compiler: {
+        removeConsole: {
+          exclude: ['error'],
+        },
+      },
 
 }
 

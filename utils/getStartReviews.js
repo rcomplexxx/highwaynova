@@ -1,24 +1,26 @@
-import betterSqlite3 from "better-sqlite3";
+
 import reviewsData from "@/data/reviews.json";
+const getPool = require('./mariaDbPool');
 
 
-
-export const getReviewsData= (productId)=>{
+export const getReviewsData= async(productId)=>{
 const limit = 20;
 
     try {
    
   
-    
+   
+
+
+
+     let dbConnection = await getPool().getConnection();
   
-      const db = betterSqlite3('./data/database.db');
+     
+      const result =  await dbConnection.query(`SELECT * FROM reviews WHERE product_id = ? LIMIT ?`, [productId, limit]);
   
-      const query = `SELECT * FROM reviews WHERE product_id = ? LIMIT ?`;
-      const stmt = db.prepare(query);
+
   
-      const result = stmt.all(productId, limit);
-  
-      db.close();
+      await dbConnection.release();
   
       return result.length<20?reviewsData:result;
     } catch (error) {

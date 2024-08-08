@@ -95,13 +95,13 @@ export default function OrderCard({
 
   const changePs = () => {
    
-   if(packageStatus ==="3") return;
+   if(packageStatus ===3) return;
 
-    packageStatus === "0"
-      ? handlePackageStatusChange(id, "1")
-      : packageStatus === "1"
-      ? handlePackageStatusChange(id, "2")
-      : handlePackageStatusChange(id, "0");
+    packageStatus === 0
+      ? handlePackageStatusChange(id, 1)
+      : packageStatus === 1
+      ? handlePackageStatusChange(id, 2)
+      : handlePackageStatusChange(id, 0);
   };
 
   return (
@@ -113,12 +113,12 @@ export default function OrderCard({
       <p className={styles.orderId}>Order_id {infoObj.id}</p>
 
       <button className={styles.packageStatusButton} onClick={changePs}>
-        {packageStatus === "0"
+        {packageStatus === 0
           ? "Not Ordered"
-          : packageStatus === "1"
+          : packageStatus === 1
           ? "Ordered"
-          : packageStatus === "2"? "Completed"
-          : packageStatus === "3" ? "Returned":
+          : packageStatus === 2? "Completed"
+          : packageStatus === 3 ? "Returned":
           "Undefined"}
       </button>
       </div>

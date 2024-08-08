@@ -1,24 +1,25 @@
-import betterSqlite3 from "better-sqlite3";
 
+const getPool = require('./mariaDbPool');
 
-const getRatingData = (product_id, stars) => {
+const getRatingData = async(product_id, stars) => {
  
 
   try {
   
 
-    const db = betterSqlite3(process.env.DB_PATH);
+    let dbConnection = await getPool().getConnection();
 
-    const query = `SELECT COUNT(*) as count FROM reviews WHERE product_id = ? AND stars = ?`;
+ 
+
    
     
-    const stmt = db.prepare(query);
+    const result = parseInt((await dbConnection.query(`SELECT COUNT(*) as count FROM reviews WHERE product_id = ? AND stars = ?`, [product_id, stars]))[0].count);
 
-    const result = stmt.pluck().get(product_id, stars);;
    
-    db.close();
-    console.log('number', result);
-    return result;
+   
+    await dbConnection.release()
+    
+    return Number(result);
   } catch (error) {
 
    return 0;

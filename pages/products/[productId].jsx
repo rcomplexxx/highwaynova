@@ -332,7 +332,7 @@ export async function getStaticProps(context) {
     });
 
 
-    const reviewsData= getReviewsData(productId);
+    const reviewsData= await getReviewsData(productId);
 
     if ('supplierPrice' in product) {
       // Remove the property
@@ -345,14 +345,16 @@ export async function getStaticProps(context) {
     let reviewsNumberFinal = 0;
     let sumOfAllReviews= 0 ;
     for(let i=1; i <6; i++){
-      const reviewsNumber = getRatingData(productId, i);
+      
+      const reviewsNumber = await getRatingData(productId, i);
       ratingData={...ratingData, [`stars${i}`]:reviewsNumber}
       reviewsNumberFinal = reviewsNumberFinal + reviewsNumber;
       sumOfAllReviews=sumOfAllReviews+reviewsNumber*i;
+
     }
     const averageValue=reviewsNumberFinal!==0?Math.round(sumOfAllReviews/reviewsNumberFinal * 10)/ 10:4.7;
     if(reviewsNumberFinal===0) ratingData={stars5:386, stars4:60, stars3:0, stars2:1, stars1:2, reviewsNumber: 449, rating: averageValue}
-    else{ratingData={...ratingData, reviewsNumber: reviewsNumberFinal, rating: averageValue}}
+    else {ratingData={...ratingData, reviewsNumber: reviewsNumberFinal, rating: averageValue}}
   // Return the data as props
   return {
     props: {

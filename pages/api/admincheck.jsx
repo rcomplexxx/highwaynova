@@ -1,18 +1,18 @@
 import fs from 'fs'
 import { verifyToken } from "../../utils/auth.js"; // Adjust the path based on your project structure
 import RateLimiter from "@/utils/rateLimiter.js";
-import betterSqlite3 from "better-sqlite3";
 import emailSendJob from '@/utils/sendEmailJob.jsx';
 import makeNewDescription from "../../utils/makeNewDescription.js"
 import reorderReviewsByRatingAndImages from '@/utils/reorderReviews.jsx';
 import createSqliteTables from '@/utils/createSqliteTables.js';
 import getTargets from '@/utils/getTargets.js';
 
+const getPool = require('../../utils/mariaDbPool');
 
 
 const limiterPerTwoMins = new RateLimiter({
   apiNumberArg: 6,
-  tokenNumberArg: 20,
+  tokenNumberArg: 40,
   expireDurationArg: 120, //secs
 });
 
@@ -20,50 +20,57 @@ export default async function adminCheckHandler(req, res) {
   const { token } = req.cookies;
 
 
-  const resReturn = (statusNumber, jsonObject, db)=>{
+
+
+  let dbConnection = await getPool().getConnection();
+
+
+  const resReturn = async(statusNumber, jsonObject)=>{
 
     console.log('returning res', statusNumber, jsonObject);
 
-     
+    if(dbConnection) await dbConnection.release();
+
     res.status(statusNumber).json(jsonObject)
-    if(db)db.close();
+
  }
 
-  const db = betterSqlite3(process.env.DB_PATH);
 
-  const getFromDb = (table, queryCondition=true, selectVariables='*') => {
+  const getFromDb = async(table, queryCondition=true, selectVariables='*') => {
     try {
      
       let rows;
 
       if(table==="emails"){
         
-       let queryString = `SELECT * FROM emails`;
-       const rows1 = db.prepare(queryString).all();
+       const rows1 = await dbConnection.query(`SELECT * FROM emails`);
 
 
        let rows2=[];
-      //  let row2_5={};
+    
+       
        try{
-        queryString = `SELECT * FROM email_sequences`;
-        rows2 = db.prepare(queryString).all();
+        
+        rows2 = await dbConnection.query(`SELECT * FROM email_sequences`);
 
-        // queryString = `SELECT * FROM key_email_sequences WHERE id = 1`;
-        // row2_5 = db.prepare(queryString).get();
+     
+        
 
        }catch{}
 
        
        let rows3=[];
        try{
-        queryString = `SELECT * FROM email_campaigns`;
-        rows3 = db.prepare(queryString).all();
+        
+        rows3 = await dbConnection.query(`SELECT * FROM email_campaigns`);
        }catch{}
 
-      //  keySequences: row2_5,
+       
        rows= {emails: rows1, sequences: rows2,  campaigns: rows3};
 
       }
+
+  
 
      
 
@@ -89,19 +96,19 @@ else{
  
 
       // Fetching data from the specified table with the given query condition
-     rows = db.prepare(queryString).all();
+     rows = await dbConnection.query(queryString);
 
     }
 
       // Closing the database connection
 
-      return resReturn(200, { data: rows }, db)
+      return await resReturn(200, { data: rows })
    
       
     } catch (error) {
       console.error("Error fetching data from database:", error);
 
-      return resReturn(500, { successfulLogin: false, error: "No data to send" }, db)
+      return await resReturn(500, { successfulLogin: false, error: "No data to send" })
       
       
     }
@@ -154,7 +161,7 @@ else{
 }
 
 
-  const deleteRow= (tableName, deleteId)=>{
+  const deleteRow= async(tableName, deleteId)=>{
 
 
     try {
@@ -164,11 +171,11 @@ else{
     
 
     if(tableName==='email_sequences')
-    db.prepare(`DELETE FROM email_campaigns WHERE sequenceId = ?`).run(deleteId);
+    await dbConnection.query(`DELETE FROM email_campaigns WHERE sequenceId = ?`, [deleteId]);
 
-    if(tableName === 'emails'){
+    else if(tableName === 'emails'){
 
-      const allSequences = db.prepare(`SELECT id, emails FROM email_sequences`).all();
+      const allSequences = await dbConnection.query(`SELECT id, emails FROM email_sequences`);
 
 
       const sequenceToDeleteIdArray = allSequences.filter((seq)=>{
@@ -179,26 +186,63 @@ else{
       })
 
 
-      sequenceToDeleteIdArray.map(seq =>{
-        db.prepare(`DELETE FROM email_campaigns WHERE sequenceId = ?`).run(seq.id);
-        db.prepare(`DELETE FROM email_sequences WHERE id = ?`).run(deleteId);
-      })
+      for(const seq of sequenceToDeleteIdArray){
+        await dbConnection.query(`DELETE FROM email_campaigns WHERE sequenceId = ?`, [seq.id]);
+        await dbConnection.query(`DELETE FROM email_sequences WHERE id = ?`, [deleteId]);
+      }
+
+     
 
      
 
     }
 
+    else if(tableName === "product_returns"){
 
-   db.prepare(`DELETE FROM ${tableName} WHERE id = ?`).run(deleteId);
+      const prevPackageStatus = (await dbConnection.query(`SELECT prevPackageStatus FROM product_returns WHERE id = ?`,[deleteId]))[0].prevPackageStatus;
+      const orderId = (await dbConnection.query(`SELECT orderId FROM product_returns WHERE id = ?`,[deleteId]))[0].orderId;
 
-   return resReturn(200, { row_deleted: true }, db)
+     
+
+  
+
+      const orderHasMultipleReturns = parseInt((await dbConnection.query(`
+        SELECT COUNT(id) as count
+        FROM product_returns
+        WHERE orderId = ?
+      `, [orderId]))[0].count);
+
+      console.log('simple data', prevPackageStatus, orderId, orderHasMultipleReturns)
+      
+    
+    
+      const customerId = (await dbConnection.query(`SELECT customer_id FROM orders WHERE id = (SELECT orderId FROM product_returns WHERE id = ?)`,[deleteId]))[0].customer_id
+      const cashReturned = Number((await dbConnection.query(`SELECT cashReturned FROM product_returns WHERE id = ?`, [deleteId]))[0].cashReturned);
+     
+      if(orderHasMultipleReturns===1){
+
+        
+      await dbConnection.query(`UPDATE orders SET packageStatus = ? WHERE id = ?`, [prevPackageStatus,orderId]);
+
+      }
+
+
+      await dbConnection.query(`UPDATE customers SET money_spent = ROUND(money_spent - ?, 2) WHERE id = ?`,[cashReturned, customerId])
+
+
+    }
+
+
+    await dbConnection.query(`DELETE FROM ${tableName} WHERE id = ?`,[deleteId]);
+
+   return await resReturn(200, { row_deleted: true })
   
 
    
   } catch (error) {
     console.error(error);
 
-    return resReturn(500, { successfulLogin: false, error: "Database update error" }, db)
+    return await resReturn(500, { successfulLogin: false, error: "Database update error" })
    
     
 
@@ -209,7 +253,7 @@ else{
 
 
 
-  const wipeData =(tableName, product_id)=>{
+  const wipeData = async(tableName, product_id)=>{
 
 
 
@@ -225,23 +269,23 @@ else{
       if (product_id == 'all'){
 
 
-        const query = db.prepare('SELECT DISTINCT product_id FROM reviews');
-        const product_ids = query.all();
+        const product_ids = await dbConnection.query('SELECT DISTINCT product_id FROM reviews');
+       
         console.log('productids', product_ids)
         product_ids.forEach(product_id =>{
           wipeReviewImageDirectory(product_id.product_id)
         })
 
-        db.prepare(`DELETE FROM reviews`).run();
-        db.prepare(`DROP TABLE IF EXISTS reviews`).run()
+        await dbConnection.query(`DELETE FROM reviews`);
+        await dbConnection.query(`DROP TABLE IF EXISTS reviews`);
           }
           else{
-            const deletedItemsNumber=  db.prepare(`SELECT COUNT(id) as count FROM reviews WHERE product_id = ?`).get(product_id).count;
-            db.prepare(`DELETE FROM reviews WHERE product_id = ?`).run(product_id);
+            const deletedItemsNumber=  (await dbConnection.query(`SELECT COUNT(id) as count FROM reviews WHERE product_id = ?`, [product_id]))[0]?.count || 0;
+
+           
+             await dbConnection.query(`DELETE FROM reviews WHERE product_id = ?`, [product_id]);
             wipeReviewImageDirectory(product_id);
-            db.prepare(`UPDATE reviews SET id = id - ? WHERE product_id > ?`).run(
-              deletedItemsNumber, product_id
-            );
+            await dbConnection.query(`UPDATE reviews SET id = id - ? WHERE product_id > ?`,[ deletedItemsNumber, product_id]);
             
 
           }
@@ -253,26 +297,26 @@ else{
           if(tableName==='customers'){
 
             try{
-              db.prepare(`DELETE FROM product_returns`).run();
-              db.prepare(`DROP TABLE IF EXISTS product_returns`).run();
+             await dbConnection.query(`DELETE FROM product_returns`);
+             await dbConnection.query(`DROP TABLE IF EXISTS product_returns`);
               }
               catch(error){}
 
             try{
               
-            db.prepare(`DELETE FROM orders`).run();
-            db.prepare(`DROP TABLE IF EXISTS orders`).run();
+           await dbConnection.query(`DELETE FROM orders`);
+           await dbConnection.query(`DROP TABLE IF EXISTS orders`);
 
             }
             catch(error){}
 
             try{
               
-              db.prepare(`DELETE FROM messages`).run();
-              db.prepare(`DROP TABLE IF EXISTS messages`).run();
+              await dbConnection.query(`DELETE FROM messages`);
+              await dbConnection.query(`DROP TABLE IF EXISTS messages`);
 
-              db.prepare(`DELETE FROM email_campaigns`).run();
-              db.prepare(`DROP TABLE IF EXISTS email_campaigns`).run();
+              await dbConnection.query(`DELETE FROM email_campaigns`);
+              await dbConnection.query(`DROP TABLE IF EXISTS email_campaigns`);
   
               }
               catch(error){}
@@ -283,19 +327,18 @@ else{
           else if(tableName==='orders'){
 
             try{
-              db.prepare(`DELETE FROM product_returns`).run();
-              db.prepare(`DROP TABLE IF EXISTS product_returns`).run();
+             await dbConnection.query(`DELETE FROM product_returns`);
+             await dbConnection.query(`DROP TABLE IF EXISTS product_returns`);
               }
               catch(error){}
 
           }
         
 
-          db.prepare(`DELETE FROM ${tableName}`).run();
-          db.prepare(`DROP TABLE IF EXISTS ${tableName}`).run();
+          await dbConnection.query(`DELETE FROM ${tableName}`);
+         await dbConnection.query(`DROP TABLE IF EXISTS ${tableName}`);
 
 
-          createSqliteTables();
 
         }
        
@@ -303,14 +346,14 @@ else{
 
         createSqliteTables();
 
-        return resReturn(200, { data_wiped: true }, db)
+        return await resReturn(200, { data_wiped: true })
    
 
      
       } catch (error) {
       
         
-        return resReturn(500, {successfulLogin: false, error: "Database update error" }, db)
+        return await resReturn(500, {successfulLogin: false, error: "Database update error" })
    
  
         
@@ -331,37 +374,54 @@ else{
        
         console.log('proso up db', 'should be created')
         
-        const orderData = db.prepare(`
-          SELECT o.customer_id, o.packageStatus, c.id AS customer_id
-          FROM orders o
-          JOIN customers c ON o.customer_id = c.id
-          WHERE o.id = ?
-      `).get(data.orderId);
+        const orderData = (await dbConnection.query(`
+          SELECT customer_id, packageStatus
+          FROM orders
+          WHERE id = ?
+      LIMIT 1`,[data.orderId]))[0];
 
-        if(orderData.packageStatus ==="4")return;
+      console.log('order data', orderData)
 
-        db.prepare(`INSERT INTO 'product_returns' (orderId, items,couponCode, tip, cashReturned, createdDate) VALUES (?, ?, ?, ?, ?, ?)`).run(
-          data.orderId,
+        // if(orderData[0]?.packageStatus ===3)return;
+        //packageStatus 3 code je Returned
+
+        await dbConnection.query(`INSERT INTO product_returns (orderId, items,couponCode, tip, cashReturned, createdDate, prevPackageStatus) VALUES (?, ?, ?, ?, ?, ?, ?)`,
+          [data.orderId,
           data.products,
           data.couponCode,
           data.tip,
           data.cashReturned,
-          Math.floor(Date.now() / 86400000)
+          Math.floor(Date.now() / 86400000),
+          orderData.packageStatus
+
+          ]
         );
 
-        db.prepare(`UPDATE orders SET packageStatus = 3 WHERE id = ?`).run(data.orderId);
+        await dbConnection.query(`UPDATE orders SET packageStatus = 3 WHERE id = ?`, [data.orderId]);
 
-        db.prepare(`UPDATE customers SET totalOrderCount = totalOrderCount - 1, money_spent = ROUND(money_spent - ?, 2) WHERE id = ?`).run(data.cashReturned, orderData.customer_id)
+        await dbConnection.query(`UPDATE customers SET money_spent = ROUND(money_spent - ?, 2) WHERE id = ?`,[data.cashReturned, orderData.customer_id])
 
 
-        db.prepare(`UPDATE email_campaigns SET emailSentCounter = (
-          SELECT json_array_length(email_sequences.emails) 
-          FROM email_sequences 
-          WHERE email_campaigns.sequenceId = email_sequences.id
-      ) WHERE extraData IS NOT NULL AND extraData = ?`).run(JSON.stringify({orderId: data.orderId}))
 
-      console.log('campaign should be killed now using email_seuqnces', db.prepare(`SELECT * FROM email_campaigns WHERE extraData IS NOT NULL AND extraData = ?`).get(JSON.stringify({orderId: data.orderId})));
-          //killCampaign here
+
+        console.log('campaign should be killed now using email_seuqnces'
+       
+        
+        
+        );
+
+
+        await dbConnection.query(`UPDATE email_campaigns SET emailSentCounter = (
+          SELECT JSON_LENGTH(emails) 
+      FROM email_sequences 
+      WHERE id = email_campaigns.sequenceId
+      ) WHERE extraData IS NOT NULL AND extraData = ?`, [JSON.stringify({orderId: data.orderId})])
+
+
+
+
+
+
       }
 
 
@@ -372,25 +432,26 @@ else{
         //delete template with id = 1 here
 
 
-
+     
 
 
       const template_id = data.templateType==="main"?1:2;
 
-      db.prepare(`DELETE FROM email_templates WHERE id = ?`).run(template_id);
-  
+await dbConnection.query(`DELETE FROM email_templates WHERE id = ?`, [template_id]);
+
 
        
 
-        db.prepare(`INSERT INTO email_templates (id, designJson, emailFontValue, emailFontSize, emailWidthModeValue, mainBackgroundColor, templateType) VALUES (?, ?, ?, ?, ?, ?, ?)`).run(
-          template_id,
+       await dbConnection.query(`INSERT INTO email_templates (id, designJson, emailFontValue, emailFontSize, emailWidthModeValue, mainBackgroundColor, templateType) VALUES (?, ?, ?, ?, ?, ?, ?)`,
+         [ template_id,
           data.designJson,
           data.emailFontValue,
           data.emailFontSize,
           data.emailWidthModeValue,
           data.mainBackgroundColor,
-          data.templateType
+          data.templateType]
         );
+
 
       }
 
@@ -408,17 +469,23 @@ else{
 
         console.log('should be created');
 
-        let email_with_id_1_exists = db.prepare(`SELECT 1 FROM emails WHERE id = 1`).get()?1:0;
+        const email_with_id_1_exists = (await dbConnection.query(`SELECT 1 FROM emails WHERE id = 1`))[0]?1:0;;
 
-        let insert_id = !email_with_id_1_exists?1:db.prepare('SELECT MIN(id + 1) AS insert_id FROM emails WHERE id + 1 NOT IN (SELECT id FROM emails)').get().insert_id;
       
+
+        const insert_id = !email_with_id_1_exists?1:(await dbConnection.query('SELECT MIN(id + 1) AS insert_id FROM emails WHERE id + 1 NOT IN (SELECT id FROM emails) LIMIT 1'))[0]?.insert_id;
+          
+ 
        
         console.log('insert id is', insert_id)
 
-        db.prepare(`INSERT INTO emails (id, title, text) VALUES (?, ?, ?)`).run(
+ 
+
+        await dbConnection.query(`INSERT INTO emails (id, title, text) VALUES (?, ?, ?)`, [
           insert_id,
           data.title,
-          data.text,
+          data.text
+        ]
         );
 
         console.log('should be inserted?');
@@ -427,13 +494,16 @@ else{
 
 
         else{
-          data.forEach(emailData=>{
-            db.prepare(`UPDATE emails SET title = ?, text = ? WHERE id = ?`).run(
+
+          for(const emailData of data){
+           await dbConnection.query(`UPDATE emails SET title = ?, text = ? WHERE id = ?`,[
               emailData.title,
               emailData.text,
-              emailData.id
+              emailData.id]
               );
-          })
+
+          }
+       
         
         }
       }
@@ -450,17 +520,20 @@ else{
 
         console.log('should be created');
 
-        let insertId = db.prepare(`SELECT id FROM email_sequences WHERE id = 1`).get()?.id;
-
-        if(insertId)
-        insertId = db.prepare(`SELECT id FROM email_sequences WHERE id + 1 NOT IN (SELECT id FROM email_sequences)`).get().id + 1;
+        let  insertId =  (await dbConnection.query(`SELECT id FROM email_sequences WHERE id = 1`))[0]?.id;
+     
+        if(insertId){
+           insertId = (await dbConnection.query(`SELECT id FROM email_sequences WHERE id + 1 NOT IN (SELECT id FROM email_sequences)`))[0]?.id + 1
+       
+        }
         else insertId=1
 
-       const sequenceId = db.prepare(`INSERT INTO email_sequences (id, title, emails) VALUES (?, ?, ?)`).run(
+       const sequenceId = (await dbConnection.query(`INSERT INTO email_sequences (id, title, emails) VALUES (?, ?, ?)`,[
         insertId,
           data.title,
-          data.emails,
-        ).lastInsertRowid;
+          data.emails]
+        )).insertId;
+
 
         console.log('should be created3', data.key_sequence_type);
 
@@ -468,7 +541,7 @@ else{
 
           console.log('should be created');
 
-          db.prepare(`UPDATE key_email_sequences SET ${data.key_sequence_type} = ? WHERE id = 1`).run(sequenceId)
+         await dbConnection.query(`UPDATE key_email_sequences SET ${data.key_sequence_type} = ? WHERE id = 1`,[sequenceId])
 
         }
         
@@ -491,35 +564,32 @@ else{
 
         if(data.sequenceId.toString()=== process.env.WELCOME_SEQUENCE_ID || data.sequenceId.toString()=== process.env.THANK_YOU_SEQUENCE_ID
       || data.sequenceId.toString()=== process.env.THANK_YOU_SEQUENCE_FIRST_ORDER_ID)
-      return resReturn(500, { success: false }, db)
+      return await resReturn(500, { success: false })
  
       
 
-        const targets = JSON.stringify(getTargets(data.targetCustomers, false, db))
+        const targets = JSON.stringify(await getTargets(data.targetCustomers, false, dbConnection))
       
         console.log('targets for campaign are ', targets)
 
-        const result = db.prepare(`INSERT INTO email_campaigns (title, sequenceId, sendingDateInUnix, emailSentCounter,  retryCounter, targetCustomers, reserveTargetedCustomers) VALUES (?, ?, ?, ?, ?, ?, ?)`)
-        .run(
-          data.title,
+        const campaignId =   (await dbConnection.query(`INSERT INTO email_campaigns (title, sequenceId, sendingDateInUnix, emailSentCounter,  retryCounter, targetCustomers, reserveTargetedCustomers) VALUES (?, ?, ?, ?, ?, ?, ?)`,
+        [ data.title,
           data.sequenceId,
           data.sendingDateInUnix,
           0,
           0,
           targets,
           data.markTraffic==="mark_with_current_campaign"?1:0
+        ]
           
           
-        );
+        )).insertId;
 
         //RUN JOB HERE.
 
         //sendDelayAfterPrevious
 
         console.log('sending date in unix!!', data.sendingDateInUnix)
-
-        const campaignId = result.lastInsertRowid;
-
 
      
         
@@ -540,9 +610,9 @@ else{
         
 
         for (let i = 0; i < data.length; i++) {
-        db.prepare(`UPDATE messages ${queryCondition}`).run(
-          data[i].status,
-          data[i].id,
+         await dbConnection.query(`UPDATE messages ${queryCondition}`,
+          [data[i].status,
+          data[i].id]
         );
 
       }
@@ -567,7 +637,7 @@ else{
 
           //factor which determains for how much ids moves.
 
-          const productId = db.prepare(`SELECT product_id FROM reviews WHERE id = ${data[0].id}`).all()[0].product_id;
+          const productId =   (await dbConnection.query(`SELECT product_id FROM reviews WHERE id = ${data[0].id}`))[0].product_id;
 
 
 
@@ -584,7 +654,7 @@ else{
             console.log('upao u save db', data, productId)
 
 
-          const reviewProductImages =  JSON.parse(db.prepare(`SELECT imageNames FROM reviews WHERE id = ${data[i].id}`).all()[0].imageNames);
+            const reviewProductImages = JSON.parse((await dbConnection.query(`SELECT imageNames FROM reviews WHERE id = ${data[i].id}`))[0].imageNames)
        
           
 
@@ -624,14 +694,12 @@ else{
 
            
 
-           db.prepare(
-              `DELETE FROM reviews WHERE id = ?`,
-            ).run(data[i].id);
+          await dbConnection.query(
+              `DELETE FROM reviews WHERE id = ?`
+            ,[data[i].id]);
            
             
-            db.prepare(`UPDATE reviews SET id = id - 1 WHERE id > ?`).run(
-              data[i].id,
-            );
+            await dbConnection.query(`UPDATE reviews SET id = id - 1 WHERE id > ?`, [data[i].id] );
 
             console.log('Deleted. Now minus')
 
@@ -729,54 +797,54 @@ else{
 
         
 
-            db.prepare(`UPDATE reviews ${queryCondition}`).run(
+            await dbConnection.query(`UPDATE reviews ${queryCondition}`, [
               data[i].name,
               data[i].text,
               data[i].imageNames === "null" ? null : data[i].imageNames,
               data[i].stars,
-              data[i].id,
+              data[i].id
+            ]
             );
 
             if (data[i].swapId) {
-              const currentRowData = db
-                .prepare(`SELECT * FROM reviews WHERE id = ?`)
-                .get(data[i].id);
-              const targetRowData = db
-                .prepare(`SELECT * FROM reviews WHERE id = ?`)
-                .get(data[i].swapId);
+              const currentRowData = (await dbConnection.query(`SELECT * FROM reviews WHERE id = ?`, [data[i].id]))[0];
+          
+              const targetRowData = (await dbConnection.query(`SELECT * FROM reviews WHERE id = ?`,[data[i].swapId]))[0];
 
               if (targetRowData) {
-                db.prepare(
+                await dbConnection.query(
                   `UPDATE reviews SET name = ?, text = ?, stars = ?, imageNames = ? WHERE id = ?`,
-                ).run(
+                [
                   targetRowData.name,
                   targetRowData.text,
                   targetRowData.stars,
                   targetRowData.imageNames,
-                  data[i].id,
+                  data[i].id]
                 );
 
-                db.prepare(
+                await dbConnection.query(
                   `UPDATE reviews SET name = ?, text = ?, stars = ?, imageNames = ? WHERE id = ?`,
-                ).run(
+               [
                   currentRowData.name,
                   currentRowData.text,
                   currentRowData.stars,
                   currentRowData.imageNames,
-                  data[i].swapId,
+                  data[i].swapId
+               ]
                 );
               } else {
-                db.prepare(`DELETE FROM reviews WHERE id = ?`).run(data[i].id);
+              await dbConnection.query(`DELETE FROM reviews WHERE id = ?`,[data[i].id]);
 
-                db.prepare(
+              await dbConnection.query(
                   `INSERT INTO reviews (id, name, text, stars, imageNames, product_id) VALUES (?, ?, ?, ?, ?, ?)`,
-                ).run(
+               [
                   data[i].swapId,
                   currentRowData.name,
                   currentRowData.text,
                   currentRowData.stars,
                   currentRowData.imageNames,
-                  currentRowData.product_id,
+                  currentRowData.product_id
+               ]
                 );
               }
             }
@@ -800,7 +868,7 @@ else{
 
     
 
-        return resReturn(200, { data_saved: true }, db)
+        return await resReturn(200, { data_saved: true })
    
 
     
@@ -810,7 +878,7 @@ else{
     } catch (error) {
       console.error(error);
 
-      return resReturn(500, { successfulLogin: false, error: "Database update error" }, db)
+      return await resReturn(500, { successfulLogin: false, error: "Database update error" })
    
    
       
@@ -821,8 +889,8 @@ else{
   
 
   try {
-    // const clientIp = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
-    // if (!(await limiterPerTwoMins.rateLimiterGate(clientIp, db))) return resReturn(429, { error: "Too many requests." }, db)
+    const clientIp = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
+    if (!(await limiterPerTwoMins.rateLimiterGate(clientIp, dbConnection))) return await resReturn(429, { error: "Too many requests." })
    
 
       
@@ -841,7 +909,7 @@ else{
       
       if (!dataType){
 
-        return resReturn(200, { successfulLogin: true }, db)
+        return await resReturn(200, { successfulLogin: true })
 
         
       }
@@ -850,22 +918,22 @@ else{
 
         
 
-        if(dataType.startsWith("send_") && !data) return resReturn(500, { successfulLogin: false, error: "No data to send" }, db)
+        if(dataType.startsWith("send_") && !data) return await resReturn(500, { successfulLogin: false, error: "No data to send" })
         
         
 
 
 
 
-        if(dataType === "get_order_cash_info")  return getFromDb("orders", `approved = '1'`, "createdDate, items, tip, couponCode");
+        if(dataType === "get_order_cash_info")  return getFromDb("orders", `approved = 1`, "createdDate, items, tip, couponCode");
         //Ovde approved
-        else if(dataType === "get_order_cash_info_only_fulfilled_orders") return getFromDb("orders", `packageStatus != '0'`, "createdDate, items, tip, couponCode");
+        else if(dataType === "get_order_cash_info_only_fulfilled_orders") return getFromDb("orders", `packageStatus != 0`, "createdDate, items, tip, couponCode");
         else if (dataType === "get_unfulfilled_orders")
-          return getFromDb(`orders JOIN customers ON orders.customer_id = customers.id`, `approved = '1' AND packageStatus = '0'`, `orders.*, customers.email`);
+          return getFromDb(`orders JOIN customers ON orders.customer_id = customers.id`, `approved = 1 AND packageStatus = 0 ORDER BY orders.id DESC`, `orders.*, customers.email`);
         else if (dataType === "get_unapproved_orders")
-          return getFromDb(`orders JOIN customers ON orders.customer_id = customers.id`, `approved = '0'`, `orders.*, customers.email`);
+          return getFromDb(`orders JOIN customers ON orders.customer_id = customers.id`, `approved = 0 ORDER BY orders.id DESC`, `orders.*, customers.email`);
         else if (dataType === "get_fulfilled_orders")
-          return getFromDb(`orders JOIN customers ON orders.customer_id = customers.id`, `packageStatus != '0' AND packageStatus != '3'`, `orders.*, customers.email`);
+          return getFromDb(`orders JOIN customers ON orders.customer_id = customers.id`, `packageStatus != 0 AND packageStatus != 3 ORDER BY orders.id DESC`, `orders.*, customers.email`);
 
         
         else if(dataType === "get_orders_by_email")
@@ -877,9 +945,9 @@ else{
         else if(dataType ==="get_order_by_orderId")
         return getFromDb(`orders JOIN customers ON orders.customer_id = customers.id`, `orders.id = '${data.orderId}'`, `orders.*, customers.email`);
         else if (dataType === "get_unanswered_messages")
-          return getFromDb("messages JOIN customers ON messages.customer_id = customers.id", `msgStatus = '0'`, `messages.*, customers.email, customers.totalOrderCount`);
+          return getFromDb("messages JOIN customers ON messages.customer_id = customers.id", `msgStatus = 0`, `messages.*, customers.email, customers.totalOrderCount`);
         else if (dataType === "get_answered_messages")
-          return getFromDb("messages JOIN customers ON messages.customer_id = customers.id", `msgStatus != '0'`, `messages.*, customers.email, customers.totalOrderCount`);
+          return getFromDb("messages JOIN customers ON messages.customer_id = customers.id", `msgStatus != 0`, `messages.*, customers.email, customers.totalOrderCount`);
         else if (dataType === "get_reviews")
           return getFromDb(
             "reviews",
@@ -931,13 +999,13 @@ else{
       
 
 
-              const successfulReorder= await reorderReviewsByRatingAndImages(data.product_id);
+              const successfulReorder= await reorderReviewsByRatingAndImages(data.product_id, dbConnection);
 
 
           
              
-             if(successfulReorder) return resReturn(200, { success: true }, db)
-              else  return resReturn(500, { success: false }, db)
+             if(successfulReorder) return await resReturn(200, { success: true })
+              else  return await resReturn(500, { success: false })
          
               
          
@@ -1007,7 +1075,7 @@ else{
           console.log('send_new_product_description executed.');
 
           if(data.productId==="") {
-            return resReturn(500, { descriptionUpdated: false }, db)
+            return await resReturn(500, { descriptionUpdated: false })
          
          
             
@@ -1020,7 +1088,7 @@ else{
             
             
              
-           return resReturn(200, { descriptionUpdated: true }, db)
+           return await resReturn(200, { descriptionUpdated: true })
          
              
             
@@ -1029,7 +1097,7 @@ else{
 
         else{
 
-          return resReturn(500, { descriptionUpdated: false }, db)
+          return await resReturn(500, { descriptionUpdated: false })
 
        
         }
@@ -1056,6 +1124,10 @@ else{
 
           else if(dataType === "delete_email"){
             deleteRow('emails', data.deleteId)
+          }
+
+          else if(dataType==="delete_product_return"){
+            deleteRow('product_returns', data.deleteId)
           }
         
         else if(dataType === `wipe_orders`){
@@ -1095,7 +1167,7 @@ else{
           console.error("Wrong data type");
 
 
-          return resReturn(500, { successfulLogin: false, error: "Wrong data type" }, db)
+          return await resReturn(500, { successfulLogin: false, error: "Wrong data type" })
 
 
           
@@ -1103,8 +1175,8 @@ else{
       }
     } else {
 
-      return resReturn(400, { successfulLogin: false,
-        error: "You do not have access to this sector. Get lost noob.", }, db)
+      return await resReturn(400, { successfulLogin: false,
+        error: "You do not have access to this sector. Get lost noob.", })
 
 
    
@@ -1112,7 +1184,7 @@ else{
   } catch (error) {
     console.error(error);
 
-    return resReturn(500, { successfulLogin: false, error: "Internal Server Error" }, db)
+    return await resReturn(500, { successfulLogin: false, error: "Internal Server Error" })
 
 
  

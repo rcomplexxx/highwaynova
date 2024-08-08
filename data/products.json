@@ -33,8 +33,8 @@
         "variantIndex": 0
       }
     ],
-    "raiting": 4.2,
-    "reviewNumber": 250,
+    "raiting": 4.1,
+    "reviewNumber": 328,
     "variants": [
       {
         "name": "Wood grain",
@@ -75,8 +75,8 @@
         "variantIndex": 0
       }
     ],
-    "raiting": 4.7,
-    "reviewNumber": 621,
+    "raiting": 5,
+    "reviewNumber": 100,
     "variants": [
       {
         "name": "White",
@@ -239,5 +239,88 @@
     "raiting": 4.7,
     "reviewNumber": 621,
     "description": "<style>.descriptionWrapper{\ndisplay:flex;\nflex-direction: column;\nfont-size: 16px;\n}\n\n.descriptionImage{\nheight: max-content;\nwidth: 100%;\nborder-radius: 16px;\nmargin-top: 32px;\nalign-self:center;\n}\n\n.firstChild{\nmargin-top: 0;\n}\n\n.descTitle{\n margin: 32px 0;\nmargin-bottom: 32px;\nfont-weight: 600;\n}\n\n.subText{\ncolor: var(--description-content-color);\nmargin: 0 32px;\nfont-size: 18px;\ntext-align: center;\n}</style><div class=\"descriptionWrapper\">\n\n<img alt=\"description image\" class=\"descriptionImage firstChild\" src=\"/images/description_images/5-3.png\"/>\n\n<h1 class=\"descTitle\">Go to sleep with cuteness!</h1>\n\n<span class=\"subText\">You can watch the cuteness glow each night before bad, and just sink in your dreams having a lovely and adorable rest.</span>\n\n<img alt=\"description image\" class=\"descriptionImage\" src=\"/images/description_images/5-1.png\"/>\n\n<h1 class=\"descTitle\">Your room deserves cuteness</h1>\n\n<span class=\"subText\">Just imagine your room with all this cuteness from this rabbit lamp added. The room looks irresistible! 🥰</span>\n\n<img alt=\"description image\" class=\"descriptionImage\" src=\"/images/description_images/5-2.png\"/>\n\n<h1 class=\"descTitle\">Botfriends hate it</h1>\n\n<span class=\"subText\">Your boyfriend will literally be jeleus of how much attention you give to the lovely Rabby. He can't compete with that cuteness, or can he? 💙</span>\n\n</div>\n\n"
+  },
+  {
+    "id": 6,
+    "name": "Product 6",
+    "images": [
+      "product_6_image_0.jpg",
+      "product_6_image_1.jpg",
+      "product_6_image_2.jpg",
+      "product_6_image_3.jpg",
+      "product_6_image_4.jpg",
+      "product_6_image_5.jpg",
+      "product_6_image_6.jpg"
+    ],
+    "thumbnails": [
+      0,
+      1
+    ],
+    "price": 998.99,
+    "stickerPrice": 999.99,
+    "fbt": [
+      {
+        "id": 0,
+        "variantIndex": 0
+      },
+      {
+        "id": 1,
+        "variantIndex": 0
+      }
+    ],
+    "raiting": 4.7,
+    "reviewNumber": 32,
+    "variants": [
+      {
+        "name": "White",
+        "variantProductImageIndex": 0
+      },
+      {
+        "name": "Black",
+        "variantProductImageIndex": 1
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "name": "Product 7",
+    "images": [
+      "product_7_image_0.jpg",
+      "product_7_image_1.jpg",
+      "product_7_image_2.jpg",
+      "product_7_image_3.jpg",
+      "product_7_image_4.jpg",
+      "product_7_image_5.jpg"
+    ],
+    "thumbnails": [
+      0,
+      1
+    ],
+    "price": 998.99,
+    "stickerPrice": 999.99,
+    "fbt": [
+      {
+        "id": 0,
+        "variantIndex": 0
+      },
+      {
+        "id": 1,
+        "variantIndex": 0
+      }
+    ],
+    "raiting": 4.7,
+    "reviewNumber": 32,
+    "variants": [
+      {
+        "name": "White",
+        "image": "product_7_image_0.jpg",
+        "variantProductImageIndex": 0
+      },
+      {
+        "name": "Black",
+        "image": "product_7_image_1.jpg",
+        "variantProductImageIndex": 1
+      }
+    ]
   }
 ]

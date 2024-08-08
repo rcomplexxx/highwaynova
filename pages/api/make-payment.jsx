@@ -1,10 +1,12 @@
 import paypal from "@paypal/checkout-server-sdk";
 import Stripe from 'stripe';
 import productsData from "../../data/products.json";
-import betterSqlite3 from "better-sqlite3";
+
 import RateLimiter from "@/utils/rateLimiter.js";
 import coupons from '../../data/coupons.json'
 import subscribe from '@/utils/subcsribe.js'
+
+const getPool = require('../../utils/mariaDbPool');
 
 const limiterPerDay = new RateLimiter({
   apiNumberArg: 3,
@@ -72,14 +74,18 @@ const makePayment = async (req, res) => {
   
 
 
-  const db = betterSqlite3(process.env.DB_PATH);
+
+  let dbConnection = await getPool().getConnection();
 
 
-  const resReturn = (statusNumber, jsonObject, db)=>{
+  
 
-     
+
+  const resReturn = async(statusNumber, jsonObject)=>{
+
+    if(dbConnection)await dbConnection.release();
     res.status(statusNumber).json(jsonObject)
-    if(db)db.close();
+   
  }
 
 
@@ -94,14 +100,14 @@ const makePayment = async (req, res) => {
 
    
 
-    return new Promise((resolve, reject) => {
+    return new Promise(async(resolve, reject) => {
       try {
       
         //  db.prepare(`DROP TABLE IF EXISTS orders`).run();
 
 
 
-        function generateUniqueId() {
+        async function generateUniqueId() {
 
 
 
@@ -122,7 +128,8 @@ const makePayment = async (req, res) => {
           const uniqueId = randomDigits.substring(0, 2) + timestamp.substring(0, 4) + randomDigits.substring(2, 4) + timestamp.substring(4) + randomDigits.substring(4);
         
         
-          if(!db.prepare('SELECT 1 FROM orders WHERE id = ?').get(uniqueId)) return uniqueId;
+
+          if(  (  await dbConnection.query('SELECT 1 FROM orders WHERE id = ?', [uniqueId])   ).length<1  ) return uniqueId;
         
           
         }
@@ -167,13 +174,13 @@ const makePayment = async (req, res) => {
 
 
 
-        const customerInfo = db.prepare("SELECT id, used_discounts FROM customers WHERE email = ?").get(email);
+        const customerInfo = (await dbConnection.query("SELECT id, used_discounts FROM customers WHERE email = ? LIMIT 1", [email]))[0];
 
         console.log('sooun checking', customerInfo);
 
         if(customerInfo && JSON.parse(customerInfo.used_discounts).find(discountCode=>discountCode===couponCode))
     
-          return resReturn(400, { success: false, error: "Discount has already been used." }, db);
+          return await resReturn(400, { success: false, error: "Discount has already been used." }, db);
 
 
         let customerId= customerInfo?.id;
@@ -183,7 +190,7 @@ const makePayment = async (req, res) => {
          
        
 
-         const inserCustomerInfo = db.prepare("INSERT INTO customers (email, totalOrderCount, subscribed, source) VALUES (?, ?, ?, ?)").run(email, 0, 0, 'make_payment' );
+         const inserCustomerInfo = await dbConnection.query("INSERT INTO customers (email, totalOrderCount, subscribed, source) VALUES (?, ?, ?, ?)", [email, 0, 0, 'make_payment'] );
            
          customerId= inserCustomerInfo.lastInsertRowid;
 
@@ -194,17 +201,17 @@ const makePayment = async (req, res) => {
 
 
 
-        const uniqueId = generateUniqueId();
+        const uniqueId = await generateUniqueId();
 
 
 
-
+        console.log('unique key is', uniqueId)
         
       
         
-        db.prepare(
-          `INSERT INTO orders (id, customer_id, firstName, lastName, address, apt, country, zipcode, state, city, phone, couponCode, tip, items, total, paymentMethod, paymentId, packageStatus, approved, createdDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, '0', ?, ?)`,
-        ).run(
+        await dbConnection.query(
+          `INSERT INTO orders (id, customer_id, firstName, lastName, address, apt, country, zipcode, state, city, phone, couponCode, tip, items, total, paymentMethod, paymentId, approved, createdDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+        , [
           uniqueId,
           customerId,
           firstName,
@@ -223,7 +230,8 @@ const makePayment = async (req, res) => {
           paymentMethod,
           paymentId,
           approved,
-          Math.floor(Date.now() / 86400000),
+          Math.floor(Date.now() / 86400000)
+        ]
         );
 
       
@@ -237,16 +245,16 @@ const makePayment = async (req, res) => {
 
          
 
-          db.prepare("UPDATE customers SET totalOrderCount = totalOrderCount + 1, money_spent = ROUND(money_spent + ?, 2) WHERE id = ?").run(totalPrice, customerId); 
+          await dbConnection.query("UPDATE customers SET totalOrderCount = totalOrderCount + 1, money_spent = ROUND(money_spent + ?, 2) WHERE id = ?", [totalPrice, customerId]); 
 
            
           const subscribeSource = subscribed?"checkout":"checkout x"
        
-          subscribe(email, subscribeSource,  {orderId:uniqueId}, db);
+          subscribe(email, subscribeSource,  {orderId:uniqueId}, dbConnection);
 
         
 
-        if(couponCode!="")db.prepare(`
+        if(couponCode!="")await dbConnection.query(`
     UPDATE customers
     SET used_discounts = json_insert(
      used_discounts, 
@@ -254,9 +262,9 @@ const makePayment = async (req, res) => {
       ?
     ), money_spent = money_spent + ?
     WHERE id = ?
-  `).run(couponCode,customerId, totalPrice)
+  `, [couponCode,customerId, totalPrice])
 
-        giftDiscount= db.prepare(`SELECT 1 AS valid FROM customers WHERE id = ? AND totalOrderCount = 1`).get(customerId)?.valid===1;
+        giftDiscount= (await dbConnection.query(`SELECT 1 AS valid FROM customers WHERE id = ? AND totalOrderCount = 1`, [customerId]))[0]?.valid===1;
           
         
 
@@ -281,11 +289,11 @@ const makePayment = async (req, res) => {
   try {
     const clientIp = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
 
-    // if (!(await limiterPerDay.rateLimiterGate(clientIp, db))){
+    if (!(await limiterPerDay.rateLimiterGate(clientIp, dbConnection))){
       
       
-    //   return resReturn(429, { error: "Too many requests. Please try again later." }, db);
-    // }
+      return await resReturn(429, { error: "Too many requests. Please try again later." });
+    }
 
     
     
@@ -347,12 +355,12 @@ const makePayment = async (req, res) => {
       await putInDatabase(req.body.paymentMethod,response.result.id);
 
      
-      return resReturn(200, { success: true, paymentId: response.result.id }, db);
+      return await resReturn(200, { success: true, paymentId: response.result.id });
     } else {
       // Payment was not successful
 
 
-      return resReturn(400, { success: false, error: "Payment was not approved." }, db);
+      return await resReturn(400, { success: false, error: "Payment was not approved." });
 
  
       
@@ -409,11 +417,11 @@ const makePayment = async (req, res) => {
 
     
 
-    return resReturn(200, {
+    return await resReturn(200, {
 			
 			success: true,
       giftDiscount: giftDiscount
-		}, db);
+		});
     
 
   
@@ -458,11 +466,11 @@ const makePayment = async (req, res) => {
    
     
 
-    return resReturn(200, {
+    return await resReturn(200, {
 			
 			success: true,
       giftDiscount: giftDiscount
-		}, db);
+		});
 
   }
   
@@ -475,10 +483,10 @@ const makePayment = async (req, res) => {
 
     console.error("Error verifying payment:", error);
 
-    return resReturn(500, {
+    return await resReturn(500, {
 			
       success: false, error: "Error occured. Payment was not approved." 
-		}, db);
+		});
 
     
   }

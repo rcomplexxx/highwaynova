@@ -1,6 +1,9 @@
-import betterSqlite3 from "better-sqlite3";
+
 import RateLimiter from "@/utils/rateLimiter.js";
 import subscribe from '@/utils/subcsribe.js'
+const getPool = require('../../utils/mariaDbPool');
+
+
 
 const limiterPerMinute = new RateLimiter({
   apiNumberArg: 0,
@@ -22,12 +25,22 @@ const limiterPerWeek = new RateLimiter({
 
 export default async function handler(req, res) {
 
-  
-  const resReturn = (statusNumber, jsonObject, db)=>{
 
-     
+
+
+
+
+  let dbConnection = await getPool().getConnection();
+
+
+  
+
+  
+  const resReturn = async(statusNumber, jsonObject)=>{
+
+    if(dbConnection)await dbConnection.release();
     res.status(statusNumber).json(jsonObject)
-    if(db)db.close();
+   
  }
 
   
@@ -36,16 +49,16 @@ export default async function handler(req, res) {
 
     // Perform rate limiting checks
 
-    const db = betterSqlite3(process.env.DB_PATH);
+    
 
 
-  //   if (!(await limiterPerMinute.rateLimiterGate(clientIp, db)))
-  //  return resReturn(429, { error: "Too many requests." }, db)
+    if (!(await limiterPerMinute.rateLimiterGate(clientIp, dbConnection)))
+   return await resReturn(429, { error: "Too many requests." })
 
 
      
-  //   if (!(await limiterPerWeek.rateLimiterGate(clientIp, db)))
-  //     return resReturn(429, { error: "Too many requests." }, db)
+    if (!(await limiterPerWeek.rateLimiterGate(clientIp, dbConnection)))
+      return await resReturn(429, { error: "Too many requests." })
 
     // Rate limiting checks passed, proceed with API logic
 
@@ -57,8 +70,8 @@ export default async function handler(req, res) {
         if (req.body.type === "customers") {
           // Create a new SQLite database connection
 
-          if(subscribe(req.body.email, req.body.source, db))
-            return resReturn(201, { message: "Successfully subscribed." }, db)
+          if(subscribe(req.body.email, req.body.source, dbConnection))
+            return await resReturn(201, { message: "Successfully subscribed." })
             
           
 
@@ -67,9 +80,9 @@ export default async function handler(req, res) {
           // Create a new SQLite database connection
 
 
-          if (!(await dailyMessageLimit.rateLimiterGate(clientIp, db)))
+          if (!(await dailyMessageLimit.rateLimiterGate(clientIp, dbConnection)))
             
-              return resReturn(429, { error: "Too many messages sent." }, db)
+              return await resReturn(429, { error: "Too many messages sent." })
            
      
             
@@ -85,10 +98,10 @@ export default async function handler(req, res) {
          
 
 
-            let customerId =db.prepare(`SELECT id FROM customers WHERE email = ?`).get(email)?.id;
+            let customerId = (await dbConnection.query(`SELECT id FROM customers WHERE email = ? LIMIT 1`, [email]))[0]?.id;
 
           if(!customerId)
-            customerId = db.prepare(`INSERT INTO customers (email, totalOrderCount, subscribed, source) VALUES (?, ?, ?, ?)`).run(email, 0, 0, 'message' ).lastInsertRowid;
+            customerId =(await dbConnection.query(`INSERT INTO customers (email, totalOrderCount, subscribed, source) VALUES (?, ?, ?, ?)`, [email, 0, 0, 'message' ])).insertId;
 
 
 
@@ -101,13 +114,13 @@ export default async function handler(req, res) {
        
 
           // Insert message data into the messages table
-          db.prepare(
-            `INSERT INTO messages (customer_id, name, message, msgStatus) VALUES (?, ?, ?, '0')`,
-          ).run(customerId, name, message);
+          await dbConnection.query(
+            `INSERT INTO messages (customer_id, name, message) VALUES (?, ?, ?)`,
+          [customerId, name, message]);
 
           console.log("Message sent successfully.");
 
-          return resReturn(201, { message: "Message sent successfully." }, db)
+          return await resReturn(201, { message: "Message sent successfully." })
 
      
           
@@ -116,14 +129,14 @@ export default async function handler(req, res) {
       } catch (error) {
         console.error("Error handling POST request:", error);
 
-        return resReturn(500, { error: "Internal Server Error" }, db)
+        return await resReturn(500, { error: "Internal Server Error" })
 
         
        
       }
     } else {
 
-      return resReturn(405, { error: "Method Not Allowed" }, db)
+      return await resReturn(405, { error: "Method Not Allowed" })
 
       
      
@@ -131,7 +144,7 @@ export default async function handler(req, res) {
   } catch (error) {
     console.error("Error handling request:", error);
 
-    return resReturn(500, { error: "Internal Server Error"  }, db)
+    return await resReturn(500, { error: "Internal Server Error"  })
 
     
     

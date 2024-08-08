@@ -14,11 +14,11 @@ export default function MessageCard({
 const [emailCopied, setEmailCopied] = useState(false);
 
   const changeMsgStatus = () => {
-    msgStatus === "0"
-      ? handleMsgStatusChange(id, "1")
-      : msgStatus === "1"
-      ? handleMsgStatusChange(id, "2")
-      : handleMsgStatusChange(id, "0");
+    msgStatus === 0
+      ? handleMsgStatusChange(id, 1)
+      : msgStatus === 1
+      ? handleMsgStatusChange(id, 2)
+      : handleMsgStatusChange(id, 0);
   };
 
   return (
@@ -51,9 +51,9 @@ const [emailCopied, setEmailCopied] = useState(false);
 
    
       <button className={styles.msgStatusButton} onClick={changeMsgStatus}>
-        {msgStatus === "0"
+        {msgStatus === 0
           ? "Not Answered"
-          : msgStatus === "1"
+          : msgStatus === 1
           ? "Answered"
           : "Archived"}
       </button>

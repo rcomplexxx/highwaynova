@@ -1,8 +1,8 @@
-import betterSqlite3 from "better-sqlite3";
+const getPool = require('./mariaDbPool');
 import emailSendJob from "./sendEmailJob";
 
 
-function subscribe(email, source, extraData, passedDbConnection) {
+async function subscribe(email, source, extraData,dbConnectionArg) {
 
 
 
@@ -11,21 +11,23 @@ function subscribe(email, source, extraData, passedDbConnection) {
 
 
 
-    const db = passedDbConnection?passedDbConnection:betterSqlite3(process.env.DB_PATH);
+    const dbConnection = dbConnectionArg?dbConnectionArg:await getPool().getConnection();
 
 
     
 
 
    
-    const sendPostBuyingSequence = (totalOrderCount)=>{
+    const sendPostBuyingSequence = async(totalOrderCount)=>{
 
      
 
-      const sequenceId = totalOrderCount===1?process.env.THANK_YOU_SEQUENCE_FIRST_ORDER_ID:process.env.THANK_YOU_SEQUENCE_ID
+      const sequenceId = totalOrderCount===1?process.env.THANK_YOU_SEQUENCE_FIRST_ORDER_ID:process.env.THANK_YOU_SEQUENCE_ID;
+      
+
      
-      const result = db.prepare(`INSERT INTO email_campaigns (title, sequenceId, sendingDateInUnix, emailSentCounter, retryCounter, targetCustomers, extraData) VALUES (?, ?, ?, ?, ?, ?, ?)`)
-        .run(
+      const campaignId = (await dbConnection.query(`INSERT INTO email_campaigns (title, sequenceId, sendingDateInUnix, emailSentCounter, retryCounter, targetCustomers, extraData) VALUES (?, ?, ?, ?, ?, ?, ?)`
+        ,[
           `Thank you ${email}`,
           sequenceId,
           Date.now()+5000,
@@ -33,20 +35,21 @@ function subscribe(email, source, extraData, passedDbConnection) {
           0,
           JSON.stringify([email]),
           JSON.stringify({orderId: extraData.orderId})
+
+        ]
           
-        );
+        )).insertId;
        
 
       
 
         
     
-            const campaignId = result.lastInsertRowid;
     
          console.log('in thank you, thank you campaign set for email', email)
     
     
-            emailSendJob(Date.now()+5000,campaignId);
+           await emailSendJob(Date.now()+5000,campaignId);
     }
 
 
@@ -55,32 +58,32 @@ function subscribe(email, source, extraData, passedDbConnection) {
 
 
     
-const sendNewSubscriberSequence = ()=>{
+const sendNewSubscriberSequence = async()=>{
 
 
 
   
 
 
-  const result = db.prepare(`INSERT INTO email_campaigns (title, sequenceId, sendingDateInUnix, emailSentCounter, retryCounter, targetCustomers) VALUES (?, ?, ?, ?, ?, ?)`)
-  .run(
+  const campaignId = (await dbConnection.query(`INSERT INTO email_campaigns (title, sequenceId, sendingDateInUnix, emailSentCounter, retryCounter, targetCustomers) VALUES (?, ?, ?, ?, ?, ?)`,
+  [
     `Welcome ${email}`,
     process.env.WELCOME_SEQUENCE_ID,
     Date.now()+5000,
     0,
     0,
-    JSON.stringify([email])
+    JSON.stringify([email])]
    
     
-  );
-   
-
-        const campaignId = result.lastInsertRowid;
-
-     
+  )).insertId;
 
 
-        emailSendJob(Date.now()+5000,campaignId);
+
+  console.log('c id',  campaignId)
+
+
+
+      await emailSendJob(Date.now()+5000,campaignId);
 }
 
 
@@ -94,24 +97,24 @@ const sendNewSubscriberSequence = ()=>{
 
    
 
-       const result = db.prepare("SELECT totalOrderCount, subscribed FROM customers WHERE email = ?").get(email);
+       const result = (await dbConnection.query("SELECT totalOrderCount, subscribed FROM customers WHERE email = ? LIMIT 1", [email]))[0];
         
     
         if(!result){
 
-          db.prepare("INSERT INTO customers (email, totalOrderCount, subscribed, source) VALUES (?, ?, ?, ?)")
-          .run( email, 0, 1, source );
+          await dbConnection.query("INSERT INTO customers (email, totalOrderCount, subscribed, source) VALUES (?, ?, ?, ?)",
+            [ email, 0, 1, source] );
       
         
-          sendNewSubscriberSequence();
+          await sendNewSubscriberSequence();
 
           //ovde se ne pominju uslovi za checkout jer kad je checkout, customer je vec kreiran i !result nikad nije true
       
         }
 
         else  if(source === 're_subscribe'){
-          db.prepare("UPDATE customers SET subscribed = 1 WHERE email = ?").run(email); 
-          if(!passedDbConnection)db.close();
+         await dbConnection.query("UPDATE customers SET subscribed = 1 WHERE email = ?", [email]); 
+          if(!dbConnectionArg && dbConnection)await dbConnection.release();
 
           return true;
         }
@@ -129,7 +132,7 @@ const sendNewSubscriberSequence = ()=>{
 
               
            
-              sendPostBuyingSequence(result.totalOrderCount);
+              await sendPostBuyingSequence(result.totalOrderCount);
 
             }
               
@@ -140,8 +143,8 @@ const sendNewSubscriberSequence = ()=>{
       
 
             if(newSubscribe) {
-              db.prepare("UPDATE customers SET subscribed = 1 WHERE email = ?").run(email); 
-              sendNewSubscriberSequence();
+             await dbConnection.query("UPDATE customers SET subscribed = 1 WHERE email = ?", [email]); 
+              await sendNewSubscriberSequence();
              
             }
 
@@ -154,7 +157,7 @@ const sendNewSubscriberSequence = ()=>{
 
 
          // Close the database connection when done
-    if(!passedDbConnection)db.close();
+         if(!dbConnectionArg && dbConnection)await dbConnection.release();
 
     return true;
 
