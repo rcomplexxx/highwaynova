@@ -18,10 +18,10 @@ function getPool() {
 
 
         pool = createPool({
-            host: sql7.freesqldatabase.com,
-            user: sql7724818,
-            password: nxPnr5hUPr,
-            database: sql7724818,
+            host: 'sql7.freesqldatabase.com',
+            user: 'sql7724818',
+            password: 'nxPnr5hUPr',
+            database: 'sql7724818',
             port: 3306,
             connectionLimit: 10,
         });
