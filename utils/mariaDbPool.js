@@ -23,7 +23,7 @@ function getPool() {
             password: '2e13626b40d1ae7082b56dc61cecc02b6e95b905',
             database: 'mariadatabase_northhold',
             port: 3305,
-            connectionLimit: 10,
+            connectionLimit: 1,
         });
     }
 
