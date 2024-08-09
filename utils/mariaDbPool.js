@@ -18,11 +18,11 @@ function getPool() {
 
 
         pool = createPool({
-            host: 'sql7.freesqldatabase.com',
-            user: 'sql7724818',
-            password: 'nxPnr5hUPr',
-            database: 'sql7724818',
-            port: 3306,
+            host: 'nga.h.filess.io',
+            user: 'mariadatabase_northhold',
+            password: '2e13626b40d1ae7082b56dc61cecc02b6e95b905',
+            database: 'mariadatabase_northhold',
+            port: 3305,
             connectionLimit: 10,
         });
     }

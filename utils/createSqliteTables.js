@@ -26,8 +26,9 @@ async function createSqliteTables() {
 
 
 
+    // await conn.query(`CREATE DATABASE IF NOT EXISTS ${process.env.DB_DATABASE} CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci`);
 
-    await conn.query(`CREATE DATABASE IF NOT EXISTS ${process.env.DB_DATABASE} CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci`);
+    await conn.query(`CREATE DATABASE IF NOT EXISTS mariadatabase_northhold CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci`);
 
     
 
