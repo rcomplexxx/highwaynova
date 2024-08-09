@@ -331,6 +331,8 @@ export async function getStaticProps(context) {
       };
     });
 
+    console.log('making reviews data')
+
 
     const reviewsData= await getReviewsData(productId);
 
