@@ -446,7 +446,7 @@ p {
   --navbar-current-link-color: var(--main-color-5);
   --navbar-arrow-color: var(--nav-links-color);
   --nav-select-search-link-color:var(--main-color-1);
-  --shopping-cart-color: var(--accent-color-5);
+  --shopping-cart-color: var(--neutral-7);
  
   
   --popcart-correct-icon-color: var(--success-color);
