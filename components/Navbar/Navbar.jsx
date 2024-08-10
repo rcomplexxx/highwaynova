@@ -8,7 +8,7 @@ import collections from "@/data/collections.json";
 import Search from "./Search/Search";
 
 import dynamic from "next/dynamic";
-import { ArrowDown, MenuIcon } from "@/public/images/svgs/svgImages";
+import { ArrowDown, CartIcon, MenuIcon } from "@/public/images/svgs/svgImages";
 import { useGlobalStore } from "@/contexts/AppContext";
 
 // import MobileMenu from "./MobileMenu/MobileMenu";
@@ -289,14 +289,17 @@ const NavBar = () => {
             <Link id="cart" href="/cart" className={styles.cartStyle}>
               
               
-                <Image
+                {/* <Image
                   height={0}
                   width={0}
                   sizes="48px"
                   src="/images/bag.png"
                   className={styles.bagImg}
                   alt="cart"
-                />
+                /> */}
+
+
+                <CartIcon styleClassName={styles.bagImg}/>
                 {totalItems > 0 && (
                   <div className={styles.badgeDiv}>{totalItems}</div>
                 )}

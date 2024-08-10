@@ -325,13 +325,13 @@ p {
   --main-color-9: #F8F6F2;
 
 
-  --accent-color-1: #130202;
-  --accent-color-2: #5D0909;
-  --accent-color-3: #A71111;
-  --accent-color-4: #E92020;
-  --accent-color-5: #EE5858;
-  --accent-color-6: #F49090;
-  --accent-color-7: #F9C7C7;
+  --accent-color-1: #240B05;
+  --accent-color-2: #6C200F;
+  --accent-color-3: #B43518;
+  --accent-color-4: #e35231;
+  --accent-color-5: #E9775D;
+  --accent-color-6: #EE9581;
+  --accent-color-7: #F3B3A5;
 
 
   --neutral-0: #0A0A0A; /*#F5F6F4;*/
@@ -446,7 +446,7 @@ p {
   --navbar-current-link-color: var(--main-color-5);
   --navbar-arrow-color: var(--nav-links-color);
   --nav-select-search-link-color:var(--main-color-1);
-
+  --shopping-cart-color: var(--accent-color-5);
  
   
   --popcart-correct-icon-color: var(--success-color);

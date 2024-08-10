@@ -267,12 +267,12 @@
 
   .cartStyle {
     position: relative;
-    height: var(--size-7);
-    width: var(--size-7);
+    height: var(--size-6);
+    width: var(--size-6);
     color: #888b88;
     transition: transform 0.1s ease-in;
     
-    margin-left: var(--size-3);
+    margin-left: var(--size-4);
   
   }
   
@@ -287,8 +287,8 @@
 
  
   .bagImg{
-    height: var(--size-7);
-    width: var(--size-7);
+    height: var(--size-6);
+    width: var(--size-6);
   }
 
   .badgeDiv{
@@ -296,8 +296,8 @@
     position: absolute;
     top: -6px;
     right: -6px;
-    width:20px;
-    height: 20px;
+    width:16px;
+    height: 16px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -305,7 +305,7 @@
     background-color: var(--cart-button-items-number-bg);
    
     border-radius: 100%;
-    font-size: var(--font-size-2);
+    font-size: var(--font-size-1);
     font-weight: 600;
   }
   
