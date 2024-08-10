@@ -344,7 +344,7 @@ else{
        
 
 
-        createSqliteTables();
+        await createSqliteTables();//
 
         return await resReturn(200, { data_wiped: true })
    
