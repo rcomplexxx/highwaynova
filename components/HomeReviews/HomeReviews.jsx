@@ -65,7 +65,6 @@ export default function HomeReviews() {
     infinite: true,
     slidesToShow: 1,
     slidesToScroll: 1,
-    variableWidth: true,
     centerMode: true,
     centerPadding: "0", // Set padding between centered items to 0
   };
