@@ -125,22 +125,17 @@ if(!campaign) throw new Error('campaign_deleted')
              
 
              const transporter = nodemailer.createTransport({
-               host: 'live.smtp.mailtrap.io',
-               port: 587,
+               host: process.env.EMAIL_HOST,
+               port: Number(process.env.EMAIL_PORT),
                auth: {
-                 user: 'api',
-                 pass: 'e57c347537c65cf31ffdcfb9eeefc47a',
+                 user: process.env.EMAIL_USER,
+                 pass: process.env.EMAIL_PASSWORD,
                },
-              
-  tls: {
-    ciphers: 'SSLv3', // Use this if you need to specify TLS ciphers (optional)
-    rejectUnauthorized: false // Useful for testing, allows self-signed certificates (optional)
-  }
              });
    
              transporter.sendMail({
                //   from: 'orderconfirmed@selling-game-items-next.com',
-               from: 'api',
+               from: process.env.EMAIL_USER,
                to: target,
                subject: email.title,
                html: finalEmailText,

@@ -13,8 +13,12 @@ const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
 const server = express();
+let appServer;
 
 async function startEmailJobs(){
+
+
+  
 
 
   let dbConnection = await getPool().getConnection();
@@ -126,8 +130,7 @@ for(const campaign of campaigns){
 console.log('Additional code.');
 
 
-
-app.prepare().then(async() => {
+ app.prepare().then(async() => {
 
   BigInt.prototype.toJSON = function() { return this.toString() }
 
@@ -146,8 +149,45 @@ app.prepare().then(async() => {
 
   const PORT = process.env.PORT || 3000;
 
-  server.listen(PORT, (err) => {
+  appServer = server.listen(PORT, (err) => {
     if (err) throw err;
     console.log(`> Ready on http://localhost:${PORT} - env ${process.env.NODE_ENV}`);
   });
+}).catch(err => {
+  console.error('Error starting server:', err);
+  process.exit(1);
 });
+
+
+
+async function closeServerGracefully() {
+  console.log('Gracefully shutting down...');
+
+  //  stopEmailJobs(); ??
+
+
+  await getPool().end()
+    .then(() => {
+      console.log('MariaDB pool closed.');
+    })
+    .catch(err => {
+      console.error('Error closing the MariaDB pool:', err);
+    })
+  
+    
+    if(appServer) appServer.close((err) => {
+      if (err) {
+        console.log('server closing error', err)
+    process.exit(1)
+      } else {
+        console.log('Server closed.');
+        process.exit(0)
+      }
+    });
+}
+
+// Signal handling
+process.on('SIGINT', closeServerGracefully);  // Handle Ctrl+C
+process.on('SIGTERM', closeServerGracefully); // Handle termination
+
+

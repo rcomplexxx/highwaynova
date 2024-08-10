@@ -175,6 +175,8 @@ export default function Search({searchOpen, setSearchOpen}){
             value={searchTerm}
             onFocus={()=>{setSearchOpen(true)}}
             onChange={(e) => handleSearch(e.target.value)}
+
+            autoCapitalize="off"
           
           />
 

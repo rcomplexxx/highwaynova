@@ -214,6 +214,7 @@ return false;
                   type="email"
                   handleChange={handleChange}
                   error={errors.email}
+                  
                 >
                   {errors.email && (
                     <p className={styles.error}><ErrorIcon/>{errors.email}</p>
