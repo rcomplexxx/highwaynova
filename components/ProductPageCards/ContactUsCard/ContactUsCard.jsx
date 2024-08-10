@@ -112,6 +112,7 @@ export default function ContactUsCard() {
           <input
           placeholder=" "
             id="email"
+            type="email"
             ref={emailRef}
             className={styles.contactInput}
             maxLength={127}

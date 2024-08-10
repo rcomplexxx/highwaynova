@@ -123,6 +123,7 @@ export default function ContactUs() {
                 <input
                 placeholder=" "
                 id="email"
+                type="email"
                 ref={emailRef}
                 className={styles.contactInput}
                 maxLength={127}
