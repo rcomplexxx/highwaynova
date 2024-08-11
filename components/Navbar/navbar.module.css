@@ -275,8 +275,16 @@
     margin-left: var(--size-4);
   
   }
+
   
-  .cartStyle:hover {
+  
+  @media (hover: hover) {
+    .cartStyle:hover {
+      transform: scale(1.1);
+    }
+  }
+
+  .cartStyle:active {
     transform: scale(1.1);
   }
   
