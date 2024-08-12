@@ -78,7 +78,7 @@
  
             width: calc(100% - var(--size-11));
             margin: var(--size-7) var(--size-3);
-            margin-bottom: var(--size-7);
+            margin-bottom:40px;
            
           
           }
