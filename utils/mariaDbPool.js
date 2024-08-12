@@ -14,6 +14,7 @@ function getPool() {
             database: process.env.DB_DATABASE,
             port: process.env.DB_PORT,
             connectionLimit: 10,
+            timeout: 30000
         });
 
 
