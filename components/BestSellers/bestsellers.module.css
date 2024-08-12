@@ -13,7 +13,8 @@
     
     margin-top: auto;
     
-    padding-bottom: var(--size-7);
+    padding-top: var(--size-5);
+    padding-bottom: var(--size-9);
     contain: content;
    
 }
