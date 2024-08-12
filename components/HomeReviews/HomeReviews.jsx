@@ -67,6 +67,7 @@ export default function HomeReviews() {
     slidesToScroll: 1,
     centerMode: true,
     centerPadding: "0", // Set padding between centered items to 0
+    variableWidth: true,
   };
 
   useEffect(() => {
