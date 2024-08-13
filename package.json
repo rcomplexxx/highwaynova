@@ -58,7 +58,7 @@
   },
   "devDependencies": {
     "@fullhuman/postcss-purgecss": "^5.0.0",
-    "eslint-config-next": "13.4.3",
+    "eslint-config-next": "^14.1.0",
     "sass": "^1.74.1"
   }
 }

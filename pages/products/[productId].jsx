@@ -334,24 +334,10 @@ export async function getStaticProps(context) {
     console.log('making reviews data')
 
 
-    let mariaDbOnlineStatus;
-
-    try {
-      // Set a specific timeout when acquiring a connection
-      const connection = await pool.getConnection({ acquireTimeout: customTimeout });
-  
-      await connection.release();
-  
-      mariaDbOnlineStatus = true;
-    } catch (error) {
-      
-      
-      mariaDbOnlineStatus = false;
-    }
-
+ 
 
  
-    const reviewsData= mariaDbOnlineStatus?await getReviewsData(productId):4.7;
+    const reviewsData= await getReviewsData(productId);
 
  
     
@@ -365,7 +351,21 @@ export async function getStaticProps(context) {
 
 
    
-    
+    let mariaDbOnlineStatus;
+
+    try {
+      // Set a specific timeout when acquiring a connection
+      const connection = await pool.getConnection();
+  
+      await connection.release();
+  
+      mariaDbOnlineStatus = true;
+    } catch (error) {
+      
+      
+      mariaDbOnlineStatus = false;
+    }
+
 
 
 
