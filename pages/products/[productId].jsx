@@ -334,18 +334,42 @@ export async function getStaticProps(context) {
     console.log('making reviews data')
 
 
-    const reviewsData= await getReviewsData(productId);
+    let mariaDbOnlineStatus;
 
-    if ('supplierPrice' in product) {
-      // Remove the property
-      delete product.supplierPrice;
+    try {
+      // Set a specific timeout when acquiring a connection
+      const connection = await pool.getConnection({ acquireTimeout: customTimeout });
+  
+      await connection.release();
+  
+      mariaDbOnlineStatus = true;
+    } catch (error) {
+      
+      
+      mariaDbOnlineStatus = false;
     }
+
+
+ 
+    const reviewsData= mariaDbOnlineStatus?await getReviewsData(productId):null;
+
+ 
+    
+
     
     
 
     let ratingData={};
     let reviewsNumberFinal = 0;
     let sumOfAllReviews= 0 ;
+
+
+   
+    
+
+
+
+      if(mariaDbOnlineStatus){
     for(let i=1; i <6; i++){
       
       const reviewsNumber = await getRatingData(productId, i);
@@ -354,6 +378,10 @@ export async function getStaticProps(context) {
       sumOfAllReviews=sumOfAllReviews+reviewsNumber*i;
 
     }
+
+  }
+
+
     const averageValue=reviewsNumberFinal!==0?Math.round(sumOfAllReviews/reviewsNumberFinal * 10)/ 10:4.7;
     if(reviewsNumberFinal===0) ratingData={stars5:386, stars4:60, stars3:0, stars2:1, stars1:2, reviewsNumber: 449, rating: averageValue}
     else {ratingData={...ratingData, reviewsNumber: reviewsNumberFinal, rating: averageValue}}
