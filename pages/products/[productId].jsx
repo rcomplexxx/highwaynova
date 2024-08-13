@@ -351,7 +351,7 @@ export async function getStaticProps(context) {
 
 
  
-    const reviewsData= mariaDbOnlineStatus?await getReviewsData(productId):null;
+    const reviewsData= mariaDbOnlineStatus?await getReviewsData(productId):4.7;
 
  
     
