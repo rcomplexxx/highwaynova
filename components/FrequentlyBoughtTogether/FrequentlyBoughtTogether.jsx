@@ -1,7 +1,7 @@
 import styles from "./fbt.module.css";
 import Image from "next/image";
 import Link from "next/link";
-import products from "../../data/products.json";
+import products from "@/data/products.json";
 
 const FreqProduct = ({ productId, variantIndex, onAddToCart }) => {
   const product = products.find((p) => {

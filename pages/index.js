@@ -34,13 +34,13 @@ const HomePage = ({ products }) => {
    
 
       <picture className={styles.heroWindow}>
-    <source media="(min-width: 720px)" srcSet="/images/heroImg2.jpg" />
-    <source media="(max-width: 720px)" srcSet="/images/heroImg3.jpg" />        
+    <source media="(min-width: 720px)" srcSet="/images/main_wallpaper.jpg" />
+    <source media="(max-width: 720px)" srcSet="/images/main_wallpaper_mob4.png" />        
    
         <Image
           height={0}
           width={0}
-         src={`/images/heroImg2.jpg`} // Path to your image from the `public` directory
+         src={`/images/main_wallpaper.jpg`} // Path to your image from the `public` directory
           alt="Hero Discount Image"
           priority={true}
           sizes="100vw"

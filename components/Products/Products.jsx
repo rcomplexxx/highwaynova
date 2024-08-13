@@ -18,7 +18,7 @@ const Products = ({ products, showAll, productListTitle }) => {
           />
         ))}
       </div>
-      {!showAll && products.length>6 && (
+      {!showAll && products.length>=6 && (
         <Link href="/products" className={styles.viewAllLink}>
           View All
         </Link>
