@@ -90,9 +90,9 @@ export default function AdminStatistics(){
                 const items = JSON.parse(orderInfo.items);
               
                 let totalPrice=0;
-                let supplierCosts=0;
                 let tip = orderInfo.tip?orderInfo.tip:0;
                 let discountLostMoney = 0;
+                const supplierCost = orderInfo.supplierCost;
 
 
                 console.log('or in', orderInfo)
@@ -114,8 +114,9 @@ export default function AdminStatistics(){
                     totalPrice=totalPrice+price;
                     discountLostMoney= discountLostMoney+price  * discountPercentage /100;
                     if(discountPercentage)totalPrice=totalPrice - discountLostMoney;
-                    supplierCosts += product.supplierPrice.product * parseInt(item.quantity, 10)  + product.supplierPrice.shipping;
-                    
+
+
+                 
                     
                   }
 
@@ -126,7 +127,7 @@ export default function AdminStatistics(){
 
                 totalPrice= Number(totalPrice.toFixed(2));
                 discountLostMoney= Number(discountLostMoney.toFixed(2));
-                supplierCosts= Number(supplierCosts.toFixed(2));
+              
                 tip= parseFloat(tip, 2);
 
 
@@ -144,7 +145,7 @@ export default function AdminStatistics(){
           
                
 
-                return ({createdDate: orderInfo.createdDate, cashObtained: totalPrice, discountLostMoney:discountLostMoney, supplierCosts:supplierCosts, tip:tip})
+                return ({createdDate: orderInfo.createdDate, cashObtained: totalPrice, discountLostMoney:discountLostMoney, supplierCosts:supplierCost, tip:tip})
 
               }
               );

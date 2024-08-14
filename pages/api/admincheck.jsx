@@ -365,6 +365,20 @@ else{
     
       
 
+      if(table==='orders'){
+        
+
+        
+
+        for(const changedOrder of data){
+
+          await  console.log('pair', changedOrder)
+          
+        await dbConnection.query(`UPDATE orders SET packageStatus = ? WHERE id = ?`, [changedOrder.packageStatus, changedOrder.id]);
+
+        }
+
+      }
      
 
 
@@ -422,6 +436,24 @@ else{
 
 
 
+      }
+
+
+      else if(table==='messages'){
+
+        await console.log('message detected', data)
+        
+
+        for(const changedMessage of data){
+
+          await console.log('pair', changedMessage);
+          
+         await dbConnection.query(`UPDATE messages SET msgStatus = ? WHERE id = ?`,
+          [changedMessage.msgStatus,
+            changedMessage.id]
+        );
+
+      }
       }
 
 
@@ -606,17 +638,7 @@ await dbConnection.query(`DELETE FROM email_templates WHERE id = ?`, [template_i
 
 
 
-      else if(table==='messages'){
-        
-
-        for (let i = 0; i < data.length; i++) {
-         await dbConnection.query(`UPDATE messages ${queryCondition}`,
-          [data[i].status,
-          data[i].id]
-        );
-
-      }
-      }
+   
 
 
 
@@ -764,7 +786,7 @@ await dbConnection.query(`DELETE FROM email_templates WHERE id = ?`, [template_i
 
       })
 
-      console.log('hello everyone!', addedImagesFromDel)
+      console.log('images from del', addedImagesFromDel)
 
       if(addedImagesFromDel.length>0){
 
@@ -972,6 +994,7 @@ await dbConnection.query(`DELETE FROM email_templates WHERE id = ?`, [template_i
 
 
         else if (dataType === "send_unfulfilled_orders") {
+
          
 
           await updateDb("orders", data, `SET packageStatus = ? WHERE id = ?`);
@@ -979,7 +1002,7 @@ await dbConnection.query(`DELETE FROM email_templates WHERE id = ?`, [template_i
         
 
 
-          await updateDb("messages", data, `SET msgStatus = ? WHERE id = ?`);
+          await updateDb("messages", data);
         } else if (dataType === "send_reviews") {
 
 

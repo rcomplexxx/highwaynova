@@ -46,24 +46,7 @@ export default function Admin() {
 
     for (let i = 0; i < data.length; i++) {
       const order = data[i];
-      newOrders.push({
-        id: order.id,
-        email: order.email,
-        firstName: order.firstName,
-        lastName: order.lastName,
-        address: order.address,
-        country: order.country,
-        zipcode: order.zipcode,
-        state: order.state,
-        city: order.city,
-        phone: order.phone,
-        items: order.items,
-        couponCode: order.couponCode,
-        tip: order.tip,
-        packageStatus: order.packageStatus,
-        paymentMethod: order.paymentMethod,
-        paymentId: order.paymentId
-      });
+      newOrders.push(order);
     }
 
     orders.current = newOrders;
@@ -86,13 +69,7 @@ export default function Admin() {
 
     for (let i = 0; i < data.length; i++) {
       const message = data[i];
-      newOrders.push({
-        id: message.id,
-        name: message.name,
-        email: message.email,
-        message: message.message,
-        totalOrderCount: message.totalOrderCount
-      });
+      newOrders.push(message);
     }
 
     messages.current = newOrders;

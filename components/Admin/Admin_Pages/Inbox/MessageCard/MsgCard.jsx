@@ -8,17 +8,36 @@ export default function MessageCard({
   totalOrderCount,
   message,
   msgStatus,
-  handleMsgStatusChange,
+  handleChangedMessagesArray,
 }) {
 
 const [emailCopied, setEmailCopied] = useState(false);
+const [currentStatus, setCurrentStatus] = useState(msgStatus);
+
+
+
+
 
   const changeMsgStatus = () => {
-    msgStatus === 0
-      ? handleMsgStatusChange(id, 1)
-      : msgStatus === 1
-      ? handleMsgStatusChange(id, 2)
-      : handleMsgStatusChange(id, 0);
+
+    console.log('changing status.')
+
+    if(currentStatus === 0){
+
+      setCurrentStatus(1);
+      handleChangedMessagesArray({id: id, msgStatus: 1})
+
+    }
+    else if(currentStatus === 1){
+      setCurrentStatus(2);
+      handleChangedMessagesArray({id: id, msgStatus: 2})
+    }
+    else if(currentStatus===2){
+      setCurrentStatus(0);
+      handleChangedMessagesArray({id: id, msgStatus: 0});
+    }
+
+
   };
 
   return (
@@ -51,9 +70,9 @@ const [emailCopied, setEmailCopied] = useState(false);
 
    
       <button className={styles.msgStatusButton} onClick={changeMsgStatus}>
-        {msgStatus === 0
+        {currentStatus === 0
           ? "Not Answered"
-          : msgStatus === 1
+          : currentStatus === 1
           ? "Answered"
           : "Archived"}
       </button>

@@ -1,5 +1,4 @@
-import { useRef, useState } from 'react'
-import GetDataButton from '../MagicButtons/GetDataButton'
+import { useState } from 'react'
 import Link from 'next/link';
 import EmailCard from './EmailCard/EmailCard';
 import styles from './emails.module.css'

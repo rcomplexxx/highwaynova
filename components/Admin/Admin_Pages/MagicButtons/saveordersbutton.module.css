@@ -1,3 +1,7 @@
+
+
+
+
 .saveButton{
     color: var(--admin-txt-color);
         background-color: transparent;
@@ -8,7 +12,6 @@
         user-select: none;
 
 
-    position:absolute;
-    margin-top: var(--size-9);
-    right: var(--size-5);
+        margin-top: var(--size-5);
+  
 }

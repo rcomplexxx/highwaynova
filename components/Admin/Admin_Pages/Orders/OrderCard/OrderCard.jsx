@@ -1,21 +1,26 @@
 import styles from "./ordercard.module.css";
 import { useEffect, useMemo, useState } from "react";
+import SupplierCostInput from "./supplierCostInput/SupplierCostInput";
 
 export default function OrderCard({
   id,
   info,
  
   packageStatus,
-  handlePackageStatusChange,
+  handleChangedOrdersArray,
   products,
   coupons,
   productReturnsPageStyle=false
 }) {
+
+
   const [transactionCovered, setStransactionCovered]= useState(true);
   const [paymentIdCovered, setPaymentIdCovered] = useState(true);
   const [amount, setAmount] = useState(0);
   const [discountPercent, setDiscountPercent] = useState();
   const [discountInCash, setDiscoutInCash] = useState();
+  const [supplierCostInputOpen, setSupplierCostInputOpen] = useState(false);
+  const [currentPackageStatus, setCurrentPackageStatus] = useState(packageStatus);
 
 
    const infoObj = useMemo(() => JSON.parse(info), [info]);
@@ -95,17 +100,21 @@ export default function OrderCard({
 
   const changePs = () => {
    
-   if(packageStatus ===3) return;
+   if(currentPackageStatus ===3) return;
 
-    packageStatus === 0
-      ? handlePackageStatusChange(id, 1)
-      : packageStatus === 1
-      ? handlePackageStatusChange(id, 2)
-      : handlePackageStatusChange(id, 0);
+    if(currentPackageStatus === 0) {setSupplierCostInputOpen(true)}
+    else if(currentPackageStatus===1){  setCurrentPackageStatus(2); handleChangedOrdersArray({id: id, packageStatus:2})}
+    else if(currentPackageStatus===2){  setCurrentPackageStatus(0); handleChangedOrdersArray({id: id, packageStatus:0})}
+    
+    
   };
 
   return (
     <div className={`${styles.cardMainDiv} ${productReturnsPageStyle && styles.productReturnsPageStyle}`}>
+
+      {supplierCostInputOpen && <SupplierCostInput handleChangedOrdersArray={()=>{
+         setCurrentPackageStatus(1);
+         handleChangedOrdersArray({id: id, packageStatus:1})}} setSupplierCostInputOpen={setSupplierCostInputOpen}/>}
       <div className={styles.cardRow}>
       <h1 className={styles.identifier}>{id + 1}</h1>
     
@@ -113,12 +122,12 @@ export default function OrderCard({
       <p className={styles.orderId}>Order_id {infoObj.id}</p>
 
       <button className={styles.packageStatusButton} onClick={changePs}>
-        {packageStatus === 0
+        {currentPackageStatus === 0
           ? "Not Ordered"
-          : packageStatus === 1
+          : currentPackageStatus === 1
           ? "Ordered"
-          : packageStatus === 2? "Completed"
-          : packageStatus === 3 ? "Returned":
+          : currentPackageStatus === 2? "Completed"
+          : currentPackageStatus === 3 ? "Returned":
           "Undefined"}
       </button>
       </div>
@@ -192,7 +201,7 @@ export default function OrderCard({
       <h1 className={`${styles.rowTitle} ${styles.itemsRow}`}>Items</h1>
       <div className={`${styles.infoRowDiv} ${styles.itemsMiniRow}`}>
       {JSON.parse(infoObj.items)?.map((item, index)=>{
-        return <div className={`${styles.cardRow} ${styles.itemInfoRow} ${styles.cardRowNoBorder}`}>
+        return <div key={index} className={`${styles.cardRow} ${styles.itemInfoRow} ${styles.cardRowNoBorder}`}>
         <p className={styles.itemNumber}>Item {index+1 + ' →'}  </p>
 
         <div className={styles.infoPair}>

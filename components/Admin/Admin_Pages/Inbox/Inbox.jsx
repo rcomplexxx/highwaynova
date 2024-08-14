@@ -1,5 +1,5 @@
 import GetDataButton from "../MagicButtons/GetDataButton";
-import SaveButton from "../MagicButtons/SaveButton";
+import SaveOrdersButton from "../MagicButtons/SaveOrdersButton";
 import MessageCard from "./MessageCard/MsgCard";
 import { useState } from "react";
 import styles from "./inbox.module.css";
@@ -7,33 +7,40 @@ import PageIndexButtons from "../MagicButtons/PageIndexButtons";
 
 export default function Inbox({ data, setData }) {
   const [page, setPage] = useState(0);
-  const [msgStatusArray, setMsgStatusArray] = useState([]);
+  const [changedMessagesArray, setChangedMessagesArray] = useState([]);
 
 
   console.log('hello', data)
 
-  const handleMsgStatusChange = (i, msgStatus) => {
-    const updatedMsgStatusArray = [];
-    msgStatusArray.map((ps, id) => {
-      if (id === i) updatedMsgStatusArray.push(msgStatus);
-      else updatedMsgStatusArray.push(ps);
+
+
+
+  const handleChangedMessagesArray = (changedMessage) => {
+
+    
+
+    let updatedChangedMessagesArray = [...changedMessagesArray].filter(status => {
+      return status.id !== changedMessage.id
     });
 
-    setMsgStatusArray(updatedMsgStatusArray);
+    updatedChangedMessagesArray.push(changedMessage)
+ 
+
+    setChangedMessagesArray(updatedChangedMessagesArray);
+
+
   };
 
+
+
   const clearAfterDataSave = () => {
-    setMsgStatusArray([]);
+    setChangedMessagesArray([]);
     setPage(0);
   };
 
   const initializeMsgStatusData = (data) => {
-    let newMsgStatusArray = [];
-    for (let i = 0; i < data.length; i++) {
-      newMsgStatusArray.push(data[i].msgStatus);
-    }
 
-    setMsgStatusArray(newMsgStatusArray);
+    
   };
 
   if (data.length === 1 && data[0] === "No Messages")
@@ -55,11 +62,12 @@ export default function Inbox({ data, setData }) {
       <div className={styles.titleDiv}>
         <h1>Inbox</h1>
         {data.length !== 0 ? (
-          <SaveButton
+          <SaveOrdersButton
             dataType="send_unanswered_messages"
-            oldData={data}
-            statusData={msgStatusArray}
-            setOldData={setData}
+            
+            
+            newData={changedMessagesArray}
+            setData={setData}
             clearAfterDataSave={clearAfterDataSave}
           />
         ) : (
@@ -92,13 +100,13 @@ export default function Inbox({ data, setData }) {
             .map((msg, index) => (
               <MessageCard
                 key={page * 10 + index}
-                id={page * 10 + index}
+                id={msg.id}
                 name={msg.name}
                 email={msg.email}
                 totalOrderCount={msg.totalOrderCount}
                 message={msg.message}
-                msgStatus={msgStatusArray[index]}
-                handleMsgStatusChange={handleMsgStatusChange}
+                msgStatus={data[index].msgStatus}
+                handleChangedMessagesArray={handleChangedMessagesArray}
               />
             ))}
         </>

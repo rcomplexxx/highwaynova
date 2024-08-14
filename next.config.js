@@ -34,9 +34,9 @@ const nextConfig = {
       },
 
       compiler: {
-        removeConsole: {
-          exclude: ['error'],
-        },
+        // removeConsole: {
+        //   exclude: ['error'],
+        // },
       },
 
 }

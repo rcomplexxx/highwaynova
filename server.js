@@ -15,6 +15,15 @@ const handle = app.getRequestHandler();
 const server = express();
 let appServer;
 
+
+
+
+
+
+
+
+
+
 async function startEmailJobs(){
 
 
@@ -153,10 +162,30 @@ console.log('Additional code.');
     if (err) throw err;
     console.log(`> Ready on http://localhost:${PORT} - env ${process.env.NODE_ENV}`);
   });
-}).catch(err => {
+
+
+
+
+  
+}).catch(async(err) => {
+
+    try{
+
+      
+
+    await (await getPool()).end();
+   
+  console.log('MariaDB pool closed.');
+  }
+  catch(err){
+    console.error('Error closing the MariaDB pool:', err);
+  }
   console.error('Error starting server:', err);
   process.exit(1);
 });
+
+
+
 
 
 
@@ -166,14 +195,19 @@ async function closeServerGracefully() {
   //  stopEmailJobs(); ??
 
 
-  await getPool().end()
-    .then(() => {
-      console.log('MariaDB pool closed.');
-    })
-    .catch(err => {
-      console.error('Error closing the MariaDB pool:', err);
-    })
+  try{
+    await (await getPool()).end();
+   
+  console.log('MariaDB pool closed.');
+  }
+  catch(err){
+    console.error('Error closing the MariaDB pool:', err);
+  }
+   
   
+  process.off('SIGINT', closeServerGracefully); // Remove the signal handler
+  process.off('SIGTERM', closeServerGracefully); // Remove the signal handler
+
     
     if(appServer) appServer.close((err) => {
       if (err) {

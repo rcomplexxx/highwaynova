@@ -126,13 +126,13 @@ await conn.query(
                 paymentId TEXT,
                 packageStatus TINYINT DEFAULT 0,
                 approved TINYINT,
+                supplyCost DECIMAL(10, 2) DEFAULT 0,
                 createdDate BIGINT
         )
       `,
       );
 
-  
-
+     
 
 
 
@@ -172,10 +172,25 @@ await conn.query(
       );
 
 
+
+
+    //   await conn.query(`
+    //     ALTER TABLE messages
+    //     DROP COLUMN status;
+    // `);
+
+    
+
   // await conn.query(`
       //   ALTER TABLE email_campaigns
       //   MODIFY sendingDateInUnix BIGINT;
       // `);
+
+
+          // await conn.query(`
+    //     ALTER TABLE orders
+    //      ADD COLUMN supplyCost DECIMAL(10, 2) DEFAULT 0
+    //   `);
 
  
       await conn.query(`
