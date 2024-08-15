@@ -166,7 +166,8 @@ const sendNewSubscriberSequence = async()=>{
     }
 
       catch(error){
-        console.log('subscribe error', error)
+        console.log('subscribe error', error);
+        return false;
       }
 
 
