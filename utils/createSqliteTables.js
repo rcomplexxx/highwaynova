@@ -133,7 +133,7 @@ await conn.query(
       );
 
      
-
+   
 
 
 
@@ -307,7 +307,7 @@ await conn.query(
 
   finally{
     if (conn) {
-      conn.release(); // Release the connection
+      await conn.release(); // Release the connection
   }
   }
 

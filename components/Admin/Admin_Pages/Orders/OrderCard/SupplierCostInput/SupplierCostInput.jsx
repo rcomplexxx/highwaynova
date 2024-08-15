@@ -6,7 +6,7 @@ export default function SupplierCostInput({
     handleChangedOrdersArray, setSupplierCostInputOpen
 }) {
 
-    const [supplierPrice, setSupplierPrice] = useState('0');
+    const [supplierPrice, setSupplierPrice] = useState('');
 
 
 
@@ -15,11 +15,12 @@ export default function SupplierCostInput({
     <div className={styles.mainWrapper}>
     <div className={styles.mainDiv}>
 
+        <span className={styles.titleText}>Input supplier cost</span>
+
         <input value={`$${supplierPrice}`} onChange={(event)=>{
 
 const newValue = event.target.value.substring(1);
 
-console.log('sdsd',newValue);
 
             if(/^\d+(\.\d{0,2})?$/.test(newValue) || newValue === ''){
                 setSupplierPrice(newValue)
@@ -37,7 +38,7 @@ console.log('final supp pri', supplierPrice)
             console.log('final supp pri', finalSupplierPrice)
 
 
-            handleChangedOrdersArray();
+            handleChangedOrdersArray(finalSupplierPrice);
             setSupplierCostInputOpen(false);
         }} className={styles.inputButton}>Apply supplier costs</button>
 

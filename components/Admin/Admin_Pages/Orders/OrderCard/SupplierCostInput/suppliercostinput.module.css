@@ -38,7 +38,14 @@
 
 }
 
+.titleText{
+    font-size: var(--font-size-5);
+}
+
 .costInput{
+
+    color: white;
+    background-color: rgb(0, 0, 0);
 
     min-height: var(--size-8);
 
@@ -48,6 +55,7 @@
 
 .inputButton{
 
+    background-color: var(--neutral-5);
     
     min-height: var(--size-8);
 

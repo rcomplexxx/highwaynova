@@ -15,7 +15,7 @@ export default function AdminStatistics(){
     const [returnCashData, setReturnCashData] = useState([]);
     const [revealStatsReadingInstructions, setRevealStatsReadingInstructions] = useState(false);
     const [showCharts, setShowCharts] = useState(true);
-    const [customDateStats, setCustomDateStats] = useState({orderNumber:'N/A', customerCash:'N/A', discountLostMoney:'N/A', supplierCosts:'N/A', tip:'N/A',lostInReturns:'N/A', averageOrderValue:'N/A', profit: 'N/A'});
+    const [customDateStats, setCustomDateStats] = useState({orderNumber:'N/A', total:'N/A', discountLostMoney:'N/A', supplyCost:'N/A', tip:'N/A',lostInReturns:'N/A', averageOrderValue:'N/A', profit: 'N/A'});
     const [shouldUseOnlyFulfilledOrders, setShouldUseOnlyFulfilledOrders]= useState(false);
   
    
@@ -81,52 +81,32 @@ export default function AdminStatistics(){
       
             if (response.ok) {
               const data = await response.json();
-             
 
+              console.log('here is pure data', data.data)
+             
 
               
               const cashInfo = data.data.map(orderInfo => {
-                //Ovde se nalazi cash info.
-                const items = JSON.parse(orderInfo.items);
+                
               
-                let totalPrice=0;
+                let totalPrice=orderInfo.total;
                 let tip = orderInfo.tip?orderInfo.tip:0;
-                let discountLostMoney = 0;
-                const supplierCost = orderInfo.supplierCost;
+              
+                const supplyCost = orderInfo.supplyCost;
 
+                const coupon = coupons.find(c=>{return c.code.toLowerCase() ==orderInfo.couponCode.toLowerCase()});
 
-                console.log('or in', orderInfo)
-              items.forEach((item) => {
+                const discountPercentage = coupon?coupon.discountPercentage:0;
 
+                const discountLostMoney = Number(((totalPrice-tip)*discountPercentage/(100- discountPercentage)).toFixed(2))
 
-                
-                  const product = products.find((p) => p.id === item.id);
-                  console.log('coup', coupons)
-                  const coupon = coupons.find(c=>{return c.code ==orderInfo.couponCode.toLowerCase()});
-
-                  let discountPercentage = coupon?coupon.discountPercentage:0;
-
-                  console.log('disc percentage', discountPercentage);
-                
-                  if (product) {
-                    const price = product.price * parseInt(item.quantity, 10);
-                    console.log('supp pr', product)
-                    totalPrice=totalPrice+price;
-                    discountLostMoney= discountLostMoney+price  * discountPercentage /100;
-                    if(discountPercentage)totalPrice=totalPrice - discountLostMoney;
-
-
-                 
-                    
-                  }
-
-                  console.log('Product data', product)
-
-
-                });
+                //dy/100-d
 
                 totalPrice= Number(totalPrice.toFixed(2));
-                discountLostMoney= Number(discountLostMoney.toFixed(2));
+
+
+                console.log('or in', discountLostMoney)
+           
               
                 tip= parseFloat(tip, 2);
 
@@ -145,7 +125,7 @@ export default function AdminStatistics(){
           
                
 
-                return ({createdDate: orderInfo.createdDate, cashObtained: totalPrice, discountLostMoney:discountLostMoney, supplierCosts:supplierCost, tip:tip})
+                return ({createdDate: orderInfo.createdDate, cashObtained: totalPrice, discountLostMoney:discountLostMoney, supplyCost:supplyCost, tip:tip})
 
               }
               );
@@ -199,24 +179,28 @@ export default function AdminStatistics(){
           else if(period=='All time') startPeriod=0;
         }
         let orderNumber= 0;
-        let customerCash= 0;
+        let total= 0;
         let discountLostMoney=0;
        
-        let supplierCosts = 0;
+        let supplyCost = 0;
         let tip = 0;
        
         if(cashData) {cashData.forEach(info=>{
             if(info.createdDate>=startPeriod && info.createdDate<= endPeriod){
               orderNumber=orderNumber+1;
              
-              customerCash=customerCash+info.cashObtained
-              console.log('curent cus price', customerCash)
+              total=total+info.cashObtained
+            
               discountLostMoney+= info.discountLostMoney;
-              supplierCosts+=info.supplierCosts;
+              supplyCost+=info.supplyCost;
               tip+=info.tip;
           
             }
 
+            tip=Number(tip.toFixed(2))
+            discountLostMoney=Number(discountLostMoney.toFixed(2))
+            supplyCost=Number(supplyCost.toFixed(2))
+            total = Number(total.toFixed(2))
             
 
 
@@ -239,10 +223,10 @@ export default function AdminStatistics(){
 
         console.log('lost in returns', lostInReturns);
 
-        customerCash=customerCash.toFixed(2);
-        supplierCosts=supplierCosts.toFixed(2);
+        total=total.toFixed(2);
+        supplyCost=supplyCost.toFixed(2);
         tip=tip.toFixed(2);
-        let profit= Number(customerCash) - Number(supplierCosts)+Number(tip) - lostInReturns;
+        let profit= Number(total) - Number(supplyCost)+Number(tip) - lostInReturns;
         
         profit=profit.toFixed(2);
 
@@ -255,10 +239,10 @@ export default function AdminStatistics(){
         return <div className={styles.saleStat}>
         <span className={styles.statName}>{period}</span> 
          <span className={styles.statName}>{orderNumber}</span> 
-        <span className={styles.statName}>${customerCash}</span> 
+        <span className={styles.statName}>${total}</span> 
         <span className={styles.statName}>${discountLostMoney}</span>
         <span className={styles.statName}>${tip}</span> 
-        <span className={styles.statName}>${supplierCosts}</span> 
+        <span className={styles.statName}>${supplyCost}</span> 
         <span className={styles.statName}>${lostInReturns}</span> 
         <span className={styles.statName}>${averageOrderValue}</span>
         <span className={styles.statName}>${profit}</span> 
@@ -274,8 +258,8 @@ export default function AdminStatistics(){
 
 
         let orderNumber= 0;
-        let customerCash= 0;
-        let supplierCosts = 0;
+        let total= 0;
+        let supplyCost = 0;
         let tip = 0;
         let discountLostMoney= 0;
 
@@ -298,9 +282,9 @@ export default function AdminStatistics(){
 
               orderNumber=orderNumber+1;
              
-              customerCash=customerCash+info.cashObtained
-              console.log('curent cus price', customerCash)
-              supplierCosts+=info.supplierCosts;
+              total=total+info.cashObtained
+              console.log('curent cus price', total)
+              supplyCost+=info.supplyCost;
               tip+=info.tip;
               discountLostMoney+=info.discountLostMoney;
         
@@ -316,8 +300,8 @@ export default function AdminStatistics(){
 
 
       
-      customerCash=customerCash.toFixed(2);
-      supplierCosts=supplierCosts.toFixed(2);
+      total=total.toFixed(2);
+      supplyCost=supplyCost.toFixed(2);
       discountLostMoney=discountLostMoney.toFixed(2);
       tip=tip.toFixed(2);
 
@@ -337,13 +321,13 @@ export default function AdminStatistics(){
       }
 
 
-      let profit= Number(customerCash) - Number(supplierCosts)+Number(tip) - Number(lostInReturns);
+      let profit= Number(total) - Number(supplyCost)+Number(tip) - Number(lostInReturns);
       lostInReturns= lostInReturns.toFixed(2);
       profit=profit.toFixed(2);
 
       const averageOrderValue= (Number(profit) / Number(orderNumber)).toFixed(2);
 
-      setCustomDateStats({orderNumber, customerCash, discountLostMoney, supplierCosts, tip, lostInReturns, averageOrderValue, profit})
+      setCustomDateStats({orderNumber, total, discountLostMoney, supplyCost, tip, lostInReturns, averageOrderValue, profit})
 
 console.log('cs', cashData);
      
@@ -360,9 +344,9 @@ console.log('cs', cashData);
       cashData.forEach(item => {
         const indexOfCreatedDate = AovChartData.findIndex(data => {return data.createdDate == item.createdDate});
         if(indexOfCreatedDate == -1)
-          AovChartData.push({createdDate:item.createdDate, profit: Number(item.cashObtained) - Number(item.supplierCosts)+Number(item.tip), orderNumber: 1})
+          AovChartData.push({createdDate:item.createdDate, profit: Number(item.cashObtained) - Number(item.supplyCost)+Number(item.tip), orderNumber: 1})
         else {
-          AovChartData[indexOfCreatedDate].profit += Number(item.cashObtained) - Number(item.supplierCosts)+Number(item.tip);
+          AovChartData[indexOfCreatedDate].profit += Number(item.cashObtained) - Number(item.supplyCost)+Number(item.tip);
           AovChartData[indexOfCreatedDate].orderNumber += 1;
         }
       })
@@ -418,7 +402,7 @@ console.log('cs', cashData);
 
         else {
           setSelectedRange([]);
-          setCustomDateStats({orderNumber:'N/A', customerCash:'N/A', discountLostMoney:'N/A', supplierCosts:'N/A', tip:'N/A', lostInReturns: 'N/A', averageOrderValue: 'N/A', profit: 'N/A'});
+          setCustomDateStats({orderNumber:'N/A', total:'N/A', discountLostMoney:'N/A', supplyCost:'N/A', tip:'N/A', lostInReturns: 'N/A', averageOrderValue: 'N/A', profit: 'N/A'});
       
 
         }
@@ -429,10 +413,10 @@ console.log('cs', cashData);
 
 
 <span className={styles.statName}>{customDateStats.orderNumber}</span> 
-        <span className={styles.statName}>{`${customDateStats.customerCash!="N/A" ? "$": ""}${customDateStats.customerCash}`}</span>
+        <span className={styles.statName}>{`${customDateStats.total!="N/A" ? "$": ""}${customDateStats.total}`}</span>
         <span className={styles.statName}>{`${customDateStats.discountLostMoney!="N/A" ? "$": ""}${customDateStats.discountLostMoney}`}</span>
         <span className={styles.statName}>{`${customDateStats.tip!="N/A" ? "$": ""}${customDateStats.tip}`}</span> 
-        <span className={styles.statName}>{`${customDateStats.supplierCosts!="N/A" ? "$": ""}${customDateStats.supplierCosts}`}</span>
+        <span className={styles.statName}>{`${customDateStats.supplyCost!="N/A" ? "$": ""}${customDateStats.supplyCost}`}</span>
         <span className={styles.statName}>{`${customDateStats.lostInReturns!="N/A" ? "$": ""}${customDateStats.lostInReturns}`}</span>
         <span className={styles.statName}>{`${customDateStats.averageOrderValue!="N/A" ? "$": ""}${customDateStats.averageOrderValue}`}</span>
        
@@ -500,7 +484,7 @@ ${shouldUseOnlyFulfilledOrders && styles.onlyFulfilledOrdersChecked}`}
 
           <Charts title="Revenue" chartData={cashData.map(item => {return {createdDate:item.createdDate, yMetric:item.cashObtained}})}/>
 
-          <Charts title="Profit" chartData={cashData.map(item => {return {createdDate:item.createdDate, yMetric:Number(item.cashObtained) - Number(item.supplierCosts)+Number(item.tip)}})}/>
+          <Charts title="Profit" chartData={cashData.map(item => {return {createdDate:item.createdDate, yMetric:Number(item.cashObtained) - Number(item.supplyCost)+Number(item.tip)}})}/>
           
 
           <Charts title="Average order number" chartData={getAovChartData() }/>

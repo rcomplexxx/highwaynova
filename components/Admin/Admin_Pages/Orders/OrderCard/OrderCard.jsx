@@ -7,6 +7,7 @@ export default function OrderCard({
   info,
  
   packageStatus,
+  supplierCosts,
   handleChangedOrdersArray,
   products,
   coupons,
@@ -112,9 +113,9 @@ export default function OrderCard({
   return (
     <div className={`${styles.cardMainDiv} ${productReturnsPageStyle && styles.productReturnsPageStyle}`}>
 
-      {supplierCostInputOpen && <SupplierCostInput handleChangedOrdersArray={()=>{
+      {supplierCostInputOpen && <SupplierCostInput handleChangedOrdersArray={(supplierCost)=>{
          setCurrentPackageStatus(1);
-         handleChangedOrdersArray({id: id, packageStatus:1})}} setSupplierCostInputOpen={setSupplierCostInputOpen}/>}
+         handleChangedOrdersArray({id: id, packageStatus:1, supplierCost: supplierCost})}} setSupplierCostInputOpen={setSupplierCostInputOpen}/>}
       <div className={styles.cardRow}>
       <h1 className={styles.identifier}>{id + 1}</h1>
     
@@ -234,19 +235,35 @@ export default function OrderCard({
          <p>Total{(discountPercent && infoObj.tip) ?'(tip & disc. included)':(discountPercent?'(discount included)':
          infoObj.tip && infoObj.tip!=0 && '(tip included)')}</p>
          <p>{amount}</p>
+
+
+         
       </div>
+
+    
+    
 
     <div onClick={()=>{setStransactionCovered(false)}} 
     className={`${styles.transactionCoverableDiv} ${!discountPercent && styles.transactionCoverableDivNoDisc} ${
       transactionCovered && styles.transactionCovered
     }`}>
 
-  { transactionCovered ? <span>Click for details</span> :<> {infoObj.couponCode && discountPercent && discountInCash &&
+  { transactionCovered ? <span>Click for details</span> :<> 
+  
+  
+   {  supplierCosts >0 && <div className={styles.infoPair}>
+         <p>Supply costs</p>
+         <p>{supplierCosts}</p>
+      </div>}
+  
+  {infoObj.couponCode && discountPercent && discountInCash &&
      <div className={styles.infoPair}>
          <p>Discount ({discountPercent}%)</p>
          <p>{discountInCash}</p>
       </div>
 }
+
+
 
 {infoObj.tip && infoObj.tip!=0 &&
      <div className={styles.infoPair}>

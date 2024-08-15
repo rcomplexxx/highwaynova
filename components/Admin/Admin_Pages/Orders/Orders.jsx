@@ -108,6 +108,7 @@ export default function Orders({ data, setData }) {
                 tip:order.tip,items:order.items, paymentMethod: order.paymentMethod,paymentId:order.paymentId })}
                
                 packageStatus={data[index + page * 10].packageStatus}
+                supplierCosts = {data[index + page * 10].supplyCost}
                 handleChangedOrdersArray={handleChangedOrdersArray}
                 products={products}
                 coupons={coupons}

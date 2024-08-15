@@ -372,9 +372,10 @@ else{
 
         for(const changedOrder of data){
 
-          await  console.log('pair', changedOrder)
+           console.log('pair', changedOrder)
           
-        await dbConnection.query(`UPDATE orders SET packageStatus = ? WHERE id = ?`, [changedOrder.packageStatus, changedOrder.id]);
+           if(changedOrder.supplierCost!==undefined) await dbConnection.query(`UPDATE orders SET packageStatus = ?, supplyCost = ? WHERE id = ?`, [changedOrder.packageStatus, changedOrder.supplierCost, changedOrder.id]);
+           else await dbConnection.query(`UPDATE orders SET packageStatus = ? WHERE id = ?`, [changedOrder.packageStatus, changedOrder.id]);
 
         }
 
@@ -819,7 +820,7 @@ await dbConnection.query(`DELETE FROM email_templates WHERE id = ?`, [template_i
 
         
 
-            await dbConnection.query(`UPDATE reviews ${queryCondition}`, [
+            await dbConnection.query(`UPDATE reviews SET name = ?, text = ?, imageNames = ?, stars = ? WHERE id = ?`, [
               data[i].name,
               data[i].text,
               data[i].imageNames === "null" ? null : data[i].imageNames,
@@ -947,50 +948,50 @@ await dbConnection.query(`DELETE FROM email_templates WHERE id = ?`, [template_i
 
 
 
-        if(dataType === "get_order_cash_info")  return getFromDb("orders", `approved = 1`, "createdDate, items, tip, couponCode");
+        if(dataType === "get_order_cash_info")  await getFromDb("orders", `approved = 1`, "createdDate, total, supplyCost, tip, couponCode");
         //Ovde approved
-        else if(dataType === "get_order_cash_info_only_fulfilled_orders") return getFromDb("orders", `packageStatus != 0`, "createdDate, items, tip, couponCode");
+        else if(dataType === "get_order_cash_info_only_fulfilled_orders") await getFromDb("orders", `packageStatus != 0`, "createdDate, total, supplyCost, tip, couponCode");
         else if (dataType === "get_unfulfilled_orders")
-          return getFromDb(`orders JOIN customers ON orders.customer_id = customers.id`, `approved = 1 AND packageStatus = 0 ORDER BY orders.id DESC`, `orders.*, customers.email`);
+          await getFromDb(`orders JOIN customers ON orders.customer_id = customers.id`, `approved = 1 AND packageStatus = 0 ORDER BY orders.id DESC`, `orders.*, customers.email`);
         else if (dataType === "get_unapproved_orders")
-          return getFromDb(`orders JOIN customers ON orders.customer_id = customers.id`, `approved = 0 ORDER BY orders.id DESC`, `orders.*, customers.email`);
+          await getFromDb(`orders JOIN customers ON orders.customer_id = customers.id`, `approved = 0 ORDER BY orders.id DESC`, `orders.*, customers.email`);
         else if (dataType === "get_fulfilled_orders")
-          return getFromDb(`orders JOIN customers ON orders.customer_id = customers.id`, `packageStatus != 0 AND packageStatus != 3 ORDER BY orders.id DESC`, `orders.*, customers.email`);
+          await getFromDb(`orders JOIN customers ON orders.customer_id = customers.id`, `packageStatus != 0 AND packageStatus != 3 ORDER BY orders.id DESC`, `orders.*, customers.email`);
 
         
         else if(dataType === "get_orders_by_email")
-        return getFromDb(`orders JOIN customers ON orders.customer_id = customers.id`, `email = '${data.email}'`, `orders.*, customers.email`);
+        await getFromDb(`orders JOIN customers ON orders.customer_id = customers.id`, `email = '${data.email}'`, `orders.*, customers.email`);
       
 
        
         
         else if(dataType ==="get_order_by_orderId")
-        return getFromDb(`orders JOIN customers ON orders.customer_id = customers.id`, `orders.id = '${data.orderId}'`, `orders.*, customers.email`);
+        await getFromDb(`orders JOIN customers ON orders.customer_id = customers.id`, `orders.id = '${data.orderId}'`, `orders.*, customers.email`);
         else if (dataType === "get_unanswered_messages")
-          return getFromDb("messages JOIN customers ON messages.customer_id = customers.id", `msgStatus = 0`, `messages.*, customers.email, customers.totalOrderCount`);
+          await getFromDb("messages JOIN customers ON messages.customer_id = customers.id", `msgStatus = 0`, `messages.*, customers.email, customers.totalOrderCount`);
         else if (dataType === "get_answered_messages")
-          return getFromDb("messages JOIN customers ON messages.customer_id = customers.id", `msgStatus != 0`, `messages.*, customers.email, customers.totalOrderCount`);
+          await getFromDb("messages JOIN customers ON messages.customer_id = customers.id", `msgStatus != 0`, `messages.*, customers.email, customers.totalOrderCount`);
         else if (dataType === "get_reviews")
-          return getFromDb(
+          await getFromDb(
             "reviews",
             `product_id = ${data.product_id}`,
           ); 
        
         else if (dataType === "get_customers")
-          return getFromDb("customers", 'subscribed = 1');
+          await getFromDb("customers", 'subscribed = 1');
         else if(dataType === "get_customers_bh")
-        return getFromDb("customers", 'subscribed = 0');
+        await getFromDb("customers", 'subscribed = 0');
         else if(dataType === "get_email_templates"){
-          return getFromDb("email_templates")
+          await getFromDb("email_templates")
         }
           else if (dataType === "get_emails")
-          {return getFromDb("emails");}
+          {await getFromDb("emails");}
           else if (dataType === "get_email_sequences")
-            return getFromDb("email_sequences");
+            await getFromDb("email_sequences");
           else if (dataType === "get_email_campaigns")
-          return getFromDb("email_campaigns");
+          await getFromDb("email_campaigns");
         else if(dataType === "get_product_returns")
-        return getFromDb("product_returns");
+        await getFromDb("product_returns");
 
 
         else if (dataType === "send_unfulfilled_orders") {
@@ -1011,8 +1012,8 @@ await dbConnection.query(`DELETE FROM email_templates WHERE id = ?`, [template_i
 
           await updateDb(
             "reviews",
-            data,
-            "SET name = ?, text = ?, imageNames = ?, stars = ? WHERE id = ?",
+            data
+            
           );
          
         } 

@@ -250,7 +250,7 @@ const makePayment = async (req, res) => {
            
           const subscribeSource = subscribed?"checkout":"checkout x"
        
-          subscribe(email, subscribeSource,  {orderId:uniqueId}, dbConnection);
+          await subscribe(email, subscribeSource,  {orderId:uniqueId}, dbConnection);
 
         
 

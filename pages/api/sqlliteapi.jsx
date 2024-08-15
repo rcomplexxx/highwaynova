@@ -70,7 +70,7 @@ export default async function handler(req, res) {
         if (req.body.type === "customers") {
           // Create a new SQLite database connection
 
-          if(subscribe(req.body.email, req.body.source, dbConnection))
+          if(await subscribe(req.body.email, req.body.source, dbConnection))
             return await resReturn(201, { message: "Successfully subscribed." })
             
           

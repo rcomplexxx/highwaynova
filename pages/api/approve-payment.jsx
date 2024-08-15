@@ -96,7 +96,7 @@ const approvePayment = async (req, res) => {
 
        
       
-          subscribe(email, subscribeSource, {orderId:orderData.id}, dbConnection);
+          await subscribe(email, subscribeSource, {orderId:orderData.id}, dbConnection);
    
 
          
