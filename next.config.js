@@ -7,7 +7,7 @@ const path = require('path');
 const nextConfig = {
     experimental: {
         scrollRestoration: true,
-        optimizePackageImports: true,
+    
      
       },
       images: {
@@ -18,7 +18,7 @@ const nextConfig = {
         defaultLocale: 'en',
       },
       compress: true,
-   
+
       webpack: (config, { isServer }) => {
 
         config.resolve.alias['@'] = path.join(__dirname);
