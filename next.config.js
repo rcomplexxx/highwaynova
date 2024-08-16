@@ -18,14 +18,19 @@ const nextConfig = {
         defaultLocale: 'en',
       },
       compress: true,
-
+      optimization: {
+        usedExports: true,  // Enable tree shaking by marking unused exports
+        minimize: true,     // Enable minification to further reduce bundle size
+        experimental: {
+          optimizeCss: true,
+        },
+      },
       webpack: (config, { isServer }) => {
 
         config.resolve.alias['@'] = path.join(__dirname);
         
         return config;
       },
-      swcMinify: true,
 
       compiler: {
         // removeConsole: {
