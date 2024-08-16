@@ -3,11 +3,12 @@ import { useEffect, useMemo, useState } from "react";
 import SupplierCostInput from "./supplierCostInput/SupplierCostInput";
 
 export default function OrderCard({
+   index,
   id,
   info,
  
   packageStatus,
-  supplierCosts,
+  existingSupplierCosts,
   handleChangedOrdersArray,
   products,
   coupons,
@@ -21,7 +22,10 @@ export default function OrderCard({
   const [discountPercent, setDiscountPercent] = useState();
   const [discountInCash, setDiscoutInCash] = useState();
   const [supplierCostInputOpen, setSupplierCostInputOpen] = useState(false);
+  const [supplierCost, setSupplierCost] = useState('');
+
   const [currentPackageStatus, setCurrentPackageStatus] = useState(packageStatus);
+  
 
 
    const infoObj = useMemo(() => JSON.parse(info), [info]);
@@ -104,7 +108,15 @@ export default function OrderCard({
    if(currentPackageStatus ===3) return;
 
     if(currentPackageStatus === 0) {setSupplierCostInputOpen(true)}
-    else if(currentPackageStatus===1){  setCurrentPackageStatus(2); handleChangedOrdersArray({id: id, packageStatus:2})}
+    else if(currentPackageStatus===1){  setCurrentPackageStatus(2); 
+      
+      if(packageStatus===0)handleChangedOrdersArray({id: id, packageStatus:2, supplierCost: parseFloat(parseFloat(supplierCost).toFixed(2))})
+      
+      else handleChangedOrdersArray({id: id, packageStatus:2})
+   
+   }
+
+
     else if(currentPackageStatus===2){  setCurrentPackageStatus(0); handleChangedOrdersArray({id: id, packageStatus:0})}
     
     
@@ -113,11 +125,14 @@ export default function OrderCard({
   return (
     <div className={`${styles.cardMainDiv} ${productReturnsPageStyle && styles.productReturnsPageStyle}`}>
 
-      {supplierCostInputOpen && <SupplierCostInput handleChangedOrdersArray={(supplierCost)=>{
+      {supplierCostInputOpen && <SupplierCostInput
+      
+      supplierCost={supplierCost} setSupplierCost={setSupplierCost}
+      handleChangedOrdersArray={(supplierCost)=>{
          setCurrentPackageStatus(1);
          handleChangedOrdersArray({id: id, packageStatus:1, supplierCost: supplierCost})}} setSupplierCostInputOpen={setSupplierCostInputOpen}/>}
       <div className={styles.cardRow}>
-      <h1 className={styles.identifier}>{id + 1}</h1>
+      <h1 className={styles.identifier}>{index+1}</h1>
     
 
       <p className={styles.orderId}>Order_id {infoObj.id}</p>
@@ -251,9 +266,9 @@ export default function OrderCard({
   { transactionCovered ? <span>Click for details</span> :<> 
   
   
-   {  supplierCosts >0 && <div className={styles.infoPair}>
+   {  existingSupplierCosts >0 && <div className={styles.infoPair}>
          <p>Supply costs</p>
-         <p>{supplierCosts}</p>
+         <p>{existingSupplierCosts}</p>
       </div>}
   
   {infoObj.couponCode && discountPercent && discountInCash &&

@@ -4,7 +4,7 @@
 
 .pickProductsTitle{
     margin:0;
-    margin-top: var(--size-9);
+    margin-top: var(--size-7);
 }
 
 .returnedProductsInputWrapper{
@@ -42,6 +42,27 @@
 }
 
 
+.discountWarning{
+
+    color: yellow;
+    margin-top: var(--size-7);
+    margin-bottom: calc(-1 * var(--size-5));
+    align-self: flex-start;
+    box-sizing: border-box;
+
+}
+
+
+.inputLabel{
+    color: var(--neutral-6);
+    margin-top: var(--size-7);
+    margin-bottom: var(--size-2);
+    align-self: flex-start;
+    box-sizing: border-box;
+
+}
+
+
 
 .inputProductId{
     color: rgb(225, 236, 238);
@@ -53,7 +74,7 @@
     padding: var(--size-3);
     font-size: var(--font-size-5);
     line-height: var(--size-7);
-    margin-top: var(--size-7);
+    
    margin-bottom: var(--size-6);
    /* border: 1px solid var(--border-color-strong); */
    border: none;

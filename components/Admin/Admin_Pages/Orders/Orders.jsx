@@ -66,29 +66,54 @@ export default function Orders({ data, setData }) {
           />
         ) : (
           <div className={styles.getButtonsWrapper}>
-            <GetDataButton
-              name="Fulfilled Orders"
-              dataType={"get_fulfilled_orders"}
-              setData={setData}
-              initializeData={initializePackageStatusData}
-            />
-            <GetDataButton
-              name="Unapproved Orders"
-              dataType={"get_unapproved_orders"}
-              setData={setData}
-              initializeData={initializePackageStatusData}
-            />
-          </div>
-        )}
-      </div>
-      {data.length === 0 && (
-        <GetDataButton
-          name="Orders"
+
+
+<GetDataButton
+          name="orders - NEW"
           dataType={"get_unfulfilled_orders"}
           setData={setData}
           initializeData={initializePackageStatusData}
         />
-      )}
+
+
+<GetDataButton
+              name="orders - ORDERED"
+              dataType={"get_ordered_orders"}
+              setData={setData}
+              initializeData={initializePackageStatusData}
+            />
+
+<GetDataButton
+              name="orders - COMPLETED"
+              dataType={"get_completed_orders"}
+              setData={setData}
+              initializeData={initializePackageStatusData}
+            />
+     
+     
+     <GetDataButton
+              name="orders - RETURNED"
+              dataType={"get_returned_orders"}
+              setData={setData}
+              initializeData={initializePackageStatusData}
+            />
+
+
+
+            <GetDataButton
+              name="Orders - UNAPPROVED"
+              dataType={"get_unapproved_orders"}
+              setData={setData}
+              initializeData={initializePackageStatusData}
+            />
+
+
+
+
+          </div>
+        )}
+      </div>
+     
       {data.length !== 0 && data.length >= page * 10 && (
         <>
           {data
@@ -102,13 +127,14 @@ export default function Orders({ data, setData }) {
             .map((order, index) => (
               <OrderCard
                 key={page * 10 + index}
+                index={page * 10 + index}
                 id={order.id}
                 info={
                   JSON.stringify({id:order.id, email:order.email, firstName:order.firstName, lastName:order.lastName, address:order.address, apt: order.apt, country: order.country, zipcode:order.zipcode, state:order.state, city:order.city, phone: order.phone, couponCode:order.couponCode,
                 tip:order.tip,items:order.items, paymentMethod: order.paymentMethod,paymentId:order.paymentId })}
                
                 packageStatus={data[index + page * 10].packageStatus}
-                supplierCosts = {data[index + page * 10].supplyCost}
+                existingSupplierCosts = {data[index + page * 10].supplyCost}
                 handleChangedOrdersArray={handleChangedOrdersArray}
                 products={products}
                 coupons={coupons}

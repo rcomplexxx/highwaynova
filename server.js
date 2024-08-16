@@ -167,21 +167,13 @@ console.log('Additional code.');
 
 
   
-}).catch(async(err) => {
+}).catch((err) => {
 
-    try{
-
-      
-
-    await (await getPool()).end();
+  
    
-  console.log('MariaDB pool closed.');
-  }
-  catch(err){
-    console.error('Error closing the MariaDB pool:', err);
-  }
-  console.error('Error starting server:', err);
-  process.exit(1);
+  console.log('Server error.', err);
+  process.kill(process.pid, 'SIGTERM');
+ 
 });
 
 
@@ -196,28 +188,46 @@ async function closeServerGracefully() {
 
 
   try{
+
+    process.off('SIGINT', closeServerGracefully); // Remove the signal handler
+    process.off('SIGTERM', closeServerGracefully); // Remove the signal handler
+
+    try{
+
     await (await getPool()).end();
+
+    console.log('MariaDB pool closed.');
+
+    }
+
+    catch(err){
+      console.log('MariaDb pool was already closed.', err)
+    }
+
+    if (appServer && appServer.listening) {
+
+      console.log('Server still alive. Closing server.')
+    await appServer.close();
+
+    }
+
+    console.log('Server closed.');
+
+    process.exit(0);
    
-  console.log('MariaDB pool closed.');
+ 
   }
   catch(err){
-    console.error('Error closing the MariaDB pool:', err);
+    process.exit(1);
+
   }
    
   
-  process.off('SIGINT', closeServerGracefully); // Remove the signal handler
-  process.off('SIGTERM', closeServerGracefully); // Remove the signal handler
+
 
     
-    if(appServer) appServer.close((err) => {
-      if (err) {
-        console.log('server closing error', err)
-    process.exit(1)
-      } else {
-        console.log('Server closed.');
-        process.exit(0)
-      }
-    });
+
+
 }
 
 // Signal handling

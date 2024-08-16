@@ -133,8 +133,6 @@ await conn.query(
       );
 
      
-   
-
 
 
       await conn.query(
@@ -145,13 +143,13 @@ await conn.query(
                 items TEXT,
                 couponCode TEXT,
                 tip TEXT,
-                cashReturned TEXT,
+                returnCost DECIMAL(10, 2) DEFAULT 0,
                 createdDate BIGINT,
                 prevPackageStatus TINYINT
         )
       `);
 
-
+      
 
 
  

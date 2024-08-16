@@ -17,6 +17,8 @@ const [linkOrderIdValue, setLinkOrderIdValue] = useState();
 
 const [returnProducts, setReturnProducts] = useState([]);
 
+const [returnCost, setReturnCost] = useState('');
+
 const [shouldReturnTip, setShouldReturnTip] = useState(false);
 
 const [myProductReturns , setMyProductReturns] = useState();
@@ -138,27 +140,17 @@ const saveNewReturn = async()=>{
 
   if(!linkedOrder || returnProducts.length ==0 || returnProducts.find(rp =>{return rp.id==undefined || rp.id=="" || rp.quantity==0}) ||  returnProducts.find(rp=>{return rp.id == "" || rp.quantity == 0}))return;
   
-  let totalPrice = 0;
-  returnProducts.forEach(product=>{
-    console.log('new pr', product)
-    totalPrice += products.find(p=>{return p.id == product.id})?.price * product.quantity;
-  })
-  console.log('tp', totalPrice);
-  totalPrice= Number(totalPrice).toFixed(2);
 
-  const discountPercentage = coupons.find(coupon=>{return linkedOrder.couponCode.toLowerCase()==coupon.code.toLowerCase()})?.discountPercentage;
-  if(discountPercentage){
-    totalPrice= totalPrice - totalPrice* discountPercentage/100;
-    totalPrice= Number(totalPrice).toFixed(2);
-  }
+
+  
  
  
-  if(shouldReturnTip)totalPrice=Number(totalPrice) + parseFloat(linkedOrder.tip);
-  totalPrice= Number(totalPrice).toFixed(2);
+  
+  const totalPrice= parseFloat(parseFloat(returnCost).toFixed(2));
 
 
     let newReturnData = { orderId: linkedOrder.id, products:JSON.stringify(returnProducts), 
-      couponCode: linkedOrder.couponCode, tip:shouldReturnTip?linkedOrder.tip:"0.00", cashReturned: totalPrice };
+      couponCode: linkedOrder.couponCode, tip:shouldReturnTip?linkedOrder.tip:"0.00", returnCost: totalPrice };
 
 
     await fetch("/api/admincheck", {
@@ -297,7 +289,7 @@ if (result) {
           className={`${styles.saveDescription} ${styles.fileNewReturnButton}`}>Unlink order</button>
 
        <PickReturnProducts returnProducts={returnProducts} setReturnProducts={setReturnProducts} 
-       orderProducts={JSON.parse(linkedOrder.items)}
+       orderProducts={JSON.parse(linkedOrder.items)} returnCost={returnCost} setReturnCost={setReturnCost} coupon={linkedOrder.couponCode}
        shouldReturnTip={shouldReturnTip} setShouldReturnTip={setShouldReturnTip} tipExist={linkedOrder.tip !=0}
        />
 

@@ -8,7 +8,7 @@ import styles from './pickreturnproducts.module.css'
 
 
 
-export default function PickReturnProducts({orderProducts, returnProducts, setReturnProducts, shouldReturnTip, setShouldReturnTip, tipExist}) {
+export default function PickReturnProducts({orderProducts, returnProducts, setReturnProducts, returnCost, setReturnCost, coupon,  shouldReturnTip, setShouldReturnTip, tipExist}) {
 
 
 
@@ -16,11 +16,40 @@ export default function PickReturnProducts({orderProducts, returnProducts, setRe
 
 
     const [returnProductsNumberInputValue, setReturnProductsNumberInputValue] = useState();
+    
 
 
   return (
     <>
-    <h2 className={styles.pickProductsTitle}>Pick returned products</h2>
+    <h2 className={styles.pickProductsTitle}>Return information</h2>
+    
+    {coupon && <span className={styles.discountWarning}>Warning! Order has DISCOUNT. Calculate return cost with DISCOUNT!</span>}
+
+    
+
+    <label className={`${styles.inputLabel}`} htmlFor='returnCostInput'>Return cost</label>
+
+    <input
+    id='returnCostInput'
+    className={`${styles.inputProductId}`}
+    value={`$${returnCost}`} onChange={(event)=>{
+
+      const newValue = event.target.value.substring(1);
+      
+      
+                  if(/^\d+(\.\d{0,2})?$/.test(newValue) || newValue === ''){
+                      setReturnCost(newValue)
+                  }
+      
+              }}
+
+              
+              
+ 
+ 
+  />
+
+
 
 <input
     className={`${styles.inputProductId}`}

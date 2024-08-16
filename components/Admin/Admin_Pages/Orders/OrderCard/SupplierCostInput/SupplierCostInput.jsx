@@ -3,11 +3,11 @@ import styles from './suppliercostinput.module.css'
 import { useState } from 'react';
 
 export default function SupplierCostInput({
-    handleChangedOrdersArray, setSupplierCostInputOpen
+    handleChangedOrdersArray, setSupplierCostInputOpen,
+    supplierCost, setSupplierCost
 }) {
 
-    const [supplierPrice, setSupplierPrice] = useState('');
-
+ 
 
 
   return (
@@ -17,28 +17,28 @@ export default function SupplierCostInput({
 
         <span className={styles.titleText}>Input supplier cost</span>
 
-        <input value={`$${supplierPrice}`} onChange={(event)=>{
+        <input value={`$${supplierCost}`} onChange={(event)=>{
 
 const newValue = event.target.value.substring(1);
 
 
             if(/^\d+(\.\d{0,2})?$/.test(newValue) || newValue === ''){
-                setSupplierPrice(newValue)
+                setSupplierCost(newValue)
             }
 
         }} className={styles.costInput}/>
 
         <button onClick={()=>{
 
-console.log('final supp pri', supplierPrice)
+console.log('final supp pri', supplierCost)
           
-            if(isNaN(parseFloat(supplierPrice)))return;
+            if(isNaN(parseFloat(supplierCost)))return;
 
-            const finalSupplierPrice = parseFloat(parseFloat(supplierPrice).toFixed(2));
-            console.log('final supp pri', finalSupplierPrice)
+            const finalSupplierCost = parseFloat(parseFloat(supplierCost).toFixed(2));
+            console.log('final supp pri', finalSupplierCost)
 
 
-            handleChangedOrdersArray(finalSupplierPrice);
+            handleChangedOrdersArray(finalSupplierCost);
             setSupplierCostInputOpen(false);
         }} className={styles.inputButton}>Apply supplier costs</button>
 

@@ -217,7 +217,7 @@ else{
     
     
       const customerId = (await dbConnection.query(`SELECT customer_id FROM orders WHERE id = (SELECT orderId FROM product_returns WHERE id = ?)`,[deleteId]))[0].customer_id
-      const cashReturned = Number((await dbConnection.query(`SELECT cashReturned FROM product_returns WHERE id = ?`, [deleteId]))[0].cashReturned);
+      const returnCost = (await dbConnection.query(`SELECT returnCost FROM product_returns WHERE id = ?`, [deleteId]))[0].returnCost;
      
       if(orderHasMultipleReturns===1){
 
@@ -227,13 +227,14 @@ else{
       }
 
 
-      await dbConnection.query(`UPDATE customers SET money_spent = ROUND(money_spent - ?, 2) WHERE id = ?`,[cashReturned, customerId])
+      await dbConnection.query(`UPDATE customers SET money_spent = ROUND(money_spent - ?, 2) WHERE id = ?`,[returnCost, customerId])
 
 
     }
 
 
     await dbConnection.query(`DELETE FROM ${tableName} WHERE id = ?`,[deleteId]);
+    
 
    return await resReturn(200, { row_deleted: true })
   
@@ -400,12 +401,12 @@ else{
         // if(orderData[0]?.packageStatus ===3)return;
         //packageStatus 3 code je Returned
 
-        await dbConnection.query(`INSERT INTO product_returns (orderId, items,couponCode, tip, cashReturned, createdDate, prevPackageStatus) VALUES (?, ?, ?, ?, ?, ?, ?)`,
+        await dbConnection.query(`INSERT INTO product_returns (orderId, items,couponCode, tip, returnCost, createdDate, prevPackageStatus) VALUES (?, ?, ?, ?, ?, ?, ?)`,
           [data.orderId,
           data.products,
           data.couponCode,
           data.tip,
-          data.cashReturned,
+          data.returnCost,
           Math.floor(Date.now() / 86400000),
           orderData.packageStatus
 
@@ -414,7 +415,7 @@ else{
 
         await dbConnection.query(`UPDATE orders SET packageStatus = 3 WHERE id = ?`, [data.orderId]);
 
-        await dbConnection.query(`UPDATE customers SET money_spent = ROUND(money_spent - ?, 2) WHERE id = ?`,[data.cashReturned, orderData.customer_id])
+        await dbConnection.query(`UPDATE customers SET money_spent = ROUND(money_spent - ?, 2) WHERE id = ?`,[data.returnCost, orderData.customer_id])
 
 
 
@@ -952,18 +953,26 @@ await dbConnection.query(`DELETE FROM email_templates WHERE id = ?`, [template_i
         //Ovde approved
         else if(dataType === "get_order_cash_info_only_fulfilled_orders") await getFromDb("orders", `packageStatus != 0`, "createdDate, total, supplyCost, tip, couponCode");
         else if (dataType === "get_unfulfilled_orders")
-          await getFromDb(`orders JOIN customers ON orders.customer_id = customers.id`, `approved = 1 AND packageStatus = 0 ORDER BY orders.id DESC`, `orders.*, customers.email`);
+          await getFromDb(`orders JOIN customers ON orders.customer_id = customers.id`, `approved = 1 AND packageStatus = 0 ORDER BY orders.createdDate DESC`, `orders.*, customers.email`);
         else if (dataType === "get_unapproved_orders")
-          await getFromDb(`orders JOIN customers ON orders.customer_id = customers.id`, `approved = 0 ORDER BY orders.id DESC`, `orders.*, customers.email`);
-        else if (dataType === "get_fulfilled_orders")
-          await getFromDb(`orders JOIN customers ON orders.customer_id = customers.id`, `packageStatus != 0 AND packageStatus != 3 ORDER BY orders.id DESC`, `orders.*, customers.email`);
+          await getFromDb(`orders JOIN customers ON orders.customer_id = customers.id`, `approved = 0 ORDER BY orders.createdDate DESC`, `orders.*, customers.email`);
+     
+        else if (dataType === "get_ordered_orders")
+          await getFromDb(`orders JOIN customers ON orders.customer_id = customers.id`, `packageStatus = 1 ORDER BY orders.createdDate DESC`, `orders.*, customers.email`);
+
+
+        else if (dataType === "get_completed_orders")
+          await getFromDb(`orders JOIN customers ON orders.customer_id = customers.id`, `packageStatus = 2 ORDER BY orders.createdDate DESC`, `orders.*, customers.email`);
 
         
-        else if(dataType === "get_orders_by_email")
-        await getFromDb(`orders JOIN customers ON orders.customer_id = customers.id`, `email = '${data.email}'`, `orders.*, customers.email`);
-      
+ 
+        else if (dataType === "get_returned_orders")
+          await getFromDb(`orders JOIN customers ON orders.customer_id = customers.id`, `packageStatus = 3 ORDER BY orders.createdDate DESC`, `orders.*, customers.email`);
+        
 
-       
+        else if(dataType === "get_orders_by_email")
+          await getFromDb(`orders JOIN customers ON orders.customer_id = customers.id`, `email = '${data.email}'`, `orders.*, customers.email`);
+        
         
         else if(dataType ==="get_order_by_orderId")
         await getFromDb(`orders JOIN customers ON orders.customer_id = customers.id`, `orders.id = '${data.orderId}'`, `orders.*, customers.email`);

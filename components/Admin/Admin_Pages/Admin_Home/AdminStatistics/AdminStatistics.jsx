@@ -52,7 +52,7 @@ export default function AdminStatistics(){
            
               if(data.data){
 
-                returnCashInfo=data.data.map(productReturn=>{return {cashReturned: productReturn.cashReturned, createdDate: productReturn.createdDate}});
+                returnCashInfo=data.data.map(productReturn=>{return {returnCost: productReturn.returnCost, createdDate: productReturn.createdDate}});
                 setReturnCashData(returnCashInfo);
                 
 
@@ -213,7 +213,7 @@ export default function AdminStatistics(){
 
           
           if(rcd.createdDate>=startPeriod && rcd.createdDate<= endPeriod)
-          lostInReturns = lostInReturns + Number(rcd.cashReturned);
+          lostInReturns = lostInReturns + rcd.returnCost;
 
         }
         )
@@ -314,7 +314,7 @@ export default function AdminStatistics(){
 
         
         if(rcd.createdDate>=selectedRange[0] && rcd.createdDate<= selectedRange[1])
-        lostInReturns = lostInReturns + Number(rcd.cashReturned);
+        lostInReturns = lostInReturns + rcd.returnCost;
 
       }
       )

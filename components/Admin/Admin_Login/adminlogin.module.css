@@ -10,6 +10,8 @@
     flex-direction: column;
     align-items: center;
     color: var(--admin-txt-color);
+    background: url('/images/admin_login_bg2.jpg');
+    background-size: contain;
     background-color: var(--gray-9-elegant);
 }
 
