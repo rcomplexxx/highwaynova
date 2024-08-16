@@ -1,6 +1,6 @@
 import styles from "./ordercard.module.css";
 import { useEffect, useMemo, useState } from "react";
-import SupplierCostInput from "./supplierCostInput/SupplierCostInput";
+import SupplierCostInput from "./SupplierCostInput/SupplierCostInput";
 
 export default function OrderCard({
    index,
