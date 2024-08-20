@@ -2,10 +2,9 @@ import { useEffect} from "react";
 import { useRouter } from "next/router";
 import products from "../../../data/products.json";
 import Products from "@/components/Products/Products.jsx";
-import Link from "next/link";
-import styles from "./page.module.css";
-import Head from "next/head";
-import Image from "next/image";
+
+import styles from "@/styles/productlist.module.css";
+
 import PageNumber from "@/components/PageNumbers/PageNumbers";
 import { NextSeo } from "next-seo";
 import { unimportantPageSeo } from "@/utils/SEO-configs/next-seo.config";

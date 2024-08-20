@@ -487,7 +487,7 @@ ${shouldUseOnlyFulfilledOrders && styles.onlyFulfilledOrdersChecked}`}
           <Charts title="Profit" chartData={cashData.map(item => {return {createdDate:item.createdDate, yMetric:Number(item.cashObtained) - Number(item.supplyCost)+Number(item.tip)}})}/>
           
 
-          <Charts title="Average order number" chartData={getAovChartData() }/>
+          <Charts title="Average order value" chartData={getAovChartData() }/>
          
 
 

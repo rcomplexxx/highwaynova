@@ -2,7 +2,7 @@ import  { useCallback, useEffect, useMemo, useRef } from "react";
 import products from "../../data/products.json";
 import Image from "next/image";
 import {useGlobalStore} from "@/contexts/AppContext";
-import CustomerReviews from "@/components/CustomerReviews/CustomerReviews.jsx";
+import CustomerReviews from "@/components/ProductPage/CustomerReviews/CustomerReviews.jsx";
 
 
 
@@ -10,12 +10,12 @@ import { useState} from "react";
 
 
 
-import QuantityButton from "@/components/QuantityButton/QuantityButton";
-import FrequentlyBoughtTogether from "@/components/FrequentlyBoughtTogether/FrequentlyBoughtTogether";
+import QuantityButton from "@/components/ProductPage/QuantityButton/QuantityButton";
+import FrequentlyBoughtTogether from "@/components/ProductPage/FrequentlyBoughtTogether/FrequentlyBoughtTogether";
 
-import ProductPageCards from "@/components/ProductPageCards/ProductPageCards";
+import ProductPageCards from "@/components/ProductPage/ProductPageCards/ProductPageCards";
 
-import ProductPics from "@/components/ProductPics/ProductPics";
+import ProductPics from "@/components/ProductPage/ProductPics/ProductPics";
 
 import { getReviewsData } from "@/utils/getStartReviews";
 import getRatingData from "@/utils/getRatingData";
@@ -28,6 +28,7 @@ import { Amex,Discover, Jcb, MasterCard, Visa } from "@/public/images/svgs/svgIm
 import Link from "next/link";
 
 import styles from "../../styles/productpage.module.css";
+import BundleOffer from "@/components/ProductPage/BundleOffer/BundleOffer";
 
 
 
@@ -183,11 +184,15 @@ export default function ProductPage({ product, images, startReviews, ratingData 
            
             })
 
-}
+                }
            
           </div>
           </div>
 }
+
+<BundleOffer/>
+
+
 
           <QuantityButton quantity={quantity} setQuantity={setQuantity} />
 

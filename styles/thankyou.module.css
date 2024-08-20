@@ -1,5 +1,7 @@
 
 .thankYouWrapper{
+
+    max-height: 100%;
     width: 100%;
     background-color: var(--bg-color);
     position: absolute;
@@ -7,6 +9,9 @@
     left:0;
     display: flex;
     justify-content: center;
+
+
+    overflow: hidden;
     
     z-index: 99;
 }
@@ -54,16 +59,35 @@
     width: 40px;
 }
 
+
+.rideon{
+
+width: 100%;
+
+height: auto;
+min-height: 100%;
+
+position: absolute;
+top: 0;
+left: 0;
+
+object-fit: cover;
+
+z-index: -1;
+
+}
+
+
 .mainPharagraph{
     
     color: var(--thank-you-pharagraph-color);
-    max-width: var(--size-16);
+    max-width: var(--size-18);
     text-align: center;
     font-size: var(--font-size-4);
     font-weight: 400;
 
     margin-bottom: 0;
-    font-family: var(--hand-writing-font);
+    font-family: var(--font-neutral);
    
     
 }
@@ -101,7 +125,7 @@
 
     .mainDiv{
  
-        width: calc(100% - var(--size-7));
+        padding: 0 var(--size-7);
     }
 
     .continue{
@@ -114,13 +138,38 @@
 @media(max-width:480px){
 
     .mainDiv{
-        width: calc(100% - var(--size-6));
+        padding: 0 var(--size-5);
     }
 
     .continue{
    
         width: calc(100% - var(--size-7));
     }
+
+
+    .titleDiv{
+        gap: var(--size-3);
+    }
+
+    .title{
+       font-size: var(--font-size-6);
+    }
+    
+    
+    
+    
+    .correctImg{
+        height: 32px;
+        width: 32px;
+    }
+
+    .mainPharagraph{
+    
+       
+        font-size: var(--font-size-3);
+    }
+
+
 
 }
 

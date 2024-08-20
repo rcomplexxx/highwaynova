@@ -3,11 +3,11 @@ import { useRouter } from "next/router";
 
 
 import "../styles/globals.css";
-import Navbar from "../components/Navbar/Navbar.jsx";
+import Navbar from "../components/GeneralComps/Navbar/Navbar.jsx";
 import {useGlobalStore} from "@/contexts/AppContext";
-import Footer from "@/components/Footer/Footer";
+import Footer from "@/components/GeneralComps/Footer/Footer";
 import SEO from '@/utils/SEO-configs/next-seo.config.js'
-import EmailFlowPopup from "@/components/EmailFlowPopup/EmailFlowPopup";
+import SubscribePopup from "@/components/GeneralComps/SubscribePopup/SubscribePopup";
 import { inter, eb_Garamond } from "@/utils/fonts";
 import { DefaultSeo } from "next-seo";
 
@@ -265,7 +265,7 @@ export default function App({ Component, pageProps }) {
         <DefaultSeo {...SEO}/>
        
       
-      {emailPopup && <EmailFlowPopup setEmailPopup={setEmailPopup}/>}
+      {emailPopup && <SubscribePopup setEmailPopup={setEmailPopup}/>}
     {!router.pathname.includes('admin') && <Navbar/>}
 
       

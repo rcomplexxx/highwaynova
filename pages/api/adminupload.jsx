@@ -45,14 +45,14 @@ const limiterPerHour = new RateLimiter({
 
             const form = formidable({multiples: false});
 
-           console.log('curr form', form)
+           console.log('curr form making')
 
             const [fields, files] = await form.parse(req);
 
 
             const myFile = files.file[0];
 
-
+            console.log('dir2')
         
                
 
@@ -65,11 +65,24 @@ const limiterPerHour = new RateLimiter({
 
             const uploadDir = path.join(`${process.cwd()}/public/images/email_images/`);
 
-            if(fs.access(`${uploadDir}/${myFile.originalFilename}`)) return res.status(200).json({ success: true, 
+            console.log('dir3')
+
+            try{
+              await fs.access(`${uploadDir}/${myFile.originalFilename}`)
+              console.log('somehow succeeded')
+              
+              return res.status(200).json({ success: true, 
               fileUrl:  `${req.protocol}://${req.headers.host}/images/email_images/${myFile.originalFilename}` });
+            }
+            catch(error){
+              console.log('file does not exist.')
+
+            }
 
 
-           
+            
+              console.log('dir4')
+
 
             const additionalExtension =path.extname(myFile.originalFilename).length !== 0?"":".png";
        
@@ -91,6 +104,7 @@ const limiterPerHour = new RateLimiter({
 
 
              } catch(error){
+              console.log('error cought', error)
                 res.status(500).json({ success: false, error: 'Uploading server error' });
              }
             

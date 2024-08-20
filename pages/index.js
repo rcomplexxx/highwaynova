@@ -1,7 +1,7 @@
 import HomeReviews from "../components/HomeReviews/HomeReviews.jsx";
 import Products from "@/components/Products/Products.jsx";
 import products from "../data/products.json";
-import styles from "../styles/appStyle.module.css";
+import styles from "@/styles/home.module.css";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -34,13 +34,13 @@ const HomePage = ({ products }) => {
    
 
       <picture className={styles.heroWindow}>
-    <source media="(min-width: 720px)" srcSet="/images/main_wallpaper.jpg" />
-    <source media="(max-width: 720px)" srcSet="/images/main_wallpaper_mob4.png" />        
+    <source media="(min-width: 720px)" srcSet="/images/motohero.jpeg" />
+    <source media="(max-width: 720px)" srcSet="/images/motohero2.jpeg" />        
    
         <Image
           height={0}
           width={0}
-         src={`/images/main_wallpaper.jpg`} // Path to your image from the `public` directory
+         src={`/images/motohero.jpeg`} // Path to your image from the `public` directory
           alt="Hero Discount Image"
           priority={true}
           sizes="100vw"

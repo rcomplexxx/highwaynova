@@ -309,61 +309,80 @@ p {
 
 
   
+  
 
+ 
+  
+ 
   
 
 
-  --main-color-0: #1B180E;
-  --main-color-1: #433C23;
-  --main-color-2: #6B6038;
-  --main-color-3: #93844D;
-  --main-color-4: #B2A36C;
-  --main-color-5: #C0B387;
-  --main-color-6: #CEC3A1;
-  --main-color-7: #DCD4BC;
-  --main-color-8: #EAE5D7;
-  --main-color-9: #F8F6F2;
-
-
-  --accent-color-1: #2F2145;
-  --accent-color-2: #4B346F;
-  --accent-color-3: #674899;
-  --accent-color-4: #7D5CB3;
-  --accent-color-5: #9B82C4;
-  --accent-color-6: #B29ED1;
-  --accent-color-7: #C8BADE;
-
-
-  --neutral-0: #0A0A0A; /*#F5F6F4;*/
-  --neutral-0-5: #141414; /*#f2e7e5*/
-  --neutral-1: #292929;  
-  --neutral-2: #474747;
-  --neutral-3: #666666;
-  --neutral-4: #858585;
-  --neutral-5: #999999;
-  --neutral-6: #ADADAD;
-  --neutral-7: #C2C2C2;
-  --neutral-8: #D6D6D6;
-  --neutral-9: #EBEBEB;
-  --neutral-10: #F5F5F5;
 
 
 
 
-  --red-1: #daaba8;
+
+
+
+  
+  
+ /* Take your primary branding color, convert it to HSL then shift the lightness up to the 90-99% 
+  range until it's bright enough. Or #f2f2f2/F4F3F2*/
+
+
+  --main-color-0: #510015;
+  --main-color-1: #7a011F;
+  --main-color-2: #a31039;
+  --main-color-3: #cb0134;
+  --main-color-4: #f4013e;
+  --main-color-5: #fe0b48;
+  --main-color-6: #fe2057;
+  --main-color-7: #fe4876;
+  --main-color-8: #fe7194;
+  --main-color-9: #fe9ab3;
+
+
+  --accent-color-1: #11596A;
+  --accent-color-2: #16778D;
+  --accent-color-3: #1C95B0;
+  --accent-color-4: #20AFD0;
+  --accent-color-5: #3dc3e1;
+  --accent-color-6: #60cee6;
+  --accent-color-7: #83d9ec;
+
+
+
+
+
+
+
+
+
+
+
+  --neutral-0: hsl(246, 46%, 7%); /*#F5F6F4;*/
+  --neutral-0-5: hsl(256, 45%, 9%); /*#f2e7e5*/
+  --neutral-1: hsl(249, 43%, 20%);  
+  --neutral-2: hsl(261, 43%, 26%);  
+  --neutral-3: hsl(262, 43%, 34%);  
+  --neutral-4: hsl(256, 41%, 40%);
+  --neutral-5: hsl(256, 41%, 48%);
+  --neutral-6: hsl(222, 38%, 59%);
+  --neutral-7: hsl(256, 36%, 66%);
+  --neutral-8: hsl(256, 35%, 74%);
+  --neutral-9: hsl(256, 35%, 84%);
+  --neutral-10: hsl(266, 34%, 92%);
+
+ 
+
+
+
+
+
   --red-2: #B87F65;
-  --red-3: #A75631;
-  --red-4: #8a4322;
-  --red-5: #712f1b;
-  --red-6: #5b2717;
-  --gray-1: #CBC6B0;
-  --gray-2: #AC9576;
-  --gray-3: #9E846F;
-  --gray-4: #866E57;
-  --gray-5: #685947;
-  --gray-6: #50443B;
-  --gray-7: #372F2A;
-  --gray-8: #241F1C;
+
+
+
   --gray-10:#030a08;
   --gray-9: #0A0A09;
   --gray-10: #030404;
@@ -371,11 +390,11 @@ p {
   --gray-9-elegant-op08: #02050acc;
   --gray-9-elegant-original:#010203;
   
-  --yellow-8: #796632;
-  --practice:#e9e2c3;
+  
 
+  
 
-  /* Take your primary branding color, convert it to HSL then shift the lightness up to the 90-99% range until it's bright enough. Or #f2f2f2/F4F3F2*/
+ 
 
 
   /* General */
@@ -430,7 +449,8 @@ p {
 
   /*~ Navbar ~*/
 
- 
+  --headTrack-color: var(--neutral-7);
+  --headTrack-bg-color: var(--main-color-0);
   
   --navbar-bg: var(--neutral-0-5);
   --nav-bottom-border-color: var(--neutral-1);
@@ -477,8 +497,8 @@ p {
 
 
  --shop-now-hero-button-color:black;
- --shop-now-hero-button-bg: var(--main-color-8);
- --shop-now-hero-button-box-shadow: 0 2px 6px var(--neutral-9);
+ --shop-now-hero-button-bg: var(--neutral-5);
+ --shop-now-hero-button-box-shadow: 0 1px 4px var(--neutral-1);
 
  
 
@@ -535,6 +555,8 @@ p {
  --buy-now-hover-box-shadow-border: var(--neutral-5);
  --buy-now-hover-bg: var(--main-color-0);
 
+
+ --fbt-border: var(--neutral-7);
  --fbt-title-color: var(--neutral-10);
  --fbt-add-to-cart-color: var(--action-button-txt-color);
  --fbt-add-to-cart-bg: var(--action-button-bg-color);

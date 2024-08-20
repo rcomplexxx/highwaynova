@@ -27,8 +27,13 @@ export default function ThankYou() {
     <div className={styles.thankYouWrapper}>
      <NextSeo {...unimportantPageSeo('/thank-you')}/>
     <div className={styles.mainDiv}>
+
+
+ 
+
+
       <div className={styles.titleDiv}>
-        <h1 className={styles.title}>Thank you</h1>
+        <h1 className={styles.title}>Order confirmed!</h1>
        
           <Image
             className={styles.correctImg}
@@ -39,8 +44,26 @@ export default function ThankYou() {
           />
        
       </div>
-      <span className={styles.mainPharagraph}>Thank you for shopping with us! Your order has been palced. Check your email for order details. {bonusMessage}</span>
-      <Link href='/' className={styles.continue}>Back to home</Link>
+
+
+
+      <span className={styles.mainPharagraph}>Thank you for shopping with us. Please check your inbox, as confirmation email is on it's way.</span>
+     
+   
+     
+     
+      <Link href='/' className={styles.continue}>Return to store</Link>
+
+
+      <Image
+            className={styles.rideon}
+            src="/images/rideonmini.jpeg"
+            alt="Thanks"
+            height={0}
+            width={0}
+            sizes="100%"
+          />
+
     </div>
     </div>
   );
