@@ -35,7 +35,7 @@ const transformColorToRgb = (bgColor, opacity)=>{
       g = Math.round(g * 255);
       b = Math.round(b * 255);
   
-      if(opacity!==undefined) return `rgba(${r}, ${g}, ${b}, ${opacity})`;
+      if(opacity!==undefined && opacity!==1) return `rgba(${r}, ${g}, ${b}, ${opacity})`;
       return `rgb(${r}, ${g}, ${b})`;
 
       
@@ -53,7 +53,7 @@ const transformColorToRgb = (bgColor, opacity)=>{
           g = parseInt(hex[3] + hex[4], 16);
           b = parseInt(hex[5] + hex[6], 16);
       }
-      if(opacity!==undefined) return `rgba(${r}, ${g}, ${b}, ${opacity})`;
+      if(opacity!==undefined && opacity!==1) return `rgba(${r}, ${g}, ${b}, ${opacity})`;
       return `rgb(${r}, ${g}, ${b})`;
 
     }
