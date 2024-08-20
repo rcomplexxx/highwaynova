@@ -266,7 +266,7 @@ export default function CustomerReviews({ product_id, ratingData, startReviews }
 
   return (
     <div className={styles.mainDiv} id="customerReviews">
-      <h1 className={styles.happyCustomersTitle}>Our happy customers!</h1>
+ 
 
       
    <WriteReviewVisible ratingData={ratingData} sortingType={sortingType} setSortingType={handleSortingTypeChange}/>

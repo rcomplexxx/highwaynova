@@ -17,7 +17,7 @@ import ProductPageCards from "@/components/ProductPage/ProductPageCards/ProductP
 
 import ProductPics from "@/components/ProductPage/ProductPics/ProductPics";
 
-import { getReviewsData } from "@/utils/getStartReviews";
+import { getStartReviews } from "@/utils/getStartReviews";
 import getRatingData from "@/utils/getRatingData";
 import PayPalButton from "@/components/Checkout/PayPal/PayPal";
 import { NextSeo } from "next-seo";
@@ -190,7 +190,7 @@ export default function ProductPage({ product, images, startReviews, ratingData 
           </div>
 }
 
-<BundleOffer/>
+{/* <BundleOffer/> */}
 
 
 
@@ -342,7 +342,7 @@ export async function getStaticProps(context) {
  
 
  
-    const reviewsData= await getReviewsData(productId);
+    const reviewsData= await getStartReviews(productId, 8);
 
  
     

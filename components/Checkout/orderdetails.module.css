@@ -127,6 +127,7 @@
       align-self: center;
      
       
+      box-sizing: border-box;
       border: solid 1px var(--checkout-input-border-color);
  
       font-size: var(--font-size-2);

@@ -3,8 +3,8 @@ import reviewsData from "@/data/reviews.json";
 const getPool = require('./mariaDbPool');
 
 
-export const getReviewsData= async(productId)=>{
-const limit = 20;
+export const getStartReviews= async(productId, limit = 20)=>{
+
 
     try {
    
@@ -22,7 +22,7 @@ const limit = 20;
   
       await dbConnection.release();
   
-      return result.length<20?reviewsData:result;
+      return result.length<20?reviewsData.slice(0, limit):result;
     } catch (error) {
      return reviewsData;
     }
