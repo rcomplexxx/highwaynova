@@ -11,19 +11,24 @@ export const getStartReviews= async(productId, limit = 20)=>{
   
    
 
+      console.log('in the reviews getter.')
 
-
-     let dbConnection = await getPool().getConnection();
+     let dbConnection = await (await getPool()).getConnection();
   
      
       const result =  await dbConnection.query(`SELECT * FROM reviews WHERE product_id = ? LIMIT ?`, [productId, limit]);
+
+      console.log('here is result', result)
   
 
   
       await dbConnection.release();
   
-      return result.length<20?reviewsData.slice(0, limit):result;
+      return result.length<limit?result.slice(0, limit):result;
     } catch (error) {
-     return reviewsData;
+      console.log('cant pick up reviews with main function.', error)
+     return reviewsData.slice(0,limit);
     }
+
+
 }
