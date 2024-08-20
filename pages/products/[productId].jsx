@@ -254,9 +254,14 @@ export default function ProductPage({ product, images, startReviews, ratingData 
         
 
 
-          <Link className={styles.buy_now_button} 
+          {/* <Link className={styles.buy_now_button} 
           href={`/checkout/buynow?productid=${product.id}${variant?`&variant=${variant}`:""}&quantity=${quantity}`}>
             Buy it now
+          </Link> */}
+
+<Link className={styles.buy_now_button} 
+          href={`/checkout/buynow?productid=${product.id}${variant?`&variant=${variant}`:""}&quantity=${quantity}`}>
+            More payment options
           </Link>
 
 

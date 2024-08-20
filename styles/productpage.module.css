@@ -249,6 +249,46 @@
 
 
   
+    color: var(--buy-now-color);
+    /* background-color: var(--buy-now-bg); */
+
+    /* max-width: var(--size-15);
+    width:100%; */
+   
+   
+   
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s ease;
+
+
+   /* box-sizing: border-box; 
+    border: 1px solid var(--buy-now-border); */
+
+    border-radius: 4px;
+
+    margin-top: var(--size-2);
+    margin-bottom: 0;
+
+    align-self: center;
+
+    text-decoration: underline;
+    font-family: var(--font-neutral);
+    font-weight:  700;
+    font-size: var(--font-size-3);
+   
+  }
+
+
+
+
+  /* .buy_now_button{
+
+    height: var(--size-8);
+
+   
     color: var(--high-contrast-txt-color);
     background-color: var(--buy-now-bg);
 
@@ -256,13 +296,15 @@
     width:100%;
    
    
-    box-sizing: border-box;
+    
   
   display: flex;
   justify-content: center;
   align-items: center;
   transition: background-color 0.3s ease;
    
+
+  box-sizing: border-box;
     border: 1px solid var(--buy-now-border);
 
     border-radius: 4px;
@@ -279,10 +321,11 @@
 
   @media(hover:hover){
   .buy_now_button:hover {
-    /* box-shadow: 0 0 3px var(--buy-now-hover-box-shadow-border); */
+   
     background-color: var(--buy-now-hover-bg);
   }
-}
+} */
+ /* box-shadow: 0 0 3px var(--buy-now-hover-box-shadow-border); */
 
 
   .buyBadges{
@@ -293,7 +336,7 @@
     flex-wrap: wrap;
     gap: var(--size-2);
     row-gap: var(--size-4);
-    margin-top: var(--size-5);
+    margin-top: var(--size-4);
  
     
 

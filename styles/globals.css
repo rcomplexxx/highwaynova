@@ -550,6 +550,7 @@ p {
  --paypal-bg:#FFC439;
  --paypal-wrapper-border: var(--accent-color-6);
 
+ --buy-now-color: var(--accent-color-7);
  --buy-now-bg: transparent;
  --buy-now-border: var(--neutral-5);
  --buy-now-hover-box-shadow-border: var(--neutral-5);
