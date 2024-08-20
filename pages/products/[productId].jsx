@@ -342,7 +342,7 @@ export async function getStaticProps(context) {
  
 
  
-    const reviewsData= await getStartReviews(productId, 8);
+    const reviewsData= await getStartReviews(productId, 12);
 
  
     
