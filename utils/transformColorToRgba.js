@@ -44,14 +44,14 @@ const transformColorToRgb = (bgColor, opacity)=>{
     else if(bgColor.includes('#')){
 
       let r = 0, g = 0, b = 0;
-      if (hex.length === 4) {
-          r = parseInt(hex[1] + hex[1], 16);
-          g = parseInt(hex[2] + hex[2], 16);
-          b = parseInt(hex[3] + hex[3], 16);
-      } else if (hex.length === 7) {
-          r = parseInt(hex[1] + hex[2], 16);
-          g = parseInt(hex[3] + hex[4], 16);
-          b = parseInt(hex[5] + hex[6], 16);
+      if (bgColor.length === 4) {
+          r = parseInt(bgColor[1] + bgColor[1], 16);
+          g = parseInt(bgColor[2] + bgColor[2], 16);
+          b = parseInt(bgColor[3] + bgColor[3], 16);
+      } else if (bgColor.length === 7) {
+          r = parseInt(bgColor[1] + bgColor[2], 16);
+          g = parseInt(bgColor[3] + bgColor[4], 16);
+          b = parseInt(bgColor[5] + bgColor[6], 16);
       }
       if(opacity!==undefined && opacity!==1) return `rgba(${r}, ${g}, ${b}, ${opacity})`;
       return `rgb(${r}, ${g}, ${b})`;
