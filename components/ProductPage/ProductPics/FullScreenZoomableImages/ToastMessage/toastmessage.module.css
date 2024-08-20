@@ -45,7 +45,7 @@
     }
   }
 
-  @media (!pointer:coarse) {
+  @media (hover: hover) and (pointer: fine) {
     .toast{
       display: none;
     }

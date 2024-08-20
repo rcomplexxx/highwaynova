@@ -50,9 +50,12 @@
         font-weight: 800;
 }
 
+@media (hover: hover) and (pointer: fine) {
 .mainButton:hover{
   background-color: var(--main-button-hover-color);
 }
+}
+
 
 .accentButton{
   color: var( --action-button-txt-color);
@@ -472,6 +475,14 @@ p {
   --popcart-correct-icon-color: var(--success-color);
   --cart-button-items-number-color: black;
   --cart-button-items-number-bg: var(--main-color-5);
+
+  --view-cart-color: var(--high-contrast-txt-color);
+  --view-cart-bg: transparent;
+  --view-cart-border-color: var(--main-color-4);
+
+ 
+
+
   --popcart-checkout-button-border: var(--accent-color-4);
 
 

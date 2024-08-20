@@ -57,9 +57,11 @@
   }
   
   .smallCorrect{
-    height: var(--size-4);
-    width: var(--size-4);
+    height: var(--size-5);
+    width: var(--size-5);
     margin-right: var(--size-3);
+    
+    transform: translateY(-1px);
   }
 
   .productImage{
@@ -91,10 +93,10 @@
 
 
 
-  .add_to_cart_button {
+  .viewCartButton {
    
-    
-    
+    color:  var(--view-cart-color);
+    background-color: var(--view-cart-bg);
     
     width:100%;
     max-width: var(--size-15);
@@ -109,7 +111,7 @@
  
     
 
-   
+    border: 1px solid var(--view-cart-border-color);
     
     margin-top: var(--size-7);
     margin-bottom: var(--size-3);

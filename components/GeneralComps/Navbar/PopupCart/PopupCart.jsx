@@ -121,7 +121,7 @@ const handlePopCartLinkClick=(event, nextLinkHref)=>{
   
   <div className={`${styles.cartPopupTitle} ${styles .firstPopupTitle}`}>
     <CorrectIcon color={`var(--popcart-correct-icon-color)`} styleClassName={styles.smallCorrect}/>
-     <h3 className={styles.popCartMainTitle}>Item added to your cart</h3>
+     <h3 className={styles.popCartMainTitle}>Added:</h3>
       </div>
  <div className={styles.cartPopupTitle}> 
  <Image height={64} width={64} src={`/images/${newProduct.image}`} alt='Bought product image' className={styles.productImage}/> 
@@ -133,13 +133,13 @@ const handlePopCartLinkClick=(event, nextLinkHref)=>{
 
  
 
-  <Link href='/cart'  className={`${styles.add_to_cart_button} mainButton`}
+  <Link href='/cart'  className={`${styles.viewCartButton} mainButton`}
   onClick={(event)=>{
     handlePopCartLinkClick(event, '/cart')
   }}
      >
 
-      View my cart ({totalItems})
+      View cart ({totalItems})
     
     </Link>
 

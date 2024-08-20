@@ -10,6 +10,8 @@ import ToastMessage from "./ToastMessage/ToastMessage";
 import { ArrowDown, CancelIcon, ZoomInIcon, ZoomOutIcon } from "@/public/images/svgs/svgImages";
 import { useGlobalStore } from "@/contexts/AppContext";
 
+import { transformColorToRgb } from "@/utils/transformColorToRgba";
+
 
 
 
@@ -127,7 +129,7 @@ const FullScreenZoomableImage = ({
 
    
      
-     
+    
 
 
 
@@ -146,9 +148,10 @@ const FullScreenZoomableImage = ({
       const fixedZoomDiv = fixedZoomDivRef.current;
 
       let bgColor = getComputedStyle(document.documentElement).getPropertyValue('--bg-color');
+
+      console.log('my bg color should be', bgColor)
      
-      if(bgColor.length===4)bgColor = bgColor + bgColor[2] + bgColor[2] + bgColor[2];
-      const rgbValues = `rgba(${parseInt(bgColor.slice(1, 3), 16)}, ${parseInt(bgColor.slice(3, 5), 16)}, ${parseInt(bgColor.slice(5, 7), 16)}, 1)`;
+      const rgbValues = transformColorToRgb(bgColor);
     
     
     
@@ -239,10 +242,10 @@ const FullScreenZoomableImage = ({
   useEffect(() => {
     const fixedZoomDiv = fixedZoomDivRef.current;
     let bgColor = getComputedStyle(document.documentElement).getPropertyValue('--bg-color');
-    if(bgColor.length===4)bgColor = bgColor + bgColor[2] + bgColor[2] + bgColor[2];
+    if(bgColor.length===4)bgColor =  transformColorToRgb(bgColor)
    
-    const baseRgb=`${parseInt(bgColor.slice(1, 3), 16)}, ${parseInt(bgColor.slice(3, 5), 16)}, ${parseInt(bgColor.slice(5, 7), 16)},`
-    const getRgbValues = (opacity) =>{ return `rgba(${baseRgb} ${opacity})`};
+      
+    const getRgbValues = (opacity) =>{ return  transformColorToRgb(bgColor, opacity)};
 
 
     let timeoutId;
