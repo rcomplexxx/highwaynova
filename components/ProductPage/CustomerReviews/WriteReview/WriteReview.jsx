@@ -320,6 +320,7 @@ export default function WriteReview({ setInfoDivOpen }) {
                     <input
                       className={styles.personEmail}
                       value={reviewInfo.email}
+                      autoComplete="email"
                       onChange={(event) => {
                         if (errors.email)
                           setErrors({ ...errors, email: false });
