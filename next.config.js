@@ -32,11 +32,11 @@ const nextConfig = {
         return config;
       },
 
-      compiler: {
-        removeConsole: {
-          exclude: ['error'],
-        },
-      },
+      // compiler: {
+      //   removeConsole: {
+      //     exclude: ['error'],
+      //   },
+      // },
 
 }
 

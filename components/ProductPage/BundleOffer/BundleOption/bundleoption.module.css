@@ -1,0 +1,105 @@
+
+
+.bundleOption{
+
+
+    
+    background-color: var(--bundle-option-bg);
+
+    height: var(--size-9);
+
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--size-3);
+
+
+    box-sizing: border-box;
+    padding: 0 var(--size-3);
+    border-radius: 4px;
+
+
+
+    cursor: pointer;
+    
+  
+}
+
+
+
+
+.bundleRadioButton{
+
+}
+
+
+.bundleInfo{
+
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    
+    gap: var(--size-1);
+}
+
+.bundleOffer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    font-size: var(--font-size-4);
+}
+
+
+
+.quantityDiv{
+
+    color: var(--bundle-main-color);
+
+    
+
+}
+
+.offerPrice{
+
+}
+
+
+
+
+.bundleSave{
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    font-size: var(--font-size-1);
+
+}
+
+.saveDiv{
+
+    color: var(--bundle-save-txt-color);
+
+  
+
+}
+
+
+
+
+
+
+.origPrice{
+
+    color: var(--bundle-original-price);
+
+    width: min-content;
+
+    text-decoration:line-through;
+
+    font-size: var(--font-size-1);
+    
+
+}

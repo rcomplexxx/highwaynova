@@ -149,7 +149,7 @@ const handlePopCartLinkClick=(event, nextLinkHref)=>{
     }}
     >
     
-     Check out
+     Checkout
   
     </Link>
     

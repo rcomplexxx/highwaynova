@@ -190,7 +190,7 @@ export default function ProductPage({ product, images, startReviews, ratingData 
           </div>
 }
 
-{/* <BundleOffer/> */}
+      <BundleOffer productId={product.id} price={product.price} stickerPrice={product.stickerPrice}/>
 
 
 
