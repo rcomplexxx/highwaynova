@@ -129,6 +129,7 @@ export default function Orders({ data, setData }) {
                 key={page * 10 + index}
                 index={page * 10 + index}
                 id={order.id}
+                total = {order.total}
                 info={
                   JSON.stringify({id:order.id, email:order.email, firstName:order.firstName, lastName:order.lastName, address:order.address, apt: order.apt, country: order.country, zipcode:order.zipcode, state:order.state, city:order.city, phone: order.phone, couponCode:order.couponCode,
                 tip:order.tip,items:order.items, paymentMethod: order.paymentMethod,paymentId:order.paymentId })}

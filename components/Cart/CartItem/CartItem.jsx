@@ -3,12 +3,15 @@ import Link from "next/link";
 import Image from "next/image";
 import styles from "./cartitem.module.css";
 
-import classNames from "classnames";
+import findBestBundle from '@/utils/findBestBundle'
 
 import { useGlobalStore } from "@/contexts/AppContext";
 import { BinIcon } from "@/public/images/svgs/svgImages";
 
 const CartItem = ({ item }) => {
+
+
+  
 
 
   
@@ -24,7 +27,7 @@ const CartItem = ({ item }) => {
   const handleUpdateCartQty = (quantity) => {
     
     setCartProducts(
-      cartProducts
+      findBestBundle(cartProducts
         .map((cp) => {
           if (cp.id === item.id && cp.variant === item.variant) {
             cp.quantity += quantity;
@@ -32,7 +35,7 @@ const CartItem = ({ item }) => {
           }
           return cp;
         })
-        .filter(Boolean),
+        .filter(Boolean))
     );
   };
 
@@ -41,7 +44,7 @@ const CartItem = ({ item }) => {
     const newCartProducts = cartProducts.filter((cp) => cp.id !== item.id || cp.variant !== item.variant);
   
     
-    setCartProducts(newCartProducts);
+    setCartProducts(findBestBundle(newCartProducts));
   };
 
   return (

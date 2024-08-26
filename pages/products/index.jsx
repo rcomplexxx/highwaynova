@@ -1,5 +1,5 @@
 import Products from "@/components/Products/Products.jsx";
-import products from "../../data/products.json";
+import products from "@/data/products.json";
 import PageNumber from "@/components/PageNumbers/PageNumbers";
 import { NextSeo } from "next-seo";
 import { unimportantPageSeo } from "@/utils/SEO-configs/next-seo.config";

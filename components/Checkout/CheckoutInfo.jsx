@@ -14,12 +14,12 @@ import { CorrectIcon, ErrorIcon, correctIcon } from "@/public/images/svgs/svgIma
 import Image from "next/image";
 
 
-export default function CheckoutInfo({ products }) {
+export default function CheckoutInfo() {
   const [showApt, setShowApt] = useState(false);
   const [errors, setErrors] = useState({});
   // const [shippingType, setShippingType] = useState("free");
 
-  const {couponCode, tip, subscribe, setSubscribe} = useContext(CheckoutContext);
+  const {cartProducts, couponCode, tip, subscribe, setSubscribe} = useContext(CheckoutContext);
 
 
 
@@ -159,7 +159,7 @@ return false;
     const phone = document.getElementById("phone").value;
    
     const items=[];
-    products.map((product) => {
+    cartProducts.map((product) => {
       items.push({
       id: product.id,
       quantity: product.quantity,
@@ -197,7 +197,7 @@ return false;
   return (
       <div className={styles.leftWrapper}>
         <div className={styles.checkout_left}>
-          <ExpressCheckout products={products} checkFields={checkFields} organizeUserData={organizeUserData}
+          <ExpressCheckout products={cartProducts} checkFields={checkFields} organizeUserData={organizeUserData}
           />
 
 
@@ -360,7 +360,7 @@ return false;
          
          <PaymentSection  checkFields={checkFields} organizeUserData={organizeUserData} />
                 
-                <Tip products={products} />
+                <Tip products={cartProducts} />
       
 
         </div>

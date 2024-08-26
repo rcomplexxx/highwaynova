@@ -3,6 +3,7 @@ import products from "../../data/products.json";
 import Image from "next/image";
 import {useGlobalStore} from "@/contexts/AppContext";
 import CustomerReviews from "@/components/ProductPage/CustomerReviews/CustomerReviews.jsx";
+import findBestBundle from "@/utils/findBestBundle"
 
 
 
@@ -33,7 +34,7 @@ import BundleOffer from "@/components/ProductPage/BundleOffer/BundleOffer";
 
 
 
-export default function ProductPage({ product, images, startReviews, ratingData }) {
+export default function ProductPage({ product, description, images, startReviews, ratingData }) {
 
 
   
@@ -106,8 +107,10 @@ export default function ProductPage({ product, images, startReviews, ratingData 
       setNewProduct(newProduct);
     }
 
+    const bundledProducts = findBestBundle(updatedCartProducts)
+
   
-      setCartProducts( updatedCartProducts);
+      setCartProducts( bundledProducts);
     
       
 
@@ -166,6 +169,8 @@ export default function ProductPage({ product, images, startReviews, ratingData 
           {product.variants && <div className={styles .variantDiv}>
           <span className={styles.variantLabel}>Color: {variant}</span>
           <div className={styles.product_style_options}>
+
+
             {product.variants.map((v, i)=>{
            return   <Image
                key={i}
@@ -185,12 +190,14 @@ export default function ProductPage({ product, images, startReviews, ratingData 
             })
 
                 }
+
+
            
           </div>
           </div>
 }
 
-      <BundleOffer productId={product.id} price={product.price} stickerPrice={product.stickerPrice}/>
+     {product.bundle && <BundleOffer productId={product.id} price={product.price} stickerPrice={product.stickerPrice} bundle={product.bundle}/>}
 
 
 
@@ -282,7 +289,7 @@ export default function ProductPage({ product, images, startReviews, ratingData 
 
           
 
-          <ProductPageCards description ={product.description}/>
+          <ProductPageCards description ={description}/>
 
           <FrequentlyBoughtTogether
             fbtProductInfo={product.fbt}
@@ -310,7 +317,7 @@ export async function getStaticPaths() {
 export async function getStaticProps(context) {
 
 
-
+  const getPool = require('@/utils/mariaDbPool');
 
 
   const productName = context.params.productId;
@@ -341,7 +348,6 @@ export async function getStaticProps(context) {
       };
     });
 
-    console.log('making reviews data')
 
 
  
@@ -354,7 +360,7 @@ export async function getStaticProps(context) {
 
     
     
-
+    let description = `Product ${productId} description`
     let ratingData={};
     let reviewsNumberFinal = 0;
     let sumOfAllReviews= 0 ;
@@ -365,17 +371,19 @@ export async function getStaticProps(context) {
 
     try {
       // Set a specific timeout when acquiring a connection
-      const connection = await pool.getConnection();
+      const connection = await (await getPool()).getConnection();
   
       await connection.release();
   
       mariaDbOnlineStatus = true;
     } catch (error) {
       
-      
+        console.log('there is error', error)
+
       mariaDbOnlineStatus = false;
     }
 
+    console.log('mariaDb status', mariaDbOnlineStatus)
 
 
 
@@ -389,16 +397,23 @@ export async function getStaticProps(context) {
 
     }
 
+    const connection = await (await getPool()).getConnection();
+    const descriptionData= await connection.query(`SELECT description FROM products WHERE productId = ?` , [productId]);
+    if(descriptionData.length > 0) description = descriptionData[0].description;
+
+    await connection.release();
+
   }
 
 
     const averageValue=reviewsNumberFinal!==0?Math.round(sumOfAllReviews/reviewsNumberFinal * 10)/ 10:4.7;
-    if(reviewsNumberFinal===0) ratingData={stars5:386, stars4:60, stars3:0, stars2:1, stars1:2, reviewsNumber: 449, rating: averageValue}
+    if(reviewsNumberFinal===0) ratingData={stars5:30, stars4:2, stars3:0, stars2:0, stars1:0, reviewsNumber: 32, rating: averageValue}
     else {ratingData={...ratingData, reviewsNumber: reviewsNumberFinal, rating: averageValue}}
   // Return the data as props
   return {
     props: {
       product,
+      description,
       images,
       startReviews: reviewsData,
       ratingData: ratingData

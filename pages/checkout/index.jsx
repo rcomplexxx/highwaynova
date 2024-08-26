@@ -59,9 +59,9 @@ const CheckoutPage = () => {
        <CheckoutProvider>
       <CheckoutLogo/>
       <div className={styles.checkout_container}>
-        <OrderDetails  products={cartProducts} />
+        <OrderDetails/>
 
-        <CheckoutInfo  products={cartProducts} />
+        <CheckoutInfo/>
           
        
       </div>

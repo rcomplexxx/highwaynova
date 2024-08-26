@@ -98,6 +98,10 @@
   }
 
 
+  .stickerPrice{
+    color: var(--summery-sticker-price-color);
+    text-decoration: line-through;
+  }
 
 
   .coupon_code{

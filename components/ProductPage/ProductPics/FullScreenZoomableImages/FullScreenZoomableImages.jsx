@@ -32,6 +32,7 @@ const FullScreenZoomableImage = ({
 
   const [swiper, setSwiper] = useState();
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [closingFullscreen, setClosingFullscreen] = useState(false);
  
  const zoomScaleRef= useRef(1);
  const mouseStartingPointRef=useRef({x:0, y:0})
@@ -402,8 +403,12 @@ const FullScreenZoomableImage = ({
   
 
   const killFullScreen = useCallback((currY = 0) => {
+
+
   
     if (zoomed) swiper.zoom.toggle();
+
+    setClosingFullscreen(true);
 
     
     if( !global.toastMessageNotShowable ){
@@ -525,7 +530,7 @@ const FullScreenZoomableImage = ({
       
           <div
             className={`${styles.closeSuiter} ${
-              navActive && styles.navActive
+              !closingFullscreen && navActive && styles.navActive
             }`}
           >
             <div className={styles.pagination}>

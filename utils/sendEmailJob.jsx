@@ -27,7 +27,7 @@ console.log('setting email cron scheduler', date)
 cron.schedule(date, async() => {
   console.log('Send email here');
 
-  const dbConnection = await getPool().getConnection();
+  const dbConnection = await (await getPool()).getConnection();;
 
 
  

@@ -1,6 +1,7 @@
 import paypal from "@paypal/checkout-server-sdk";
 import Stripe from 'stripe';
 import productsData from "../../data/products.json";
+import findBestBundleServer from '@/utils/findBestBundleServer'
 
 import RateLimiter from "@/utils/rateLimiter.js";
 import coupons from '../../data/coupons.json'
@@ -75,7 +76,7 @@ const makePayment = async (req, res) => {
 
 
 
-  let dbConnection = await getPool().getConnection();
+let dbConnection = await (await getPool()).getConnection();
 
 
   
@@ -230,7 +231,7 @@ const makePayment = async (req, res) => {
           paymentMethod,
           paymentId,
           approved,
-          Math.floor(Date.now() / 86400000)
+          Date.now()
         ]
         );
 
@@ -295,10 +296,29 @@ const makePayment = async (req, res) => {
       return await resReturn(429, { error: "Too many requests. Please try again later." });
     }
 
+    console.log('here are items of buying', req.body.order.items)
+
+    const couponCode = req.body.order.couponCode;
+    console.log('discount code is!', couponCode)
+
+    //Ovde se montira bundle ako ga ima.
+
+    let orderItems = (couponCode!=undefined && couponCode != "")?req.body.order.items:findBestBundleServer(req.body.order.items);
+
+
+    console.log('here are bundled prices', orderItems)
+
     
     
-    totalPrice = parseFloat(req.body.order.items
+    totalPrice = parseFloat(orderItems
       .reduce((sum, product) => {
+
+        if(product.bundledPrice) {
+          sum+= product.bundledPrice * product.quantity;
+
+          return sum;
+        }
+
         const productInfo = productsData.find((item) => item.id === product.id);
         if (productInfo) {
           sum += productInfo.price * product.quantity;
@@ -307,8 +327,9 @@ const makePayment = async (req, res) => {
       }, 0) .toFixed(2));
 
     console.log('TOTALPRICE!',totalPrice);
-    const couponCode = req.body.order.couponCode;
-    console.log('discount code is!', couponCode)
+   
+
+
     if (couponCode != "") {
       const coupon= coupons.find((c)=>{return c.code.toUpperCase()===couponCode.toUpperCase()});
       console.log('coupon is!', coupon);
@@ -332,6 +353,8 @@ const makePayment = async (req, res) => {
         }
     console.log('Total price on server is', totalPrice)
     console.log('tip je:', req.body.order.tip);
+
+    //ovde negde namontirati da se u totalPrice ubacuje i bundle
 
 
     

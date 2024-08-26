@@ -14,6 +14,7 @@ import { NextSeo } from "next-seo";
 import { unimportantPageSeo } from "@/utils/SEO-configs/next-seo.config";
 import CheckoutProvider from "@/contexts/CheckoutContext";
 import { Spinner2 } from "@/public/images/svgs/svgImages";
+import findBestBundle from '@/utils/findBestBundle'
 
 const BuyNowPage = () => {
   const router = useRouter();
@@ -49,7 +50,7 @@ const BuyNowPage = () => {
         price: product.price,
         variant: variant
       };
-      setCartProducts([newProduct]);
+      setCartProducts(findBestBundle([newProduct]));
     } else {
       // setCartProducts([]);
     }

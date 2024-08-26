@@ -14,7 +14,7 @@ cron.schedule('0 0 * * *', async () => {
  //NE BRISATI. A MESSAGES NAMONTIRATI DA STIZU NA MEJL, A NA ADMIN SAMO DA SE PREUZIMAJU !!!!!!!!!!!!!!!!!!!!!!
  //rateLimiter data je ok da se brise.
 
- let dbConnection = await getPool().getConnection();
+ let dbConnection = await (await getPool()).getConnection();;
 
 
 

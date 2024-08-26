@@ -29,7 +29,7 @@ const approvePayment = async (req, res) => {
 
 
 
-  let dbConnection = await getPool().getConnection();
+let dbConnection = await (await getPool()).getConnection();
 
 
 
@@ -141,7 +141,7 @@ const approvePayment = async (req, res) => {
           if(!paypalExpressChecker)throw new Error('Something went wrong. No data found in the database for the specified paymentId and paymentMethod.');
 
 
-          if(paypalExpressChecker.address!="" && paypalExpressChecker.city!="")return resolve();
+          if(paypalExpressChecker.address!="" && paypalExpressChecker.city!="") resolve();
           
           
  

@@ -7,7 +7,7 @@ const getRatingData = async(product_id, stars) => {
   try {
   
 
-    let dbConnection = await getPool().getConnection();
+  let dbConnection = await (await getPool()).getConnection();
 
  
 

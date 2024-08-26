@@ -11,7 +11,7 @@ import {
 import { CheckoutContext } from "@/contexts/CheckoutContext";
 import { ArrowDown, CancelIcon, DiscountIcon, DiscountIconTotal, ErrorIcon } from "@/public/images/svgs/svgImages";
   
-  export default function OrderDetails({  products }) {
+  export default function OrderDetails() {
     const [showAnswer, setShowAnswer] = useState(false);
 
     const [tempCouponCode, setTemptempCouponCode] = useState("");
@@ -23,7 +23,7 @@ import { ArrowDown, CancelIcon, DiscountIcon, DiscountIconTotal, ErrorIcon } fro
   
    
 
-    const {total, subTotal, couponCode, setAndValidateCouponCode, discount, tip} = useContext(CheckoutContext);
+    const {cartProducts, total, subTotal, couponCode, setAndValidateCouponCode, discount, tip} = useContext(CheckoutContext);
 
 
       useEffect(()=>{
@@ -125,7 +125,7 @@ const handleCouponApply = () => {
               >
                 
                  
-                 {products.map((cp, i) => (
+                 {cartProducts.map((cp, i) => (
             <div className={styles.order_pair} key={i}>
 
               <div className={styles.productImageDiv}>
@@ -146,8 +146,10 @@ const handleCouponApply = () => {
                 </span>
                 </div>
               </div>
-
+              <div className={styles.productTitleDiv}>
               <span>${(cp.quantity * cp.price).toFixed(2)}</span>
+              {cp.stickerPrice && <span className={styles.stickerPrice}>${(cp.quantity * cp.stickerPrice).toFixed(2)}</span>}
+              </div>
 
             </div>
           ))}

@@ -11,7 +11,7 @@ async function createSqliteTables() {
 
 
 
-  let conn = await getPool().getConnection();
+  let conn = await (await getPool()).getConnection();;
 
 
 
@@ -52,6 +52,16 @@ async function createSqliteTables() {
     CREATE INDEX IF NOT EXISTS idx_ip_apiNumber ON rateLimiter(ip, apiNumber)
 `);
 
+
+
+await conn.query(`
+  CREATE TABLE IF NOT EXISTS products (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                productId TINYINT,
+                description TEXT CHARACTER SET utf8mb4
+                
+           )
+`);
 
 
 

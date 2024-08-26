@@ -15,38 +15,71 @@ export default function DescriptionMaker() {
     const descriptionTextRef=useRef();
     const descriptionCssTextRef=useRef();
     const [previewDescription, setPreviewDescription]= useState();
-    const [descriptionGetterProductId, setDescriptionGetterProductId]=useState("");
+    const [descriptionGetterProductId, setDescriptionGetterProductId]=useState();
     const [productId, setProductId] = useState("");
     
     const [savedContent, setSavedContent] = useState();
     
 
     console.log('PreviewContent', previewDescription);
-    const router = useRouter();
+
+    
 
 
 
 
-    const getCurrentDescription = () =>{
-        if(descriptionGetterProductId=="")return;
+    const getCurrentDescription = async() =>{
 
-        const product = productsData.find((product) => descriptionGetterProductId === product.id.toString());
+
+        if(descriptionGetterProductId===undefined || descriptionGetterProductId===NaN)return;
+
+        const product = productsData.find((product) => descriptionGetterProductId === product.id);
+
+        let productDescription;
 
        
         if(product){
 
+
+
+          const response =  await fetch("/api/admincheck", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(
+              { dataType:"get_product_description", data: {productId: product.id} }
+            ),
+          });
+
+    
+          if (response.ok) {
+            const data = await response.json();
+         
+            if(data.data && data.data.length === 1){
+
+              productDescription = data.data[0].description
+              
+
+            }
+          }
+
+
+
+          
+
         
-        if(product.description) {
+        if(productDescription) {
           
-          if(product.description.split("</style>").length>1){
+          if(productDescription.split("</style>").length>1){
 
-            const fullDescription= product.description;
+            
 
-            descriptionTextRef.current.value= fullDescription.split("</style>")[1];
+            descriptionTextRef.current.value= productDescription.split("</style>")[1];
 
           
-            descriptionCssTextRef.current.value =  fullDescription.substring(fullDescription.indexOf('<style>')+ '<style>'.length,
-            fullDescription.indexOf("</style>"));
+            descriptionCssTextRef.current.value =  productDescription.substring(productDescription.indexOf('<style>')+ '<style>'.length,
+            productDescription.indexOf("</style>"));
 
            
 
@@ -54,10 +87,10 @@ export default function DescriptionMaker() {
           }
 
           else{
-            descriptionTextRef.current.value= product.description;
+            descriptionTextRef.current.value= productDescription;
           }
 
-          setSavedContent(product.description);
+          setSavedContent(productDescription);
         }
 
         
@@ -134,7 +167,7 @@ export default function DescriptionMaker() {
               descriptionTextRef.current.value="";
               descriptionCssTextRef.current.value="";
               setPreviewDescription("");
-              setDescriptionGetterProductId("")
+              setDescriptionGetterProductId()
               setProductId("");
               
               // router.push('/admin');
@@ -179,7 +212,7 @@ export default function DescriptionMaker() {
             value={descriptionGetterProductId}
             placeholder="Enter product id to GET current description"
             onChange={(event) => {
-              const inputNumber = event.target.value;
+              const inputNumber = Number(event.target.value);
               setDescriptionGetterProductId(inputNumber);
             }}
           />
@@ -269,8 +302,8 @@ export default function DescriptionMaker() {
             value={productId}
             placeholder="Enter product id to UPDATE description"
             onChange={(event) => {
-              const inputNumber = event.target.value;
-              setDescriptionGetterProductId("")
+              const inputNumber = Number(event.target.value);
+              setDescriptionGetterProductId()
                setProductId(inputNumber);
             }}
           />:<span className={styles.newDescWarning}>New description will affect product with ID: {descriptionGetterProductId}</span>

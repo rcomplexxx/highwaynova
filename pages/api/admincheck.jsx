@@ -22,7 +22,7 @@ export default async function adminCheckHandler(req, res) {
 
 
 
-  let dbConnection = await getPool().getConnection();
+let dbConnection = await (await getPool()).getConnection();
 
 
   const resReturn = async(statusNumber, jsonObject)=>{
@@ -37,6 +37,9 @@ export default async function adminCheckHandler(req, res) {
 
 
   const getFromDb = async(table, queryCondition=true, selectVariables='*') => {
+
+
+
     try {
      
       let rows;
@@ -46,33 +49,18 @@ export default async function adminCheckHandler(req, res) {
        const rows1 = await dbConnection.query(`SELECT * FROM emails`);
 
 
-       let rows2=[];
-    
-       
-       try{
-        
-        rows2 = await dbConnection.query(`SELECT * FROM email_sequences`);
+       const rows2 = await dbConnection.query(`SELECT * FROM email_sequences`);
 
      
         
-
-       }catch{}
-
-       
-       let rows3=[];
-       try{
-        
-        rows3 = await dbConnection.query(`SELECT * FROM email_campaigns`);
-       }catch{}
-
+       const rows3 = await dbConnection.query(`SELECT * FROM email_campaigns`);
+      
        
        rows= {emails: rows1, sequences: rows2,  campaigns: rows3};
 
       }
 
   
-
-     
 
 else{
 
@@ -101,6 +89,12 @@ else{
     }
 
       // Closing the database connection
+
+
+
+
+
+
 
       return await resReturn(200, { data: rows })
    
@@ -362,6 +356,9 @@ else{
   }
 
   const updateDb = async (table, data, queryCondition) => {
+
+
+
     try {
     
       
@@ -407,7 +404,7 @@ else{
           data.couponCode,
           data.tip,
           data.returnCost,
-          Math.floor(Date.now() / 86400000),
+          Date.now(),
           orderData.packageStatus
 
           ]
@@ -907,6 +904,8 @@ await dbConnection.query(`DELETE FROM email_templates WHERE id = ?`, [template_i
    
       
     }
+
+
   };
 
 
@@ -947,7 +946,7 @@ await dbConnection.query(`DELETE FROM email_templates WHERE id = ?`, [template_i
         
 
 
-
+          // await dbConnection.query(`SELECT orders.*, customers.email FROM orders JOIN customers ON orders.customer_id = customers.id WHERE approved = 0 ORDER BY orders.createdDate DESC`)
 
         if(dataType === "get_order_cash_info")  await getFromDb("orders", `approved = 1`, "createdDate, total, supplyCost, tip, couponCode");
         //Ovde approved
@@ -999,6 +998,9 @@ await dbConnection.query(`DELETE FROM email_templates WHERE id = ?`, [template_i
             await getFromDb("email_sequences");
           else if (dataType === "get_email_campaigns")
           await getFromDb("email_campaigns");
+
+          else if(dataType === "get_product_description")
+            await getFromDb("products", `productId = ${data.productId}`)
         else if(dataType === "get_product_returns")
         await getFromDb("product_returns");
 
@@ -1105,16 +1107,13 @@ await dbConnection.query(`DELETE FROM email_templates WHERE id = ?`, [template_i
           );
         }
         else if(dataType === 'send_new_product_description'){
+
+          
           console.log('send_new_product_description executed.');
 
-          if(data.productId==="") {
-            return await resReturn(500, { descriptionUpdated: false })
-         
-         
-            
-          }
+    
 
-          const newDescriptionIntegrated = makeNewDescription(data.text , data.productId);
+          const newDescriptionIntegrated = await makeNewDescription(data.text , data.productId, dbConnection);
 
           if(newDescriptionIntegrated){
  
@@ -1209,12 +1208,17 @@ await dbConnection.query(`DELETE FROM email_templates WHERE id = ?`, [template_i
     } else {
 
       return await resReturn(400, { successfulLogin: false,
-        error: "You do not have access to this sector. Get lost noob.", })
+        error: "You do not have access to this sector. Unable to hack, amateur ;).", })
 
 
    
     }
-  } catch (error) {
+
+
+  }
+  
+  
+   catch (error) {
     console.error(error);
 
     return await resReturn(500, { successfulLogin: false, error: "Internal Server Error" })

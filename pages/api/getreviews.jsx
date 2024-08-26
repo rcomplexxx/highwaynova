@@ -46,7 +46,7 @@ const getReviews = async (req, res) => {
 
 
 
-  let dbConnection = await getPool().getConnection();
+let dbConnection = await (await getPool()).getConnection();
 
   
 

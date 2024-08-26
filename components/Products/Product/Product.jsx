@@ -20,7 +20,7 @@ const Product = ({ product}) => {
       </Link>
         <div className={styles.starDiv}>
 
-        <Stars ratingNumber={product.raiting?product.raiting:4.7} starWrapperClassName={styles.starWrapperClassName} starClassName={styles.starClassName}/>
+        <Stars ratingNumber={product.rating?product.rating:4.7} starWrapperClassName={styles.starWrapperClassName} starClassName={styles.starClassName}/>
 
 
  <span className={styles.product_rating_reviews_number}>({product.reviewNumber})</span>

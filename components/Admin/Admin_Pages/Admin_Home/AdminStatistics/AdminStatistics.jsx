@@ -26,6 +26,7 @@ export default function AdminStatistics(){
     useEffect(() => {
 
 
+      const dayInMs = 86400000;
 
 
       
@@ -52,7 +53,7 @@ export default function AdminStatistics(){
            
               if(data.data){
 
-                returnCashInfo=data.data.map(productReturn=>{return {returnCost: productReturn.returnCost, createdDate: productReturn.createdDate}});
+                returnCashInfo=data.data.map(productReturn=>{return {returnCost: productReturn.returnCost, createdDate: Math.floor(productReturn.createdDate / dayInMs)}});
                 setReturnCashData(returnCashInfo);
                 
 
@@ -125,7 +126,7 @@ export default function AdminStatistics(){
           
                
 
-                return ({createdDate: orderInfo.createdDate, cashObtained: totalPrice, discountLostMoney:discountLostMoney, supplyCost:supplyCost, tip:tip})
+                return ({createdDate: Math.floor(orderInfo.createdDate / dayInMs), cashObtained: totalPrice, discountLostMoney:discountLostMoney, supplyCost:supplyCost, tip:tip})
 
               }
               );
@@ -325,7 +326,7 @@ export default function AdminStatistics(){
       lostInReturns= lostInReturns.toFixed(2);
       profit=profit.toFixed(2);
 
-      const averageOrderValue= (Number(profit) / Number(orderNumber)).toFixed(2);
+      const averageOrderValue= Number(orderNumber)===0?"0.00":(Number(profit) / Number(orderNumber)).toFixed(2);
 
       setCustomDateStats({orderNumber, total, discountLostMoney, supplyCost, tip, lostInReturns, averageOrderValue, profit})
 

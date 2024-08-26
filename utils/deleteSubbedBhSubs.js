@@ -7,7 +7,7 @@ const getPool = require('./mariaDbPool');
 
 
  
-  let dbConnection = await getPool().getConnection();
+let dbConnection = await (await getPool()).getConnection();
 
   
 

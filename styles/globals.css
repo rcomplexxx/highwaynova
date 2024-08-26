@@ -794,6 +794,8 @@ p {
   --checkout-order-summery-bg-mobile: var(--main-color-0);
  
   --summery-variant-color: var(--neutral-7);
+
+  --summery-sticker-price-color: var(--neutral-6);
   
 
   --apply-border-color: var(--action-button-border-color);
