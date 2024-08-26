@@ -2,15 +2,16 @@ import  { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 
 
-import "../styles/globals.css";
-import Navbar from "../components/GeneralComps/Navbar/Navbar.jsx";
+import "@/styles/globals.css";
+import Navbar from "@/components/GeneralComps/Navbar/Navbar.jsx";
 import {useGlobalStore} from "@/contexts/AppContext";
 import Footer from "@/components/GeneralComps/Footer/Footer";
 import SEO from '@/utils/SEO-configs/next-seo.config.js'
 import SubscribePopup from "@/components/GeneralComps/SubscribePopup/SubscribePopup";
 import { inter, eb_Garamond } from "@/utils/fonts";
 import { DefaultSeo } from "next-seo";
-
+import NProgress from 'nprogress';
+import 'nprogress/nprogress.css'; // Import CSS for NProgress
 
 
 
@@ -168,22 +169,12 @@ export default function App({ Component, pageProps }) {
        
       
        }
-    
-
-
-
-
-
 
       
       popupTimeout= setTimeout( handlePopupTurning, 30000);
       
     };
-
-
-
-
-
+    
 
 
 
@@ -230,6 +221,24 @@ export default function App({ Component, pageProps }) {
 
 
 
+
+
+  useEffect(() => {
+    NProgress.configure({ showSpinner: false });
+
+    const handleStart = () => NProgress.start();
+    const handleComplete = () => NProgress.done();
+
+    router.events.on('routeChangeStart', handleStart);
+    router.events.on('routeChangeComplete', handleComplete);
+    router.events.on('routeChangeError', handleComplete);
+
+    return () => {
+      router.events.off('routeChangeStart', handleStart);
+      router.events.off('routeChangeComplete', handleComplete);
+      router.events.off('routeChangeError', handleComplete);
+    };
+  }, [router]);
 
 
 
