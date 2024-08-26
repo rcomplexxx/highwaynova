@@ -18,7 +18,7 @@ export default function BundleOffer({price, stickerPrice, bundle}) {
     <div className={styles.mainDiv}>
 
 
-    <BundleOption originalPrice={stickerPrice} discountPercentage={stickerPrice?100*(1-(price/stickerPrice)):0} quantity={1}/>
+    <BundleOption originalPrice={stickerPrice?stickerPrice:price} discountPercentage={stickerPrice?100*(1-(price/stickerPrice)):0} quantity={1}/>
   
 
       {bundle.map((b, index)=>{

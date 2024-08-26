@@ -27,6 +27,13 @@
   max-width: 100%;
   
   height: var(--size-9);
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  box-sizing: border-box;
+  padding: 0 var(--size-5);
  
    
 
@@ -60,13 +67,8 @@
   }
 
 
-  .toolbarDiv {
-    height:100%;
-    margin: 0 var(--size-6);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
+
+  
 
 
  
@@ -248,9 +250,8 @@
     background-color: var(--nav-select-search-link-color);
   }
 
-  .menuItemDiv p{
-    font-size: var(--font-size-2);
-  }
+
+  
 
   .currentLinkMobile {
     color: var(--navbar-current-link-color);
@@ -344,11 +345,6 @@
 
 
   
-
-    .toolbarDiv {
-    
-      margin: 0 var(--size-5);
-    }
 
    
 

@@ -1,6 +1,6 @@
 import  { useState, useEffect,  useMemo } from "react";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { usePathname } from 'next/navigation';
 import styles from "./navbar.module.css";
 import Image from "next/image";
 
@@ -22,8 +22,9 @@ const NavBar = () => {
 
 
 
-  const router = useRouter();
-  const pathname = router.asPath;
+  
+  const pathname = usePathname();
+
 
   const handleMobileMenuOpen = (event) => {
     // event.stopPropagation();
@@ -95,7 +96,7 @@ const NavBar = () => {
       
        
       >
-        <div className={styles.toolbarDiv}>
+      
 
 
           <div className={styles.growAlt}>
@@ -122,17 +123,15 @@ const NavBar = () => {
           <div className={styles.grow}>
             <Link
               href="/"
-              className={`${styles.linkStyle} ${
-                pathname === "/" && styles.currentLink
-              }`}
+              className={`${styles.linkStyle} ${pathname === "/" && styles.currentLink}`}
             >
               Home
             </Link>
+
+
             <Link
               href="/products"
-              className={`${styles.linkStyle} ${
-                pathname === "/products" && styles.currentLink
-              }`}
+              className={`${styles.linkStyle} ${pathname === "/products" && styles.currentLink}`}
             >
               Products
             </Link>
@@ -165,6 +164,7 @@ const NavBar = () => {
                     const linkUrl= `/collection/${c.name
                       .toLowerCase()
                       .replace(/ /g, "-")}/page/1`;
+                      
                     return (
                       <Link
                       key={index}
@@ -307,7 +307,7 @@ const NavBar = () => {
               
             </Link>
           </div>
-        </div>
+       
         {newProduct && (
           <PopupCart
             totalItems={totalItems}
