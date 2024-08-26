@@ -133,6 +133,7 @@
   position:absolute;
   top: 50%;
   left: 50%;
+  width: max-content;
   transform: translateX(-50%) translateY(-50%);
   display: flex;
   justify-content: space-between;
@@ -376,7 +377,11 @@
    }
 
 
-
+@media(max-width: 480px){
+  .growAlt{
+    z-index: 1;
+  }
+}
 
  
 

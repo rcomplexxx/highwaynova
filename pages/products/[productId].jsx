@@ -20,7 +20,7 @@ import ProductPics from "@/components/ProductPage/ProductPics/ProductPics";
 
 import { getStartReviews } from "@/utils/getStartReviews";
 import getRatingData from "@/utils/getRatingData";
-import PayPalButton from "@/components/Checkout/PayPal/PayPal";
+import dynamic from "next/dynamic";
 import { NextSeo } from "next-seo";
 import { productPageSeo } from "@/utils/SEO-configs/next-seo.config";
 
@@ -31,10 +31,13 @@ import Link from "next/link";
 import styles from "../../styles/productpage.module.css";
 import BundleOffer from "@/components/ProductPage/BundleOffer/BundleOffer";
 
-
+const PayPalButton = dynamic(() => import("@/components/Checkout/PayPal/PayPal"));
 
 
 export default function ProductPage({ product, description, images, startReviews, ratingData }) {
+
+
+  
 
 
   

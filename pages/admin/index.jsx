@@ -1,5 +1,4 @@
 import dynamic from "next/dynamic";
-import Head from "next/head.js";
 
 // Load the About component dynamically
 
