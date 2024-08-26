@@ -71,42 +71,49 @@
   
 
 
- 
-  
-  .title {
-  
-    height: 36px;
-    width: auto;
 
-    margin-top: var(--size-2);
-    margin-bottom: var(--size-2);
-    
-    
-   
-    
-
-    transition: transform 0.08s ease-in;
-  
-  
-    
-  }
- 
-  
-  .title:hover {
-    transform: scale(1.1);
-  }
-  
-  .title:active {
-    transform: scale(1);
+  .growAlt {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    z-index: 10;
   }
 
   .logoLink{
     
     display: flex;
     justify-content: center;
-    align-items: center;
-    padding: var(--size-2) 0;
+    align-items: center;   
+    padding: var(--size-3);
+    
+    transition: transform 0.08s ease-in;
   }
+
+  .logoLink:hover {
+    transform: scale(1.1);
+  }
+  
+  .logoLink:active {
+    transform: scale(1);
+  }
+ 
+  
+  .logoImg {
+  
+    height: 36px;
+    width: auto;
+
+
+  
+    
+  }
+ 
+  
+ 
+
+
+  
+
   
  
   
@@ -118,27 +125,22 @@
 
   }
 
- 
   
 
  
 .grow{
-  width: max-content;
+
   position:absolute;
   top: 50%;
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
   display: flex;
   justify-content: space-between;
+  gap: var(--size-6);
 }
 
 
-.growAlt {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  z-index: 10;
-}
+
   
  
 
@@ -165,7 +167,7 @@
     transition: transform 0.08s ease-in;
     font-size: var(--font-size-3);
     font-weight: 600;
-    padding: var(--size-4);
+    -webkit-backface-visibility: hidden;
   }
   
   .linkStyle:hover {
@@ -183,6 +185,7 @@
   }
 
   .subMenuPortal{
+   
     position: relative;
     
     user-select: none;
@@ -289,9 +292,7 @@
     transform: scale(1.1);
   }
   
-  .cartStyle:active {
-    transform: scale(1);
-  }
+
 
 
  
@@ -346,21 +347,15 @@
 
   
 
-   
-
-    .pcDiv{
-      display: block;
-    }
+  
 
     @media(min-width: 980px){
       .smallMenuImage{
         display: none;
       }
 
-      .logoLink{
-        margin-left: var(--size-3);
-        
-      }
+   
+      
 
       .cartStyle{
         margin-right: var(--size-2);
@@ -375,17 +370,13 @@
     }
 
     .logoLink{
-      padding: var(--size-2);
+      padding:  var(--size-3) var(--size-2);
     }
    
    }
 
 
-  @media(max-width: 500px){
-    .growAlt{
-      z-index: 1;
-      }
-    }
+
 
  
 

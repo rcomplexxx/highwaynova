@@ -53,13 +53,14 @@ const NavBar = () => {
 
 
 
+
     let handleClickOutside = (event) => {
         
       if(isMenuOpen)return;
 
       if (
-        (subMenu == 1 && !document?.getElementById("infoDropMenuLink").contains(event.target)) ||
-        (subMenu == 2 && !document?.getElementById("collectionsDropMenuLink").contains(event.target))
+        (subMenu === 1 && !document?.getElementById("infoDropMenuLink").contains(event.target)) ||
+        (subMenu === 2 && !document?.getElementById("collectionsDropMenuLink").contains(event.target))
       ) {
         
         setSubMenu(0);
@@ -70,10 +71,10 @@ const NavBar = () => {
 
     
 
-    if (subMenu !=0) {
+    if (subMenu !==0) {
   
 
-    document.getElementById(`${subMenu == 1?"collectionsDropMenu":"infoDropMenu"}`).style.top = "calc(100% + var(--size-3))";//40px
+    document.getElementById(`${subMenu === 1?"collectionsDropMenu":"infoDropMenu"}`).style.top = "calc(100% + var(--size-3))";//40px
 
       document?.addEventListener("click", handleClickOutside, true);
     } 
@@ -115,7 +116,7 @@ const NavBar = () => {
                sizes="128px"
                src='/images/lightbook11.png'
                alt={`logo`}
-               className={styles.title}/>
+               className={styles.logoImg}/>
 
             </Link>
           </div>

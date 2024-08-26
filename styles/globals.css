@@ -466,7 +466,7 @@ p {
   --mobile-nav-cancel-icon-color: var(--search-cancel-icon-color);
   --menu-icon-color: var(--neutral-8);
   --nav-links-color: var(--main-color-4);
-  --navbar-current-link-color: var(--main-color-2);
+  --navbar-current-link-color: var(--accent-color-6);
   --navbar-arrow-color: var(--nav-links-color);
   --nav-select-search-link-color:var(--main-color-1);
   --shopping-cart-color: var(--neutral-7);
