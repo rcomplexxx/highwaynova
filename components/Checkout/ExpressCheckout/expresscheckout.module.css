@@ -25,6 +25,7 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
+    gap: var(--size-5);
 
     background-color: var(--express-checkout-bg);
 
@@ -40,14 +41,22 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    width: calc(50% - var(--size-3));
-    min-height: var(--size-8);
+    
+    flex: 1;
+    height: var(--size-8);
 
     border-radius: 4px;
 
     z-index: 2;
    
 
+}
+
+.gpayWrapper{
+    background-color: black;
+    box-sizing: border-box;
+    border: 1px solid var(--google-pay-border-color);
+    overflow: hidden;
 }
 
 

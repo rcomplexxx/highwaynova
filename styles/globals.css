@@ -727,7 +727,7 @@ p {
 
   --express-checkout-bg: var(--payment-div-bg);
   --express-checkout-button-bg: var(--neutral-1);
-  --google-pay-border-color: transparent;
+  --google-pay-border-color: #757575;
 
 
   --checkout-title: var(--high-contrast-txt-color);
