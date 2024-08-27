@@ -402,6 +402,21 @@ p {
 
   /* General */
 
+  --loading-bar-bg: var(--neutral-5);
+
+  --loading-peg-color-1: var(--neutral-7);
+  --loading-peg-color-2: var(--neutral-7);
+
+ 
+
+  #nprogress .bar {
+    background: var(--loading-bar-bg); /* Change progress bar color to orange */
+  }
+
+  #nprogress .peg {
+    box-shadow: 0 0 10px var(--loading-peg-color-1), 0 0 5px var(--loading-peg-color-2); /* Replace with your desired color */
+  }
+
   --high-contrast-txt-color: var(--neutral-10);
   --txt-color: var(--neutral-9);
   --weak-txt-color: var(--neutral-7);
