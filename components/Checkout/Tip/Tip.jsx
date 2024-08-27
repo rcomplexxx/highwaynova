@@ -85,9 +85,7 @@ export default function Tip(){
       </div>
      
   
-      <span className={styles.tipShowCheckboxLabel}>
-     Show your support for the GameBuff team
-    </span>
+      <span className={styles.tipShowCheckboxLabel}>{`Show your support for the ${process.env.NEXT_PUBLIC_WEBSITE_NAME} team`}</span>
 
    
     </div>

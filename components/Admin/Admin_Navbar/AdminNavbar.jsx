@@ -75,7 +75,7 @@ const AdminNavbar = ({ setIsAdmin }) => {
                 >
                   <Image
                     src="/images/hackerLight2.png"
-                    alt="Gamebuff"
+                    alt={process.env.NEXT_PUBLIC_WEBSITE_NAME}
                     height={24}
                     width={24}
                     className={styles.image}
@@ -91,7 +91,7 @@ const AdminNavbar = ({ setIsAdmin }) => {
                 <h1 className={styles.title}>
                 <Image
                     src="/images/hackerLight2.png"
-                    alt="Gamebuff"
+                    alt={process.env.NEXT_PUBLIC_WEBSITE_NAME}
                     height={24}
                     width={24}
                     className={styles.image}

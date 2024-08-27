@@ -7,7 +7,7 @@ import collections from '../../data/collections.json'
 
 
 
-const siteName= "Gamebuff"
+const siteName= process.env.NEXT_PUBLIC_WEBSITE_NAME;
 const siteUrlTail = 'https://selling-game-items-next.vercel.app';
 const siteMiniDescription = 'Buy perfect equipment for deep-night gaming';
 
@@ -27,7 +27,7 @@ const createPageSeo = (title, description, pagePath, imageName, ogTitle, ogDescr
         {
           url:`${siteUrlTail}/images/${imageName}`,
          
-          alt: 'Gamebuff',
+          alt: siteName,
           type: 'image/png',
         } 
     ]:null,
@@ -51,8 +51,8 @@ const createPageSeo = (title, description, pagePath, imageName, ogTitle, ogDescr
 
 
 export default {
-    titleTemplate: '%s - Gamebuff',
-      defaultTitle: "Gamebuff",
+    titleTemplate: `%s - ${siteName}`,
+      defaultTitle: siteName,
     
    
       description: "As graduation loomed, we collectively decided to channel our passion into something greater, the Gamebuff! Our mission is promoting the amazing gaming night experience with friends, and enhancing that experience by providing exceptional gaming equipment. Join us in utilizing technology to create the sureally joyful experience noone has ever had a chance to experience throughout history. Happy shopping!",
@@ -62,7 +62,7 @@ export default {
       
       url: 'https://selling-game-items-next.vercel.app/',
       siteName: siteName,
-      title: "Gamebuff",
+      title: siteName,
       description: siteMiniDescription,
       images: [
         {
@@ -81,7 +81,7 @@ export default {
       handle: '@handle',
       site: '@site',
       cardType: 'summary_large_image',
-      title: "Gamebuff",
+      title: siteName,
       description: siteMiniDescription,
       image: 'https://selling-game-items-next.vercel.app/images/gameGirl2.png',
     },
@@ -154,14 +154,14 @@ export default {
           type: 'website',
           
           url: 'https://selling-game-items-next.vercel.app/our-story',
-          siteName: 'Gamebuff',
-          title: "Gamebuff",
+          siteName:  siteName,
+          title: siteName,
           description: description,
           images: [
             {
             url: 'https://selling-game-items-next.vercel.app/images/gamingFriends2.png',
         
-          alt: 'Gamebuff',
+          alt: siteName,
           type: 'image/png',
             }
           ]
@@ -173,7 +173,7 @@ export default {
           handle: '@handle',
           site: '@site',
           cardType: 'summary_large_image',
-          title: "Gamebuff - our story",
+          title: `${siteName} - our story`,
           description: 'Buy perfect equipment for deep-night gaming',
           image: 'https://selling-game-items-next.vercel.app/images/gamingFriends2.png',
         },
