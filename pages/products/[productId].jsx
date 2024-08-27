@@ -31,7 +31,7 @@ import Link from "next/link";
 import styles from "../../styles/productpage.module.css";
 import BundleOffer from "@/components/ProductPage/BundleOffer/BundleOffer";
 
-const PayPalButton = dynamic(() => import("@/components/Checkout/PayPal/PayPal"));
+const PayPalButton = dynamic(() => import("@/components/Checkout/ExpressCheckout/PayPal/PayPal"));
 
 
 export default function ProductPage({ product, description, images, startReviews, ratingData }) {
@@ -260,7 +260,7 @@ export default function ProductPage({ product, description, images, startReviews
                 return requestData
               }
             
-  ,[])}/>
+  ,[quantity, variant])}/>
         
 
 

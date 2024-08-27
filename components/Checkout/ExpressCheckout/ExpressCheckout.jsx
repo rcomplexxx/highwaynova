@@ -1,5 +1,5 @@
-import GooglePay from "../GooglePay/GooglePay";
-import PayPalButton from "../PayPal/PayPal";
+import GooglePay from "./GooglePay/GooglePay";
+import PayPalButton from "./PayPal/PayPal";
 import styles from "./expresscheckout.module.css";
 
 export default function ExpressCheckout({

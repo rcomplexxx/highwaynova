@@ -51,7 +51,7 @@ let dbConnection = await (await getPool()).getConnection();
 
 
   const updateDb = async (email) => {
-    return new Promise(async(resolve, reject) => {
+
 
     
 
@@ -111,27 +111,29 @@ let dbConnection = await (await getPool()).getConnection();
 
      
           
-          resolve({
+          return {
             message: "Order placed successfully.",
           
-          });
+          };
         } else {
-          // If no changes were made, reject the promise with an error message
-          reject("Error: Order not found or not updated.");
+      
+
+          return {error: "Error: Order not found or not updated."};
         }
 
         // Closing the database connection
        
       } catch (error) {
-        reject("Error in database operations." + error);
+       return {error: "Error in database operations." + error};
       }
-    });
+
+
   };
 
 
 
   const updateAddress = async (email,shippingAddress) => {
-    return new Promise(async(resolve, reject) => {
+   
       try {
        
 
@@ -141,7 +143,7 @@ let dbConnection = await (await getPool()).getConnection();
           if(!paypalExpressChecker)throw new Error('Something went wrong. No data found in the database for the specified paymentId and paymentMethod.');
 
 
-          if(paypalExpressChecker.address!="" && paypalExpressChecker.city!="") resolve();
+          if(paypalExpressChecker.address!="" && paypalExpressChecker.city!="") return {message:"Order approved successfully."};
           
           
  
@@ -170,19 +172,19 @@ let dbConnection = await (await getPool()).getConnection();
         // Check the result of the update operation
         console.log('result',result);
         if (result.affectedRows > 0) {
-          // If changes were made, resolve the promise
-          resolve("Order approved successfully.");
+          
+          return {message:"Order approved successfully."};
         } else {
-          // If no changes were made, reject the promise with an error message
-          reject("Error: Order not found or not updated.");
+          
+          return {error:"Error: Order not found or not updated."};
         }
 
         // Closing the database connection
        
       } catch (error) {
-        reject("Error in database operations." + error);
+      return {error:"Error in database operations." + error};
       }
-    });
+ 
   };
 
 
@@ -217,9 +219,9 @@ let dbConnection = await (await getPool()).getConnection();
       if (response.result.status === "COMPLETED") {
         console.log('hello!', response.result.purchase_units[0].shipping)
 
-        await updateAddress(response.result.payer.email_address,response.result.purchase_units[0].shipping);
+        if(await updateAddress(response.result.payer.email_address,response.result.purchase_units[0].shipping).error) throw new Error('Error updating database.');
         
-        await updateDb(response.result.payer.email_address);
+        if(await updateDb(response.result.payer.email_address).error) throw new Error('Error updating database.');
      
 
         return await resReturn(200, { message: "Payment successful",

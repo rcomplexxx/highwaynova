@@ -96,12 +96,11 @@ let dbConnection = await (await getPool()).getConnection();
 
   let giftDiscount = false;
 
-  const putInDatabase = (paymentMethod,paymentId, approved=0) => {
+  const putInDatabase = async(paymentMethod,paymentId, approved=0) => {
 
 
    
 
-    return new Promise(async(resolve, reject) => {
       try {
       
         //  db.prepare(`DROP TABLE IF EXISTS orders`).run();
@@ -273,14 +272,13 @@ let dbConnection = await (await getPool()).getConnection();
 
       
 
-        resolve({
+        return{
           message: "Order placed successfully."
-        });
+        };
       } catch (error) {
         console.error("Error in database operations:", error);
-        reject("Error in database operations.");
+        return {error: "Error in database operations."};
       }
-    });
 
   
 
@@ -290,11 +288,11 @@ let dbConnection = await (await getPool()).getConnection();
   try {
     const clientIp = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
 
-    if (!(await limiterPerDay.rateLimiterGate(clientIp, dbConnection))){
+    // if (!(await limiterPerDay.rateLimiterGate(clientIp, dbConnection))){
       
       
-      return await resReturn(429, { error: "Too many requests. Please try again later." });
-    }
+    //   return await resReturn(429, { error: "Too many requests. Please try again later." });
+    // }
 
     console.log('here are items of buying', req.body.order.items)
 
@@ -375,7 +373,7 @@ let dbConnection = await (await getPool()).getConnection();
      
       
      
-      await putInDatabase(req.body.paymentMethod,response.result.id);
+      if(await putInDatabase(req.body.paymentMethod,response.result.id).error)throw new Error('Error saving data in database.');
 
      
       return await resReturn(200, { success: true, paymentId: response.result.id });
@@ -435,7 +433,9 @@ let dbConnection = await (await getPool()).getConnection();
         allow_redirects: 'never',
       },
 		});
-    await putInDatabase('GPAY(STRIPE)',paymentIntent.client_secret, 1);
+
+    if(await putInDatabase('GPAY(STRIPE)',paymentIntent.client_secret, 1).error)throw new Error('Error saving data in database.');
+   
 
 
     
@@ -481,8 +481,9 @@ let dbConnection = await (await getPool()).getConnection();
   
 
     
+    if(await putInDatabase('STRIPE',paymentIntent.client_secret, 1).error)throw new Error('Error saving data in database.');
+   
     
-    await putInDatabase('STRIPE',paymentIntent.client_secret, 1);
 
    
    

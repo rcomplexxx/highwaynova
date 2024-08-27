@@ -1,4 +1,4 @@
-import  { useState } from "react";
+import  { useEffect, useState } from "react";
 
 import { useRouter } from "next/router";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
@@ -9,6 +9,9 @@ import { useGlobalStore } from "@/contexts/AppContext";
 
 const PayPalButton=({checkFields, organizeUserData, method='paypal',  type='normal', color='blue'})=>{
   const [paypalError, setPaypalError] = useState();
+
+
+
 
 
   const router = useRouter();
@@ -167,11 +170,12 @@ const PayPalButton=({checkFields, organizeUserData, method='paypal',  type='norm
               onClick={handlePayPalButtonClick}
               onApprove={handlePayPalButtonApprove}
               onCancel={cancelHandler}
-              createOrder={async()=>{return await handlePayPalOrder()}}
+              createOrder={handlePayPalOrder}
               style={{
                 color: color,
                 height: 48
               }}
+              forceReRender={[organizeUserData]}
               
               className={`${styles.paypalButton} ${type==="instant" && styles.instantPaypalButton}`}
             />

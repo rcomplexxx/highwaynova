@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import PayPalButton from "../PayPal/PayPal";
+import PayPalButton from "../ExpressCheckout/PayPal/PayPal";
 import StripeWrapper from "../Stripe/Stripe";
 import styles from "./paymentmethodwrapper.module.css";
 import Image from "next/image";
