@@ -38,7 +38,7 @@ export default function EditorHtmlSnippets() {
     onClick={()=> {
         navigator.clipboard.writeText(`
 <div style="text-align: center;">
-<a href="${process.env.WEBSITE_ROOT_URL}" target="_blank" style="width: 100%;box-sizing: border-box;display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #ffffff; background-color: #000000; border-radius: 48px;-webkit-border-radius: 48px; -moz-border-radius: 48px; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;border: 1px solid #858585; font-size: 22px;font-weight: 700; ">
+<a href="${process.env.NEXT_PUBLIC_WEBSITE_ROOT_URL}" target="_blank" style="width: 100%;box-sizing: border-box;display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #ffffff; background-color: #000000; border-radius: 48px;-webkit-border-radius: 48px; -moz-border-radius: 48px; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;border: 1px solid #858585; font-size: 22px;font-weight: 700; ">
       <span style="display:block;padding:15px;line-height:100%;"><strong><span style="line-height: 22px;">Use the code now</span></strong></span>
   </a></div>
 `).then(() => {

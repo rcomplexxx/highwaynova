@@ -170,7 +170,7 @@ export default function Footer() {
         </div>
         </div>
         <span className={styles.reservedRightsPharagraph}>
-          © 2024, Lightbook All Rights Reserved.
+          © 2024, {process.env.NEXT_PUBLIC_WEBSITE_NAME} All Rights Reserved.
         </span>
       </div>
     </footer>

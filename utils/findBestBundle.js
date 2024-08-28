@@ -6,15 +6,34 @@ function findBestBundle(cartProducts) {
     
     let cartProductsTemp = [...cartProducts];
 
-    let bestBundleCpIndex;
+    let bestBundleCpId;
     
     let bestBundlePrice = 0;
     let bestBundlePercentage = 0;
 
+    const shrinkedCartProductsTemp = [];
 
+     cartProductsTemp.forEach(cp =>{
+
+        const foundshrinkedCpIndex = shrinkedCartProductsTemp.findIndex(scp =>{return scp.id===cp.id});
+
+        
+
+        if (foundshrinkedCpIndex!==-1){
+            
+            shrinkedCartProductsTemp[foundshrinkedCpIndex].quantity = shrinkedCartProductsTemp[foundshrinkedCpIndex].quantity + cp.quantity;
+
+        }
+
+        else{
+            shrinkedCartProductsTemp.push({...cp});
+        }
+
+      
+    })
   
 
-    cartProductsTemp.forEach((cp, index) => {
+    shrinkedCartProductsTemp.forEach((cp) => {
 
         const product = products.find(p =>{return p.id == cp.id});
 
@@ -22,9 +41,13 @@ function findBestBundle(cartProducts) {
 
       
         let offerIndex;
+
+        
             
             
             product.bundle.forEach((pb, index) =>{ 
+
+                
 
                 if(cp.quantity>=pb.quantity)offerIndex = index;
 
@@ -32,12 +55,12 @@ function findBestBundle(cartProducts) {
 
             if(offerIndex===undefined)return;
 
-    
+            
 
         const cartProductBundlePriceOff = parseFloat((product.price* cp.quantity * product.bundle[offerIndex].discountPercentage/100).toFixed(2));
 
         if(cartProductBundlePriceOff>bestBundlePrice){
-            bestBundleCpIndex = index;
+            bestBundleCpId = cp.id;
             bestBundlePrice=cartProductBundlePriceOff;
             bestBundlePercentage = product.bundle[offerIndex].discountPercentage;
         }
@@ -68,20 +91,26 @@ function findBestBundle(cartProducts) {
     });
 
     
+  console.log('here is cartProductsTemp rn', cartProductsTemp)
 
     if(bestBundlePrice === 0)return cartProductsTemp;
 
     
 
 
-        
-
     
 
-        cartProductsTemp[bestBundleCpIndex].priceBeforeBundle = cartProductsTemp[bestBundleCpIndex].price;
-        cartProductsTemp[bestBundleCpIndex].stickerPrice = cartProductsTemp[bestBundleCpIndex].price;
-        cartProductsTemp[bestBundleCpIndex].price = parseFloat((cartProductsTemp[bestBundleCpIndex].price * (100 - bestBundlePercentage)/100).toFixed(2));
+    cartProductsTemp = cartProductsTemp.map(cp => {
+        if(cp.id === bestBundleCpId) 
+            {
+                cp.priceBeforeBundle = cp.price;
+                cp.stickerPrice = cp.price;
+                cp.price =  parseFloat((cp.price * (100 - bestBundlePercentage)/100).toFixed(2));
 
+            }
+
+            return cp
+    })
 
        
        

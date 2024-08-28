@@ -1,5 +1,4 @@
 import PolicyCard from "@/components/Cards/PolicyCard/PolicyCard";
-import Head from "next/head";
 import { NextSeo } from "next-seo";
 import { unimportantPageSeo } from "@/utils/SEO-configs/next-seo.config";
 

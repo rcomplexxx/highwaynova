@@ -8,8 +8,12 @@ import collections from '../../data/collections.json'
 
 
 const siteName= process.env.NEXT_PUBLIC_WEBSITE_NAME;
-const siteUrlTail = 'https://selling-game-items-next.vercel.app';
+const siteUrlTail = process.env.NEXT_PUBLIC_WEBSITE_ROOT_URL;
+const siteDescription = "As graduation loomed, we collectively decided to channel our passion into something greater, the Gamebuff! Our mission is promoting the amazing gaming night experience with friends, and enhancing that experience by providing exceptional gaming equipment. Join us in utilizing technology to create the sureally joyful experience noone has ever had a chance to experience throughout history. Happy shopping!";
 const siteMiniDescription = 'Buy perfect equipment for deep-night gaming';
+const siteRepresentativeImageFullPath = `${siteUrlTail}/images/motohero2.jpeg`
+const ourStoryRepresentativeImage = `${siteUrlTail}/images/gamingFriends2.png`
+
 
 const createPageSeo = (title, description, pagePath, imageName, ogTitle, ogDescription, noFollow, noIndex)=>{
 
@@ -55,18 +59,18 @@ export default {
       defaultTitle: siteName,
     
    
-      description: "As graduation loomed, we collectively decided to channel our passion into something greater, the Gamebuff! Our mission is promoting the amazing gaming night experience with friends, and enhancing that experience by providing exceptional gaming equipment. Join us in utilizing technology to create the sureally joyful experience noone has ever had a chance to experience throughout history. Happy shopping!",
-      themeColor: "#02050a",
+      description: siteDescription,
+         themeColor: "#02050a",
     openGraph: {
       type: 'website',
       
-      url: 'https://selling-game-items-next.vercel.app/',
+      url: siteUrlTail,
       siteName: siteName,
       title: siteName,
       description: siteMiniDescription,
       images: [
         {
-        url: 'https://selling-game-items-next.vercel.app/images/gameGirl2.png',
+        url: siteRepresentativeImageFullPath,
       width: 737,
       height: 737,
       alt: siteName,
@@ -83,7 +87,7 @@ export default {
       cardType: 'summary_large_image',
       title: siteName,
       description: siteMiniDescription,
-      image: 'https://selling-game-items-next.vercel.app/images/gameGirl2.png',
+      image: siteRepresentativeImageFullPath,
     },
     canonical: `${siteUrlTail}/`,
   };
@@ -148,18 +152,18 @@ export default {
       return {
         title: 'Our story',
         description: description,
-        url:`https://selling-game-items-next.vercel.app/our-story`,
+        url:`${siteUrlTail}/our-story`,
    
         openGraph: {
           type: 'website',
           
-          url: 'https://selling-game-items-next.vercel.app/our-story',
+          url: `${siteUrlTail}/our-story`,
           siteName:  siteName,
           title: siteName,
           description: description,
           images: [
             {
-            url: 'https://selling-game-items-next.vercel.app/images/gamingFriends2.png',
+            url: ourStoryRepresentativeImage,
         
           alt: siteName,
           type: 'image/png',
@@ -173,11 +177,11 @@ export default {
           handle: '@handle',
           site: '@site',
           cardType: 'summary_large_image',
-          title: `${siteName} - our story`,
-          description: 'Buy perfect equipment for deep-night gaming',
-          image: 'https://selling-game-items-next.vercel.app/images/gamingFriends2.png',
+          title: `Our story - ${siteName}`,
+          description: siteMiniDescription,
+          image: ourStoryRepresentativeImage,
         },
-        canonical: 'https://selling-game-items-next.vercel.app/',
+        canonical: siteUrlTail,
       }
     
 

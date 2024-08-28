@@ -369,7 +369,7 @@ if(!campaign) throw new Error('campaign_deleted')
     ">
     <img
       style='border-radius: 4px;'
-  src="${process.env.WEBSITE_ROOT_URL}/images/${itemSource.images[0]}"
+  src="${process.env.NEXT_PUBLIC_WEBSITE_ROOT_URL}/images/${itemSource.images[0]}"
   alt=${itemSource.name}
   height="48px"
   width="48px"

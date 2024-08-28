@@ -1,5 +1,4 @@
 import PolicyCard from "@/components/Cards/PolicyCard/PolicyCard";
-import Head from "next/head";
 import { NextSeo } from "next-seo";
 import { unimportantPageSeo } from "@/utils/SEO-configs/next-seo.config";
 
@@ -28,7 +27,7 @@ function RefundPolicy() {
 <hr/>
 
 <h2>What if there Late or Missing refunds?</h2>
-<p>If you haven’t received a refund yet, first check your bank account again. Then contact your credit card company; it may take some time before your refund is officially posted. Next, contact your bank. There is often some processing time before a refund is posted. If you’ve done all of this and you still have not received your refund yet, please contact us at sales@gamebuff.com</p>
+<p>If you haven’t received a refund yet, first check your bank account again. Then contact your credit card company; it may take some time before your refund is officially posted. Next, contact your bank. There is often some processing time before a refund is posted. If you’ve done all of this and you still have not received your refund yet, please contact us at {process.env.NEXT_PUBLIC_SALES_EMAIL_ADDRESS}</p>
 
 <hr/>
 
@@ -38,7 +37,7 @@ function RefundPolicy() {
 <hr/>
 
 <h2>If I get a wrong product, can I get it replaced?</h2>
-<p>We strive to ensure 100% customer satisfaction by providing them exactly what they need. However, if you receive a wrong product, you can certainly raise a request for replacement. The refund will be made only after thoroughly investigating the reason for which you want to receive it. You can email us at sales@gamebuff.com for further assistance on the refund.</p>
+<p>We strive to ensure 100% customer satisfaction by providing them exactly what they need. However, if you receive a wrong product, you can certainly raise a request for replacement. The refund will be made only after thoroughly investigating the reason for which you want to receive it. You can email us at {process.env.NEXT_PUBLIC_SALES_EMAIL_ADDRESS} for further assistance on the refund.</p>
 
 
 

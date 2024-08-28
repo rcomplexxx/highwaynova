@@ -1,7 +1,6 @@
 
 
 import PolicyCard from "@/components/Cards/PolicyCard/PolicyCard";
-import Head from "next/head";
 import { NextSeo } from "next-seo";
 import { unimportantPageSeo } from "@/utils/SEO-configs/next-seo.config";
 
@@ -142,7 +141,7 @@ We reserve the right, at our sole discretion, to update, change or replace any p
 
 <h2>SECTION 20 - CONTACT INFORMATION</h2>
 
-<p>Questions about the Terms of Service should be sent to us at sales@gamebuff.com.</p>
+<p>Questions about the Terms of Service should be sent to us at {process.env.NEXT_PUBLIC_SALES_EMAIL_ADDRESS}.</p>
 
 </PolicyCard>);
 }
