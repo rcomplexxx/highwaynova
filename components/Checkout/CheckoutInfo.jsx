@@ -19,7 +19,7 @@ export default function CheckoutInfo() {
   const [errors, setErrors] = useState({});
   // const [shippingType, setShippingType] = useState("free");
 
-  const {cartProducts, couponCode, tip, subscribe, setSubscribe} = useContext(CheckoutContext);
+  const {cartProducts, coupon, tip, subscribe, setSubscribe} = useContext(CheckoutContext);
 
 
 
@@ -181,7 +181,7 @@ return false;
         phone,
         items:items ,
         subscribe,
-        couponCode: couponCode,
+        couponCode: coupon.code,
         tip: tip.toFixed(2)
       },
       paymentMethod: paymentMethod,
@@ -190,7 +190,7 @@ return false;
       // Include other payment-related data if required
     };
     return requestData
-  }, [subscribe, couponCode, tip]);
+  }, [subscribe, coupon.code, tip]);
 
  
 

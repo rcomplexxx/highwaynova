@@ -15,11 +15,11 @@ const GooglePay = ({
   const [googlePayError, setGooglePayError] = useState();
 
 
-  const { subTotal, discount, tip} = useContext(CheckoutContext);
+  const { subTotal, coupon, tip} = useContext(CheckoutContext);
 
   const totalPrice = useMemo(()=>{
-    return (subTotal - discount*subTotal/100 + parseFloat(tip)).toFixed(2)
- }, [subTotal, discount, tip]);
+    return (subTotal - coupon.discount*subTotal/100 + parseFloat(tip)).toFixed(2)
+ }, [subTotal, coupon.discount, tip]);
  
 
   const router = useRouter();

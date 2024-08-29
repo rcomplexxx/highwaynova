@@ -13,7 +13,7 @@ import findBestBundle from '@/utils/findBestBundle'
 
 
 
-export const CheckoutContext = createContext({total:0,subTotal:0, couponCode:"", setAndValidateCouponCode:()=>{}, discount:0, tip:0, setTip:()=>{} });
+export const CheckoutContext = createContext({total:0,subTotal:0, coupon:{code: "", discount: 0}, setAndValidateCouponCode:()=>{}, discount:0, tip:0, setTip:()=>{} });
 
 
 
@@ -29,7 +29,7 @@ export const CheckoutContext = createContext({total:0,subTotal:0, couponCode:"",
  
 
     const [subscribe, setSubscribe] = useState(false);
-    const [couponCode, setCouponCode] = useState('');
+    const [coupon, setCoupon] = useState({code: "", discount: 0});
     const [tip, setTip]= useState(0);
     const [cartProducts, setCartProducts] = useState(findBestBundle(buyNowProduct?buyNowProduct:[...useGlobalStore(state => state.cartProducts)]))
   
@@ -41,14 +41,19 @@ export const CheckoutContext = createContext({total:0,subTotal:0, couponCode:"",
 
     useEffect(()=>{
 
-      let newCartProducts = findBestBundle(cartProducts)
+      let newCartProducts = findBestBundle(cartProducts);
+      
+     
   
-      if(couponCode!==""){
+      if(coupon.code!==""){
+
         const alterProduct = newCartProducts.find(cp =>{return cp.priceBeforeBundle!==undefined});
 
         console.log('checking altered product', alterProduct)
   
         if (alterProduct) {
+
+        
           newCartProducts = newCartProducts.map(cp => {
             if (cp.priceBeforeBundle !== undefined) {
               cp.price = cp.priceBeforeBundle;
@@ -56,21 +61,29 @@ export const CheckoutContext = createContext({total:0,subTotal:0, couponCode:"",
             }
             return cp;
           });
+
+      
         }
 
 
       }
 
+ 
+      
+
       console.log('new cart products are', newCartProducts)
 
       setCartProducts(newCartProducts);
   
-    },[couponCode])
+    },[coupon.code])
 
 
-    const setAndValidateCouponCode = useCallback((newCouponCode)=>{
 
-        if(newCouponCode==="" && couponCode!==""){setCouponCode(""); return true;}
+
+
+    const setAndValidateCoupon = useCallback((newCouponCode)=>{
+
+        if(newCouponCode==="" && coupon.code!==""){setCoupon({code: "", discount: 0}); return true;}
 
         const newCoupon = coupons.find((c) => {
             return c.code.toUpperCase() === newCouponCode.toUpperCase();
@@ -81,34 +94,24 @@ export const CheckoutContext = createContext({total:0,subTotal:0, couponCode:"",
 
             if(checkDiscountSavesMoreThenBundle(cartProducts, newCoupon.discountPercentage)){
 
-            setCouponCode(newCoupon.code.toUpperCase())
+            setCoupon({code: newCoupon.code.toUpperCase(), discount: newCoupon.discountPercentage})
             }
     
           return true;
-        } else if(!couponCode) return false;
+        } 
+        
 
         return false;
 
 
 
-    },[couponCode]);
+    },[coupon.code]);
 
 
 
 
 
-    const discount = useMemo(() => {
-      if (couponCode === "") {return 0;}
-      
-      const newCoupon = coupons.find((c) => {
-        return c.code.toUpperCase() === couponCode.toUpperCase();
-      });
-      if (newCoupon) {
-         
-       return newCoupon.discountPercentage;
-       
-      } else {setCouponCode("");return 0;}
-    },[couponCode])
+    
 
 
 
@@ -142,12 +145,12 @@ export const CheckoutContext = createContext({total:0,subTotal:0, couponCode:"",
 
 
       const total = useMemo(()=>{
-        return (subTotal - discount*subTotal/100 + parseFloat(tip)).toFixed(2)
-     }, [subTotal, discount, tip]);
+        return (subTotal - coupon.discount*subTotal/100 + parseFloat(tip)).toFixed(2)
+     }, [subTotal, coupon.discount, tip]);
 
   
     return (
-      <CheckoutContext.Provider value={{cartProducts, total,subTotal, couponCode, setAndValidateCouponCode, discount, tip, setTip, subscribe, setSubscribe }}>
+      <CheckoutContext.Provider value={{cartProducts, total,subTotal, coupon, setAndValidateCoupon, tip, setTip, subscribe, setSubscribe }}>
         {children}
       </CheckoutContext.Provider>
     );

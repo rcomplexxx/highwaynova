@@ -19,12 +19,12 @@ export default function Tip(){
     const mounted = useRef(false);
     const tipDivRef = useRef();
 
-    const {subTotal, discount, tip, setTip} = useContext(CheckoutContext);
+    const {subTotal, coupon, tip, setTip} = useContext(CheckoutContext);
 
 
     const fullProductCost= useMemo(()=>{
-    return subTotal - subTotal*discount/100;
-    }, [subTotal, discount])
+    return subTotal - subTotal*coupon.discount/100;
+    }, [subTotal, coupon.discount])
  
 
 

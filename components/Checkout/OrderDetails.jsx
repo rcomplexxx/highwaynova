@@ -4,6 +4,7 @@ import {
     useEffect,
     useRef,
     useContext,
+    useMemo,
   } from "react";
   import styles from "./orderdetails.module.css";
   import Image from "next/image";
@@ -23,7 +24,23 @@ import { ArrowDown, CancelIcon, DiscountIcon, DiscountIconTotal, ErrorIcon } fro
   
    
 
-    const {cartProducts, total, subTotal, couponCode, setAndValidateCouponCode, discount, tip} = useContext(CheckoutContext);
+    const {cartProducts, total, subTotal, coupon, setAndValidateCoupon, tip} = useContext(CheckoutContext);
+
+    const totalSavings = useMemo(()=>{
+
+     
+      const alterProduct = cartProducts.find(cp =>{return cp.priceBeforeBundle!==undefined});
+
+      
+      let bundleSavings = 0;
+
+      cartProducts.forEach(cp => {
+        if(cp.priceBeforeBundle!==undefined)bundleSavings=bundleSavings + parseFloat((parseFloat((cp.stickerPrice-cp.price).toFixed(2))*cp.quantity).toFixed(2))
+      })
+
+      
+      return (bundleSavings + subTotal*coupon.discount/100).toFixed(2)
+    },[subTotal,cartProducts, coupon])
 
 
       useEffect(()=>{
@@ -75,7 +92,7 @@ import { ArrowDown, CancelIcon, DiscountIcon, DiscountIconTotal, ErrorIcon } fro
 const handleCouponApply = () => {
     if (tempCouponCode === "") return;
     
-    const couponActivated = setAndValidateCouponCode(tempCouponCode);
+    const couponActivated = setAndValidateCoupon(tempCouponCode);
     if(couponActivated){
       setCouponError(false);
           setTemptempCouponCode("");
@@ -112,7 +129,7 @@ const handleCouponApply = () => {
                 
   
                   <div className={styles.mainPriceDiv}>
-                  {couponCode!="" && <span className={styles.mainPriceSub}>${subTotal}</span>}
+                  {coupon.code!="" && <span className={styles.mainPriceSub}>${subTotal}</span>}
                   <span className={styles.mainPrice}>${total}</span>
                   
                   </div>
@@ -177,12 +194,12 @@ const handleCouponApply = () => {
                     </span>
                   )}
 
-                {couponCode &&
+                {coupon.code &&
                   <div className={styles.mainCouponCode}> 
                   <DiscountIcon color={`var(--discount-icon-color)`} styleClassName={styles.mainDiscountImg}/>
                   
-                      <span>{couponCode}</span>
-                      <CancelIcon color={`var(--discount-cancel-icon-color)`} styleClassName={styles.discountCancelImage} handleClick={()=>{setAndValidateCouponCode("");}}
+                      <span>{coupon.code}</span>
+                      <CancelIcon color={`var(--discount-cancel-icon-color)`} styleClassName={styles.discountCancelImage} handleClick={()=>{setAndValidateCoupon("");}}
                     />
                       </div>
                    }
@@ -208,7 +225,7 @@ const handleCouponApply = () => {
                     <span>Subtotal</span>
                     <span>${subTotal}</span>
                   </div>
-                  {couponCode && (
+                  {coupon.code &&  (
                     <>
                     
                       <span className={styles.discountPairTitle}>Order Discount</span>
@@ -217,9 +234,9 @@ const handleCouponApply = () => {
                     <div className={`${styles.order_pair} ${styles.discountPair}`}>
                     <div className={styles.couponCodeDiv}>
                       <DiscountIcon color={`var(--discount-order-pair-color)`} styleClassName={styles.discountIcon}/>
-                        <span id="couponCode">{couponCode}</span>
+                        <span id="couponCode">{coupon.code}</span>
                         </div>
-                    <span id="discountPrice">- ${(subTotal*discount/100).toFixed(2)}</span>
+                    <span id="discountPrice">- ${(subTotal*coupon.discount/100).toFixed(2)}</span>
                     </div>
                  </>
 
@@ -246,10 +263,11 @@ const handleCouponApply = () => {
                     </div>
                   </div>
 
-                  {couponCode &&
+                  {totalSavings!=0 &&
                   <div className={styles.totalDiscount}> 
                     <DiscountIconTotal color={`var(--discount-icon-total-color)`} styleClassName={styles.totalDiscountImg}/>
-                      <span className={styles.totalDiscountSpan}>Total savings</span><span className={styles.totalDiscountSpan}>${(subTotal*discount/100).toFixed(2)}</span>
+                      <span className={styles.totalDiscountSpan}>Total savings</span>
+                      <span className={styles.totalDiscountSpan}>${totalSavings}</span>
                       
                       </div>
   }
