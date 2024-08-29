@@ -90,17 +90,44 @@
   .productTitleDiv{
     display: flex;
     flex-direction: column;
+    gap: var(--size-2);
+    font-size: var(--font-size-2);
+   
   }
 
   .variant{
-    font-weight: 300;
+   
     color: var(--summery-variant-color);
+
+
+    font-size: var(--font-size-1);
+    font-weight: 400;
+  
+  }
+
+  .bundleDisc{
+
+    color: var(--summery-variant-color);
+
+    display: flex;
+    align-items: center;
+    gap: var(--size-2);
+
+    font-size: var(--font-size-1);
+    font-weight: 400;
+
+  }
+
+  .bundleDiscIcon{
+    width: var(--size-5);
+    height: var(--size-5);
   }
 
 
   .stickerPrice{
     color: var(--summery-sticker-price-color);
     text-decoration: line-through;
+    font-size: var(--font-size-1);
   }
 
 
@@ -546,7 +573,7 @@
 
    .mainPriceSub{
     opacity: 0.5;
-    font-size: var(--size-4) !important;
+    font-size: var(--font-size-1) !important;
     text-decoration: line-through;
    }
 

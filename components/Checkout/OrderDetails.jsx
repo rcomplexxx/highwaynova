@@ -29,7 +29,6 @@ import { ArrowDown, CancelIcon, DiscountIcon, DiscountIconTotal, ErrorIcon } fro
     const totalSavings = useMemo(()=>{
 
      
-      const alterProduct = cartProducts.find(cp =>{return cp.priceBeforeBundle!==undefined});
 
       
       let bundleSavings = 0;
@@ -40,7 +39,9 @@ import { ArrowDown, CancelIcon, DiscountIcon, DiscountIconTotal, ErrorIcon } fro
 
       
       return (bundleSavings + subTotal*coupon.discount/100).toFixed(2)
-    },[subTotal,cartProducts, coupon])
+    },[subTotal,cartProducts, coupon]);
+
+
 
 
       useEffect(()=>{
@@ -161,6 +162,18 @@ const handleCouponApply = () => {
                 <span className={styles.variant}>
                   {cp.variant}
                 </span>
+                {cp.bundleQuantity && <span className={styles.bundleDisc}>
+
+                <DiscountIcon color={`var(--bundle-discount-icon-color)`} styleClassName={styles.bundleDiscIcon}/>
+                  BUY {cp.bundleQuantity} (-$
+                  
+                  {
+                  
+                 parseFloat(((cp.priceBeforeBundle - cp.price).toFixed(2))*cp.quantity).toFixed(2)
+                  
+                  })
+                </span>
+                  }
                 </div>
               </div>
               <div className={styles.productTitleDiv}>

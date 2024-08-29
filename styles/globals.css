@@ -820,6 +820,7 @@ p {
  
   --coupon-code-color: black;
   --coupon-code-bg: var(--neutral-4);
+  --bundle-discount-icon-color: var(--summery-variant-color);
   --discount-cancel-icon-color: var(--neutral-0);
   --discount-icon-color: black;
   --discount-order-pair-color: var(--neutral-6);
