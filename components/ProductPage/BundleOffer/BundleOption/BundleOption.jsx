@@ -22,7 +22,8 @@ export default function BundleOption({quantity, originalPrice, discountPercentag
 
     <div className={styles.bundleOffer}>
       <div className={styles.quantityDiv}>Buy {quantity}</div>
-      <div className={styles.offerPrice}>${originalPrice - parseFloat((originalPrice*discountPercentage/100).toFixed(2))}</div>
+      {discountPercentage!==0 &&  <div className={styles.origPrice}>${originalPrice}</div>}
+   
       
     </div>
 
@@ -30,7 +31,7 @@ export default function BundleOption({quantity, originalPrice, discountPercentag
     <div className={styles.bundleSave}>
 
     <div className={styles.saveDiv}>{quantity===1?'Standard price':`You save ${discountPercentage}%`}</div>
-      {discountPercentage!==0 &&  <div className={styles.origPrice}>${originalPrice}</div>}
+    <div className={styles.offerPrice}>${originalPrice - parseFloat((originalPrice*discountPercentage/100).toFixed(2))}</div>
     </div>
 
     </div>

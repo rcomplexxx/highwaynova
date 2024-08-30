@@ -17,6 +17,17 @@ export default function BundleOffer({price, stickerPrice, bundle}) {
   return (
     <div className={styles.mainDiv}>
 
+        
+<div className={styles.BuyAndSaveWrapper}>
+<div className={styles.borderLineDiv} />
+<span className={styles.buyAndSaveTxt}>Buy More & Save Money</span>
+<div className={styles.borderLineDiv} />
+</div>
+
+
+
+
+
 
     <BundleOption originalPrice={stickerPrice?stickerPrice:price} discountPercentage={stickerPrice?100*(1-(price/stickerPrice)):0} quantity={1}/>
   

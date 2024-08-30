@@ -130,7 +130,7 @@ const handleCouponApply = () => {
                 
   
                   <div className={styles.mainPriceDiv}>
-                  {coupon.code!="" && <span className={styles.mainPriceSub}>${subTotal}</span>}
+                  {totalSavings!=0 && <span className={styles.mainPriceSub}>${(parseFloat(total) + parseFloat(totalSavings)).toFixed(2)}</span>}
                   <span className={styles.mainPrice}>${total}</span>
                   
                   </div>
@@ -177,8 +177,9 @@ const handleCouponApply = () => {
                 </div>
               </div>
               <div className={styles.productTitleDiv}>
-              <span>${(cp.quantity * cp.price).toFixed(2)}</span>
               {cp.stickerPrice && <span className={styles.stickerPrice}>${(cp.quantity * cp.stickerPrice).toFixed(2)}</span>}
+              <span>${(cp.quantity * cp.price).toFixed(2)}</span>
+             
               </div>
 
             </div>
