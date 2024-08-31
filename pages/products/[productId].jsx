@@ -200,7 +200,7 @@ export default function ProductPage({ product, description, images, startReviews
           </div>
 }
 
-     {product.bundle && <BundleOffer productId={product.id} price={product.price} stickerPrice={product.stickerPrice} bundle={product.bundle}/>}
+     {product.bundle && <BundleOffer productId={product.id} price={product.price} stickerPrice={product.stickerPrice} bundle={product.bundle} quantity={quantity} setQuantity={setQuantity}/>}
 
 
 
