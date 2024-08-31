@@ -31,7 +31,15 @@
 
 .radioExtRing{
 
-   
+    height: var(--size-5);
+    width: var(--size-5);
+
+    background-color: transparent;
+    border: 1px solid var(--bundle-ring-neutral-color);
+
+    border-radius: 50%;
+    box-sizing: border-box;
+    padding: 3px;
 
 }
 
@@ -44,35 +52,18 @@
 .radioIntRing{
     height: 100%;
     width: 100%;
-    background-color:transparent;
+    background-color: transparent;
 
     border-radius: 50%;
 }
 
-
 .intRingSelected{
     background-color: var(--bundle-ring-selected-color);
-}
 
-.hiddenRadio {
-    height: var(--size-8);
-    width: var(--size-5);
-
-    background-color: transparent;
-    border: 1px solid var(--bundle-ring-neutral-color);
-
-    
-    box-sizing: border-box;
-    padding: 3px;
-    margin: 0;
 }
 
 
 
-
-.hiddenRadio:checked  {
-    background: red;
-}
 
 
 

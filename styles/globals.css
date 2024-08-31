@@ -569,8 +569,8 @@ p {
 
  --bundle-main-color: var(--main-color-5);
 
- --bundle-ring-neutral-color: var(--main-color-2);
- --bundle-ring-selected-color: var(--main-color-4);
+ --bundle-ring-neutral-color: var(--main-color-3);
+ --bundle-ring-selected-color: var(--accent-color-5);
 
  --bundle-option-bg: var(--neutral-1);
  --bundle-save-txt-color: var(--neutral-8);
