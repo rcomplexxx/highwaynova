@@ -14,9 +14,13 @@ export default function BundleOption({isSelected, originalPrice, discountPercent
     <div className={styles.bundleOption} onClick={()=>{if(!isSelected)setQuantity(bundleQuantity)}}>
 
 
-<div className={`${styles.radioExtRing} ${isSelected && styles.extRingSelected}`}>
-<div className={`${styles.radioIntRing} ${isSelected && styles.intRingSelected}`}/>
-</div>
+<input
+    type="radio"
+    id="customRadio"
+    name="customRadioGroup"
+    checked={isSelected}
+    className={`${styles.hiddenRadio}`}
+  />
 
 <div className={styles.bundleInfo}>
 
