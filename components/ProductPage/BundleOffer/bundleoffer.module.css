@@ -10,6 +10,8 @@
    
     margin-top: var(--size-6);
     margin-bottom: var(--size-5);
+
+    contain: content;
 }
 
 
