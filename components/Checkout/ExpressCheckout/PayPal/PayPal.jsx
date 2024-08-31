@@ -10,6 +10,12 @@ import { useGlobalStore } from "@/contexts/AppContext";
 const PayPalButton=({checkFields, organizeUserData, method='paypal',  type='normal', color='blue'})=>{
   const [paypalError, setPaypalError] = useState();
 
+  const [debounceRerender, setDebounceRerender] = useState(false);
+
+  useEffect(()=>{
+    setDebounceRerender(!debounceRerender)
+  },[organizeUserData])
+
 
 
 
@@ -175,7 +181,7 @@ const PayPalButton=({checkFields, organizeUserData, method='paypal',  type='norm
                 color: color,
                 height: 48
               }}
-              forceReRender={[organizeUserData]}
+              forceReRender={[debounceRerender]}
               
               className={`${styles.paypalButton} ${type==="instant" && styles.instantPaypalButton}`}
             />

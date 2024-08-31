@@ -7,26 +7,8 @@ import BundleOption from './BundleOption/BundleOption'
 export default function BundleOffer({quantity, setQuantity, price, stickerPrice, bundle}) {
 
   
-  const [bundleSelected, setBundleSelected] = useState(0);
 
-  useEffect(()=>{
-
-   
-
-    let newBundleSelected = 0;
-
- 
-    
-    bundle.forEach((b, index) => {
-      if(quantity>=b.quantity) newBundleSelected=index+1;
-    })
-
-    
-
-
-    setBundleSelected(newBundleSelected)
-
-  },[quantity])
+  
 
 
 
@@ -49,14 +31,14 @@ export default function BundleOffer({quantity, setQuantity, price, stickerPrice,
 
 
 
-    <BundleOption isSelected={bundleSelected===0} originalPrice={stickerPrice?stickerPrice:price} discountPercentage={stickerPrice?100*(1-(price/stickerPrice)):0} bundleQuantity={1}
+    <BundleOption isSelected={quantity<bundle[0].quantity} originalPrice={stickerPrice?stickerPrice:price} discountPercentage={stickerPrice?100*(1-(price/stickerPrice)):0} bundleQuantity={1}
     setQuantity={setQuantity}/>
   
 
       {bundle.map((b, index)=>{
 
         
-    return <BundleOption key = {index} isSelected={bundleSelected===index+1} originalPrice={price* b.quantity} discountPercentage={b.discountPercentage} bundleQuantity={b.quantity}
+    return <BundleOption key = {index} isSelected={quantity>=b.quantity && (index===bundle.length-1 || quantity<bundle[index+1].quantity)} originalPrice={price* b.quantity} discountPercentage={b.discountPercentage} bundleQuantity={b.quantity}
     setQuantity={setQuantity}
     
     />

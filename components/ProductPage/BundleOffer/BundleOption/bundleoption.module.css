@@ -52,14 +52,13 @@
 .radioIntRing{
     height: 100%;
     width: 100%;
-    background-color: transparent;
+    background-color: var(--bundle-ring-selected-color);
 
     border-radius: 50%;
 }
 
-.intRingSelected{
-    background-color: var(--bundle-ring-selected-color);
-}
+
+
 
 
 

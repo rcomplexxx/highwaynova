@@ -4,8 +4,8 @@ import styles from './bundleoption.module.css'
 
 export default function BundleOption({isSelected, originalPrice, discountPercentage, bundleQuantity, setQuantity }) {
 
-    // const offerPrice = (mainPrice/discount*100).toFixed(2);
 
+  
 
 
     
@@ -15,7 +15,7 @@ export default function BundleOption({isSelected, originalPrice, discountPercent
 
 
 <div className={`${styles.radioExtRing} ${isSelected && styles.extRingSelected}`}>
-  <div className={`${styles.radioIntRing} ${isSelected && styles.intRingSelected}`}/>
+ {isSelected && <div className={`${styles.radioIntRing} ${isSelected && styles.intRingSelected}`}/>}
 </div>
 
 <div className={styles.bundleInfo}>
