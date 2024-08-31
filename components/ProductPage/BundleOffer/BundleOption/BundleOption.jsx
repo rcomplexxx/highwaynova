@@ -15,7 +15,7 @@ export default function BundleOption({isSelected, originalPrice, discountPercent
 
 
 <div className={`${styles.radioExtRing} ${isSelected && styles.extRingSelected}`}>
- {isSelected && <div className={`${styles.radioIntRing} ${isSelected && styles.intRingSelected}`}/>}
+<div className={`${styles.radioIntRing} ${isSelected && styles.intRingSelected}`}/>
 </div>
 
 <div className={styles.bundleInfo}>
