@@ -13,7 +13,7 @@ const PayPalButton=({checkFields, organizeUserData, method='paypal',  type='norm
   const [debounceRerender, setDebounceRerender] = useState(false);
 
   useEffect(()=>{
-    setDebounceRerender(!debounceRerender)
+    if(type==='instant')setDebounceRerender(!debounceRerender)
   },[organizeUserData])
 
 

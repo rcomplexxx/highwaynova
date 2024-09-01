@@ -2,10 +2,11 @@
 import styles from './bundleoption.module.css'
 
 
-export default function BundleOption({isSelected, originalPrice, discountPercentage, bundleQuantity, setQuantity }) {
+export default function BundleOption({isSelected, originalPrice, discountPercentage, bundleQuantity, setQuantity, bundleVariants, setBundleVariants }) {
 
 
-  
+  //Ako bundle popust postoji tj discPer nije 0, onda u tom slucaju se dozvoljava options i select za varijante, gde ce na select da se ubaci odgovarajuca varijanta.
+  //na odgovarajuce mesto koje se odredjuje preko ...
 
 
     

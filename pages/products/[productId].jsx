@@ -59,6 +59,7 @@ export default function ProductPage({ product, description, images, startReviews
 
   const [quantity, setQuantity] = useState(1);
   const [variant, setVariant]=useState(product.variants && product.variants[0].name);
+  const [bundleVariants, setBundleVariants] = useState([]);
 
   
   const variantIndexToZeroRef = useRef(true);
@@ -88,27 +89,36 @@ export default function ProductPage({ product, description, images, startReviews
 
     let updatedCartProducts = [...cartProducts];
 
-    const productIndex = cartProducts.findIndex((cp) => cp.id === addedProduct.id && cp.variant===addedVariant);
+    const addNewProduct = (newProductObj, newProductVariant, newProductQuantity)=>{
+
+
+    const productIndex = cartProducts.findIndex((cp) => cp.id === newProductObj.id && cp.variant===addedVariant);
 
     if (productIndex !== -1) {
      
       
-      updatedCartProducts[productIndex].quantity += quantity;
+      updatedCartProducts[productIndex].quantity += newProductQuantity;
       setNewProduct(updatedCartProducts[productIndex]);
   
     } else {
       const newProduct = {
-        id: addedProduct.id,
-        quantity: quantity,
-        name: addedProduct.name,
-        image: addedProduct.images[0],
-        price: addedProduct.price,
-        stickerPrice: addedProduct.stickerPrice,
-        variant: addedVariant
+        id: newProductObj.id,
+        quantity: newProductQuantity,
+        name: newProductObj.name,
+        image: newProductObj.images[0],
+        price: newProductObj.price,
+        stickerPrice: newProductObj.stickerPrice,
+        variant: newProductVariant
       };
       updatedCartProducts.push(newProduct);
       setNewProduct(newProduct);
     }
+
+  }
+
+  addNewProduct(addedProduct, addedVariant, quantity)
+
+
 
     const bundledProducts = findBestBundle(updatedCartProducts)
 
@@ -200,7 +210,8 @@ export default function ProductPage({ product, description, images, startReviews
           </div>
 }
 
-     {product.bundle && <BundleOffer productId={product.id} price={product.price} stickerPrice={product.stickerPrice} bundle={product.bundle} quantity={quantity} setQuantity={setQuantity}/>}
+     {product.bundle && <BundleOffer productId={product.id} price={product.price} stickerPrice={product.stickerPrice} bundle={product.bundle} quantity={quantity} 
+     setQuantity={setQuantity} mainVariant={variant} setBundleVariants={setBundleVariants} bundleVariants={bundleVariants}/>}
 
 
 
