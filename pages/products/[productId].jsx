@@ -116,7 +116,19 @@ export default function ProductPage({ product, description, images, startReviews
 
   }
 
-  addNewProduct(addedProduct, addedVariant, quantity)
+  if(bundleVariants.length!==0){
+
+
+   for(const v of bundleVariants){
+
+    addNewProduct(addedProduct, v, 1)
+   }
+
+
+ 
+ 
+  }
+  else addNewProduct(addedProduct, addedVariant, quantity);
 
 
 
@@ -127,7 +139,7 @@ export default function ProductPage({ product, description, images, startReviews
     
       
 
-    },[cartProducts, product, variant ]);
+    },[cartProducts, product, variant, bundleVariants ]);
 
   
 

@@ -11,11 +11,32 @@ export default function BundleOffer({ price, stickerPrice, bundle, quantity, set
   
   useEffect(()=>{
 
+    if(!mainVariant)return;
+
     if(quantity<bundle[0].quantity || quantity>bundle[bundle.length-1].quantity)setBundleVariants([]);
 
     
-    else{
-      setBundleVariants([]);
+    else if(quantity !== bundleVariants.length){
+     
+
+      let newBundleVariants;
+
+      if(bundleVariants.length < quantity){
+
+        newBundleVariants = [...bundleVariants];
+
+        for(let i=0; i<quantity - bundleVariants.length  ; i++) newBundleVariants.push(mainVariant)
+      }
+
+      else if(bundleVariants.length > quantity){
+
+        newBundleVariants = bundleVariants.filter((bv, index)=>{
+          return index<quantity;
+        })
+
+      }
+
+      setBundleVariants(newBundleVariants);
       //Ovde podesiti bundle variants
     }
 
