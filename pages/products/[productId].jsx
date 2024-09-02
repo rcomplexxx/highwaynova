@@ -91,14 +91,19 @@ export default function ProductPage({ product, description, images, startReviews
 
     const addNewProduct = (newProductObj, newProductVariant, newProductQuantity)=>{
 
+      console.log('info', newProductObj, newProductVariant)
 
-    const productIndex = cartProducts.findIndex((cp) => cp.id === newProductObj.id && cp.variant===addedVariant);
+
+    const productIndex = updatedCartProducts.findIndex((cp) => cp.id === newProductObj.id && cp.variant===newProductVariant);
 
     if (productIndex !== -1) {
      
       
       updatedCartProducts[productIndex].quantity += newProductQuantity;
-      setNewProduct(updatedCartProducts[productIndex]);
+
+      
+    setNewProduct(updatedCartProducts[productIndex]);
+    
   
     } else {
       const newProduct = {
@@ -111,17 +116,22 @@ export default function ProductPage({ product, description, images, startReviews
         variant: newProductVariant
       };
       updatedCartProducts.push(newProduct);
-      setNewProduct(newProduct);
+
+      
+    setNewProduct(newProduct);
+
     }
+
 
   }
 
   if(bundleVariants.length!==0){
 
 
-   for(const v of bundleVariants){
+   for(const variant of bundleVariants){
+    
 
-    addNewProduct(addedProduct, v, 1)
+    addNewProduct(addedProduct, variant.name, variant.quantity)
    }
 
 
@@ -147,6 +157,31 @@ export default function ProductPage({ product, description, images, startReviews
     if(variantIndexToZeroRef.current){return -1;}
     return product.variants && product.variants.find((v)=>{return v.name==variant})?.variantProductImageIndex;
   },[variant])
+
+
+  const bundleBuyNowLink = useMemo(()=>{
+
+    let variantNames = '';
+    let variantQuantities = '';
+
+    console.log('bundleVariants are', bundleVariants)
+
+    bundleVariants.forEach((bv,index)=>{
+      console.log('bg',bv)
+
+      variantNames= variantNames + bv.name + (index!==bundleVariants.length-1?',':"")
+      variantQuantities= variantQuantities+ bv.quantity + (index!==bundleVariants.length-1?',':"")
+    })
+
+
+
+    return `/checkout/buynow?productid=${product.id}&variant=${variantNames}&quantity=${variantQuantities}`
+
+
+  },[bundleVariants])
+
+
+
   
 
   return (
@@ -223,7 +258,7 @@ export default function ProductPage({ product, description, images, startReviews
 }
 
      {product.bundle && <BundleOffer productId={product.id} price={product.price} stickerPrice={product.stickerPrice} bundle={product.bundle} quantity={quantity} 
-     setQuantity={setQuantity} mainVariant={variant} setBundleVariants={setBundleVariants} bundleVariants={bundleVariants}/>}
+     setQuantity={setQuantity} mainVariant={variant} setBundleVariants={setBundleVariants} bundleVariants={bundleVariants} allVariants={product.variants.map(v=>v.name)}/> }
 
 
 
@@ -253,7 +288,13 @@ export default function ProductPage({ product, description, images, startReviews
                 const city = "";
                 const phone = "";
                
-                const items=[{
+                const items=bundleVariants.length>0?bundleVariants.map(bv =>{
+                  return {
+                    id: product.id,
+                    quantity: bv.quantity,
+                    variant: bv.name
+                  }
+                }):[{
                   id: product.id,
                   quantity: quantity,  
                   variant: variant
@@ -283,17 +324,14 @@ export default function ProductPage({ product, description, images, startReviews
                 return requestData
               }
             
-  ,[quantity, variant])}/>
+  ,[quantity, variant, bundleVariants])}/>
         
 
 
-          {/* <Link className={styles.buy_now_button} 
-          href={`/checkout/buynow?productid=${product.id}${variant?`&variant=${variant}`:""}&quantity=${quantity}`}>
-            Buy it now
-          </Link> */}
+      
 
 <Link className={styles.buy_now_button} 
-          href={`/checkout/buynow?productid=${product.id}${variant?`&variant=${variant}`:""}&quantity=${quantity}`}>
+          href={bundleVariants.length!==0?bundleBuyNowLink:`/checkout/buynow?productid=${product.id}${variant?`&variant=${variant}`:""}&quantity=${quantity}`}>
             More payment options
           </Link>
 

@@ -4,7 +4,9 @@ import styles from './bundleoffer.module.css'
 import BundleOption from './BundleOption/BundleOption'
 
 
-export default function BundleOffer({ price, stickerPrice, bundle, quantity, setQuantity, mainVariant, bundleVariants, setBundleVariants}) {
+export default function BundleOffer({ price, stickerPrice, bundle, quantity, setQuantity, mainVariant, bundleVariants, setBundleVariants, allVariants}) {
+
+  const [localBundleVariants, setLocalBundleVariants]= useState([]);
 
   
 
@@ -13,36 +15,60 @@ export default function BundleOffer({ price, stickerPrice, bundle, quantity, set
 
     if(!mainVariant)return;
 
-    if(quantity<bundle[0].quantity || quantity>bundle[bundle.length-1].quantity)setBundleVariants([]);
+    if(quantity<bundle[0].quantity || quantity>bundle[bundle.length-1].quantity)setLocalBundleVariants([]);
 
     
-    else if(quantity !== bundleVariants.length){
+    else if(quantity !== localBundleVariants.length){
      
 
-      let newBundleVariants;
+      let newLocalBundleVariants;
 
-      if(bundleVariants.length < quantity){
+      if(localBundleVariants.length < quantity){
 
-        newBundleVariants = [...bundleVariants];
+        newLocalBundleVariants = [...localBundleVariants];
 
-        for(let i=0; i<quantity - bundleVariants.length  ; i++) newBundleVariants.push(mainVariant)
+        for(let i=0; i<quantity - localBundleVariants.length  ; i++) newLocalBundleVariants.push(mainVariant)
       }
 
-      else if(bundleVariants.length > quantity){
+      else if(localBundleVariants.length > quantity){
 
-        newBundleVariants = bundleVariants.filter((bv, index)=>{
+        newLocalBundleVariants = localBundleVariants.filter((bv, index)=>{
           return index<quantity;
         })
 
       }
 
-      setBundleVariants(newBundleVariants);
-      //Ovde podesiti bundle variants
+      setLocalBundleVariants(newLocalBundleVariants);
+     
+      
+
+
+
+
     }
 
   },[quantity])
 
+  
+  useEffect(()=>{
 
+    const newBundleVariants = [];
+
+    console.log('trenutne local vari', localBundleVariants)
+    
+    for(const localVariant of localBundleVariants){
+
+      const newBundleVariantIndex = newBundleVariants.findIndex(nbv => {return nbv.name === localVariant});
+
+      if(newBundleVariantIndex !==-1)newBundleVariants[newBundleVariantIndex].quantity+= 1;
+      
+      else newBundleVariants.push({name: localVariant, quantity: 1});
+    }
+
+    setBundleVariants(newBundleVariants);
+
+    
+  },[localBundleVariants])
 
 
   // if(bundleInfo.length === 0) return <></>
@@ -64,14 +90,14 @@ export default function BundleOffer({ price, stickerPrice, bundle, quantity, set
 
 
     <BundleOption isSelected={quantity<bundle[0].quantity} originalPrice={stickerPrice?stickerPrice:price} discountPercentage={stickerPrice?100*(1-(price/stickerPrice)):0} bundleQuantity={1}
-    setQuantity={setQuantity} setBundleVariants={setBundleVariants}/>
+    setQuantity={setQuantity} setLocalBundleVariants={setLocalBundleVariants}/>
   
 
       {bundle.map((b, index)=>{
 
         
     return <BundleOption key = {index} isSelected={quantity>=b.quantity && (index===bundle.length-1 || quantity<bundle[index+1].quantity)} originalPrice={price* b.quantity} discountPercentage={b.discountPercentage} bundleQuantity={b.quantity}
-    setQuantity={setQuantity} bundleVariants={bundleVariants} setBundleVariants={setBundleVariants}
+    setQuantity={setQuantity} localBundleVariants={localBundleVariants} setLocalBundleVariants={setLocalBundleVariants} allVariants={allVariants}
     
     />
 

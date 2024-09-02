@@ -33,27 +33,112 @@ const BuyNowPage = () => {
 
     // Get individual query parameters
     const productid = urlParams.get("productid");
-    const variant = urlParams.get("variant");
-    const quantity = urlParams.get("quantity");
+    const variant = urlParams.get("variant")?.split(',');
+    const quantity = urlParams.get("quantity")?.split(',');
+
+
+
+    let quantitiesAreNumbers = true;
+    quantity.forEach((q)=>{
+
+      
+  
+      
+      if(isNaN(Number(q))){
+
+        quantitiesAreNumbers=false;
+
+      }
+
+
+    })
+
+
+      if(!quantitiesAreNumbers || variant.length!==quantity.length) {
+        
+    setLoaded(true);
+        return;
+
+      }
 
   
     const product = products.find((p) => {
-      return p.id == productid && (variant ? p.variants.find((v)=>{return v.name==variant}): true);
+      if(p.id == productid){
+
+       
+          if(!variant) return true;
+          
+        else {
+          let variantsExist = true;
+
+          variant.forEach(v=>{
+            
+            if(!p.variants.find((pv)=>{return pv.name===v}))variantsExist=false;
+            
+            })
+
+            return variantsExist;
+        }
+
+          
+
+      }
     });
+    
+
+
+    
 
     if (product) {
+
+
+      if(variant.length>1){
+
+     
+
+        
+        let newProducts = [];
+
+      for(let i=0; i < variant.length; i++){
+
+        console.log('new var pr', product.id)
+
+        newProducts.push({
+          id: product.id,
+          quantity: Number(quantity[i]),
+          name: product.name,
+          image: product.images[0],
+          price: product.price,
+          variant: variant[i]
+        })
+      }
+
+      
+      setCartProducts(findBestBundle(newProducts));
+
+      }
+
+
+      else{
       const newProduct = {
         id: product.id,
-        quantity: quantity,
+        quantity: Number(quantity[0]),
         name: product.name,
         image: product.images[0],
         price: product.price,
-        variant: variant
+        variant: variant?variant[0]:undefined
       };
+
       setCartProducts(findBestBundle([newProduct]));
-    } else {
-      // setCartProducts([]);
     }
+     
+    } 
+
+
+
+
+
+
     setLoaded(true);
   }, []);
 

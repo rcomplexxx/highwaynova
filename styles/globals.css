@@ -572,10 +572,13 @@ p {
  --bundle-ring-neutral-color: var(--main-color-3);
  --bundle-ring-selected-color: var(--accent-color-5);
 
+
  --bundle-option-bg: var(--neutral-1);
  --bundle-save-txt-color: var(--neutral-8);
  --bundle-original-price: var(--neutral-7);
 
+ --bundle-variant-option-color: var(--high-contrast-txt-color);
+ --bundle-variant-option-bg: var(--neutral-0);
 
  --quantity-input-color: black;
  --quantity-input-border-color: var(--neutral-3);
