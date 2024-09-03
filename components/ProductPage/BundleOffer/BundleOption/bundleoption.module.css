@@ -179,6 +179,9 @@
 
 .variantOptionWrapper{
 
+    position: relative;
+
+    width: min-content;
 
     display: flex;
     align-items: center;
@@ -196,6 +199,36 @@
     font-size: var(--font-size-1);
 
 }
+
+
+
+
+
+
+  .arrowDown {
+
+    position: absolute;
+    top: 50%;
+    right: var(--size-3);
+
+    height: var(--size-3);
+    width: var(--size-3);
+   
+    
+    transform:  translateY(-50%);
+    transform-origin: center;
+
+    user-select: none;
+    pointer-events: none;
+
+    
+    
+   
+  }
+  
+
+  
+
 
 
 .targetTrafficSelect{

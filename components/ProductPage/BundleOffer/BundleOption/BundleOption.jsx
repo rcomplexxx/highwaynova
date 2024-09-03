@@ -1,6 +1,7 @@
 
 
 
+import { ArrowDown } from '@/public/images/svgs/svgImages';
 import styles from './bundleoption.module.css';
 
 
@@ -84,8 +85,10 @@ onChange={(e)=>{
 
 }
 
-
 </select>
+
+
+<ArrowDown color={'var(--rating-show-title-color)'} styleClassName={styles.arrowDown}/>
 
 </div>
 
