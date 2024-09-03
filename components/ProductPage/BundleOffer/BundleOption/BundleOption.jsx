@@ -67,6 +67,7 @@ id="selectVariants"
 className={styles.targetTrafficSelect}
 value={bv.name}
 onChange={(e)=>{
+  
  
   const newLocalBundleVariants = [...localBundleVariants];
   newLocalBundleVariants[index]= e.target.value;
