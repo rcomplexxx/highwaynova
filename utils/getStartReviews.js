@@ -38,7 +38,8 @@ export const getStartReviews= async(productId, limit = 20)=>{
 
   }
   catch(e){
-    console.log('cant establish db connection')
+    console.log('cant establish db connection');
+    return reviewsData.slice(0,limit);
   }
 
 

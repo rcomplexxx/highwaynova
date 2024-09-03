@@ -275,7 +275,7 @@ if(!campaign) throw new Error('campaign_deleted')
  
        
     finally{
-      await dbConnection.release();
+     if(dbConnection) await dbConnection.release();
     }
 
 
