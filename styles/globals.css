@@ -571,6 +571,7 @@ p {
 
  --bundle-ring-neutral-color: var(--main-color-3);
  --bundle-ring-selected-color: var(--accent-color-5);
+ --bundle-variant-option-number-color: var(--accent-color-3);
 
 
  --bundle-option-bg: var(--neutral-1);
@@ -579,6 +580,7 @@ p {
 
  --bundle-variant-option-color: var(--high-contrast-txt-color);
  --bundle-variant-option-bg: var(--neutral-0);
+
 
  --quantity-input-color: black;
  --quantity-input-border-color: var(--neutral-3);

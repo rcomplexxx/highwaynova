@@ -48,11 +48,12 @@ export default function BundleOption({isSelected, originalPrice, discountPercent
 
 {isSelected && localBundleVariants && 
     <div className={styles.variantsDiv}>
-      <span className={styles.variantLabel}>Select variants</span>
+      <span className={styles.variantOptionsTitle}>Select variants</span>
    
 
 {localBundleVariants.map((bv,index)=>{
-  return <select
+  return <div key={index} className={styles.variantOptionWrapper}>
+  <span className={styles.variantLabel}>#{index+1}</span><select
 id="selectVariants"
 className={styles.targetTrafficSelect}
 value={bv.name}
@@ -62,14 +63,16 @@ onChange={(e)=>{
   setLocalBundleVariants(newLocalBundleVariants)
 }}
 >
- {allVariants.map(v=>{
-  return <option value={v}>{v}</option>
+ {allVariants.map((v, i)=>{
+  return <option key={i} value={v}>{v}</option>
  })
 
 }
 
 
 </select>
+
+</div>
 
 })}
 
