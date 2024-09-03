@@ -578,8 +578,12 @@ p {
  --bundle-save-txt-color: var(--neutral-8);
  --bundle-original-price: var(--neutral-7);
 
+
+ --bundle-variant-select-bg: transparent;
+ --bundle-variant-select-border: var(--neutral-5);
  --bundle-variant-option-color: var(--high-contrast-txt-color);
  --bundle-variant-option-bg: var(--neutral-0);
+ --bundle-variant-option-selected-bg: var(--main-color-4);
 
 
  --quantity-input-color: black;

@@ -158,7 +158,10 @@
 
     display: flex;
     flex-direction: column;
-    gap: var(--size-3);
+    gap: var(--size-2);
+
+    
+    margin-bottom: var(--size-3);
     
 }
 
@@ -175,6 +178,8 @@
 
 
 .variantOptionWrapper{
+
+
     display: flex;
     align-items: center;
 
@@ -183,6 +188,8 @@
 
 
 .variantLabel{
+
+    width: var(--size-5);
 
     color: var(--bundle-variant-option-number-color);
 
@@ -193,11 +200,11 @@
 
 .targetTrafficSelect{
 
-    display: inline-block;
+    
   
     color: var(--bundle-variant-option-color);
+    background-color: var(--bundle-variant-select-bg);
    
-    background-color: var(--bundle-variant-option-bg);
 
     appearance: none; /* Removes default arrow */
     -webkit-appearance: none; /* For Safari */
@@ -206,29 +213,36 @@
 
     height: var(--size-7);
     min-width: var(--size-11);
-    padding: 0 var(--size-2);
+    padding: 0 var(--size-3);
+   
   
    
 
     box-sizing: border-box;
   
    
-    border: 1px solid var(--border-color-strong);
+    border: 1px solid var(--bundle-variant-select-border);
     border-radius: 4px;
-   
-
     outline: none;
+
+
+    font-size: var(--font-size-1);
+
     cursor: pointer;
     user-select: none;
-    touch-action: manipulation;
-    transition: none !important;
-    -webkit-transition: none !important;
+ 
 }
 
 
-.dropdownClassName{
+.targetTrafficSelect option{
 
 
-    background-color: red;
+    background-color: var(--bundle-variant-option-bg);
    
 }
+
+/* .targetTrafficSelect:focus > option:checked { 
+    background: var(--bundle-variant-option-selected-bg) !important;
+} */
+
+

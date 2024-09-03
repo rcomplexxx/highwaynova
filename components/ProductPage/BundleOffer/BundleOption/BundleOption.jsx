@@ -1,4 +1,5 @@
 
+import { useRef } from 'react';
 import styles from './bundleoption.module.css';
 
 
@@ -10,7 +11,7 @@ export default function BundleOption({isSelected, originalPrice, discountPercent
   //na odgovarajuce mesto koje se odredjuje preko ...
 
 
-    
+  
 
   return (
     <div className={styles.bundleOptionWrapper}> 
@@ -46,7 +47,7 @@ export default function BundleOption({isSelected, originalPrice, discountPercent
     </div>
 
 
-{isSelected && localBundleVariants && 
+{isSelected && localBundleVariants && localBundleVariants.length!==0 && 
     <div className={styles.variantsDiv}>
       <span className={styles.variantOptionsTitle}>Select variants</span>
    
@@ -54,18 +55,19 @@ export default function BundleOption({isSelected, originalPrice, discountPercent
 {localBundleVariants.map((bv,index)=>{
 
 
-const options = allVariants.map((v) => ({
-  value: v,
-  label: v,
-}));
+
+
 
 
   return <div key={index} className={styles.variantOptionWrapper}>
-  <span className={styles.variantLabel}>#{index+1}</span><select
+  <span className={styles.variantLabel}>#{index+1}</span>
+  <select
 id="selectVariants"
+
 className={styles.targetTrafficSelect}
 value={bv.name}
 onChange={(e)=>{
+ 
   const newLocalBundleVariants = [...localBundleVariants];
   newLocalBundleVariants[index]= e.target.value;
   setLocalBundleVariants(newLocalBundleVariants)

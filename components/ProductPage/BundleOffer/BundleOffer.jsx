@@ -1,5 +1,5 @@
 
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import styles from './bundleoffer.module.css'
 import BundleOption from './BundleOption/BundleOption'
 
@@ -11,7 +11,7 @@ export default function BundleOffer({ price, stickerPrice, bundle, quantity, set
   
 
   
-  useEffect(()=>{
+  useLayoutEffect(()=>{
 
     if(!mainVariant)return;
 
@@ -41,7 +41,20 @@ export default function BundleOffer({ price, stickerPrice, bundle, quantity, set
       setLocalBundleVariants(newLocalBundleVariants);
      
       
+      const newBundleVariants = [];
 
+      console.log('trenutne local vari', newLocalBundleVariants)
+      
+      for(const localVariant of newLocalBundleVariants){
+  
+        const newBundleVariantIndex = newBundleVariants.findIndex(nbv => {return nbv.name === localVariant});
+  
+        if(newBundleVariantIndex !==-1)newBundleVariants[newBundleVariantIndex].quantity+= 1;
+        
+        else newBundleVariants.push({name: localVariant, quantity: 1});
+      }
+  
+      setBundleVariants(newBundleVariants);
 
 
 
@@ -50,25 +63,8 @@ export default function BundleOffer({ price, stickerPrice, bundle, quantity, set
   },[quantity])
 
   
-  useEffect(()=>{
 
-    const newBundleVariants = [];
-
-    console.log('trenutne local vari', localBundleVariants)
-    
-    for(const localVariant of localBundleVariants){
-
-      const newBundleVariantIndex = newBundleVariants.findIndex(nbv => {return nbv.name === localVariant});
-
-      if(newBundleVariantIndex !==-1)newBundleVariants[newBundleVariantIndex].quantity+= 1;
-      
-      else newBundleVariants.push({name: localVariant, quantity: 1});
-    }
-
-    setBundleVariants(newBundleVariants);
-
-    
-  },[localBundleVariants])
+  
 
 
   // if(bundleInfo.length === 0) return <></>
