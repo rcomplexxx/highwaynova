@@ -192,6 +192,8 @@
 
 
 .targetTrafficSelect{
+
+    display: inline-block;
   
     color: var(--bundle-variant-option-color);
    
@@ -200,8 +202,7 @@
     appearance: none; /* Removes default arrow */
     -webkit-appearance: none; /* For Safari */
 
-    -webkit-transition: none;
-    transition: none;
+   
 
     height: var(--size-7);
     min-width: var(--size-11);
@@ -220,6 +221,7 @@
     cursor: pointer;
     user-select: none;
     touch-action: manipulation;
+    transition: none !important;
 }
 
 
