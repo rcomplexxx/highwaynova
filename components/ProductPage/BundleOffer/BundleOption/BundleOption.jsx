@@ -52,6 +52,14 @@ export default function BundleOption({isSelected, originalPrice, discountPercent
    
 
 {localBundleVariants.map((bv,index)=>{
+
+
+const options = allVariants.map((v) => ({
+  value: v,
+  label: v,
+}));
+
+
   return <div key={index} className={styles.variantOptionWrapper}>
   <span className={styles.variantLabel}>#{index+1}</span><select
 id="selectVariants"

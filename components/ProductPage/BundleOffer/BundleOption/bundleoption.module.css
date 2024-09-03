@@ -216,12 +216,13 @@
     outline: none;
     cursor: pointer;
     user-select: none;
-  
+    touch-action: manipulation;
 }
 
-.targetTrafficSelect option{
+
+.dropdownClassName{
 
 
-    background-color: var(--bundle-variant-option-bg);
+    background-color: red;
    
 }
