@@ -94,7 +94,7 @@ export default function BundleOffer({ price, stickerPrice, bundle, quantity, set
       {bundle.map((b, index)=>{
 
         
-    return <BundleOption key = {index} isSelected={quantity>=b.quantity && (index===bundle.length-1 || quantity<bundle[index+1].quantity)} originalPrice={price* b.quantity} discountPercentage={b.discountPercentage} bundleQuantity={b.quantity}
+    return <BundleOption key = {index} isSelected={quantity>=b.quantity && (index===bundle.length-1 || quantity<bundle[index+1].quantity)} originalPrice={parseFloat((price* (quantity>=b.quantity && (index===bundle.length-1 || quantity<bundle[index+1].quantity)?quantity:b.quantity)).toFixed(2))} discountPercentage={b.discountPercentage} bundleQuantity={b.quantity}
     setQuantity={setQuantity} localBundleVariants={localBundleVariants} setLocalBundleVariants={setLocalBundleVariants} allVariants={allVariants}
     
     />

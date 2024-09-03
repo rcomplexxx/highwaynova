@@ -39,7 +39,7 @@ export default function BundleOption({isSelected, originalPrice, discountPercent
     <div className={styles.bundleSave}>
 
     <div className={styles.saveDiv}>{bundleQuantity===1?'Standard price':`You save ${discountPercentage}%`}</div>
-    <div className={styles.offerPrice}>${originalPrice - parseFloat((originalPrice*discountPercentage/100).toFixed(2))}</div>
+    <div className={styles.offerPrice}>${parseFloat((originalPrice - parseFloat((originalPrice*discountPercentage/100).toFixed(2))).toFixed(2))}</div>
     </div>
 
     </div>
@@ -88,7 +88,6 @@ onChange={(e)=>{
 </select>
 
 
-<ArrowDown color={'var(--rating-show-title-color)'} styleClassName={styles.arrowDown}/>
 
 </div>
 
