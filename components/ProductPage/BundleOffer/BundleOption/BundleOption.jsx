@@ -65,7 +65,7 @@ export default function BundleOption({isSelected, originalPrice, discountPercent
 id="selectVariants"
 
 className={styles.targetTrafficSelect}
-value={bv.name}
+value={bv}
 onChange={(e)=>{
   
  
