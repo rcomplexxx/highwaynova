@@ -222,6 +222,7 @@
     user-select: none;
     touch-action: manipulation;
     transition: none !important;
+    -webkit-transition: none !important;
 }
 
 
