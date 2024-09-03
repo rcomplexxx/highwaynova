@@ -133,10 +133,7 @@ for(const campaign of campaigns){
 catch(e){
   console.log('error connecting to db')
 }
-finally{
 
-  if(dbConnection) await dbConnection.release();
-}
 
 //mozda dodati i retry numbers i pokusati da posaljem mejl kroz 30 min. Tipa 5 retryja
 //kad radim retryje, svaki email pomeriti za 30 min.

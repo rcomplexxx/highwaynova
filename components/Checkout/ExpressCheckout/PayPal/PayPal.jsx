@@ -1,4 +1,4 @@
-import  { useEffect, useState } from "react";
+import  { useEffect, useRef, useState } from "react";
 
 import { useRouter } from "next/router";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
@@ -10,10 +10,13 @@ import { useGlobalStore } from "@/contexts/AppContext";
 const PayPalButton=({checkFields, organizeUserData, method='paypal',  type='normal', color='blue'})=>{
   const [paypalError, setPaypalError] = useState();
 
-  const [debounceRerender, setDebounceRerender] = useState(false);
+  const organizeUserDataRef = useRef(organizeUserData);
+
 
   useEffect(()=>{
-    if(type==='instant')setDebounceRerender(!debounceRerender)
+
+    organizeUserDataRef.current = organizeUserData;
+
   },[organizeUserData])
 
 
@@ -54,7 +57,7 @@ const PayPalButton=({checkFields, organizeUserData, method='paypal',  type='norm
         try {
 
           console.log('creating order');
-          let requestData = organizeUserData(type=="normal"?"PAYPAL":(type=="express"?"PAYPAL(EXPRESS)":"PAYPAL(INSTANT)"));
+          let requestData = organizeUserDataRef.current(type=="normal"?"PAYPAL":(type=="express"?"PAYPAL(EXPRESS)":"PAYPAL(INSTANT)"));
           const discEle = document.getElementById("couponCode");
           if(discEle){
             console.log('discount exists', discEle.innerText)
@@ -181,7 +184,7 @@ const PayPalButton=({checkFields, organizeUserData, method='paypal',  type='norm
                 color: color,
                 height: 48
               }}
-              forceReRender={[debounceRerender]}
+              
               
               className={`${styles.paypalButton} ${type==="instant" && styles.instantPaypalButton}`}
             />

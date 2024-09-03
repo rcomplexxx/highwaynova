@@ -258,7 +258,7 @@ export default function ProductPage({ product, description, images, startReviews
 }
 
      {product.bundle && <BundleOffer productId={product.id} price={product.price} stickerPrice={product.stickerPrice} bundle={product.bundle} quantity={quantity} 
-     setQuantity={setQuantity} mainVariant={variant} setBundleVariants={setBundleVariants} bundleVariants={bundleVariants} allVariants={product.variants.map(v=>v.name)}/> }
+     setQuantity={setQuantity} mainVariant={variant} setBundleVariants={setBundleVariants} allVariants={product.variants.map(v=>v.name)}/> }
 
 
 

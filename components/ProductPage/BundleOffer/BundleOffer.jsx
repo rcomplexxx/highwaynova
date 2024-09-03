@@ -4,7 +4,7 @@ import styles from './bundleoffer.module.css'
 import BundleOption from './BundleOption/BundleOption'
 
 
-export default function BundleOffer({ price, stickerPrice, bundle, quantity, setQuantity, mainVariant, bundleVariants, setBundleVariants, allVariants}) {
+export default function BundleOffer({ price, stickerPrice, bundle, quantity, setQuantity, mainVariant, setBundleVariants, allVariants}) {
 
   const [localBundleVariants, setLocalBundleVariants]= useState([]);
 
@@ -13,30 +13,26 @@ export default function BundleOffer({ price, stickerPrice, bundle, quantity, set
   
   useLayoutEffect(()=>{
 
-    if(!mainVariant)return;
+    if(!mainVariant || quantity === localBundleVariants.length)return;
 
     if(quantity<bundle[0].quantity || quantity>bundle[bundle.length-1].quantity)setLocalBundleVariants([]);
 
     
-    else if(quantity !== localBundleVariants.length){
+    else {
      
 
-      let newLocalBundleVariants;
+      let newLocalBundleVariants = [...localBundleVariants];
 
       if(localBundleVariants.length < quantity){
 
-        newLocalBundleVariants = [...localBundleVariants];
+      
 
         for(let i=0; i<quantity - localBundleVariants.length  ; i++) newLocalBundleVariants.push(mainVariant)
       }
 
-      else if(localBundleVariants.length > quantity){
+      else if(localBundleVariants.length > quantity) newLocalBundleVariants = localBundleVariants.slice(0, quantity);
 
-        newLocalBundleVariants = localBundleVariants.filter((bv, index)=>{
-          return index<quantity;
-        })
-
-      }
+      
 
       setLocalBundleVariants(newLocalBundleVariants);
      
@@ -50,7 +46,9 @@ export default function BundleOffer({ price, stickerPrice, bundle, quantity, set
   },[quantity])
 
   
-  useLayoutEffect(()=>{
+
+  
+  useEffect(()=>{
 
     const newBundleVariants = [];
 

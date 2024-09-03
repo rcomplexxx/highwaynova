@@ -4,7 +4,7 @@ import styles from './bundleoption.module.css';
 
 
 
-export default function BundleOption({isSelected, originalPrice, discountPercentage, bundleQuantity, setQuantity, localBundleVariants, setLocalBundleVariants, allVariants }) {
+export default function BundleOption({isSelected, originalPrice, discountPercentage, bundleQuantity, quantity, setQuantity, localBundleVariants, setLocalBundleVariants, allVariants }) {
 
 
   //Ako bundle popust postoji tj discPer nije 0, onda u tom slucaju se dozvoljava options i select za varijante, gde ce na select da se ubaci odgovarajuca varijanta.
@@ -69,8 +69,11 @@ value={bv}
 onChange={(e)=>{
   
  
-  const newLocalBundleVariants = [...localBundleVariants];
-  newLocalBundleVariants[index]= e.target.value;
+  const newLocalBundleVariants = localBundleVariants.map((lbv, i) =>{ 
+    if (i === index)return e.target.value
+    return lbv
+
+  })
   setLocalBundleVariants(newLocalBundleVariants)
 }}
 >
