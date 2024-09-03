@@ -50,7 +50,7 @@ export default function BundleOffer({ price, stickerPrice, bundle, quantity, set
   },[quantity])
 
   
-  useEffect(()=>{
+  useLayoutEffect(()=>{
 
     const newBundleVariants = [];
 
