@@ -84,7 +84,7 @@ function findBestBundle(cartProducts) {
             
             
             delete newCpt.priceBeforeBundle;
-
+            delete newCpt.bundleQuantity;
 
         }
 
@@ -95,7 +95,7 @@ function findBestBundle(cartProducts) {
     
   console.log('here is cartProductsTemp rn', cartProductsTemp)
 
-    if(bestBundlePrice === 0)return cartProductsTemp;
+    if(bestBundlePrice == 0)return cartProductsTemp;
 
     
 

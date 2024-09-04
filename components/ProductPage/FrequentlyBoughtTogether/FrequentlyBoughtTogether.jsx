@@ -10,8 +10,8 @@ const FreqProduct = ({ productId, variantIndex, onAddToCart }) => {
 
   console.log('variant index', variantIndex)
 
-  const variantName= product.variants?
-  (variantIndex<0 || variantIndex>product.variants?.length-1)?product.variants[0].name:product.variants[variantIndex].name
+  const variant= product.variants?
+  (variantIndex<0 || variantIndex>product.variants?.length-1)?product.variants[0]:product.variants[variantIndex]
   :null;
 
   return (
@@ -21,7 +21,7 @@ const FreqProduct = ({ productId, variantIndex, onAddToCart }) => {
       >
         <Image
         height={0} width={0}
-          src={`/images/${product.images[0]}`}
+          src={`/images/${variantIndex && variantIndex!==0?product.images[variant.variantProductImageIndex]:product.images[0]}`}
           alt="Black"
           className={styles.productImage}
           sizes="128px"
@@ -44,7 +44,7 @@ const FreqProduct = ({ productId, variantIndex, onAddToCart }) => {
      
       <button
         className={styles.add_to_cart_button}
-        onClick={(event) => {event.stopPropagation();onAddToCart(1,product, variantName)}}
+        onClick={(event) => {event.stopPropagation();onAddToCart(1,product, variant.name)}}
        
       >
         Add to Cart

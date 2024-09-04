@@ -6,7 +6,7 @@ import styles from './bundleoption.module.css';
 
 
 
-export default function BundleOption({isSelected, originalPrice, discountPercentage, bundleQuantity, quantity,  setQuantity, localBundleVariants, setLocalBundleVariants, allVariants }) {
+export default function BundleOption({isSelected, originalPrice, discountPercentage, bundleQuantity, quantity,  setQuantity, havingPlus, localBundleVariants, setLocalBundleVariants, allVariants }) {
 
 
   //Ako bundle popust postoji tj discPer nije 0, onda u tom slucaju se dozvoljava options i select za varijante, gde ce na select da se ubaci odgovarajuca varijanta.
@@ -29,8 +29,8 @@ export default function BundleOption({isSelected, originalPrice, discountPercent
 
 
     <div className={styles.bundleOffer}>
-      <div className={styles.bundleQuantityDiv}>Buy {bundleQuantity}</div>
-      {discountPercentage!==0 &&  <div className={styles.origPrice}>${parseFloat(parseFloat(((originalPrice * (isSelected?quantity:bundleQuantity)).toFixed(2))).toFixed(2))}</div>}
+      <div className={styles.bundleQuantityDiv}>Buy {bundleQuantity}{havingPlus?'+':''}</div>
+      {discountPercentage!==0 &&  <div className={styles.origPrice}>${(parseFloat(parseFloat(((originalPrice * (isSelected?quantity:bundleQuantity)).toFixed(2))).toFixed(2))).toFixed(2)}</div>}
    
       
     </div>
@@ -39,7 +39,7 @@ export default function BundleOption({isSelected, originalPrice, discountPercent
     <div className={styles.bundleSave}>
 
     <div className={styles.saveDiv}>{bundleQuantity===1?'Standard price':`You save ${discountPercentage}%`}</div>
-    <div className={styles.offerPrice}>${parseFloat(((parseFloat(originalPrice - (originalPrice*discountPercentage/100)).toFixed(2))*quantity).toFixed(2))}</div>
+    <div className={styles.offerPrice}>${(parseFloat(((parseFloat(originalPrice - (originalPrice*discountPercentage/100)).toFixed(2))*quantity).toFixed(2))).toFixed(2)}</div>
     </div>
 
     </div>

@@ -165,7 +165,7 @@ const handleCouponApply = () => {
                 {cp.bundleQuantity && <span className={styles.bundleDisc}>
 
                 <DiscountIcon color={`var(--bundle-discount-icon-color)`} styleClassName={styles.bundleDiscIcon}/>
-                  BUY {cp.bundleQuantity} (-$
+                  BUY {cp.bundleQuantity}{(i===cartProducts.length-1 || cp.quantity - cartProducts[i+1].quantity>1)?'+':''} (-$
                   
                   {
                   

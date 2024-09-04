@@ -41,13 +41,15 @@
 
 
 .slider{ 
+
+
     box-sizing: border-box;
     padding-left: var(--size-7) !important;
     padding-right: var(--size-5) !important;
 
     display: flex;
-    align-items: stretch;
-  height: auto !important;
+   
+    
     width: 100%;
    
 
@@ -65,11 +67,10 @@
 
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: stretch;
    
 
-    text-align: center;
     box-sizing: border-box;
     border-radius: 8px;
  
@@ -94,12 +95,24 @@
 
 
 .productTitle{
+    
    
     font-size: var(--font-size-4);
     font-weight: 500;
-   
     margin-top: var(--size-5);
-     margin-bottom: var(--size-6);
+ 
+}
+
+.productVariant{
+  
+    color: var(--best-sellers-variant-color);
+
+    margin-top: var(--size-2);
+    margin-bottom: var(--size-7);
+
+
+    font-size: var(--font-size-2);
+    font-weight: 400;
 }
 
 

@@ -717,8 +717,10 @@ p {
   --free-shipping-slider-empty-color: var(--neutral-1);
   --free-shipping-slider-fill-color: var(--accent-color-5); */
  
+  
   --best-sellers-bg: var(--bg-color);
   --best-sellers-slide-bg: transparent;
+  --best-sellers-variant-color: var(--neutral-8);
   --best-sellers-addtocart-color: black;
   --best-sellers-addtocart-bg: var(--action-button-bg-color);
   --best-sellers-addtocart-bg-hover: var(--action-button-bg-color-hover);

@@ -43,16 +43,16 @@ export default function BestSellers() {
 
     console.log('item escaped condition', product.id, 'inprnames', initialProductNames);
 
-    let variantName;
+    let variant;
     if(bsp.variantIndex){
-    variantName =   bsp.variantIndex>0 && bsp.variantIndex<product.variants.length-1? product.variants[bsp.variantIndex].name:product?.variants[0].name;
+    variant =   bsp.variantIndex>0 && bsp.variantIndex<product.variants.length-1? product.variants[bsp.variantIndex]:product?.variants[0];
    
     }
 
     else{
-      variantName= product?.variants ? product?.variants[0].name: undefined;
+      variant= product?.variants ? product?.variants[0]: undefined;
     }
-     return {product:product,variantName:variantName};
+     return {product:product,variant:variant};
    
   }).filter(Boolean).slice(0, 4);
 
@@ -139,12 +139,14 @@ export default function BestSellers() {
             className={styles.productImageLink}>
             
               
-                <PicWithThumbnail product={bsp.product} />
+                <PicWithThumbnail product={bsp.product} variantImage={bsp.variant.image} />
              
             
             </Link>
 
             <span className={styles.productTitle}>{bsp.product.name}</span>
+
+           {bsp.variant && <span className={styles.productVariant}>{bsp.variant.name}</span>}
             
             <div className={styles.product_price}>
   ${bsp.product.price.toFixed(2)}
@@ -156,7 +158,7 @@ export default function BestSellers() {
  
 
 
-            <button onClick={()=>{ onAddToCart(1, bsp.product, bsp.variantName)}} className={styles.addToCartButton}>
+            <button onClick={()=>{ onAddToCart(1, bsp.product, bsp.variant.name)}} className={styles.addToCartButton}>
             Add
             </button>
             

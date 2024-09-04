@@ -70,7 +70,7 @@ function findBestBundleServer(cartProducts) {
     
     
 
-    if(bestBundlePrice === 0)return cartProductsTemp;
+    if(bestBundlePrice == 0)return cartProductsTemp;
 
     
 

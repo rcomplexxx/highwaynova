@@ -87,20 +87,25 @@ export default function BundleOffer({ price, stickerPrice, bundle, quantity, set
 
 
 
-    <BundleOption isSelected={quantity<bundle[0].quantity}  quantity={quantity} originalPrice={stickerPrice?stickerPrice:price} discountPercentage={stickerPrice?100*(1-(price/stickerPrice)):0} bundleQuantity={1}
-    setQuantity={setQuantity} setLocalBundleVariants={setLocalBundleVariants}/>
+    <BundleOption isSelected={quantity<bundle[0].quantity}  quantity={quantity} originalPrice={stickerPrice?stickerPrice:price} 
+    discountPercentage={stickerPrice?100*(1-(price/stickerPrice)):0} bundleQuantity={1} 
+    setQuantity={setQuantity} havingPlus={bundle[0].quantity-1>1} setLocalBundleVariants={setLocalBundleVariants}/>
   
 
       {bundle.map((b, index)=>{
 
-        
-    return <BundleOption key = {index} isSelected={quantity>=b.quantity && (index===bundle.length-1 || quantity<bundle[index+1].quantity)} 
+        const isSelected = quantity>=b.quantity && (index===bundle.length-1 || quantity<bundle[index+1].quantity);
 
-    quantity={quantity}
+        
+    return <BundleOption key = {index} isSelected={isSelected} 
+
+    quantity={isSelected?quantity:b.quantity}
     originalPrice={price} 
     discountPercentage={b.discountPercentage} 
     bundleQuantity={b.quantity}
-    setQuantity={setQuantity} localBundleVariants={localBundleVariants} setLocalBundleVariants={setLocalBundleVariants} allVariants={allVariants}
+    setQuantity={setQuantity} 
+    havingPlus={index===bundle.length-1 || bundle[index+1].quantity-b.quantity>1}
+    localBundleVariants={localBundleVariants} setLocalBundleVariants={setLocalBundleVariants} allVariants={allVariants}
     
     />
 

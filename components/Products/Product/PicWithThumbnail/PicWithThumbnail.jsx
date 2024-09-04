@@ -2,7 +2,7 @@ import Image from "next/image";
 import styles from "./picwiththumbnail.module.css";
 import { useEffect, useState } from "react";
 
-export default function PicWithThumbnail({ product }) {
+export default function PicWithThumbnail({ product, variantImage }) {
   const [images, setImages] = useState(false);
   
   
@@ -20,10 +20,13 @@ export default function PicWithThumbnail({ product }) {
       const productImagesLength = product.images.length;
 
 
-      if (productImagesLength > thumbIndexes[0])
+      if(variantImage)myImages.push(variantImage);
+      else{
+       if (productImagesLength > thumbIndexes[0].length)
         myImages.push(product.images[thumbIndexes[0]]);
 
       else myImages.push(product.images[0]);
+}
 
 
 
