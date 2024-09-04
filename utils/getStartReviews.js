@@ -27,12 +27,12 @@ export const getStartReviews= async(productId, limit = 20)=>{
   
 
   
-      await dbConnection.release();
+      if(dbConnection)await dbConnection.release();
   
       return result.length<limit?result.slice(0, limit):result;
     } catch (error) {
       console.log('cant pick up reviews with main function.', error)
-      await dbConnection.release();
+      if(dbConnection) await dbConnection.release();
      return reviewsData.slice(0,limit);
     }
 

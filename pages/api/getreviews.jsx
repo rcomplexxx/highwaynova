@@ -42,21 +42,22 @@ const craftShuffledArrayQuery = (array)=>{
 
 const getReviews = async (req, res) => {
 
- 
 
 
 
-let dbConnection = await (await getPool()).getConnection();
+
+  let dbConnection
 
   
-
-
   const resReturn = async(statusNumber, jsonObject)=>{
 
     if(dbConnection) await dbConnection.release();
     res.status(statusNumber).json(jsonObject)
 
  }
+
+ 
+
 
 
  
@@ -66,6 +67,11 @@ let dbConnection = await (await getPool()).getConnection();
 
   try {
     
+
+
+    dbConnection = await (await getPool()).getConnection();
+
+  
 
 
 
@@ -222,6 +228,10 @@ let dbConnection = await (await getPool()).getConnection();
     
 
   }
+
+
+
+
 };
 
 export default getReviews;
