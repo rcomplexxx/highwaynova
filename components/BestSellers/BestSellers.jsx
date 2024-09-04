@@ -45,7 +45,7 @@ export default function BestSellers() {
 
     let variant;
     if(bsp.variantIndex){
-    variant =   bsp.variantIndex>0 && bsp.variantIndex<product.variants.length-1? product.variants[bsp.variantIndex]:product?.variants[0];
+    variant =   bsp.variantIndex>0 && bsp.variantIndex<product.variants.length? product.variants[bsp.variantIndex]:product?.variants[0];
    
     }
 
@@ -61,9 +61,11 @@ export default function BestSellers() {
   const onAddToCart = ( quantity = 1,addedProduct, addedVariant) => {
     let updatedCartProducts = [...cartProducts];
 
-    const productIndex = cartProducts.findIndex((cp) => cp.id === addedProduct.id && cp.variant===addedVariant);
+    const productIndex = cartProducts.findIndex((cp) => cp.id === addedProduct.id && cp.variant===addedVariant.name);
 
     if (productIndex !== -1) {
+
+      const variantIndex = products[productIndex].variants.findIndex(v => {return addedVariant.name === v.name})
      
       
       updatedCartProducts[productIndex].quantity += quantity;
@@ -75,10 +77,10 @@ export default function BestSellers() {
         id: addedProduct.id,
         quantity: quantity,
         name: addedProduct.name,
-        image: addedProduct.images[0],
+        image: addedProduct.images[variantIndex>0?variant.image:0],
         price: addedProduct.price,
         stickerPrice: addedProduct.stickerPrice,
-        variant: addedVariant
+        variant: addedVariant.name
       };
       updatedCartProducts.push(newProduct);
     }
@@ -158,7 +160,7 @@ export default function BestSellers() {
  
 
 
-            <button onClick={()=>{ onAddToCart(1, bsp.product, bsp.variant.name)}} className={styles.addToCartButton}>
+            <button onClick={()=>{ onAddToCart(1, bsp.product, bsp.variant)}} className={styles.addToCartButton}>
             Add
             </button>
             
