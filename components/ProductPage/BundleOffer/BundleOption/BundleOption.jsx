@@ -49,9 +49,9 @@ export default function BundleOption({isSelected, originalPrice, discountPercent
     </div>
 
 
-{isSelected && localBundleVariants && localBundleVariants.length!==0 && 
+{isSelected && localBundleVariants && localBundleVariants.length!==0 && <> <span className={styles.variantOptionsTitle}>Select variants</span>
     <div className={styles.variantsDiv}>
-      <span className={styles.variantOptionsTitle}>Select variants</span>
+     
    
 
 {localBundleVariants.map((bv,index)=>{
@@ -62,11 +62,13 @@ export default function BundleOption({isSelected, originalPrice, discountPercent
 
 
   return <div key={index} className={styles.variantOptionWrapper}>
+
+    <ArrowDown color={'var(--bundle-variant-option-color)'} styleClassName={styles.arrowDown}/>
   <span className={styles.variantLabel}>#{index+1}</span>
   <select
 id="selectVariants"
 
-className={styles.targetTrafficSelect}
+className={styles.variantSelect}
 value={bv}
 onChange={(e)=>{
   
@@ -94,7 +96,7 @@ onChange={(e)=>{
 })}
 
 </div>
-
+</>
 }
 
 

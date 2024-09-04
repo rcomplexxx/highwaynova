@@ -567,7 +567,9 @@ p {
  --mini-slider-arrow-color: var(--neutral-9);
 
 
- --bundle-main-color: var(--main-color-5);
+ 
+
+ --bundle-main-color: var(--main-color-4);
 
  --bundle-ring-neutral-color: var(--main-color-3);
  --bundle-ring-selected-color: var(--accent-color-5);
@@ -576,7 +578,10 @@ p {
 
  --bundle-option-bg: var(--neutral-1);
  --bundle-save-txt-color: var(--neutral-8);
+ --bundle-price: var(--high-contrast-txt-color);
  --bundle-original-price: var(--neutral-7);
+
+
 
 
  --bundle-variant-select-bg: transparent;
