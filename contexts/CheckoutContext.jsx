@@ -31,7 +31,7 @@ export const CheckoutContext = createContext({total:0,subTotal:0, coupon:{code: 
     const [subscribe, setSubscribe] = useState(false);
     const [coupon, setCoupon] = useState({code: "", discount: 0});
     const [tip, setTip]= useState(0);
-    const [cartProducts, setCartProducts] = useState(findBestBundle(buyNowProduct?buyNowProduct:[...useGlobalStore(state => state.cartProducts)]))
+    const [cartProducts, setCartProducts] = useState(buyNowProduct?findBestBundle(buyNowProduct):[...useGlobalStore(state => state.cartProducts)])
   
 
     

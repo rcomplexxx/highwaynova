@@ -3,7 +3,8 @@ import products from "../../data/products.json";
 import Image from "next/image";
 import {useGlobalStore} from "@/contexts/AppContext";
 import CustomerReviews from "@/components/ProductPage/CustomerReviews/CustomerReviews.jsx";
-import findBestBundle from "@/utils/findBestBundle"
+
+
 
 
 
@@ -147,10 +148,9 @@ export default function ProductPage({ product, description, images, startReviews
 
 
 
-    const bundledProducts = findBestBundle(updatedCartProducts)
 
   
-      setCartProducts( bundledProducts);
+      setCartProducts( updatedCartProducts);
     
       
 
@@ -438,15 +438,18 @@ export async function getStaticProps(context) {
    
     let mariaDbOnlineStatus;
 
+    let connection;
+
     try {
       // Set a specific timeout when acquiring a connection
-      const connection = await (await getPool()).getConnection();
+      connection  = await (await getPool()).getConnection();
   
-      await connection.release();
+      if(connection)await connection.release();
   
       mariaDbOnlineStatus = true;
     } catch (error) {
       
+      if(connection) await connection.release();
         console.log('there is error', error)
 
       mariaDbOnlineStatus = false;
@@ -466,11 +469,20 @@ export async function getStaticProps(context) {
 
     }
 
-    const connection = await (await getPool()).getConnection();
+    try {
+
+    connection = await (await getPool()).getConnection();
     const descriptionData= await connection.query(`SELECT description FROM products WHERE productId = ?` , [productId]);
     if(descriptionData.length > 0) description = descriptionData[0].description;
 
-    await connection.release();
+    if(connection)await connection.release();
+
+    }
+
+    catch(error){
+      console.log('there is error with db connection', error)
+      if(connection)await connection.release();
+    }
 
   }
 

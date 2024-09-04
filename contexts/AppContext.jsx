@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import findBestBundle from '@/utils/findBestBundle.js'
 
 export const useGlobalStore = create((set) => {
   return {
@@ -6,7 +7,7 @@ export const useGlobalStore = create((set) => {
     newProduct:undefined,
     setNewProduct: (newNewProduct) => set({newProduct: newNewProduct}),
     cartProducts: [],
-    setCartProducts: (newCartProducts) => set({ cartProducts: newCartProducts }),
+    setCartProducts: (newCartProducts) => set({ cartProducts: findBestBundle(newCartProducts) }),
     cartProductsInitialized: false,
     setCartProductsInitialized: (areInitialized)=> set({cartProductsInitialized: areInitialized}),
 

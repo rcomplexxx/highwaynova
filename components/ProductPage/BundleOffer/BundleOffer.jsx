@@ -21,24 +21,21 @@ export default function BundleOffer({ price, stickerPrice, bundle, quantity, set
     else {
      
 
-      let newLocalBundleVariants = [...localBundleVariants];
-
-      if(localBundleVariants.length < quantity){
+      let newLocalBundleVariants = [...localBundleVariants]
 
       
 
-        for(let i=0; i<quantity - localBundleVariants.length  ; i++) newLocalBundleVariants.push(mainVariant)
+      if(localBundleVariants.length > quantity) newLocalBundleVariants = localBundleVariants.slice(0, quantity);
+
+      else while(newLocalBundleVariants.length !== quantity){
+        newLocalBundleVariants.push(mainVariant)
       }
-
-      else if(localBundleVariants.length > quantity) newLocalBundleVariants = localBundleVariants.slice(0, quantity);
-
+    
       
 
       setLocalBundleVariants(newLocalBundleVariants);
      
       
-
-
 
 
     }
@@ -50,19 +47,17 @@ export default function BundleOffer({ price, stickerPrice, bundle, quantity, set
   
   useEffect(()=>{
 
-    const newBundleVariants = [];
-
-    console.log('trenutne local vari', localBundleVariants)
-    
-    for(const localVariant of localBundleVariants){
-
-      const newBundleVariantIndex = newBundleVariants.findIndex(nbv => {return nbv.name === localVariant});
-
-      if(newBundleVariantIndex !==-1)newBundleVariants[newBundleVariantIndex].quantity+= 1;
-      
-      else newBundleVariants.push({name: localVariant, quantity: 1});
-    }
-
+    const newBundleVariants = localBundleVariants.reduce((acc, localVariant) => {
+      const existing = acc.find(item => item.name === localVariant);
+      if (existing) {
+        existing.quantity += 1;
+      } else {
+        acc.push({ name: localVariant, quantity: 1 });
+      }
+      return acc;
+    }, []);
+  
+    console.log('trenutne local vari', localBundleVariants);
     setBundleVariants(newBundleVariants);
 
     

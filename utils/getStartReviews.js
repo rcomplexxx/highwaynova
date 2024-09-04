@@ -5,13 +5,14 @@ const getPool = require('./mariaDbPool');
 
 export const getStartReviews= async(productId, limit = 20)=>{
 
+  let dbConnection;
+
 
   try{
-    let dbConnection = await (await getPool()).getConnection();
+    dbConnection = await (await getPool()).getConnection();
   
 
-
-    try {
+    
    
   
    
@@ -30,15 +31,12 @@ export const getStartReviews= async(productId, limit = 20)=>{
       if(dbConnection)await dbConnection.release();
   
       return result.length<limit?result.slice(0, limit):result;
-    } catch (error) {
-      console.log('cant pick up reviews with main function.', error)
-      if(dbConnection) await dbConnection.release();
-     return reviewsData.slice(0,limit);
     }
 
-  }
-  catch(e){
-    console.log('cant establish db connection');
+  
+  catch(error){
+    console.log('cant establish db connection',error);
+    if(dbConnection) await dbConnection.release();
     return reviewsData.slice(0,limit);
   }
 

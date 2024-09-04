@@ -8,7 +8,7 @@ import styles from './bestsellers.module.css';
 import Link from 'next/link';
 import {  useEffect, useRef, useState } from 'react';
 import products from '@/data/products.json'
-import findBestBundle from '@/utils/findBestBundle'
+
 
 // Import Swiper styles
 import "swiper/css";
@@ -97,7 +97,7 @@ export default function BestSellers() {
     }
 
   
-      setCartProducts( findBestBundle(updatedCartProducts));
+      setCartProducts( updatedCartProducts);
     
   };
 

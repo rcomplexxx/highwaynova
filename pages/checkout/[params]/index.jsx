@@ -92,16 +92,23 @@ const BuyNowPage = () => {
     if (product) {
 
 
+
+      
+      let newProducts = [];
+
+      
+      let variantIndex = product.variants.findIndex(v=>{return v.name === variants[0]})
+
+
       if(variants.length>1){
 
      
       
         
-        let newProducts = [];
 
       for(let i=0; i < variants.length; i++){
 
-        const variantIndex = product.variants.findIndex(v=>{return v.name === variants[i]})
+        variantIndex = product.variants.findIndex(v=>{return v.name === variants[i]})
         
 
 
@@ -118,27 +125,28 @@ const BuyNowPage = () => {
       }
 
       
-      setCartProducts(findBestBundle(newProducts));
-
+  
       }
 
 
       else{
 
 
-        const variantIndex = product.variants.findIndex(v=>{return v.name === variants[0]})
 
-      const newProduct = {
+        newProducts.push({
         id: product.id,
         quantity: Number(quantities[0]),
         name: product.name,
         image: variantIndex>0?product.variants[variantIndex].image:product.images[0],
         price: product.price,
         variant: variants?variants[0]:undefined
-      };
+      });
 
-      setCartProducts(findBestBundle([newProduct]));
+     
     }
+
+
+    setCartProducts(findBestBundle(newProducts));
      
     } 
 
