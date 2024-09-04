@@ -33,13 +33,13 @@ const BuyNowPage = () => {
 
     // Get individual query parameters
     const productid = urlParams.get("productid");
-    const variant = urlParams.get("variant")?.split(',');
-    const quantity = urlParams.get("quantity")?.split(',');
+    const variants = urlParams.get("variant")?.split(',');
+    const quantities = urlParams.get("quantity")?.split(',');
 
 
 
     let quantitiesAreNumbers = true;
-    quantity.forEach((q)=>{
+    quantities.forEach((q)=>{
 
       
   
@@ -54,7 +54,7 @@ const BuyNowPage = () => {
     })
 
 
-      if(!quantitiesAreNumbers || variant.length!==quantity.length) {
+      if(!quantitiesAreNumbers || variants.length!==quantities.length) {
         
     setLoaded(true);
         return;
@@ -66,12 +66,12 @@ const BuyNowPage = () => {
       if(p.id == productid){
 
        
-          if(!variant) return true;
+          if(!variants) return true;
           
         else {
           let variantsExist = true;
 
-          variant.forEach(v=>{
+          variants.forEach(v=>{
             
             if(!p.variants.find((pv)=>{return pv.name===v}))variantsExist=false;
             
@@ -92,24 +92,24 @@ const BuyNowPage = () => {
     if (product) {
 
 
-      if(variant.length>1){
+      if(variants.length>1){
 
      
 
         
         let newProducts = [];
 
-      for(let i=0; i < variant.length; i++){
+      for(let i=0; i < variants.length; i++){
 
         console.log('new var pr', product.id)
 
         newProducts.push({
           id: product.id,
-          quantity: Number(quantity[i]),
+          quantity: Number(quantities[i]),
           name: product.name,
           image: product.images[0],
           price: product.price,
-          variant: variant[i]
+          variant: variants[i]
         })
       }
 
@@ -122,11 +122,11 @@ const BuyNowPage = () => {
       else{
       const newProduct = {
         id: product.id,
-        quantity: Number(quantity[0]),
+        quantity: Number(quantities[0]),
         name: product.name,
         image: product.images[0],
         price: product.price,
-        variant: variant?variant[0]:undefined
+        variant: variants?variants[0]:undefined
       };
 
       setCartProducts(findBestBundle([newProduct]));
