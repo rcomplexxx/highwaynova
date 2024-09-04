@@ -63,8 +63,9 @@ export default function BundleOption({isSelected, originalPrice, discountPercent
 
   return <div key={index} className={styles.variantOptionWrapper}>
 
-    <ArrowDown color={'var(--bundle-variant-option-color)'} styleClassName={styles.arrowDown}/>
   <span className={styles.variantLabel}>#{index+1}</span>
+
+  <div className={styles.selectWrapper}>
   <select
 id="selectVariants"
 
@@ -89,7 +90,8 @@ onChange={(e)=>{
 
 </select>
 
-
+<ArrowDown color={'var(--bundle-variant-option-color)'} styleClassName={styles.arrowDown}/>
+</div>
 
 </div>
 
