@@ -65,14 +65,18 @@ export default function BestSellers() {
 
     if (productIndex !== -1) {
 
-      const variantIndex = products[productIndex].variants.findIndex(v => {return addedVariant.name === v.name})
-     
+    
       
       updatedCartProducts[productIndex].quantity += quantity;
      
       
   
     } else {
+
+
+      const variantIndex = products[productIndex].variants.findIndex(v => {return addedVariant.name === v.name})
+     
+
       const newProduct = {
         id: addedProduct.id,
         quantity: quantity,
