@@ -164,6 +164,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+ 
     flex-wrap: wrap;
 
     row-gap: var(--size-3);
@@ -174,7 +175,8 @@
 
     box-sizing: border-box;
 
-    padding: 0 var(--size-1);
+ 
+    padding-left: var(--size-2);
     
 }
 
@@ -194,14 +196,12 @@
 
     position: relative;
 
-    flex:1 ;
 
     display: flex;
     align-items: center;
 
     gap: var(--size-2);
 
-    
 }
 
 
@@ -218,6 +218,8 @@
 
 
 .selectWrapper{
+
+    
     position: relative;
 }
 
@@ -261,9 +263,9 @@
 
    
 
-    height: var(--size-6);
+    height: 28px;
   
-    min-width: var(--size-9-5);
+    min-width: var(--size-11-5);
 
 
 
