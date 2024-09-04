@@ -106,11 +106,16 @@ export default function ProductPage({ product, description, images, startReviews
     
   
     } else {
+
+
+      const variantObj= product.variants.find(pv=>{return pv.name === newProductVariant})
+
+
       const newProduct = {
         id: newProductObj.id,
         quantity: newProductQuantity,
         name: newProductObj.name,
-        image: newProductObj.images[0],
+        image: variantObj?.variantProductImageIndex>0?newProductObj.images[variantObj?.variantProductImageIndex]:newProductObj.images[0],
         price: newProductObj.price,
         stickerPrice: newProductObj.stickerPrice,
         variant: newProductVariant

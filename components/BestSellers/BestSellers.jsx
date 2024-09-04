@@ -16,7 +16,7 @@ import { useGlobalStore } from '@/contexts/AppContext';
 
 export default function BestSellers() {
   const sliderRef = useRef();
-  const [initialProductNames, setInitialProductNames] = useState([]);
+  const [initialProducts, setInitialProducts] = useState([]);
 
 
 
@@ -28,7 +28,7 @@ export default function BestSellers() {
 
 
   useEffect(()=>{
-   setInitialProductNames(cartProducts.map(product=> product.id));
+   setInitialProducts(cartProducts.map(product=> {return {id:product.id, variant: product.variant}}));
   },[])
   
 
@@ -39,9 +39,17 @@ export default function BestSellers() {
 
     const product= products.find(p=>{return p.id== bsp.id});
 
-    if(initialProductNames?.includes(product.id))return;
+    console.log('intialPr', initialProducts, bsp)
 
-    console.log('item escaped condition', product.id, 'inprnames', initialProductNames);
+    if(!product)return;
+
+    if(initialProducts.find(ip => {
+      return ip.id === bsp.id && ip.variant === product.variants[bsp.variantIndex].name
+    })) return;
+
+    
+
+    console.log('item escaped condition', product.id, 'inprnames', initialProducts);
 
     let variant;
     if(bsp.variantIndex){

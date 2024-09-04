@@ -95,19 +95,23 @@ const BuyNowPage = () => {
       if(variants.length>1){
 
      
-
+      
         
         let newProducts = [];
 
       for(let i=0; i < variants.length; i++){
 
-        console.log('new var pr', product.id)
+        const variantIndex = product.variants.findIndex(v=>{return v.name === variants[i]})
+        
+
+
+        console.log('new var pr', product.id, variantIndex)
 
         newProducts.push({
           id: product.id,
           quantity: Number(quantities[i]),
           name: product.name,
-          image: product.images[0],
+          image: variantIndex>0?product.variants[variantIndex].image:product.images[0],
           price: product.price,
           variant: variants[i]
         })
@@ -120,11 +124,15 @@ const BuyNowPage = () => {
 
 
       else{
+
+
+        const variantIndex = product.variants.findIndex(v=>{return v.name === variants[0]})
+
       const newProduct = {
         id: product.id,
         quantity: Number(quantities[0]),
         name: product.name,
-        image: product.images[0],
+        image: variantIndex>0?product.variants[variantIndex].image:product.images[0],
         price: product.price,
         variant: variants?variants[0]:undefined
       };
