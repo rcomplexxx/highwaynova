@@ -58,6 +58,10 @@ export default function BestSellers() {
 
   console.log('context check main', cartProducts,setCartProducts)
 
+
+
+
+
   const onAddToCart = ( quantity = 1,addedProduct, addedVariant) => {
     let updatedCartProducts = [...cartProducts];
 
@@ -72,16 +76,11 @@ export default function BestSellers() {
       
   
     } else {
-
-
-      const variantIndex = products[productIndex].variants.findIndex(v => {return addedVariant.name === v.name})
-     
-
       const newProduct = {
         id: addedProduct.id,
         quantity: quantity,
         name: addedProduct.name,
-        image: addedProduct.images[variantIndex>0?variant.image:0],
+        image: addedVariant?.variantProductImageIndex>0?addedProduct.images[addedVariant?.variantProductImageIndex]:addedProduct.images[0],
         price: addedProduct.price,
         stickerPrice: addedProduct.stickerPrice,
         variant: addedVariant.name
