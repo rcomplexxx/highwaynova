@@ -70,9 +70,12 @@ export default function OrderCard({
 
   const changePs = () => {
    
-   if(currentPackageStatus ===3) return;
+   if(currentPackageStatus ===4) return;
 
     if(currentPackageStatus === 0) {setSupplierCostInputOpen(true)}
+
+
+     //Ovaj deo je cudan>>>
     else if(currentPackageStatus===1){  setCurrentPackageStatus(2); 
       
       if(packageStatus===0)handleChangedOrdersArray({id: id, packageStatus:2, supplierCost: parseFloat(parseFloat(supplierCost).toFixed(2))})
@@ -81,10 +84,12 @@ export default function OrderCard({
    
    }
 
+  
 
-    else if(currentPackageStatus===2){  setCurrentPackageStatus(0); handleChangedOrdersArray({id: id, packageStatus:0})}
+
+    else if(currentPackageStatus===2){  setCurrentPackageStatus(3); handleChangedOrdersArray({id: id, packageStatus:3})}
     
-    
+    else if(currentPackageStatus===3){  setCurrentPackageStatus(0); handleChangedOrdersArray({id: id, packageStatus:0})}
   };
 
   return (
@@ -108,8 +113,9 @@ export default function OrderCard({
           : currentPackageStatus === 1
           ? "Ordered"
           : currentPackageStatus === 2? "Completed"
-          : currentPackageStatus === 3 ? "Returned":
-          "Undefined"}
+          : currentPackageStatus === 3 ? "Canceled"
+          : currentPackageStatus === 4 ? "Returned"
+          : "Undefined"}
       </button>
       </div>
 

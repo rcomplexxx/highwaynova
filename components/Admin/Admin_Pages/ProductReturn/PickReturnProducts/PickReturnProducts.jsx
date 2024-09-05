@@ -55,26 +55,45 @@ export default function PickReturnProducts({orderProducts, returnProducts, setRe
     className={`${styles.inputProductId}`}
     value={returnProductsNumberInputValue}
     placeholder="How many different types of products user wants to return?"
+
+
     onChange={(event) => {
+
+
+
       const currentReturnProductNumberValue = event.target.value;
       if(!isNaN(currentReturnProductNumberValue) && currentReturnProductNumberValue>=0 && 
       currentReturnProductNumberValue <=orderProducts.length )
+
+
      { 
 
       let newReturnProductsArray = [];
+
+
       if(returnProducts.length < currentReturnProductNumberValue){
+
         newReturnProductsArray = [...returnProducts];
-        for(let i=returnProducts.length; i< currentReturnProductNumberValue; i++){
-          newReturnProductsArray.push({id: undefined, quantity: 1});
-        }
+
+        while(newReturnProductsArray.length < currentReturnProductNumberValue)  newReturnProductsArray.push({id: undefined, variant: undefined, quantity: 1});
+
+
+     
        
 
       }
       else if(returnProducts.length > currentReturnProductNumberValue){
 
-        for(let i =0; i < currentReturnProductNumberValue; i++){
-          newReturnProductsArray.push(returnProducts[i]);
+        let counter=0;
+
+        while(newReturnProductsArray<currentReturnProductNumberValue){
+          
+          newReturnProductsArray.push(returnProducts[counter]);
+          counter++;
+
         }
+
+   
 
       }
 
@@ -95,6 +114,25 @@ export default function PickReturnProducts({orderProducts, returnProducts, setRe
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   {returnProducts.length>0 && returnProducts.map((product, index)=>
 
 {
@@ -104,37 +142,49 @@ export default function PickReturnProducts({orderProducts, returnProducts, setRe
     <select
     
   className={styles.inputProductId}
-  defaultValue={product.id}
-  onChange={(event) => {
-    console.log(returnProducts, 'sdsd')
+  defaultValue={index}
 
+
+
+
+
+
+
+  onChange={(event) => {
   
 
+  
+  const newReturnProduct= orderProducts[event.target.value];
 
-   
-   if( returnProducts.find(rp => rp.id ==event.target.value)){
-    event.target.value= returnProducts[index].id;
-    return;
-   }
 
+  console.log('sdsd', newReturnProduct)
 
     const newReturnProductsArray= returnProducts.map((rp, i)=>{
-        if(index===i) return {id: event.target.value, quantity: 1};
+        if(index===i) return {id:newReturnProduct.id, variant: newReturnProduct.variant, quantity: 1};
         else return rp;
     });
+
+
+ console.log( 'new ret pr', newReturnProductsArray)
 
     setReturnProducts(newReturnProductsArray);
   }}
 >
 
 
+
+
+
   <option value={""}
    
   >Select product for returning</option>
-  {orderProducts.map(p => 
+
+
+
+  {orderProducts.map((p,i) => 
     
-    {return <option value={p.id}>id: {p.id} | 
-  {products.find(prGlobal =>{return prGlobal.id==p.id})?.name}
+    {return <option value={i}>
+      id: {p.id} | {products.find(prGlobal =>{return prGlobal.id==p.id})?.name} {p.variant && `| ${p.variant}`}
   </option>
 
 
@@ -145,18 +195,29 @@ export default function PickReturnProducts({orderProducts, returnProducts, setRe
   
 </select>
 
+
+
+
+
 <input
     className={`${styles.inputProductId} ${styles.productQuantity}`}
     value={returnProducts[index].quantity}
     placeholder="Quantity"
     onChange={(event) => {
       //set quantity
-      const currentValue = event.target.value;
-      if(isNaN(currentValue) || currentValue < 0 || returnProducts[index].id==undefined || returnProducts[index].id=="" || 
-      currentValue> orderProducts.find(op=>product.id == op.id).quantity){return;}
+
+      console.log('checking', orderProducts, product);
+
+
+      const returnProductQuantity = event.target.value;
+
+      if(isNaN(returnProductQuantity) || returnProductQuantity < 0 || returnProducts[index].id===undefined || returnProducts[index].id==="" || 
+      returnProductQuantity> orderProducts.find(op=>product.id == op.id && product.variant == op.variant).quantity) return;
+
+
       const newReturnProducts = [...returnProducts];
 
-      newReturnProducts[index].quantity = event.target.value;
+      newReturnProducts[index].quantity = returnProductQuantity;
 
       setReturnProducts(newReturnProducts)
    }}
@@ -169,6 +230,19 @@ export default function PickReturnProducts({orderProducts, returnProducts, setRe
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     </>
   )

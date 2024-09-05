@@ -91,12 +91,7 @@ export default function Orders({ data, setData }) {
             />
      
      
-     <GetDataButton
-              name="orders - RETURNED"
-              dataType={"get_returned_orders"}
-              setData={setData}
-              initializeData={initializePackageStatusData}
-            />
+
 
 
 
@@ -107,6 +102,20 @@ export default function Orders({ data, setData }) {
               initializeData={initializePackageStatusData}
             />
 
+<GetDataButton
+              name="Orders - CANCELED"
+              dataType={"get_canceled_orders"}
+              setData={setData}
+              initializeData={initializePackageStatusData}
+            />
+
+
+<GetDataButton
+              name="orders - RETURNED"
+              dataType={"get_returned_orders"}
+              setData={setData}
+              initializeData={initializePackageStatusData}
+            />
 
 
 

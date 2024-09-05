@@ -410,7 +410,7 @@ else{
           ]
         );
 
-        await dbConnection.query(`UPDATE orders SET packageStatus = 3 WHERE id = ?`, [data.orderId]);
+        await dbConnection.query(`UPDATE orders SET packageStatus = 4 WHERE id = ?`, [data.orderId]);
 
         await dbConnection.query(`UPDATE customers SET money_spent = ROUND(money_spent - ?, 2) WHERE id = ?`,[data.returnCost, orderData.customer_id])
 
@@ -963,10 +963,12 @@ await dbConnection.query(`DELETE FROM email_templates WHERE id = ?`, [template_i
         else if (dataType === "get_completed_orders")
           await getFromDb(`orders JOIN customers ON orders.customer_id = customers.id`, `packageStatus = 2 ORDER BY orders.createdDate DESC`, `orders.*, customers.email`);
 
-        
+        else if (dataType === "get_canceled_orders")
+          await getFromDb(`orders JOIN customers ON orders.customer_id = customers.id`, `packageStatus = 3 ORDER BY orders.createdDate DESC`, `orders.*, customers.email`);
+
  
         else if (dataType === "get_returned_orders")
-          await getFromDb(`orders JOIN customers ON orders.customer_id = customers.id`, `packageStatus = 3 ORDER BY orders.createdDate DESC`, `orders.*, customers.email`);
+          await getFromDb(`orders JOIN customers ON orders.customer_id = customers.id`, `packageStatus = 4 ORDER BY orders.createdDate DESC`, `orders.*, customers.email`);
         
 
         else if(dataType === "get_orders_by_email")

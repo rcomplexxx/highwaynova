@@ -135,10 +135,14 @@ const getProductReturns = async () => {
 
 const saveNewReturn = async()=>{
 
-  console.log(returnProducts);
+  console.log('return data', returnProducts ,linkedOrder);
 
 
-  if(!linkedOrder || returnProducts.length ==0 || returnProducts.find(rp =>{return rp.id==undefined || rp.id=="" || rp.quantity==0}) ||  returnProducts.find(rp=>{return rp.id == "" || rp.quantity == 0}))return;
+  if(!linkedOrder || returnProducts.length ===0 || 
+    
+    returnProducts.find(rp =>{return rp.id==undefined 
+      
+      || rp.id==="" || rp.quantity===0}) ||  returnProducts.find(rp=>{return rp.id === "" || rp.quantity === 0}))return;
   
 
 
