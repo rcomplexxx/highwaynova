@@ -33,13 +33,12 @@ const NavBar = () => {
     setIsMenuOpen(true);
   };
 
-  const { cartProducts, newProduct, setNewProduct } = useGlobalStore(state => ({
+  const { cartProducts, newProducts, setNewProducts } = useGlobalStore(state => ({
     cartProducts: state.cartProducts,
-    newProduct: state.newProduct,
-    setNewProduct: state.setNewProduct,
+    newProducts: state.newProducts,
+    setNewProducts: state.setNewProducts,
   }));
 
-  console.log('nav change', isMenuOpen, newProduct)
 
   const totalItems= useMemo(()=>{
     let s=0;
@@ -92,8 +91,8 @@ const NavBar = () => {
 
       <nav id="navBar"
         className={`${styles.appBar} ${
-          (newProduct || searchOpen || isMenuOpen) && styles.appBarFixed
-        } ${newProduct && window.scrollY > 0 && styles.appBarMaterialize}`}
+          (newProducts?.length!==0 || searchOpen || isMenuOpen) && styles.appBarFixed
+        } ${newProducts?.length!==0 && window.scrollY > 0 && styles.appBarMaterialize}`}
       
        
       >
@@ -309,11 +308,11 @@ const NavBar = () => {
             </Link>
           </div>
        
-        {newProduct && (
+        {newProducts?.length!==0 && (
           <PopupCart
             totalItems={totalItems}
-            newProduct={newProduct}
-            setNewProduct={setNewProduct}
+            newProducts={newProducts}
+            setNewProducts={setNewProducts}
           />
         )}
           {isMenuOpen && (

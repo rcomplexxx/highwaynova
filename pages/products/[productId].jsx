@@ -68,8 +68,8 @@ export default function ProductPage({ product, description, images, startReviews
 
 
 
-  const { setNewProduct,cartProducts, setCartProducts } = useGlobalStore(state => ({
-    setNewProduct: state.setNewProduct,
+  const { setNewProducts,cartProducts, setCartProducts } = useGlobalStore(state => ({
+    setNewProducts: state.setNewProducts,
     cartProducts: state.cartProducts,
     setCartProducts: state.setCartProducts,
   }));
@@ -90,6 +90,13 @@ export default function ProductPage({ product, description, images, startReviews
 
     let updatedCartProducts = [...cartProducts];
 
+    
+    const newProducts = [];
+
+
+
+
+
     const addNewProduct = (newProductObj, newProductVariant, newProductQuantity)=>{
 
       console.log('info', newProductObj, newProductVariant)
@@ -102,8 +109,9 @@ export default function ProductPage({ product, description, images, startReviews
       
       updatedCartProducts[productIndex].quantity += newProductQuantity;
 
+      newProducts.push(updatedCartProducts[productIndex])
+
       
-    setNewProduct(updatedCartProducts[productIndex]);
     
   
     } else {
@@ -124,7 +132,7 @@ export default function ProductPage({ product, description, images, startReviews
       updatedCartProducts.push(newProduct);
 
       
-    setNewProduct(newProduct);
+      newProducts.push(newProduct)
 
     }
 
@@ -134,14 +142,15 @@ export default function ProductPage({ product, description, images, startReviews
   if(bundleVariants.length!==0){
 
 
+
    for(const variant of bundleVariants){
     
+  
 
     addNewProduct(addedProduct, variant.name, variant.quantity)
    }
 
 
- 
  
   }
   else addNewProduct(addedProduct, addedVariant, quantity);
@@ -151,6 +160,25 @@ export default function ProductPage({ product, description, images, startReviews
 
   
       setCartProducts( updatedCartProducts);
+
+
+
+      const newProductsShrinked = newProducts.reduce((finalNewProducts, newProduct) => {
+
+
+
+        const existing = finalNewProducts.find(item => item.id === newProduct.id && item.variant === newProduct.variant);
+        if (existing) {
+          existing.quantity += 1;
+        } else {
+          finalNewProducts.push(newProduct);
+        }
+        return finalNewProducts;
+      }, []);
+    
+    
+    
+       setNewProducts(newProductsShrinked);
     
       
 

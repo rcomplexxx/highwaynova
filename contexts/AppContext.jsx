@@ -4,8 +4,8 @@ import findBestBundle from '@/utils/findBestBundle.js'
 export const useGlobalStore = create((set) => {
   return {
 
-    newProduct:undefined,
-    setNewProduct: (newNewProduct) => set({newProduct: newNewProduct}),
+    newProducts:[],
+    setNewProducts: (newNewProducts) => set({newProducts: newNewProducts}),
     cartProducts: [],
     setCartProducts: (newCartProducts) => set({ cartProducts: findBestBundle(newCartProducts) }),
     cartProductsInitialized: false,

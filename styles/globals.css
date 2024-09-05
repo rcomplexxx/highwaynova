@@ -572,7 +572,7 @@ p {
 
  
 
- --bundle-main-color: var(--main-color-4);
+ --bundle-main-color: var(--high-contrast-txt-color);
 
  --bundle-ring-neutral-color: var(--main-color-3);
  --bundle-ring-selected-color: var(--accent-color-5);

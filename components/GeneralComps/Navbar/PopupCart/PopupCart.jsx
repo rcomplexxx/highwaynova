@@ -10,7 +10,7 @@ import { useGlobalStore } from '@/contexts/AppContext';
 
 
 
-export default function PopupCart({totalItems,newProduct, setNewProduct}){
+export default function PopupCart({totalItems,newProducts, setNewProducts}){
 
 
 const router = useRouter();
@@ -56,7 +56,7 @@ useEffect(()=>{
     if(nextLink.current)router.push(nextLink.current);
    
    
-    setNewProduct();
+    setNewProducts([]);
     window?.removeEventListener("popstate", handlePopState);
   
   }
@@ -72,7 +72,7 @@ useEffect(()=>{
     }
 
     else if(document.getElementById('cart').contains(event.target) || document.getElementById('mobileMenuSpawn').contains(event.target)){
-        setNewProduct();
+        setNewProducts([]);
     
     }
 
@@ -104,7 +104,7 @@ useEffect(()=>{
 },[])
 
 
-console.log('my new product', newProduct)
+console.log('my new product', newProducts)
 
 // useEffect(()=>{ popupCart.focus();},[])
 
@@ -119,17 +119,33 @@ const handlePopCartLinkClick=(event, nextLinkHref)=>{
 
     return <div id='popCart' ref={popCartRef} className={`${styles.cartPopup}`} >
   
-  <div className={`${styles.cartPopupTitle} ${styles .firstPopupTitle}`}>
+  <div className={`${styles.productWrapper} ${styles .firstPopupTitle}`}>
+
+
     <CorrectIcon color={`var(--popcart-correct-icon-color)`} styleClassName={styles.smallCorrect}/>
      <h3 className={styles.popCartMainTitle}>Added:</h3>
+
+     
       </div>
- <div className={styles.cartPopupTitle}> 
+
+
+
+      <div className={styles.newProducts}>
+
+    {newProducts.map((newProduct,index) =>{  
+ 
+ 
+ return <div key = {index} className={styles.productWrapper}> 
  <Image height={64} width={64} src={`/images/${newProduct.image}`} alt='Bought product image' className={styles.productImage}/> 
  <div className={styles.productTitleDiv}>
  <span className={styles.productTitle}>{newProduct.name}</span>
  <span className={styles.productVariant}>{newProduct.variant}</span>
  </div>
  </div>
+
+    })}
+
+</div>
 
  
 
