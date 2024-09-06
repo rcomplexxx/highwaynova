@@ -1,4 +1,4 @@
-import  { useCallback, useEffect, useMemo, useRef } from "react";
+import  { useCallback, useEffect, useLayoutEffect, useMemo, useRef } from "react";
 import products from "../../data/products.json";
 import Image from "next/image";
 import {useGlobalStore} from "@/contexts/AppContext";
@@ -59,11 +59,11 @@ export default function ProductPage({ product, description, images, startReviews
  
 
   const [quantity, setQuantity] = useState(1);
-  const [variant, setVariant]=useState(product.variants && product.variants[0].name);
+  const [variant, setVariant]=useState(product.variants && product.variants[0]);
   const [bundleVariants, setBundleVariants] = useState([]);
 
+  const variantIndexToZeroRef = useRef(false);
   
-  const variantIndexToZeroRef = useRef(true);
 
 
 
@@ -77,11 +77,13 @@ export default function ProductPage({ product, description, images, startReviews
 
 
 
-  useEffect(()=>{
-    console.log('use effect reactivated')
-    variantIndexToZeroRef.current = true;
-      setVariant(product.variants && product.variants[0].name);
+  useLayoutEffect(()=>{
+    
+    variantIndexToZeroRef.current = false;
+      setVariant(product.variants && product.variants[0]);
       setQuantity(1);
+
+      //Tu ubrizgati varijantu.
   },[product.id])
 
 
@@ -186,10 +188,6 @@ export default function ProductPage({ product, description, images, startReviews
 
   
 
-  const variantImageIndex = useMemo(()=>{
-    if(variantIndexToZeroRef.current){return -1;}
-    return product.variants && product.variants.find((v)=>{return v.name==variant})?.variantProductImageIndex;
-  },[variant])
 
 
   const bundleBuyNowLink = useMemo(()=>{
@@ -212,6 +210,9 @@ export default function ProductPage({ product, description, images, startReviews
 
 
   },[bundleVariants])
+//moze da se optimizuje
+
+
 
 
 
@@ -222,7 +223,7 @@ export default function ProductPage({ product, description, images, startReviews
         <NextSeo {...productPageSeo(product.id)}/>
       <div className={styles.productPageDiv}>
        
-          <ProductPics productId={product.id} onAddToCart ={ onAddToCart } images={images} variantImageIndex={variantImageIndex} />
+          <ProductPics productId={product.id} onAddToCart ={ onAddToCart } images={images} variantImageIndex={variantIndexToZeroRef.current && variant?.variantProductImageIndex} />
       
           <div className={styles.productInfoWrapper}>
        
@@ -260,7 +261,7 @@ export default function ProductPage({ product, description, images, startReviews
             <span className={styles.inStockSpan}>In stock, ready to ship</span>
           </div>
           {product.variants && <div className={styles .variantDiv}>
-          <span className={styles.variantLabel}>Color: {variant}</span>
+          <span className={styles.variantLabel}>Color: {variant.name}</span>
           <div className={styles.product_style_options}>
 
 
@@ -272,8 +273,8 @@ export default function ProductPage({ product, description, images, startReviews
                 sizes="(max-width: 980px) 48px, 64px"
                 className={`${styles.productVariantImage} ${v.name===variant && styles.productVariantSelected}`}
                 onClick={() => {
-                  variantIndexToZeroRef.current = false;
-                  setVariant(v.name);
+                  variantIndexToZeroRef.current = true;
+                  setVariant(v);
                 }}
                
                 height={0}
@@ -291,7 +292,7 @@ export default function ProductPage({ product, description, images, startReviews
 }
 
      {product.bundle && <BundleOffer productId={product.id} price={product.price} stickerPrice={product.stickerPrice} bundle={product.bundle} quantity={quantity} 
-     setQuantity={setQuantity} mainVariant={variant} setBundleVariants={setBundleVariants} allVariants={product.variants.map(v=>v.name)}/> }
+     setQuantity={setQuantity} mainVariant={variant.name} setBundleVariants={setBundleVariants} allVariants={product.variants.map(v=>v.name)}/> }
 
 
 
@@ -364,7 +365,7 @@ export default function ProductPage({ product, description, images, startReviews
       
 
 <Link className={styles.buy_now_button} 
-          href={bundleVariants.length!==0?bundleBuyNowLink:`/checkout/buynow?productid=${product.id}${variant?`&variant=${variant}`:""}&quantity=${quantity}`}>
+          href={bundleVariants.length!==0?bundleBuyNowLink:`/checkout/buynow?productid=${product.id}${variant?`&variant=${variant.name}`:""}&quantity=${quantity}`}>
             More payment options
           </Link>
 
