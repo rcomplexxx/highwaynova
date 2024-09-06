@@ -45,3 +45,16 @@
     margin-left: var(--size-1);
     font-size: var(--font-size-2);
 }
+
+
+
+@media (max-width: 980px){
+
+    
+
+
+    .paypalError{
+        margin-left: 0;
+    }
+
+}

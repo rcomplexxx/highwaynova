@@ -28,7 +28,7 @@ const GooglePay = ({
 
   const handleGpayOrder = async (paymentData) => {
     try {
-      setGooglePayError();
+    
       console.log("Time to uncover data", paymentData);
 
       const paymentToken = JSON.parse(
@@ -219,6 +219,10 @@ const GooglePay = ({
       }}
       onCancel={(reason)=>{
         setGooglePayError('Payment is canceled.');
+      }}
+
+      onClick={()=>{
+        setGooglePayError();
       }}
       onError={(reason) => {
         console.log(reason);
