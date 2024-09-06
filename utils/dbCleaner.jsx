@@ -14,7 +14,7 @@ cron.schedule('0 0 * * *', async () => {
  //NE BRISATI. A MESSAGES NAMONTIRATI DA STIZU NA MEJL, A NA ADMIN SAMO DA SE PREUZIMAJU !!!!!!!!!!!!!!!!!!!!!!
  //rateLimiter data je ok da se brise.
 
- let dbConnection = await (await getPool()).getConnection();;
+ let dbConnection;
 
 
 
@@ -29,7 +29,7 @@ cron.schedule('0 0 * * *', async () => {
   // 
   try {
  
-    
+    dbConnection = await (await getPool()).getConnection();
     await dbConnection.query(cleanRateLimiterQuery);
     await dbConnection.query('OPTIMIZE TABLE yourTableName');
     console.log('Rows deleted successfully!');

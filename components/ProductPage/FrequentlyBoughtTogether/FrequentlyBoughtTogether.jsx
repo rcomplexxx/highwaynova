@@ -14,15 +14,18 @@ const FreqProduct = ({ productId, variantIndex, onAddToCart }) => {
   (variantIndex<0 || variantIndex>product.variants?.length-1)?product.variants[0]:product.variants[variantIndex]
   :null;
 
+
+  console.log('variant', variant)
+
   return (
     <div className={styles.product_style_div}>
       <Link
-        href={`/products/${product.name.toLowerCase().replace(/\s+/g, "-")}`}
+        href={`/products/${product.name.toLowerCase().replace(/\s+/g, "-")}${variant? '?variant='+variant.name: ''}`}
       >
         <Image
         height={0} width={0}
-          src={`/images/${variantIndex && variantIndex!==0?product.images[variant.variantProductImageIndex]:product.images[0]}`}
-          alt="Black"
+          src={`/images/${product.images[variant?variant.variantProductImageIndex:0]}`}
+          alt={variant.name}
           className={styles.productImage}
           sizes="128px"
           

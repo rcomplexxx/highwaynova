@@ -28,15 +28,14 @@ async function startEmailJobs(){
 
 
   
-try{
 
-let dbConnection = await (await getPool()).getConnection();
+let dbConnection;
 
 
   try{
 
 
- 
+    dbConnection = await (await getPool()).getConnection();
 
 
 
@@ -129,10 +128,8 @@ for(const campaign of campaigns){
 
   }
 
-}
-catch(e){
-  console.log('error connecting to db')
-}
+
+  
 
 
 //mozda dodati i retry numbers i pokusati da posaljem mejl kroz 30 min. Tipa 5 retryja

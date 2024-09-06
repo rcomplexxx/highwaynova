@@ -24,10 +24,13 @@ const getPool = require('./mariaDbPool');
 const date =formatDateToCron(dateInUnix);
 console.log('setting email cron scheduler', date)
 
+
+
+
 cron.schedule(date, async() => {
   console.log('Send email here');
 
-  const dbConnection = await (await getPool()).getConnection();;
+  let dbConnection;
 
 
  
@@ -36,7 +39,8 @@ cron.schedule(date, async() => {
     
 
 
-       
+      dbConnection = await (await getPool()).getConnection();;
+
 
 
      

@@ -148,7 +148,7 @@ export default function BestSellers() {
          return <SwiperSlide key={index} className={styles.slide}>
             
             
-            <Link href={`/products/${bsp.product.name.toLowerCase().replace(/\s+/g, "-")}`} 
+            <Link href={`/products/${bsp.product.name.toLowerCase().replace(/\s+/g, "-")}${bsp.variant? '?variant='+bsp.variant.name: ''}`} 
             className={styles.productImageLink}>
             
               
