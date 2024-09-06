@@ -32,7 +32,7 @@ export default function ExpressCheckout({
          
         </div>
 
-        <div className={`${styles.paymentDiv} ${styles.gpayWrapper}`}>
+        <div className={styles.paymentDiv}>
        
           <GooglePay
             products={products}

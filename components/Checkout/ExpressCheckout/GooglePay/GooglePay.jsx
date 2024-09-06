@@ -161,6 +161,7 @@ const GooglePay = ({
 
   return (
     <>
+    <div className={styles.gpayWrapper}>
     <GooglePayButton
       environment={process.env.GPAYENVIRENMENT}
       className={classNames(styles.gpayButton)}
@@ -224,6 +225,7 @@ const GooglePay = ({
         setGooglePayError(reason.message)
       }}
     />
+    </div>
    {googlePayError && <p className={styles.googlePayError}><ErrorIcon/>{googlePayError}</p>}
     </>
   );

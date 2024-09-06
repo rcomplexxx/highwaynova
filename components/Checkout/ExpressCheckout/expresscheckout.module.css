@@ -44,8 +44,8 @@
     
     flex: 1;
     min-height: var(--size-8);
-    height: var(--size-8);
 
+    box-sizing: border-box;
     border-radius: 4px;
 
     z-index: 2;
@@ -53,12 +53,7 @@
 
 }
 
-.gpayWrapper{
-    background-color: black;
-    box-sizing: border-box;
-    border: 1px solid var(--google-pay-border-color);
-    overflow: hidden;
-}
+
 
 
 

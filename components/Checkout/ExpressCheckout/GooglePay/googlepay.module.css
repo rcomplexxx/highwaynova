@@ -1,5 +1,20 @@
 
 
+.gpayWrapper{
+    
+
+    height: var(--size-8);
+    width: 100% ;
+
+    background-color: black;
+  
+    box-sizing: border-box;
+    border: 1px solid var(--google-pay-border-color);
+
+    border-radius: 4px;
+    
+    overflow: hidden;
+}
 
 .gpayButton{
    
