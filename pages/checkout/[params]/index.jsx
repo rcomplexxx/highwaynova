@@ -37,16 +37,18 @@ const BuyNowPage = () => {
     const quantities = urlParams.get("quantity")?.split(',');
 
 
+    let productInfoCorrect = true;
 
-    let quantitiesAreNumbers = true;
-    quantities.forEach((q)=>{
+    if(!variants || !quantities)productInfoCorrect = false;
+  
+    quantities?.forEach((q)=>{
 
       
   
       
       if(isNaN(Number(q))){
 
-        quantitiesAreNumbers=false;
+        productInfoCorrect=false;
 
       }
 
@@ -54,7 +56,7 @@ const BuyNowPage = () => {
     })
 
 
-      if(!quantitiesAreNumbers || variants.length!==quantities.length) {
+      if(!productInfoCorrect || variants.length!==quantities.length) {
         
     setLoaded(true);
         return;

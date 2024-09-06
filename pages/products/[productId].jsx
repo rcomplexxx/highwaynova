@@ -88,6 +88,8 @@ export default function ProductPage({ product, description, images, startReviews
 
 
 
+
+
   const onAddToCart = useCallback(( quantity = 1,addedProduct=product, addedVariant=variant) => {
 
     let updatedCartProducts = [...cartProducts];
@@ -155,7 +157,7 @@ export default function ProductPage({ product, description, images, startReviews
 
  
   }
-  else addNewProduct(addedProduct, addedVariant, quantity);
+  else addNewProduct(addedProduct, addedVariant.name, quantity);
 
 
 
@@ -190,26 +192,18 @@ export default function ProductPage({ product, description, images, startReviews
 
 
 
-  const bundleBuyNowLink = useMemo(()=>{
-
-    let variantNames = '';
-    let variantQuantities = '';
-
-    console.log('bundleVariants are', bundleVariants)
-
-    bundleVariants.forEach((bv,index)=>{
-      console.log('bg',bv)
-
-      variantNames= variantNames + bv.name + (index!==bundleVariants.length-1?',':"")
-      variantQuantities= variantQuantities+ bv.quantity + (index!==bundleVariants.length-1?',':"")
-    })
-
-
-
-    return `/checkout/buynow?productid=${product.id}&variant=${variantNames}&quantity=${variantQuantities}`
-
-
-  },[bundleVariants])
+    const bundleBuyNowLink = useMemo(() => {
+      const { variantNames, variantQuantities } = bundleVariants.reduce(
+        (acc, bv, index) => {
+          acc.variantNames += bv.name + (index !== bundleVariants.length - 1 ? ',' : '');
+          acc.variantQuantities += bv.quantity + (index !== bundleVariants.length - 1 ? ',' : '');
+          return acc;
+        },
+        { variantNames: '', variantQuantities: '' }
+      );
+    
+      return `/checkout/buynow?productid=${product.id}&variant=${variantNames}&quantity=${variantQuantities}`;
+    }, [bundleVariants]);
 //moze da se optimizuje
 
 
