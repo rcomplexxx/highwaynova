@@ -152,7 +152,7 @@ export default function BestSellers() {
             className={styles.productImageLink}>
             
               
-                <PicWithThumbnail product={bsp.product} variantImage={bsp.variant.image} />
+                <PicWithThumbnail product={bsp.product} variantImage={bsp.product.images[bsp.variant?.variantProductImageIndex || 0]} />
              
             
             </Link>
