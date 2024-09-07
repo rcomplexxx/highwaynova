@@ -31,6 +31,7 @@ import Link from "next/link";
 
 import styles from "../../styles/productpage.module.css";
 import BundleOffer from "@/components/ProductPage/BundleOffer/BundleOffer";
+import { useRouter } from "next/router";
 
 const PayPalButton = dynamic(() => import("@/components/Checkout/ExpressCheckout/PayPal/PayPal"));
 
@@ -75,7 +76,11 @@ export default function ProductPage({ product, description, images, startReviews
   }));
   
 
-  console.log('currentVariant', variant)
+
+  const router = useRouter();
+  const { query } = router; 
+
+
 
 
   useLayoutEffect(()=>{
@@ -85,10 +90,7 @@ export default function ProductPage({ product, description, images, startReviews
     if(!product.variants)return;
     
    
-    const queryParameters = window.location.search;
-    const urlParams = new URLSearchParams(queryParameters);
-    
-    const variantByQuery = urlParams.get("variant");
+    const variantByQuery = query.variant;
 
     if(variantByQuery){
 
@@ -115,7 +117,7 @@ export default function ProductPage({ product, description, images, startReviews
       
       
 
-  },[product.id])
+  },[product.id, query])
 
 
 
@@ -394,7 +396,7 @@ export default function ProductPage({ product, description, images, startReviews
       
 
 <Link className={styles.buy_now_button} 
-          href={bundleVariants.length!==0?bundleBuyNowLink:`/checkout/buynow?productid=${product.id}${variant?`&variant=${variant.name}`:""}&quantity=${quantity}`}>
+          href={bundleVariants.length!==0?bundleBuyNowLink:`/checkout/buynow?productid=${product.id}${variant?`&variant=${variant.name}`:""}&quantity=${quantity}`}  shallow>
             More payment options
           </Link>
 
