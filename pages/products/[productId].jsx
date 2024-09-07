@@ -75,15 +75,46 @@ export default function ProductPage({ product, description, images, startReviews
   }));
   
 
+  console.log('currentVariant', variant)
 
 
   useLayoutEffect(()=>{
+
+    console.log('this effect reactivated')
+
+    if(!product.variants)return;
     
-    variantIndexToZeroRef.current = false;
-      setVariant(product.variants && product.variants[0]);
+   
+    const queryParameters = window.location.search;
+    const urlParams = new URLSearchParams(queryParameters);
+    
+    const variantByQuery = urlParams.get("variant");
+
+    if(variantByQuery){
+
+
+      variantIndexToZeroRef.current = true;
+
+      const currentVariant = product.variants?.find(v =>{return v.name === variantByQuery});
+
+
+        setVariant(currentVariant?currentVariant:product.variants[0]);
+
+
+    }
+    else{
+
+      variantIndexToZeroRef.current = false;
+      setVariant(product.variants[0]);
+     
+    }
+
+     
       setQuantity(1);
 
-      //Tu ubrizgati varijantu.
+      
+      
+
   },[product.id])
 
 
@@ -265,10 +296,14 @@ export default function ProductPage({ product, description, images, startReviews
                 src={"/images/" + v.image}
                 alt={v.name}
                 sizes="(max-width: 980px) 48px, 64px"
-                className={`${styles.productVariantImage} ${v.name===variant && styles.productVariantSelected}`}
+                className={`${styles.productVariantImage} ${v.name===variant.name && styles.productVariantSelected}`}
                 onClick={() => {
+
+                  
                   variantIndexToZeroRef.current = true;
+                  
                   setVariant(v);
+                  
                 }}
                
                 height={0}

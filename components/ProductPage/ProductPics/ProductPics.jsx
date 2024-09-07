@@ -118,9 +118,10 @@ export default function ProductPics({ productId, images, onAddToCart, variantIma
 
   useEffect(()=>{
 
+    console.log('activated', variantImageIndex);
   
     
-      if(variantImageIndex && variantImageIndex>-1 && variantImageIndex < images.length){
+      if(variantImageIndex!==undefined && variantImageIndex>-1 && variantImageIndex < images.length){
         swiper?.slideTo(variantImageIndex,window.innerWidth<980?400:0);
         
       }

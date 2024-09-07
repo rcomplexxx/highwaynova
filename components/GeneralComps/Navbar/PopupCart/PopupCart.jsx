@@ -62,15 +62,11 @@ useEffect(()=>{
   }
 
   const navBar = document.getElementById('navBar')
-
   const handleClick = (event) => {
   
     if (!navBar.contains(event.target)) {
 
-      console.log('this should be triggered.')
 
-      event.preventDefault();
-      event.stopImmediatePropagation();
     
       history.back();
       decreaseDeepLinkLevel();

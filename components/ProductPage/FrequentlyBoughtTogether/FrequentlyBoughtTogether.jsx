@@ -8,14 +8,14 @@ const FreqProduct = ({ productId, variantIndex, onAddToCart }) => {
     return p.id == productId;
   });
 
-  console.log('variant index', variantIndex)
+  console.log('fbt variant index', variantIndex)
 
   const variant= product.variants?
   (variantIndex<0 || variantIndex>product.variants?.length-1)?product.variants[0]:product.variants[variantIndex]
   :null;
 
 
-  console.log('variant', variant)
+  console.log('fbt variant', variant)
 
   return (
     <div className={styles.product_style_div}>
