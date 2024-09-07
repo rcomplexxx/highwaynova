@@ -431,6 +431,17 @@ export default function ProductPage({ product, description, images, startReviews
   );
 }
 
+
+
+
+
+
+
+
+
+
+
+
 export async function getStaticPaths() {
   return {
     paths: products.map((product) => {
@@ -445,6 +456,10 @@ export async function getStaticProps(context) {
 
 
   const getPool = require('@/utils/mariaDbPool');
+
+  
+
+ 
 
 
   const productName = context.params.productId;
@@ -479,57 +494,26 @@ export async function getStaticProps(context) {
 
  
 
- 
-    const reviewsData= await getStartReviews(productId, 12);
-
- 
-    
 
     
+  
     
-    let description = `Product ${productId} description`
-    let ratingData={};
-    let reviewsNumberFinal = 0;
-    let sumOfAllReviews= 0 ;
 
+     const ratingData = await getRatingData(productId);
 
+     const reviewsData= await getStartReviews(productId, 12);
    
-    let mariaDbOnlineStatus;
+    
+  let description =  `Product ${productId} description`;
 
-    let connection;
-
-    try {
-      // Set a specific timeout when acquiring a connection
-      connection  = await (await getPool()).getConnection();
-  
-      if(connection)await connection.release();
-  
-      mariaDbOnlineStatus = true;
-    } catch (error) {
-      
-      if(connection) await connection.release();
-        console.log('there is error', error)
-
-      mariaDbOnlineStatus = false;
-    }
-
-    console.log('mariaDb status', mariaDbOnlineStatus)
+    
 
 
-
-      if(mariaDbOnlineStatus){
-    for(let i=1; i <6; i++){
-      
-      const reviewsNumber = await getRatingData(productId, i);
-      ratingData={...ratingData, [`stars${i}`]:reviewsNumber}
-      reviewsNumberFinal = reviewsNumberFinal + reviewsNumber;
-      sumOfAllReviews=sumOfAllReviews+reviewsNumber*i;
-
-    }
+  let connection;
 
     try {
 
-    connection = await (await getPool()).getConnection();
+    connection = await getPool().getConnection();
     const descriptionData= await connection.query(`SELECT description FROM products WHERE productId = ?` , [productId]);
     if(descriptionData.length > 0) description = descriptionData[0].description;
 
@@ -542,12 +526,17 @@ export async function getStaticProps(context) {
       if(connection)await connection.release();
     }
 
-  }
 
 
-    const averageValue=reviewsNumberFinal!==0?Math.round(sumOfAllReviews/reviewsNumberFinal * 10)/ 10:4.7;
-    if(reviewsNumberFinal===0) ratingData={stars5:30, stars4:2, stars3:0, stars2:0, stars1:0, reviewsNumber: 32, rating: averageValue}
-    else {ratingData={...ratingData, reviewsNumber: reviewsNumberFinal, rating: averageValue}}
+
+  
+
+  
+
+  
+
+
+
   // Return the data as props
   return {
     props: {

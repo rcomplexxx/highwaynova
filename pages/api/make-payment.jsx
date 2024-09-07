@@ -76,7 +76,7 @@ const makePayment = async (req, res) => {
 
 
 
-let dbConnection = await (await getPool()).getConnection();
+let dbConnection = await getPool().getConnection();
 
 
   

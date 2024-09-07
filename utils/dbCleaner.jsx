@@ -29,7 +29,7 @@ cron.schedule('0 0 * * *', async () => {
   // 
   try {
  
-    dbConnection = await (await getPool()).getConnection();
+    dbConnection = await getPool().getConnection();
     await dbConnection.query(cleanRateLimiterQuery);
     await dbConnection.query('OPTIMIZE TABLE yourTableName');
     console.log('Rows deleted successfully!');

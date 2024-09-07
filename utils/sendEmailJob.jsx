@@ -39,7 +39,7 @@ cron.schedule(date, async() => {
     
 
 
-      dbConnection = await (await getPool()).getConnection();;
+      dbConnection = await getPool().getConnection();;
 
 
 

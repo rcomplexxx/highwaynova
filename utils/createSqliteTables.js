@@ -11,7 +11,7 @@ async function createSqliteTables() {
 
 
 
-  let conn = await (await getPool()).getConnection();;
+  let conn = await getPool().getConnection();;
 
 
 

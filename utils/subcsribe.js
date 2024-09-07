@@ -11,7 +11,7 @@ async function subscribe(email, source, extraData,dbConnectionArg) {
 
 
 
-    const dbConnection = dbConnectionArg?dbConnectionArg:await (await getPool()).getConnection();;
+    const dbConnection = dbConnectionArg?dbConnectionArg:await getPool().getConnection();;
 
 
     

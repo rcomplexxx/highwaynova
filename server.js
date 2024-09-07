@@ -35,7 +35,7 @@ let dbConnection;
   try{
 
 
-    dbConnection = await (await getPool()).getConnection();
+    dbConnection = await getPool().getConnection();
 
 
 
@@ -197,7 +197,7 @@ async function closeServerGracefully() {
 
     try{
 
-    await (await getPool()).end();
+    await getPool().end();
 
     console.log('MariaDB pool closed.');
 

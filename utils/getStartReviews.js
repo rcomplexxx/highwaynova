@@ -9,7 +9,7 @@ export const getStartReviews= async(productId, limit = 20)=>{
 
 
   try{
-    dbConnection = await (await getPool()).getConnection();
+    dbConnection = await getPool().getConnection();
   
 
     

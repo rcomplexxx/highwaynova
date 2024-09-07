@@ -22,7 +22,7 @@ export default async function adminCheckHandler(req, res) {
 
 
 
-let dbConnection = await (await getPool()).getConnection();
+let dbConnection = await getPool().getConnection();
 
 
   const resReturn = async(statusNumber, jsonObject)=>{
