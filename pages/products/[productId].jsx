@@ -295,7 +295,7 @@ export default function ProductPage({ product, description, images, startReviews
             {product.variants.map((v, i)=>{
            return   <Image
                key={i}
-                src={"/images/" + v.image}
+                src={"/images/" + product.images[v.variantProductImageIndex]}
                 alt={v.name}
                 sizes="(max-width: 980px) 48px, 64px"
                 className={`${styles.productVariantImage} ${v.name===variant.name && styles.productVariantSelected}`}

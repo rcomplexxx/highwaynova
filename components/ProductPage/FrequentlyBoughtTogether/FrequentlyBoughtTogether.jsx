@@ -4,6 +4,9 @@ import Link from "next/link";
 import products from "@/data/products.json";
 
 const FreqProduct = ({ productId, variantIndex, onAddToCart }) => {
+
+
+
   const product = products.find((p) => {
     return p.id == productId;
   });
@@ -47,7 +50,7 @@ const FreqProduct = ({ productId, variantIndex, onAddToCart }) => {
      
       <button
         className={styles.add_to_cart_button}
-        onClick={(event) => {event.stopPropagation();onAddToCart(1,product, variant.name)}}
+        onClick={(event) => {event.stopPropagation();onAddToCart(1,product, variant)}}
        
       >
         Add to Cart
