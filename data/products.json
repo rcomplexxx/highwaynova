@@ -51,7 +51,6 @@
       },
       {
         "name": "Black",
-        "image": "product_0_image_1.jpg",
         "variantProductImageIndex": 1
       }
     ],
@@ -109,12 +108,10 @@
     "variants": [
       {
         "name": "White",
-        "image": "product_1_image_0.jpg",
         "variantProductImageIndex": 0
       },
       {
         "name": "Black",
-        "image": "product_1_image_1.jpg",
         "variantProductImageIndex": 1
       }
     ],
@@ -154,12 +151,10 @@
     "variants": [
       {
         "name": "White",
-        "image": "product_2_image_0.jpg",
         "variantProductImageIndex": 0
       },
       {
         "name": "Black",
-        "image": "product_2_image_1.jpg",
         "variantProductImageIndex": 1
       }
     ],
