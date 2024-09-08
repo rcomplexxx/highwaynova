@@ -64,28 +64,13 @@ const BuyNowPage = () => {
       }
 
   
-    const product = products.find((p) => {
-      if(p.id == productid){
-
-       
-          if(!variants) return true;
-          
-        else {
-          let variantsExist = true;
-
-          variants.forEach(v=>{
-            
-            if(!p.variants.find((pv)=>{return pv.name===v}))variantsExist=false;
-            
-            })
-
-            return variantsExist;
-        }
-
-          
-
-      }
-    });
+      const product = products.find(p => 
+        p.id == productid && (
+          !variants || variants.every(v => 
+            p.variants.some(pv => pv.name === v)
+          )
+        )
+      );
     
 
 
