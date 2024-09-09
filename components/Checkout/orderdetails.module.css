@@ -522,7 +522,12 @@
 
    
   
-    
+    @media (min-width: 980px){
+      .emerge{
+        
+      max-height: none !important;
+      }
+    }
   
  
     
