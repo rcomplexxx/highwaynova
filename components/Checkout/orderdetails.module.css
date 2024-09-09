@@ -24,7 +24,7 @@
 
     position: sticky;
       
-    top: 0;
+    top: var(--size-8-5);
 
     height: min-content;
     width: var(--size-14-5);
