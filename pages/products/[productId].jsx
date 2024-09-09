@@ -97,7 +97,7 @@ export default function ProductPage({ product, description, images, startReviews
 
       variantIndexToZeroRef.current = true;
 
-      const currentVariant = product.variants?.find(v =>{return v.name === variantByQuery});
+      const currentVariant = product.variants?.find(v =>{return v.name.toLowerCase().replace(/\s+/g, "-") === variantByQuery});
 
 
         setVariant(currentVariant?currentVariant:product.variants[0]);
@@ -228,7 +228,7 @@ export default function ProductPage({ product, description, images, startReviews
     const bundleBuyNowLink = useMemo(() => {
       const { variantNames, variantQuantities } = bundleVariants.reduce(
         (acc, bv, index) => {
-          acc.variantNames += bv.name + (index !== bundleVariants.length - 1 ? ',' : '');
+          acc.variantNames += bv.name.toLowerCase().replace(/\s+/g, "-") + (index !== bundleVariants.length - 1 ? ',' : '');
           acc.variantQuantities += bv.quantity + (index !== bundleVariants.length - 1 ? ',' : '');
           return acc;
         },
@@ -396,7 +396,7 @@ export default function ProductPage({ product, description, images, startReviews
       
 
 <Link className={styles.buy_now_button} 
-          href={bundleVariants.length!==0?bundleBuyNowLink:`/checkout/buynow?productid=${product.id}${variant?`&variant=${variant.name}`:""}&quantity=${quantity}`}  shallow>
+          href={bundleVariants.length!==0?bundleBuyNowLink:`/checkout/buynow?productid=${product.id}${variant?`&variant=${variant.name.toLowerCase().replace(/\s+/g, "-")}`:""}&quantity=${quantity}`}  shallow>
             More payment options
           </Link>
 

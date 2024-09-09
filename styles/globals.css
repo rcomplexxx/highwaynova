@@ -829,7 +829,9 @@ p {
   --summery-title-price-color: var(--high-contrast-txt-color);
  
   --checkout-order-summery-bg: var(--main-color-0);
-  --checkout-order-summery-bg-mobile: var(--main-color-0);
+
+  --checkout-order-summery-bg-mobile-title: var(--main-color-0);
+  --checkout-order-summery-bg-mobile: var(--checkout-bg);
  
   --summery-variant-color: var(--neutral-7);
 

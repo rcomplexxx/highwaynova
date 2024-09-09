@@ -110,8 +110,10 @@ const handleCouponApply = () => {
       <div className={styles.rightWrapper}>
         <div id="checkout_right" className={styles.checkout_right}>
         
+
+        <div className={styles.titleDivWrapper} onClick={()=>{ setShowAnswer(!showAnswer);}}>
            
-              <div className={styles.title_div} onClick={()=>{ setShowAnswer(!showAnswer);}}>
+              <div className={styles.title_div} >
                
                   
                   
@@ -136,6 +138,10 @@ const handleCouponApply = () => {
                   </div>
              
               </div>
+
+
+              </div>
+              
   
               <div
               ref={summeryDivRef}
@@ -144,7 +150,7 @@ const handleCouponApply = () => {
                 
                  
                  {cartProducts.map((cp, i) => (
-            <div className={styles.order_pair} key={i}>
+            <div className={`${i===0 && styles.emergePaddingTop} ${styles.order_pair}`} key={i}>
 
               <div className={styles.productImageDiv}>
                 <Image
@@ -239,6 +245,8 @@ const handleCouponApply = () => {
                     <span>Subtotal</span>
                     <span>${subTotal}</span>
                   </div>
+
+                  
                   {coupon.code &&  (
                     <>
                     
@@ -255,6 +263,11 @@ const handleCouponApply = () => {
                  </>
 
                   )}
+
+
+
+
+
                   <div className={styles.order_pair}>
                     <span>Shipping</span>
                     <span>Free</span>
@@ -280,7 +293,7 @@ const handleCouponApply = () => {
                   {totalSavings!=0 &&
                   <div className={styles.totalDiscount}> 
                     <DiscountIconTotal color={`var(--discount-icon-total-color)`} styleClassName={styles.totalDiscountImg}/>
-                      <span className={styles.totalDiscountSpan}>Total savings</span>
+                      <span className={`${styles.totalDiscountSpan} ${styles.totalDiscountTxt}`}>Total savings</span>
                       <span className={styles.totalDiscountSpan}>${totalSavings}</span>
                       
                       </div>

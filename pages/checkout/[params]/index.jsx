@@ -14,7 +14,7 @@ import { NextSeo } from "next-seo";
 import { unimportantPageSeo } from "@/utils/SEO-configs/next-seo.config";
 import CheckoutProvider from "@/contexts/CheckoutContext";
 import { Spinner2 } from "@/public/images/svgs/svgImages";
-import findBestBundle from '@/utils/findBestBundle'
+
 
 const BuyNowPage = () => {
   const router = useRouter();
@@ -37,37 +37,23 @@ const BuyNowPage = () => {
     const quantities = urlParams.get("quantity")?.split(',');
 
 
-    let productInfoCorrect = true;
-
-    if(!variants || !quantities)productInfoCorrect = false;
-  
-    quantities?.forEach((q)=>{
-
-      
-  
-      
-      if(isNaN(Number(q))){
-
-        productInfoCorrect=false;
-
-      }
 
 
-    })
+    
+    if (!variants || !quantities || quantities.some(q => isNaN(Number(q))) || variants.length!==quantities.length) {
+      setLoaded(true);
+      return;
+    }
 
 
-      if(!productInfoCorrect || variants.length!==quantities.length) {
-        
-    setLoaded(true);
-        return;
-
-      }
+    
+    
 
   
       const product = products.find(p => 
         p.id == productid && (
           !variants || variants.every(v => 
-            p.variants.some(pv => pv.name === v)
+            p.variants.some(pv => pv.name.toLowerCase().replace(/\s+/g, "-") === v)
           )
         )
       );
@@ -79,47 +65,41 @@ const BuyNowPage = () => {
     if (product) {
 
 
-
+   
       
       let newProducts = [];
 
       
-      let variantIndex = product.variants.findIndex(v=>{return v.name === variants[0]})
 
 
-      if(variants.length>1){
-
-     
+ 
       
+ 
+        if(variants){
+
+      variants.forEach((variant, i) => {
+
+       
+        const variantObj = product.variants.find(pv=>{return pv.name.toLowerCase().replace(/\s+/g, "-") === variant});
         
 
-      for(let i=0; i < variants.length; i++){
 
-        variantIndex = product.variants.findIndex(v=>{return v.name === variants[i]})
         
-
-
-        console.log('new var pr', product.id, variantIndex)
 
         newProducts.push({
           id: product.id,
           quantity: Number(quantities[i]),
           name: product.name,
-          image: variantIndex>0?product.variants[variantIndex].image:product.images[0],
+          image: product.images[variantObj.variantProductImageIndex],
           price: product.price,
-          variant: variants[i]
+          variant: variantObj.name
         })
-      }
+      })
 
-      
-  
-      }
-
+    }
 
       else{
-
-
-
+        
         newProducts.push({
         id: product.id,
         quantity: Number(quantities[0]),
@@ -129,11 +109,20 @@ const BuyNowPage = () => {
         variant: variants?variants[0]:undefined
       });
 
-     
-    }
+
+      }
+
+      
 
 
-    setCartProducts(findBestBundle(newProducts));
+
+
+
+
+   
+
+
+    setCartProducts(newProducts);
      
     } 
 
@@ -187,9 +176,9 @@ const BuyNowPage = () => {
        <CheckoutProvider buyNowProduct={cartProducts}>
       <CheckoutLogo/>
       <div className={styles.checkout_container}>
-        <OrderDetails products={cartProducts} />
+        <OrderDetails />
 
-        <CheckoutInfo products={cartProducts} setCartProducts={setCartProducts}/>
+        <CheckoutInfo/>
        
         </div>
         </CheckoutProvider>

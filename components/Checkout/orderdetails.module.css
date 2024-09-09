@@ -6,13 +6,13 @@
    
    
     background-color: var(--checkout-order-summery-bg);
-    padding-top: 40px;
+  
 
     box-sizing: border-box;
     border-left: 1px solid var(--border-color-mid);
     
     
-    
+    padding-top: var(--size-8-5);
     
  
   }
@@ -24,7 +24,7 @@
 
     position: sticky;
       
-    top: 40px;
+    top: 0;
 
     height: min-content;
     width: var(--size-14-5);
@@ -138,8 +138,8 @@
     justify-content: space-between;
     align-items: flex-start;
     border:none;
-    margin-top: var(--size-5);
-    margin-bottom: var(--size-6);
+    margin-top: var(--size-2);
+    margin-bottom: var(--size-4);
     overflow:visible;
    
   
@@ -225,38 +225,6 @@
   .applyDisabled:hover{
     background-color: var(--action-button-disabled-bg);
   }
-  
- 
-
-
-  
-
-
-
-  .order_pair{
-    
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: var(--size-5) 0;
-    font-size: var(--font-size-2);
-   
-  }
-  
-
-  .discountPairTitle{
-    display: flex;
-    align-items: center;
-    font-size: var(--font-size-2);
-    margin: var(--size-4) 0;
-   
- 
-  }
-  
-
-  .discountPair{
-    color: var(--discount-order-pair-color);
-  }
 
 
   .mainCouponCode {
@@ -317,6 +285,43 @@
 }
 
 
+  
+ 
+
+
+  
+  .discountPairTitle{
+    display: flex;
+    align-items: center;
+    font-size: var(--font-size-2);
+
+    margin-bottom: var(--size-5);
+  
+   
+ 
+  }
+
+
+  .order_pair{
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: var(--font-size-2);
+   
+  }
+  
+
+
+  
+
+  .discountPair{
+    color: var(--discount-order-pair-color);
+
+  }
+
+
+
 
   
    
@@ -366,16 +371,19 @@
   }
 
   .totalDiscount{
-    width:min-content;
+    width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
     align-items: center;
     gap: var(--size-1);
+
+
+    box-sizing: border-box;
+
     padding: 0 var(--size-1);
     
-    margin-top: var(--size-3);
-    margin-bottom: var(--size-6);
+    padding-bottom: var(--size-6);
+
   }
 
   .totalDiscountImg{
@@ -385,10 +393,16 @@
     margin-left: var(--size-2);
   }
 
+
+
   .totalDiscountSpan{
     white-space: nowrap;
     font-size: var(--font-size-3);
     font-weight: 600;
+  }
+
+  .totalDiscountTxt{
+      flex: 1;
   }
 
 
@@ -435,13 +449,20 @@
     
     .emerge {
       /* background-color: #091a29; */
+      
+      max-height: none;
       max-width: var(--size-16);
       width: 100%;
      
-      
+      display: flex;
+      flex-direction: column;
+      gap: var(--size-4) 0;
       
       transform-origin: top;
       transition: all 0.3s ease;
+
+        
+    
     
     }
 
@@ -449,22 +470,8 @@
   
     
   
-    @media(min-width:980px){
-
-     
-  
-
-   
-
+ 
     
-    
-
-      .emerge {
-        max-height: none !important;
-      }
-
-
-    }
 
   @media (max-width: 980px)  {
 
@@ -482,8 +489,11 @@
     padding-top: 0;
     border-left: none;
     justify-content: center;
+
+    padding: 0;
     margin-bottom: var(--size-6);
 
+    border-bottom: 1px solid var(--neutral-3);
    }
 
 
@@ -492,17 +502,29 @@
       max-width: none;
     width: 100%;
     padding: 0;
+    
    
   }
     
    
+  .titleDivWrapper{
+
     
+   background-color: var(--checkout-order-summery-bg-mobile-title);
+
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    
+  }
 
    .title_div {
    
     height: var(--size-9);
     max-width: var(--size-16);
    width: calc(100% - var(--size-11));
+
 
    
 
@@ -538,7 +560,7 @@
     display: block;
     color: var(--summery-title-color);
     user-select: none;
-    font-size: var(--font-size-4);
+    font-size: var(--font-size-3);
     font-weight: 400;
   
   }
@@ -603,27 +625,44 @@
    
 
     .emerge {
+
+    max-height: 0;
      
     
       box-sizing: border-box;
       padding: 0 var(--size-9);
-      display: flex;
-      flex-direction: column;
-      max-height: 0;
+      
+     
+   
+
 
    
+        
+        gap: var(--size-4) 0;
+    
 
       
       
       overflow-y: hidden;
     }
 
+    .emergePaddingTop{
+      
+      padding-top: var(--size-6);
+    }
+
    
     
 
-    .order_pair{
-      margin: var(--size-4) 0;
+    .coupon_code{
+   
+   
+      margin-top: var(--size-3);
+      margin-bottom: var(--size-3);
+     
+    
     }
+    
 
 
 
@@ -643,13 +682,14 @@
 
   .title_div{
       
-     width: calc(100% - var(--size-8));
+     width: calc(100% - var(--size-6));
   
      }
   
      .emerge{
      
      padding: 0 var(--size-6);
+     
      }
     
 
