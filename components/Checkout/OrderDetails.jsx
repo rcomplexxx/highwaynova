@@ -153,6 +153,9 @@ const handleCouponApply = () => {
             <div className={`${i===0 && styles.emergePaddingTop} ${styles.order_pair}`} key={i}>
 
               <div className={styles.productImageDiv}>
+
+
+                <div className={styles.productImageWrapper}>
                 <Image
                   className={styles.productImage}
                   src={`/images/${cp.image}`}
@@ -161,10 +164,13 @@ const handleCouponApply = () => {
                   width={0}
                   sizes="64px"
                 />
+
+            <div className={styles.badgeDiv}>{cp.quantity}</div>
+
+  
+                </div>
                 <div className={styles.productTitleDiv}>
-                <span>
-                  {cp.quantity} {`${cp.name}${cp.quantity>1?'s':''}`}
-                </span>
+                <span> {cp.name}</span>
                 <span className={styles.variant}>
                   {cp.variant}
                 </span>

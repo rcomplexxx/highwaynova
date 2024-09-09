@@ -72,7 +72,7 @@
 
 
   transition: background-color 0.2s ease;
-  font-size: var(--font-size-3);
+  font-size: var(--font-size-2);
 }
 
 .accentButton:hover{
@@ -348,7 +348,7 @@ p {
   --main-color-9: #fe9ab3;
 
 
-  --accent-color-1: #11596A;
+  --accent-color-1: #11596a;
   --accent-color-2: #16778D;
   --accent-color-3: #1C95B0;
   --accent-color-4: #20AFD0;
@@ -831,11 +831,18 @@ p {
   --checkout-order-summery-bg: var(--main-color-0);
 
   --checkout-order-summery-bg-mobile-title: var(--main-color-0);
-  --checkout-order-summery-bg-mobile: var(--checkout-bg);
+  --checkout-order-summery-bg-mobile: var(--main-color-0);
+
+
+  --checkout-item-badge-bg: var(--accent-color-4);
+  --checkout-item-badge-color: black;
  
   --summery-variant-color: var(--neutral-7);
 
   --summery-sticker-price-color: var(--neutral-6);
+
+
+  
   
 
   --apply-border-color: var(--action-button-border-color);

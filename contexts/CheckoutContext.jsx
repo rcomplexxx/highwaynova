@@ -4,7 +4,7 @@
 
   
 
-import { createContext, useCallback, useEffect, useMemo, useState } from 'react';
+import { createContext, useCallback, useLayoutEffect, useMemo, useState } from 'react';
 
 import coupons from '@/data/coupons.json'
 import { useGlobalStore } from './AppContext';
@@ -39,7 +39,7 @@ export const CheckoutContext = createContext({total:0,subTotal:0, coupon:{code: 
 
 
 
-    useEffect(()=>{
+    useLayoutEffect(()=>{
 
       let newCartProducts = findBestBundle(cartProducts);
       

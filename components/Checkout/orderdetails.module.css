@@ -12,7 +12,6 @@
     border-left: 1px solid var(--border-color-mid);
     
     
-    padding-top: var(--size-8-5);
     
  
   }
@@ -40,6 +39,7 @@
 
     padding: 0 40px;
    
+    padding-top: var(--size-8-5);
 
     
    
@@ -76,12 +76,53 @@
   }
 
 
+  .productImageWrapper{
+    position: relative;
+
+    
+    margin-right: var(--size-5);
+  }
+
+
+
+
+  .badgeDiv{
+   
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    min-width: 20px;
+    min-height: 20px;
+    
+
+   
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: var(--checkout-item-badge-color);
+    background-color: var(--checkout-item-badge-bg);
+
+    box-sizing: border-box;
+    padding: var(--size-1) 6px;
+   
+    border-radius: 36px;
+
+    transform: translate(25%, -50%);
+
+    opacity: 0.6;
+
+    font-size: 12px;
+    font-weight: 600;
+  }
+
 
   .productImage{
     height:auto;
     width: var(--size-9);
     aspect-ratio: 1;
-    margin-right: var(--size-5);
   
     border-radius: 8px;
     user-select: none;
@@ -137,6 +178,9 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
+
+    gap: var(--size-5);
+
     border:none;
     margin-top: var(--size-2);
     margin-bottom: var(--size-4);
@@ -144,6 +188,19 @@
    
   
   }
+
+
+
+
+  .form_group {
+    position: relative;
+    
+    
+  
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
 
 
   .coupon_code_input {
@@ -189,6 +246,9 @@
   
 }
 
+
+
+
   
  
   
@@ -197,14 +257,18 @@
     justify-content: center;
     align-items: center;
     color: var(--apply-coupon-txt-color);
+
+    width: var(--size-10);
     
-    width:  var(--size-10);
+  
     background-color: var(--apply-coupon-color);
+
+
+    box-sizing: border-box;
     border-radius: 4px;
    
-   
     border: 1px solid var(--apply-border-color);
-    margin-left: var(--size-3);
+
     font-size: var(--font-size-3);
     
   }
@@ -269,6 +333,8 @@
   .couponCodeDiv{
     display: flex;
     align-items: center;
+    
+    color: var(--discount-order-pair-color);
   }
 
   .discountIcon{
@@ -315,11 +381,8 @@
 
   
 
-  .discountPair{
-    color: var(--discount-order-pair-color);
 
-  }
-
+  
 
 
 
@@ -329,16 +392,7 @@
   
  
   
-  .form_group {
-    position: relative;
-    
-    
-  
-    margin-right: var(--size-3);
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-    }
+
 
  
 
@@ -493,7 +547,6 @@
     padding: 0;
     margin-bottom: var(--size-6);
 
-    border-bottom: 1px solid var(--neutral-3);
    }
 
 
@@ -693,7 +746,7 @@
      }
     
 
-     .productImage{
+     .productImageWrapper{
      
       margin-right: var(--size-3);
      }
