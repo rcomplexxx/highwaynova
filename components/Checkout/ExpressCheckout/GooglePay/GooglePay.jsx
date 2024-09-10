@@ -15,11 +15,9 @@ const GooglePay = ({
   const [googlePayError, setGooglePayError] = useState();
 
 
-  const { subTotal, coupon, tip} = useContext(CheckoutContext);
+  const { total } = useContext(CheckoutContext);
 
-  const totalPrice = useMemo(()=>{
-    return (subTotal - coupon.discount*subTotal/100 + parseFloat(tip)).toFixed(2)
- }, [subTotal, coupon.discount, tip]);
+
  
 
   const router = useRouter();
@@ -64,16 +62,26 @@ const GooglePay = ({
         firstName = name;
       }
 
-      const discEle = document.getElementById("couponCode");
-      const disc = discEle?discEle.innerText:"";
-    
+      let couponCode = document.getElementById("couponCode")?.innerText;
+      couponCode = !couponCode || couponCode==="BUNDLE"?"":couponCode;
 
-      const tipEl = document.getElementById("tipPrice");
-      const tip = tipEl?tipEl.innerText.split("$")[1]:"0.00"
+
+
+      
+      
+    
+   
+        let tip = document.getElementById("tipPrice")?.innerText;
+        tip = tip?tip.split("$")[1]:"0.00";
+
+     
+        
+    
+        
      
       //document.getElementById('emailSubscribed')
 
-      const totalPrice =  parseFloat(document.getElementById('totalPrice').innerText.split('$')[1]).toFixed(2);
+      
 
       
       const requestData = {
@@ -90,7 +98,7 @@ const GooglePay = ({
           
           phone: paymentData.shippingAddress.phoneNumber,
           items: items,
-          couponCode: disc,
+          couponCode: couponCode,
           
           tip:tip,
           subscribed:  document.getElementById('subscribeCheckbox')?.getAttribute('data-subscribe')==='true',
@@ -102,7 +110,7 @@ const GooglePay = ({
         // Include other payment-related data if required
       };
 
-      const requestDataFinal = { ...requestData, amount:totalPrice };
+      const requestDataFinal = { ...requestData, amount: total };
 
       console.log("mydata", requestData);
       return await fetch("/api/make-payment", {
@@ -196,7 +204,7 @@ const GooglePay = ({
         transactionInfo: {
           totalPriceStatus: "ESTIMATED",
           totalPriceLabel: "Total",
-          totalPrice: `${totalPrice}`,
+          totalPrice: `${total}`,
           currencyCode: "USD",
           countryCode: "US",
         },

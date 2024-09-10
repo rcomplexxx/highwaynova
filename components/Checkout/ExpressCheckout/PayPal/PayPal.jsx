@@ -57,26 +57,25 @@ const PayPalButton=({checkFields, organizeUserData, method='paypal',  type='norm
         try {
 
           console.log('creating order');
-          let requestData = organizeUserDataRef.current(type=="normal"?"PAYPAL":(type=="express"?"PAYPAL(EXPRESS)":"PAYPAL(INSTANT)"));
-          const discEle = document.getElementById("couponCode");
-          if(discEle){
-            console.log('discount exists', discEle.innerText)
-            requestData={...requestData, order:{...requestData.order, couponCode: discEle.innerText}}
-          }
-          else{
-            requestData={...requestData, order:{...requestData.order, couponCode: ""}}
-          }
 
-          const tipEl = document.getElementById("tipPrice");
+
+          let requestData = organizeUserDataRef.current(type=="normal"?"PAYPAL":(type=="express"?"PAYPAL(EXPRESS)":"PAYPAL(INSTANT)"));
+
+
+
+          let couponCode = document.getElementById("couponCode")?.innerText;
+          couponCode = !couponCode || couponCode==="BUNDLE"?"":couponCode;
          
-          if (tipEl) {
-           let tip = tipEl.innerText;
-            tip = tip.substring(tip.indexOf("$") + 1).trim();
-            requestData={...requestData, order:{...requestData.order, tip: tip}}
-          }
-          else{
-            requestData={...requestData, order:{...requestData.order, tip: "0.00"}}
-          }
+          
+          
+        
+          let tip = document.getElementById("tipPrice")?.innerText;
+          tip = tip?tip.split("$")[1]:"0.00";
+         
+            
+            requestData={...requestData, order:{...requestData.order, couponCode: couponCode, tip: tip}}
+         
+
           
             const response = await fetch("/api/make-payment", {
               method: "POST",

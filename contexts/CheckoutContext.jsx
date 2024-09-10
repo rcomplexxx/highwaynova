@@ -41,13 +41,18 @@ export const CheckoutContext = createContext({total:0,subTotal:0, coupon:{code: 
 
     useLayoutEffect(()=>{
 
+      
+
       let newCartProducts = findBestBundle(cartProducts);
+
+      if(coupon.code === "BUNDLE")return;
       
      
+      
+      const alterProduct = newCartProducts.find(cp =>{return cp.priceBeforeBundle!==undefined});
   
       if(coupon.code!==""){
 
-        const alterProduct = newCartProducts.find(cp =>{return cp.priceBeforeBundle!==undefined});
 
         console.log('checking altered product', alterProduct)
   
@@ -70,6 +75,20 @@ export const CheckoutContext = createContext({total:0,subTotal:0, coupon:{code: 
       }
 
       else{
+
+        if (alterProduct) {
+
+          let bundleDiscount = 0;
+
+          newCartProducts.forEach(cp =>{
+
+            if(cp.priceBeforeBundle)bundleDiscount += cp.quantity * (cp.priceBeforeBundle - cp.price);
+          });
+
+
+          setCoupon({code : "BUNDLE", discount: bundleDiscount})
+
+        }
 
       }
 
@@ -99,7 +118,7 @@ export const CheckoutContext = createContext({total:0,subTotal:0, coupon:{code: 
 
             if(checkDiscountSavesMoreThenBundle(cartProducts, newCoupon.discountPercentage)){
 
-            setCoupon({code: newCoupon.code.toUpperCase(), discount: newCoupon.discountPercentage})
+            setCoupon({code: newCoupon.code.toUpperCase(), discount: newCoupon.discountPercentage*subTotal/100 })
             }
 
             else{
@@ -135,7 +154,7 @@ export const CheckoutContext = createContext({total:0,subTotal:0, coupon:{code: 
         
         let subTotal = 0;
         cartProducts.forEach((cp, i) => {
-            subTotal = subTotal + cp.quantity * cp.price;
+            subTotal = subTotal + cp.quantity * (cp.priceBeforeBundle?cp.priceBeforeBundle:cp.price);
         });
         subTotal = subTotal.toFixed(2);
    
@@ -156,7 +175,7 @@ export const CheckoutContext = createContext({total:0,subTotal:0, coupon:{code: 
 
 
       const total = useMemo(()=>{
-        return (subTotal - coupon.discount*subTotal/100 + parseFloat(tip)).toFixed(2)
+        return (subTotal - coupon.discount + parseFloat(tip)).toFixed(2)
      }, [subTotal, coupon.discount, tip]);
 
   

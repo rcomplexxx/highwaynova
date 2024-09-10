@@ -181,7 +181,7 @@ return false;
         phone,
         items:items ,
         subscribe,
-        couponCode: coupon.code,
+        couponCode: coupon.code==="BUNDLE"?"":coupon.code,
         tip: tip.toFixed(2)
       },
       paymentMethod: paymentMethod,
