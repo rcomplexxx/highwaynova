@@ -69,6 +69,10 @@ export const CheckoutContext = createContext({total:0,subTotal:0, coupon:{code: 
 
       }
 
+      else{
+
+      }
+
  
       
 
@@ -97,12 +101,18 @@ export const CheckoutContext = createContext({total:0,subTotal:0, coupon:{code: 
 
             setCoupon({code: newCoupon.code.toUpperCase(), discount: newCoupon.discountPercentage})
             }
+
+            else{
+              
+        return {error: "Coupon code saves less then bundle", couponCode: newCoupon.code};
+            }
+            
     
           return true;
         } 
         
 
-        return false;
+        return {error: "Incorrect coupon code"};
 
 
 

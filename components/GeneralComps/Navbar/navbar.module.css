@@ -87,14 +87,20 @@
     padding: var(--size-3);
     
     transition: transform 0.08s ease-in;
+    transform: scale(1);
   }
 
+
+  
+@media(pointer: fine){
   .logoLink:hover {
     transform: scale(1.1);
   }
+}
   
   .logoLink:active {
-    transform: scale(1);
+    transform: scale(1.1);
+  
   }
  
   

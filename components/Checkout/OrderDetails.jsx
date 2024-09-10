@@ -16,7 +16,8 @@ import { ArrowDown, CancelIcon, DiscountIcon, DiscountIconTotal, ErrorIcon } fro
     const [showAnswer, setShowAnswer] = useState(false);
 
     const [tempCouponCode, setTemptempCouponCode] = useState("");
-    const [couponError, setCouponError] = useState(false);
+    const [couponError, setCouponError] = useState();
+    
 
     const summeryDivRef = useRef();
     const expendHeightTimeout = useRef();
@@ -94,11 +95,20 @@ const handleCouponApply = () => {
     if (tempCouponCode === "") return;
     
     const couponActivated = setAndValidateCoupon(tempCouponCode);
-    if(couponActivated){
-      setCouponError(false);
+    if(!couponActivated.error){
+      setCouponError();
           setTemptempCouponCode("");
     }
-    else setCouponError(true);
+    else if(couponActivated.error === 'Incorrect coupon code')setCouponError('Incorrect coupon code');
+
+    else if(couponActivated.error === 'Coupon code saves less then bundle'){
+
+
+      setCouponError(`${couponActivated.couponCode?.toUpperCase()} couldn't be used with your current discounts.`)
+
+      //Ovde setovati vrednost za couponMessage(ili neko slicno ime). I aktivirati na
+      //taj nacin message za Coupon cant be implemented.
+    }
     
   }
 
@@ -207,25 +217,27 @@ const handleCouponApply = () => {
                         }}
                         onKeyUp={(e) => e.key === 'Enter' && handleCouponApply()}
                         className={`${styles.coupon_code_input} ${
-                          couponError && styles.coupon_code_input_error
+                          couponError === 'Incorrect coupon code' && styles.coupon_code_input_error
                         }`}
                         placeholder={" "}
                       />
                       <label htmlFor={"coupon_code"} className={styles.myLabel}>
                         Coupon code
                       </label>
-                      {couponError && (
+                      {couponError ==='Incorrect coupon code' && (
                     <span className={styles.couponError}>
                       <ErrorIcon/>Enter a valid discount code.
                     </span>
                   )}
+
+
 
                 {coupon.code &&
                   <div className={styles.mainCouponCode}> 
                   <DiscountIcon color={`var(--discount-icon-color)`} styleClassName={styles.mainDiscountImg}/>
                   
                       <span>{coupon.code}</span>
-                      <CancelIcon color={`var(--discount-cancel-icon-color)`} styleClassName={styles.discountCancelImage} handleClick={()=>{setAndValidateCoupon("");}}
+                      <CancelIcon color={`var(--weak-discount-cancel-color)`} styleClassName={styles.discountCancelImage} handleClick={()=>{setAndValidateCoupon("");}}
                     />
                       </div>
                    }
@@ -243,6 +255,12 @@ const handleCouponApply = () => {
                   </div>
 
                  
+              {couponError && couponError.includes( "couldn't be used with your current discounts.") && (
+                    <span className={styles.weakCouponError}>
+                      {couponError}  <CancelIcon color={`var(--weak-coupon-cancel-color)`} styleClassName={styles.weakCouponCacel} handleClick={()=>{setCouponError()}}
+                    />
+                    </span>
+                  )}
         
 
                  
@@ -269,6 +287,10 @@ const handleCouponApply = () => {
                  </>
 
                   )}
+
+
+
+
 
 
 

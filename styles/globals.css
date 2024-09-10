@@ -849,9 +849,16 @@ p {
   --apply-coupon-color: var(--accent-color-4);
   --apply-coupon-hover-color: var(--accent-color-5);
   --apply-coupon-txt-color: var(--action-button-txt-color);
+
+  --weak-coupon-color: var(--neutral-8);
+  --weak-coupon-bg: var(--neutral-0);
+  --weak-coupon-cancel-color: var(--neutral-9);
  
   --coupon-code-color: black;
   --coupon-code-bg: var(--neutral-4);
+
+
+
   --bundle-discount-icon-color: var(--summery-variant-color);
   --discount-cancel-icon-color: var(--neutral-0);
   --discount-icon-color: black;
