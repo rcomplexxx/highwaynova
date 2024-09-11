@@ -8,24 +8,24 @@ function checkDiscountSavesMoreThenBundle(cartProducts, discountPercentage) {
 
     if (!bundledProduct) return true;
     
-    const priceBeforeBundle = bundledProduct.priceBeforeBundle;
+    let bundlePriceOff = 0;
     
     const discountPriceOff = parseFloat(
       (
         cartProducts.reduce((total, cp) => {
+          bundlePriceOff+= cp.price* cp.quantity;
           const cpTotal = (cp.priceBeforeBundle || cp.price) * cp.quantity;
           return total + cpTotal;
-        }, 0) * discountPercentage / 100
+        }, 0) * (100 - discountPercentage) / 100
       ).toFixed(2)
     );
     
-    const bundlePriceOff = (priceBeforeBundle - bundledProduct.price) * bundledProduct.quantity;
 
     
     console.log('discountPriceOff, and bundlePriceOff', discountPriceOff, bundlePriceOff)
 
 
-    if(discountPriceOff>=bundlePriceOff)return true;
+    if(discountPriceOff<=bundlePriceOff)return true;
 
     return false;
     

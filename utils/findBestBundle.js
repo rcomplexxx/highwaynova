@@ -8,6 +8,7 @@ function findBestBundle(cartProducts) {
 
     let bestBundleCpId;
     let bundleQuantity;
+    let bundleLabel;
     let bestBundlePrice = 0;
     let bestBundlePercentage = 0;
 
@@ -63,6 +64,7 @@ function findBestBundle(cartProducts) {
         if(cartProductBundlePriceOff>bestBundlePrice){
             bestBundleCpId = cp.id;
             bundleQuantity=product.bundle[offerIndex].quantity;
+            bundleLabel = `${bundleQuantity}${product.bundle.length - 1===offerIndex || product.bundle[offerIndex+1].quantity - bundleQuantity >1?"+":""}`
             bestBundlePrice=cartProductBundlePriceOff;
             bestBundlePercentage = product.bundle[offerIndex].discountPercentage;
         }
@@ -85,6 +87,7 @@ function findBestBundle(cartProducts) {
             
             delete newCpt.priceBeforeBundle;
             delete newCpt.bundleQuantity;
+            delete newCpt.bundleLabel;
 
         }
 
@@ -107,6 +110,7 @@ function findBestBundle(cartProducts) {
             {
                 cp.priceBeforeBundle = cp.price;
                 cp.bundleQuantity = bundleQuantity;
+                cp.bundleLabel = bundleLabel;
               cp.stickerPrice = cp.price;
                 cp.price =  parseFloat((cp.price * (100 - bestBundlePercentage)/100).toFixed(2));
                 

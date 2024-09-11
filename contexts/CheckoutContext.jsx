@@ -64,6 +64,7 @@ export const CheckoutContext = createContext({total:0,subTotal:0, coupon:{code: 
               cp.price = cp.priceBeforeBundle;
               delete cp.priceBeforeBundle;
               delete cp.bundleQuantity;
+              delete cp.bundleLabel;
             }
             return cp;
           });

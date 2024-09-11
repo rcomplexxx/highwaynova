@@ -50,7 +50,7 @@ const CartItem = ({ item }) => {
   return (
     <div className={styles.mainItemDiv}>
       
-      <Link className={styles.mediaLink} href={`/products/${item.name.toLowerCase().replace(/\s+/g, "-")}${item.variant? '?variant='+item.variant: ''}`} >
+      <Link className={styles.mediaLink} href={`/products/${item.name.toLowerCase().replace(/\s+/g, "-")}${item.variant? '?variant='+item.variant.toLowerCase().replace(/\s+/g, "-"): ''}`} >
        
           <Image
             src={`/images/${item.image}`}
@@ -62,7 +62,7 @@ const CartItem = ({ item }) => {
       </Link>
      
       <div className={styles.mainItemInfo}>
-        <Link className={styles.productName} href={`/products/${item.name.toLowerCase().replace(/\s+/g, "-")}${item.variant? '?variant='+item.variant: ''}`}>
+        <Link className={styles.productName} href={`/products/${item.name.toLowerCase().replace(/\s+/g, "-")}${item.variant? '?variant='+item.variant.toLowerCase().replace(/\s+/g, "-"): ''}`}>
       {item.name}
         </Link>
        
