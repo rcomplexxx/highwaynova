@@ -19,7 +19,7 @@ export default function CheckoutInfo() {
   const [errors, setErrors] = useState({});
   // const [shippingType, setShippingType] = useState("free");
 
-  const {cartProducts, coupon, tip, subscribe, setSubscribe} = useContext(CheckoutContext);
+  const {total, cartProducts, coupon, tip, subscribe, setSubscribe} = useContext(CheckoutContext);
 
 
 
@@ -146,51 +146,39 @@ return false;
 
  
 
-  const organizeUserData= useCallback((paymentMethod, paymentToken)=>{
-    const email = document.getElementById("email").value;
-    const firstName = document.getElementById("firstName").value;
-    const lastName = document.getElementById("lastName").value;
-    const address = document.getElementById("address").value;
-    const apt = document.getElementById("apt")?.value;
-    const country = document.getElementById("country").value;
-    const zipcode = document.getElementById("zipcode").value;
-    const state = document.getElementById("state").value;
-    const city = document.getElementById("city").value;
-    const phone = document.getElementById("phone").value;
-   
-    const items=[];
-    cartProducts.map((product) => {
-      items.push({
-      id: product.id,
-      quantity: product.quantity,
-      variant: product.variant
-      })
-    });
-   
-    const requestData = {
-      order: {
-        email,
-        firstName,
-        lastName,
-        address,
-        apt,
-        country,
-        zipcode,
-        state,
-        city,
-        phone,
-        items:items ,
-        subscribe,
-        couponCode: coupon.code==="BUNDLE"?"":coupon.code,
-        tip: tip.toFixed(2)
-      },
-      paymentMethod: paymentMethod,
-      paymentToken: paymentToken
+const organizeUserData = useCallback((paymentMethod, paymentToken) => {
+  
+  // Collect user input values
+  const fields = ["email", "firstName", "lastName", "address", "apt", "country", "zipcode", "state", "city", "phone"];
+  const userData = fields.reduce((acc, field) => {
+    acc[field] = document.getElementById(field)?.value || "";
+    return acc;
+  }, {});
 
-      // Include other payment-related data if required
-    };
-    return requestData
-  }, [subscribe, coupon.code, tip]);
+
+  
+  const items = cartProducts.map(({ id, quantity, variant }) => ({ id, quantity, variant }));
+
+  
+  const requestData = {
+    order: {
+      ...userData,
+      items,
+      subscribe,
+      couponCode: coupon.code === "BUNDLE" ? "" : coupon.code,
+      tip,
+      clientTotal: total
+    },
+    paymentMethod,
+    paymentToken
+  };
+
+  return requestData;
+}, [cartProducts, subscribe, coupon.code, tip, total]);
+
+
+
+
 
  
 

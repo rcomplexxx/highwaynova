@@ -79,6 +79,10 @@
     text-align: center;
     margin-top: var(--size-2);
   margin-bottom: var(--size-6);
+  
+  align-self: flex-start;
+
+  font-size: var(--font-size-4);
   }
 
 
@@ -89,7 +93,7 @@
    margin-bottom: var(--size-2);
   }
   
-  .product_price_span{
+  .stickerPrice{
     color: var(--neutral-6);
     font-size: var(--font-size-4);
     margin-left: var(--size-3);

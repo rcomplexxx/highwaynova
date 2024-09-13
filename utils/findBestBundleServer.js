@@ -13,29 +13,10 @@ function findBestBundleServer(cartProducts) {
     let bestBundlePrice = 0;
     let bestBundlePercentage = 0;
 
-    const shrinkedCartProductsTemp = [];
-
-   cartProductsTemp.forEach(cp =>{
-
-        const foundshrinkedCpIndex = shrinkedCartProductsTemp.findIndex(scp =>{return scp.id===cp.id});
-
-        if (foundshrinkedCpIndex!==-1){
-            
-            shrinkedCartProductsTemp[foundshrinkedCpIndex].quantity = shrinkedCartProductsTemp[foundshrinkedCpIndex].quantity + cp.quantity;
-
-        }
-
-        else{
-            shrinkedCartProductsTemp.push({...cp});
-        }
-
-      
-    })
-
-
+    
   
 
-    shrinkedCartProductsTemp.forEach((cp) => {
+    cartProductsTemp.forEach((cp) => {
 
         const product = products.find(p =>{return p.id == cp.id});
 
@@ -60,8 +41,8 @@ function findBestBundleServer(cartProducts) {
         if(cartProductBundlePriceOff>bestBundlePrice){
             bestBundleCpId = cp.id;
             bestBundlePrice=cartProductBundlePriceOff;
-            bestBundlePercentage = product.bundle[offerIndex].discountPercentage;
             bestBundleProductOrigPrice= product.price;
+            bestBundlePercentage = product.bundle[offerIndex].discountPercentage;
         }
 
     })

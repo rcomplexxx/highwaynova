@@ -56,7 +56,7 @@ export default function Tip(){
              }, 1)
              setTipInputValue("");
              setSelectedField();
-            setTip(0);
+            setTip('0.00');
 
           }
         },[tipShow])
@@ -67,8 +67,8 @@ export default function Tip(){
             if(parseFloat(tipInputValue, 2) > fullProductCost) {setTipInputValue(""); setTipError(true); return;}
               setSelectedField(0);
               setApplyDisabled(true);
-              if(tipInputValue==="")setTip(0);
-              else setTip(parseFloat(tipInputValue, 2));
+              if(tipInputValue==="")setTip('0.00');
+              else setTip(parseFloat(tipInputValue, 2).toFixed(2));
           
         }
 
@@ -94,19 +94,19 @@ export default function Tip(){
         <div className={styles.roundPercentWrapper}>
             <div className={`${styles.roundPercent} ${styles.firstRoundPercent} ${selectedField==5 && styles.selectedPercent}`} 
             onClick={()=>{
-              setTipError(); setTipInputValue(""); setApplyDisabled(true); setSelectedField(5); setTip(parseFloat(fullProductCost*5/100, 2));}}>
+              setTipError(); setTipInputValue(""); setApplyDisabled(true); setSelectedField(5); setTip(parseFloat(fullProductCost*5/100, 2).toFixed(2));}}>
             <span className={styles.roundPercentSpan}>5%</span>
             <span className={styles.roundTipSpan}>${(fullProductCost*5/100).toFixed(2)}</span>
            
             </div>
             <div className={`${styles.roundPercent} ${styles.centerRoundPercent} ${selectedField==10 && styles.selectedPercent}`}
-             onClick={()=>{setTipError();setTipInputValue(""); setApplyDisabled(true); setSelectedField(10); setTip(parseFloat(fullProductCost*10/100, 2));}}>
+             onClick={()=>{setTipError();setTipInputValue(""); setApplyDisabled(true); setSelectedField(10); setTip(parseFloat(fullProductCost*10/100, 2).toFixed(2));}}>
             <span className={styles.roundPercentSpan}>10%</span>
             <span className={styles.roundTipSpan}>${(fullProductCost*10/100).toFixed(2)}</span>
         
             </div>
             <div className={`${styles.roundPercent} ${styles.lastRoundPercent} ${selectedField==15 && styles.selectedPercent}`} 
-            onClick={()=>{setTipError();setTipInputValue(""); setApplyDisabled(true); setSelectedField(15); setTip(parseFloat(fullProductCost*15/100, 2));}}>
+            onClick={()=>{setTipError();setTipInputValue(""); setApplyDisabled(true); setSelectedField(15); setTip(parseFloat(fullProductCost*15/100, 2).toFixed(2));}}>
             <span className={styles.roundPercentSpan}>15%</span>
             <span className={styles.roundTipSpan}>${(fullProductCost*15/100).toFixed(2)}</span>
          
@@ -176,7 +176,7 @@ export default function Tip(){
 
         </div>
         <button className={`${styles.addTip} accentButton ${applyDisabled && styles.addTipDisabled}`}
-        onClick={handleUpdateTip}    >{tip==0?"Add tip":"Update tip"}</button>
+        onClick={handleUpdateTip}    >{tip==="0.00"?"Add tip":"Update tip"}</button>
       
 
 

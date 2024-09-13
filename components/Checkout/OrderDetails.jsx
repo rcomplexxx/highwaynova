@@ -270,7 +270,7 @@ const handleCouponApply = () => {
                       <DiscountIcon color={`var(--discount-order-pair-color)`} styleClassName={styles.discountIcon}/>
                         <span id="couponCode">{coupon.code}</span>
                         </div>
-                    <span id="discountPrice">- ${(coupon.discount).toFixed(2)}</span>
+                    <span id="discountPrice">- ${coupon.discount}</span>
                     </div>
                  </>
 
@@ -289,9 +289,9 @@ const handleCouponApply = () => {
                     <span>Free</span>
                   </div>
 
-                  {tip!==0 && tip!=="" && <div className={styles.order_pair}>
+                  {tip!=="0.00" && tip!=="" && <div className={styles.order_pair}>
                     <span>Tip</span>
-                    <span id="tipPrice">{`$${tip.toFixed(2)}`}</span>
+                    <span id="tipPrice">{`$${tip}`}</span>
                   </div>}
 
                   
@@ -310,10 +310,10 @@ const handleCouponApply = () => {
                   <div className={styles.totalDiscount}> 
                     <DiscountIconTotal color={`var(--discount-icon-total-color)`} styleClassName={styles.totalDiscountImg}/>
                       <span className={`${styles.totalDiscountSpan} ${styles.totalDiscountTxt}`}>Total savings</span>
-                      <span className={styles.totalDiscountSpan}>${coupon.discount.toFixed(2)}</span>
+                      <span className={styles.totalDiscountSpan}>${coupon.discount}</span>
                       
                       </div>
-  }
+                     }
               
               
               </div>

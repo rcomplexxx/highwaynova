@@ -1,131 +1,74 @@
 
-import products from '@/data/products.json'
+import products from '@/data/products.json';
 
 function findBestBundle(cartProducts) {
-    
-    
-    let cartProductsTemp = [...cartProducts];
+  let cartProductsTemp = [...cartProducts];
+  let bestBundle = { id: null, quantity: 0, label: '', priceOff: 0, discountPercentage: 0 };
 
-    let bestBundleCpId;
-    let bundleQuantity;
-    let bundleLabel;
-    let bestBundlePrice = 0;
-    let bestBundlePercentage = 0;
+  const shrinkedCartProductsTemp = cartProductsTemp.reduce((acc, cp) => {
+    const existing = acc.find(scp => scp.id === cp.id);
+    if (existing) {
+      existing.quantity += cp.quantity;
+    } else {
+      acc.push({ ...cp });
+    }
+    return acc;
+  }, []);
 
-    const shrinkedCartProductsTemp = [];
+  shrinkedCartProductsTemp.forEach(cp => {
+    const product = products.find(p => p.id === cp.id);
+    if (!product?.bundle) return;
 
-     cartProductsTemp.forEach(cp =>{
+    let offerIndex = -1;
+    for (let i = product.bundle.length - 1; i >= 0; i--) {
+      if (cp.quantity >= product.bundle[i].quantity) {
+        offerIndex = i;
+        break; 
+      }
+    }
 
-        const foundshrinkedCpIndex = shrinkedCartProductsTemp.findIndex(scp =>{return scp.id===cp.id});
+    if (offerIndex === -1) return;
 
-        
-
-        if (foundshrinkedCpIndex!==-1){
-            
-            shrinkedCartProductsTemp[foundshrinkedCpIndex].quantity = shrinkedCartProductsTemp[foundshrinkedCpIndex].quantity + cp.quantity;
-
-        }
-
-        else{
-            shrinkedCartProductsTemp.push({...cp});
-        }
-
-      
-    })
-  
-
-    shrinkedCartProductsTemp.forEach((cp) => {
-
-        const product = products.find(p =>{return p.id == cp.id});
-
-        if(!product.bundle) return;
-
-      
-        let offerIndex;
-
-        
-            
-            
-            product.bundle.forEach((pb, index) =>{ 
-
-                
-
-                if(cp.quantity>=pb.quantity)offerIndex = index;
-               
-
-            });
-
-            if(offerIndex===undefined)return;
-
-            
-
-        const cartProductBundlePriceOff = parseFloat((product.price* cp.quantity * product.bundle[offerIndex].discountPercentage/100).toFixed(2));
-
-        if(cartProductBundlePriceOff>bestBundlePrice){
-            bestBundleCpId = cp.id;
-            bundleQuantity=product.bundle[offerIndex].quantity;
-            bundleLabel = `${bundleQuantity}${product.bundle.length - 1===offerIndex || product.bundle[offerIndex+1].quantity - bundleQuantity >1?"+":""}`
-            bestBundlePrice=cartProductBundlePriceOff;
-            bestBundlePercentage = product.bundle[offerIndex].discountPercentage;
-        }
-
-    })
-
-
-
-    cartProductsTemp = cartProductsTemp.map(cpt => {
-
-        const newCpt = {...cpt};
-
-        if(cpt.priceBeforeBundle){
-
-            const productTemp = products.find(p=>{return p.id === newCpt.id});
-
-            newCpt.price = productTemp.price;
-            newCpt.stickerPrice = productTemp.stickerPrice;
-            
-            
-            delete newCpt.priceBeforeBundle;
-            delete newCpt.bundleQuantity;
-            delete newCpt.bundleLabel;
-
-        }
-
-        return newCpt;
-
-    });
-
-    
-  console.log('here is cartProductsTemp rn', cartProductsTemp)
-
-    if(bestBundlePrice == 0)return cartProductsTemp;
+    const discount = product.bundle[offerIndex].discountPercentage;
+    const priceOff = parseFloat((product.price * cp.quantity * discount / 100).toFixed(2));
 
     
 
+    if (priceOff > bestBundle.priceOff) {
+      bestBundle = {
+        id: cp.id,
+        quantity: product.bundle[offerIndex].quantity,
+        label: `${product.bundle[offerIndex].quantity}${(product.bundle.length - 1 === offerIndex || product.bundle[offerIndex + 1]?.quantity - product.bundle[offerIndex].quantity > 1) ? '+' : ''}`,
+        priceOff,
+        discountPercentage: discount
+      };
+    }
+  });
 
-    
+  cartProductsTemp = cartProductsTemp.map(cpt => {
+    const newCpt = { ...cpt };
 
-    cartProductsTemp = cartProductsTemp.map(cp => {
-        if(cp.id === bestBundleCpId) 
-            {
-                cp.priceBeforeBundle = cp.price;
-                cp.bundleQuantity = bundleQuantity;
-                cp.bundleLabel = bundleLabel;
-              cp.stickerPrice = cp.price;
-                cp.price =  parseFloat((cp.price * (100 - bestBundlePercentage)/100).toFixed(2));
-                
-            }
+    if (newCpt.priceBeforeBundle) {
+      const productTemp = products.find(p => p.id === newCpt.id);
+      newCpt.price = productTemp.price;
+      newCpt.stickerPrice = productTemp.stickerPrice;
+      delete newCpt.priceBeforeBundle;
+      delete newCpt.bundleQuantity;
+      delete newCpt.bundleLabel;
+    }
 
-            return cp
-    })
+    if (newCpt.id === bestBundle.id) {
+      newCpt.priceBeforeBundle = newCpt.price;
+      newCpt.bundleQuantity = bestBundle.quantity;
+      newCpt.bundleLabel = bestBundle.label;
+      newCpt.stickerPrice = newCpt.price;
+      newCpt.price = parseFloat((newCpt.price * (100 - bestBundle.discountPercentage) / 100).toFixed(2));
+    }
 
-       
-       
-        return cartProductsTemp;
-    
+    return newCpt;
+  });
 
-
-
+  return bestBundle.priceOff === 0 ? cartProductsTemp : cartProductsTemp;
 }
 
-module.exports = findBestBundle;
+export default findBestBundle;

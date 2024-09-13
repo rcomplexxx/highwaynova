@@ -39,7 +39,7 @@ cron.schedule(date, async() => {
     
 
 
-      dbConnection = await getPool().getConnection();;
+      dbConnection = await getPool().getConnection();
 
 
 
@@ -96,16 +96,6 @@ if(!campaign) throw new Error('campaign_deleted')
           
 
               
-
-            
-         
-         
-         
-           
-
-         
-         
-         
          
          
          
@@ -137,7 +127,7 @@ if(!campaign) throw new Error('campaign_deleted')
                },
              });
    
-             transporter.sendMail({
+             await transporter.sendMail({
                //   from: 'orderconfirmed@selling-game-items-next.com',
                from: process.env.EMAIL_USER,
                to: target,
@@ -154,7 +144,7 @@ if(!campaign) throw new Error('campaign_deleted')
 
                 for(const target of targets){
 
-                  await db.query(`UPDATE customers SET currentCampaign = ? WHERE email = ?`, [
+                  await dbConnection.query(`UPDATE customers SET currentCampaign = ? WHERE email = ?`, [
                     null,
                     target.email
                   ]
@@ -299,6 +289,11 @@ if(!campaign) throw new Error('campaign_deleted')
 
 
 
+
+
+
+
+ 
 
 
 

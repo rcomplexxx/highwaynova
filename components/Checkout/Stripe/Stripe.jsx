@@ -301,8 +301,8 @@ const handleStripePay= async(event)=>{
 
   
 
-              const requestDataFinal=  {...requestData, stripeId:id, amount: total};
-              console.log('reqdata BITNO ~!!!~', requestDataFinal)
+       
+              
 
               const response = await fetch("/api/make-payment", {
                 method: "POST",
@@ -310,7 +310,7 @@ const handleStripePay= async(event)=>{
                   "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                  ...requestDataFinal, items: JSON.stringify(requestDataFinal.items)
+                  ...requestData, items: JSON.stringify(requestData.items)
                 }),
               });
               const data=await response.json();

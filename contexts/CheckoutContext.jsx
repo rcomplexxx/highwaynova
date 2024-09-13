@@ -13,7 +13,7 @@ import findBestBundle from '@/utils/findBestBundle'
 
 
 
-export const CheckoutContext = createContext({total:0,subTotal:0, coupon:{code: "", discount: 0}, setAndValidateCouponCode:()=>{}, discount:0, tip:0, setTip:()=>{} });
+export const CheckoutContext = createContext({cartProducts: [], total:'0.00',subTotal:'0.00', coupon:{code: "", discount: '0.00'}, setAndValidateCouponCode:()=>{}, tip:'0.00', setTip:()=>{}, subscribe: false, setSubscribe:()=>{} });
 
 
 
@@ -30,7 +30,7 @@ export const CheckoutContext = createContext({total:0,subTotal:0, coupon:{code: 
 
     const [subscribe, setSubscribe] = useState(false);
     const [coupon, setCoupon] = useState({code: "", discount: 0});
-    const [tip, setTip]= useState(0);
+    const [tip, setTip]= useState('0.00');
     const [cartProducts, setCartProducts] = useState(buyNowProduct?findBestBundle(buyNowProduct):[...useGlobalStore(state => state.cartProducts)])
   
 
@@ -39,104 +39,59 @@ export const CheckoutContext = createContext({total:0,subTotal:0, coupon:{code: 
 
 
 
-    useLayoutEffect(()=>{
-
-      
-
-      let newCartProducts = findBestBundle(cartProducts);
-
-      if(coupon.code === "BUNDLE")return;
-      
-     
-      
-      const alterProduct = newCartProducts.find(cp =>{return cp.priceBeforeBundle!==undefined});
-  
-      if(coupon.code!==""){
-
-
-        console.log('checking altered product', alterProduct)
-  
-        if (alterProduct) {
-
-        
-          newCartProducts = newCartProducts.map(cp => {
-            if (cp.priceBeforeBundle !== undefined) {
-              cp.price = cp.priceBeforeBundle;
-              delete cp.priceBeforeBundle;
-              delete cp.bundleQuantity;
-              delete cp.bundleLabel;
-            }
-            return cp;
-          });
-
-      
-        }
+    useLayoutEffect(() => {
+      if (coupon.code) return;
+    
+      const newCartProducts = findBestBundle(cartProducts);
+    
+      if (!newCartProducts.some(cp => cp.priceBeforeBundle)) return;
+    
+      const bundleDiscount = newCartProducts.reduce(
+        (total, cp) => total + (cp.priceBeforeBundle ? cp.quantity * (cp.priceBeforeBundle - cp.price) : 0), 
+        0
+      );
+    
+      setCoupon({ code: "BUNDLE", discount: bundleDiscount.toFixed(2) });
+      setCartProducts(newCartProducts);
+    }, [coupon.code]);
 
 
-      }
-
-      else{
-
-        if (alterProduct) {
-
-          let bundleDiscount = 0;
-
-          newCartProducts.forEach(cp =>{
-
-            if(cp.priceBeforeBundle)bundleDiscount += cp.quantity * (cp.priceBeforeBundle - cp.price);
-          });
 
 
-          setCoupon({code : "BUNDLE", discount: bundleDiscount})
 
-        }
 
-      }
 
- 
-      
+ const setAndValidateCoupon = useCallback((newCouponCode) => {
+  if (!newCouponCode && coupon.code) {
+    setCoupon({ code: "", discount: 0 });
+    return true;
+  }
 
-      console.log('new cart products are', newCartProducts)
+  const newCoupon = coupons.find(c => c.code.toUpperCase() === newCouponCode.toUpperCase());
+  if (!newCoupon) return { error: "Incorrect coupon code" };
+
+  if (coupon.code === "BUNDLE") {
+    if (!checkDiscountSavesMoreThenBundle(cartProducts, newCoupon.discountPercentage))   return {error: "Coupon code saves less then bundle", couponCode: newCoupon.code};
+
+    
+      const newCartProducts = cartProducts.map(cp =>
+        cp.priceBeforeBundle
+          ? { ...cp, price: cp.priceBeforeBundle, priceBeforeBundle: undefined, bundleQuantity: undefined, bundleLabel: undefined }
+          : cp
+      );
+
+      const newSubTotal = newCartProducts.reduce((total, cp) => total + cp.price * cp.quantity, 0).toFixed(2);
 
       setCartProducts(newCartProducts);
-  
-    },[coupon.code])
-
-
-
-
-
-    const setAndValidateCoupon = useCallback((newCouponCode)=>{
-
-        if(newCouponCode==="" && coupon.code!==""){setCoupon({code: "", discount: 0}); return true;}
-
-        const newCoupon = coupons.find((c) => {
-            return c.code.toUpperCase() === newCouponCode.toUpperCase();
-          });
-
-          if (newCoupon) {
-
-
-            if(checkDiscountSavesMoreThenBundle(cartProducts, newCoupon.discountPercentage)){
-
-            setCoupon({code: newCoupon.code.toUpperCase(), discount: newCoupon.discountPercentage*subTotal/100 })
-            }
-
-            else{
-              
-        return {error: "Coupon code saves less then bundle", couponCode: newCoupon.code};
-            }
-            
+      setCoupon({ code: newCoupon.code.toUpperCase(), discount: ((newCoupon.discountPercentage * newSubTotal) / 100).toFixed(2) });
+      return true;
     
-          return true;
-        } 
-        
+    
+  }
 
-        return {error: "Incorrect coupon code"};
-
-
-
-    },[coupon.code]);
+  setCoupon({ code: newCoupon.code.toUpperCase(), discount: ((newCoupon.discountPercentage * subTotal) / 100).toFixed(2) });
+  return true;
+}, [coupon.code]);
 
 
 
@@ -153,13 +108,10 @@ export const CheckoutContext = createContext({total:0,subTotal:0, coupon:{code: 
 
     const subTotal = useMemo(() => {
         
-        let subTotal = 0;
-        cartProducts.forEach((cp, i) => {
-            subTotal = subTotal + cp.quantity * (cp.priceBeforeBundle?cp.priceBeforeBundle:cp.price);
-        });
-        subTotal = subTotal.toFixed(2);
+      return cartProducts
+  .reduce((total, cp) => total + cp.quantity * (cp.priceBeforeBundle || cp.price), 0)
+  .toFixed(2);
    
-        return subTotal
       }, [cartProducts]);
 
   

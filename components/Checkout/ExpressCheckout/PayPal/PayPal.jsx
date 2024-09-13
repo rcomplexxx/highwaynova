@@ -63,18 +63,12 @@ const PayPalButton=({checkFields, organizeUserData, method='paypal',  type='norm
 
 
 
-          let couponCode = document.getElementById("couponCode")?.innerText;
-          couponCode = !couponCode || couponCode==="BUNDLE"?"":couponCode;
-         
-          
           
         
-          let tip = document.getElementById("tipPrice")?.innerText;
-          tip = tip?tip.split("$")[1]:"0.00";
+          
          
-            
-            requestData={...requestData, order:{...requestData.order, couponCode: couponCode, tip: tip}}
-         
+
+          
 
           
             const response = await fetch("/api/make-payment", {

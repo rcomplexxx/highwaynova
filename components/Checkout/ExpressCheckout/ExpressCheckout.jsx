@@ -37,7 +37,7 @@ export default function ExpressCheckout({
           <GooglePay
             products={products}
           
-            
+            organizeUserData={organizeUserData}
             
           
             

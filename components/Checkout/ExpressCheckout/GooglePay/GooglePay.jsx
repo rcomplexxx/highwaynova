@@ -1,4 +1,4 @@
-import  { useContext, useEffect, useMemo, useState } from "react";
+import  { useContext, useEffect, useMemo, useRef, useState } from "react";
 import GooglePayButton from "@google-pay/button-react";
 import styles from "./googlepay.module.css";
 import classNames from "classnames";
@@ -15,10 +15,26 @@ const GooglePay = ({
   const [googlePayError, setGooglePayError] = useState();
 
 
-  const { total } = useContext(CheckoutContext);
+  const { total, coupon, tip } = useContext(CheckoutContext);
 
 
- 
+  const totalRef = useRef(total);
+  const couponCodeRef = useRef(coupon.code==="BUNDLE"?"":coupon.code);
+
+  const tipRef = useRef(tip);
+
+
+  useEffect(()=>{
+
+    couponCodeRef.current =coupon.code==="BUNDLE"?"":coupon.code;
+
+    tipRef.current = tip;
+
+    totalRef.current = total;
+
+  },[coupon.code, tip, total])
+
+
 
   const router = useRouter();
 
@@ -27,90 +43,39 @@ const GooglePay = ({
   const handleGpayOrder = async (paymentData) => {
     try {
     
-      console.log("Time to uncover data", paymentData);
-
-      const paymentToken = JSON.parse(
-        paymentData.paymentMethodData.tokenizationData.token
-      ).id;
-
-   
-
-     
-   
-
-
-      const items = [];
-      products.map((product) => {
-        items.push({
-          id: product.id,
-          quantity: product.quantity,
-          variant: product.variant,
-        });
-      });
-
-      let firstName,
-        lastName = "";
-      const name = paymentData.shippingAddress.name;
-      const lastSpaceIndex = name.lastIndexOf(" ");
-
-      // Check if a space was found
-      if (lastSpaceIndex !== -1) {
-        // Extract the first part and the second part
-        firstName = name.slice(0, lastSpaceIndex);
-        lastName = name.slice(lastSpaceIndex);
-      } else {
-        firstName = name;
-      }
-
-      let couponCode = document.getElementById("couponCode")?.innerText;
-      couponCode = !couponCode || couponCode==="BUNDLE"?"":couponCode;
-
-
-
       
       
-    
-   
-        let tip = document.getElementById("tipPrice")?.innerText;
-        tip = tip?tip.split("$")[1]:"0.00";
+const paymentToken = JSON.parse(paymentData.paymentMethodData.tokenizationData.token).id;
 
-     
-        
-    
-        
-     
-      //document.getElementById('emailSubscribed')
+// Map products to items
+const items = products.map(({ id, quantity, variant }) => ({ id, quantity, variant }));
 
+// Extract first and last name
+const [firstName = "", lastName = ""] = paymentData.shippingAddress.name.split(" ");
+
+// Build requestData
+const requestData = {
+  order: {
+    email: paymentData.email,
+    firstName: firstName,
+    lastName: lastName,
+    address: paymentData.shippingAddress.address1,
+    apt: undefined,
+    country: swapCountryCode(paymentData.shippingAddress.countryCode),
+    zipcode: paymentData.shippingAddress.postalCode,
+    state: paymentData.shippingAddress.administrativeArea,
+    city: paymentData.shippingAddress.locality,
+    phone: paymentData.shippingAddress.phoneNumber,
+    items,
+    couponCode: couponCodeRef.current,
+    tip: tipRef.current,
+    subscribed: document.getElementById('subscribeCheckbox')?.getAttribute('data-subscribe') === 'true',
+    clientTotal: totalRef.current
+  },
+  paymentMethod: "GPAY",
+  paymentToken
+};
       
-
-      
-      const requestData = {
-        order: {
-          email: paymentData.email,
-          firstName: firstName,
-          lastName: lastName,
-          address: paymentData.shippingAddress.address1,
-          apt: undefined,
-          country: swapCountryCode(paymentData.shippingAddress.countryCode),
-          zipcode: paymentData.shippingAddress.postalCode,
-          state: paymentData.shippingAddress.administrativeArea,
-          city: paymentData.shippingAddress.locality,
-          
-          phone: paymentData.shippingAddress.phoneNumber,
-          items: items,
-          couponCode: couponCode,
-          
-          tip:tip,
-          subscribed:  document.getElementById('subscribeCheckbox')?.getAttribute('data-subscribe')==='true',
-          
-        },
-        paymentMethod: "GPAY",
-        paymentToken: paymentToken,
-
-        // Include other payment-related data if required
-      };
-
-      const requestDataFinal = { ...requestData, amount: total };
 
       console.log("mydata", requestData);
       return await fetch("/api/make-payment", {
@@ -119,8 +84,8 @@ const GooglePay = ({
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          ...requestDataFinal,
-          items: JSON.stringify(requestDataFinal.items),
+          ...requestData,
+          items: JSON.stringify(requestData.items),
         }),
       })
         .then((response) => response.json())
@@ -245,27 +210,3 @@ const GooglePay = ({
 
 export default GooglePay;
 
-// onPaymentDataChanged={()=>{}}
-
-//  merchantInfo: {
-//   merchantId: 'BCR2DN4TZLVYPEIX',
-//   merchantName: 'Demo Merchant',
-// },
-
-//ERROR
-// error: {
-//   reason: "SHIPPING_ADDRESS_UNSERVICEABLE",
-//   message: "We are not providing shipping service on that shipping address.",
-//   intent: "SHIPPING_ADDRESS"
-// }
-//OFFER_INVALID
-//OFFER
-
-// allowedCountryCodes:"US"
-
-//dodaj discount u amount.
-
-// offerDetail: {
-//   redemptionCode: "PROMOTIONALCODE",
-//   description: "An excellent discount"
-// },

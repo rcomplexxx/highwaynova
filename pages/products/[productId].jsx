@@ -123,103 +123,48 @@ export default function ProductPage({ product, description, images, startReviews
 
 
 
-  const onAddToCart = useCallback(( quantity = 1,addedProduct=product, addedVariant=variant) => {
-
+  const onAddToCart = useCallback((quantity = 1, addedProduct = product, addedVariant = variant) => {
     let updatedCartProducts = [...cartProducts];
-
-    
-    const newProducts = [];
-
-
-
-
-
-    const addNewProduct = (newProductObj, newProductVariant, newProductQuantity)=>{
-
-      console.log('info', newProductObj, newProductVariant)
-
-
-    const productIndex = updatedCartProducts.findIndex((cp) => cp.id === newProductObj.id && cp.variant===newProductVariant);
-
-    if (productIndex !== -1) {
-     
-      
-      updatedCartProducts[productIndex].quantity += newProductQuantity;
-
-      newProducts.push(updatedCartProducts[productIndex])
-
-      
-    
+    let newProducts = [];
   
-    } else {
-
-
-      const variantObj= product.variants.find(pv=>{return pv.name === newProductVariant})
-
-
-      const newProduct = {
-        id: newProductObj.id,
-        quantity: newProductQuantity,
-        name: newProductObj.name,
-        image: variantObj?.variantProductImageIndex>0?newProductObj.images[variantObj?.variantProductImageIndex]:newProductObj.images[0],
-        price: newProductObj.price,
-        stickerPrice: newProductObj.stickerPrice,
-        variant: newProductVariant
-      };
-      updatedCartProducts.push(newProduct);
-
-      
-      newProducts.push(newProduct)
-
-    }
-
-
-  }
-
-  if(bundleVariants.length!==0){
-
-
-
-   for(const variant of bundleVariants){
-    
+    const addNewProduct = (newProductObj, newProductVariant, newProductQuantity) => {
+      const productIndex = updatedCartProducts.findIndex(
+        (cp) => cp.id === newProductObj.id && cp.variant === newProductVariant
+      );
   
-
-    addNewProduct(addedProduct, variant.name, variant.quantity)
-   }
-
-
- 
-  }
-  else addNewProduct(addedProduct, addedVariant.name, quantity);
-
-
-
-
+      if (productIndex !== -1) {
+        updatedCartProducts[productIndex].quantity += newProductQuantity;
+        newProducts.push(updatedCartProducts[productIndex]);
+      } else {
+        const variantObj = product.variants.find((pv) => pv.name === newProductVariant) || {};
+        const newProduct = {
+          id: newProductObj.id,
+          quantity: newProductQuantity,
+          name: newProductObj.name,
+          image: newProductObj.images[variantObj?.variantProductImageIndex] || newProductObj.images[0],
+          price: newProductObj.price,
+          stickerPrice: newProductObj.stickerPrice,
+          variant: newProductVariant,
+        };
+        updatedCartProducts.push(newProduct);
+        newProducts.push(newProduct);
+      }
+    };
   
-      setCartProducts( updatedCartProducts);
-
-
-
-      const newProductsShrinked = newProducts.reduce((finalNewProducts, newProduct) => {
-
-
-
-        const existing = finalNewProducts.find(item => item.id === newProduct.id && item.variant === newProduct.variant);
-        if (existing) {
-          existing.quantity += 1;
-        } else {
-          finalNewProducts.push(newProduct);
-        }
-        return finalNewProducts;
-      }, []);
-    
-    
-    
-       setNewProducts(newProductsShrinked);
-    
-      
-
-    },[cartProducts, product, variant, bundleVariants ]);
+    (bundleVariants.length ? bundleVariants : [{ name: addedVariant.name, quantity }]).forEach(({ name, quantity }) =>
+      addNewProduct(addedProduct, name, quantity)
+    );
+  
+    setCartProducts(updatedCartProducts);
+  
+    const newProductsShrinked = newProducts.reduce((acc, newProduct) => {
+      const existing = acc.find((item) => item.id === newProduct.id && item.variant === newProduct.variant);
+      existing ? (existing.quantity += 1) : acc.push(newProduct);
+      return acc;
+    }, []);
+  
+    setNewProducts(newProductsShrinked);
+  }, [cartProducts, product, variant, bundleVariants]);
 
   
 
@@ -266,7 +211,8 @@ export default function ProductPage({ product, description, images, startReviews
             }}
           >
 
-        {/* <span className={styles.ratingNumber}>{ratingData.rating.toFixed(1)}</span> */}
+    
+    
             
             <Stars ratingNumber={ratingData.rating?ratingData.rating:4.7} starClassName={styles.starClassName}/>
             <span className={styles.product_rating_reviews_number}>{ratingData.reviewsNumber} reviews</span>
@@ -341,52 +287,47 @@ export default function ProductPage({ product, description, images, startReviews
           </button>
 
             <PayPalButton type='instant' color='gold' organizeUserData={
-             useCallback((paymentMethod)=>{
-                const email = "";
-                const firstName = "";
-                const lastName = "";
-                const address = "";
-                const apt = "";
-                const country = "";
-                const zipcode = "";
-                const state = "";
-                const city = "";
-                const phone = "";
-               
-                const items=bundleVariants.length>0?bundleVariants.map(bv =>{
-                  return {
+               useCallback((paymentMethod) => {
+                const defaultFields = {
+                  email: "",
+                  firstName: "",
+                  lastName: "",
+                  address: "",
+                  apt: "",
+                  country: "",
+                  zipcode: "",
+                  state: "",
+                  city: "",
+                  phone: ""
+                };
+              
+                const items = bundleVariants.length > 0 ? 
+                  bundleVariants.map(bv => ({
                     id: product.id,
                     quantity: bv.quantity,
                     variant: bv.name
-                  }
-                }):[{
-                  id: product.id,
-                  quantity: quantity,  
-                  variant: variant
-                }];
-               
+                  })) : [{
+                    id: product.id,
+                    quantity,
+                    variant
+                  }];
+
+                  
+
+              
                 const requestData = {
                   order: {
-                    email,
-                    firstName,
-                    lastName,
-                    address,
-                    apt,
-                    country,
-                    zipcode,
-                    state,
-                    city,
-                    phone,
+                    ...defaultFields,
                     couponCode: "",
-                    tip: 0,
-                    items:items ,
+                    tip: "0.00",
+                    items
                   },
-                  paymentMethod: paymentMethod,
+                  paymentMethod,
                   paymentToken: undefined
-            
                   // Include other payment-related data if required
                 };
-                return requestData
+              
+                return requestData;
               }
             
   ,[quantity, variant, bundleVariants])}/>

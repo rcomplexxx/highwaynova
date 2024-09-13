@@ -434,11 +434,18 @@
   
    
  
-  
+  .totalPair{
+    
+  padding-bottom: var(--size-5) !important;
+  }
  
   
 
 
+  .totalText{
+    font-size: var(--font-size-4);
+    font-weight: 600;
+  }
  
 
 
@@ -449,10 +456,9 @@
   
 }
 
-.totalText{
-  font-size: var(--font-size-4);
-  font-weight: 600;
-}
+
+
+
 
 .total{
   font-size: var(--font-size-4);
@@ -481,7 +487,7 @@
 
     padding: 0 var(--size-1);
     
-    padding-bottom: var(--size-6);
+    padding-bottom: var(--size-5);
 
   }
 

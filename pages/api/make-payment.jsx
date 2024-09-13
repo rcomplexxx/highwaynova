@@ -68,11 +68,43 @@ const paypalPay=async(totalPrice, requestShipping)=>{
 
 
 
-
 const makePayment = async (req, res) => {
   console.log('  reqdata BITNO ~!!!~).', req.body)
 
   
+
+
+  
+async function generateUniqueId() {
+
+
+
+
+
+  // Generate four random digits
+  // const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+  const characters = '0123456789';
+ 
+
+  while (true) {
+
+    const timestamp = Date.now().toString(16);
+
+    const randomDigits = characters.charAt(Math.floor(Math.random() * characters.length));
+
+  const uniqueId = randomDigits.substring(0, 2) + timestamp.substring(0, 4) + randomDigits.substring(2, 4) + timestamp.substring(4) + randomDigits.substring(4);
+
+
+
+  if(  (  await dbConnection.query('SELECT 1 FROM orders WHERE id = ?', [uniqueId])   ).length<1  ) return uniqueId;
+
+  
+}
+
+}
+
+
 
 
 
@@ -103,49 +135,9 @@ let dbConnection = await getPool().getConnection();
 
       try {
       
-        //  db.prepare(`DROP TABLE IF EXISTS orders`).run();
-
-
-
-        async function generateUniqueId() {
-
-
-
-
-
-          // Generate four random digits
-          // const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-
-          const characters = '0123456789';
-         
-        
-          while (true) {
-        
-            const timestamp = Date.now().toString(16);
-        
-            const randomDigits = characters.charAt(Math.floor(Math.random() * characters.length));
-        
-          const uniqueId = randomDigits.substring(0, 2) + timestamp.substring(0, 4) + randomDigits.substring(2, 4) + timestamp.substring(4) + randomDigits.substring(4);
-        
         
 
-          if(  (  await dbConnection.query('SELECT 1 FROM orders WHERE id = ?', [uniqueId])   ).length<1  ) return uniqueId;
-        
-          
-        }
-        
-        }
 
-
-
-
-
-
-       
-
-    
-
-  
 
 
       
@@ -294,65 +286,33 @@ let dbConnection = await getPool().getConnection();
     //   return await resReturn(429, { error: "Too many requests. Please try again later." });
     // }
 
-    console.log('here are items of buying', req.body.order.items)
-
-    const couponCode = req.body.order.couponCode;
-    console.log('discount code is!', couponCode)
-
-    //Ovde se montira bundle ako ga ima.
-
-    let orderItems = (couponCode!=undefined && couponCode != "")?req.body.order.items:findBestBundleServer(req.body.order.items);
-
-
-    console.log('here are bundled prices', orderItems)
-
     
+
+
+
+
+
+
+    const { clientTotal, couponCode, tip, items } = req.body.order;
+    const orderItems = couponCode ? items : findBestBundleServer(items);
     
-    totalPrice = parseFloat(orderItems
-      .reduce((sum, product) => {
+    totalPrice = parseFloat(
+      orderItems.reduce((sum, product) => 
+        sum + (product.bundledPrice || productsData.find(item => item.id === product.id)?.price || 0) * product.quantity
+      , 0).toFixed(2)
+    );
+    
+    const coupon = couponCode && coupons.find(c => c.code.toUpperCase() === couponCode.toUpperCase());
+    
+    totalPrice = (totalPrice - (coupon ? totalPrice * coupon.discountPercentage / 100 : 0) + (parseFloat(tip) || 0)).toFixed(2);
+    
 
-        if(product.bundledPrice) {
-          sum+= product.bundledPrice * product.quantity;
 
-          return sum;
-        }
 
-        const productInfo = productsData.find((item) => item.id === product.id);
-        if (productInfo) {
-          sum += productInfo.price * product.quantity;
-        }
-         return sum;
-      }, 0) .toFixed(2));
+    console.log('here are subtotal, tip and total price', orderItems,tip,totalPrice)
 
-    console.log('TOTALPRICE!',totalPrice);
    
-
-
-    if (couponCode != "") {
-      const coupon= coupons.find((c)=>{return c.code.toUpperCase()===couponCode.toUpperCase()});
-      console.log('coupon is!', coupon);
-      if(coupon){
-      const discount= coupon.discountPercentage;
-      const discountFloat = parseFloat(discount);
-
-      totalPrice = parseFloat((totalPrice - totalPrice*discountFloat/100).toFixed(2));
-     
-      }
-
-    }
-
-    const tip =req.body.order.tip;
-      if (tip && tip!="" && tip!="0") {
-      
-        const tipFloat = parseFloat(tip);
-  
-        totalPrice = totalPrice + tipFloat;
-        totalPrice= parseFloat(totalPrice.toFixed(2));
-        }
-    console.log('Total price on server is', totalPrice)
-    console.log('tip je:', req.body.order.tip);
-
-    //ovde negde namontirati da se u totalPrice ubacuje i bundle
+    
 
 
     
