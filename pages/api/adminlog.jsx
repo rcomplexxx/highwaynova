@@ -1,5 +1,5 @@
-import { generateToken } from "../../utils/auth.js"; // Import necessary functions for token generation and password verification
-import RateLimiter from "@/utils/rateLimiter.js";
+import { generateToken } from "@/utils/utils-server/auth.js"; // Import necessary functions for token generation and password verification
+import RateLimiter from "@/utils/utils-server/rateLimiter.js";
 import jwt from "jsonwebtoken";
 
 const limiterPerHour = new RateLimiter({

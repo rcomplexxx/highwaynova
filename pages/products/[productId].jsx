@@ -5,6 +5,7 @@ import {useGlobalStore} from "@/contexts/AppContext";
 import CustomerReviews from "@/components/ProductPage/CustomerReviews/CustomerReviews.jsx";
 
 
+const getPool = require('@/utils/utils-server/mariaDbPool');
 
 
 
@@ -19,8 +20,8 @@ import ProductPageCards from "@/components/ProductPage/ProductPageCards/ProductP
 
 import ProductPics from "@/components/ProductPage/ProductPics/ProductPics";
 
-import { getStartReviews } from "@/utils/getStartReviews";
-import getRatingData from "@/utils/getRatingData";
+import { getStartReviews } from "@/utils/utils-server/getStartReviews";
+import getRatingData from "@/utils/utils-server/getRatingData";
 import dynamic from "next/dynamic";
 import { NextSeo } from "next-seo";
 import { productPageSeo } from "@/utils/SEO-configs/next-seo.config";
@@ -123,50 +124,50 @@ export default function ProductPage({ product, description, images, startReviews
 
 
 
+
+
   const onAddToCart = useCallback((quantity = 1, addedProduct = product, addedVariant = variant) => {
-    let updatedCartProducts = [...cartProducts];
-    let newProducts = [];
+    const updatedCartProducts = [...cartProducts];
+    const newProducts = [];
   
-    const addNewProduct = (newProductObj, newProductVariant, newProductQuantity) => {
-      const productIndex = updatedCartProducts.findIndex(
-        (cp) => cp.id === newProductObj.id && cp.variant === newProductVariant
+    const formatName = name => name.toLowerCase().replace(/\s+/g, "-");
+  
+    const addNewProduct = (variantName, qty) => {
+      const existingProduct = updatedCartProducts.find(cp =>
+        cp.id === addedProduct.id &&
+        formatName(cp.variant) === formatName(variantName)
       );
   
-      if (productIndex !== -1) {
-        updatedCartProducts[productIndex].quantity += newProductQuantity;
-        newProducts.push(updatedCartProducts[productIndex]);
+      if (existingProduct) {
+        existingProduct.quantity += qty;
+        newProducts.push({ ...existingProduct, quantity: qty });
       } else {
-        const variantObj = product.variants.find((pv) => pv.name === newProductVariant) || {};
+        const variantObj = product.variants.find(pv => formatName(pv.name) === formatName(variantName)) || {};
         const newProduct = {
-          id: newProductObj.id,
-          quantity: newProductQuantity,
-          name: newProductObj.name,
-          image: newProductObj.images[variantObj?.variantProductImageIndex] || newProductObj.images[0],
-          price: newProductObj.price,
-          stickerPrice: newProductObj.stickerPrice,
-          variant: newProductVariant,
+          id: addedProduct.id,
+          quantity: qty,
+          name: addedProduct.name,
+          image: addedProduct.images[variantObj.variantProductImageIndex] || addedProduct.images[0],
+          price: addedProduct.price,
+          stickerPrice: addedProduct.stickerPrice,
+          variant: variantName,
         };
-        updatedCartProducts.push(newProduct);
         newProducts.push(newProduct);
+        updatedCartProducts.push(newProduct);
       }
     };
   
-    (bundleVariants.length ? bundleVariants : [{ name: addedVariant.name, quantity }]).forEach(({ name, quantity }) =>
-      addNewProduct(addedProduct, name, quantity)
-    );
+    const newProductsMini = bundleVariants.length ? bundleVariants : [{ name: addedVariant.name, quantity }];
+    newProductsMini.forEach(({ name, quantity }) => addNewProduct(name, quantity));
   
     setCartProducts(updatedCartProducts);
-  
-    const newProductsShrinked = newProducts.reduce((acc, newProduct) => {
-      const existing = acc.find((item) => item.id === newProduct.id && item.variant === newProduct.variant);
-      existing ? (existing.quantity += 1) : acc.push(newProduct);
-      return acc;
-    }, []);
-  
-    setNewProducts(newProductsShrinked);
-  }, [cartProducts, product, variant, bundleVariants]);
+    setNewProducts(newProducts);
+  }, [cartProducts, product, variant, quantity, bundleVariants]);
 
   
+
+
+
 
 
 
@@ -288,6 +289,9 @@ export default function ProductPage({ product, description, images, startReviews
 
             <PayPalButton type='instant' color='gold' organizeUserData={
                useCallback((paymentMethod) => {
+
+
+
                 const defaultFields = {
                   email: "",
                   firstName: "",
@@ -300,17 +304,41 @@ export default function ProductPage({ product, description, images, startReviews
                   city: "",
                   phone: ""
                 };
+
+               
               
-                const items = bundleVariants.length > 0 ? 
-                  bundleVariants.map(bv => ({
-                    id: product.id,
-                    quantity: bv.quantity,
-                    variant: bv.name
-                  })) : [{
-                    id: product.id,
-                    quantity,
-                    variant
-                  }];
+                let items = [{ id: product.id, quantity, variant: variant.name }];
+                let clientTotal = (product.price * quantity).toFixed(2);
+                
+                if (bundleVariants.length > 0) {
+                  const bundleQuantity = bundleVariants.reduce((total, cp) => total + cp.quantity, 0);
+                  items = bundleVariants.map(cp => ({ id: product.id, quantity: cp.quantity, variant: cp.name }));
+                
+                  const bundleIndex = product.bundle.findIndex(b => b.quantity > bundleQuantity);
+                  const discountIndex = bundleIndex === -1 ? product.bundle.length - 1 : bundleIndex - 1;
+                  const discountPercentage = product.bundle[discountIndex].discountPercentage;
+                
+                  clientTotal = 
+                    bundleVariants.reduce((sum, bv) => 
+                      sum + parseFloat((product.price * (100 - discountPercentage) / 100).toFixed(2))  * bv.quantity
+                    , 0).toFixed(2);
+                  
+                  
+                } else if (product.bundle) {
+                  const lastBundle = product.bundle[product.bundle.length - 1];
+                  if(quantity > lastBundle.quantity)
+                    clientTotal= ( parseFloat((product.price * (100 - lastBundle.discountPercentage) / 100).toFixed(2))  * quantity).toFixed(2)
+                    
+                
+                  
+                }
+                
+                
+                
+                  
+                  
+
+                
 
                   
 
@@ -320,7 +348,8 @@ export default function ProductPage({ product, description, images, startReviews
                     ...defaultFields,
                     couponCode: "",
                     tip: "0.00",
-                    items
+                    items,
+                    clientTotal: clientTotal
                   },
                   paymentMethod,
                   paymentToken: undefined
@@ -398,7 +427,6 @@ export async function getStaticPaths() {
 export async function getStaticProps(context) {
 
 
-  const getPool = require('@/utils/mariaDbPool');
 
   
 
@@ -452,21 +480,25 @@ export async function getStaticProps(context) {
     
 
 
-  let connection;
+  let dbConnection;
 
     try {
 
-    connection = await getPool().getConnection();
-    const descriptionData= await connection.query(`SELECT description FROM products WHERE productId = ?` , [productId]);
+    dbConnection = await getPool().getConnection();
+    const descriptionData= await dbConnection.query(`SELECT description FROM products WHERE productId = ?` , [productId]);
+
     if(descriptionData.length > 0) description = descriptionData[0].description;
 
-    if(connection)await connection.release();
 
     }
 
     catch(error){
       console.log('there is error with db connection', error)
-      if(connection)await connection.release();
+      
+    }
+
+    finally{
+      if(dbConnection)await dbConnection.release();
     }
 
 

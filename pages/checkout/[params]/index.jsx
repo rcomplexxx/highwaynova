@@ -53,7 +53,7 @@ const BuyNowPage = () => {
       const product = products.find(p => 
         p.id == productid && (
           !variants || variants.every(v => 
-            p.variants.some(pv => pv.name.toLowerCase().replace(/\s+/g, "-") === v)
+            p.variants.some(pv => pv.name.toLowerCase().replace(/\s+/g, "-") === v.toLowerCase().replace(/\s+/g, "-"))
           )
         )
       );
@@ -80,7 +80,7 @@ const BuyNowPage = () => {
       variants.forEach((variant, i) => {
 
        
-        const variantObj = product.variants.find(pv=>{return pv.name.toLowerCase().replace(/\s+/g, "-") === variant});
+        const variantObj = product.variants.find(pv=>{return pv.name.toLowerCase().replace(/\s+/g, "-") === variant.toLowerCase().replace(/\s+/g, "-")});
         
 
 

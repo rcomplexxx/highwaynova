@@ -1,6 +1,6 @@
 const cron = require('node-cron');
 
-const getPool = require('./mariaDbPool');
+const getPool = require('@/utils/utils-server/mariaDbPool');
 
 
 // Schedule the cron job to run every day at midnight

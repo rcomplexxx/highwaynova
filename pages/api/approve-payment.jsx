@@ -1,7 +1,7 @@
 import paypal from "@paypal/checkout-server-sdk";
-import RateLimiter from "@/utils/rateLimiter.js";
-import subscribe from '@/utils/subcsribe'
-const getPool = require('../../utils/mariaDbPool');
+import RateLimiter from "@/utils/utils-server/rateLimiter.js";
+import subscribe from '@/utils/utils-server/subcsribe'
+const getPool = require('@/utils/utils-server/mariaDbPool');
 
 
 
@@ -29,7 +29,7 @@ const approvePayment = async (req, res) => {
 
 
 
-let dbConnection = await getPool().getConnection();
+let dbConnection;
 
 
 
@@ -50,12 +50,65 @@ let dbConnection = await getPool().getConnection();
 
 
 
-  const updateDb = async (email) => {
+
+
+
+  const updateAddress = async (email,shippingAddress, dbConnection) => {
+   
+       
+
+    // Updating the 'approved' field in the 'orders' table using prepared statements
+
+const paypalExpressChecker=  (await dbConnection.query(`SELECT address, city FROM orders WHERE paymentId = ? AND paymentMethod = ?`, [paymentId, paymentMethod]))[0];
+
+      if(!paypalExpressChecker)throw new Error('Something went wrong. No data found in the database for the specified paymentId and paymentMethod.');
+
+
+      if(paypalExpressChecker.address!="" && paypalExpressChecker.city!="") return {message:"Order approved successfully."};
+      
+      
+
+    const fullName=shippingAddress.name.full_name;
+    const address =  shippingAddress.address;
+
+    console.log("Here is my data!",email, fullName.slice(0, fullName.indexOf(" ")),  fullName.slice(fullName.indexOf(" "), fullName.length), 
+    address.address_line_1,  address.address_line_2,address.country_code, address.postal_code, address.admin_area_1,address.admin_area_2 , 
+    paymentId, paymentMethod)
+    
+
+
+
+      
+
+
+
+    const myCustomerId = (await dbConnection.query(`SELECT id FROM customers WHERE email = ?`, [email]))[0]?.id;
+    
+
+
+    const result = await dbConnection.query("UPDATE orders SET customer_id = ?, firstName = ?, lastName = ?, address = ?, apt = ?, country = ?, zipcode =?, state = ?, city=? WHERE paymentId = ? AND paymentMethod = ?"
+      , [myCustomerId, fullName.slice(0, fullName.indexOf(" ")), fullName.slice(fullName.indexOf(" "), fullName.length), 
+      address.address_line_1, address.address_line_2,address.country_code, address.postal_code, address.admin_area_1,address.admin_area_2 , paymentId, paymentMethod]);
+      // , phone=?
+    // Check the result of the update operation
+    console.log('result',result);
+    if (result.affectedRows === 0) {
+      
+
+      throw new Error("Error: Order not found or not updated.");
+    }
+    
+ 
+
+};
+
+
+
+  const updateDb = async (email,  dbConnection) => {
 
 
     
 
-      try {
        
 
         // Updating the 'approved' field in the 'orders' table using prepared statements
@@ -65,7 +118,12 @@ let dbConnection = await getPool().getConnection();
       [1, paymentId, paymentMethod]
     );
 
-        if (result.affectedRows > 0) {
+        if (result.affectedRows === 0) 
+          throw new Error("Error: Order not found or not updated.");
+
+
+
+
          
  const orderData = (await dbConnection.query(`SELECT id, total, couponCode FROM orders WHERE paymentId = ? AND paymentMethod = ?`, [paymentId, paymentMethod]))[0];
           
@@ -111,81 +169,21 @@ let dbConnection = await getPool().getConnection();
 
      
           
-          return {
-            message: "Order placed successfully.",
           
-          };
-        } else {
+
+          
+       
+
+        // Closing the database connection
+       
       
 
-          return {error: "Error: Order not found or not updated."};
-        }
-
-        // Closing the database connection
-       
-      } catch (error) {
-       return {error: "Error in database operations." + error};
-      }
-
 
   };
 
 
 
-  const updateAddress = async (email,shippingAddress) => {
-   
-      try {
-       
 
-        // Updating the 'approved' field in the 'orders' table using prepared statements
-
-  const paypalExpressChecker=  (await dbConnection.query(`SELECT address, city FROM orders WHERE paymentId = ? AND paymentMethod = ?`, [paymentId, paymentMethod]))[0];
-          if(!paypalExpressChecker)throw new Error('Something went wrong. No data found in the database for the specified paymentId and paymentMethod.');
-
-
-          if(paypalExpressChecker.address!="" && paypalExpressChecker.city!="") return {message:"Order approved successfully."};
-          
-          
- 
-        const fullName=shippingAddress.name.full_name;
-        const address =  shippingAddress.address;
-
-        console.log("Here is my data!",email, fullName.slice(0, fullName.indexOf(" ")),  fullName.slice(fullName.indexOf(" "), fullName.length), 
-        address.address_line_1,  address.address_line_2,address.country_code, address.postal_code, address.admin_area_1,address.admin_area_2 , 
-        paymentId, paymentMethod)
-        
-
-    
-
-          
-
-
-
-        const myCustomerId = (await dbConnection.query(`SELECT id FROM customers WHERE email = ?`, [email]))[0]?.id;
-        
-
-
-        const result = await dbConnection.query("UPDATE orders SET customer_id = ?, firstName = ?, lastName = ?, address = ?, apt = ?, country = ?, zipcode =?, state = ?, city=? WHERE paymentId = ? AND paymentMethod = ?"
-          , [myCustomerId, fullName.slice(0, fullName.indexOf(" ")), fullName.slice(fullName.indexOf(" "), fullName.length), 
-          address.address_line_1, address.address_line_2,address.country_code, address.postal_code, address.admin_area_1,address.admin_area_2 , paymentId, paymentMethod]);
-          // , phone=?
-        // Check the result of the update operation
-        console.log('result',result);
-        if (result.affectedRows > 0) {
-          
-          return {message:"Order approved successfully."};
-        } else {
-          
-          return {error:"Error: Order not found or not updated."};
-        }
-
-        // Closing the database connection
-       
-      } catch (error) {
-      return {error:"Error in database operations." + error};
-      }
- 
-  };
 
 
 
@@ -200,6 +198,10 @@ let dbConnection = await getPool().getConnection();
 
     if (!(await limiterPerDay.rateLimiterGate(clientIp, dbConnection)))
       return await resReturn(429, {error: "Too many requests. Please try again later." })
+
+
+
+    dbConnection = await getPool().getConnection();
   
     
 
@@ -219,9 +221,9 @@ let dbConnection = await getPool().getConnection();
       if (response.result.status === "COMPLETED") {
         console.log('hello!', response.result.purchase_units[0].shipping)
 
-        if(await updateAddress(response.result.payer.email_address,response.result.purchase_units[0].shipping).error) throw new Error('Error updating database.');
+        await updateAddress(response.result.payer.email_address,response.result.purchase_units[0].shipping, dbConnection);
         
-        if(await updateDb(response.result.payer.email_address).error) throw new Error('Error updating database.');
+        await updateDb(response.result.payer.email_address, dbConnection);
      
 
         return await resReturn(200, { message: "Payment successful",

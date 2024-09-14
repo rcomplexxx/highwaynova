@@ -8,8 +8,8 @@ import { createContext, useCallback, useLayoutEffect, useMemo, useState } from '
 
 import coupons from '@/data/coupons.json'
 import { useGlobalStore } from './AppContext';
-import checkDiscountSavesMoreThenBundle from '@/utils/compareDiscountAndBundle';
-import findBestBundle from '@/utils/findBestBundle'
+import checkDiscountSavesMoreThenBundle from '@/utils/utils-client/compareDiscountAndBundle';
+import findBestBundle from '@/utils/utils-client/findBestBundle'
 
 
 

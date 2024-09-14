@@ -3,8 +3,8 @@ import formidable from "formidable";
 const path = require('path');
 import {promises as fs} from 'fs'
 
-import RateLimiter from "@/utils/rateLimiter.js";
-import { verifyToken } from "../../utils/auth.js"; 
+import RateLimiter from "@/utils/utils-server/rateLimiter.js";
+import { verifyToken } from "@/utils/utils-server/auth.js"; 
 
 
 

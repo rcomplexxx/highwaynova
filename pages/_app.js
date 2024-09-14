@@ -8,7 +8,7 @@ import {useGlobalStore} from "@/contexts/AppContext";
 import Footer from "@/components/GeneralComps/Footer/Footer";
 import SEO from '@/utils/SEO-configs/next-seo.config.js'
 import SubscribePopup from "@/components/GeneralComps/SubscribePopup/SubscribePopup";
-import { inter, eb_Garamond } from "@/utils/fonts";
+import { inter, eb_Garamond } from "@/utils/utils-client/fonts";
 import { DefaultSeo } from "next-seo";
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css'; // Import CSS for NProgress

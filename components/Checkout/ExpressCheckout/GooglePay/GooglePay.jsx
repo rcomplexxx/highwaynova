@@ -3,7 +3,7 @@ import GooglePayButton from "@google-pay/button-react";
 import styles from "./googlepay.module.css";
 import classNames from "classnames";
 import { useRouter } from "next/router";
-import swapCountryCode from "@/utils/countryList";
+import swapCountryCode from "@/utils/utils-client/countryList";
 import { CheckoutContext } from "@/contexts/CheckoutContext";
 import { ErrorIcon } from "@/public/images/svgs/svgImages";
 

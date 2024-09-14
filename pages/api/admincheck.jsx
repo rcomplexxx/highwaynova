@@ -1,13 +1,13 @@
 import fs from 'fs'
-import { verifyToken } from "../../utils/auth.js"; // Adjust the path based on your project structure
-import RateLimiter from "@/utils/rateLimiter.js";
-import emailSendJob from '@/utils/sendEmailJob.jsx';
-import makeNewDescription from "../../utils/makeNewDescription.js"
-import reorderReviewsByRatingAndImages from '@/utils/reorderReviews.jsx';
-import createSqliteTables from '@/utils/createSqliteTables.js';
-import getTargets from '@/utils/getTargets.js';
+import { verifyToken } from "@/utils/utils-server/auth.js"; // Adjust the path based on your project structure
+import RateLimiter from "@/utils/utils-server/rateLimiter.js";
+import emailSendJob from '@/utils/utils-server/sendEmailJob.jsx';
+import makeNewDescription from "@/utils/utils-server/makeNewDescription.js"
+import reorderReviewsByRatingAndImages from '@/utils/utils-server/reorderReviews.jsx';
+import createSqliteTables from '@/utils/utils-server/createSqliteTables.js';
+import getTargets from '@/utils/utils-server/getTargets';
 
-const getPool = require('../../utils/mariaDbPool');
+const getPool = require('@/utils/utils-server/mariaDbPool');
 
 
 const limiterPerTwoMins = new RateLimiter({
@@ -22,7 +22,7 @@ export default async function adminCheckHandler(req, res) {
 
 
 
-let dbConnection = await getPool().getConnection();
+let dbConnection;
 
 
   const resReturn = async(statusNumber, jsonObject)=>{
@@ -109,6 +109,13 @@ else{
   };
 
 
+
+
+
+
+  
+
+
 //   function deleteImage(product_id, imageName) {
 //     const fs = require('fs');
 
@@ -132,7 +139,7 @@ else{
 
 
 
-  function  wipeReviewImageDirectory(product_id) {
+  function  deleteReviewImageFolder(product_id) {
 
     console.log('wipe dir entered, ', product_id)
 
@@ -172,12 +179,7 @@ else{
       const allSequences = await dbConnection.query(`SELECT id, emails FROM email_sequences`);
 
 
-      const sequenceToDeleteIdArray = allSequences.filter((seq)=>{
-
-        const seqEmails = JSON.parse(seq.emails);
-
-        return seqEmails.find(seqEmail => seqEmail.id === deleteId)
-      })
+      const sequenceToDeleteIdArray = allSequences.filter((seq)=> JSON.parse(seq.emails).find(seqEmail => seqEmail.id === deleteId))
 
 
       for(const seq of sequenceToDeleteIdArray){
@@ -268,7 +270,7 @@ else{
        
         console.log('productids', product_ids)
         product_ids.forEach(product_id =>{
-          wipeReviewImageDirectory(product_id.product_id)
+          deleteReviewImageFolder(product_id.product_id)
         })
 
         await dbConnection.query(`DELETE FROM reviews`);
@@ -279,7 +281,7 @@ else{
 
            
              await dbConnection.query(`DELETE FROM reviews WHERE product_id = ?`, [product_id]);
-            wipeReviewImageDirectory(product_id);
+            deleteReviewImageFolder(product_id);
             await dbConnection.query(`UPDATE reviews SET id = id - ? WHERE product_id > ?`,[ deletedItemsNumber, product_id]);
             
 
@@ -362,6 +364,7 @@ else{
     try {
     
       
+      console.log('proso up db', 'should be created')
 
       if(table==='orders'){
         
@@ -370,9 +373,10 @@ else{
 
         for(const changedOrder of data){
 
-           console.log('pair', changedOrder)
           
-           if(changedOrder.supplierCost!==undefined) await dbConnection.query(`UPDATE orders SET packageStatus = ?, supplyCost = ? WHERE id = ?`, [changedOrder.packageStatus, changedOrder.supplierCost, changedOrder.id]);
+          
+           if(changedOrder.supplierCost!==undefined) 
+            await dbConnection.query(`UPDATE orders SET packageStatus = ?, supplyCost = ? WHERE id = ?`, [changedOrder.packageStatus, changedOrder.supplierCost, changedOrder.id]);
            else await dbConnection.query(`UPDATE orders SET packageStatus = ? WHERE id = ?`, [changedOrder.packageStatus, changedOrder.id]);
 
         }
@@ -385,7 +389,6 @@ else{
 
       
        
-        console.log('proso up db', 'should be created')
         
         const orderData = (await dbConnection.query(`
           SELECT customer_id, packageStatus
@@ -417,11 +420,7 @@ else{
 
 
 
-        console.log('campaign should be killed now using email_seuqnces'
-       
         
-        
-        );
 
 
         await dbConnection.query(`UPDATE email_campaigns SET emailSentCounter = (
@@ -440,12 +439,12 @@ else{
 
       else if(table==='messages'){
 
-        await console.log('message detected', data)
+       console.log('message detected', data)
         
 
         for(const changedMessage of data){
 
-          await console.log('pair', changedMessage);
+          
           
          await dbConnection.query(`UPDATE messages SET msgStatus = ? WHERE id = ?`,
           [changedMessage.msgStatus,
@@ -468,20 +467,18 @@ else{
 
       const template_id = data.templateType==="main"?1:2;
 
-await dbConnection.query(`DELETE FROM email_templates WHERE id = ?`, [template_id]);
-
-
-       
-
-       await dbConnection.query(`INSERT INTO email_templates (id, designJson, emailFontValue, emailFontSize, emailWidthModeValue, mainBackgroundColor, templateType) VALUES (?, ?, ?, ?, ?, ?, ?)`,
-         [ template_id,
-          data.designJson,
-          data.emailFontValue,
-          data.emailFontSize,
-          data.emailWidthModeValue,
-          data.mainBackgroundColor,
-          data.templateType]
-        );
+      await dbConnection.query(`
+        REPLACE INTO email_templates (id, designJson, emailFontValue, emailFontSize, emailWidthModeValue, mainBackgroundColor, templateType)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+      `, [
+        template_id,
+        data.designJson,
+        data.emailFontValue,
+        data.emailFontSize,
+        data.emailWidthModeValue,
+        data.mainBackgroundColor,
+        data.templateType
+      ]);
 
 
       }
@@ -498,17 +495,19 @@ await dbConnection.query(`DELETE FROM email_templates WHERE id = ?`, [template_i
         console.log('in table emails');
        
 
-        console.log('should be created');
+        
 
-        const email_with_id_1_exists = (await dbConnection.query(`SELECT 1 FROM emails WHERE id = 1`))[0]?1:0;;
-
-      
-
-        const insert_id = !email_with_id_1_exists?1:(await dbConnection.query('SELECT MIN(id + 1) AS insert_id FROM emails WHERE id + 1 NOT IN (SELECT id FROM emails) LIMIT 1'))[0]?.insert_id;
-          
- 
+        const insert_id = (await dbConnection.query(`
+          SELECT COALESCE(
+            (SELECT MIN(id + 1) 
+             FROM emails 
+             WHERE id + 1 NOT IN (SELECT id FROM emails)
+             AND EXISTS (SELECT 1 FROM emails WHERE id = 1)),
+            1
+          ) AS insert_id
+        `))[0].insert_id;
        
-        console.log('insert id is', insert_id)
+        
 
  
 
@@ -519,7 +518,7 @@ await dbConnection.query(`DELETE FROM email_templates WHERE id = ?`, [template_i
         ]
         );
 
-        console.log('should be inserted?');
+        
         }
 
 
@@ -549,21 +548,27 @@ await dbConnection.query(`DELETE FROM email_templates WHERE id = ?`, [template_i
         console.log('in table email_sequences');
       
 
-        console.log('should be created');
 
-        let  insertId =  (await dbConnection.query(`SELECT id FROM email_sequences WHERE id = 1`))[0]?.id;
-     
-        if(insertId){
-           insertId = (await dbConnection.query(`SELECT id FROM email_sequences WHERE id + 1 NOT IN (SELECT id FROM email_sequences)`))[0]?.id + 1
-       
-        }
-        else insertId=1
+        const sequenceId = (await dbConnection.query(`
+          SELECT COALESCE(
+            (SELECT MIN(id + 1) 
+             FROM email_sequences 
+             WHERE id + 1 NOT IN (SELECT id FROM email_sequences)
+             AND EXISTS (SELECT 1 FROM email_sequences WHERE id = 1)),
+            1
+          ) AS insert_id
+        `))[0].insert_id;
 
-       const sequenceId = (await dbConnection.query(`INSERT INTO email_sequences (id, title, emails) VALUES (?, ?, ?)`,[
-        insertId,
+
+
+
+
+
+        await dbConnection.query(`INSERT INTO email_sequences (id, title, emails) VALUES (?, ?, ?)`,[
+          sequenceId,
           data.title,
           data.emails]
-        )).insertId;
+        );
 
 
         console.log('should be created3', data.key_sequence_type);
@@ -916,7 +921,7 @@ await dbConnection.query(`DELETE FROM email_templates WHERE id = ?`, [template_i
     if (!(await limiterPerTwoMins.rateLimiterGate(clientIp, dbConnection))) return await resReturn(429, { error: "Too many requests." })
    
 
-      
+      dbConnection = await getPool().getConnection()
 
     
 
@@ -1215,6 +1220,9 @@ await dbConnection.query(`DELETE FROM email_templates WHERE id = ?`, [template_i
 
    
     }
+
+    return await resReturn(500, { successfulLogin: false, error: "Wrong data type" })
+
 
 
   }

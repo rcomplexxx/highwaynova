@@ -1,11 +1,13 @@
+require('module-alias/register');
+
 
 const next = require('next');
 const express = require('express');
-const createSqliteTables = require('./utils/createSqliteTables.js')
-const dbCleaner = require('./utils/dbCleaner.jsx');
-const sendEmailJob = require('./utils/sendEmailJob.jsx');
+const createSqliteTables = require('@/utils/utils-server/createSqliteTables.js')
+const dbCleaner = require('@/utils/utils-server/dbCleaner.jsx');
+const sendEmailJob = require('@/utils/utils-server/sendEmailJob.jsx');
 
-const getPool = require('./utils/mariaDbPool');
+const getPool = require('@/utils/utils-server/mariaDbPool');
 
 
 

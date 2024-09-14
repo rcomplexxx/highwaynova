@@ -10,7 +10,7 @@ import ToastMessage from "./ToastMessage/ToastMessage";
 import { ArrowDown, CancelIcon, ZoomInIcon, ZoomOutIcon } from "@/public/images/svgs/svgImages";
 import { useGlobalStore } from "@/contexts/AppContext";
 
-import { transformColorToRgb } from "@/utils/transformColorToRgba";
+import { transformColorToRgb } from "@/utils/utils-client/transformColorToRgba";
 
 
 

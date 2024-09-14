@@ -1,9 +1,9 @@
 const cron = require('node-cron');
 const nodemailer = require("nodemailer");
 const hashData = require('./hashData');
-const products = require('../data/products.json')
-const coupons = require('../data/coupons.json')
-const getPool = require('./mariaDbPool');
+const products = require('../../data/products.json')
+const coupons = require('../../data/coupons.json')
+const getPool = require('@/utils/utils-server/mariaDbPool');
 
 
 
@@ -29,6 +29,8 @@ console.log('setting email cron scheduler', date)
 
 cron.schedule(date, async() => {
   console.log('Send email here');
+
+  return;
 
   let dbConnection;
 
@@ -278,6 +280,10 @@ if(!campaign) throw new Error('campaign_deleted')
 
 }
 );
+
+
+
+
 
 
  }

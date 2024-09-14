@@ -70,35 +70,29 @@ export default function BestSellers() {
 
 
 
-  const onAddToCart = ( quantity = 1,addedProduct, addedVariant) => {
-    let updatedCartProducts = [...cartProducts];
-
-    const productIndex = cartProducts.findIndex((cp) => cp.id === addedProduct.id && cp.variant===addedVariant.name);
-
-    if (productIndex !== -1) {
-
-    
-      
-      updatedCartProducts[productIndex].quantity += quantity;
-     
-      
+  const onAddToCart = (quantity = 1, addedProduct, addedVariant) => {
+    const updatedCartProducts = [...cartProducts];
+    const product = updatedCartProducts.find(
+      (cp) => cp.id === addedProduct.id && cp.variant === addedVariant.name
+    );
   
+    if (product) {
+      product.quantity += quantity;
     } else {
-      const newProduct = {
+      updatedCartProducts.push({
         id: addedProduct.id,
-        quantity: quantity,
+        quantity,
         name: addedProduct.name,
-        image: addedVariant?.variantProductImageIndex>0?addedProduct.images[addedVariant?.variantProductImageIndex]:addedProduct.images[0],
+        image: addedVariant?.variantProductImageIndex > 0
+          ? addedProduct.images[addedVariant.variantProductImageIndex]
+          : addedProduct.images[0],
         price: addedProduct.price,
         stickerPrice: addedProduct.stickerPrice,
-        variant: addedVariant.name
-      };
-      updatedCartProducts.push(newProduct);
+        variant: addedVariant.name,
+      });
     }
-
   
-      setCartProducts( updatedCartProducts);
-    
+    setCartProducts(updatedCartProducts);
   };
 
  

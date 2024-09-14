@@ -1,4 +1,4 @@
-const getPool = require('./mariaDbPool');
+const getPool = require('@/utils/utils-server/mariaDbPool');
 
 
 
@@ -26,7 +26,7 @@ class RateLimiter {
 
   
 
-        const dbConnection= dbConnectionArg?dbConnectionArg:await getPool().getConnection();;
+        let dbConnection;
 
 
 
@@ -34,6 +34,7 @@ class RateLimiter {
       
           try {
          
+            dbConnection= dbConnectionArg?dbConnectionArg:await getPool().getConnection();
   
               const existingRecord = (await dbConnection.query(`
                   SELECT id, tokenNumber, expireDate  FROM rateLimiter WHERE ip = ? AND apiNumber = ?

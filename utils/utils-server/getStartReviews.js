@@ -1,6 +1,6 @@
 
 import reviewsData from "@/data/reviews.json";
-const getPool = require('./mariaDbPool');
+const getPool = require('@/utils/utils-server/mariaDbPool');
 
 
 export const getStartReviews= async(productId, limit = 20)=>{
@@ -28,16 +28,23 @@ export const getStartReviews= async(productId, limit = 20)=>{
   
 
   
-      if(dbConnection)await dbConnection.release();
   
       return result.length<limit?result.slice(0, limit):result;
+
+
+
+      
     }
 
   
   catch(error){
     console.log('cant establish db connection',error);
-    if(dbConnection) await dbConnection.release();
+  
     return reviewsData.slice(0,limit);
+  }
+
+  finally{
+    if(dbConnection) await dbConnection.release();
   }
 
 

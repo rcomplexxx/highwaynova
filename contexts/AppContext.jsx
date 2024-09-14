@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import findBestBundle from '@/utils/findBestBundle.js'
+import findBestBundle from '@/utils/utils-client/findBestBundle.js'
 import currency from "currency.js";
 
 export const useGlobalStore = create((set) => {

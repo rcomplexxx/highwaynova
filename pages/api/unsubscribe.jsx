@@ -1,8 +1,8 @@
 // Import necessary functions for token generation and password verification
-import hashData from "@/utils/hashData";
-import RateLimiter from "@/utils/rateLimiter.js";
+import hashData from "@/utils/utils-server/hashData";
+import RateLimiter from "@/utils/utils-server/rateLimiter.js";
 
-const getPool = require('../../utils/mariaDbPool');
+const getPool = require('@/utils/utils-server/mariaDbPool');
 
 const limiterPerHour = new RateLimiter({
   apiNumberArg: 9,
@@ -16,7 +16,7 @@ export default async function unsubscribe(req, res) {
 
 
 
-  let dbConnection = await getPool().getConnection();
+  let dbConnection ;
 
 
 
@@ -39,10 +39,15 @@ const {customer_id, customer_hash} = req.body;
   
   try {
 
+    
+
     const clientIp = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
 
     if (!(await limiterPerHour.rateLimiterGate(clientIp)))
       return await resReturn(429, { success: true, error: "server_error" })
+
+
+    dbConnection = await getPool().getConnection();
      
 
     console.log(Number(customer_id), 'welcome')

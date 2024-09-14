@@ -1,8 +1,10 @@
-const getPool = require('./mariaDbPool');
-import emailSendJob from "./sendEmailJob";
+const getPool = require('@/utils/utils-server/mariaDbPool');
+import emailSendJob from "@/utils/utils-server/sendEmailJob";
 
 
 async function subscribe(email, source, extraData,dbConnectionArg) {
+
+  let dbConnection;
 
 
 
@@ -11,7 +13,7 @@ async function subscribe(email, source, extraData,dbConnectionArg) {
 
 
 
-    const dbConnection = dbConnectionArg?dbConnectionArg:await getPool().getConnection();;
+    dbConnection = dbConnectionArg?dbConnectionArg:await getPool().getConnection();;
 
 
     
@@ -114,7 +116,7 @@ const sendNewSubscriberSequence = async()=>{
 
         else  if(source === 're_subscribe'){
          await dbConnection.query("UPDATE customers SET subscribed = 1 WHERE email = ?", [email]); 
-          if(!dbConnectionArg && dbConnection)await dbConnection.release();
+          
 
           return true;
         }
@@ -156,8 +158,7 @@ const sendNewSubscriberSequence = async()=>{
       }
 
 
-         // Close the database connection when done
-         if(!dbConnectionArg && dbConnection)await dbConnection.release();
+      
 
     return true;
 
@@ -168,6 +169,11 @@ const sendNewSubscriberSequence = async()=>{
       catch(error){
         console.log('subscribe error', error);
         return false;
+      }
+
+
+      finally{
+        if(!dbConnectionArg && dbConnection)await dbConnection.release();
       }
 
 

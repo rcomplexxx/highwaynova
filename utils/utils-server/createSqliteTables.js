@@ -1,24 +1,24 @@
 
-const getPool = require('./mariaDbPool');
+const getPool = require('@/utils/utils-server/mariaDbPool');
 
 
 
 async function createSqliteTables() {
 
-  try{
 
 
 
 
 
-  let conn = await getPool().getConnection();;
+
+  let dbConnection;
 
 
 
   try {
 
 
-  
+    dbConnection = await getPool().getConnection();
 
 
     console.log('Creating sqlite tables.');
@@ -26,15 +26,15 @@ async function createSqliteTables() {
 
 
 
-    await conn.query(`CREATE DATABASE IF NOT EXISTS ${process.env.DB_DATABASE} CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci`);
+    await dbConnection.query(`CREATE DATABASE IF NOT EXISTS ${process.env.DB_DATABASE} CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci`);
 
-    await conn.query(`CREATE DATABASE IF NOT EXISTS mariadatabase_northhold CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci`);
-
-    
-
+    await dbConnection.query(`CREATE DATABASE IF NOT EXISTS mariadatabase_northhold CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci`);
 
     
-    await conn.query(`
+
+
+    
+    await dbConnection.query(`
       CREATE TABLE IF NOT EXISTS rateLimiter (
           id INT AUTO_INCREMENT PRIMARY KEY,
           ip VARCHAR(255),
@@ -48,13 +48,13 @@ async function createSqliteTables() {
 
 
 
-  await conn.query(`
+  await dbConnection.query(`
     CREATE INDEX IF NOT EXISTS idx_ip_apiNumber ON rateLimiter(ip, apiNumber)
 `);
 
 
 
-await conn.query(`
+await dbConnection.query(`
   CREATE TABLE IF NOT EXISTS products (
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 productId TINYINT,
@@ -65,7 +65,7 @@ await conn.query(`
 
 
 
-await conn.query(`
+await dbConnection.query(`
   CREATE TABLE IF NOT EXISTS reviews (
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 name TEXT,
@@ -78,7 +78,7 @@ await conn.query(`
 
 
 
-await conn.query(`
+await dbConnection.query(`
 CREATE INDEX IF NOT EXISTS idx_product_id_stars ON reviews (product_id, stars)
 `);
 
@@ -86,7 +86,7 @@ CREATE INDEX IF NOT EXISTS idx_product_id_stars ON reviews (product_id, stars)
 
 
 
-await conn.query(
+await dbConnection.query(
         `
         CREATE TABLE IF NOT EXISTS customers (
                 id INT AUTO_INCREMENT PRIMARY KEY,
@@ -104,7 +104,7 @@ await conn.query(
 
 
 
-      await conn.query(`
+      await dbConnection.query(`
         CREATE INDEX IF NOT EXISTS idx_email ON customers(email)
     `);
 
@@ -114,7 +114,7 @@ await conn.query(
 
 
 
-    await conn.query(
+    await dbConnection.query(
         `
         CREATE TABLE IF NOT EXISTS orders (
           id VARCHAR(255) PRIMARY KEY,
@@ -145,7 +145,7 @@ await conn.query(
      
 
 
-      await conn.query(
+      await dbConnection.query(
         `
         CREATE TABLE IF NOT EXISTS product_returns (
          id INT AUTO_INCREMENT PRIMARY KEY,
@@ -167,7 +167,7 @@ await conn.query(
 
 
 
-      await conn.query(
+      await dbConnection.query(
         `
         CREATE TABLE IF NOT EXISTS messages (
          id INT AUTO_INCREMENT PRIMARY KEY,
@@ -182,26 +182,26 @@ await conn.query(
 
 
 
-    //   await conn.query(`
+    //   await dbConnection.query(`
     //     ALTER TABLE messages
     //     DROP COLUMN status;
     // `);
 
     
 
-  // await conn.query(`
+  // await dbConnection.query(`
       //   ALTER TABLE email_campaigns
       //   MODIFY sendingDateInUnix BIGINT;
       // `);
 
 
-          // await conn.query(`
+          // await dbConnection.query(`
     //     ALTER TABLE orders
     //      ADD COLUMN supplyCost DECIMAL(10, 2) DEFAULT 0
     //   `);
 
  
-      await conn.query(`
+      await dbConnection.query(`
             CREATE TABLE IF NOT EXISTS email_templates (
          id INT AUTO_INCREMENT PRIMARY KEY,
                 designJson TEXT CHARACTER SET utf8mb4,
@@ -218,7 +218,7 @@ await conn.query(
 
 
 
-      await conn.query(
+      await dbConnection.query(
         `
         CREATE TABLE IF NOT EXISTS emails (
          id INT AUTO_INCREMENT PRIMARY KEY,
@@ -233,7 +233,7 @@ await conn.query(
 
 
 
-      await conn.query(
+      await dbConnection.query(
         `
         CREATE TABLE IF NOT EXISTS email_sequences (
          id INT AUTO_INCREMENT PRIMARY KEY,
@@ -242,7 +242,7 @@ await conn.query(
         )
       `);
 
-      await conn.query(
+      await dbConnection.query(
         `
         CREATE TABLE IF NOT EXISTS key_email_sequences (
            id INT AUTO_INCREMENT PRIMARY KEY,
@@ -253,8 +253,8 @@ await conn.query(
 
      
       
-      if (!await conn.query('SELECT 1 FROM key_email_sequences WHERE id = 1').length === 0) {
-        await conn.query(`
+      if (!await dbConnection.query('SELECT 1 FROM key_email_sequences WHERE id = 1').length === 0) {
+        await dbConnection.query(`
           INSERT INTO key_email_sequences (id, thank_you_sequence, welcome_sequence)
           VALUES (1, NULL, NULL)
         `);
@@ -266,7 +266,7 @@ await conn.query(
 
 
 
-      await conn.query(
+      await dbConnection.query(
         `
         CREATE TABLE IF NOT EXISTS email_campaigns (
          id INT AUTO_INCREMENT PRIMARY KEY,
@@ -288,7 +288,7 @@ await conn.query(
 
 
 
-      // await conn.query(`
+      // await dbConnection.query(`
       //   ALTER TABLE email_campaigns
       //   MODIFY sendingDateInUnix BIGINT;
       // `);
@@ -314,13 +314,11 @@ await conn.query(
   }
 
   finally{
-    if (conn) {
-      await conn.release(); // Release the connection
-  }
+    if (dbConnection)  await dbConnection.release(); // Release the connection
+  
   }
 
-}
-catch(error){ console.error('Error establishing MARIA DB connection:', error);}
+
 
 
 }

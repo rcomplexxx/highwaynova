@@ -8,7 +8,7 @@ import { Elements, useElements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import { useRouter } from "next/router";
 import BillingInfo from './BillingInfo/BillingInfo';
-import swapCountryCode from '@/utils/countryList';
+import swapCountryCode from '@/utils/utils-client/countryList';
 import { CheckoutContext } from '@/contexts/CheckoutContext';
 import InputField from '../Input/InputField';
 import { CorrectIcon, ErrorIcon, Spinner} from '@/public/images/svgs/svgImages';

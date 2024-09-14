@@ -1,13 +1,13 @@
 import paypal from "@paypal/checkout-server-sdk";
 import Stripe from 'stripe';
-import productsData from "../../data/products.json";
-import findBestBundleServer from '@/utils/findBestBundleServer'
+import productsData from "@/data/products.json";
+import findBestBundleServer from '@/utils/utils-server/findBestBundleServer'
 
-import RateLimiter from "@/utils/rateLimiter.js";
-import coupons from '../../data/coupons.json'
-import subscribe from '@/utils/subcsribe.js'
+import RateLimiter from "@/utils/utils-server/rateLimiter.js";
+import coupons from '@/data/coupons.json'
+import subscribe from '@/utils/utils-server/subcsribe.js'
 
-const getPool = require('../../utils/mariaDbPool');
+const getPool = require('@/utils/utils-server/mariaDbPool');
 
 const limiterPerDay = new RateLimiter({
   apiNumberArg: 3,
@@ -74,8 +74,43 @@ const makePayment = async (req, res) => {
   
 
 
+
+
+
+
+
+
+let dbConnection;
+
+
   
-async function generateUniqueId() {
+
+
+  const resReturn = async(statusNumber, jsonObject)=>{
+
+    if(dbConnection)await dbConnection.release();
+    res.status(statusNumber).json(jsonObject)
+   
+ }
+
+
+
+
+  let totalPrice;
+
+  let giftDiscount = false;
+
+
+
+
+
+
+
+  const putInDatabase = async(paymentMethod,paymentId, approved=0, dbConnection) => {
+
+
+      
+async function generateUniqueId(dbConnection) {
 
 
 
@@ -105,35 +140,9 @@ async function generateUniqueId() {
 }
 
 
-
-
-
-let dbConnection = await getPool().getConnection();
-
-
-  
-
-
-  const resReturn = async(statusNumber, jsonObject)=>{
-
-    if(dbConnection)await dbConnection.release();
-    res.status(statusNumber).json(jsonObject)
-   
- }
-
-
-
-
-  let totalPrice;
-
-  let giftDiscount = false;
-
-  const putInDatabase = async(paymentMethod,paymentId, approved=0) => {
-
-
    
 
-      try {
+
       
         
 
@@ -172,7 +181,7 @@ let dbConnection = await getPool().getConnection();
 
         if(customerInfo && JSON.parse(customerInfo.used_discounts).find(discountCode=>discountCode===couponCode))
     
-          return await resReturn(400, { success: false, error: "Discount has already been used." }, db);
+          return await resReturn(400, { success: false, error: "Discount has already been used." }, dbConnection);
 
 
         let customerId= customerInfo?.id;
@@ -193,7 +202,7 @@ let dbConnection = await getPool().getConnection();
 
 
 
-        const uniqueId = await generateUniqueId();
+        const uniqueId = await generateUniqueId(dbConnection);
 
 
 
@@ -264,18 +273,17 @@ let dbConnection = await getPool().getConnection();
 
       
 
-        return{
-          message: "Order placed successfully."
-        };
-      } catch (error) {
-        console.error("Error in database operations:", error);
-        return {error: "Error in database operations."};
-      }
+        
+    
 
   
 
 
   };
+
+
+
+
 
   try {
     const clientIp = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
@@ -288,19 +296,20 @@ let dbConnection = await getPool().getConnection();
 
     
 
-
+    dbConnection = await getPool().getConnection()
 
 
 
 
     const { clientTotal, couponCode, tip, items } = req.body.order;
     const orderItems = couponCode ? items : findBestBundleServer(items);
+
+    console.log('items and orderItems', items, orderItems)
     
-    totalPrice = parseFloat(
+    totalPrice = 
       orderItems.reduce((sum, product) => 
         sum + (product.bundledPrice || productsData.find(item => item.id === product.id)?.price || 0) * product.quantity
-      , 0).toFixed(2)
-    );
+      , 0).toFixed(2);
     
     const coupon = couponCode && coupons.find(c => c.code.toUpperCase() === couponCode.toUpperCase());
     
@@ -309,8 +318,9 @@ let dbConnection = await getPool().getConnection();
 
 
 
-    console.log('here are subtotal, tip and total price', orderItems,tip,totalPrice)
+    console.log('here are subtotal, tip and total price', orderItems,tip,totalPrice, clientTotal)
 
+    if(clientTotal!==totalPrice)return await resReturn(400, { success: false, error: "Payment was not approved." });
    
     
 
@@ -333,7 +343,7 @@ let dbConnection = await getPool().getConnection();
      
       
      
-      if(await putInDatabase(req.body.paymentMethod,response.result.id).error)throw new Error('Error saving data in database.');
+      await putInDatabase(req.body.paymentMethod,response.result.id, 0 , dbConnection);
 
      
       return await resReturn(200, { success: true, paymentId: response.result.id });
@@ -394,7 +404,7 @@ let dbConnection = await getPool().getConnection();
       },
 		});
 
-    if(await putInDatabase('GPAY(STRIPE)',paymentIntent.client_secret, 1).error)throw new Error('Error saving data in database.');
+     await putInDatabase('GPAY(STRIPE)',paymentIntent.client_secret, 1, dbConnection);
    
 
 
@@ -441,7 +451,7 @@ let dbConnection = await getPool().getConnection();
   
 
     
-    if(await putInDatabase('STRIPE',paymentIntent.client_secret, 1).error)throw new Error('Error saving data in database.');
+     await putInDatabase('STRIPE',paymentIntent.client_secret, 1, dbConnection);
    
     
 

@@ -4,6 +4,10 @@ const { createPool } = require("mariadb");
 let pool;
 
 function getPool() {
+
+
+    console.log('Get Pool is called! ----------------------------')
+
     if (!pool) {
     
 

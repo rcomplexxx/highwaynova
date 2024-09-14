@@ -1,6 +1,6 @@
 
-const getPool = require('../../utils/mariaDbPool');
-import RateLimiter from "@/utils/rateLimiter.js";
+const getPool = require('@/utils/utils-server/mariaDbPool');
+import RateLimiter from "@/utils/utils-server/rateLimiter.js";
 
 const limiterPerDay = new RateLimiter({
   apiNumberArg: 4,

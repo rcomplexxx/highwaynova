@@ -1,7 +1,7 @@
 
-import RateLimiter from "@/utils/rateLimiter.js";
-import subscribe from '@/utils/subcsribe.js'
-const getPool = require('../../utils/mariaDbPool');
+import RateLimiter from "@/utils/utils-server/rateLimiter.js";
+import subscribe from '@/utils/utils-server/subcsribe.js'
+const getPool = require('@/utils/utils-server/mariaDbPool');
 
 
 
@@ -30,7 +30,7 @@ export default async function handler(req, res) {
 
 
 
-let dbConnection = await getPool().getConnection();
+let dbConnection;
 
 
   
@@ -49,7 +49,7 @@ let dbConnection = await getPool().getConnection();
 
     // Perform rate limiting checks
 
-    
+    dbConnection = await getPool().getConnection();
 
 
     if (!(await limiterPerMinute.rateLimiterGate(clientIp, dbConnection)))
@@ -62,10 +62,10 @@ let dbConnection = await getPool().getConnection();
 
     // Rate limiting checks passed, proceed with API logic
 
-    if (req.method === "POST") {
+    if (req.method !== "POST")  return await resReturn(405, { error: "Method Not Allowed" })
       // Handle POST requests here
-      try {
-        if (!req.body.type) return;
+    
+        if (!req.body.type)  throw new Error('Request type not provided')
 
         if (req.body.type === "customers") {
           // Create a new SQLite database connection
@@ -76,7 +76,9 @@ let dbConnection = await getPool().getConnection();
           
 
         
-        } else if (req.body.type === "messages") {
+        } 
+        
+        else if (req.body.type === "messages") {
           // Create a new SQLite database connection
 
 
@@ -126,22 +128,17 @@ let dbConnection = await getPool().getConnection();
           
         
         }
-      } catch (error) {
-        console.error("Error handling POST request:", error);
 
-        return await resReturn(500, { error: "Internal Server Error" })
+        return await resReturn(500, { error: "Internal Server Error"  })
 
-        
+
        
-      }
-    } else {
-
-      return await resReturn(405, { error: "Method Not Allowed" })
-
       
-     
-    }
-  } catch (error) {
+   
+  } 
+  
+  
+  catch (error) {
     console.error("Error handling request:", error);
 
     return await resReturn(500, { error: "Internal Server Error"  })

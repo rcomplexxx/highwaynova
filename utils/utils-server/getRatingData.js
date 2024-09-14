@@ -1,5 +1,5 @@
 
-const getPool = require('./mariaDbPool');
+const getPool = require('@/utils/utils-server/mariaDbPool');
 
 const getRatingData = async(product_id) => {
  
@@ -38,19 +38,28 @@ const getRatingData = async(product_id) => {
 
   if(reviewsNumberFinal===0) throw new Error('rating data not found.')
   
-  else {ratingData={...ratingData, reviewsNumber: reviewsNumberFinal, rating: averageValue}}
+  else {
+    
+    
+    ratingData={...ratingData, reviewsNumber: reviewsNumberFinal, rating: averageValue}
+  
+  return ratingData;
+}
 
    
    
-    await dbConnection.release()
     
-    return ratingData;
+   
   } catch (error) {
 
     
-    if(dbConnection)await dbConnection.release()
 
    return {stars5:30, stars4:2, stars3:0, stars2:0, stars1:0, reviewsNumber: 32, rating: 4.9};
+  }
+
+  finally{
+
+    if(dbConnection)await dbConnection.release()
   }
 };
 

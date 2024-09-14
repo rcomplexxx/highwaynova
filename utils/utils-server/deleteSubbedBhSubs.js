@@ -1,5 +1,5 @@
 
-const getPool = require('./mariaDbPool');
+const getPool = require('@/utils/utils-server/mariaDbPool');
 
 
 // Ovaj program brise bh subscrajbere koji su se normalno subscribovali
@@ -27,7 +27,10 @@ let dbConnection = await getPool().getConnection();
   }
 
 
+  finally{
   await dbConnection.release();
+
+  }
 
 
 
