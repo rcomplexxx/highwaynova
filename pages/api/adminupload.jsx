@@ -1,7 +1,9 @@
 
 import formidable from "formidable";
-const path = require('path');
+
 import {promises as fs} from 'fs'
+const path = require('path');
+
 
 import RateLimiter from "@/utils/utils-server/rateLimiter.js";
 import { verifyToken } from "@/utils/utils-server/auth.js"; 
@@ -63,12 +65,12 @@ const limiterPerHour = new RateLimiter({
                 return res.status(400).json({ error: "No image file uploaded." });
             }
 
-            const uploadDir = path.join(`${process.cwd()}/public/images/email_images/`);
+            const uploadDir = path.join(process.cwd(), 'public', 'images', 'email_images');
 
             console.log('dir3')
 
             try{
-              await fs.access(`${uploadDir}/${myFile.originalFilename}`)
+              await fs.access(path.join(uploadDir, myFile.originalFilename))
               console.log('somehow succeeded')
               
               return res.status(200).json({ success: true, 
@@ -90,7 +92,7 @@ const limiterPerHour = new RateLimiter({
 
             const newFileName = Date.now() + '_'+ myFile.originalFilename+additionalExtension;
 
-            const newFilePath = `${uploadDir}/${newFileName}${additionalExtension}`;
+            const newFilePath = path.join(uploadDir, newFileName, additionalExtension);
 
             console.log('dir', uploadDir)
 

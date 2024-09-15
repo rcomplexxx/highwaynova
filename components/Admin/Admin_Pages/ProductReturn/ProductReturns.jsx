@@ -277,10 +277,20 @@ if (result) {
       
           <h2>Linked order</h2>
           <OrderCard
+            
+
+                index={0}
+               
+                id={linkedOrder.id}
+                total = {linkedOrder.total}
                 info={
                   JSON.stringify({id:linkedOrder.id, email:linkedOrder.email, firstName:linkedOrder.firstName, lastName:linkedOrder.lastName, address:linkedOrder.address, apt: linkedOrder.apt, country: linkedOrder.country, zipcode:linkedOrder.zipcode, state:linkedOrder.state, city:linkedOrder.city, phone: linkedOrder.phone, couponCode:linkedOrder.couponCode,
                 tip:linkedOrder.tip,items:linkedOrder.items, paymentMethod: linkedOrder.paymentMethod,paymentId:linkedOrder.paymentId })}
                
+               
+             
+
+
                 packageStatus={linkedOrder.packageStatus}
                 handlePackageStatusChange={()=>{}}
                 products={products}
@@ -366,7 +376,10 @@ className={`${styles.saveDescription} ${styles.fileNewReturnButton}`}>Save new r
 
         return <OrderCard
                 key={index}
-                id={index}
+                index={index}
+               
+                id={order.id}
+                total = {order.total}
                 info={
                   JSON.stringify({id:order.id, email:order.email, firstName:order.firstName, lastName:order.lastName, address:order.address, apt: order.apt, country: order.country, zipcode:order.zipcode, state:order.state, city:order.city, phone: order.phone, couponCode:order.couponCode,
                 tip:order.tip,items:order.items, paymentMethod: order.paymentMethod,paymentId:order.paymentId })}

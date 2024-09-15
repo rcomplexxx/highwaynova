@@ -25,7 +25,6 @@ export default async function unsubscribe(req, res) {
 
     console.log('returning res', statusNumber, jsonObject);
 
-    if(dbConnection) await dbConnection.release();
     res.status(statusNumber).json(jsonObject)
   
  }
@@ -125,4 +124,11 @@ const {customer_id, customer_hash} = req.body;
   } catch (e) {
     return await resReturn(500, { success: false, error: e } )
   }
+
+  finally{
+    
+    if(dbConnection) await dbConnection.release();
+  }
+
+
 }

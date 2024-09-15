@@ -35,7 +35,6 @@ let dbConnection;
 
   const resReturn = async(statusNumber, jsonObject)=>{
 
-    if(dbConnection) await dbConnection.release();
     res.status(statusNumber).json(jsonObject)
    
  }
@@ -258,6 +257,11 @@ const paypalExpressChecker=  (await dbConnection.query(`SELECT address, city FRO
     return await resReturn(500, { error: "Server error. Payment was not approved." })
 
     
+  }
+
+  finally{
+    
+    if(dbConnection) await dbConnection.release();
   }
 };
 

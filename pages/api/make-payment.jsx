@@ -88,7 +88,6 @@ let dbConnection;
 
   const resReturn = async(statusNumber, jsonObject)=>{
 
-    if(dbConnection)await dbConnection.release();
     res.status(statusNumber).json(jsonObject)
    
  }
@@ -211,7 +210,7 @@ async function generateUniqueId(dbConnection) {
       
         
         await dbConnection.query(
-          `INSERT INTO orders (id, customer_id, firstName, lastName, address, apt, country, zipcode, state, city, phone, couponCode, tip, items, total, paymentMethod, paymentId, approved, createdDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+          `INSERT INTO orders (id, customer_id, firstName, lastName, address, apt, country, zipcode, state, city, phone, couponCode, tip, items, total, paymentMethod, paymentId, approved, createdDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())`
         , [
           uniqueId,
           customerId,
@@ -230,8 +229,7 @@ async function generateUniqueId(dbConnection) {
           totalPrice,
           paymentMethod,
           paymentId,
-          approved,
-          Date.now()
+          approved
         ]
         );
 
@@ -484,6 +482,12 @@ async function generateUniqueId(dbConnection) {
 
     
   }
+
+  finally{
+    
+    if(dbConnection)await dbConnection.release();
+  }
+
 };
 
 export default makePayment;

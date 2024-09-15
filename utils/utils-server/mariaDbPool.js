@@ -20,7 +20,8 @@ function getPool() {
             connectionLimit: 10,
             timeout: 30000,
             supportBigNumbers: true,  // Support big numbers (e.g., DECIMAL)
-             bigNumberStrings: false   // Return big numbers as numbers, not strings
+             bigNumberStrings: false,   // Return big numbers as numbers, not strings,
+             leakDetectionTimeout: 24000
         });
 
 

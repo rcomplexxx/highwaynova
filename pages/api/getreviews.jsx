@@ -51,7 +51,6 @@ const getReviews = async (req, res) => {
   
   const resReturn = async(statusNumber, jsonObject)=>{
 
-    if(dbConnection) await dbConnection.release();
     res.status(statusNumber).json(jsonObject)
 
  }
@@ -227,6 +226,11 @@ const getReviews = async (req, res) => {
 
     
 
+  }
+
+  finally{
+    
+    if(dbConnection) await dbConnection.release();
   }
 
 

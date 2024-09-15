@@ -38,7 +38,6 @@ let dbConnection;
   
   const resReturn = async(statusNumber, jsonObject)=>{
 
-    if(dbConnection)await dbConnection.release();
     res.status(statusNumber).json(jsonObject)
    
  }
@@ -145,5 +144,10 @@ let dbConnection;
 
     
     
+  }
+
+  finally{
+    
+    if(dbConnection)await dbConnection.release();
   }
 }
