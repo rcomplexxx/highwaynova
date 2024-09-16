@@ -8,6 +8,43 @@ import getTargets from '@/utils/utils-server/getTargets';
 
 
 
+
+
+const   moveImagesToDeletedImagesFolder = (reviewProductImages, productId, shouldRecover)=>{
+  if(reviewProductImages){
+   
+    const basePath = path.join(
+        process.cwd(),
+        'public',
+        'images',
+        'review_images',
+        `productId_${productId}`
+      );
+    const deletedImagesPath = path.join(basePath,`deleted_images`);
+
+    const moveFrom = shouldRecover?deletedImagesPath:basePath;
+    const moveTo = shouldRecover?basePath:deletedImagesPath;
+  
+  
+    if (!fs.existsSync(deletedImagesPath))fs.mkdirSync(deletedImagesPath, { recursive: true });
+
+    
+  
+    reviewProductImages?.forEach((imageName)=>{
+      
+      fs.rename(path.join(moveFrom,imageName), path.join(moveTo,imageName),function (err) {
+        if (err) throw err
+        console.log('Successfully renamed - AKA moved!')
+      });
+      
+    
+    });
+  
+  }
+}
+
+
+
 async function updateDb (dbConnection, resReturn, table, data, queryCondition) {
 
 
@@ -336,45 +373,20 @@ async function updateDb (dbConnection, resReturn, table, data, queryCondition) {
                 console.log('upao u save db', data, productId)
     
     
-                const reviewProductImages = JSON.parse((await dbConnection.query(`SELECT imageNames FROM reviews WHERE id = ${data[i].id}`))[0].imageNames)
-           
+         
               
     
+                const reviewProductImages = JSON.parse((await dbConnection.query(`SELECT imageNames FROM reviews WHERE id = ${data[i].id}`))[0].imageNames)
+           
+                
     
     
     
               if (data[i].deleted) {
     
-    
-                
                 
                   //imageNames
-                if(reviewProductImages){
-                 
-                    const basePath = path.join(
-                        process.cwd(),
-                        'public',
-                        'images',
-                        'review_images',
-                        `productId_${productId}`
-                      );
-                    const deletedImagesPath = path.join(basePath,`/deleted_images/`);
-    
-    
-                    if (!fs.existsSync(deletedImagesPath)) {
-                      fs.mkdirSync(deletedImagesPath, { recursive: true });
-    
-                    reviewProductImages?.forEach((imageName)=>{
-                      
-                      fs.rename(path.join(basePath,imageName), path.join(deletedImagesPath,imageName),function (err) {
-                        if (err) throw err
-                        console.log('Successfully renamed - AKA moved!')
-                      });
-                      
-                    
-                    });
-                }
-              }
+              moveImagesToDeletedImagesFolder(reviewProductImages, productId, true)
     
                
     
@@ -415,33 +427,8 @@ async function updateDb (dbConnection, resReturn, table, data, queryCondition) {
                 const deletedImages= reviewProductImages?.filter((img)=>!reviewImages.find(rImg => rImg===img));
     
                 
-                if(deletedImages){
-
-                    const basePath = path.join(
-                        process.cwd(),
-                        'public',
-                        'images',
-                        'review_images',
-                        `productId_${productId}`
-                      );
-                 
-                      
-                      const deletedImagesPath = path.join(basePath,`/deleted_images/`);
-    
-    
-                  if (!fs.existsSync(deletedImagesPath))  fs.mkdirSync(deletedImagesPath, { recursive: true });
-                  
-    
-                    deletedImages.forEach((deletedImage)=>{
-                        
-                        
-                        fs.rename(path.join(basePath, deletedImage), path.join(deletedImagesPath, deletedImage),function (err) {
-                        if (err) throw err
-                        console.log('Successfully renamed - AKA moved!')
-                      });
-              });
-            
-          }
+                moveImagesToDeletedImagesFolder(deletedImages, productId, false);
+                
     
           const recycledReviewImages= reviewImages?.filter((img)=>{
          

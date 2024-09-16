@@ -353,7 +353,7 @@
 
   }
 
-  @media (max-width: 580px){
+  @media (max-width: 600px){
     .fixedAddToCartDiv{
       position: fixed;
       bottom: 0;
@@ -376,6 +376,7 @@
 
 
       animation: spawnAddToCart 0.3s ease;
+      
       cursor: pointer;
     z-index: 11;
      

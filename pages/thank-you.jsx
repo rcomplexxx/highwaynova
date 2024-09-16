@@ -41,6 +41,8 @@ export default function ThankYou() {
             alt="Thanks"
             height={40}
             width={40}
+            loading="eager"
+            priority={true}
           />
        
       </div>

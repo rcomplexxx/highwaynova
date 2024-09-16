@@ -1,4 +1,4 @@
-import  { useEffect, useRef } from 'react';
+import  {  useLayoutEffect, useRef } from 'react';
 import styles from './toastmessage.module.css'
 
 export default function ToastMessage({showToastMessage, setShowToastMessage}) {
@@ -7,7 +7,7 @@ export default function ToastMessage({showToastMessage, setShowToastMessage}) {
     const toastRef= useRef();
 
 
-    useEffect(()=>{
+    useLayoutEffect(()=>{
 
        
         const toast = toastRef.current;

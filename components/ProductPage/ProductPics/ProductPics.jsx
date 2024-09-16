@@ -1,7 +1,7 @@
 import styles from "./productmobilepics.module.css";
 
 import dynamic from "next/dynamic";
-import { useCallback, useEffect,   useRef,   useState } from "react";
+import { useCallback, useEffect,   useLayoutEffect,   useRef,   useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -55,7 +55,7 @@ export default function ProductPics({ productId, images, onAddToCart, variantIma
 
 
 
-  useEffect(() => {
+  useLayoutEffect(() => {
    
     
 
@@ -73,19 +73,19 @@ export default function ProductPics({ productId, images, onAddToCart, variantIma
       
       if(shouldSpawn){
         setSpawnAddToCart(true)
-      if(destroyFixedCartTimeout){
-        clearTimeout(destroyFixedCartTimeout);
-        destroyFixedCartTimeout=null;
-      }
+      if(destroyFixedCartTimeout){ clearTimeout(destroyFixedCartTimeout); destroyFixedCartTimeout=null; }
+
+      
     }
-    else{
-      if(fixedAddToCartRef.current){
+    else if(fixedAddToCartRef.current){
+
+
       fixedAddToCartRef.current.style.opacity=0;
       fixedAddToCartRef.current.style.transform='translateY(100%)';
       destroyFixedCartTimeout= setTimeout(()=>{
         setSpawnAddToCart(false);
       },300)
-    }
+    
     }
       
     };
@@ -108,15 +108,17 @@ export default function ProductPics({ productId, images, onAddToCart, variantIma
   
 
 
-  useEffect(()=>{
+  useLayoutEffect(()=>{
     if(!mounted.current){ mounted.current=true;return;}
-    swiper && swiper.slideTo(0, window.innerWidth<980?400:0);
+
+
+    swiper && swiper.slideTo(0, 0);
     
   },[productId])
   
 
 
-  useEffect(()=>{
+  useLayoutEffect(()=>{
 
     console.log('activated', variantImageIndex);
   

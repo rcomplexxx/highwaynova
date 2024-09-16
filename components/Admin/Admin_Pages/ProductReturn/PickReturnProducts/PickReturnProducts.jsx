@@ -142,7 +142,7 @@ export default function PickReturnProducts({orderProducts, returnProducts, setRe
     <select
     
   className={styles.inputProductId}
-  defaultValue={index}
+  defaultValue={""}
 
 
 

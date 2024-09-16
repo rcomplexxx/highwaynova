@@ -9,22 +9,23 @@ const deleteRow= async(dbConnection, resReturn, tableName, deleteId)=>{
 
     if(tableName==='email_sequences')
     await dbConnection.query(`DELETE FROM email_campaigns WHERE sequenceId = ?`, [deleteId]);
+  
 
     else if(tableName === 'emails'){
 
-      const allSequences = await dbConnection.query(`SELECT id, emails FROM email_sequences`);
+      const sequencesToDelete = await dbConnection.query(
+        `SELECT id FROM email_sequences WHERE JSON_CONTAINS(emails, JSON_OBJECT('id', ?), '$')`,
+        [deleteId]
+      );
 
+      
 
-      const sequenceToDeleteIdArray = allSequences.filter((seq)=> JSON.parse(seq.emails).find(seqEmail => seqEmail.id === deleteId))
-
-
-      for(const seq of sequenceToDeleteIdArray){
+      for(const seq of sequencesToDelete){
         await dbConnection.query(`DELETE FROM email_campaigns WHERE sequenceId = ?`, [seq.id]);
-        await dbConnection.query(`DELETE FROM email_sequences WHERE id = ?`, [deleteId]);
+        await dbConnection.query(`DELETE FROM email_sequences WHERE id = ?`, [seq.id]);
       }
 
      
-
      
 
     }
@@ -37,14 +38,6 @@ const deleteRow= async(dbConnection, resReturn, tableName, deleteId)=>{
      
 
   
-
- 
-
-    
- 
-
-
-
 
 
 
@@ -87,6 +80,9 @@ const deleteRow= async(dbConnection, resReturn, tableName, deleteId)=>{
             WHERE o.id = ?
         )
     `, [deleteId, orderId]);
+
+
+    
 
 
     }

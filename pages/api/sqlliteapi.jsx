@@ -51,13 +51,13 @@ let dbConnection;
     dbConnection = await getPool().getConnection();
 
 
-    if (!(await limiterPerMinute.rateLimiterGate(clientIp, dbConnection)))
-   return await resReturn(429, { error: "Too many requests." })
+  //   if (!(await limiterPerMinute.rateLimiterGate(clientIp, dbConnection)))
+  //  return await resReturn(429, { error: "Too many requests." })
 
 
      
-    if (!(await limiterPerWeek.rateLimiterGate(clientIp, dbConnection)))
-      return await resReturn(429, { error: "Too many requests." })
+  //   if (!(await limiterPerWeek.rateLimiterGate(clientIp, dbConnection)))
+  //     return await resReturn(429, { error: "Too many requests." })
 
     // Rate limiting checks passed, proceed with API logic
 

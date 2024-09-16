@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useCallback,  useLayoutEffect, useRef, useState } from "react";
 import styles from "./fullscreenzoomableimage.module.css";
 import { Zoom } from "swiper/core";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -125,7 +125,7 @@ const FullScreenZoomableImage = ({
 
 
 
-  useEffect(() => {
+  useLayoutEffect(() => {
 
 
    
@@ -230,7 +230,7 @@ const FullScreenZoomableImage = ({
 
 
 
-  useEffect(()=>{
+  useLayoutEffect(()=>{
     const handlePopState=(event)=>{  event.preventDefault();  setNavActive(false);killFullScreen();}
 
     window?.addEventListener("popstate", handlePopState);
@@ -240,7 +240,7 @@ const FullScreenZoomableImage = ({
    }
   },[imageIndex,zoomed])
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const fixedZoomDiv = fixedZoomDivRef.current;
     let bgColor = getComputedStyle(document.documentElement).getPropertyValue('--bg-color');
     if(bgColor.length===4)bgColor =  transformColorToRgb(bgColor)
