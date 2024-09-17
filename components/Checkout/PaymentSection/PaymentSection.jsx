@@ -5,7 +5,7 @@ import styles from "./paymentmethodwrapper.module.css";
 import Image from "next/image";
 import {Amex, Discover, Jcb, MasterCard, UntionPay, Visa} from '@/public/images/svgs/svgImages.jsx'
 
-export default function PaymentSection({ checkFields, organizeUserData  }) {
+export default function PaymentSection({ checkFields }) {
     const [paymentMethod, setPaymentMethod] = useState("creditcard");
     
     const [allowMoreCardsPopup, setAllowMoreCardsPopup] = useState(true);
@@ -136,7 +136,7 @@ export default function PaymentSection({ checkFields, organizeUserData  }) {
           <StripeWrapper
        
        
-            organizeUserData={organizeUserData}
+       
             checkFields={checkFields}
           />
           </div>
@@ -169,7 +169,7 @@ export default function PaymentSection({ checkFields, organizeUserData  }) {
         <div className={styles.paypalFieldWrapper}>
           <PayPalButton
             checkFields={checkFields}
-            organizeUserData={organizeUserData}
+            
         
             
            

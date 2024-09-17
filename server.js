@@ -116,6 +116,9 @@ for(const campaign of campaigns){
       
       await sendEmailJob(finalSendingDate, campaign.id);
   }
+
+
+  
 }
 
 

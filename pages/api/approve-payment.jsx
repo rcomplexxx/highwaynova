@@ -134,12 +134,12 @@ const paypalExpressChecker=  (await dbConnection.query(`SELECT address, city FRO
           
 
 
-          const customerInfo = (await dbConnection.query("SELECT id, used_discounts FROM customers WHERE email = ?", [email]))[0];
+          const customerInfo = (await dbConnection.query("SELECT id, JSON_CONTAINS(used_discounts, JSON_QUOTE(?), '$') as used_discount_exists FROM customers WHERE email = ?", [orderData.couponCode, email]))[0];
           const customerId = customerInfo?.id || (await dbConnection.query("INSERT INTO customers (email, totalOrderCount, subscribed, source) VALUES (?, ?, ?, ?)", [email, 0, 0, 'make_payment'])).insertId;
 
         
 
-          if(customerInfo && JSON.parse(customerInfo.used_discounts).find(discountCode=>  discountCode===orderData.couponCode))
+          if(customerInfo?.used_discount_exists)
            return await resReturn(400, { success: false, error: "Discount has already been used."})
 
 
@@ -147,33 +147,28 @@ const paypalExpressChecker=  (await dbConnection.query(`SELECT address, city FRO
 
           await dbConnection.query("UPDATE customers SET totalOrderCount = totalOrderCount + 1, money_spent = ROUND(money_spent + ?, 2) WHERE id = ?", [orderData.total, customerId]); 
 
+          if(orderData.couponCode!="") await dbConnection.query(`UPDATE customers SET used_discounts = JSON_ARRAY_APPEND(used_discounts, '$', ?) WHERE id = ? `, [orderData.couponCode, customerId])
+    
+            
 
-        
-          const subscribeSource = customerSubscribed? "checkout": "checkout x";
 
-       
+  
+            
       
-          await subscribe(email, subscribeSource, {orderId:orderData.id}, dbConnection);
+          await subscribe(email, customerSubscribed? "checkout": "checkout x", {orderId:orderData.id}, dbConnection);
    
 
          
 
-          if(orderData.couponCode)
-        await dbConnection.query(`UPDATE customers SET used_discounts = json_insert(used_discounts, '$[#]', ?), money_spent = money_spent + ? WHERE id = ? `, [orderData.couponCode, orderData.total, customerId])
-
-        
+      
         
 
           giftDiscount=  (await dbConnection.query(`SELECT 1 FROM customers WHERE id = ? AND totalOrderCount = 1`, [customerId]))[0];
 
      
           
-          
-
-          
        
 
-        // Closing the database connection
        
       
 

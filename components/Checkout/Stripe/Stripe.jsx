@@ -20,12 +20,12 @@ import { useGlobalStore } from '@/contexts/AppContext';
 
 
 
-export default function StripeWrapper({organizeUserData, checkFields}){
+export default function StripeWrapper({ checkFields}){
   const stripePromise = loadStripe('pk_test_51OR1EhAom3KfH7oBf5QRKboVHPrFIrZ3nwmtwS30uSDtrHbpgwsFzf19Np73RjxFiAqUy0tjPi5BIYdDmSPDExya00m4ZFZoI1');
   
   return (
     <Elements stripe={stripePromise}>
-    <Stripe organizeUserData={organizeUserData}  checkFields={checkFields}/>
+    <Stripe checkFields={checkFields}/>
     </Elements>
   );
   }
@@ -36,7 +36,7 @@ export default function StripeWrapper({organizeUserData, checkFields}){
 
                
 
-const Stripe = ({organizeUserData, checkFields}) => {
+const Stripe = ({checkFields}) => {
     const [billingAddressSameAsShipping, setBillingAddressSameAsShipping] = useState(true);
     const [billingErrors, setBillingErrors]= useState({});
     const [focusedField, setFocusedField]= useState();
@@ -53,7 +53,7 @@ const Stripe = ({organizeUserData, checkFields}) => {
 
     const router = useRouter();
 
-    const {total} = useContext(CheckoutContext);
+    const {organizeUserData} = useContext(CheckoutContext);
 
     const setGiftDiscount = useGlobalStore(state =>  state.setGiftDiscount);
 
@@ -223,6 +223,8 @@ const handleStripePay= async(event)=>{
   const cardElement = elements.getElement(CardNumberElement);
 
   const requestData = organizeUserData('STRIPE');
+
+  
   console.log('THE BILLING FUCKING DATA!',requestData);
 
   let transactionError, transactionPaymentMethod;

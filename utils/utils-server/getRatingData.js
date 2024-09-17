@@ -35,16 +35,20 @@ const getRatingData = async(product_id) => {
 
   
   const averageValue=Math.round(sumOfAllReviews/reviewsNumberFinal * 10)/ 10;
+  
 
   if(reviewsNumberFinal===0) throw new Error('rating data not found.')
+
+
   
-  else {
+    
     
     
     ratingData={...ratingData, reviewsNumber: reviewsNumberFinal, rating: averageValue}
   
   return ratingData;
-}
+
+  
 
    
    

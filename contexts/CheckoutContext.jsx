@@ -13,7 +13,8 @@ import findBestBundle from '@/utils/utils-client/findBestBundle'
 
 
 
-export const CheckoutContext = createContext({cartProducts: [], total:'0.00',subTotal:'0.00', coupon:{code: "", discount: '0.00'}, setAndValidateCouponCode:()=>{}, tip:'0.00', setTip:()=>{}, subscribe: false, setSubscribe:()=>{} });
+export const CheckoutContext = createContext({cartProducts: [], total:'0.00',subTotal:'0.00', coupon:{code: "", discount: '0.00'}, setAndValidateCouponCode:undefined, tip:'0.00',
+ setTip:undefined, customerSubscribed: false, setCustomerSubscribed:undefined, organizeUserData: undefined });
 
 
 
@@ -28,7 +29,7 @@ export const CheckoutContext = createContext({cartProducts: [], total:'0.00',sub
  
  
 
-    const [subscribe, setSubscribe] = useState(false);
+    const [customerSubscribed, setCustomerSubscribed] = useState(false);
     const [coupon, setCoupon] = useState({code: "", discount: 0});
     const [tip, setTip]= useState('0.00');
     const [cartProducts, setCartProducts] = useState(buyNowProduct?findBestBundle(buyNowProduct):[...useGlobalStore(state => state.cartProducts)])
@@ -131,9 +132,47 @@ export const CheckoutContext = createContext({cartProducts: [], total:'0.00',sub
         return (subTotal - coupon.discount + parseFloat(tip)).toFixed(2)
      }, [subTotal, coupon.discount, tip]);
 
+
+
+     
+const organizeUserData = useCallback((paymentMethod, paymentToken) => {
+  
+  // Collect user input values
+  const fields = ["email", "firstName", "lastName", "address", "apt", "country", "zipcode", "state", "city", "phone"];
+  const userData = fields.reduce((acc, field) => {
+    acc[field] = document.getElementById(field)?.value || "";
+    return acc;
+  }, {});
+
+
+  
+  const items = cartProducts.map(({ id, quantity, variant }) => ({ id, quantity, variant }));
+
+  
+  const requestData = {
+    order: {
+      ...userData,
+      items,
+      customerSubscribed,
+      couponCode: coupon.code === "BUNDLE" ? "" : coupon.code,
+      tip,
+      clientTotal: total
+    },
+    paymentMethod,
+    paymentToken
+  };
+
+  return requestData;
+}, [cartProducts, customerSubscribed, coupon.code, tip, total]);
+
+
+
+
+     
+
   
     return (
-      <CheckoutContext.Provider value={{cartProducts, total,subTotal, coupon, setAndValidateCoupon, tip, setTip, subscribe, setSubscribe }}>
+      <CheckoutContext.Provider value={{cartProducts, total,subTotal, coupon, setAndValidateCoupon, tip, setTip, customerSubscribed, setCustomerSubscribed, organizeUserData }}>
         {children}
       </CheckoutContext.Provider>
     );

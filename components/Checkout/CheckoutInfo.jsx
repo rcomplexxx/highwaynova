@@ -11,7 +11,7 @@ import PaymentSection from "./PaymentSection/PaymentSection";
 import Tip from "./Tip/Tip";
 import { CheckoutContext } from "@/contexts/CheckoutContext";
 import { CorrectIcon, ErrorIcon, correctIcon } from "@/public/images/svgs/svgImages";
-import Image from "next/image";
+
 
 
 export default function CheckoutInfo() {
@@ -19,7 +19,7 @@ export default function CheckoutInfo() {
   const [errors, setErrors] = useState({});
   // const [shippingType, setShippingType] = useState("free");
 
-  const {total, cartProducts, coupon, tip, subscribe, setSubscribe} = useContext(CheckoutContext);
+  const {cartProducts,  customerSubscribed, setCustomerSubscribed} = useContext(CheckoutContext);
 
 
 
@@ -146,36 +146,6 @@ return false;
 
  
 
-const organizeUserData = useCallback((paymentMethod, paymentToken) => {
-  
-  // Collect user input values
-  const fields = ["email", "firstName", "lastName", "address", "apt", "country", "zipcode", "state", "city", "phone"];
-  const userData = fields.reduce((acc, field) => {
-    acc[field] = document.getElementById(field)?.value || "";
-    return acc;
-  }, {});
-
-
-  
-  const items = cartProducts.map(({ id, quantity, variant }) => ({ id, quantity, variant }));
-
-  
-  const requestData = {
-    order: {
-      ...userData,
-      items,
-      subscribe,
-      couponCode: coupon.code === "BUNDLE" ? "" : coupon.code,
-      tip,
-      clientTotal: total
-    },
-    paymentMethod,
-    paymentToken
-  };
-
-  return requestData;
-}, [cartProducts, subscribe, coupon.code, tip, total]);
-
 
 
 
@@ -185,7 +155,7 @@ const organizeUserData = useCallback((paymentMethod, paymentToken) => {
   return (
       <div className={styles.leftWrapper}>
         <div className={styles.checkout_left}>
-          <ExpressCheckout products={cartProducts} checkFields={checkFields} organizeUserData={organizeUserData}
+          <ExpressCheckout checkFields={checkFields}
           />
 
 
@@ -212,9 +182,9 @@ const organizeUserData = useCallback((paymentMethod, paymentToken) => {
 
 
 
-                <div tabIndex={0} className={styles.emailSubscribeDiv} onClick={()=>{ setSubscribe(!subscribe);}}>
-      <div id='subscribeCheckbox' data-subscribe={subscribe} 
-      className={`${styles.emailSubscribeChecker} ${subscribe && styles.emailSubscribeCheckerChecked}`}>
+                <div tabIndex={0} className={styles.emailSubscribeDiv} onClick={()=>{ setCustomerSubscribed(!customerSubscribed);}}>
+      <div 
+      className={`${styles.emailSubscribeChecker} ${customerSubscribed && styles.emailSubscribeCheckerChecked}`}>
         <CorrectIcon styleClassName={styles.checkImage}/>
       </div>
      
@@ -346,7 +316,7 @@ const organizeUserData = useCallback((paymentMethod, paymentToken) => {
 
 
          
-         <PaymentSection  checkFields={checkFields} organizeUserData={organizeUserData} />
+         <PaymentSection  checkFields={checkFields} />
                 
                 <Tip products={cartProducts} />
       

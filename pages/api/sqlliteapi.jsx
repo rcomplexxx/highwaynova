@@ -69,7 +69,7 @@ let dbConnection;
         if (req.body.type === "customers") {
           // Create a new SQLite database connection
 
-          if(await subscribe(req.body.email, req.body.source, dbConnection))
+          if(await subscribe(req.body.email, req.body.source, undefined, dbConnection))
             return await resReturn(201, { message: "Successfully subscribed." })
             
           

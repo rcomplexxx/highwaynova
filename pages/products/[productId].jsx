@@ -287,7 +287,7 @@ export default function ProductPage({ product, description, images, startReviews
             Add to Cart
           </button>
 
-            <PayPalButton type='instant' color='gold' organizeUserData={
+            <PayPalButton type='instant' color='gold' organizeUserDataArg={
                useCallback((paymentMethod) => {
 
 
@@ -304,6 +304,8 @@ export default function ProductPage({ product, description, images, startReviews
                   city: "",
                   phone: ""
                 };
+
+                
 
                
               
@@ -339,16 +341,15 @@ export default function ProductPage({ product, description, images, startReviews
                   
 
                 
-
-                  
-
               
                 const requestData = {
                   order: {
                     ...defaultFields,
+                    items,
+                    customerSubscribed: false,
                     couponCode: "",
                     tip: "0.00",
-                    items,
+                    
                     clientTotal: clientTotal
                   },
                   paymentMethod,

@@ -164,7 +164,7 @@ async function generateUniqueId(dbConnection) {
           couponCode,
           tip,
           items,
-          subscribe:subscribed,
+          customerSubscribed,
           email
         } = req.body.order;
 
@@ -173,14 +173,12 @@ async function generateUniqueId(dbConnection) {
 
 
 
-
-        const customerInfo = (await dbConnection.query("SELECT id, used_discounts FROM customers WHERE email = ? LIMIT 1", [email]))[0];
+        
+        const customerInfo = (await dbConnection.query("SELECT id, JSON_CONTAINS(used_discounts, JSON_QUOTE(?), '$') as used_discount_exists FROM customers WHERE email = ? LIMIT 1", [couponCode,email]))[0];
 
         console.log('sooun checking', customerInfo);
 
-        if(customerInfo && JSON.parse(customerInfo.used_discounts).find(discountCode=>discountCode===couponCode))
-    
-          return await resReturn(400, { success: false, error: "Discount has already been used." }, dbConnection);
+        if(customerInfo?.used_discount_exists) return await resReturn(400, { success: false, error: "Discount has already been used." }, dbConnection);
 
 
         let customerId= customerInfo?.id;
@@ -204,8 +202,6 @@ async function generateUniqueId(dbConnection) {
         const uniqueId = await generateUniqueId(dbConnection);
 
 
-
-        console.log('unique key is', uniqueId)
         
       
         
@@ -238,30 +234,29 @@ async function generateUniqueId(dbConnection) {
       
 
         if(approved===1){
-        
+
+
           
-          console.log('its approved, sending thank you campaign');
+          console.log('its approved, sending thank you campaign and coupon code is', couponCode );
 
          
 
           await dbConnection.query("UPDATE customers SET totalOrderCount = totalOrderCount + 1, money_spent = ROUND(money_spent + ?, 2) WHERE id = ?", [totalPrice, customerId]); 
 
+          if(couponCode!="")await dbConnection.query(`UPDATE customers SET used_discounts = JSON_ARRAY_APPEND(used_discounts, '$', ?) WHERE id = ? `, [couponCode,  customerId])
+
+
+
            
-          const subscribeSource = subscribed?"checkout":"checkout x"
+            
        
-          await subscribe(email, subscribeSource,  {orderId:uniqueId}, dbConnection);
+          await subscribe(email, customerSubscribed?"checkout":"checkout x",  {orderId:uniqueId}, dbConnection);
 
         
 
-        if(couponCode!="")await dbConnection.query(`
-    UPDATE customers
-    SET used_discounts = json_insert(
-     used_discounts, 
-      '$[#]', 
-      ?
-    ), money_spent = money_spent + ?
-    WHERE id = ?
-  `, [couponCode,customerId, totalPrice])
+      
+          
+
 
         giftDiscount= (await dbConnection.query(`SELECT 1 AS valid FROM customers WHERE id = ? AND totalOrderCount = 1`, [customerId]))[0]?.valid===1;
           
@@ -270,11 +265,6 @@ async function generateUniqueId(dbConnection) {
         }
 
       
-
-        
-    
-
-  
 
 
   };
@@ -311,9 +301,9 @@ async function generateUniqueId(dbConnection) {
     
     const coupon = couponCode && coupons.find(c => c.code.toUpperCase() === couponCode.toUpperCase());
     
-    totalPrice = (totalPrice - (coupon ? totalPrice * coupon.discountPercentage / 100 : 0) + (parseFloat(tip) || 0)).toFixed(2);
+    totalPrice = (totalPrice - (coupon ? ((totalPrice * coupon.discountPercentage) / 100).toFixed(2) : 0) + (parseFloat(tip) || 0)).toFixed(2);
     
-
+    
 
 
     console.log('here are subtotal, tip and total price', orderItems,tip,totalPrice, clientTotal)

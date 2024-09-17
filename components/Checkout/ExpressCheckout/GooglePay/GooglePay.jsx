@@ -7,32 +7,28 @@ import swapCountryCode from "@/utils/utils-client/countryList";
 import { CheckoutContext } from "@/contexts/CheckoutContext";
 import { ErrorIcon } from "@/public/images/svgs/svgImages";
 
-const GooglePay = ({
-  products,
-
-}) => {
+const GooglePay = () => {
   //paymentRequest.paymentMethodData.tokenizationData.token
   const [googlePayError, setGooglePayError] = useState();
 
 
-  const { total, coupon, tip } = useContext(CheckoutContext);
+  const { total, organizeUserData} = useContext(CheckoutContext);
 
 
   const totalRef = useRef(total);
-  const couponCodeRef = useRef(coupon.code==="BUNDLE"?"":coupon.code);
-
-  const tipRef = useRef(tip);
+const organizeUserDataRef = useRef(organizeUserData)
 
 
   useEffect(()=>{
 
-    couponCodeRef.current =coupon.code==="BUNDLE"?"":coupon.code;
-
-    tipRef.current = tip;
-
+   
     totalRef.current = total;
+    organizeUserDataRef.current=organizeUserData;
+    
 
-  },[coupon.code, tip, total])
+    
+
+  },[organizeUserData])
 
 
 
@@ -47,34 +43,37 @@ const GooglePay = ({
       
 const paymentToken = JSON.parse(paymentData.paymentMethodData.tokenizationData.token).id;
 
-// Map products to items
-const items = products.map(({ id, quantity, variant }) => ({ id, quantity, variant }));
+
 
 // Extract first and last name
 const [firstName = "", lastName = ""] = paymentData.shippingAddress.name.split(" ");
 
 // Build requestData
+
+const requestDataTemplate = {...organizeUserDataRef.current("GPAY", paymentToken)};
+
 const requestData = {
+  ...requestDataTemplate, 
+  
   order: {
+    ...requestDataTemplate.order,  
     email: paymentData.email,
-    firstName: firstName,
-    lastName: lastName,
-    address: paymentData.shippingAddress.address1,
-    apt: undefined,
-    country: swapCountryCode(paymentData.shippingAddress.countryCode),
-    zipcode: paymentData.shippingAddress.postalCode,
-    state: paymentData.shippingAddress.administrativeArea,
-    city: paymentData.shippingAddress.locality,
-    phone: paymentData.shippingAddress.phoneNumber,
-    items,
-    couponCode: couponCodeRef.current,
-    tip: tipRef.current,
-    subscribed: document.getElementById('subscribeCheckbox')?.getAttribute('data-subscribe') === 'true',
-    clientTotal: totalRef.current
-  },
-  paymentMethod: "GPAY",
-  paymentToken
+  firstName: firstName,
+  lastName: lastName,
+  address: paymentData.shippingAddress.address1,
+  apt: undefined,
+  country: swapCountryCode(paymentData.shippingAddress.countryCode),
+  zipcode: paymentData.shippingAddress.postalCode,
+  state: paymentData.shippingAddress.administrativeArea,
+  city: paymentData.shippingAddress.locality,
+  phone: paymentData.shippingAddress.phoneNumber
+ 
+  
+}
 };
+
+
+
       
 
       console.log("mydata", requestData);

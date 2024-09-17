@@ -17,7 +17,7 @@ function getPool() {
             password: process.env.DB_PASSWORD,
             database: process.env.DB_DATABASE,
             port: process.env.DB_PORT,
-            connectionLimit: 10,
+            connectionLimit: 25,
             timeout: 30000,
             supportBigNumbers: true,  // Support big numbers (e.g., DECIMAL)
              bigNumberStrings: false,   // Return big numbers as numbers, not strings,

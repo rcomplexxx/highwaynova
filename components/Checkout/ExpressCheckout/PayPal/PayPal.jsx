@@ -1,23 +1,38 @@
-import  { useEffect, useRef, useState } from "react";
+import  { useContext, useEffect, useRef, useState } from "react";
 
 import { useRouter } from "next/router";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import styles from './paypal.module.css'
 import { ErrorIcon } from "@/public/images/svgs/svgImages";
 import { useGlobalStore } from "@/contexts/AppContext";
+import { CheckoutContext } from "@/contexts/CheckoutContext";
 
 
-const PayPalButton=({checkFields, organizeUserData, method='paypal',  type='normal', color='blue'})=>{
+const PayPalButton=({checkFields, organizeUserDataArg, method='paypal',  type='normal', color='blue'})=>{
   const [paypalError, setPaypalError] = useState();
 
-  const organizeUserDataRef = useRef(organizeUserData);
+
+  
+
+const {organizeUserData, customerSubscribed} = useContext(CheckoutContext);
+
+
+
+
+const organizeUserDataRef = useRef(organizeUserData);
+const customerSubscribedRef = useRef(customerSubscribed);
+
 
 
   useEffect(()=>{
-
+    if(organizeUserData)
     organizeUserDataRef.current = organizeUserData;
 
-  },[organizeUserData])
+    else organizeUserDataRef.current = organizeUserDataArg;
+
+    customerSubscribedRef.current = customerSubscribed;
+
+  },[organizeUserData, organizeUserDataArg, customerSubscribed])
 
 
 
@@ -63,7 +78,7 @@ const PayPalButton=({checkFields, organizeUserData, method='paypal',  type='norm
 
 
 
-          
+          console.log('here is req data', requestData)
         
           
          
@@ -106,8 +121,8 @@ const PayPalButton=({checkFields, organizeUserData, method='paypal',  type='norm
         try {
           console.log("mail to be sent:" + document.getElementById("email")?.value);
         
-
-          console.log('detecting subscribe data', document.getElementById('subscribeCheckbox')?.getAttribute('data-subscribe')==='true')
+          console.log('customerSubscribed',subscribeRef.current);
+          
 
      
           const response = await fetch("/api/approve-payment", {
@@ -118,7 +133,7 @@ const PayPalButton=({checkFields, organizeUserData, method='paypal',  type='norm
             body: JSON.stringify({
               paymentMethod: type=="normal"?"PAYPAL":(type=="express"?"PAYPAL(EXPRESS)":"PAYPAL(INSTANT)"),
               paymentId: data.orderID,
-              customerSubscribed: document.getElementById('subscribeCheckbox')?.getAttribute('data-subscribe')==='true'
+              customerSubscribed: customerSubscribedRef.current
             }),
           });
           // Parse the JSON response

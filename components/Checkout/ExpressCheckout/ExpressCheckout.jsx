@@ -1,17 +1,33 @@
+import { useContext } from "react";
 import GooglePay from "./GooglePay/GooglePay";
 import PayPalButton from "./PayPal/PayPal";
 import styles from "./expresscheckout.module.css";
+import { CheckoutContext } from "@/contexts/CheckoutContext";
 
 export default function ExpressCheckout({
-  products,
-  
-  
+
   checkFields,
-  organizeUserData,
+  
  
   
+}) 
+
+
+
+
+
+
+{
+
+
+
+
+
+
   
-}) {
+
+
+
   return (
     <div className={styles.expressCheckoutWrapper}>
       <h3 className={styles.expressCheckoutTitle}>Express checkout</h3>
@@ -22,7 +38,8 @@ export default function ExpressCheckout({
           color='blue'
           type='express'
              checkFields={checkFields}
-             organizeUserData={organizeUserData}
+             
+             
           
              
            
@@ -35,9 +52,9 @@ export default function ExpressCheckout({
         <div className={styles.paymentDiv}>
        
           <GooglePay
-            products={products}
           
-            organizeUserData={organizeUserData}
+          
+          
             
           
             

@@ -193,7 +193,6 @@ if(!campaign) throw new Error('campaign_deleted')
 
           await dbConnection.prepare(`DELETE FROM email_campaigns WHERE id = ?`,[campaignId]);
           
-          if(dbConnection)await dbConnection.release();
           return;
 
          }
@@ -279,6 +278,9 @@ if(!campaign) throw new Error('campaign_deleted')
 
 
 }
+
+
+
 );
 
 

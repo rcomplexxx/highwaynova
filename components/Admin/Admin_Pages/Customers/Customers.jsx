@@ -67,6 +67,7 @@ export default function Customers({ customers, setCustomers }) {
           <p key={index+number} className={styles.emailP}>Email: {customers[index+number]?.email}</p>
           <p key={index+number} className={styles.emailP}>Order number/Money spent: {customers[index+number]?.totalOrderCount}/{customers[index+number]?.money_spent}</p>
           <p key={index+number} className={styles.source}>Source: {customers[index+number]?.source}</p>
+          <p key={index+number} className={styles.source}>used d; {customers[index+number]?.used_discounts}</p>
           </div> :<></>
         })}
         </div>
