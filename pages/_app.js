@@ -226,8 +226,17 @@ export default function App({ Component, pageProps }) {
   useEffect(() => {
     NProgress.configure({ showSpinner: false });
 
-    const handleStart = () => NProgress.start();
-    const handleComplete = () => NProgress.done();
+    const handleStart = () => {
+      if (deepLinkLevelRef.current === 0) {
+          NProgress.start();
+      }
+  };
+
+  const handleComplete = () => {
+      if (deepLinkLevelRef.current === 0) {
+          NProgress.done();
+      }
+  };
 
     router.events.on('routeChangeStart', handleStart);
     router.events.on('routeChangeComplete', handleComplete);
