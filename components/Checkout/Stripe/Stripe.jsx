@@ -13,6 +13,7 @@ import { CheckoutContext } from '@/contexts/CheckoutContext';
 import InputField from '../Input/InputField';
 import { CorrectIcon, ErrorIcon, Spinner} from '@/public/images/svgs/svgImages';
 import { useGlobalStore } from '@/contexts/AppContext';
+import { transformColorToRgb } from '@/utils/utils-client/transformColorToRgba';
 
 
 
@@ -67,12 +68,14 @@ const Stripe = ({checkFields}) => {
     
 
     const getInputColor =  useCallback(()=>{
-      return getComputedStyle(document.documentElement).getPropertyValue('--checkout-input-color');
+      const color =  getComputedStyle(document.documentElement).getPropertyValue('--checkout-input-color');
+      return transformColorToRgb(color);
     },[])
 
 
     const getInputBgColor = useCallback(()=>{
-      return getComputedStyle(document.documentElement).getPropertyValue('--checkout-input-bg');
+      const color =  getComputedStyle(document.documentElement).getPropertyValue('--checkout-input-bg');
+      return transformColorToRgb(color);
     },[])
  
   
