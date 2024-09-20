@@ -23,7 +23,10 @@ async function createSqliteTables() {
 
     console.log('Creating sqlite tables.');
 
-
+    await dbConnection.query("SET GLOBAL slow_query_log = 'ON';");
+    
+    // Set the threshold for logging (e.g., 2 seconds)
+    await dbConnection.query("SET GLOBAL long_query_time = 2;");
 
 
     await dbConnection.query(`CREATE DATABASE IF NOT EXISTS ${process.env.DB_DATABASE} CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci`);
@@ -314,6 +317,9 @@ await dbConnection.query(
   }
 
   finally{
+
+    console.log('db conn check', dbConnection, dbConnection.release, dbConnection.end)
+
     if (dbConnection)  await dbConnection.release(); // Release the connection
   
   }

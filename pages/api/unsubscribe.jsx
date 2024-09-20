@@ -39,14 +39,15 @@ const {customer_id, customer_hash} = req.body;
   try {
 
     
+    
+    dbConnection = await getPool().getConnection();
 
     const clientIp = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
 
-    if (!(await limiterPerHour.rateLimiterGate(clientIp)))
+    if (!(await limiterPerHour.rateLimiterGate(clientIp, dbConnection)))
       return await resReturn(429, { success: true, error: "server_error" })
 
 
-    dbConnection = await getPool().getConnection();
      
 
     console.log(Number(customer_id), 'welcome')

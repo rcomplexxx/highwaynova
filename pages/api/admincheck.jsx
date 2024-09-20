@@ -64,11 +64,16 @@ let dbConnection;
   
 
   try {
+
+
+    
+    dbConnection = await getPool().getConnection()
+
+
     // const clientIp = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
     // if (!(await limiterPerTwoMins.rateLimiterGate(clientIp, dbConnection))) return await resReturn(429, { error: "Too many requests." })
    
 
-      dbConnection = await getPool().getConnection()
 
     
 

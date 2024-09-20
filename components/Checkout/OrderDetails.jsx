@@ -296,7 +296,7 @@ const handleCouponApply = () => {
 
                   
   
-                  <div className={styles.order_pair}>
+                  <div className={`${styles.order_pair} ${coupon.discount===0 && styles.totalPair}`}>
                     
                         <span className={styles.totalText}>Total</span>
                         

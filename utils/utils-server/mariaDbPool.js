@@ -18,10 +18,11 @@ function getPool() {
             database: process.env.DB_DATABASE,
             port: process.env.DB_PORT,
             connectionLimit: 25,
-            timeout: 30000,
+            timeout: 60000,
+            acquireTimeout: 30000,
             supportBigNumbers: true,  // Support big numbers (e.g., DECIMAL)
              bigNumberStrings: false,   // Return big numbers as numbers, not strings,
-             leakDetectionTimeout: 24000
+             leakDetectionTimeout: 10000
         });
 
 

@@ -121,7 +121,7 @@ const customerSubscribedRef = useRef(customerSubscribed);
         try {
           console.log("mail to be sent:" + document.getElementById("email")?.value);
         
-          console.log('customerSubscribed',subscribeRef.current);
+          console.log('customerSubscribed',customerSubscribedRef.current);
           
 
      

@@ -95,12 +95,13 @@ async function updateDb (dbConnection, resReturn, table, data, queryCondition) {
 
 
     
-            await dbConnection.query(`INSERT INTO product_returns (orderId, items,couponCode, tip, returnCost, createdDate, prevPackageStatus) VALUES (?, ?, ?, ?, ?, NOW(), ?)`,
+            await dbConnection.query(`INSERT INTO product_returns (orderId, items,couponCode, tip, returnCost, createdDate, prevPackageStatus) VALUES (?, ?, ?, ?, ?, ?, ?)`,
               [data.orderId,
               data.products,
               data.couponCode,
               data.tip,
               data.returnCost,
+              Date.now(),
               packageStatus
     
               ]

@@ -56,7 +56,8 @@
 }
 
 .input_field:-moz-autofill{
-  caret-color: var(--checkout-input-autofill-bg);
+  
+  
   
   -webkit-box-shadow: 0 0 0 30px var(--checkout-input-autofill-bg) inset !important;
   -webkit-text-fill-color: var(--checkout-input-color) !important;

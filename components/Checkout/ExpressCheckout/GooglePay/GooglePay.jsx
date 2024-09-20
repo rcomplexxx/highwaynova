@@ -62,7 +62,7 @@ const requestData = {
   lastName: lastName,
   address: paymentData.shippingAddress.address1,
   apt: undefined,
-  country: swapCountryCode(paymentData.shippingAddress.countryCode),
+  country: paymentData.shippingAddress.countryCode,
   zipcode: paymentData.shippingAddress.postalCode,
   state: paymentData.shippingAddress.administrativeArea,
   city: paymentData.shippingAddress.locality,

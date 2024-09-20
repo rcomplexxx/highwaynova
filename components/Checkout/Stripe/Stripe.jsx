@@ -140,7 +140,7 @@ const Stripe = ({checkFields}) => {
         }
       }
   
-      setBillingErrors(newErrors);
+      return newErrors;
 
     }
 
@@ -232,37 +232,52 @@ const handleStripePay= async(event)=>{
 
   let transactionError, transactionPaymentMethod;
 
-  if(billingAddressSameAsShipping){
-    const {error, paymentMethod} = await stripe.createPaymentMethod({
-      type: "card",
-      card: cardElement,
-      billing_details: {
-          name: cardHolderName,
-          email: requestData.order.email,
-          address: {
-              line1: requestData.order.address,
-              line2: requestData.order.apt?requestData.order.apt:null,
-              city: requestData.order.city,
-              state: requestData.order.state,
-              postal_code: requestData.order.zipcode,
-              country: swapCountryCode(requestData.order.country)
-          },
-          phone:requestData.order.phone
-      }
-  });
 
-  transactionError= error; transactionPaymentMethod= paymentMethod;
-    
+
+
+  let billingAddress;
+  let billingApt;
+  let billingCountry;
+  let billingZipcode;
+  let billingState;
+  let billingCity;
+  let billingPhone;
+
+
+
+  if(billingAddressSameAsShipping){
+
+
+
+
+    billingAddress = requestData.order.address;
+    billingApt = requestData.order.apt?requestData.order.apt:null;
+    billingCountry = requestData.order.country;
+    billingZipcode = requestData.order.zipcode;
+    billingState = requestData.order.state;
+    billingCity = requestData.order.city;
+    billingPhone = requestData.order.phone;
   }
+
   else{
+    billingAddress = document.getElementById("address").value;
+    billingApt = document.getElementById("apt")?.value;
+    billingCountry = document.getElementById("country").value;
+    billingZipcode = document.getElementById("zipcode").value;
+    billingState = document.getElementById("state").value;
+    billingCity = document.getElementById("city").value;
+    billingPhone = document.getElementById("phone").value;
+
    
-    const billingAddress = document.getElementById("address").value;
-    const billingApt = document.getElementById("apt")?.value;
-    const billingCountry = document.getElementById("country").value;
-    const billingZipcode = document.getElementById("zipcode").value;
-    const billingState = document.getElementById("state").value;
-    const billingCity = document.getElementById("city").value;
-    const billingPhone = document.getElementById("phone").value;
+
+  }
+
+
+  billingApt = billingApt!=""?billingApt:null;
+  billingCountry= swapCountryCode(billingCountry);
+  billingPhone = billingPhone!=""?billingPhone:null;
+
+    
 
       const {error, paymentMethod} = await stripe.createPaymentMethod({
       type: "card",
@@ -272,19 +287,25 @@ const handleStripePay= async(event)=>{
           email: requestData.order.email,
           address: {
             line1: billingAddress,
-            line2: billingApt!=""?billingApt:null,
+            line2: billingApt,
               city: billingCity,
               state: billingState,
               postal_code: billingZipcode,
               country: swapCountryCode(billingCountry)
           },
-          phone:  billingPhone!=""?billingPhone:null
+          phone:  billingPhone
       }
   });
 
+
+
+
   transactionError= error; 
   transactionPaymentMethod= paymentMethod;
-  }
+  
+
+
+
 
        
 
@@ -302,7 +323,7 @@ const handleStripePay= async(event)=>{
               const {id} = transactionPaymentMethod
              
            
-             
+              
 
   
 
@@ -315,7 +336,7 @@ const handleStripePay= async(event)=>{
                   "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                  ...requestData, items: JSON.stringify(requestData.items)
+                  ...requestData, stripeId:id
                 }),
               });
               const data=await response.json();

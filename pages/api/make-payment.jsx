@@ -206,7 +206,7 @@ async function generateUniqueId(dbConnection) {
       
         
         await dbConnection.query(
-          `INSERT INTO orders (id, customer_id, firstName, lastName, address, apt, country, zipcode, state, city, phone, couponCode, tip, items, total, paymentMethod, paymentId, approved, createdDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())`
+          `INSERT INTO orders (id, customer_id, firstName, lastName, address, apt, country, zipcode, state, city, phone, couponCode, tip, items, total, paymentMethod, paymentId, approved, createdDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
         , [
           uniqueId,
           customerId,
@@ -225,7 +225,8 @@ async function generateUniqueId(dbConnection) {
           totalPrice,
           paymentMethod,
           paymentId,
-          approved
+          approved,
+          Date.now(),
         ]
         );
 
@@ -274,7 +275,15 @@ async function generateUniqueId(dbConnection) {
 
 
   try {
+
+
+    
+    dbConnection = await getPool().getConnection()
+
+
     const clientIp = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
+
+    
 
     // if (!(await limiterPerDay.rateLimiterGate(clientIp, dbConnection))){
       
@@ -284,7 +293,6 @@ async function generateUniqueId(dbConnection) {
 
     
 
-    dbConnection = await getPool().getConnection()
 
 
 
@@ -420,6 +428,8 @@ async function generateUniqueId(dbConnection) {
    
     
     console.log('STRIPE')
+
+    
     const {stripeId} = req.body;
  
 

@@ -2,20 +2,19 @@ import { useEffect, useState } from 'react';
 import styles from './adminstatistics.module.css'
 import DatePicker from 'react-multi-date-picker';
 import "react-multi-date-picker/styles/backgrounds/bg-dark.css"
-import products from "@/data/products.json";
 import coupons from "@/data/coupons.json"
 import Charts from './Charts/Charts';
-import Image from 'next/image';
 import { CorrectIcon } from '@/public/images/svgs/svgImages';
 
 
 export default function AdminStatistics(){
-    const [selectedRange, setSelectedRange] = useState([]); //Modza ne treba selectedRange
+  
     const [cashData, setCashData] = useState([]);
     const [returnCashData, setReturnCashData] = useState([]);
     const [revealStatsReadingInstructions, setRevealStatsReadingInstructions] = useState(false);
     const [showCharts, setShowCharts] = useState(true);
-    const [customDateStats, setCustomDateStats] = useState({orderNumber:'N/A', total:'N/A', discountLostMoney:'N/A', supplyCost:'N/A', tip:'N/A',lostInReturns:'N/A', averageOrderValue:'N/A', profit: 'N/A'});
+    const [customDateRange, setCustomDateRange] = useState([]);
+    
     const [shouldUseOnlyFulfilledOrders, setShouldUseOnlyFulfilledOrders]= useState(false);
   
    
@@ -24,317 +23,193 @@ export default function AdminStatistics(){
 
     // dataType={}
     useEffect(() => {
-
-
       const dayInMs = 86400000;
-
-
-      
-        const fetchData = async () => {
-          try {
-
-            let returnCashInfo =[];
-
-
-
-            const responseReturnCashInfo = await fetch("/api/admincheck", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(
-                { dataType:"get_product_returns" }
-              ),
-            });
-
-      
-            if (responseReturnCashInfo.ok) {
-              const data = await responseReturnCashInfo.json();
-           
-              if(data.data){
-
-                returnCashInfo=data.data.map(productReturn=>{return {returnCost: productReturn.returnCost, createdDate: Math.floor(productReturn.createdDate / dayInMs)}});
-                setReturnCashData(returnCashInfo);
-                
-
-              }
-             
-
-
-              
-          
-              }
-
-              console.log('return cash', returnCashInfo)
-            
-
-
-
+    
+      const fetchData = async () => {
+        try {
+          const fetchApi = async (dataType) => {
             const response = await fetch("/api/admincheck", {
               method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(
-                { dataType:shouldUseOnlyFulfilledOrders?"get_order_cash_info_only_fulfilled_orders":"get_order_cash_info" }
-              ),
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ dataType }),
             });
+            return response.ok ? response.json() : Promise.reject("Network response not ok.");
+          };
+    
+          const returnCashResponse = await fetchApi("get_product_returns");
+          const returnCashInfo = returnCashResponse.data?.map(({ returnCost, createdDate }) => ({
+            returnCost,
+            createdDate: Math.floor(createdDate / dayInMs),
+          })) || [];
+    
+          setReturnCashData(returnCashInfo);
+          console.log("return cash", returnCashInfo);
+    
+          const orderCashDataType = shouldUseOnlyFulfilledOrders
+            ? "get_order_cash_info_only_fulfilled_orders"
+            : "get_order_cash_info";
+          const orderCashResponse = await fetchApi(orderCashDataType);
+    
+          const cashInfo = orderCashResponse.data.map((orderInfo) => {
+            const { total, tip = 0, supplyCost, createdDate, couponCode } = orderInfo;
+            const coupon = coupons.find((c) => c.code.toLowerCase() === couponCode.toLowerCase());
+            const discountPercentage = coupon?.discountPercentage || 0;
+            const discountLostMoney = Number(((total - tip) * discountPercentage / (100 - discountPercentage)).toFixed(2));
+    
+            return {
+              createdDate: Math.floor(createdDate / dayInMs),
+              cashObtained: Number(total.toFixed(2)),
+              discountLostMoney,
+              supplyCost,
+              tip: parseFloat(tip),
+            };
+          });
+    
+          setCashData(cashInfo);
+          console.log("cash info", cashInfo);
+        } catch (error) {
+          console.error("Fetch error:", error);
+        }
+      };
+    
+      fetchData();
+    }, [shouldUseOnlyFulfilledOrders]);
+
+
+
+
+
+    const StatField = (period, startPeriod, endPeriod) => {
+
+
       
-            if (response.ok) {
-              const data = await response.json();
-
-              console.log('here is pure data', data.data)
-             
-
-              
-              const cashInfo = data.data.map(orderInfo => {
-                
-              
-                let totalPrice=orderInfo.total;
-                let tip = orderInfo.tip?orderInfo.tip:0;
-              
-                const supplyCost = orderInfo.supplyCost;
-
-                const coupon = coupons.find(c=>{return c.code.toLowerCase() ==orderInfo.couponCode.toLowerCase()});
-
-                const discountPercentage = coupon?coupon.discountPercentage:0;
-
-                const discountLostMoney = Number(((totalPrice-tip)*discountPercentage/(100- discountPercentage)).toFixed(2))
-
-                //dy/100-d
-
-                totalPrice= Number(totalPrice.toFixed(2));
-
-
-                console.log('or in', discountLostMoney)
-           
-              
-                tip= parseFloat(tip, 2);
-
-
-              
-                
-
-
-
-                console.log('testing total price', orderInfo)
-                //Doradi popust
-                //Doradi tip
-             
-              
-
-          
-               
-
-                return ({createdDate: Math.floor(orderInfo.createdDate / dayInMs), cashObtained: totalPrice, discountLostMoney:discountLostMoney, supplyCost:supplyCost, tip:tip})
-
-              }
-              );
-              setCashData(cashInfo);
-
-              console.log('cash info', cashInfo);
-
-
-
-
-              
-               
-              
-
-
-
-                
-
-
-
-
-            } else {
-              throw new Error("Network response was not ok.");
-            }
-          } catch (error) {
-            console.error("There has been a problem with your fetch operation:", error);
-          }
-        };
-      
-        fetchData();
-      }, [shouldUseOnlyFulfilledOrders]);
-
-
-
-
-
-
-
-      const StatField=(period,startPeriod, endPeriod)=>{
-        
-        if(!endPeriod){
-          const today = new Date();
-          const unixTimestampInDays = Math.floor(today / 86400000); // Convert milliseconds to days
-          endPeriod= unixTimestampInDays;
-        }
-        if(!startPeriod){
-          if(period=='Today') startPeriod=endPeriod;
-          else if(period=='Last 7 days') startPeriod=endPeriod - 7;
-          else if(period=='Last 30 days') startPeriod=endPeriod - 30;
-          else if(period=='Last 365 days') startPeriod=endPeriod - 365;
-          else if(period=='All time') startPeriod=0;
-        }
-        let orderNumber= 0;
-        let total= 0;
-        let discountLostMoney=0;
-       
-        let supplyCost = 0;
-        let tip = 0;
-       
-        if(cashData) {cashData.forEach(info=>{
-            if(info.createdDate>=startPeriod && info.createdDate<= endPeriod){
-              orderNumber=orderNumber+1;
-             
-              total=total+info.cashObtained
+      const dayInMs = 86400000;
+      const unixTimestampInDays = Math.floor(Date.now() / dayInMs);
+   
+    
+      if (period === 'Custom date' && !endPeriod) {
+        return (
+          <div className={styles.saleStat}>
+            <div className={styles.datePickerWrapper}>
+            <DatePicker
+              range
+              format="DD/MM/YYYY"
+              className={`bg-dark ${styles.datePicker}`}
+              placeholder="Pick a date range"
+              inputClass={styles.dateInput}
+              onChange={(value) => {
+                if (value.length > 1) {
+                  setCustomDateRange([
+                    Math.floor(value[0].valueOf() / dayInMs),
+                    Math.floor(value[1].valueOf() / dayInMs),
+                  ]);
+                }
+              }}
+            />
+            </div>
+            {Array(8).fill(<span className={styles.statName}>N/A</span>)}
             
-              discountLostMoney+= info.discountLostMoney;
-              supplyCost+=info.supplyCost;
-              tip+=info.tip;
-          
-            }
-
-            tip=Number(tip.toFixed(2))
-            discountLostMoney=Number(discountLostMoney.toFixed(2))
-            supplyCost=Number(supplyCost.toFixed(2))
-            total = Number(total.toFixed(2))
-            
-
-
-        });
-
-        let lostInReturns = 0;
-
-        if(returnCashData.length !=0){
-          returnCashData.forEach(rcd =>{
-
-          
-          if(rcd.createdDate>=startPeriod && rcd.createdDate<= endPeriod)
-          lostInReturns = lostInReturns + rcd.returnCost;
-
-        }
-        )
-        }
-
-        lostInReturns=lostInReturns.toFixed(2);
-
-        console.log('lost in returns', lostInReturns);
-
-        total=total.toFixed(2);
-        supplyCost=supplyCost.toFixed(2);
-        tip=tip.toFixed(2);
-        let profit= Number(total) - Number(supplyCost)+Number(tip) - lostInReturns;
-        
-        profit=profit.toFixed(2);
-
-        let averageOrderValue= orderNumber==0?0:(Number(profit) / Number(orderNumber));
-        averageOrderValue=averageOrderValue.toFixed(2);
-
-
-
-
-        return <div className={styles.saleStat}>
-        <span className={styles.statName}>{period}</span> 
-         <span className={styles.statName}>{orderNumber}</span> 
-        <span className={styles.statName}>${total}</span> 
-        <span className={styles.statName}>${discountLostMoney}</span>
-        <span className={styles.statName}>${tip}</span> 
-        <span className={styles.statName}>${supplyCost}</span> 
-        <span className={styles.statName}>${lostInReturns}</span> 
-        <span className={styles.statName}>${averageOrderValue}</span>
-        <span className={styles.statName}>${profit}</span> 
-        </div>
-        }
-        return <div className={styles.saleStat}>
-        </div>
-        
+          </div>
+        );
       }
 
-      const customPeriodData= (selectedRange)=>{
 
 
-
-        let orderNumber= 0;
-        let total= 0;
-        let supplyCost = 0;
-        let tip = 0;
-        let discountLostMoney= 0;
-
-
-
-
-        cashData.forEach(info=>{
-          if(info.createdDate>=selectedRange[0] && info.createdDate<= selectedRange[1]){
-
-
-              //=
-
-
-
-
-
-
-        
-       
-
-              orderNumber=orderNumber+1;
-             
-              total=total+info.cashObtained
-              console.log('curent cus price', total)
-              supplyCost+=info.supplyCost;
-              tip+=info.tip;
-              discountLostMoney+=info.discountLostMoney;
-        
-
-
-              
-
-
-
-
-          }
+      endPeriod = endPeriod || unixTimestampInDays;
+    
+      // Default period range calculation
+      const periodMap = {
+        Today: 0,
+        'Last 7 days': 7,
+        'Last 30 days': 30,
+        'Last 365 days': 365,
+        'All time': endPeriod,
+      };
+      startPeriod = startPeriod || (endPeriod - (periodMap[period] ?? endPeriod));
+    
+      // Initialize variables
+      let stats = {
+        orderNumber: 0,
+        total: 0,
+        discountLostMoney: 0,
+        supplyCost: 0,
+        tip: 0,
+        lostInReturns: 0,
+      };
+    
+      // Process cashData and returnCashData
+      cashData?.forEach(({ createdDate, cashObtained, discountLostMoney, supplyCost, tip }) => {
+        if (createdDate >= startPeriod && createdDate <= endPeriod) {
+          stats.orderNumber++;
+          stats.total += cashObtained;
+          stats.discountLostMoney += discountLostMoney;
+          stats.supplyCost += supplyCost;
+          stats.tip += tip;
+        }
+      });
+    
+      returnCashData?.forEach(({ createdDate, returnCost }) => {
+        if (createdDate >= startPeriod && createdDate <= endPeriod) {
+          stats.lostInReturns += returnCost;
+        }
+      });
+    
+      // Format numbers
+      const formatNum = (num) => num.toFixed(2);
+      Object.keys(stats).forEach((key) => {
+        if (key !== 'orderNumber') {
+          stats[key] = formatNum(stats[key]);
+        }
       });
 
-
       
-      total=total.toFixed(2);
-      supplyCost=supplyCost.toFixed(2);
-      discountLostMoney=discountLostMoney.toFixed(2);
-      tip=tip.toFixed(2);
+      const profit = formatNum(Number(stats.total) - Number(stats.supplyCost) + Number(stats.tip) - Number(stats.lostInReturns));
+      const averageOrderValue = formatNum(stats.orderNumber ? Number(profit) / Number(stats.orderNumber) : 0);
 
-
+   
       
-      let lostInReturns = 0;
 
-      if(returnCashData.length !=0){
-        returnCashData.forEach(rcd =>{
-
-        
-        if(rcd.createdDate>=selectedRange[0] && rcd.createdDate<= selectedRange[1])
-        lostInReturns = lostInReturns + rcd.returnCost;
-
-      }
-      )
-      }
-
-
-      let profit= Number(total) - Number(supplyCost)+Number(tip) - Number(lostInReturns);
-      lostInReturns= lostInReturns.toFixed(2);
-      profit=profit.toFixed(2);
-
-      const averageOrderValue= Number(orderNumber)===0?"0.00":(Number(profit) / Number(orderNumber)).toFixed(2);
-
-      setCustomDateStats({orderNumber, total, discountLostMoney, supplyCost, tip, lostInReturns, averageOrderValue, profit})
-
-console.log('cs', cashData);
-     
     
-       
+    
+      return (
+        <div className={styles.saleStat}>
+          {period !== 'Custom date' ? (
+            <span className={styles.statName}>{period}</span>
+          ) : (
+            <div className={styles.datePickerWrapper}>
+            <DatePicker
+              range
+              format="DD/MM/YYYY"
+              className={`bg-dark ${styles.datePicker}`}
+              placeholder="Pick a date range"
+              inputClass={styles.dateInput}
+              onChange={(value) => {
+                if (value.length > 1) {
+                  setCustomDateRange([
+                    Math.floor(value[0].valueOf() / dayInMs),
+                    Math.floor(value[1].valueOf() / dayInMs),
+                  ]);
+                }
+              }}
+            />
+            </div>
+          )}
+          <span className={styles.statName}>{stats.orderNumber}</span>
+          <span className={styles.statName}>${stats.total}</span>
+          <span className={styles.statName}>${stats.discountLostMoney}</span>
+          <span className={styles.statName}>${stats.tip}</span>
+          <span className={styles.statName}>${stats.supplyCost}</span>
+          <span className={styles.statName}>${stats.lostInReturns}</span>
+          <span className={styles.statName}>${averageOrderValue}</span>
+          <span className={styles.statName}>${profit}</span>
+        </div>
+      );
     };
+
+
+
+
+
 
 
     const getAovChartData = ()=>{
@@ -384,47 +259,12 @@ console.log('cs', cashData);
       {StatField('Last 30 days')}
       {StatField('Last 365 days')}
       {StatField('All time')}
-      
-      <div className={styles.saleStat}>
-    <div className={styles.datePickerWrapper}>
-
-
-
-    <DatePicker range format="DD/MM/YYYY"  className={`bg-dark ${styles.datePicker}`}
-    placeholder='Pick a date range'
-    inputClass={styles.dateInput}
-    onChange={(value) => {
-
-            if(value.length>1){
-              const dateRange = [ Math.floor(value[0].valueOf()/ 86400000),  Math.floor(value[1].valueOf()/ 86400000)];
-          setSelectedRange(dateRange);
-          customPeriodData(dateRange); //ovde
-            }
-
-        else {
-          setSelectedRange([]);
-          setCustomDateStats({orderNumber:'N/A', total:'N/A', discountLostMoney:'N/A', supplyCost:'N/A', tip:'N/A', lostInReturns: 'N/A', averageOrderValue: 'N/A', profit: 'N/A'});
-      
-
-        }
-        
-          }}/>
-          
-</div>
-
-
-<span className={styles.statName}>{customDateStats.orderNumber}</span> 
-        <span className={styles.statName}>{`${customDateStats.total!="N/A" ? "$": ""}${customDateStats.total}`}</span>
-        <span className={styles.statName}>{`${customDateStats.discountLostMoney!="N/A" ? "$": ""}${customDateStats.discountLostMoney}`}</span>
-        <span className={styles.statName}>{`${customDateStats.tip!="N/A" ? "$": ""}${customDateStats.tip}`}</span> 
-        <span className={styles.statName}>{`${customDateStats.supplyCost!="N/A" ? "$": ""}${customDateStats.supplyCost}`}</span>
-        <span className={styles.statName}>{`${customDateStats.lostInReturns!="N/A" ? "$": ""}${customDateStats.lostInReturns}`}</span>
-        <span className={styles.statName}>{`${customDateStats.averageOrderValue!="N/A" ? "$": ""}${customDateStats.averageOrderValue}`}</span>
+      {StatField('Custom date',customDateRange[0], customDateRange[1])}
        
-        <span className={styles.statName}>{`${customDateStats.profit!="N/A" ? "$": ""}${customDateStats.profit}`}</span> 
 
-</div>
-      
+          
+
+
         
 
     

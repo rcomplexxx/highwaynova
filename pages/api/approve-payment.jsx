@@ -1,6 +1,7 @@
 import paypal from "@paypal/checkout-server-sdk";
 import RateLimiter from "@/utils/utils-server/rateLimiter.js";
 import subscribe from '@/utils/utils-server/subcsribe'
+import swapCountryCode from "@/utils/utils-client/countryList";
 const getPool = require('@/utils/utils-server/mariaDbPool');
 
 
@@ -71,7 +72,7 @@ const paypalExpressChecker=  (await dbConnection.query(`SELECT address, city FRO
     const address =  shippingAddress.address;
 
     console.log("Here is my data!",email, fullName.slice(0, fullName.indexOf(" ")),  fullName.slice(fullName.indexOf(" "), fullName.length), 
-    address.address_line_1,  address.address_line_2,address.country_code, address.postal_code, address.admin_area_1,address.admin_area_2 , 
+    address.address_line_1,  address.address_line_2, address.country_code, address.postal_code, address.admin_area_1,address.admin_area_2 , 
     paymentId, paymentMethod)
     
 
@@ -87,7 +88,7 @@ const paypalExpressChecker=  (await dbConnection.query(`SELECT address, city FRO
 
     const result = await dbConnection.query("UPDATE orders SET customer_id = ?, firstName = ?, lastName = ?, address = ?, apt = ?, country = ?, zipcode =?, state = ?, city=? WHERE paymentId = ? AND paymentMethod = ?"
       , [myCustomerId, fullName.slice(0, fullName.indexOf(" ")), fullName.slice(fullName.indexOf(" "), fullName.length), 
-      address.address_line_1, address.address_line_2,address.country_code, address.postal_code, address.admin_area_1,address.admin_area_2 , paymentId, paymentMethod]);
+      address.address_line_1, address.address_line_2, address.country_code, address.postal_code, address.admin_area_1,address.admin_area_2 , paymentId, paymentMethod]);
       // , phone=?
     // Check the result of the update operation
     console.log('result',result);
@@ -188,14 +189,19 @@ const paypalExpressChecker=  (await dbConnection.query(`SELECT address, city FRO
 
 
   try {
+
+
+    
+    dbConnection = await getPool().getConnection();
+
+
     const clientIp = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
 
-    if (!(await limiterPerDay.rateLimiterGate(clientIp, dbConnection)))
-      return await resReturn(429, {error: "Too many requests. Please try again later." })
+    // if (!(await limiterPerDay.rateLimiterGate(clientIp, dbConnection)))
+    //   return await resReturn(429, {error: "Too many requests. Please try again later." })
 
 
 
-    dbConnection = await getPool().getConnection();
   
     
 

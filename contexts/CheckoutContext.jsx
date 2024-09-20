@@ -10,6 +10,7 @@ import coupons from '@/data/coupons.json'
 import { useGlobalStore } from './AppContext';
 import checkDiscountSavesMoreThenBundle from '@/utils/utils-client/compareDiscountAndBundle';
 import findBestBundle from '@/utils/utils-client/findBestBundle'
+import swapCountryCode from '@/utils/utils-client/countryList';
 
 
 
@@ -152,6 +153,7 @@ const organizeUserData = useCallback((paymentMethod, paymentToken) => {
   const requestData = {
     order: {
       ...userData,
+      country: swapCountryCode(userData.country),
       items,
       customerSubscribed,
       couponCode: coupon.code === "BUNDLE" ? "" : coupon.code,

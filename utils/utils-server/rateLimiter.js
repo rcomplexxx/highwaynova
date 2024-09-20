@@ -6,9 +6,7 @@ const getPool = require('@/utils/utils-server/mariaDbPool');
 class RateLimiter {
 
  
-
-    //doraditi u zavisnosti od mog api numbera
-  
+    
 
 
     constructor({apiNumberArg, tokenNumberArg, expireDurationArg}) {
@@ -22,6 +20,9 @@ class RateLimiter {
         
     }
 
+
+    
+
     async rateLimiterGate (ipArg, dbConnectionArg )  {
 
   
@@ -30,57 +31,63 @@ class RateLimiter {
 
 
 
+        const currentDateInDays = Math.floor(Date.now() / 1000);
     
       
           try {
          
-            dbConnection= dbConnectionArg?dbConnectionArg:await getPool().getConnection();
+            dbConnection= dbConnectionArg?dbConnectionArg:(await getPool().getConnection());
+
+
   
               const existingRecord = (await dbConnection.query(`
                   SELECT id, tokenNumber, expireDate  FROM rateLimiter WHERE ip = ? AND apiNumber = ?
               LIMIT 1`,[ipArg, this.apiNumber]))[0];
+
+
+                //Ako ip/apiNumber par nikad nije zabelezen, insertirati novi db row
+              if (!existingRecord) {
+
+                       
   
-              if (existingRecord) {
-                  if (existingRecord.tokenNumber === 0) {
+                await dbConnection.query(`
+                    INSERT INTO rateLimiter (ip, tokenNumber, apiNumber, expireDate) VALUES (?, ?, ?, ?)
+                `,[ipArg, this.tokenNumber - 1, this.apiNumber, currentDateInDays + this.expireDuration]);
+
+                return true;
+
+              }
+
+                //Ako record ima jos tokena, oduzeti jedan i dozvoliti nastavak apija 
+                  if (existingRecord.tokenNumber !== 0) {
+
+
+                    await dbConnection.query(`
+                        UPDATE rateLimiter SET tokenNumber = tokenNumber - 1 WHERE id = ?
+                      `, [existingRecord.id]);
+
+                      return true;
+                  }
+                    
+                //Ako record nema vise tokena, i jos nije doso expireDate, zabraniti nastavak apija(return false)
+                    if(currentDateInDays <= existingRecord.expireDate) return false;
   
-                    if(Math.floor(Date.now() / 1000)>existingRecord.expireDate)
-                    {
+                   
   
-                     
-  
+                //Ako record nema vise tokena, ali je proso expireDate, ubrizgari novi paket tokena, i dozvoliti nastavak apija
                      
                       await dbConnection.query(`
                       UPDATE rateLimiter 
                               SET tokenNumber = ?, expireDate = ? 
                               WHERE id = ?
-                  `, [this.tokenNumber - 1, Math.floor(Date.now() / 1000) + this.expireDuration, existingRecord.id]);
-                  
-                  return true;
+                  `, [this.tokenNumber - 1, currentDateInDays + this.expireDuration, existingRecord.id]);
+          
+
+              return true;
                       
-  
-  
-                    }
-  
-  
-                     return false;
-                  } else {
-  
-                    
-                      await dbConnection.query(`
-                          UPDATE rateLimiter SET tokenNumber = ? WHERE ip = ? AND apiNumber = ?
-                      `, [existingRecord.tokenNumber - 1, ipArg, this.apiNumber]);
-                      return true;
-                  }
-              } else {
-  
-  
-              
-  
-                 await dbConnection.query(`
-                      INSERT INTO rateLimiter (ip, tokenNumber, apiNumber, expireDate) VALUES (?, ?, ?, ?)
-                  `,[ipArg, this.tokenNumber - 1, this.apiNumber, Math.floor(Date.now() / 1000) + this.expireDuration]);
-                  return true;
-              }
+
+
+
           } catch (error) {
               console.error('Error in database operations:', error);
               return false;

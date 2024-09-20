@@ -7,6 +7,7 @@ import ColorPicker from './ColorPicker/ColorPicker';
 import LoadTemplate from './TemplateManipulation/LoadTemplate';
 import SaveTemplate from './TemplateManipulation/SaveTemplate';
 import EditorHtmlSnippets from './EditorHtmlSnippets/EditorHtmlSnippets';
+import { transformColorToRgb } from '@/utils/utils-client/transformColorToRgba';
 
 
 
@@ -209,8 +210,8 @@ catch(error){
     
             // Extract the font-family property
             // const order_color = computedStyles.getPropertyValue('--email-order-summery-color');
-            const total_color = computedStyles.getPropertyValue('--email-order-summery-total');
-            const order_weak = computedStyles.getPropertyValue('--email-order-summery-weak');
+            const total_color = transformColorToRgb(computedStyles.getPropertyValue('--email-order-summery-total'));
+            const order_weak = transformColorToRgb(computedStyles.getPropertyValue('--email-order-summery-weak'));
 
             optimizedHtml = optimizedHtml.replace(/{{order_details}}/g, `{{order_details[${order_weak},${total_color}]}}`)
 
