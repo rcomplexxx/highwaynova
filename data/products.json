@@ -148,72 +148,7 @@
     ],
     "rating": 4.7,
     "reviewNumber": 32,
-    "variants": [
-      {
-        "name": "White",
-        "variantProductImageIndex": 0
-      },
-      {
-        "name": "Black",
-        "variantProductImageIndex": 1
-      }
-    ],
-    "raiting": 4.7
-  },
-  {
-    "id": 6,
-    "name": "Product 6",
-    "images": [
-      "product_6_image_0.jpg",
-      "product_6_image_1.jpg",
-      "product_6_image_2.jpg",
-      "product_6_image_3.jpg",
-      "product_6_image_4.jpg",
-      "product_6_image_5.jpg",
-      "product_6_image_6.jpg",
-      "product_6_image_7.jpg",
-      "product_6_image_8.jpg",
-      "product_6_image_9.jpg",
-      "product_6_image_10.jpg"
-    ],
-    "thumbnails": [
-      0,
-      1
-    ],
-    "price": 998.99,
-    "stickerPrice": 999.99,
-    "fbt": [
-      {
-        "id": 0,
-        "variantIndex": 0
-      },
-      {
-        "id": 1,
-        "variantIndex": 0
-      }
-    ],
-    "rating": 4.7,
-    "reviewNumber": 32,
-    "bundle": [
-      {
-        "quantity": 2,
-        "discountPercentage": 20
-      },
-      {
-        "quantity": 4,
-        "discountPercentage": 50
-      }
-    ],
-    "variants": [
-      {
-        "name": "White",
-        "variantProductImageIndex": 0
-      },
-      {
-        "name": "Black",
-        "variantProductImageIndex": 1
-      }
-    ],
     "raiting": 4.7
   }
+  
 ]

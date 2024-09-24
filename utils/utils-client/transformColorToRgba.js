@@ -1,7 +1,7 @@
 
 
 
-const transformColorToRgb = (bgColor, opacity)=>{
+const transformColorToRgb = (bgColor, opacity=1)=>{
 
     if(bgColor.includes('hsl')){
 
@@ -77,6 +77,32 @@ const transformColorToRgb = (bgColor, opacity)=>{
    }
 
 
+   const rgbToHex = (r, g, b) => {
+    const toHex = (num) => {
+      const hex = num.toString(16);
+      return hex.length === 1 ? '0' + hex : hex;
+    };
+    return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+  };
+  
+  // Transform color to Hex
+  const transformColorToHex = (bgColor) => {
+
+    if(!bgColor)return;
+    
+    const rgbColor = transformColorToRgb(bgColor); // Get RGB color
+    const rgbValues = rgbColor.match(/\d+/g); // Extract the RGB values
+  
+    // Convert to Hex
+    const r = parseInt(rgbValues[0]);
+    const g = parseInt(rgbValues[1]);
+    const b = parseInt(rgbValues[2]);
+  
+    return rgbToHex(r, g, b);
+  };
+
+
    module.exports = {
-    transformColorToRgb
+    transformColorToRgb,
+    transformColorToHex
   };

@@ -1,5 +1,6 @@
 
-import products from '@/data/products.json';
+
+const products = require('@/data/products.json');
 
 function findBestBundle(cartProducts) {
   let cartProductsTemp = [...cartProducts];
@@ -71,4 +72,4 @@ function findBestBundle(cartProducts) {
   return bestBundle.priceOff === 0 ? cartProductsTemp : cartProductsTemp;
 }
 
-export default findBestBundle;
+module.exports = findBestBundle;

@@ -28,7 +28,7 @@ let dbConnection = await getPool().getConnection();
 
 
   finally{
-  await dbConnection.release();
+  if(dbConnection)await dbConnection.release();
 
   }
 

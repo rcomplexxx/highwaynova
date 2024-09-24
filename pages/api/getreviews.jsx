@@ -46,7 +46,7 @@ const getReviews = async (req, res) => {
 
 
 
-  let dbConnection
+  let dbConnection;
 
   
   const resReturn = async(statusNumber, jsonObject)=>{

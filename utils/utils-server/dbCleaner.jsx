@@ -20,18 +20,22 @@ cron.schedule('0 0 * * *', async () => {
 
 
 
-  const currUnixDateInDays = Math.floor(Date.now() / (86400000)) - 100;
-  const currUnixDateInSeconds= (Math.floor(Date.now() / 1000));
+ 
+  
   // const cleanOrdersQuery = `DELETE FROM orders WHERE ((packageStatus=3 OR packageStatus=4)  AND createdDate < ${currUnixDateInDays+33}) OR (approved=0 AND createdDate < ${currUnixDateInDays})`;
   // const cleanOrdersQuery = `DELETE FROM orders WHERE createdDate < ${currUnixDateInDays}`;
   // const cleanMessagesQuery = `DELETE FROM messages WHERE msgStatus = 2`;
-  const cleanRateLimiterQuery = `DELETE FROM rateLimiter WHERE expireDate < ${currUnixDateInSeconds}`;
+
+  
   // 
   try {
  
     dbConnection = await getPool().getConnection();
-    await dbConnection.query(cleanRateLimiterQuery);
-    await dbConnection.query('OPTIMIZE TABLE yourTableName');
+
+    await dbConnection.query(`DELETE FROM rateLimiter WHERE expireDate < ${Math.floor(Date.now() / 1000)}`);
+    await dbConnection.query('OPTIMIZE TABLE rateLimiter');
+
+
     console.log('Rows deleted successfully!');
   } catch (error) {
     console.error('Error deleting rows:', error.message);

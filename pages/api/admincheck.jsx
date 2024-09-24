@@ -1,5 +1,5 @@
 
-import { verifyToken } from "@/utils/utils-server/auth.js"; // Adjust the path based on your project structure
+import { verifyToken } from "@/utils/utils-server/utils-admin/auth.js"; // Adjust the path based on your project structure
 import RateLimiter from "@/utils/utils-server/rateLimiter.js";
 
 import makeNewDescription from "@/utils/utils-server/makeNewDescription.js"
@@ -33,7 +33,7 @@ let dbConnection;
 
   const resReturn = async(statusNumber, jsonObject)=>{
 
-    console.log('returning res', statusNumber, jsonObject);
+    
 
 
     res.status(statusNumber).json(jsonObject)

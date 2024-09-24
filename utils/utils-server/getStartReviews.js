@@ -1,6 +1,7 @@
 
 import reviewsData from "@/data/reviews.json";
-const getPool = require('@/utils/utils-server/mariaDbPool');
+import getConnection from "./mariaDbConnection";
+
 
 
 export const getStartReviews= async(productId, limit = 20)=>{
@@ -9,7 +10,7 @@ export const getStartReviews= async(productId, limit = 20)=>{
 
 
   try{
-    dbConnection = await getPool().getConnection();
+    dbConnection = await getConnection();
   
 
     
@@ -24,7 +25,7 @@ export const getStartReviews= async(productId, limit = 20)=>{
      
       const result =  await dbConnection.query(`SELECT * FROM reviews WHERE product_id = ? LIMIT ?`, [productId, limit]);
 
-      console.log('here is result', result)
+      
   
 
   
@@ -44,7 +45,7 @@ export const getStartReviews= async(productId, limit = 20)=>{
   }
 
   finally{
-    if(dbConnection) await dbConnection.release();
+    if(dbConnection) await dbConnection.end();
   }
 
 

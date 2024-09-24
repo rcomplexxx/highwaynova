@@ -298,13 +298,15 @@ async function generateUniqueId(dbConnection) {
 
 
     const { clientTotal, couponCode, tip, items } = req.body.order;
-    const orderItems = couponCode ? items : findBestBundleServer(items);
-
+    const orderItems = (couponCode ? items : findBestBundleServer(items)).map(product => ({ 
+      ...product, 
+      price: product.bundledPrice || productsData.find(item => item.id === product.id)?.price || 0 
+    }));
     console.log('items and orderItems', items, orderItems)
     
     totalPrice = 
       orderItems.reduce((sum, product) => 
-        sum + (product.bundledPrice || productsData.find(item => item.id === product.id)?.price || 0) * product.quantity
+        sum + product.price * product.quantity
       , 0).toFixed(2);
     
     const coupon = couponCode && coupons.find(c => c.code.toUpperCase() === couponCode.toUpperCase());

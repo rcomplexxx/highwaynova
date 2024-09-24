@@ -7,7 +7,7 @@ import ColorPicker from './ColorPicker/ColorPicker';
 import LoadTemplate from './TemplateManipulation/LoadTemplate';
 import SaveTemplate from './TemplateManipulation/SaveTemplate';
 import EditorHtmlSnippets from './EditorHtmlSnippets/EditorHtmlSnippets';
-import { transformColorToRgb } from '@/utils/utils-client/transformColorToRgba';
+import { transformColorToHex } from '@/utils/utils-client/transformColorToRgba';
 
 
 
@@ -204,14 +204,17 @@ catch(error){
                 table{\nmax-width: ${emailMainWidth}px !important;\n}\n\n
                 body {`);
 
-            optimizedHtml = optimizedHtml
+                
 
             const computedStyles = window.getComputedStyle(document.documentElement);
     
             // Extract the font-family property
             // const order_color = computedStyles.getPropertyValue('--email-order-summery-color');
-            const total_color = transformColorToRgb(computedStyles.getPropertyValue('--email-order-summery-total'));
-            const order_weak = transformColorToRgb(computedStyles.getPropertyValue('--email-order-summery-weak'));
+            const total_color = transformColorToHex(computedStyles.getPropertyValue('--email-post-purchase-total-color'));
+            const order_weak = transformColorToHex(computedStyles.getPropertyValue('--email-post-purchase-variant-color'));
+
+           
+            
 
             optimizedHtml = optimizedHtml.replace(/{{order_details}}/g, `{{order_details[${order_weak},${total_color}]}}`)
 

@@ -938,14 +938,18 @@ p {
 
 /* Email colors */
 
---email-order-summery-weak: var(--neutral-6);
---email-order-summery-total: var(--neutral-9);
 
 
+
+--email-post-purchase-variant-color: var(--neutral-6);
+--email-post-purchase-total-color: var(--neutral-10);
 
 
 
 color-scheme: light only;
+
+
+
 
 
   /*~Admin sector colors*/

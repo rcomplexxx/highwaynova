@@ -36,7 +36,7 @@ class RateLimiter {
       
           try {
          
-            dbConnection= dbConnectionArg?dbConnectionArg:(await getPool().getConnection());
+            dbConnection = dbConnectionArg || await getPool().getConnection();
 
 
   

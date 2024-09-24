@@ -6,7 +6,7 @@ const path = require('path');
 
 
 import RateLimiter from "@/utils/utils-server/rateLimiter.js";
-import { verifyToken } from "@/utils/utils-server/auth.js"; 
+import { verifyToken } from "@/utils/utils-server/utils-admin/auth.js"; 
 
 
 

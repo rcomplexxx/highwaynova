@@ -1,5 +1,6 @@
+import getConnection from './mariaDbConnection';
 
-const getPool = require('@/utils/utils-server/mariaDbPool');
+
 
 const getRatingData = async(product_id) => {
  
@@ -13,7 +14,7 @@ const getRatingData = async(product_id) => {
     let sumOfAllReviews= 0 ;
   
 
-  dbConnection = await getPool().getConnection();
+  dbConnection = await getConnection();
 
  
 
@@ -63,7 +64,7 @@ const getRatingData = async(product_id) => {
 
   finally{
 
-    if(dbConnection)await dbConnection.release()
+    if(dbConnection)await dbConnection.end()
   }
 };
 

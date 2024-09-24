@@ -5,7 +5,7 @@ import {useGlobalStore} from "@/contexts/AppContext";
 import CustomerReviews from "@/components/ProductPage/CustomerReviews/CustomerReviews.jsx";
 
 
-const getPool = require('@/utils/utils-server/mariaDbPool');
+
 
 
 
@@ -33,6 +33,7 @@ import Link from "next/link";
 import styles from "../../styles/productpage.module.css";
 import BundleOffer from "@/components/ProductPage/BundleOffer/BundleOffer";
 import { useRouter } from "next/router";
+import getConnection from "@/utils/utils-server/mariaDbConnection";
 
 const PayPalButton = dynamic(() => import("@/components/Checkout/ExpressCheckout/PayPal/PayPal"));
 
@@ -41,7 +42,6 @@ export default function ProductPage({ product, description, images, startReviews
 
 
   
-
 
   
   if (!product) return   <div className={styles.notFoundDiv}>
@@ -485,7 +485,7 @@ export async function getStaticProps(context) {
 
     try {
 
-    dbConnection = await getPool().getConnection();
+    dbConnection = await getConnection();
     const descriptionData= await dbConnection.query(`SELECT description FROM products WHERE productId = ?` , [productId]);
 
     if(descriptionData.length > 0) description = descriptionData[0].description;
@@ -499,7 +499,7 @@ export async function getStaticProps(context) {
     }
 
     finally{
-      if(dbConnection)await dbConnection.release();
+      if(dbConnection)await dbConnection.end();
     }
 
 

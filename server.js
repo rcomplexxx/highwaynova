@@ -5,7 +5,7 @@ const next = require('next');
 const express = require('express');
 const createSqliteTables = require('@/utils/utils-server/createSqliteTables.js')
 const dbCleaner = require('@/utils/utils-server/dbCleaner.jsx');
-const sendEmailJob = require('@/utils/utils-server/sendEmailJob.jsx');
+const emailSendJob = require('@/utils/utils-server/sendEmailJob.jsx');
 
 const getPool = require('@/utils/utils-server/mariaDbPool');
 
@@ -102,9 +102,9 @@ for(const campaign of campaigns){
     })
 
     
+  let finalSendingDate = new Date(Math.max(Date.now(), dateCalculated) + 5000);
 
-    let   finalSendingDate=(Date.now() - dateCalculated) >  -5000?
-    Date.now()+5000: dateCalculated;
+  
 
 
 
@@ -114,7 +114,7 @@ for(const campaign of campaigns){
 
 
       
-      await sendEmailJob(finalSendingDate, campaign.id);
+      await emailSendJob(finalSendingDate, campaign.id);
   }
 
 
@@ -137,8 +137,7 @@ for(const campaign of campaigns){
   
 
 
-//mozda dodati i retry numbers i pokusati da posaljem mejl kroz 30 min. Tipa 5 retryja
-//kad radim retryje, svaki email pomeriti za 30 min.
+  
 }
 
 

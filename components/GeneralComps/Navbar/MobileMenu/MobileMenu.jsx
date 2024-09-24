@@ -48,145 +48,56 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
 
 
    
-    useEffect(() => {
-
-      const handleResize = () =>{
-        if (window.innerWidth>980)setIsMenuOpen(false);
-      }
-
-   
-      const closeMenu = ()=>{ 
-        
-        document.getElementById('mobileMenu').classList.add(styles.menuClosed);
-        window?.removeEventListener("popstate", handlePopState);
-        setTimeout(()=>{
-       
-        
-        setIsMenuOpen(false);
-      },500)
-    
-    };
-
-      const handleClickOutside = (event) => {
-
-       
-        if( emailPopupOn)return;
-
-         if(!document?.getElementById('mobileMenu').contains(event.target) && !document?.getElementById('mobileMenuSpawn').contains(event.target))
-       { 
-        
-        event.stopPropagation(); 
-        event.preventDefault(); 
-        
-        
+       useEffect(() => {
+        const handleResize = () => window.innerWidth > 980 && setIsMenuOpen(false);
+      
+        const closeMenu = () => {
+          document.getElementById('mobileMenu').classList.add(styles.menuClosed);
+          window.removeEventListener("popstate", handlePopState);
+          setTimeout(() => setIsMenuOpen(false), 500);
+        };
+      
+        const handleClickOutside = (event) => {
+          if (emailPopupOn || document.getElementById('mobileMenu').contains(event.target) || document.getElementById('mobileMenuSpawn').contains(event.target)) return;
+          event.preventDefault();
           closeMenu();
-          if(subMenu!=0){
+          subMenu !== 0 && history.back();
           history.back();
-        }
-        history.back();
+        };
       
-        // document.removeEventListener('click', handleClickOutside, true);
-      
-      
-      }
-        
-      };
-
-
-
-
-
-
-      const handlePopState = ()=>{
-        
-        console.log('popon')
-       
-        if( emailPopupOn)return;
-      
-
-       if(whiteButtonCancelRef.current){
-        
-        closeMenu();
-        if(subMenu!=0){
-        history.back();
-      }
-      return;
-
-       }
-
-
-        if( nextLink.current){
-          
-         
-         
-          if(subMenu!=0 && !subMenuBackDone.current){
-            subMenuBackDone.current=true;
-            history.back();
+        const handlePopState = () => {
+          if (emailPopupOn) return;
+          if (whiteButtonCancelRef.current) {
+            closeMenu();
+            subMenu !== 0 && history.back();
             return;
           }
-
-          window?.removeEventListener("popstate", handlePopState);
-          closeMenu();
-          
-          router.push(nextLink.current);
-          
-          return;
-        }
-       
-       if(subMenu!=0 ) {
-        
-       
-      setSubMenu(0); 
-
-   
-        
-      }
-    
-       else {
+          if (nextLink.current) {
+            if (subMenu !== 0 && !subMenuBackDone.current) {
+              subMenuBackDone.current = true;
+              history.back();
+              return;
+            }
+            window.removeEventListener("popstate", handlePopState);
+            closeMenu();
+            router.push(nextLink.current, undefined, { shallow: true });
+            return;
+          }
+          subMenu !== 0 ? setSubMenu(0) : closeMenu();
+        };
       
-
-
-
-          closeMenu();
-   
-      }
-       
-         console.log('popstate')
-      }
-
-
-
-
-
-
-
-
- 
-
-        if(subMenu!=0){
-            window.history.pushState(null, null, router.asPath);
+        subMenu !== 0 && history.go(1);
         
-        history.go(1);
-        }
+        window.addEventListener("resize", handleResize);
+        window.addEventListener("popstate", handlePopState);
+        document.addEventListener('click', handleClickOutside, true);
       
-
-     
-       
-        window?.addEventListener("resize", handleResize);
-        window?.addEventListener("popstate", handlePopState);
-        document?.addEventListener('click', handleClickOutside, true);
-  
-      return () => {
-        
-       
-          window?.removeEventListener("resize", handleResize);
-          window?.removeEventListener("popstate", handlePopState);
-          document?.removeEventListener('click', handleClickOutside, true);
-         
-        
-      };
-    }, [subMenu, emailPopupOn]);
-
+        return () => {
+          window.removeEventListener("resize", handleResize);
+          window.removeEventListener("popstate", handlePopState);
+          document.removeEventListener('click', handleClickOutside, true);
+        };
+      }, [subMenu, emailPopupOn]);
 
 
 

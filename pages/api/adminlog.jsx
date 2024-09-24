@@ -1,4 +1,4 @@
-import { generateToken } from "@/utils/utils-server/auth.js"; // Import necessary functions for token generation and password verification
+import { generateToken } from "@/utils/utils-server/utils-admin/auth.js"; // Import necessary functions for token generation and password verification
 import RateLimiter from "@/utils/utils-server/rateLimiter.js";
 import jwt from "jsonwebtoken";
 
