@@ -291,20 +291,20 @@ cron.schedule(date, async() => {
     ))[0];
 
     let items = JSON.parse(order.items).map(item => {
-      const { name, price, images, variants } = products.find(p => p.id === item.id);
+      const { name, price, images, stickerPrice, variants } = products.find(p => p.id === item.id);
 
-      if(item.variant){
-        
-      const currentVariant = variants?.find(v =>{return v.name.toLowerCase().replace(/\s+/g, "-") === item.variant.toLowerCase().replace(/\s+/g, "-")});
+      const currentVariant = variants?.find(v =>{return v.name.toLowerCase().replace(/\s+/g, "-") === item.variant?.toLowerCase().replace(/\s+/g, "-")});
 
-      if(currentVariant) return {...item, name, price, productImage: images[currentVariant.variantProductImageIndex]}
-      }
 
-      if(currentVariant) return {...item, name, price, productImage: images[0]}
+   
+      if(currentVariant) return {...item, name, price, stickerPrice, productImage: images[currentVariant?.variantProductImageIndex]}
+      
+
+      else return {...item, name, price, stickerPrice, productImage: images[0]}
     });
-    if(!order.couponCode)items = findBestBundle(items)
+    if(!order.couponCode || order.couponCode ==='')items = findBestBundle(items)
 
-      console.log('items analyzing...', items)
+      console.log('items analyzing...', items, order)
 
 
     const fontFamily = transformedEmailText.match(/font-family:[^;]*;/);
@@ -342,8 +342,33 @@ cron.schedule(date, async() => {
         <td colspan="2" style="padding: 12px 0; vertical-align: middle;${fontFamily}">
           <span style="display: block;">${item.quantity} ${item.name}${item.quantity > 1 ? 's' : ''}</span>
           ${item.variant ? `<span style="display: block; padding-left: 2px; padding-top: 2px; font-size: 14px; color: ${orderDetailsColors[0]};">Color: ${item.variant}</span>` : ''}
+       
+         ${item.bundleLabel ?`
+          
+        
+          <div style="display: inline-block; padding-left: 2px; vertical-align:middle;">
+
+ <svg xmlns="http://www.w3.org/2000/svg" style="vertical-align: middle; padding-top: 1px;" height="14" width="14" viewBox="0 0 14 14">
+  <path fill="transparent" stroke="${orderDetailsColors[0]}" d="M7.284 1.402h4.964a.35.35 0 0 1 .35.35v4.964a.7.7 0 0 1-.205.495L7.49 12.115a.7.7 0 0 1-.99 0L1.885 7.5a.7.7 0 0 1 0-.99L6.79 1.607a.7.7 0 0 1 .495-.205Z"/>
+  <circle fill="${orderDetailsColors[0]}" cx="9.1" cy="4.9" r="1"/>
+</svg>
+
+           <span style="padding-left: 1px; font-size: 12px; vertical-align: middle; color: ${orderDetailsColors[0]};">BUY ${item.bundleLabel} (-$${ parseFloat(((item.priceBeforeBundle - item.price).toFixed(2))*item.quantity).toFixed(2)})</span>
+           </div>`:''}
+         
+           </td>
+        <td style="padding: 12px 16px 12px 0; vertical-align: middle; text-align: right;white-space: nowrap;${fontFamily}">
+
+
+        ${item.stickerPrice ? `<span style="display: block; color: ${orderDetailsColors[1]}; 
+        text-decoration: line-through; font-size: 12px; padding-bottom: 2px;">$${(item.quantity * item.stickerPrice).toFixed(2)}</span>`: ""}
+      
+       
+        
+             
+         <span style="display: block;">$${(item.quantity * item.price).toFixed(2)}</span>
+        
         </td>
-        <td style="padding: 12px 16px 12px 0; vertical-align: middle; text-align: right;white-space: nowrap;${fontFamily}">$${itemPrice}</td>
       </tr>
     `;
     
@@ -353,13 +378,35 @@ cron.schedule(date, async() => {
   const finalSubTotal = subTotal.toFixed(2);
 
 
+
+  let discount;
   
 
-  const discount = coupons.find(c=> {return c.code.toLowerCase()===order.couponCode.toLowerCase()})?.discountPercentage;
+  if(order.couponCode){
+
+  discount = coupons.find(c=> {return c.code.toLowerCase()===order.couponCode.toLowerCase()});
+
+  discount ={...discount, discountPercentage: (finalSubTotal * discount?.discountPercentage / 100).toFixed(2)}
+  }
+  // else  if (items.some(item => item.priceBeforeBundle)){
+
+      
+  // const bundleDiscount = items.reduce(
+  //   (total, item) => total + (item.priceBeforeBundle ? item.quantity * (item.priceBeforeBundle - item.price) : 0), 
+  //   0
+  // );
+
+  // discount = { code: "BUNDLE", discountPercentage: bundleDiscount.toFixed(2) };
+  
+
+
+  //   }
+
+  
 
 
 
-
+  
   
 
 
@@ -374,10 +421,10 @@ cron.schedule(date, async() => {
         <td colspan="3" style="padding: 12px 16px; text-align: left; ${fontFamily}">Subtotal</td>
         <td style="padding: 12px 16px; text-align: right; ${fontFamily}">$${finalSubTotal}</td>
       </tr>
-      ${discount ? `
+      ${discount && discount.discountPercentage!=='0.00'? `
       <tr>
-        <td colspan="3" style="padding: 12px 16px; text-align: left; ${fontFamily}">Coupon(${order.couponCode})</td>
-        <td style="padding: 12px 16px; text-align: right; ${fontFamily}">- $${(finalSubTotal * discount / 100).toFixed(2)}</td>
+        <td colspan="3" style="padding: 12px 16px; text-align: left; ${fontFamily}">Coupon(${discount.code})</td>
+        <td style="padding: 12px 16px; text-align: right; ${fontFamily}">- $${discount.discountPercentage}</td>
       </tr>` : ''}
       <tr>
         <td colspan="3" style="padding: 12px 16px; text-align: left; ${fontFamily}">Shipping</td>
@@ -391,7 +438,7 @@ cron.schedule(date, async() => {
       <tr><td colspan="4" style="padding: 12px 16px;"><div style="height: 1px; background-color: #292929;"></div></td></tr>
       <tr>
         <td colspan="3" style="padding: 13px 16px; text-align: left; ${fontFamily}">Total</td>
-        <td style="padding: 12px 16px; text-align: right; font-weight: 700; color: ${orderDetailsColors[1]}; ${fontFamily}">$${order.total} USD</td>
+        <td style="padding: 12px 16px; text-align: right; font-weight: 700; color: ${orderDetailsColors[2]}; ${fontFamily}">$${order.total.toFixed(2)} USD</td>
       </tr>
     </tbody>
   </table>`;

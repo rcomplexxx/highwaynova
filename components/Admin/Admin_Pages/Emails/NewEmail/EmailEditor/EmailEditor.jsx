@@ -211,12 +211,13 @@ catch(error){
             // Extract the font-family property
             // const order_color = computedStyles.getPropertyValue('--email-order-summery-color');
             const total_color = transformColorToHex(computedStyles.getPropertyValue('--email-post-purchase-total-color'));
+            const sticker_price_color = transformColorToHex(computedStyles.getPropertyValue('--email-post-purchase-sticker-price-color'));
             const order_weak = transformColorToHex(computedStyles.getPropertyValue('--email-post-purchase-variant-color'));
 
            
             
 
-            optimizedHtml = optimizedHtml.replace(/{{order_details}}/g, `{{order_details[${order_weak},${total_color}]}}`)
+            optimizedHtml = optimizedHtml.replace(/{{order_details}}/g, `{{order_details[${order_weak},${sticker_price_color},${total_color}]}}`)
 
             // optimizedHtml = optimizedHtml.replace(/(\.u-row .u-col\s*\{[^}]*?)(\})/gi, (match, p1, p2) => {
             //   return `${p1}  background-color: ${mainBackgroundColor};\n  ${p2}`;

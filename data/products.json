@@ -24,11 +24,11 @@
     "stickerPrice": 999.99,
     "fbt": [
       {
-        "id": 0,
+        "id": 2,
         "variantIndex": 0
       },
       {
-        "id": 0,
+        "id": 1,
         "variantIndex": 1
       }
     ],

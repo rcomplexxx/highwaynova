@@ -140,8 +140,8 @@ const paypalExpressChecker=  (await dbConnection.query(`SELECT address, city FRO
 
         
 
-          if(customerInfo?.used_discount_exists)
-           return await resReturn(400, { success: false, error: "Discount has already been used."})
+          // if(customerInfo?.used_discount_exists)
+          //  return await resReturn(400, { success: false, error: "Discount has already been used."})
 
 
 

@@ -44,7 +44,7 @@ export default function BestSellers() {
     if(!product)return;
 
     if(initialProducts.find(ip => {
-      return ip.id === bsp.id && ip.variant === product.variants[bsp.variantIndex].name
+      return ip.id === bsp.id && (!ip.variant || ip.variant === product?.variants?.[bsp.variantIndex].name)
     })) return;
 
     
@@ -53,7 +53,7 @@ export default function BestSellers() {
 
     let variant;
     if(bsp.variantIndex){
-    variant =   bsp.variantIndex>0 && bsp.variantIndex<product.variants.length? product.variants[bsp.variantIndex]:product?.variants[0];
+    variant =   bsp.variantIndex>0 && bsp.variantIndex<product.variants.length? product?.variants[bsp.variantIndex]:product?.variants[0];
    
     }
 
@@ -73,7 +73,7 @@ export default function BestSellers() {
   const onAddToCart = (quantity = 1, addedProduct, addedVariant) => {
     const updatedCartProducts = [...cartProducts];
     const product = updatedCartProducts.find(
-      (cp) => cp.id === addedProduct.id && cp.variant === addedVariant.name
+      (cp) => cp.id === addedProduct.id && cp.variant === addedVariant?.name
     );
   
     if (product) {
@@ -88,7 +88,7 @@ export default function BestSellers() {
           : addedProduct.images[0],
         price: addedProduct.price,
         stickerPrice: addedProduct.stickerPrice,
-        variant: addedVariant.name,
+        variant: addedVariant?.name,
       });
     }
   

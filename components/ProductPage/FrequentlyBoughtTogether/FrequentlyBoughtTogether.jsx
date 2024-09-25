@@ -28,7 +28,7 @@ const FreqProduct = ({ productId, variantIndex, onAddToCart }) => {
         <Image
         height={0} width={0}
           src={`/images/${product.images[variant?variant.variantProductImageIndex:0]}`}
-          alt={variant.name}
+          alt={`${product.name}${variant?.name?` ${variant.name}`:''}`}
           className={styles.productImage}
           sizes="128px"
           

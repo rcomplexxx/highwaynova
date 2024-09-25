@@ -259,7 +259,7 @@ const handleCouponApply = () => {
                   </div>
 
                   
-                  {coupon.code &&  (
+                  {coupon.code && coupon.code!=='BUNDLE' &&  (
                     <>
                     
                       <span className={styles.discountPairTitle}>Order Discount</span>

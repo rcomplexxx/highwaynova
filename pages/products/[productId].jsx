@@ -88,7 +88,12 @@ export default function ProductPage({ product, description, images, startReviews
 
     console.log('this effect reactivated')
 
-    if(!product.variants)return;
+    setBundleVariants([]);
+
+    if(!product.variants){
+      setVariant();
+      return;
+    }
     
    
     const variantByQuery = query.variant;
@@ -130,7 +135,7 @@ export default function ProductPage({ product, description, images, startReviews
     const updatedCartProducts = [...cartProducts];
     const newProducts = [];
   
-    const formatName = name => name.toLowerCase().replace(/\s+/g, "-");
+    const formatName = name => name?.toLowerCase().replace(/\s+/g, "-");
   
     const addNewProduct = (variantName, qty) => {
       const existingProduct = updatedCartProducts.find(cp =>
@@ -142,7 +147,7 @@ export default function ProductPage({ product, description, images, startReviews
         existingProduct.quantity += qty;
         newProducts.push({ ...existingProduct, quantity: qty });
       } else {
-        const variantObj = product.variants.find(pv => formatName(pv.name) === formatName(variantName)) || {};
+        const variantObj = product.variants?.find(pv => formatName(pv.name) === formatName(variantName)) || {};
         const newProduct = {
           id: addedProduct.id,
           quantity: qty,
@@ -156,8 +161,10 @@ export default function ProductPage({ product, description, images, startReviews
         updatedCartProducts.push(newProduct);
       }
     };
+
+    
   
-    const newProductsMini = bundleVariants.length ? bundleVariants : [{ name: addedVariant.name, quantity }];
+    const newProductsMini = bundleVariants.length ? bundleVariants : [{ name: addedVariant?.name, quantity }];
     newProductsMini.forEach(({ name, quantity }) => addNewProduct(name, quantity));
   
     setCartProducts(updatedCartProducts);
@@ -235,7 +242,7 @@ export default function ProductPage({ product, description, images, startReviews
             <span className={styles.inStockSpan}>In stock, ready to ship</span>
           </div>
           {product.variants && <div className={styles .variantDiv}>
-          <span className={styles.variantLabel}>Color: {variant.name}</span>
+          {variant?.name && <span className={styles.variantLabel}>Color: {variant.name}</span>}
           <div className={styles.product_style_options}>
 
 
@@ -245,7 +252,7 @@ export default function ProductPage({ product, description, images, startReviews
                 src={"/images/" + product.images[v.variantProductImageIndex]}
                 alt={v.name}
                 sizes="(max-width: 980px) 48px, 64px"
-                className={`${styles.productVariantImage} ${v.name===variant.name && styles.productVariantSelected}`}
+                className={`${styles.productVariantImage} ${v.name.toLowerCase().replace(/\s+/g, "-")===variant?.name.toLowerCase().replace(/\s+/g, "-") && styles.productVariantSelected}`}
                 onClick={() => {
 
                   
@@ -270,7 +277,7 @@ export default function ProductPage({ product, description, images, startReviews
 }
 
      {product.bundle && <BundleOffer productId={product.id} price={product.price} stickerPrice={product.stickerPrice} bundle={product.bundle} quantity={quantity} 
-     setQuantity={setQuantity} mainVariant={variant.name} setBundleVariants={setBundleVariants} allVariants={product.variants.map(v=>v.name)}/> }
+     setQuantity={setQuantity} mainVariant={variant?.name} setBundleVariants={setBundleVariants} allVariants={product.variants.map(v=>v.name)}/> }
 
 
 

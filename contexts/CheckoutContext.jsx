@@ -111,13 +111,13 @@ export const CheckoutContext = createContext({cartProducts: [], total:'0.00',sub
     const subTotal = useMemo(() => {
         
       return cartProducts
-  .reduce((total, cp) => total + cp.quantity * (cp.priceBeforeBundle || cp.price), 0)
+  .reduce((total, cp) => total + cp.quantity * cp.price, 0)
   .toFixed(2);
    
       }, [cartProducts]);
 
   
-  
+      // (cp.priceBeforeBundle || 
 
 
    
@@ -130,7 +130,7 @@ export const CheckoutContext = createContext({cartProducts: [], total:'0.00',sub
 
 
       const total = useMemo(()=>{
-        return (subTotal - coupon.discount + parseFloat(tip)).toFixed(2)
+        return (subTotal - (coupon.code!=="BUNDLE"?coupon.discount:0) + parseFloat(tip)).toFixed(2)
      }, [subTotal, coupon.discount, tip]);
 
 
