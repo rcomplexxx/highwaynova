@@ -1,5 +1,5 @@
 const getPool = require('@/utils/utils-server/mariaDbPool');
-import emailSendJob from "@/utils/utils-server/sendEmailJob";
+import {emailSendJob} from "@/utils/utils-server/sendEmailJob";
 
 
 async function subscribe(email, source, extraData,dbConnectionArg) {
@@ -34,6 +34,9 @@ async function subscribe(email, source, extraData,dbConnectionArg) {
         : `Thank you ${email}`;
     
       // Insert into the email_campaigns table
+
+      
+
       const columns = ['title', 'sequenceId', 'sendingDateInUnix', 'emailSentCounter', 'retryCounter', 'targetCustomers'];
       const values = [campaignName, sequenceId, Date.now() + 5000, 0, 0, JSON.stringify([email])];
     
@@ -51,7 +54,7 @@ async function subscribe(email, source, extraData,dbConnectionArg) {
       )).insertId;
     
       // Schedule the email job
-      await emailSendJob(Date.now() + 5000, campaignId);
+      emailSendJob(campaignId);
     };
 
 

@@ -36,8 +36,11 @@ const FreqProduct = ({ productId, variantIndex, onAddToCart }) => {
       </Link>
    
    
+        <div className={styles.productTitleWrapper}>
+        <span>{product.name}</span>
+        {variant && <span className={styles.productVariant}>{variant.name}</span>}
+        </div>
 
-        <span className={styles.product_title}>{product.name}</span>
 
         <div className={styles.product_price}>
           ${product.price.toFixed(2)}

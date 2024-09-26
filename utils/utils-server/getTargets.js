@@ -4,43 +4,41 @@
   
 
 
-
-
-
+  
 
   
-    const targetConditions = async(targetPack)=>{
+    const targetConditions = async()=>{
   
       let myTargets;
    
-    if(targetPack==='cold_traffic'){
-      myTargets = await dbConnection.query(`SELECT email FROM customers WHERE subscribed = ? AND totalOrderCount <= 1`,[1])?.map(row => row.email);
+    if(campaignTargets==='cold_traffic'){
+      myTargets = (await dbConnection.query(`SELECT email FROM customers WHERE subscribed = ? AND totalOrderCount <= 1`,[1]))?.map(row => row.email);
   
     }
-      else if(targetPack==='warm_traffic'){
-        myTargets = await dbConnection.query(`SELECT email FROM customers WHERE subscribed = ? AND totalOrderCount = 2`,[1])?.map(row => row.email);
+      else if(campaignTargets==='warm_traffic'){
+        myTargets = (await dbConnection.query(`SELECT email FROM customers WHERE subscribed = ? AND totalOrderCount = 2`,[1]))?.map(row => row.email);
   
       }
-        else if(targetPack==='hot_traffic') {
-          myTargets = await dbConnection.query(`SELECT email FROM customers WHERE subscribed = ? AND totalOrderCount >= 3 AND totalOrderCount <5`,[1])?.map(row => row.email);
+        else if(campaignTargets==='hot_traffic') {
+          myTargets = (await dbConnection.query(`SELECT email FROM customers WHERE subscribed = ? AND totalOrderCount >= 3 AND totalOrderCount <5`,[1]))?.map(row => row.email);
   
         } 
-        else if(targetPack==='loyal_traffic'){
+        else if(campaignTargets==='loyal_traffic'){
   
-          myTargets = await dbConnection.query(`SELECT email FROM customers WHERE subscribed = ? AND totalOrderCount >= 5`,[1])?.map(row => row.email);
+          myTargets = (await dbConnection.query(`SELECT email FROM customers WHERE subscribed = ? AND totalOrderCount >= 5`,[1]))?.map(row => row.email);
   
         }
   
-        else  if(targetPack==='all'){
-          myTargets =  await dbConnection.query(`SELECT email FROM customers WHERE subscribed = ?`,[1])?.map(row => row.email);
+        else  if(campaignTargets==='all'){
+          myTargets =  (await dbConnection.query(`SELECT email FROM customers WHERE subscribed = ?`,[1]))?.map(row => row.email);
         }
-        else if(targetPack==='bh_customers'){
+        else if(campaignTargets==='bh_customers'){
        
-          myTargets = await dbConnection.query(`SELECT email FROM customers WHERE subscribed = ?`,[0])?.map(row => row.email);
+          myTargets = (await dbConnection.query(`SELECT email FROM customers WHERE subscribed = ?`,[0]))?.map(row => row.email);
         }
         else{
-            console.log('tpack',targetPack)
-          myTargets = JSON.parse(targetPack);
+            console.log('tpack',campaignTargets)
+          myTargets = JSON.parse(campaignTargets);
         }
   
         return myTargets
@@ -53,18 +51,17 @@
 
 
   
-      let targets = await targetConditions(campaignTargets);
+      let targets = await targetConditions();
 
 
 
 
 
-      
   
   
   
         if(!targetEvenReservedCustomers) {
-         let reservedTargets =  await dbConnection.query(`SELECT targetCustomers FROM email_campaigns WHERE finished = 0 AND reserveTargetedCustomers = 1`).map(row => row.targetCustomers);
+         let reservedTargets =  (await dbConnection.query(`SELECT targetCustomers FROM email_campaigns WHERE finished = 0 AND reserveTargetedCustomers = 1`))?.map(row => row.targetCustomers);
         
          reservedTargets = [...new Set(reservedTargets)];
          let reservedTargetsFinal = [];

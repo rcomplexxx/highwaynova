@@ -75,15 +75,34 @@
    
   }
 
-  .product_title{
-    text-align: center;
-    margin-top: var(--size-2);
-  margin-bottom: var(--size-6);
-  
-  align-self: flex-start;
+  .productTitleWrapper{
+    display: flex;
+    flex-direction: column;
 
+    margin-top: var(--size-2);
+    margin-bottom: var(--size-6);
+
+    gap: 0;
+
+    
+    
+  align-self: flex-start;
+  
   font-size: var(--font-size-4);
   }
+
+
+  
+
+  .productVariant{
+  
+    color: var(--fbt-variant-color);
+
+    
+
+    font-size: var(--font-size-2);
+    font-weight: 400;
+}
 
 
   .product_price{

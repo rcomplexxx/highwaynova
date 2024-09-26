@@ -7,10 +7,12 @@ import reorderReviewsByRatingAndImages from '@/utils/utils-server/reorderReviews
 
 
 
+import insertInDb from '@/utils/utils-server/utils-admin/adminInsertDb'
 import updateDb from '@/utils/utils-server/utils-admin/adminUpdateDb'
 import getFromDb from '@/utils/utils-server/utils-admin/adminGetFromDb';
 import wipeData from '@/utils/utils-server/utils-admin/adminDataWiper'
 import deleteRow from '@/utils/utils-server/utils-admin/adminDbRowDeleter';
+import obtainGetDbQueryParams from "@/utils/utils-server/utils-admin/obtainGetDbQueryParmas";
 
 
 const getPool = require('@/utils/utils-server/mariaDbPool');
@@ -92,6 +94,8 @@ let dbConnection;
       if (!dataType) return await resReturn(200, { successfulLogin: true })
 
         
+
+        
         if(dataType.startsWith("send_") && !data) return await resReturn(500, { successfulLogin: false, error: "No data to send" })
 
         console.log('data', data);
@@ -99,77 +103,51 @@ let dbConnection;
 
         
 
-        
-        
+        if(dataType.startsWith("get_")){
 
 
-          // await dbConnection.query(`SELECT orders.*, customers.email FROM orders JOIN customers ON orders.customer_id = customers.id WHERE approved = 0 ORDER BY orders.createdDate DESC`)
-
-        if(dataType === "get_order_cash_info")  await getFromDb(dbConnection, resReturn, "orders", `approved = 1`, "createdDate, total, supplyCost, tip, couponCode");
-        //Ovde approved
-        else if(dataType === "get_order_cash_info_only_fulfilled_orders") await getFromDb(dbConnection, resReturn, "orders", `packageStatus != 0`, "createdDate, total, supplyCost, tip, couponCode");
-        else if (dataType === "get_unfulfilled_orders")
-          await getFromDb(dbConnection, resReturn, `orders JOIN customers ON orders.customer_id = customers.id`, `approved = 1 AND packageStatus = 0 ORDER BY orders.createdDate DESC`, `orders.*, customers.email`);
-        else if (dataType === "get_unapproved_orders")
-          await getFromDb(dbConnection, resReturn, `orders JOIN customers ON orders.customer_id = customers.id`, `approved = 0 ORDER BY orders.createdDate DESC`, `orders.*, customers.email`);
-     
-        else if (dataType === "get_ordered_orders")
-          await getFromDb(dbConnection, resReturn, `orders JOIN customers ON orders.customer_id = customers.id`, `packageStatus = 1 ORDER BY orders.createdDate DESC`, `orders.*, customers.email`);
+         const {table, queryCondition, selectVariables} = obtainGetDbQueryParams(dataType);
 
 
-        else if (dataType === "get_completed_orders")
-          await getFromDb(dbConnection, resReturn, `orders JOIN customers ON orders.customer_id = customers.id`, `packageStatus = 2 ORDER BY orders.createdDate DESC`, `orders.*, customers.email`);
 
-        else if (dataType === "get_canceled_orders")
-          await getFromDb(dbConnection, resReturn, `orders JOIN customers ON orders.customer_id = customers.id`, `packageStatus = 3 ORDER BY orders.createdDate DESC`, `orders.*, customers.email`);
 
- 
-        else if (dataType === "get_returned_orders")
-          await getFromDb(dbConnection, resReturn, `orders JOIN customers ON orders.customer_id = customers.id`, `packageStatus = 4 ORDER BY orders.createdDate DESC`, `orders.*, customers.email`);
-        
 
-        else if(dataType === "get_orders_by_email")
-          await getFromDb(dbConnection, resReturn, `orders JOIN customers ON orders.customer_id = customers.id`, `email = '${data.email}'`, `orders.*, customers.email`);
-        
-        
-        else if(dataType ==="get_order_by_orderId")
-        await getFromDb(dbConnection, resReturn, `orders JOIN customers ON orders.customer_id = customers.id`, `orders.id = '${data.orderId}'`, `orders.*, customers.email`);
-        else if (dataType === "get_unanswered_messages")
-          await getFromDb(dbConnection, resReturn, "messages JOIN customers ON messages.customer_id = customers.id", `msgStatus = 0`, `messages.*, customers.email, customers.totalOrderCount`);
-        else if (dataType === "get_answered_messages")
-          await getFromDb(dbConnection, resReturn, "messages JOIN customers ON messages.customer_id = customers.id", `msgStatus != 0`, `messages.*, customers.email, customers.totalOrderCount`);
-        else if (dataType === "get_reviews")
-          await getFromDb(dbConnection, resReturn, 
-            "reviews",
-            `product_id = ${data.product_id}`,
-          ); 
-       
-        else if (dataType === "get_customers")
-          await getFromDb(dbConnection, resReturn, "customers", 'subscribed = 1');
-        else if(dataType === "get_customers_bh")
-        await getFromDb(dbConnection, resReturn, "customers", 'subscribed = 0');
-        else if(dataType === "get_email_templates"){
-          await getFromDb(dbConnection, resReturn, "email_templates")
+        return await getFromDb(dbConnection, resReturn, 
+          table,
+          queryCondition,
+          selectVariables
+        ); 
+
+
+
+
         }
-          else if (dataType === "get_emails")
-          {await getFromDb(dbConnection, resReturn, "emails");}
-          else if (dataType === "get_email_sequences")
-            await getFromDb(dbConnection, resReturn, "email_sequences");
-          else if (dataType === "get_email_campaigns")
-          await getFromDb(dbConnection, resReturn, "email_campaigns");
+        
 
-          else if(dataType === "get_product_description")
-            await getFromDb(dbConnection, resReturn, "products", `productId = ${data.productId}`)
-        else if(dataType === "get_product_returns")
-        await getFromDb(dbConnection, resReturn, "product_returns");
+      else if (dataType.startsWith("send_")){
 
 
-        else if (dataType === "send_unfulfilled_orders") {
+        
+
+        if (dataType === "send_orders") {
 
          
 
-          await updateDb(dbConnection, resReturn, "orders", data, `SET packageStatus = ? WHERE id = ?`);
-        } else if (dataType === "send_unanswered_messages") {
+          await updateDb(dbConnection, resReturn, "orders", data);
+        } 
+
+        else if (dataType === 'send_new_return'){
+
+          
+          await insertInDb(dbConnection,  resReturn,
+            "product_returns",
+            data
+          );
+          }
+        
+        
+        
+        else if (dataType === "send_unanswered_messages") {
         
 
 
@@ -205,17 +183,7 @@ let dbConnection;
          
         } 
       
-        else if (dataType === "send_email_data") {
-          console.log('started email send');
-     
-
-           
-          await updateDb(dbConnection,  resReturn,
-            "emails",
-            data,
-          );
-
-        }
+      
 
         else if(dataType=== "send_new_email_template"){
 
@@ -226,6 +194,8 @@ let dbConnection;
 
         }
 
+        
+
     
         
         else if (dataType === "send_new_email") {
@@ -233,22 +203,32 @@ let dbConnection;
       
           
 
+          await insertInDb(dbConnection,  resReturn,
+            "emails",
+            data
+          );
+        }
+
+
+        else if (dataType === "send_email_data") {
+          console.log('started email send');
+     
+
+           
           await updateDb(dbConnection,  resReturn,
             "emails",
-            data,
-            'newEmail'
+            data
           );
+
         }
         
         else if(dataType==='send_new_sequence'){
 
      
 
-          await updateDb(dbConnection,  resReturn,
+          await insertInDb(dbConnection,  resReturn,
             "email_sequences",
-            data,
-            
-            'updateEmails'
+            data
           );
 
         }
@@ -258,13 +238,15 @@ let dbConnection;
          
           
 
-          await updateDb(dbConnection,  resReturn,
+          await insertInDb(dbConnection,  resReturn,
             "email_campaigns",
-            data,
-            
-            'updateEmails'
+            data
           );
         }
+
+
+     
+
         else if(dataType === 'send_new_product_description'){
 
           
@@ -274,39 +256,32 @@ let dbConnection;
 
           const newDescriptionIntegrated = await makeNewDescription(data.text , data.productId, dbConnection);
 
-          if(newDescriptionIntegrated){
- 
-            
-            
-             
+          if(!newDescriptionIntegrated) return await resReturn(500, { descriptionUpdated: false })
+
+
+
+
+
+          //return true u res ako je uspesno revritowan fajl u kojem je smestena descripcija.
            return await resReturn(200, { descriptionUpdated: true })
          
              
             
-          
-        }
+     
+           
 
-        else{
-
-          return await resReturn(500, { descriptionUpdated: false })
-
-       
-        }
-
-          //return true u res ako je uspesno revritowan fajl.
          
         }
 
-        else if (dataType === 'send_new_return'){
 
-          
-        await updateDb(dbConnection,  resReturn,
-          "product_returns",
-          data
-        );
-        }
+      }
 
-        else if(dataType ==="delete_email_sequence")
+
+      else if(dataType.startsWith('delete_')){
+
+
+        
+       if(dataType ==="delete_email_sequence")
           {
            deleteRow(dbConnection, resReturn, 'email_sequences', data.deleteId)
         
@@ -320,8 +295,19 @@ let dbConnection;
           else if(dataType==="delete_product_return"){
             deleteRow(dbConnection, resReturn, 'product_returns', data.deleteId)
           }
+
+
+
+
+      }
+
+
+      else if(dataType.startsWith('wipe')){
+
+
         
-        else if(dataType === `wipe_orders`){
+        
+         if(dataType === `wipe_orders`){
           wipeData(dbConnection,  resReturn,'orders')
         }
         else if(dataType === `wipe_messages`){
@@ -352,6 +338,18 @@ let dbConnection;
 
         else if(dataType ==="wipe_customers")
           wipeData(dbConnection,  resReturn,'customers')
+
+
+        
+      }
+
+        
+
+
+
+
+     
+
      
         
         else {
@@ -367,6 +365,7 @@ let dbConnection;
    
       
 
+        console.log(' this shit should not be triggered')
         
 
 

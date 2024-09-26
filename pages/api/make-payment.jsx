@@ -178,7 +178,7 @@ async function generateUniqueId(dbConnection) {
 
         console.log('sooun checking', customerInfo);
 
-        // if(customerInfo?.used_discount_exists) return await resReturn(400, { success: false, error: "Discount has already been used." }, dbConnection);
+        if(customerInfo?.used_discount_exists) return await resReturn(400, { success: false, error: "Discount has already been used." }, dbConnection);
 
 
         let customerId= customerInfo?.id;

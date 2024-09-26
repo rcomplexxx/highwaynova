@@ -53,12 +53,14 @@ function findBestBundle(cartProducts) {
       const productTemp = products.find(p => p.id === newCpt.id);
       newCpt.price = productTemp.price;
       newCpt.stickerPrice = productTemp.stickerPrice;
+      delete newCpt.stickerPriceBeforeBundle;
       delete newCpt.priceBeforeBundle;
       delete newCpt.bundleQuantity;
       delete newCpt.bundleLabel;
     }
 
     if (newCpt.id === bestBundle.id) {
+      newCpt.stickerPriceBeforeBundle = newCpt.stickerPrice;
       newCpt.priceBeforeBundle = newCpt.price;
       newCpt.bundleQuantity = bestBundle.quantity;
       newCpt.bundleLabel = bestBundle.label;

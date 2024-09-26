@@ -7,10 +7,26 @@ const getPool = require('@/utils/utils-server/mariaDbPool');
 const findBestBundle = require('../utils-client/findBestBundle');
 
 
+async function scheduleEmailSendJob(dateInUnix, campaignId){
+
+
+  const date =formatDateToCron(dateInUnix);
+console.log('setting email cron scheduler', date, new Date(dateInUnix));
 
 
 
- async function emailSendJob( dateInUnix, campaignId) {
+
+cron.schedule(date, async () => await emailSendJob(campaignId));
+
+
+
+}
+
+
+
+
+
+ async function emailSendJob(campaignId) {
 
 
 //
@@ -19,16 +35,7 @@ const findBestBundle = require('../utils-client/findBestBundle');
 
 
 
-  
 
-
-const date =formatDateToCron(dateInUnix);
-console.log('setting email cron scheduler', date)
-
-
-
-
-cron.schedule(date, async() => {
 
   
 
@@ -120,7 +127,7 @@ cron.schedule(date, async() => {
                 
               const finalEmailText = await finalizeEmailText(email.text, target, campaign.extraData, dbConnection)
 
-              console.log('Sending email! _______________________________');
+              console.log('Sending email! _______________________________', campaign.title);
 
               
              try{
@@ -145,6 +152,7 @@ cron.schedule(date, async() => {
 
              
 
+             
              if(currentEmailIndex===campaign.sequenceEmailPointers.lenght-1)
                 await dbConnection.query(`UPDATE customers SET currentCampaign = ? WHERE email = ?`, [
                   null,
@@ -155,6 +163,8 @@ cron.schedule(date, async() => {
               
 
               campaignCorrect=true;
+
+              console.log('email sent successfuly!')
                 
               
 
@@ -177,24 +187,32 @@ cron.schedule(date, async() => {
 
               if (campaignCorrect) {
 
-                let sendTimeGap = parseInt(campaign.sequenceEmailPointers[currentEmailIndex + 1]?.sendTimeGap) || 0;
-
-                
-                //odrediti trenutan datum.
-                  
-                    const dateCalculated = parseInt(campaign.sendingDateInUnix) + campaign.sequenceEmailPointers
-                      .slice(0, currentEmailIndex + 1)
-                      .reduce((acc, emailPointer) => acc + (parseInt(emailPointer.sendTimeGap) || 0), 0);
-                  
-                    const finalSendingDate = Math.max(Date.now(), dateCalculated) + sendTimeGap;
+            
                   
     
                     //Ako counter jos uvek nije dostigao zadnji mejl, posalji sledeci mejl, i povecaj counter. U suprotnom deletaj campanju/stavi finished.
                     
                     if (currentEmailIndex < campaign.sequenceEmailPointers.length - 1) {
+
+
+                      
+
+                
+                      //odrediti trenutan datum.
+                        
+                          const dateCalculated =  campaign.sequenceEmailPointers
+                            .slice(0, currentEmailIndex + 1)
+                            .reduce((acc, emailPointer) => acc + (parseInt(emailPointer.sendTimeGap) || 0), parseInt(campaign.sendingDateInUnix));
+                        
+
+
+
+                      
                       await dbConnection.query(`UPDATE email_campaigns SET emailSentCounter = ?, retryCounter = ? WHERE id = ?`, [currentEmailIndex + 1, 0, campaign.id]);
-                      console.log(`SCHEDULING NEXT EMAIL FOR`, new Date(finalSendingDate));
-                      await emailSendJob(finalSendingDate, campaignId);
+                      console.log(`SCHEDULING NEXT EMAIL FOR`, new Date(Math.max(Date.now()+61000, dateCalculated)));
+                      await scheduleEmailSendJob(dateCalculated, campaignId);
+
+                      
                     } else {
                       const isThankYouOrWelcome = [process.env.THANK_YOU_SEQUENCE_ID, process.env.THANK_YOU_SEQUENCE_FIRST_ORDER_ID, process.env.WELCOME_SEQUENCE_ID]
                         .includes(campaign.sequenceId.toString());
@@ -212,7 +230,7 @@ cron.schedule(date, async() => {
               
                 if (campaign.retryCounter < 10) {
                   await dbConnection.query(`UPDATE email_campaigns SET retryCounter = retryCounter + 1 WHERE id = ?`, [campaign.id]);
-                  await emailSendJob(Date.now() + ((campaign.retryCounter + 1) % 3 === 0 ? 7200000 : 60000), campaignId);
+                  await scheduleEmailSendJob(Date.now() + ((campaign.retryCounter + 1) % 3 === 0 ? 7200000 : 61000), campaignId);
                 } else {
                   const isThankYouOrWelcome = [process.env.THANK_YOU_SEQUENCE_ID, process.env.THANK_YOU_SEQUENCE_FIRST_ORDER_ID, process.env.WELCOME_SEQUENCE_ID]
                     .includes(campaign.sequenceId.toString());
@@ -253,7 +271,6 @@ cron.schedule(date, async() => {
 
 
 
-});
 
 
 
@@ -304,7 +321,8 @@ cron.schedule(date, async() => {
     });
     if(!order.couponCode || order.couponCode ==='')items = findBestBundle(items)
 
-      console.log('items analyzing...', items, order)
+     
+      
 
 
     const fontFamily = transformedEmailText.match(/font-family:[^;]*;/);
@@ -423,7 +441,7 @@ cron.schedule(date, async() => {
       </tr>
       ${discount && discount.discountPercentage!=='0.00'? `
       <tr>
-        <td colspan="3" style="padding: 12px 16px; text-align: left; ${fontFamily}">Coupon(${discount.code})</td>
+        <td colspan="3" style="padding: 12px 16px; text-align: left; ${fontFamily}">Coupon (${discount.code.toUpperCase()})</td>
         <td style="padding: 12px 16px; text-align: right; ${fontFamily}">- $${discount.discountPercentage}</td>
       </tr>` : ''}
       <tr>
@@ -444,7 +462,7 @@ cron.schedule(date, async() => {
   </table>`;
 
 
-console.log('my order details html', orderDetailsHtml)
+  
    transformedEmailText = transformedEmailText.replace(/<table[^>]*>(?:(?!<\/table>)[\s\S])*{{order_details\[[^\]]*\]}}[\s\S]*?<\/table>/g, orderDetailsHtml);
 
   
@@ -480,31 +498,22 @@ console.log('my order details html', orderDetailsHtml)
 
 
 
+function formatDateToCron(date) {
+  let finalSendingDate = new Date(Math.max(Date.now() + 61000, date));
 
- function formatDateToCron(date) {
+  console.log('finalSendingDate is', finalSendingDate);
 
-  
+  const [seconds, minutes, hours, dayOfMonth, month, dayOfWeek] = [
+    finalSendingDate.getSeconds(),
+    finalSendingDate.getMinutes(),
+    finalSendingDate.getHours(),
+    finalSendingDate.getDate(),
+    finalSendingDate.getMonth() + 1, // Months are zero-indexed
+    finalSendingDate.getDay()
+  ];
 
-  
-
-  let finalSendingDate = new Date(Math.max(Date.now(), date) + 5000);
-
-              finalSendingDate = new Date(finalSendingDate);
-
-
-    console.log('finalSendingDate is', finalSendingDate)
-    const [seconds, minutes, hours, dayOfMonth, month, dayOfWeek] = [
-      finalSendingDate.getSeconds(),
-      finalSendingDate.getMinutes(),
-      finalSendingDate.getHours(),
-      finalSendingDate.getDate(),
-      finalSendingDate.getMonth() + 1, // Months are zero-indexed
-      finalSendingDate.getDay()
-    ];
-  
-    return `${seconds} ${minutes} ${hours} ${dayOfMonth} ${month} ${dayOfWeek}`;
+  return `${seconds} ${minutes} ${hours} ${dayOfMonth} ${month} ${dayOfWeek}`;
 }
 
 
-
- module.exports = emailSendJob;
+ module.exports = {scheduleEmailSendJob, emailSendJob};

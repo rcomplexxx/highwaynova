@@ -5,7 +5,7 @@ const next = require('next');
 const express = require('express');
 const createSqliteTables = require('@/utils/utils-server/createSqliteTables.js')
 const dbCleaner = require('@/utils/utils-server/dbCleaner.jsx');
-const emailSendJob = require('@/utils/utils-server/sendEmailJob.jsx');
+const {scheduleEmailSendJob} = require('@/utils/utils-server/sendEmailJob.jsx');
 
 const getPool = require('@/utils/utils-server/mariaDbPool');
 
@@ -89,20 +89,10 @@ for(const campaign of campaigns){
      
     
 
-    let dateCalculated = parseInt(campaign.sendingDateInUnix);
-
-  
-
-    emailPointers.forEach((emailPointer, index) =>{
-    
-      if(index!==0 && index < currentEmailIndex+1)
-      dateCalculated = dateCalculated + parseInt(emailPointer.sendTimeGap);
-   
-
-    })
+    const dateCalculated =  emailPointers.slice(1, currentEmailIndex + 1).reduce((acc, emailPointer) => acc + parseInt(emailPointer.sendTimeGap), parseInt(campaign.sendingDateInUnix));
 
     
-  let finalSendingDate = new Date(Math.max(Date.now(), dateCalculated) + 5000);
+    
 
   
 
@@ -114,7 +104,7 @@ for(const campaign of campaigns){
 
 
       
-      await emailSendJob(finalSendingDate, campaign.id);
+      await scheduleEmailSendJob(dateCalculated, campaign.id);
   }
 
 

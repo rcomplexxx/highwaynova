@@ -4,6 +4,9 @@ const getFromDb = async(dbConnection, resReturn, table, queryCondition=true, sel
 
     try {
      
+
+
+
       let rows;
 
       if(table==="emails"){
@@ -26,27 +29,13 @@ const getFromDb = async(dbConnection, resReturn, table, queryCondition=true, sel
 
 else{
 
-
-      let queryString;
-
-      if(table==="reviews"){
-        queryString = `SELECT id, name, text, stars, imageNames, product_id FROM reviews WHERE ${queryCondition}`;
-
-      }
-
-     else{
-       queryString = `SELECT ${selectVariables} FROM ${table} WHERE ${queryCondition}`;
-
-      
-      } 
-
-      console.log('my query selector is', queryString)
+  
 
     
  
 
       // Fetching data from the specified table with the given query condition
-     rows = await dbConnection.query(queryString);
+     rows = await dbConnection.query(`SELECT ${selectVariables} FROM ${table} WHERE ${queryCondition}`);
 
     }
 

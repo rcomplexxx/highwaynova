@@ -73,12 +73,14 @@ export const CheckoutContext = createContext({cartProducts: [], total:'0.00',sub
   if (!newCoupon) return { error: "Incorrect coupon code" };
 
   if (coupon.code === "BUNDLE") {
-    if (!checkDiscountSavesMoreThenBundle(cartProducts, newCoupon.discountPercentage))   return {error: "Coupon code saves less then bundle", couponCode: newCoupon.code};
+    
+    if (!checkDiscountSavesMoreThenBundle(cartProducts, newCoupon.discountPercentage))   
+      return {error: "Coupon code saves less then bundle", couponCode: newCoupon.code};
 
     
       const newCartProducts = cartProducts.map(cp =>
         cp.priceBeforeBundle
-          ? { ...cp, price: cp.priceBeforeBundle, priceBeforeBundle: undefined, bundleQuantity: undefined, bundleLabel: undefined }
+          ? { ...cp, price: cp.priceBeforeBundle, stickerPrice: cp.stickerPriceBeforeBundle, priceBeforeBundle: undefined, bundleQuantity: undefined, bundleLabel: undefined }
           : cp
       );
 

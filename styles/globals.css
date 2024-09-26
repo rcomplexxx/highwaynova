@@ -612,6 +612,7 @@ p {
 
  --fbt-border: var(--neutral-7);
  --fbt-title-color: var(--neutral-10);
+ --fbt-variant-color: var(--neutral-7);
  --fbt-add-to-cart-color: var(--action-button-txt-color);
  --fbt-add-to-cart-bg: var(--action-button-bg-color);
  --fbt-add-to-cart-hover-bg: var(--action-button-bg-color-hover);
@@ -728,7 +729,7 @@ p {
   
   --best-sellers-bg: var(--bg-color);
   --best-sellers-slide-bg: transparent;
-  --best-sellers-variant-color: var(--neutral-8);
+  --best-sellers-variant-color: var(--neutral-7);
   --best-sellers-addtocart-color: black;
   --best-sellers-addtocart-bg: var(--action-button-bg-color);
   --best-sellers-addtocart-bg-hover: var(--action-button-bg-color-hover);
