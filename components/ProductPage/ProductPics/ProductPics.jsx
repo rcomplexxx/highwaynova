@@ -129,10 +129,19 @@ useLayoutEffect(()=>{
 
 
 
-useLayoutEffect(() => {
-  setSmoothSwiping(!stopSmoothSwipingForNewLinkRef.current && (stopSmoothSwipingForNewLinkRef.current = false));
-  setImageIndex(variantImageIndex || 0);
-}, [variantImageIndex]);
+useLayoutEffect(()=>{
+
+  let smoothSwiping = !stopSmoothSwipingForNewLinkRef.current;
+
+  
+  stopSmoothSwipingForNewLinkRef.current=false;
+  
+  
+  setSmoothSwiping(smoothSwiping)
+    setImageIndex(variantImageIndex || 0);
+    
+    
+  },[variantImageIndex])
 
 
     
@@ -193,6 +202,8 @@ useLayoutEffect(() => {
         <Swiper  onSwiper={setSwiper} speed={400} slidesPerView='auto'
        
        
+       onSlideChange={(swiper)=>{handleChangeImage(swiper.activeIndex, true)} }
+
         preventClicks={false}
         // preventClicksPropagation={false}
         touchStartPreventDefault={false}
