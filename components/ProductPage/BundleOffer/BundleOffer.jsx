@@ -4,7 +4,7 @@ import styles from './bundleoffer.module.css'
 import BundleOption from './BundleOption/BundleOption'
 
 
-export default function BundleOffer({ price, stickerPrice, bundle, quantity, setQuantity, mainVariant, setBundleVariants, allVariants}) {
+export default function BundleOffer({ product, quantity, setQuantity, mainVariant, setBundleVariants}) {
 
   const [localBundleVariants, setLocalBundleVariants]= useState([]);
 
@@ -13,32 +13,17 @@ export default function BundleOffer({ price, stickerPrice, bundle, quantity, set
   
   useLayoutEffect(()=>{
 
-    if(!mainVariant || quantity === localBundleVariants.length)return;
+  if (!mainVariant) return;
 
-    if(quantity<bundle[0].quantity || quantity>bundle[bundle.length-1].quantity)setLocalBundleVariants([]);
-
-    
-    else {
-     
-
-      let newLocalBundleVariants = [...localBundleVariants]
-
-      
-
-      if(localBundleVariants.length > quantity) newLocalBundleVariants = localBundleVariants.slice(0, quantity);
-
-      else while(newLocalBundleVariants.length !== quantity){
-        newLocalBundleVariants.push(mainVariant)
-      }
-    
-      
-
-      setLocalBundleVariants(newLocalBundleVariants);
-     
-      
-
-
-    }
+  if (quantity < product.bundle[0].quantity || quantity > product.bundle.at(-1).quantity) {
+    setLocalBundleVariants([]);
+  } else {
+    setLocalBundleVariants(prev => 
+      prev.length > quantity 
+        ? prev.slice(0, quantity) 
+        : [...prev, ...Array(quantity - prev.length).fill(mainVariant)]
+    );
+  }
 
   },[quantity])
 
@@ -49,22 +34,28 @@ export default function BundleOffer({ price, stickerPrice, bundle, quantity, set
 
     const newBundleVariants = localBundleVariants.reduce((acc, localVariant) => {
       const existing = acc.find(item => item.name === localVariant);
-      if (existing) {
-        existing.quantity += 1;
-      } else {
-        acc.push({ name: localVariant, quantity: 1 });
-      }
+      existing ? existing.quantity++ : acc.push({ name: localVariant, quantity: 1 });
       return acc;
     }, []);
-  
+    
     console.log('trenutne local vari', localBundleVariants);
     setBundleVariants(newBundleVariants);
 
+ 
     
   },[localBundleVariants])
 
 
   // if(bundleInfo.length === 0) return <></>
+
+
+
+
+
+  
+
+
+
 
 
   return (
@@ -82,25 +73,42 @@ export default function BundleOffer({ price, stickerPrice, bundle, quantity, set
 
 
 
-    <BundleOption isSelected={quantity<bundle[0].quantity}  quantity={quantity} originalPrice={stickerPrice?stickerPrice:price} 
-    discountPercentage={stickerPrice?100*(1-(price/stickerPrice)):0} bundleQuantity={1} 
-    setQuantity={setQuantity} havingPlus={bundle[0].quantity-1>1} setLocalBundleVariants={setLocalBundleVariants}/>
+    <BundleOption isSelected={quantity<product.bundle[0].quantity}  quantity={quantity} 
+    
+    stickerPrice ={((product.stickerPrice * (quantity<product.bundle[0].quantity)).toFixed(2))}
+
+    price = {((product.price * (quantity<product.bundle[0].quantity)).toFixed(2))}
+
+
+    discountPercentage={product.stickerPrice?100*(1-(product.price/product.stickerPrice)):0} 
+    
+    bundleQuantity={1} 
+    setQuantity={setQuantity} havingPlus={product.bundle[0].quantity-1>1} setLocalBundleVariants={setLocalBundleVariants}/>
   
 
-      {bundle.map((b, index)=>{
+      {product.bundle.map((b, index)=>{
 
-        const isSelected = quantity>=b.quantity && (index===bundle.length-1 || quantity<bundle[index+1].quantity);
+        const isSelected = quantity>=b.quantity && (index===product.bundle.length-1 || quantity<product.bundle[index+1].quantity);
 
         
     return <BundleOption key = {index} isSelected={isSelected} 
 
     quantity={isSelected?quantity:b.quantity}
-    originalPrice={price} 
+   
+    
+
+
+    stickerPrice ={((product.price * (isSelected?quantity:b.quantity)).toFixed(2))}
+
+    price = {(parseFloat((product.price * (100 - b.discountPercentage) / 100).toFixed(2)) * (isSelected?quantity:b.quantity)).toFixed(2)}
+
+
     discountPercentage={b.discountPercentage} 
+     
     bundleQuantity={b.quantity}
     setQuantity={setQuantity} 
-    havingPlus={index===bundle.length-1 || bundle[index+1].quantity-b.quantity>1}
-    localBundleVariants={localBundleVariants} setLocalBundleVariants={setLocalBundleVariants} allVariants={allVariants}
+    havingPlus={index===product.bundle.length-1 || product.bundle[index+1].quantity-b.quantity>1}
+    localBundleVariants={localBundleVariants} setLocalBundleVariants={setLocalBundleVariants} allVariants={product.variants?.map(v => {return v.name})}
     
     />
 

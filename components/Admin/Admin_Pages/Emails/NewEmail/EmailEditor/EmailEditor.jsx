@@ -94,7 +94,7 @@ const handleSaveTemplate = async(templateType) => {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ dataType: 'send_new_email_template', data: {designJson: JSON.stringify(design), emailFontValue: emailFontValue, emailFontSize: generalFontSize, emailWidthModeValue: emailWidthMode, mainBackgroundColor: mainBackgroundColor, templateType: templateType } }),
+    body: JSON.stringify({ dataType: 'update_new_email_template', data: {designJson: JSON.stringify(design), emailFontValue: emailFontValue, emailFontSize: generalFontSize, emailWidthModeValue: emailWidthMode, mainBackgroundColor: mainBackgroundColor, templateType: templateType } }),
   })
     .then((response) => {
       if (response.ok) {

@@ -68,7 +68,7 @@ const EmailPreview = ({previewHtml, setFinalPreview, emailTitle, setEmailTitle})
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ dataType: 'send_new_email', data: newEmailData }),
+          body: JSON.stringify({ dataType: "insert_new_email", data: newEmailData }),
         })
           .then((response) => {
 

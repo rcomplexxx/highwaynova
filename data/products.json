@@ -24,7 +24,7 @@
     "stickerPrice": 999.99,
     "fbt": [
       {
-        "id": 2,
+        "id": 0,
         "variantIndex": 0
       },
       {
@@ -150,5 +150,4 @@
     "reviewNumber": 32,
     "raiting": 4.7
   }
-  
 ]

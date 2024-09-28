@@ -18,7 +18,7 @@ export default function SortByRatingAndImages({productId,  setOldReviews, clearA
               headers: {
                 "Content-Type": "application/json",
               },
-              body: JSON.stringify({ dataType: "send_reviews_reorder", data: {product_id: productId} }),
+              body: JSON.stringify({ dataType: "update_reviews_reorder", data: {product_id: productId} }),
             })
               .then((response) => {
                 if (response.ok) {

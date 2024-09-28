@@ -137,7 +137,7 @@ export default function NewSequence({emailData, setEmailData}) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ dataType: 'send_new_sequence', data: newSequenceData  }),
+        body: JSON.stringify({ dataType: 'insert_new_sequence', data: newSequenceData  }),
       })
         .then((response) => {
           if (response.ok) {

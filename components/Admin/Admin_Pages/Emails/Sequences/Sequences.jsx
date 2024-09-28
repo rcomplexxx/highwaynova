@@ -127,7 +127,7 @@ handleSaveEmail={(id, emailTitle, emailTextHtml)=>{
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ dataType: "send_email_data", data: emailData }),
+    body: JSON.stringify({ dataType: "update_email_data", data: emailData }),
   })
     .then((response) => {
       if (response.ok) {

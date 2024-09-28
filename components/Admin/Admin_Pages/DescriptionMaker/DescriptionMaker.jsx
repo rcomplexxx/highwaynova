@@ -155,7 +155,7 @@ export default function DescriptionMaker() {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ dataType: 'send_new_product_description',
+          body: JSON.stringify({ dataType: 'update_new_product_description',
              data: newDescriptionData }),
         })
           .then((response) => {

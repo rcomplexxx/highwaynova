@@ -12,7 +12,7 @@ import updateDb from '@/utils/utils-server/utils-admin/adminUpdateDb'
 import getFromDb from '@/utils/utils-server/utils-admin/adminGetFromDb';
 import wipeData from '@/utils/utils-server/utils-admin/adminDataWiper'
 import deleteRow from '@/utils/utils-server/utils-admin/adminDbRowDeleter';
-import obtainGetDbQueryParams from "@/utils/utils-server/utils-admin/obtainGetDbQueryParmas";
+import {obtainGetDbQueryParams} from "@/utils/utils-server/utils-admin/obtainAdminDbQueryParmas";
 
 
 const getPool = require('@/utils/utils-server/mariaDbPool');
@@ -96,9 +96,12 @@ let dbConnection;
         
 
         
-        if(dataType.startsWith("send_") && !data) return await resReturn(500, { successfulLogin: false, error: "No data to send" })
+        
 
         console.log('data', data);
+
+        
+        if(!data && (dataType.startsWith("insert_") || dataType.startsWith("update_") || dataType.startsWith("delete_"))) return await resReturn(500, { successfulLogin: false, error: "No data to send" })
       
 
         
@@ -106,17 +109,8 @@ let dbConnection;
         if(dataType.startsWith("get_")){
 
 
-         const {table, queryCondition, selectVariables} = obtainGetDbQueryParams(dataType);
-
-
-
-
-
-        return await getFromDb(dbConnection, resReturn, 
-          table,
-          queryCondition,
-          selectVariables
-        ); 
+         const {table, queryCondition, selectVariables} = obtainGetDbQueryParams(dataType, data);
+        return await getFromDb(dbConnection, resReturn, table, queryCondition, selectVariables ); 
 
 
 
@@ -124,133 +118,62 @@ let dbConnection;
         }
         
 
-      else if (dataType.startsWith("send_")){
+      else if (dataType.startsWith("update_")){
 
 
-        
-
-        if (dataType === "send_orders") {
-
-         
-
-          await updateDb(dbConnection, resReturn, "orders", data);
-        } 
-
-        else if (dataType === 'send_new_return'){
-
-          
-          await insertInDb(dbConnection,  resReturn,
-            "product_returns",
-            data
-          );
-          }
-        
-        
-        
-        else if (dataType === "send_unanswered_messages") {
-        
 
 
-          await updateDb(dbConnection, resReturn, "messages", data);
-        } else if (dataType === "send_reviews") {
 
+          let table;
 
-       
-          
-
-          await updateDb(dbConnection, resReturn, 
-            "reviews",
-            data
-            
-          );
-         
-        } 
-        else if (dataType === "send_reviews_reorder") {
-
-
-      
-
-
-              const successfulReorder= await reorderReviewsByRatingAndImages(data.product_id, dbConnection);
-
-
-          
-             
-             if(successfulReorder) return await resReturn(200, { success: true })
-              else  return await resReturn(500, { success: false })
-         
-              
-         
-        } 
-      
-      
-
-        else if(dataType=== "send_new_email_template"){
-
-          await updateDb(dbConnection,  resReturn,
-            "email_templates",
-            data
-          );
-
-        }
-
-        
-
+        if (dataType === "update_orders")  table = "orders";
     
-        
-        else if (dataType === "send_new_email") {
-          console.log('started email send');
-      
-          
+        else if (dataType === "update_unanswered_messages")   table = "messages";
 
-          await insertInDb(dbConnection,  resReturn,
-            "emails",
-            data
-          );
-        }
+         else if (dataType === "update_reviews") table = "reviews";
 
+  
+         else if(dataType=== "update_new_email_template")  table = "email_templates";
 
-        else if (dataType === "send_email_data") {
+     
+     
+         else if (dataType === "update_email_data") {
+
           console.log('started email send');
      
-
+          table = "emails";
            
-          await updateDb(dbConnection,  resReturn,
-            "emails",
-            data
-          );
 
         }
-        
-        else if(dataType==='send_new_sequence'){
 
-     
-
-          await insertInDb(dbConnection,  resReturn,
-            "email_sequences",
-            data
-          );
-
-        }
-        
-        
-        else if(dataType === 'send_new_capaign'){
+        if(table) return await updateDb(dbConnection, resReturn, table, data);
+ 
          
+
+
+
+
+
+        else {
+      
+
+       if (dataType === "update_reviews_reorder") {
+
+
+
+          const successfulReorder= await reorderReviewsByRatingAndImages(data.product_id, dbConnection);
+         if(successfulReorder) return await resReturn(200, { success: true })
+          else  return await resReturn(500, { success: false })
+     
           
-
-          await insertInDb(dbConnection,  resReturn,
-            "email_campaigns",
-            data
-          );
-        }
-
-
+     
+    } 
      
 
-        else if(dataType === 'send_new_product_description'){
+        else if(dataType === 'update_new_product_description'){
 
           
-          console.log('send_new_product_description executed.');
+          console.log('update_new_product_description executed.');
 
     
 
@@ -268,35 +191,75 @@ let dbConnection;
              
             
      
-           
-
          
         }
+        else{
+        return await resReturn(500, { successfulLogin: false, error: "Wrong data type" })
+        }
+
+        }
+
+
+
 
 
       }
 
 
+
+      else if(dataType.startsWith('insert_')){
+
+        let table;
+
+        if (dataType === 'insert_new_return') table = "product_returns";
+
+          
+      
+
+        else if (dataType === "insert_new_email")  table = "emails";
+
+        else if(dataType==='insert_new_sequence') table = "email_sequences";
+
+       
+        
+        else if(dataType === 'insert_new_capaign') table = "email_campaigns";
+
+        else return await resReturn(500, { successfulLogin: false, error: "Wrong data type" })
+
+        
+
+
+        
+        return await insertInDb(dbConnection,  resReturn, table, data);
+
+
+
+
+      }
+
+
+
+
+
+
       else if(dataType.startsWith('delete_')){
 
+        let table;
+        
+       if(dataType ==="delete_email_sequence") table = 'email_sequences';
+      
+       
 
-        
-       if(dataType ==="delete_email_sequence")
-          {
-           deleteRow(dbConnection, resReturn, 'email_sequences', data.deleteId)
-        
+          else if(dataType === "delete_email")table = 'emails';
+      
           
-          }
 
-          else if(dataType === "delete_email"){
-            deleteRow(dbConnection, resReturn, 'emails', data.deleteId)
-          }
+          else if(dataType==="delete_product_return")table = 'product_returns';
 
-          else if(dataType==="delete_product_return"){
-            deleteRow(dbConnection, resReturn, 'product_returns', data.deleteId)
-          }
+          else return await resReturn(500, { successfulLogin: false, error: "Wrong data type" })
+       
 
-
+         return await deleteRow(dbConnection, resReturn, table, data.deleteId)
 
 
       }
@@ -305,47 +268,48 @@ let dbConnection;
       else if(dataType.startsWith('wipe')){
 
 
+        let table; 
         
         
-         if(dataType === `wipe_orders`){
-          wipeData(dbConnection,  resReturn,'orders')
-        }
-        else if(dataType === `wipe_messages`){
-          wipeData(dbConnection,  resReturn,'messages')
-        }
+         if(dataType === `wipe_orders`) table= 'orders';
+        
+        else if(dataType === `wipe_messages`) table= 'messages';
+          
+  
+
+
+        else if(dataType ==="wipe_product_returns") table= 'product_returns';
+        
+
+        else if(dataType ==="wipe_emails")  table= 'emails';
+        
+        
+
+        else if(dataType ==="wipe_email_sequences") table= 'email_sequences';
+      
+        
+        else if(dataType ==="wipe_email_campaigns")  table= 'email_campaigns';
+        
+
+        else if(dataType ==="wipe_customers") table= 'customers';
+
         else if(dataType === `wipe_reviews`){
-          console.log('reviews wipiong', data.product_id)
-          wipeData(dbConnection,  resReturn,'reviews', data.product_id)
+          console.log('reviews wiping', data.product_id)
+          return await wipeData(dbConnection,  resReturn,'reviews', data.product_id)
         }
-        else if(dataType ==="wipe_product_returns")
-        wipeData(dbConnection,  resReturn,'product_returns')
 
-        else if(dataType ==="wipe_emails")
-          {
-          wipeData(dbConnection,  resReturn,'emails')
-          wipeData(dbConnection,  resReturn,'email_sequences')
-          wipeData(dbConnection,  resReturn,'email_campaigns')
-          }
-
-        else if(dataType ==="wipe_email_sequences")
-         {
-          wipeData(dbConnection,  resReturn,'email_campaigns')
-          wipeData(dbConnection,  resReturn,'email_sequences')
-         
-         }
-        else if(dataType ==="wipe_email_campaigns")
-          wipeData(dbConnection,  resReturn,'email_campaigns')
-
-        else if(dataType ==="wipe_customers")
-          wipeData(dbConnection,  resReturn,'customers')
 
 
         
+        if(table) return await wipeData(dbConnection, resReturn, table);
+
+        
+
+        else return await resReturn(500, { successfulLogin: false, error: "Wrong data type" })
+
+        
+
       }
-
-        
-
-
 
 
      
@@ -365,7 +329,7 @@ let dbConnection;
    
       
 
-        console.log(' this shit should not be triggered')
+        
         
 
 
@@ -374,7 +338,7 @@ let dbConnection;
   
   
    catch (error) {
-    console.error(error);
+    console.error('error in admin check api', error);
 
     return await resReturn(500, { successfulLogin: false, error: "Internal Server Error" })
 

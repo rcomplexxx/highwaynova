@@ -63,7 +63,7 @@ export default function Inbox({ data, setData }) {
         <h1>Inbox</h1>
         {data.length !== 0 ? (
           <SaveOrdersButton
-            dataType="send_unanswered_messages"
+            dataType="update_unanswered_messages"
             
             
             newData={changedMessagesArray}

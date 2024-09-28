@@ -209,7 +209,9 @@ cron.schedule(date, async () => await emailSendJob(campaignId));
 
                       
                       await dbConnection.query(`UPDATE email_campaigns SET emailSentCounter = ?, retryCounter = ? WHERE id = ?`, [currentEmailIndex + 1, 0, campaign.id]);
+                      
                       console.log(`SCHEDULING NEXT EMAIL FOR`, new Date(Math.max(Date.now()+61000, dateCalculated)));
+
                       await scheduleEmailSendJob(dateCalculated, campaignId);
 
                       

@@ -233,7 +233,7 @@ const paypalExpressChecker=  (await dbConnection.query(`SELECT address, city FRO
           
       } else if (response.result.status === "INSTRUMENT_DECLINED") {
 
-        return await resReturn(500, {  error: "INSTRUMENT_DECLINED"  })
+        return await resReturn(500, {  error: response.result.status  })
 
  
       } else {

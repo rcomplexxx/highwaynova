@@ -9,7 +9,7 @@ const path = require('path');
 
 
 const   moveImagesToDeletedImagesFolder = (reviewProductImages, productId, shouldRecover)=>{
-  if(reviewProductImages){
+  if(reviewProductImages && reviewProductImages.length>0 ){
    
     const basePath = path.join(
         process.cwd(),
@@ -28,7 +28,7 @@ const   moveImagesToDeletedImagesFolder = (reviewProductImages, productId, shoul
 
     
   
-    reviewProductImages?.forEach((imageName)=>{
+    reviewProductImages.forEach((imageName)=>{
       
       fs.rename(path.join(moveFrom,imageName), path.join(moveTo,imageName),function (err) {
         if (err) throw err
@@ -247,49 +247,35 @@ async function updateDb (dbConnection, resReturn, table, data) {
                 
                 moveImagesToDeletedImagesFolder(deletedImages, productId, false);
                 
+
+
     
-          const recycledReviewImages= reviewImages?.filter((img)=>{
-         
-            return img.includes('deleted_images/');
-          });
+          const recycledReviewImages= reviewImages?.filter((img)=>img?.split('deleted_images/')?.[1]);
+
+          
+          
+
+          
+          console.log('recycled Review Images, data', recycledReviewImages, data);
     
           
-          data.imageNames= data.imageNames?.map(img=>{
-            if(recycledReviewImages.find(addedImg => {return addedImg == img})){
-              return img.split('deleted_images/')[1]
-            }
-            return img;
     
-    
-          })
-    
-          console.log('recycled images', recycledReviewImages)
-    
-          if(recycledReviewImages.length>0){
-    
-            const basePath = `${process.cwd()}/public/images/review_images/productId_${productId}/`;
-            const deletedImagesPath = `${basePath}/deleted_images/`;
-    
-    
-         
-      
-            recycledReviewImages?.forEach((image)=>{
-           
-              
-    
-    
-             
-              fs.rename(`${deletedImagesPath}${image.split('deleted_images/')[1]}`, `${basePath}${image.split('deleted_images/')[1]}`,function (err) {
-                if (err) throw err
-                console.log('Successfully renamed - AKA moved!')
-              });
-              
+
+            moveImagesToDeletedImagesFolder(recycledReviewImages, productId, true)
+
+
+            let newImageNames = reviewImages?.map(img => img.startsWith('deleted_images/') ? img.split('deleted_images/')[1] : img);
             
-            });
+            newImageNames = newImageNames.length ? JSON.stringify(newImageNames) : null;
+            
+            
+
+            
+            
     
            
     
-        }
+        
       
     
     
@@ -300,7 +286,7 @@ async function updateDb (dbConnection, resReturn, table, data) {
                 await dbConnection.query(`UPDATE reviews SET name = ?, text = ?, imageNames = ?, stars = ? WHERE id = ?`, [
                   data[i].name,
                   data[i].text,
-                  data[i].imageNames === "null" ? null : data[i].imageNames,
+                  newImageNames,
                   data[i].stars,
                   data[i].id
                 ]

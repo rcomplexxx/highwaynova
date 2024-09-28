@@ -30,7 +30,7 @@ export default function Subscribe() {
                 "Content-Type": "application/json",
               },
               body: JSON.stringify({
-                type: "customers",
+                type: "subscribe",
                 email: emailInputRef.current.value,
                 source: "re_subscribe",
               }),

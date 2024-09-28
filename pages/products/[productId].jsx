@@ -61,7 +61,7 @@ export default function ProductPage({ product, description, images, startReviews
  
 
   const [quantity, setQuantity] = useState(1);
-  const [variant, setVariant]=useState(product.variants && product.variants[0]);
+  const [variant, setVariant]=useState(product.variants?.[0]);
   const [bundleVariants, setBundleVariants] = useState([]);
 
   const variantIndexToZeroRef = useRef(false);
@@ -84,46 +84,22 @@ export default function ProductPage({ product, description, images, startReviews
 
 
 
-  useLayoutEffect(()=>{
-
-    console.log('this effect reactivated')
-
-    setBundleVariants([]);
-
-    if(!product.variants){
+  useLayoutEffect(() => {
+    console.log('this effect reactivated');
+  
+    if (!product.variants) {
       setVariant();
       return;
     }
-    
-   
+  
     const variantByQuery = query.variant;
-
-    if(variantByQuery){
-
-
-      variantIndexToZeroRef.current = true;
-
-      const currentVariant = product.variants?.find(v =>{return v.name.toLowerCase().replace(/\s+/g, "-") === variantByQuery});
-
-
-        setVariant(currentVariant?currentVariant:product.variants[0]);
-
-
-    }
-    else{
-
-      variantIndexToZeroRef.current = false;
-      setVariant(product.variants[0]);
-     
-    }
-
-     
-      setQuantity(1);
-
-      
-      
-
-  },[product.id, query])
+    const currentVariant = variantByQuery && product.variants?.find(v => v.name.toLowerCase().replace(/\s+/g, "-") === variantByQuery);
+  
+    setVariant(currentVariant || product.variants?.[0]);
+    variantIndexToZeroRef.current = !variantByQuery;
+  
+    setQuantity(1);
+  }, [product.id, query]);
 
 
 
@@ -169,6 +145,7 @@ export default function ProductPage({ product, description, images, startReviews
   
     setCartProducts(updatedCartProducts);
     setNewProducts(newProducts);
+    
   }, [cartProducts, product, variant, quantity, bundleVariants]);
 
   
@@ -177,20 +154,6 @@ export default function ProductPage({ product, description, images, startReviews
 
 
 
-
-    const bundleBuyNowLink = useMemo(() => {
-      const { variantNames, variantQuantities } = bundleVariants.reduce(
-        (acc, bv, index) => {
-          acc.variantNames += bv.name.toLowerCase().replace(/\s+/g, "-") + (index !== bundleVariants.length - 1 ? ',' : '');
-          acc.variantQuantities += bv.quantity + (index !== bundleVariants.length - 1 ? ',' : '');
-          return acc;
-        },
-        { variantNames: '', variantQuantities: '' }
-      );
-    
-      return `/checkout/buynow?productid=${product.id}&variant=${variantNames}&quantity=${variantQuantities}`;
-    }, [bundleVariants]);
-//moze da se optimizuje
 
 
 
@@ -276,8 +239,8 @@ export default function ProductPage({ product, description, images, startReviews
           </div>
 }
 
-     {product.bundle && <BundleOffer productId={product.id} price={product.price} stickerPrice={product.stickerPrice} bundle={product.bundle} quantity={quantity} 
-     setQuantity={setQuantity} mainVariant={variant?.name} setBundleVariants={setBundleVariants} allVariants={product.variants.map(v=>v.name)}/> }
+     {product.bundle && <BundleOffer product={{price: product.price, stickerPrice: product.stickerPrice, bundle: product.bundle, variants: product.variants}} quantity={quantity} 
+     setQuantity={setQuantity} mainVariant={variant?.name} setBundleVariants={setBundleVariants}/> }
 
 
 
@@ -316,10 +279,12 @@ export default function ProductPage({ product, description, images, startReviews
 
                
               
-                let items = [{ id: product.id, quantity, variant: variant.name }];
+                let items = [{ id: product.id, quantity, variant: variant?.name }];
                 let clientTotal = (product.price * quantity).toFixed(2);
                 
                 if (bundleVariants.length > 0) {
+
+                  
                   const bundleQuantity = bundleVariants.reduce((total, cp) => total + cp.quantity, 0);
                   items = bundleVariants.map(cp => ({ id: product.id, quantity: cp.quantity, variant: cp.name }));
                 
@@ -333,7 +298,10 @@ export default function ProductPage({ product, description, images, startReviews
                     , 0).toFixed(2);
                   
                   
-                } else if (product.bundle) {
+                }
+                
+                
+                else if (product.bundle) {
                   const lastBundle = product.bundle[product.bundle.length - 1];
                   if(quantity > lastBundle.quantity)
                     clientTotal= ( parseFloat((product.price * (100 - lastBundle.discountPercentage) / 100).toFixed(2))  * quantity).toFixed(2)
@@ -372,9 +340,18 @@ export default function ProductPage({ product, description, images, startReviews
 
 
       
+      
 
-<Link className={styles.buy_now_button} 
-          href={bundleVariants.length!==0?bundleBuyNowLink:`/checkout/buynow?productid=${product.id}${variant?`&variant=${variant.name.toLowerCase().replace(/\s+/g, "-")}`:""}&quantity=${quantity}`}  shallow>
+
+
+
+        <Link 
+  className={styles.buy_now_button} 
+  href={bundleVariants.length 
+    ? `/checkout/buynow?productid=${product.id}&variant=${bundleVariants.map(bv => bv.name.toLowerCase().replace(/\s+/g, "-")).join(',')}&quantity=${bundleVariants.map(bv => bv.quantity).join(',')}` 
+    : `/checkout/buynow?productid=${product.id}${variant ? `&variant=${variant.name.toLowerCase().replace(/\s+/g, "-")}` : ""}&quantity=${quantity}`} 
+  shallow
+>
             More payment options
           </Link>
 

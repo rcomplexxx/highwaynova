@@ -57,7 +57,7 @@ export default function ContactUs() {
       const response = await fetch("/api/sqlliteapi", {
         method: "POST",
         body: JSON.stringify({
-          type: "messages",
+          type: "message",
           message: { name, email, message },
         }),
         headers: {

@@ -162,7 +162,7 @@ const saveNewReturn = async()=>{
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ dataType: 'send_new_return', data: newReturnData }),
+      body: JSON.stringify({ dataType: 'insert_new_return', data: newReturnData }),
     })
       .then((response) => {
         if (response.ok) {

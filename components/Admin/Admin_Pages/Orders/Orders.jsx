@@ -58,7 +58,7 @@ export default function Orders({ data, setData }) {
         <h1>Orders</h1>
         {data.length !== 0 ? (
           <SaveOrdersButton
-            dataType="send_orders"
+            dataType="update_orders"
            
             newData={changedOrdersArray}
             setData={setData}

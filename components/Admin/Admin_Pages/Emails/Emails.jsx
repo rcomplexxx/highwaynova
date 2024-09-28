@@ -75,7 +75,7 @@ export default function Emails({emailData, setEmailData}) {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ dataType: 'send_email_data', data: updatedEmailData }),
+          body: JSON.stringify({ dataType: 'update_email_data', data: updatedEmailData }),
         })
           .then((response) => {
             if (response.ok) {

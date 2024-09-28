@@ -44,6 +44,8 @@ let dbConnection;
 
   
   try {
+
+
     const clientIp = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
 
     // Perform rate limiting checks
@@ -61,12 +63,11 @@ let dbConnection;
 
     // Rate limiting checks passed, proceed with API logic
 
-    if (req.method !== "POST")  return await resReturn(405, { error: "Method Not Allowed" })
-      // Handle POST requests here
+    
     
         if (!req.body.type)  throw new Error('Request type not provided')
 
-        if (req.body.type === "customers") {
+        if (req.body.type === "subscribe") {
           // Create a new SQLite database connection
 
           if(await subscribe(req.body.email, req.body.source, undefined, dbConnection))
@@ -77,7 +78,7 @@ let dbConnection;
         
         } 
         
-        else if (req.body.type === "messages") {
+        else if (req.body.type === "message") {
           // Create a new SQLite database connection
 
 

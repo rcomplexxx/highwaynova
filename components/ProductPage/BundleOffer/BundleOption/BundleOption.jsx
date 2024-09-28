@@ -6,7 +6,7 @@ import styles from './bundleoption.module.css';
 
 
 
-export default function BundleOption({isSelected, originalPrice, discountPercentage, bundleQuantity, quantity,  setQuantity, havingPlus, localBundleVariants, setLocalBundleVariants, allVariants }) {
+export default function BundleOption({isSelected, price, stickerPrice, discountPercentage, bundleQuantity,  setQuantity, havingPlus, localBundleVariants, setLocalBundleVariants, allVariants }) {
 
 
   //Ako bundle popust postoji tj discPer nije 0, onda u tom slucaju se dozvoljava options i select za varijante, gde ce na select da se ubaci odgovarajuca varijanta.
@@ -30,7 +30,7 @@ export default function BundleOption({isSelected, originalPrice, discountPercent
 
     <div className={styles.bundleOffer}>
       <div className={styles.bundleQuantityDiv}>Buy {bundleQuantity}{havingPlus?'+':''}</div>
-      {discountPercentage!==0 &&  <div className={styles.origPrice}>${(parseFloat(parseFloat(((originalPrice * (isSelected?quantity:bundleQuantity)).toFixed(2))).toFixed(2))).toFixed(2)}</div>}
+      {discountPercentage!==0 &&  <div className={styles.origPrice}>${stickerPrice}</div>}
    
       
     </div>
@@ -39,7 +39,10 @@ export default function BundleOption({isSelected, originalPrice, discountPercent
     <div className={styles.bundleSave}>
 
     <div className={styles.saveDiv}>{bundleQuantity===1?'Standard price':`You save ${discountPercentage}%`}</div>
-    <div className={styles.offerPrice}>${(parseFloat(((parseFloat(originalPrice - (originalPrice*discountPercentage/100)).toFixed(2))*quantity).toFixed(2))).toFixed(2)}</div>
+    <div className={styles.offerPrice}>${price}</div>
+
+
+   
     </div>
 
     </div>
@@ -49,15 +52,16 @@ export default function BundleOption({isSelected, originalPrice, discountPercent
     </div>
 
 
-{isSelected && localBundleVariants && localBundleVariants.length!==0 && <> <span className={styles.variantOptionsTitle}>Select variants</span>
+    {isSelected && localBundleVariants?.length > 0 && <> 
+    
+    <span className={styles.variantOptionsTitle}>Select variants</span>
     <div className={styles.variantsDiv}>
      
    
 
+
+
 {localBundleVariants.map((bv,index)=>{
-
-
-
 
 
 
@@ -70,19 +74,13 @@ id="selectVariants"
 
 className={styles.variantSelect}
 value={bv}
-onChange={(e)=>{
-  
- 
-  const newLocalBundleVariants = localBundleVariants.map((lbv, i) =>{ 
-    if (i === index)return e.target.value
-    return lbv
+onChange={(e) => {setLocalBundleVariants(localBundleVariants.map((lbv, i) => (i === index ? e.target.value : lbv)));}}
 
-  })
-  setLocalBundleVariants(newLocalBundleVariants)
-}}
 >
- {allVariants.map((v, i)=>{
-  return <option key={i} value={v}>{v}</option>
+
+
+ {allVariants.map((variant, i)=>{
+  return <option key={i} value={variant}>{variant}</option>
  })
 
 }
@@ -94,6 +92,9 @@ onChange={(e)=>{
 
 
 })}
+
+
+
 
 </div>
 </>

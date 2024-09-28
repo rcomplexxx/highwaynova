@@ -35,7 +35,7 @@ export default function Footer() {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            type: "customers",
+            type: "subscribe",
             email: email.value,
             source: "footer",
           }),

@@ -30,7 +30,6 @@ export default async function unsubscribe(req, res) {
  }
 
 
-const {customer_id, customer_hash} = req.body;
 
 
  
@@ -44,9 +43,12 @@ const {customer_id, customer_hash} = req.body;
 
     const clientIp = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
 
-    if (!(await limiterPerHour.rateLimiterGate(clientIp, dbConnection)))
-      return await resReturn(429, { success: true, error: "server_error" })
+    // if (!(await limiterPerHour.rateLimiterGate(clientIp, dbConnection)))
+    //   return await resReturn(429, { success: true, error: "server_error" })
 
+
+    
+const {customer_id, customer_hash} = req.body;
 
      
 
@@ -76,29 +78,37 @@ const {customer_id, customer_hash} = req.body;
  
   
 
+   //Nadji sve campanje koje sadrze customerov email u targetCustomers, i odma im izbaci taj email iz targetCustomers(filter).
+
+   const modifiedCustomersCampaigns = (await dbConnection.query(`
+    SELECT id, targetCustomers
+    FROM email_campaigns
+    WHERE JSON_CONTAINS(targetCustomers, JSON_QUOTE(?), '$')
+  `, [customer.email])).map(campaign => {
+    return {
+      ...campaign,
+      targetCustomers: JSON.stringify(JSON.parse(campaign.targetCustomers).filter(tc => tc !== customer.email))
+    };
+  });
+
+  
 
 
+  
 
-       const allCampaigns = await dbConnection.query(`SELECT id, targetCustomers FROM email_campaigns`);
+  
+       
 
-       let customersCampaigns = allCampaigns.filter(campaign => 
-         campaign.targetCustomers.includes(customer.email)
-       ).map(campaign => {
-         return {
-           ...campaign,
-           targetCustomers: JSON.stringify(JSON.parse(campaign.targetCustomers).filter(tc => tc !== customer.email))
-         };
-       }).filter(campaign => {
+
+       for(const campaign of modifiedCustomersCampaigns){
+
+
         if(campaign.targetCustomers === '[]'){
-          db.prepare(`DELETE FROM email_campaigns WHERE id = ?`).run(campaign.id);
-          return false;
+          dbConnection.query(`DELETE FROM email_campaigns WHERE id = ?`, [campaign.id]);
+      
+          
         }
-        return true;
-       });
-
-
-       for(const campaign of customersCampaigns){
-        await  dbConnection.query(`UPDATE email_campaigns SET targetCustomers = ? WHERE id = ?`, [campaign.targetCustomers, campaign.id]);
+        else await  dbConnection.query(`UPDATE email_campaigns SET targetCustomers = ? WHERE id = ?`, [campaign.targetCustomers, campaign.id]);
        }
        
     
@@ -123,6 +133,7 @@ const {customer_id, customer_hash} = req.body;
 
 
   } catch (e) {
+    console.log('error exists in unsub', e)
     return await resReturn(500, { success: false, error: e } )
   }
 

@@ -51,7 +51,7 @@ export default function ContactUsCard() {
         const response = await fetch("/api/sqlliteapi", {
           method: "POST",
           body: JSON.stringify({
-            type: "messages",
+            type: "message",
             message: { name, email, message },
           }),
           headers: {

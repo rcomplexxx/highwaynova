@@ -6,15 +6,19 @@ function findBestBundle(cartProducts) {
   let cartProductsTemp = [...cartProducts];
   let bestBundle = { id: null, quantity: 0, label: '', priceOff: 0, discountPercentage: 0 };
 
+  
   const shrinkedCartProductsTemp = cartProductsTemp.reduce((acc, cp) => {
     const existing = acc.find(scp => scp.id === cp.id);
-    if (existing) {
-      existing.quantity += cp.quantity;
-    } else {
-      acc.push({ ...cp });
-    }
+    existing?  existing.quantity++ : acc.push({ ...cp });
     return acc;
   }, []);
+
+
+
+  
+ 
+
+
 
   shrinkedCartProductsTemp.forEach(cp => {
     const product = products.find(p => p.id === cp.id);

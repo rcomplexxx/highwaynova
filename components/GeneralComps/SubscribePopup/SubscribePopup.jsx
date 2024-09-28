@@ -94,7 +94,7 @@ export default function SubscribePopup({setEmailPopup}){
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              type: "customers",
+              type: "subscribe",
               email: emailFieldRef.current.value,
               source: "popUp10%"
             }), // Send the form data as JSON

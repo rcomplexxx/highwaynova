@@ -32,7 +32,7 @@ export default function SaveButton({
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ dataType: "send_reviews", data: data }),
+        body: JSON.stringify({ dataType: "update_reviews", data: data }),
       })
         .then((response) => {
           if (response.ok) {

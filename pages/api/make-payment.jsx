@@ -169,6 +169,7 @@ async function generateUniqueId(dbConnection) {
         } = req.body.order;
 
 
+        console.log('order details right now,',  req.body.order)
 
 
 
@@ -188,9 +189,12 @@ async function generateUniqueId(dbConnection) {
          
        
 
-         const inserCustomerInfo = await dbConnection.query("INSERT INTO customers (email, totalOrderCount, subscribed, source) VALUES (?, ?, ?, ?)", [email, 0, 0, 'make_payment'] );
-           
-         customerId= inserCustomerInfo.lastInsertRowid;
+          const inserCustomerInfo = (await dbConnection.query(
+            "INSERT INTO customers (email, totalOrderCount, subscribed, source) VALUES (?, ?, ?, ?)",
+            [email, 0, 0, 'make_payment']
+          ))?.[0];
+          
+          customerId = inserCustomerInfo?.insertId;
 
 
         }
@@ -296,8 +300,10 @@ async function generateUniqueId(dbConnection) {
 
 
 
-
+    const {paymentMethod} = req.body;
     const { clientTotal, couponCode, tip, items } = req.body.order;
+
+
     const orderItems = (couponCode ? items : findBestBundleServer(items)).map(product => ({ 
       ...product, 
       price: product.bundledPrice || productsData.find(item => item.id === product.id)?.price || 0 
@@ -325,7 +331,7 @@ async function generateUniqueId(dbConnection) {
 
     
     
-    if(req.body.paymentMethod.includes('PAYPAL')){
+    if(paymentMethod.includes('PAYPAL')){
 
       console.log('order ship info', req.body.order, req.body.paymentMethod)
     
@@ -357,107 +363,60 @@ async function generateUniqueId(dbConnection) {
     }
 
   }
-  else if(req.body.paymentMethod==='GPAY'){
-  
-    
-    
- 
-   
-    
-    
-  
 
-      //Namontirati gresku ako je drzava van dozvoljenih drzava
+
+
+
+  else if(paymentMethod==='GPAY' ||  paymentMethod==='STRIPE'){
+
+
+  //Namontirati gresku ako je drzava van dozvoljenih drzava
+
+
 
 
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-    const paymentMethod = await stripe.paymentMethods.create({
+
+
+
+    const paymentMethodId = paymentMethod==='GPAY'?(await stripe.paymentMethods.create({
       type: 'card',
       card: {
         token: req.body.paymentToken, // Google Pay token
       },
-    });
+    })).id:req.body.stripeId;
 
-    console.log('Proso stripe tokenizaciju')
-
-
-
-    
- 
-  
+    if(!paymentMethodId) throw new Error('Payment declined.')
 
 
+      console.log('Proso stripe tokenizaciju', paymentMethod)
 
 
-   
-
-    const paymentIntent= await stripe.paymentIntents.create({
-			amount: Math.round(totalPrice*100),
-			currency: "USD",
-      payment_method: paymentMethod.id, // Google Pay token
-      confirm: true,
-      automatic_payment_methods: {
-        enabled: true,
-        allow_redirects: 'never',
-      },
-		});
-
-     await putInDatabase('GPAY(STRIPE)',paymentIntent.client_secret, 1, dbConnection);
-   
-
-
-    
-
-    return await resReturn(200, {
-			
-			success: true,
-      giftDiscount: giftDiscount
-		});
-    
-
-  
-
-
-
-
-
-
-  }
-
-  //check amount?
-  else if(req.body.paymentMethod==='STRIPE'){
-   
-   
-    
-    console.log('STRIPE')
-
-    
-    const {stripeId} = req.body;
- 
-
-    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-      
-    const paymentIntent = await stripe.paymentIntents.create({
-      amount:Math.round(totalPrice*100),
-			currency: "USD",
-      payment_method: stripeId, 
-			automatic_payment_methods: {
+      const paymentIntent= await stripe.paymentIntents.create({
+        amount: Math.round(totalPrice*100),
+        currency: "USD",
+        payment_method: paymentMethodId, // Google Pay token  
+        automatic_payment_methods: {
           enabled: true,
           allow_redirects: 'never',
-      },
-      confirm: true
-		});
+        },
+        confirm: true
+      });
 
-  
 
+
+
+      const dbPaymentMethod = paymentMethod==="GPAY"?'GPAY(STRIPE)':'STRIPE';
+
+
+
+
+
+    await putInDatabase(dbPaymentMethod ,paymentIntent.client_secret, 1, dbConnection);
+   
+
+ 
     
-     await putInDatabase('STRIPE',paymentIntent.client_secret, 1, dbConnection);
-   
-    
-
-   
-   
-   
     
 
     return await resReturn(200, {
@@ -466,8 +425,21 @@ async function generateUniqueId(dbConnection) {
       giftDiscount: giftDiscount
 		});
 
+
+
+
+
+
+
   }
+
+
+
   
+  return await resReturn(500, {
+			
+    success: false, error: "Payment was not approved." 
+  });
 
   
 
@@ -479,7 +451,7 @@ async function generateUniqueId(dbConnection) {
 
     return await resReturn(500, {
 			
-      success: false, error: "Error occured. Payment was not approved." 
+      success: false, error: "Payment was not approved." 
 		});
 
     
