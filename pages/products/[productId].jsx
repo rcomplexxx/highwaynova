@@ -64,7 +64,7 @@ export default function ProductPage({ product, description, images, startReviews
   const [variant, setVariant]=useState(product.variants?.[0]);
   const [bundleVariants, setBundleVariants] = useState([]);
 
-  const variantIndexToZeroRef = useRef(false);
+  
   
 
 
@@ -92,11 +92,11 @@ export default function ProductPage({ product, description, images, startReviews
       return;
     }
   
-    const variantByQuery = query.variant;
-    const currentVariant = variantByQuery && product.variants?.find(v => v.name.toLowerCase().replace(/\s+/g, "-") === variantByQuery);
+    
+    const currentVariant = query.variant && product.variants?.find(v => v.name.toLowerCase().replace(/\s+/g, "-") === query.variant);
   
     setVariant(currentVariant || product.variants?.[0]);
-    variantIndexToZeroRef.current = !variantByQuery;
+
   
     setQuantity(1);
   }, [product.id, query]);
@@ -108,10 +108,14 @@ export default function ProductPage({ product, description, images, startReviews
 
 
   const onAddToCart = useCallback((quantity = 1, addedProduct = product, addedVariant = variant) => {
+
+
     const updatedCartProducts = [...cartProducts];
     const newProducts = [];
-  
+
     const formatName = name => name?.toLowerCase().replace(/\s+/g, "-");
+
+    
   
     const addNewProduct = (variantName, qty) => {
       const existingProduct = updatedCartProducts.find(cp =>
@@ -166,7 +170,7 @@ export default function ProductPage({ product, description, images, startReviews
         <NextSeo {...productPageSeo(product.id)}/>
       <div className={styles.productPageDiv}>
        
-          <ProductPics productId={product.id} onAddToCart ={ onAddToCart } images={images} variantImageIndex={variantIndexToZeroRef.current && variant?.variantProductImageIndex} />
+          <ProductPics onAddToCart ={ onAddToCart } images={images} variantImageIndex={variant?.variantProductImageIndex} />
       
           <div className={styles.productInfoWrapper}>
        
@@ -216,14 +220,7 @@ export default function ProductPage({ product, description, images, startReviews
                 alt={v.name}
                 sizes="(max-width: 980px) 48px, 64px"
                 className={`${styles.productVariantImage} ${v.name.toLowerCase().replace(/\s+/g, "-")===variant?.name.toLowerCase().replace(/\s+/g, "-") && styles.productVariantSelected}`}
-                onClick={() => {
-
-                  
-                  variantIndexToZeroRef.current = true;
-                  
-                  setVariant(v);
-                  
-                }}
+                onClick={() => {setVariant(v); }}
                
                 height={0}
                 width={0}
@@ -279,41 +276,22 @@ export default function ProductPage({ product, description, images, startReviews
 
                
               
-                let items = [{ id: product.id, quantity, variant: variant?.name }];
-                let clientTotal = (product.price * quantity).toFixed(2);
-                
-                if (bundleVariants.length > 0) {
+                const items = bundleVariants.length > 0
+                ? bundleVariants.map(cp => ({ id: product.id, quantity: cp.quantity, variant: cp.name }))
+                : [{ id: product.id, quantity, variant: variant?.name }];
 
-                  
-                  const bundleQuantity = bundleVariants.reduce((total, cp) => total + cp.quantity, 0);
-                  items = bundleVariants.map(cp => ({ id: product.id, quantity: cp.quantity, variant: cp.name }));
+                const totalQuantity = product.bundle && bundleVariants.length > 0 
+                ? bundleVariants.reduce((total, cp) => total + cp.quantity, 0) 
+                : quantity;
+
                 
-                  const bundleIndex = product.bundle.findIndex(b => b.quantity > bundleQuantity);
-                  const discountIndex = bundleIndex === -1 ? product.bundle.length - 1 : bundleIndex - 1;
-                  const discountPercentage = product.bundle[discountIndex].discountPercentage;
+                const bundleDiscount = product.bundle?.[product.bundle.findIndex(b => b.quantity > totalQuantity) - 1]?.discountPercentage ?? product.bundle?.[product.bundle.length - 1]?.discountPercentage ?? 0;
+
                 
-                  clientTotal = 
-                    bundleVariants.reduce((sum, bv) => 
-                      sum + parseFloat((product.price * (100 - discountPercentage) / 100).toFixed(2))  * bv.quantity
-                    , 0).toFixed(2);
+                const clientTotal= ((product.price * (100 -  bundleDiscount) / 100).toFixed(2)  * totalQuantity).toFixed(2)
                   
                   
-                }
-                
-                
-                else if (product.bundle) {
-                  const lastBundle = product.bundle[product.bundle.length - 1];
-                  if(quantity > lastBundle.quantity)
-                    clientTotal= ( parseFloat((product.price * (100 - lastBundle.discountPercentage) / 100).toFixed(2))  * quantity).toFixed(2)
-                    
-                
-                  
-                }
-                
-                
-                
-                  
-                  
+                console.log('order paypal info', bundleDiscount, clientTotal)
 
                 
               

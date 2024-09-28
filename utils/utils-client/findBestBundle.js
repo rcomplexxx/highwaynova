@@ -35,7 +35,10 @@ function findBestBundle(cartProducts) {
     if (offerIndex === -1) return;
 
     const discount = product.bundle[offerIndex].discountPercentage;
-    const priceOff = parseFloat((product.price * cp.quantity * discount / 100).toFixed(2));
+
+ 
+    
+    const priceOff = parseFloat((  ((product.price * (100 - discount) / 100).toFixed(2)) *  cp.quantity).toFixed(2)       );
 
     
 

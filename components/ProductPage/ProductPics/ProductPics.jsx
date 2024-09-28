@@ -11,8 +11,11 @@ import { ArrowDown, ZoomInIcon } from "@/public/images/svgs/svgImages";
 
 
 
-export default function ProductPics({ productId, images, onAddToCart, variantImageIndex }) {
-  const [imageIndex, setImageIndex] = useState(0);
+export default function ProductPics({  images, onAddToCart, variantImageIndex }) {
+
+
+  const [imageIndex, setImageIndex] = useState(variantImageIndex || 0);
+  const [smoothSwiping, setSmoothSwiping] = useState(false);
   const [zoomed, setZoomed] = useState(undefined);
   
  
@@ -20,10 +23,23 @@ export default function ProductPics({ productId, images, onAddToCart, variantIma
   const [swiper, setSwiper] = useState(null);
   const [swiperMini, setSwiperMini] = useState(null);
 
+  const stopSmoothSwipingForNewLinkRef = useRef(false);
+  
+
+
   const router = useRouter();
-  const mounted= useRef();
+  const { query } = router; 
+  
+    
+  
+
+
+  
+  
   
   const fixedAddToCartRef= useRef();
+
+
 
   useEffect(() => {
     if(zoomed===undefined){
@@ -33,12 +49,8 @@ export default function ProductPics({ productId, images, onAddToCart, variantIma
       return;
     }
 
-    
     if (zoomed) {
       if(!router.asPath.includes("#zoom"))router.push(router.asPath + "#zoom");
-
-   
-
 
      
 
@@ -55,115 +67,111 @@ export default function ProductPics({ productId, images, onAddToCart, variantIma
 
 
 
+
   useLayoutEffect(() => {
-   
-    
+    const addToCartEl = document.getElementById("addToCart");
+    const masonryEl = document.getElementById("masonry");
 
-    
-    
-    const AddToCartEl = document.getElementById("addToCart");
-    const  masonryEl = document.getElementById("masonry");
-    
-    setSpawnAddToCart(AddToCartEl.getBoundingClientRect().bottom < 0 && masonryEl.getBoundingClientRect().bottom > window.innerHeight);
-    
-    let destroyFixedCartTimeout;
-   
-    const handleScroll = () => {
-      const shouldSpawn= AddToCartEl.getBoundingClientRect().bottom < 0 && masonryEl.getBoundingClientRect().bottom > window.innerHeight;
-      
-      if(shouldSpawn){
-        setSpawnAddToCart(true)
-      if(destroyFixedCartTimeout){ clearTimeout(destroyFixedCartTimeout); destroyFixedCartTimeout=null; }
-
-      
-    }
-    else if(fixedAddToCartRef.current){
-
-
-      fixedAddToCartRef.current.style.opacity=0;
-      fixedAddToCartRef.current.style.transform='translateY(100%)';
-      destroyFixedCartTimeout= setTimeout(()=>{
-        setSpawnAddToCart(false);
-      },300)
-    
-    }
-      
+    const checkSpawnAddToCart = () => {
+        return (
+            addToCartEl.getBoundingClientRect().bottom < 0 &&
+            masonryEl.getBoundingClientRect().bottom > window.innerHeight
+        );
     };
 
+    setSpawnAddToCart(checkSpawnAddToCart());
+
+    let destroyFixedCartTimeout;
+
+    const handleScroll = () => {
    
+      
 
-    
+        if (checkSpawnAddToCart()) {
+            setSpawnAddToCart(true);
 
-  
+            if (destroyFixedCartTimeout) {
+                clearTimeout(destroyFixedCartTimeout);
+                destroyFixedCartTimeout = null;
+            }
+            
+        } else if (fixedAddToCartRef.current) {
+
+            fixedAddToCartRef.current.style.opacity = 0;
+            fixedAddToCartRef.current.style.transform = 'translateY(100%)';
+            destroyFixedCartTimeout = setTimeout(() => {setSpawnAddToCart(false); }, 300);
+
+        }
+    };
 
     window.addEventListener("scroll", handleScroll);
-   
-     
+
     return () => {
-      window.removeEventListener("scroll", handleScroll);
-     
+        window.removeEventListener("scroll", handleScroll);
+        if (destroyFixedCartTimeout) clearTimeout(destroyFixedCartTimeout); // Clean up the timeout
     };
-  }, []);
+}, []);
 
   
 
 
-  useLayoutEffect(()=>{
-    if(!mounted.current){ mounted.current=true;return;}
 
 
-    swiper && swiper.slideTo(0, 0);
+
+
+useLayoutEffect(()=>{
+  stopSmoothSwipingForNewLinkRef.current=true;
+},[query])
+
+
+
+
+
+
+
+useLayoutEffect(() => {
+  setSmoothSwiping(!stopSmoothSwipingForNewLinkRef.current && (stopSmoothSwipingForNewLinkRef.current = false));
+  setImageIndex(variantImageIndex || 0);
+}, [variantImageIndex]);
+
+
     
-  },[productId])
+
+
+
+
   
 
-
-  useLayoutEffect(()=>{
-
-    console.log('activated', variantImageIndex);
-  
+ 
+ 
+    useLayoutEffect(()=>{
     
-      if(variantImageIndex!==undefined && variantImageIndex>-1 && variantImageIndex < images.length){
-        swiper?.slideTo(variantImageIndex,window.innerWidth<980?400:0);
-        
-      }
-      
-      
-    },[variantImageIndex,swiper])
+      console.log('swiper cur index', swiper?.activeIndex)
 
-
+      if(swiper?.activeIndex !== imageIndex) swiper?.slideTo(imageIndex,smoothSwiping?400:0);
+      if(swiperMini?.activeIndex !== imageIndex) swiperMini?.slideTo(imageIndex,smoothSwiping?400:0);
   
+    },[swiper, swiperMini, smoothSwiping, imageIndex])
 
- 
- 
-
-
-
- 
- 
-
-  const handleSlideChange = useCallback((swiper) => {
     
-    const index = swiper.activeIndex;
-    setImageIndex(index);
-    swiperMini.slideTo(index);
+
+
  
-  }, [imageIndex, swiperMini]);
+ 
+    
 
 
 
 
+  const handleChangeImage = useCallback((newImageIndex, smooth=false)=>{
 
-
-  const handleChangeImage = useCallback((imageIndex, smooth=false)=>{
+    setSmoothSwiping(smooth || window.innerWidth<980)
+    setImageIndex(newImageIndex);
             
-    if(smooth)
-      swiper.slideTo(imageIndex);
-   else
-    swiper.slideTo(imageIndex, 0, false);
+  
+    
    
-   
-   },[swiper])
+   },[])
 
 
 
@@ -182,12 +190,14 @@ export default function ProductPics({ productId, images, onAddToCart, variantIma
       <div className={styles.productPicsWrapper}>
         <div className={styles.productImagesWrapper}>
         
-        <Swiper  onSwiper={setSwiper} speed={400} slidesPerView='auto' onSlideChange={handleSlideChange}
+        <Swiper  onSwiper={setSwiper} speed={400} slidesPerView='auto'
        
        
         preventClicks={false}
         // preventClicksPropagation={false}
         touchStartPreventDefault={false}
+
+        initialSlide={imageIndex}
      
 
         >
@@ -197,6 +207,7 @@ export default function ProductPics({ productId, images, onAddToCart, variantIma
        
         <SwiperSlide key={index}   
         className={`carousel-item ${styles.slide} ${index===images.length-1 && styles.lastSlide}`}
+      
        >
          
             <Image
@@ -215,8 +226,8 @@ export default function ProductPics({ productId, images, onAddToCart, variantIma
 
               sizes="(max-width: 980px) 100vw, 768px"
              
-              priority={index === 0}
-              loading={index === 0?'eager':undefined}
+              priority={index === imageIndex}
+              loading={index === imageIndex?'eager':undefined}
               draggable="false"
             />
            {imageIndex===index && <ZoomInIcon 
@@ -253,7 +264,7 @@ export default function ProductPics({ productId, images, onAddToCart, variantIma
 
             
         <Swiper  slidesPerView="auto" speed={400} 
-  
+    initialSlide={imageIndex}
     className={styles.slider2} onSwiper={setSwiperMini}>
            
           {images.map((img, index) => (
