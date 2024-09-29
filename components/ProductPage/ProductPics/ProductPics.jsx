@@ -1,6 +1,6 @@
 import styles from "./productmobilepics.module.css";
 
-import dynamic from "next/dynamic";
+
 import { useCallback, useEffect,   useLayoutEffect,   useRef,   useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -12,7 +12,7 @@ import { ArrowDown, ZoomInIcon } from "@/public/images/svgs/svgImages";
 
 
 export default function ProductPics({ images, onAddToCart, variantImageIndex }) {
-  const [imageIndex, setImageIndex] = useState(variantImageIndex);
+  const [imageIndex, setImageIndex] = useState(variantImageIndex.imageIndex);
   const [zoomed, setZoomed] = useState(undefined);
   
  
@@ -109,12 +109,7 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
 
 
 
-  
 
-useLayoutEffect(()=>{
-
-  instantSwapRef.current=true;
-}, [router.asPath])
 
 
 
@@ -122,15 +117,15 @@ useLayoutEffect(()=>{
   useLayoutEffect(()=>{
     
     
-      if(variantImageIndex!==undefined && variantImageIndex>-1 && variantImageIndex < images.length){
-
-
-        if(swiper?.activeIndex!==variantImageIndex) swiper?.slideTo(variantImageIndex, instantSwapRef.current?0:400, false);
+      if(variantImageIndex.imageIndex>-1 && variantImageIndex.imageIndex < images.length &&
+        swiper?.activeIndex!==variantImageIndex.imageIndex
+      )
+      swiper?.slideTo(variantImageIndex.imageIndex, variantImageIndex.instant?0:400);
         
-      }
       
       
-    },[variantImageIndex,swiper])
+      
+    },[variantImageIndex.imageIndex,swiper])
 
 
   
@@ -147,8 +142,9 @@ useLayoutEffect(()=>{
     
     const index = swiper.activeIndex;
     setImageIndex(index);
-    swiperMini.slideTo(index, instantSwapRef.current?0:400,false);
-    instantSwapRef.current=false;
+    swiperMini.slideTo(index, variantImageIndex.instant?0:400);
+   
+    
  
   }, [imageIndex, swiper]);
 
@@ -185,7 +181,7 @@ useLayoutEffect(()=>{
         
         <Swiper  onSwiper={setSwiper} speed={400} slidesPerView='auto' onSlideChange={handleSlideChangeEffect}
        
-       initialSlide={variantImageIndex}
+       initialSlide={variantImageIndex.imageIndex}
         preventClicks={false}
         // preventClicksPropagation={false}
         touchStartPreventDefault={false}
@@ -217,8 +213,8 @@ useLayoutEffect(()=>{
 
               sizes="(max-width: 980px) 100vw, 768px"
              
-              priority={index === (variantImageIndex ?? 0)}
-              loading={index === (variantImageIndex ?? 0)?'eager':undefined}
+              priority={index === (variantImageIndex.imageIndex ?? 0)}
+              loading={index === (variantImageIndex.imageIndex ?? 0)?'eager':undefined}
               draggable="false"
             />
            {imageIndex===index && <ZoomInIcon 
@@ -256,7 +252,7 @@ useLayoutEffect(()=>{
             
         <Swiper  slidesPerView="auto" speed={400} 
 
-        initialSlide={variantImageIndex}
+        initialSlide={variantImageIndex.imageIndex}
   
     className={styles.slider2} onSwiper={setSwiperMini}>
            
@@ -274,8 +270,8 @@ useLayoutEffect(()=>{
                   alt={img.alt}
                   sizes="25vw"
                   // loading={index>2?'lazy':undefined}
-                  priority={index === (variantImageIndex ?? 0)}
-                  loading={index === (variantImageIndex ?? 0)?'eager':undefined}
+                  priority={index === (variantImageIndex.imageIndex ?? 0)}
+                  loading={index === (variantImageIndex.imageIndex ?? 0)?'eager':undefined}
                   height={0}
                   width={0}
                   draggable="false"
@@ -308,8 +304,8 @@ useLayoutEffect(()=>{
                     sizes="20vw"
                     height={0}
                     width={0}
-                    priority={index === (variantImageIndex ?? 0)}
-                    loading={index === (variantImageIndex ?? 0)?'eager':undefined}
+                    priority={index === (variantImageIndex.imageIndex ?? 0)}
+                    loading={index === (variantImageIndex.imageIndex ?? 0)?'eager':undefined}
                     draggable="false"
                   />
               

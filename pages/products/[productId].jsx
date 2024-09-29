@@ -64,7 +64,9 @@ export default function ProductPage({ product, description, images, startReviews
   const [variant, setVariant]=useState(product.variants?.[0]);
   const [bundleVariants, setBundleVariants] = useState([]);
 
-  const variantQueryExistsRef = useRef(false);
+  const baseUrlRef = useRef();
+
+  const shouldInitializeVariantRef = useRef({initialize: false, instant: true});
   
 
 
@@ -87,8 +89,12 @@ export default function ProductPage({ product, description, images, startReviews
 
   useLayoutEffect(() => {
 
+    if(baseUrlRef.current === router.asPath.split('#')[0])return;
+
     const searchParams = new URLSearchParams(window.location.search);
     const variantQuery = searchParams.get('variant');
+
+    
 
     console.log('this effect !!!!!!!!!!!!!!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~', variantQuery);
   
@@ -101,10 +107,12 @@ export default function ProductPage({ product, description, images, startReviews
     const currentVariant = variantQuery && product.variants?.find(v => v.name.toLowerCase().replace(/\s+/g, "-") === variantQuery.toLowerCase().replace(/\s+/g, "-")) || product.variants?.[0];
   
     setVariant(currentVariant);
-    variantQueryExistsRef.current = variantQuery?true:false;
+    shouldInitializeVariantRef.current = {initialize:variantQuery?true:false, instant:true};
 
     
-    setQuantity(1)
+    setQuantity(1);
+
+    baseUrlRef.current=router.asPath;
   
     
   }, [product.id, router.asPath]);
@@ -184,7 +192,9 @@ export default function ProductPage({ product, description, images, startReviews
         <NextSeo {...productPageSeo(product.id)}/>
       <div className={styles.productPageDiv}>
        
-          <ProductPics onAddToCart ={ onAddToCart } images={images} variantImageIndex={variantQueryExistsRef.current?(variant?.variantProductImageIndex || 0):0} />
+          <ProductPics onAddToCart ={ onAddToCart } images={images} variantImageIndex={{
+            imageIndex: shouldInitializeVariantRef.current.initialize?(variant?.variantProductImageIndex || 0):0 , 
+            instant: shouldInitializeVariantRef.current.instant}} />
       
           <div className={styles.productInfoWrapper}>
        
@@ -237,7 +247,8 @@ export default function ProductPage({ product, description, images, startReviews
                 onClick={() => {
 
                   
-                  variantQueryExistsRef.current = true;
+                  
+                  shouldInitializeVariantRef.current = {initialize:true, instant:false};
                   
                   setVariant(v);
                   
