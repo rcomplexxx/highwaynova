@@ -78,6 +78,7 @@
 
 .reviewImageDiv{
     height: auto;
+    min-height: var(--size-8);
     width: var(--size-15);
      background-color: var(--customer-review-bg);
      overflow: hidden;
@@ -183,12 +184,18 @@
       
         height: min-content;
         width: 100%;
+
+        
+        background-color: transparent;
     }
 
     .reviewDiv{
         width: 100%;
         
     }
+
+    
+    
 
 }
 

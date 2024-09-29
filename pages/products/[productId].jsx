@@ -79,34 +79,41 @@ export default function ProductPage({ product, description, images, startReviews
 
 
   const router = useRouter();
-  const { query } = router; 
+  
+
 
 
 
 
   useLayoutEffect(() => {
-    console.log('this effect reactivated');
+
+    const searchParams = new URLSearchParams(window.location.search);
+    const variantQuery = searchParams.get('variant');
+
+    console.log('this effect !!!!!!!!!!!!!!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~', variantQuery);
   
     if (!product.variants) {
       setVariant();
       return;
     }
   
-    const variantByQuery = query.variant;
-    const currentVariant = variantByQuery && product.variants?.find(v => v.name.toLowerCase().replace(/\s+/g, "-") === variantByQuery.toLowerCase().replace(/\s+/g, "-"));
+    
+    const currentVariant = variantQuery && product.variants?.find(v => v.name.toLowerCase().replace(/\s+/g, "-") === variantQuery.toLowerCase().replace(/\s+/g, "-")) || product.variants?.[0];
   
-    setVariant(currentVariant || product.variants?.[0]);
+    setVariant(currentVariant);
     variantQueryExistsRef.current = currentVariant?true:false;
+
+    
+    setQuantity(1)
   
     
-  }, [product.id, query]);
+  }, [product.id, router.asPath]);
 
 
 
-  useLayoutEffect(()=>{
 
-    setQuantity(1)
-  },[product.id])
+  
+  
 
 
 

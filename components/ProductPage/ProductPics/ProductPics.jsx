@@ -21,13 +21,15 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
   const [swiperMini, setSwiperMini] = useState(null);
 
   const router = useRouter();
-  const {query} = router;
+  
  
   
   const instantSwapRef = useRef(true);
   
   const fixedAddToCartRef= useRef();
 
+
+  
 
 
   useEffect(() => {
@@ -106,6 +108,10 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
 
   
 
+useLayoutEffect(()=>{
+
+  instantSwapRef.current=true;
+}, [router.asPath])
 
 
 
@@ -117,9 +123,8 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
     
       if(variantImageIndex!==undefined && variantImageIndex>-1 && variantImageIndex < images.length){
 
-        instantSwapRef.current=true;
 
-        swiper?.slideTo(variantImageIndex, 0);
+        swiper?.slideTo(variantImageIndex, instantSwapRef.current?0:400);
         
       }
       

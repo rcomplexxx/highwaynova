@@ -1,4 +1,4 @@
-import  { useLayoutEffect, useState, useRef, useCallback } from "react";
+import  { useLayoutEffect, useState, useCallback } from "react";
 import Link from "next/link";
 
 import CartItem from "./CartItem/CartItem";
