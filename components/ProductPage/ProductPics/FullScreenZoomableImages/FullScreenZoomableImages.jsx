@@ -38,6 +38,9 @@ const FullScreenZoomableImage = ({
  const mouseStartingPointRef=useRef({x:0, y:0})
 
 
+ 
+ 
+  const initialIndexRef = useRef(imageIndex)
   const fixedZoomDivRef= useRef();
   const fullImageRef= useRef();
 
@@ -219,14 +222,13 @@ const FullScreenZoomableImage = ({
   
   }
 
-
-
-
-
    
 
 
   }, [imageLoaded]);
+
+
+  
 
 
 
@@ -239,6 +241,8 @@ const FullScreenZoomableImage = ({
     window?.removeEventListener("popstate", handlePopState);
    }
   },[imageIndex,zoomed])
+
+
 
   useLayoutEffect(() => {
     const fixedZoomDiv = fixedZoomDivRef.current;
@@ -579,7 +583,7 @@ const FullScreenZoomableImage = ({
         
 
            <Swiper
-            initialSlide={imageIndex}
+            initialSlide={initialIndexRef.current}
             speed={400}
             slidesPerView={1}
             preventClicks={false}
@@ -666,8 +670,8 @@ const FullScreenZoomableImage = ({
                       height={0}
                       width={0}
                       sizes="100vw"
-                      priority={index===imageIndex}
-                      loading={"eager"}
+                      priority={index===initialIndexRef.current}
+                      loading={index===initialIndexRef.current?"eager":undefined}
                       onLoad={()=>{if(index===imageIndex)setImageLoaded(true);}}
                       src={image.src}
                       alt="Zoomable"

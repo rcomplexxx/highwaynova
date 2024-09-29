@@ -22,15 +22,12 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
 
   const router = useRouter();
   
- 
-  
   const instantSwapRef = useRef(true);
   
   const fixedAddToCartRef= useRef();
 
 
   
-
 
   useEffect(() => {
     if(zoomed===undefined){
@@ -55,10 +52,6 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
 
    
   }, [zoomed]);
-
-
-  
-
 
 
 
@@ -106,6 +99,16 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
     };
 }, []);
 
+
+
+
+
+
+
+
+
+
+
   
 
 useLayoutEffect(()=>{
@@ -117,14 +120,12 @@ useLayoutEffect(()=>{
 
 
   useLayoutEffect(()=>{
-
-    console.log('activated', variantImageIndex);
-  
+    
     
       if(variantImageIndex!==undefined && variantImageIndex>-1 && variantImageIndex < images.length){
 
 
-        swiper?.slideTo(variantImageIndex, instantSwapRef.current?0:400);
+        if(swiper?.activeIndex!==variantImageIndex) swiper?.slideTo(variantImageIndex, instantSwapRef.current?0:400, false);
         
       }
       
@@ -146,10 +147,10 @@ useLayoutEffect(()=>{
     
     const index = swiper.activeIndex;
     setImageIndex(index);
-    swiperMini.slideTo(index, instantSwapRef.current?0:400);
+    swiperMini.slideTo(index, instantSwapRef.current?0:400,false);
     instantSwapRef.current=false;
  
-  }, [imageIndex, swiper, swiperMini]);
+  }, [imageIndex, swiper]);
 
 
 
@@ -158,8 +159,7 @@ useLayoutEffect(()=>{
 
   const handleChangeImage = useCallback((imageIndex, smooth=false)=>{
             
-    if(smooth)
-      swiper.slideTo(imageIndex);
+    if(smooth) swiper.slideTo(imageIndex, 400, false);
    else
     swiper.slideTo(imageIndex, 0, false);
    
@@ -189,7 +189,8 @@ useLayoutEffect(()=>{
         preventClicks={false}
         // preventClicksPropagation={false}
         touchStartPreventDefault={false}
-     
+      
+        
 
         >
 
@@ -216,8 +217,8 @@ useLayoutEffect(()=>{
 
               sizes="(max-width: 980px) 100vw, 768px"
              
-              priority={index === 0}
-              loading={index === 0?'eager':undefined}
+              priority={index === (variantImageIndex ?? 0)}
+              loading={index === (variantImageIndex ?? 0)?'eager':undefined}
               draggable="false"
             />
            {imageIndex===index && <ZoomInIcon 
@@ -273,7 +274,8 @@ useLayoutEffect(()=>{
                   alt={img.alt}
                   sizes="25vw"
                   // loading={index>2?'lazy':undefined}
-                 
+                  priority={index === (variantImageIndex ?? 0)}
+                  loading={index === (variantImageIndex ?? 0)?'eager':undefined}
                   height={0}
                   width={0}
                   draggable="false"
@@ -306,7 +308,8 @@ useLayoutEffect(()=>{
                     sizes="20vw"
                     height={0}
                     width={0}
-                    loading={'lazy'}
+                    priority={index === (variantImageIndex ?? 0)}
+                    loading={index === (variantImageIndex ?? 0)?'eager':undefined}
                     draggable="false"
                   />
               

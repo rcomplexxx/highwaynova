@@ -59,6 +59,7 @@
     "slick-carousel": "^1.8.1",
     "stripe": "^14.10.0",
     "swiper": "^9.4.1",
+    "tiny-swiper": "^2.2.0",
     "xumm": "^1.7.6",
     "xumm-sdk": "^1.11.0",
     "zustand": "^4.5.2"
