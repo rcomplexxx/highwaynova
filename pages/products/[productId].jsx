@@ -95,8 +95,7 @@ export default function ProductPage({ product, description, images, startReviews
     const variantQuery = searchParams.get('variant');
 
     
-
-    console.log('this effect !!!!!!!!!!!!!!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~', variantQuery);
+    
   
     if (!product.variants) {
       setVariant();
@@ -115,7 +114,7 @@ export default function ProductPage({ product, description, images, startReviews
     baseUrlRef.current=router.asPath;
   
     
-  }, [product.id, router.asPath]);
+  }, [router.asPath]);
 
 
 
