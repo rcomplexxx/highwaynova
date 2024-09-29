@@ -11,11 +11,8 @@ import { ArrowDown, ZoomInIcon } from "@/public/images/svgs/svgImages";
 
 
 
-export default function ProductPics({  images, onAddToCart, variantImageIndex }) {
-
-
-  const [imageIndex, setImageIndex] = useState(variantImageIndex || 0);
-  const [smoothSwiping, setSmoothSwiping] = useState(false);
+export default function ProductPics({ images, onAddToCart, variantImageIndex }) {
+  const [imageIndex, setImageIndex] = useState(variantImageIndex);
   const [zoomed, setZoomed] = useState(undefined);
   
  
@@ -23,19 +20,11 @@ export default function ProductPics({  images, onAddToCart, variantImageIndex })
   const [swiper, setSwiper] = useState(null);
   const [swiperMini, setSwiperMini] = useState(null);
 
-  const stopSmoothSwipingForNewLinkRef = useRef(false);
-  
-
-
   const router = useRouter();
-  const { query } = router; 
+  const {query} = router;
+ 
   
-    
-  
-
-
-  
-  
+  const instantSwapRef = useRef(true);
   
   const fixedAddToCartRef= useRef();
 
@@ -49,8 +38,12 @@ export default function ProductPics({  images, onAddToCart, variantImageIndex })
       return;
     }
 
+    
     if (zoomed) {
       if(!router.asPath.includes("#zoom"))router.push(router.asPath + "#zoom");
+
+   
+
 
      
 
@@ -63,7 +56,6 @@ export default function ProductPics({  images, onAddToCart, variantImageIndex })
 
 
   
-
 
 
 
@@ -118,69 +110,56 @@ export default function ProductPics({  images, onAddToCart, variantImageIndex })
 
 
 
+  useLayoutEffect(()=>{
 
-useLayoutEffect(()=>{
-  stopSmoothSwipingForNewLinkRef.current=true;
-},[query])
-
-
-
-
-
-
-
-useLayoutEffect(()=>{
-
-  let smoothSwiping = !stopSmoothSwipingForNewLinkRef.current;
-
+    console.log('activated', variantImageIndex);
   
-  stopSmoothSwipingForNewLinkRef.current=false;
-  
-  
-  setSmoothSwiping(smoothSwiping)
-    setImageIndex(variantImageIndex || 0);
     
-    
-  },[variantImageIndex])
+      if(variantImageIndex!==undefined && variantImageIndex>-1 && variantImageIndex < images.length){
 
+        instantSwapRef.current=true;
 
-    
-
-
+        swiper?.slideTo(variantImageIndex, 0);
+        
+      }
+      
+      
+    },[variantImageIndex,swiper])
 
 
   
 
  
  
-    useLayoutEffect(()=>{
-    
-      console.log('swiper cur index', swiper?.activeIndex)
 
-      if(swiper?.activeIndex !== imageIndex) swiper?.slideTo(imageIndex,smoothSwiping?400:0);
-      if(swiperMini?.activeIndex !== imageIndex) swiperMini?.slideTo(imageIndex,smoothSwiping?400:0);
-  
-    },[swiper, swiperMini, smoothSwiping, imageIndex])
-
-    
 
 
  
- 
+ //Ova dva se rucno menjaju
+
+  const handleSlideChangeEffect = useCallback((swiper) => {
     
+    const index = swiper.activeIndex;
+    setImageIndex(index);
+    swiperMini.slideTo(index, instantSwapRef.current?0:400);
+    instantSwapRef.current=false;
+ 
+  }, [imageIndex, swiper, swiperMini]);
 
 
 
 
-  const handleChangeImage = useCallback((newImageIndex, smooth=false)=>{
 
-    setSmoothSwiping(smooth || window.innerWidth<980)
-    setImageIndex(newImageIndex);
+
+  const handleChangeImage = useCallback((imageIndex, smooth=false)=>{
             
-  
-    
+    if(smooth)
+      swiper.slideTo(imageIndex);
+   else
+    swiper.slideTo(imageIndex, 0, false);
    
-   },[])
+   
+   },[swiper])
 
 
 
@@ -199,16 +178,12 @@ useLayoutEffect(()=>{
       <div className={styles.productPicsWrapper}>
         <div className={styles.productImagesWrapper}>
         
-        <Swiper  onSwiper={setSwiper} speed={400} slidesPerView='auto'
+        <Swiper  onSwiper={setSwiper} speed={400} slidesPerView='auto' onSlideChange={handleSlideChangeEffect}
        
-       
-       onSlideChange={(swiper)=>{handleChangeImage(swiper.activeIndex, true)} }
-
+       initialSlide={variantImageIndex}
         preventClicks={false}
         // preventClicksPropagation={false}
         touchStartPreventDefault={false}
-
-        initialSlide={imageIndex}
      
 
         >
@@ -218,7 +193,6 @@ useLayoutEffect(()=>{
        
         <SwiperSlide key={index}   
         className={`carousel-item ${styles.slide} ${index===images.length-1 && styles.lastSlide}`}
-      
        >
          
             <Image
@@ -237,8 +211,8 @@ useLayoutEffect(()=>{
 
               sizes="(max-width: 980px) 100vw, 768px"
              
-              priority={index === imageIndex}
-              loading={index === imageIndex?'eager':undefined}
+              priority={index === 0}
+              loading={index === 0?'eager':undefined}
               draggable="false"
             />
            {imageIndex===index && <ZoomInIcon 
@@ -275,7 +249,9 @@ useLayoutEffect(()=>{
 
             
         <Swiper  slidesPerView="auto" speed={400} 
-    initialSlide={imageIndex}
+
+        initialSlide={variantImageIndex}
+  
     className={styles.slider2} onSwiper={setSwiperMini}>
            
           {images.map((img, index) => (

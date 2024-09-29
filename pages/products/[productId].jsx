@@ -64,7 +64,7 @@ export default function ProductPage({ product, description, images, startReviews
   const [variant, setVariant]=useState(product.variants?.[0]);
   const [bundleVariants, setBundleVariants] = useState([]);
 
-  
+  const variantQueryExistsRef = useRef(false);
   
 
 
@@ -92,14 +92,21 @@ export default function ProductPage({ product, description, images, startReviews
       return;
     }
   
-    
-    const currentVariant = query.variant && product.variants?.find(v => v.name.toLowerCase().replace(/\s+/g, "-") === query.variant);
+    const variantByQuery = query.variant;
+    const currentVariant = variantByQuery && product.variants?.find(v => v.name.toLowerCase().replace(/\s+/g, "-") === variantByQuery.toLowerCase().replace(/\s+/g, "-"));
   
     setVariant(currentVariant || product.variants?.[0]);
-
+    variantQueryExistsRef.current = currentVariant?true:false;
   
-    setQuantity(1);
+    
   }, [product.id, query]);
+
+
+
+  useLayoutEffect(()=>{
+
+    setQuantity(1)
+  },[product.id])
 
 
 
@@ -170,7 +177,7 @@ export default function ProductPage({ product, description, images, startReviews
         <NextSeo {...productPageSeo(product.id)}/>
       <div className={styles.productPageDiv}>
        
-          <ProductPics onAddToCart ={ onAddToCart } images={images} variantImageIndex={variant?.variantProductImageIndex} />
+          <ProductPics onAddToCart ={ onAddToCart } images={images} variantImageIndex={variantQueryExistsRef.current?(variant?.variantProductImageIndex || 0):0} />
       
           <div className={styles.productInfoWrapper}>
        
@@ -220,7 +227,14 @@ export default function ProductPage({ product, description, images, startReviews
                 alt={v.name}
                 sizes="(max-width: 980px) 48px, 64px"
                 className={`${styles.productVariantImage} ${v.name.toLowerCase().replace(/\s+/g, "-")===variant?.name.toLowerCase().replace(/\s+/g, "-") && styles.productVariantSelected}`}
-                onClick={() => {setVariant(v); }}
+                onClick={() => {
+
+                  
+                  variantQueryExistsRef.current = true;
+                  
+                  setVariant(v);
+                  
+                }}
                
                 height={0}
                 width={0}

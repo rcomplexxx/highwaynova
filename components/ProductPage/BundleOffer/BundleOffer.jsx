@@ -73,17 +73,17 @@ export default function BundleOffer({ product, quantity, setQuantity, mainVarian
 
 
 
-    <BundleOption isSelected={quantity<product.bundle[0].quantity}  quantity={quantity} 
+    <BundleOption isSelected={quantity<product.bundle[0].quantity}  quantity={quantity<product.bundle[0].quantity?quantity:1} 
     
-    stickerPrice ={((product.stickerPrice * (quantity<product.bundle[0].quantity)).toFixed(2))}
+    stickerPrice ={((product.stickerPrice * (quantity<product.bundle[0].quantity?quantity:1)).toFixed(2))}
 
-    price = {((product.price * (quantity<product.bundle[0].quantity)).toFixed(2))}
+    price = {((product.price * (quantity<product.bundle[0].quantity?quantity:1)).toFixed(2))}
 
 
     discountPercentage={product.stickerPrice?100*(1-(product.price/product.stickerPrice)):0} 
     
     bundleQuantity={1} 
-    setQuantity={setQuantity} havingPlus={product.bundle[0].quantity-1>1} setLocalBundleVariants={setLocalBundleVariants}/>
+    setQuantity={setQuantity} havingPlus={product.bundle[0].quantity>2} setLocalBundleVariants={setLocalBundleVariants}/>
   
 
       {product.bundle.map((b, index)=>{
