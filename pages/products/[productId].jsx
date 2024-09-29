@@ -101,7 +101,7 @@ export default function ProductPage({ product, description, images, startReviews
     const currentVariant = variantQuery && product.variants?.find(v => v.name.toLowerCase().replace(/\s+/g, "-") === variantQuery.toLowerCase().replace(/\s+/g, "-")) || product.variants?.[0];
   
     setVariant(currentVariant);
-    variantQueryExistsRef.current = currentVariant?true:false;
+    variantQueryExistsRef.current = variantQuery?true:false;
 
     
     setQuantity(1)
