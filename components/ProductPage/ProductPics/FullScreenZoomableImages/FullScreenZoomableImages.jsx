@@ -28,13 +28,17 @@ const FullScreenZoomableImage = ({
   
 
   const [showToastMessage, setShowToastMessage] = useState(0);
+
+
+  
+  const [swiper, setSwiper] = useState();
+
   const [zoomed, setZoomed] = useState(false);
 
-  const [swiper, setSwiper] = useState();
   const [imageLoaded, setImageLoaded] = useState(false);
   const [closingFullscreen, setClosingFullscreen] = useState(false);
  
- const zoomScaleRef= useRef(1);
+  
  const mouseStartingPointRef=useRef({x:0, y:0})
 
 
@@ -56,15 +60,15 @@ const FullScreenZoomableImage = ({
     const mainImg = document.getElementById(`mainImage${imageIndex}`);
     const fullImg = fullImageRef.current;
   
-    const biggerWidth =
+    const isBiggerWidth =
       (window.innerHeight - 48) / window.innerWidth >
       fullImg.naturalHeight / fullImg.naturalWidth;
   
-    const scaleRatio = biggerWidth
+    const scaleRatio = isBiggerWidth
       ? (window.innerWidth - 48) / window.innerWidth
       : mainImg.getBoundingClientRect().height / (window.innerHeight - 48);
   
-    const deltaX = biggerWidth
+    const deltaX = isBiggerWidth
       ? 0
       : mainImg.getBoundingClientRect().left -
         (window.innerWidth -
@@ -72,7 +76,7 @@ const FullScreenZoomableImage = ({
             fullImg.naturalWidth *
             scaleRatio) / 2;
   
-    const deltaY = biggerWidth
+    const deltaY = isBiggerWidth
       ? mainImg.getBoundingClientRect().top - 48 -
         ((window.innerHeight - 48 -
           (window.innerWidth / fullImg.naturalWidth) * fullImg.naturalHeight) /
@@ -184,32 +188,31 @@ const FullScreenZoomableImage = ({
    
       
       console.log('new touch start')
-      currY =
-        event.touches[0].clientY -
-        startingTouchCoordinates.y;
-      if (currY > -16 && currY < 16) {
-        imgDiv.style.transform = `translateY(${0}px)`;
+
+      
+      currY = event.touches[0].clientY - startingTouchCoordinates.y;
+
+
+      if (Math.abs(currY) < 16) {
+        imgDiv.style.transform = `translateY(0)`;
         fixedZoomDiv.style.backgroundColor = getRgbValues(1);
 
-        currX =
-        event.touches[0].clientX -
-          startingTouchCoordinates.x;
-        if (currX < -5 || currX > 5) swipeYLock = true;
+        currX = event.touches[0].clientX - startingTouchCoordinates.x;
+        if (Math.abs(currX) > 5) swipeYLock = true;
 
        
       }
 
       else{
         //Pomeri sliku na dole, i smanji opacity pozadine
-      imgDiv.style.transform = `translateY(${currY}px)`;
-
-      fixedZoomDiv.style.backgroundColor = getRgbValues( 1 -
-        Math.abs(
-          (imgDiv.getBoundingClientRect().top - 48) / window.innerHeight
-        ) *
-          2) ;
+        imgDiv.style.transform = `translateY(${currY}px)`;
+        fixedZoomDiv.style.backgroundColor = getRgbValues(
+          1 - (Math.abs(imgDiv.getBoundingClientRect().top - 48) / window.innerHeight) * 2
+        );
     }
     };
+
+
 
     const handleTouchEnd = (event) => {
       
@@ -217,6 +220,8 @@ const FullScreenZoomableImage = ({
         fixedZoomDiv.style.backgroundColor = getRgbValues(1);
         return;
       }
+
+
       if (event.touches.length > 0) {
         multiTouchDetected=true;
 //         imgDiv.style.transform = `translateY(${0}px)`;
@@ -227,38 +232,33 @@ const FullScreenZoomableImage = ({
       swipeYLock = false;
 
         const lastTouch = event.changedTouches[0];
-        if (currY < -128 || currY > 128) {
+        if (Math.abs(currY) > 128) {
         
           killFullScreen(currY);
-        } else {
-          if (currY > 16 || currY < -16) {//
+        } else if (Math.abs(currY) > 16) {//
           
             if (!zoomed) {
-              imgDiv.style.transition =
-                "transform 0.3s ease, background-color 0.3s ease";
+              imgDiv.style.transition = "transform 0.3s ease, background-color 0.3s ease";
               imgDiv.style.transform = `translateY(${0}px)`;
-
               fixedZoomDiv.style.backgroundColor = getRgbValues(1);
             }
           }
-        }
+        
 
         if (
           Math.abs(lastTouch.clientX - startingTouchCoordinates.x) < 16 &&
           Math.abs(lastTouch.clientY - startingTouchCoordinates.y) < 16 &&
-          event.target !== document.querySelector(`.${styles.zoomButton}`) &&
-          event.target !== document.querySelector(`.${styles.close_button}`)
+          !event.target.matches(`.${styles.zoomButton}, .${styles.close_button}`)
         )
         
           
-          
-
-          timeoutId = setTimeout(() =>{
-                
+        {
+          timeoutId = setTimeout(() => {
             setNavActive((navActive) => !navActive);
             clearTimeout(timeoutId);
             timeoutId = null;
           }, 300);
+        }
 
           
       
@@ -268,25 +268,21 @@ const FullScreenZoomableImage = ({
     if (matchMedia("(pointer:fine)").matches) {
       handleUserInteraction();
       window.addEventListener("mousemove", handleUserInteraction);
-    }
-    else{
-    window.addEventListener("touchstart", handleTouchStart, true);
-    window.addEventListener("touchmove", handleTouchYMove, true);
-
-    window.addEventListener("touchend", handleTouchEnd);
-    }
- 
-
-    return () => {
+  } else {
+      window.addEventListener("touchstart", handleTouchStart, true);
+      window.addEventListener("touchmove", handleTouchYMove, true);
+      window.addEventListener("touchend", handleTouchEnd);
+  }
+  
+  return () => {
       clearTimeout(timeoutId);
       timeoutId = null;
-      
-        window.removeEventListener("mousemove", handleUserInteraction,true );
-   
+  
+      window.removeEventListener("mousemove", handleUserInteraction, true);
       window.removeEventListener("touchstart", handleTouchStart, true);
       window.removeEventListener("touchmove", handleTouchYMove, true);
       window.removeEventListener("touchend", handleTouchEnd);
-    };
+  };
   }, [imageIndex,zoomed]);
 
 
@@ -305,26 +301,28 @@ const FullScreenZoomableImage = ({
     setClosingFullscreen(true);
 
     
-    if( !global.toastMessageNotShowable ){
-    if(currY!=0){
-     
-      setShowToastMessage(2);
-    }
-    else
-    setShowToastMessage(3);
-
-    }
+    if (!global.toastMessageNotShowable) {
+      setShowToastMessage(currY !== 0 ? 2 : 3);
+  }
 
 
 
     setTimeout(
       function () {
+
+
         const fullImg = fullImageRef.current;
         if(!fullImg)return;
+
+
         const mainImg = document.getElementById(`mainImage${imageIndex}`);
-        const biggerWidth =
-          (window.innerHeight - 48) / window.innerWidth >
-          fullImg.naturalHeight / fullImg.naturalWidth;
+
+        const fullImgRect = fullImg.getBoundingClientRect();
+        const mainImgRect = mainImg.getBoundingClientRect();
+
+
+          
+        const isBiggerWidth = (window.innerHeight - 48) / window.innerWidth > fullImg.naturalHeight / fullImg.naturalWidth;
 
        
 
@@ -335,54 +333,31 @@ const FullScreenZoomableImage = ({
 
 
           
-        const scaleRatio = biggerWidth
-          ? mainImg.getBoundingClientRect().width / fullImageRef.current.getBoundingClientRect().width
+        const scaleRatio = isBiggerWidth
+            ? mainImgRect.width / fullImgRect.width
+            : mainImgRect.height / fullImgRect.height;
 
-          : mainImg.getBoundingClientRect().height / fullImageRef.current.getBoundingClientRect().height;
 
        
 
      
-
-        const distanceXDifference =
-          mainImg.getBoundingClientRect().left -
-          fullImg.getBoundingClientRect().left;
-
-            
+            const distanceX = mainImgRect.left - fullImgRect.left;
+            const distanceY = mainImgRect.top - fullImgRect.top;
 
 
-        const XTr = biggerWidth
-          ? distanceXDifference -
-            (fullImg.getBoundingClientRect().width -
-              fullImg.getBoundingClientRect().width * scaleRatio) /
-              2
-          : mainImg.getBoundingClientRect().left -
-            (window.innerWidth -
-              (fullImg.getBoundingClientRect().height / fullImg.naturalHeight) *
-                fullImg.naturalWidth *
-                scaleRatio) /
-              2;
+            const XTr = isBiggerWidth
+            ? distanceX - (fullImgRect.width * (1 - scaleRatio)) / 2
+            : mainImgRect.left - (window.innerWidth - (fullImgRect.height / fullImg.naturalHeight) * fullImg.naturalWidth * scaleRatio) / 2;
 
 
+            const YTr = isBiggerWidth
+            ? mainImgRect.top - 48 - ((window.innerHeight - 48 - (window.innerWidth * fullImg.naturalHeight) / fullImg.naturalWidth) / 2) * scaleRatio - currY
+            : distanceY;
 
-               const distanceYDifference =
-          mainImg.getBoundingClientRect().top -
-          fullImg.getBoundingClientRect().top;
-
-          //48 + (window.innerHeight - 48 - (window.innerWidth * fullImg.naturalHeight / fullImg.naturalWidth))/2 Formula za izracunavanje mainImg topa minus fullImg Top
-        const YTr = biggerWidth
-          ? 
-          
-          mainImg.getBoundingClientRect().top -
-            48 -
-            ((window.innerHeight -
-              48 -
-              (window.innerWidth * fullImg.naturalHeight) /
-                fullImg.naturalWidth) /
-              2) *
-              scaleRatio -
-            currY
-          : distanceYDifference;
+           
+                    
+    
+                    
 
 
 
@@ -390,10 +365,9 @@ const FullScreenZoomableImage = ({
       
       
 
-        fullImg.style.transform = `translateX(${XTr}px) translateY(${YTr}px) scale(${scaleRatio})`;
-
-        fixedZoomDivRef.current.style.transition = "background-color 0.2s 0.01s ease";
-        fixedZoomDivRef.current.style.backgroundColor = `rgba(0, 0, 0, 0)`;
+                    fullImg.style.transform = `translateX(${XTr}px) translateY(${YTr}px) scale(${scaleRatio})`;
+                    fixedZoomDivRef.current.style.transition = "background-color 0.2s 0.01s ease";
+                    fixedZoomDivRef.current.style.backgroundColor = "rgba(0, 0, 0, 0)";
 
        
        
@@ -489,7 +463,7 @@ const FullScreenZoomableImage = ({
             onZoomChange={(swiper, scale) => {
               setZoomed(scale>1);
              
-              zoomScaleRef.current = scale;
+             
               swiper.allowTouchMove= scale<=1;
         
               
@@ -497,9 +471,7 @@ const FullScreenZoomableImage = ({
 
            
             onSlideChange={(swiper) => {
-              if (zoomed) {swiper.zoom.out();
-              setZoomed(false);
-              }
+              zoomed && (swiper.zoom.out(), setZoomed(false));
               changeImageIndex(swiper.activeIndex);
             }}
             onSwiper={setSwiper}
@@ -533,23 +505,11 @@ const FullScreenZoomableImage = ({
                       
                       }}
                       
-                      onMouseUp={(event) => {
-                     
-                        if (
-                          event.button !== 0 ||
-                          !matchMedia("(pointer:fine)").matches
-                        )
-                          return;
-                        const { clientX, clientY } = event;
-  
-                        const differenceX = Math.abs(
-                          clientX - mouseStartingPointRef.current.x
-                        );
-                        const differenceY = Math.abs(
-                          clientY - mouseStartingPointRef.current.y
-                        );
-  
-                        if (differenceX < 12 && differenceY < 12) {
+                      onMouseUp={({ button, clientX, clientY }) => {
+                        if (button !== 0 || !matchMedia("(pointer:fine)").matches) return;
+                      
+                        const { x: startX, y: startY } = mouseStartingPointRef.current;
+                        if (Math.abs(clientX - startX) < 12 && Math.abs(clientY - startY) < 12) {
                           swiper.zoom.toggle();
                         }
                       }}

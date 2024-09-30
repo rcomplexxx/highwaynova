@@ -13,7 +13,7 @@ import { ArrowDown, ZoomInIcon } from "@/public/images/svgs/svgImages";
 
 export default function ProductPics({ images, onAddToCart, variantImageIndex }) {
   const [imageIndex, setImageIndex] = useState(variantImageIndex.imageIndex);
-  const [zoomed, setZoomed] = useState(undefined);
+  const [fullScreenOn, setFullScreenOn] = useState(undefined);
   
  
   const [spawnAddToCart, setSpawnAddToCart] = useState(false);
@@ -22,7 +22,7 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
 
   const router = useRouter();
   
-  const instantSwapRef = useRef(true);
+  
   
   const fixedAddToCartRef= useRef();
 
@@ -30,28 +30,20 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
   
 
   useEffect(() => {
-    if(zoomed===undefined){
-      if(router.asPath.includes("#zoom"))
-      router.push(router.asPath.split('#zoom')[0]);
-     
+    if (fullScreenOn === undefined) {
+      if (router.asPath.includes("#zoom")) router.push(router.asPath.split('#zoom')[0]);
+      
       return;
     }
-
-    
-    if (zoomed) {
-      if(!router.asPath.includes("#zoom"))router.push(router.asPath + "#zoom");
-
-   
-
-
-     
-
-    } else { 
-    if (router.asPath.includes("#zoom")) {document.documentElement.classList.remove("hideScroll");  router.back();}
-  }
-
-   
-  }, [zoomed]);
+  
+    const hasZoom = router.asPath.includes("#zoom");
+    if (fullScreenOn && !hasZoom) {
+      router.push(`${router.asPath}#zoom`);
+    } else if (!fullScreenOn && hasZoom) {
+      document.documentElement.classList.remove("hideScroll");
+      router.back();
+    }
+  }, [fullScreenOn]);
 
 
 
@@ -201,7 +193,7 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
             id={`mainImage${index}`}
             
             onClick={() => {
-              setZoomed(true);
+              setFullScreenOn(true);
             }}
            
 
@@ -328,14 +320,14 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
 }
 
        
-       {zoomed && <FullScreenZoomableImage
+       {fullScreenOn && <FullScreenZoomableImage
        
           imageIndex={imageIndex}
          
           changeImageIndex={handleChangeImage}
             
          
-          fullScreenChange={setZoomed}
+          fullScreenChange={setFullScreenOn}
           images={images}
         />
        }
