@@ -52,244 +52,134 @@ const FullScreenZoomableImage = ({
 
 
 
-  useLayoutEffect(()=>{
-
-
+  useLayoutEffect(() => {
     const mainImg = document.getElementById(`mainImage${imageIndex}`);
-
-    
-    
-
     const fullImg = fullImageRef.current;
-
-
+  
     const biggerWidth =
-    (window.innerHeight - 48) / window.innerWidth >
-    fullImg.naturalHeight / fullImg.naturalWidth;
-  const scaleRatio = biggerWidth
-    ? (window.innerWidth - 48) / window.innerWidth
-    : mainImg.getBoundingClientRect().height / (window.innerHeight - 48);
+      (window.innerHeight - 48) / window.innerWidth >
+      fullImg.naturalHeight / fullImg.naturalWidth;
+  
+    const scaleRatio = biggerWidth
+      ? (window.innerWidth - 48) / window.innerWidth
+      : mainImg.getBoundingClientRect().height / (window.innerHeight - 48);
+  
+    const deltaX = biggerWidth
+      ? 0
+      : mainImg.getBoundingClientRect().left -
+        (window.innerWidth -
+          ((window.innerHeight - 48) / fullImg.naturalHeight) *
+            fullImg.naturalWidth *
+            scaleRatio) / 2;
+  
+    const deltaY = biggerWidth
+      ? mainImg.getBoundingClientRect().top - 48 -
+        ((window.innerHeight - 48 -
+          (window.innerWidth / fullImg.naturalWidth) * fullImg.naturalHeight) /
+          2) * scaleRatio
+      : mainImg.getBoundingClientRect().top - 48;
+  
+    fullImg.style.opacity = 0;
+    fullImg.style.transition = "transform 0s ease";
+    fullImg.style.transform = `translate(${deltaX}px, ${deltaY}px) scale(${scaleRatio})`;
+    fullImg.style.transition = "transform 0.3s ease";
+  
+    increaseDeepLinkLevel();
 
-  // fixedZoomDiv.style.opacity = `0`;
-
-
-
-
-  //prebaciti u complete
-
-
-
- 
-
-
-
-  const deltaX = biggerWidth
-    ? 0
-    : mainImg.getBoundingClientRect().left -
-      (window.innerWidth -
-        ((window.innerHeight - 48) / fullImg.naturalHeight) *
-          fullImg.naturalWidth *
-          scaleRatio) /
-        2;
-  const deltaY = biggerWidth
-    ? mainImg.getBoundingClientRect().top -
-      48 -
-      ((window.innerHeight -
-        48 -
-        (window.innerWidth / fullImg.naturalWidth) * fullImg.naturalHeight) /
-        2) *
-        scaleRatio
-    : mainImg.getBoundingClientRect().top - 48;
-
-
-    fullImg.style.opacity= 0;
-  fullImg.style.transition = "transform 0s ease";
-  fullImg.style.transform = `translateX(${deltaX}px) translateY(${deltaY}px) scale(${scaleRatio})`;
-
-  fullImg.style.transition = "transform 0.3s ease";
-
-
-
-
-
-  increaseDeepLinkLevel();
-
-
-  return ()=>{
-    decreaseDeepLinkLevel();
-  }
- 
- 
-     
-       
-
-  },[])
+    
+    return ()=>{
+      decreaseDeepLinkLevel();
+    }
+  }, []);
  
 
 
 
   useLayoutEffect(() => {
-
-
-   
-     
-    
-
-
-
+    if (!imageLoaded) return;
   
-
-
-
-    if(imageLoaded){
-
-
-      const mainImg = document.getElementById(`mainImage${imageIndex}`);
-
-      const fullImg = fullImageRef.current;
-
-
-      const fixedZoomDiv = fixedZoomDivRef.current;
-
-      let bgColor = getComputedStyle(document.documentElement).getPropertyValue('--bg-color');
-
-      console.log('my bg color should be', bgColor)
-     
-      const rgbValues = transformColorToRgb(bgColor);
-    
-    
-    
-      
-      fixedZoomDiv.style.backgroundColor = rgbValues;
-
-      setTimeout(()=>{fixedZoomDiv.style.transition = "none";},1)
-      
-
-       fullImg.style.opacity='1';
-
-      setNavActive(true);
-
-      mainImg.style.opacity = "0";
-
-      setTimeout(()=>{
-        mainImg.style.opacity = "1";
-      },210)
-
-    
-      fullImg.style.transition = "left 0.3s ease, top 0.3s ease, transform 0.3s ease";
-      
-      fullImg.style.left = `0`;
-      fullImg.style.top = `0`;
-      fullImg.style.transform = `scale(1)`;
-
-
-
-      if(!matchMedia("(pointer:fine)").matches){
-
-
-
-        setTimeout(()=>{
-          if(!global.toastMessageNotShowable){
-          setShowToastMessage(1);
-         
-        }
-    
-    
-        }, 380);
-    
-    
-        
-    
-    
-      }
-    
-      else{
-        global.toastMessageNotShowable=true;
-      }
-    
-    
-        setTimeout(() => {
-          document.documentElement.classList.add("hideScroll");
-          
-        }, 280);
-    
-      
-    
-    
-
-
-     
+    const mainImg = document.getElementById(`mainImage${imageIndex}`);
+    const fullImg = fullImageRef.current;
+    const fixedZoomDiv = fixedZoomDivRef.current;
   
-  }
-
-   
-
-
+    const rgbValues = transformColorToRgb(
+      getComputedStyle(document.documentElement).getPropertyValue('--bg-color')
+    );
+    fixedZoomDiv.style.backgroundColor = rgbValues;
+    setTimeout(() => { fixedZoomDiv.style.transition = "none"; }, 1);
+  
+    fullImg.style.opacity = '1';
+    fullImg.style.transition = "left 0.3s ease, top 0.3s ease, transform 0.3s ease";
+    fullImg.style.left = '0';
+    fullImg.style.top = '0';
+    fullImg.style.transform = 'scale(1)';
+  
+    setNavActive(true);
+    mainImg.style.opacity = '0';
+    setTimeout(() => { mainImg.style.opacity = '1'; }, 210);
+  
+    if (!matchMedia("(pointer:fine)").matches) {
+      setTimeout(() => {
+        if (!global.toastMessageNotShowable) setShowToastMessage(1);
+      }, 380);
+    } else {
+      global.toastMessageNotShowable = true;
+    }
+  
+    setTimeout(() => {
+      document.documentElement.classList.add("hideScroll");
+    }, 280);
+  
   }, [imageLoaded]);
 
 
-  
 
 
 
-  useLayoutEffect(()=>{
-    const handlePopState=(event)=>{  event.preventDefault();  setNavActive(false);killFullScreen();}
-
-    window?.addEventListener("popstate", handlePopState);
-
-   return ()=>{
-    window?.removeEventListener("popstate", handlePopState);
-   }
-  },[imageIndex,zoomed])
+  useLayoutEffect(() => {
+    const handlePopState = (event) => {
+      event.preventDefault();
+      setNavActive(false);
+      killFullScreen();
+    };
+    
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, [imageIndex, zoomed]);
 
 
 
   useLayoutEffect(() => {
     const fixedZoomDiv = fixedZoomDivRef.current;
-    let bgColor = getComputedStyle(document.documentElement).getPropertyValue('--bg-color');
-    if(bgColor.length===4)bgColor =  transformColorToRgb(bgColor)
-   
-      
-    const getRgbValues = (opacity) =>{ return  transformColorToRgb(bgColor, opacity)};
+  const imgDiv = document.getElementById(`zoomDiv${imageIndex}`);
+  const getRgbValues = (opacity) => transformColorToRgb(
+    getComputedStyle(document.documentElement).getPropertyValue('--bg-color'), opacity
+  );
+
+  let timeoutId, swipeYLock = false, multiTouchDetected = false;
+  let startingTouchCoordinates = { x: 0, y: 0 }, currX = 0, currY = 0;
+
+  const handleUserInteraction = () => {
+    setNavActive(true);
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => setNavActive(false), 3000);
+  };
+
+  const handleTouchStart = ({ touches }) => {
+    if (touches.length > 1) return;
+    imgDiv.style.transition = "transform 0s ease";
+    startingTouchCoordinates = { x: touches[0].clientX, y: touches[0].clientY };
+  };
 
 
-    let timeoutId;
-    let swipeYLock = false;
-    let startingTouchCoordinates = { x: 0, y: 0 };
-    const imgDiv = document.getElementById("zoomDiv" + imageIndex);
-
-    let currX = 0;
-    let currY = 0;
-
-    let multiTouchDetected=false;
 
 
-    const handleUserInteraction = () => {
-      setNavActive(true);
-      clearTimeout(timeoutId);
-      timeoutId = setTimeout(function () {
-        setNavActive(false);
-      }, 3000);
-    };
 
-    const handleTouchStart = (event) => {
-      if (event.touches.length > 1) {
-        return;
-      }
-
-     
-
-      imgDiv.style.transition = "transform 0s ease";
-
-      startingTouchCoordinates = {
-        x: event.touches[0].clientX,
-        y: event.touches[0].clientY,
-      };
-    };
+  
 
     const handleTouchYMove = (event) => {
       if(event.touches.length > 1)return;
-      else{multiTouchDetected=false;}
+      else{multiTouchDetected=false;} //detected
       if (swipeYLock || zoomed || multiTouchDetected) return;
    
       

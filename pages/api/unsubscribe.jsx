@@ -78,7 +78,7 @@ const {customer_id, customer_hash} = req.body;
  
   
 
-   //Nadji sve campanje koje sadrze customerov email u targetCustomers, i odma im izbaci taj email iz targetCustomers(filter).
+   //Nadji sve campanje koje sadrze customerov email u targetCustomers, i odma im izbaci taj email iz targetCustomers(filter) u kampanje.
 
    const modifiedCustomersCampaigns = (await dbConnection.query(`
     SELECT id, targetCustomers
