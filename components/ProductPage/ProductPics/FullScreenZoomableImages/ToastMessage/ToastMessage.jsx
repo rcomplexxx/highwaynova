@@ -7,66 +7,32 @@ export default function ToastMessage({showToastMessage, setShowToastMessage}) {
     const toastRef= useRef();
 
 
-    useLayoutEffect(()=>{
-
-       
-        const toast = toastRef.current;
-        
-
-       
-        if(showToastMessage===1){
-       
-
-        toastTimeout.current= setTimeout(()=> {
-           
-            if(toast){
-            
-            toast.classList.add(styles.dissapearingToast);      
-      
-            setTimeout(()=>{
-              global.toastMessageNotShowable=true;
-              setShowToastMessage(0);
-              
-            },500);
-            
-            
-          }
-          },
-          4500);
+    useLayoutEffect(() => {
+      const toast = toastRef.current;
+    
+      if (toast) {
+        const handleToastDisappearance = (timeout, animationClass) => {
+          toast.classList.add(animationClass);
+          setTimeout(() => {
+            global.toastMessageNotShowable = true;
+            setShowToastMessage(0);
+          }, timeout);
+        };
+    
+        if (showToastMessage === 1) {
+          toastTimeout.current = setTimeout(() => {
+            handleToastDisappearance(500, styles.dissapearingToast);
+          }, 4500);
+        } else if (showToastMessage === 2) {
+          clearTimeout(toastTimeout.current);
+          handleToastDisappearance(300, styles.dissapearingToast);
+        } else if (showToastMessage === 3) {
+          clearTimeout(toastTimeout.current);
+          handleToastDisappearance(150, styles.instantDissapearingToast);
         }
-
-
-
-
-        else if(showToastMessage===2){
-
-            clearTimeout(toastTimeout.current);
-          
-               
-                if(toast){
-                    toast.classList.add(styles.dissapearingToast); 
-
-                 
-                setTimeout(()=>{  global.toastMessageNotShowable=true;setShowToastMessage(0)},300)    
-                } 
-            
-        }
-
-        else if(showToastMessage===3){
-            clearTimeout(toastTimeout.current);
-          
-              if(toast){
-                toast.classList.add(styles.instantDissapearingToast);
-             
-                global.toastMessageNotShowable=true;
-                setTimeout(()=>{  global.toastMessageNotShowable=true;setShowToastMessage(0)},150)    
-              }
-        
-        
-            
-        }
-
-    },[showToastMessage, toastRef])
+      }
+    
+    }, [showToastMessage, toastRef]);
 
 
    

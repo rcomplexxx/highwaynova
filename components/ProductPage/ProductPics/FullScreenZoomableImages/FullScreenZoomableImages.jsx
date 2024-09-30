@@ -56,6 +56,9 @@ const FullScreenZoomableImage = ({
 
 
 
+  
+
+
   useLayoutEffect(() => {
     const mainImg = document.getElementById(`mainImage${imageIndex}`);
     const fullImg = fullImageRef.current;
@@ -522,7 +525,7 @@ const FullScreenZoomableImage = ({
                       sizes="100vw"
                       priority={index===initialIndexRef.current}
                       loading={index===initialIndexRef.current?"eager":undefined}
-                      onLoad={()=>{if(index===imageIndex)setImageLoaded(true);}}
+                      onLoad={()=>{if(index===initialIndexRef.current)setImageLoaded(true);}}
                       src={image.src}
                       alt="Zoomable"
                       className={`${styles.productImage}`}
