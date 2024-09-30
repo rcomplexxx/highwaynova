@@ -91,27 +91,36 @@ export default function ProductPage({ product, description, images, startReviews
 
     if(baseUrlRef.current === router.asPath.split('#')[0])return;
 
-    const searchParams = new URLSearchParams(window.location.search);
-    const variantQuery = searchParams.get('variant');
+    
+    setQuantity(1);
+
+    
+    baseUrlRef.current=router.asPath;
+
+    
+    const variantQuery = new URLSearchParams(window.location.search).get('variant');
 
     
     
   
     if (!product.variants) {
+      
+      shouldInitializeVariantRef.current = {initialize: false, instant:true};
       setVariant();
       return;
     }
   
-    
-    const currentVariant = variantQuery && product.variants?.find(v => v.name.toLowerCase().replace(/\s+/g, "-") === variantQuery.toLowerCase().replace(/\s+/g, "-")) || product.variants?.[0];
+    const formatQuery = query => query?.toLowerCase().replace(/\s+/g, "-");
+
+const currentVariant = variantQuery ? (product.variants.find(v => formatQuery(v.name) === formatQuery(variantQuery)) || product.variants[0]): product.variants[0];
   
-    setVariant(currentVariant);
+
+
     shouldInitializeVariantRef.current = {initialize:variantQuery?true:false, instant:true};
+    setVariant(currentVariant);
 
     
-    setQuantity(1);
 
-    baseUrlRef.current=router.asPath;
   
     
   }, [router.asPath]);
@@ -130,30 +139,28 @@ export default function ProductPage({ product, description, images, startReviews
 
   const onAddToCart = useCallback((quantity = 1, addedProduct = product, addedVariant = variant) => {
 
-
     const updatedCartProducts = [...cartProducts];
     const newProducts = [];
-
-    const formatName = name => name?.toLowerCase().replace(/\s+/g, "-");
-
     
+    const formatName = name => name?.toLowerCase().replace(/\s+/g, "-");
   
-    const addNewProduct = (variantName, qty) => {
+    const newProductsMini = bundleVariants.length ? bundleVariants : [{ name: addedVariant?.name, quantity }];
+    
+    newProductsMini.forEach(({ name: variantName, quantity: qty }) => {
       const existingProduct = updatedCartProducts.find(cp =>
-        cp.id === addedProduct.id &&
-        formatName(cp.variant) === formatName(variantName)
+        cp.id === addedProduct.id && formatName(cp.variant) === formatName(variantName)
       );
   
       if (existingProduct) {
         existingProduct.quantity += qty;
         newProducts.push({ ...existingProduct, quantity: qty });
       } else {
-        const variantObj = product.variants?.find(pv => formatName(pv.name) === formatName(variantName)) || {};
+        
         const newProduct = {
           id: addedProduct.id,
           quantity: qty,
           name: addedProduct.name,
-          image: addedProduct.images[variantObj.variantProductImageIndex] || addedProduct.images[0],
+          image: addedProduct.images[addedProduct.variants?.find(pv => formatName(pv.name) === formatName(variantName))?.variantProductImageIndex] || addedProduct.images[0],
           price: addedProduct.price,
           stickerPrice: addedProduct.stickerPrice,
           variant: variantName,
@@ -161,17 +168,12 @@ export default function ProductPage({ product, description, images, startReviews
         newProducts.push(newProduct);
         updatedCartProducts.push(newProduct);
       }
-    };
-
-    
-  
-    const newProductsMini = bundleVariants.length ? bundleVariants : [{ name: addedVariant?.name, quantity }];
-    newProductsMini.forEach(({ name, quantity }) => addNewProduct(name, quantity));
+    });
   
     setCartProducts(updatedCartProducts);
     setNewProducts(newProducts);
-    
-  }, [cartProducts, product, variant, quantity, bundleVariants]);
+  
+  }, [cartProducts, product, variant, bundleVariants]);
 
   
 
