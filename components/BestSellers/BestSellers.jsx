@@ -60,11 +60,13 @@ export default function BestSellers() {
 
 
 
-  const onAddToCart = (addedProduct, addedVariant) => {
+  const onAddToCart = (addedProduct) => {
     const updatedCartProducts = [...cartProducts];
     const product = updatedCartProducts.find(
-      (cp) => cp.id === addedProduct.id && cp.variant === addedVariant?.name
+      (cp) => cp.id === addedProduct.id && cp.variant === addedProduct.variant?.name
     );
+
+    console.log('current product', addedProduct)
   
     if (product) {
       product.quantity += 1;
@@ -73,12 +75,12 @@ export default function BestSellers() {
         id: addedProduct.id,
         quantity: 1,
         name: addedProduct.name,
-        image: addedVariant?.variantProductImageIndex > 0
-          ? addedProduct.images[addedVariant.variantProductImageIndex]
+        image: addedProduct.variant?.variantProductImageIndex > 0
+          ? addedProduct.images[addedProduct.variant?.variantProductImageIndex]
           : addedProduct.images[0],
         price: addedProduct.price,
         stickerPrice: addedProduct.stickerPrice,
-        variant: addedVariant?.name,
+        variant: addedProduct.variant?.name,
       });
     }
   
@@ -162,7 +164,7 @@ export default function BestSellers() {
  
 
 
-            <button onClick={()=>{ onAddToCart(bsp, bsp.variant)}} className={styles.addToCartButton}>
+            <button onClick={()=>{ onAddToCart(bsp)}} className={styles.addToCartButton}>
             Add
             </button>
             
