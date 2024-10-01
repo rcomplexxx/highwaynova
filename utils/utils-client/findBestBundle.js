@@ -8,13 +8,13 @@ function findBestBundle(cartProducts) {
 
   
   const shrinkedCartProductsTemp = cartProductsTemp.reduce((acc, cp) => {
-    const existing = acc.find(scp => scp.id === cp.id);
-    existing?  existing.quantity++ : acc.push({ ...cp });
+    const existing = acc.find(scp => scp.id == cp.id);
+    existing?  existing.quantity+=cp.quantity : acc.push({ ...cp });
     return acc;
   }, []);
 
 
-
+console.log('shrinked cart p', shrinkedCartProductsTemp)
   
  
 
@@ -22,36 +22,41 @@ function findBestBundle(cartProducts) {
 
   shrinkedCartProductsTemp.forEach(cp => {
     const product = products.find(p => p.id === cp.id);
-    if (!product?.bundle) return;
+    if (!product?.bundle) return cartProductsTemp;
 
     let offerIndex = -1;
     for (let i = product.bundle.length - 1; i >= 0; i--) {
       if (cp.quantity >= product.bundle[i].quantity) {
         offerIndex = i;
-        break; 
+        break;
       }
     }
 
-    if (offerIndex === -1) return;
+      console.log(offerIndex, cp.quantity, bestBundle.priceOff, '!!!!!~~~~~~~~~~~~~~~~~~~~')
+
+    if (offerIndex === -1) return cartProductsTemp;
 
     const discount = product.bundle[offerIndex].discountPercentage;
 
  
     
-    const priceOff = parseFloat((  ((product.price * (100 - discount) / 100).toFixed(2)) *  cp.quantity).toFixed(2)       );
+    const priceOff = parseFloat((  ((product.price * discount / 100).toFixed(2)) *  cp.quantity).toFixed(2)       );
 
-    
+
+    console.log('prices', priceOff, bestBundle.priceOff)
 
     if (priceOff > bestBundle.priceOff) {
       bestBundle = {
         id: cp.id,
-        quantity: product.bundle[offerIndex].quantity,
+        quantity: cp.quantity,
         label: `${product.bundle[offerIndex].quantity}${(product.bundle.length - 1 === offerIndex || product.bundle[offerIndex + 1]?.quantity - product.bundle[offerIndex].quantity > 1) ? '+' : ''}`,
         priceOff,
         discountPercentage: discount
       };
     }
   });
+
+
 
   cartProductsTemp = cartProductsTemp.map(cpt => {
     const newCpt = { ...cpt };
@@ -78,7 +83,7 @@ function findBestBundle(cartProducts) {
     return newCpt;
   });
 
-  return bestBundle.priceOff === 0 ? cartProductsTemp : cartProductsTemp;
+  return cartProductsTemp;
 }
 
 module.exports = findBestBundle;

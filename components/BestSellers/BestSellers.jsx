@@ -75,9 +75,7 @@ export default function BestSellers() {
         id: addedProduct.id,
         quantity: 1,
         name: addedProduct.name,
-        image: addedProduct.variant?.variantProductImageIndex > 0
-          ? addedProduct.images[addedProduct.variant?.variantProductImageIndex]
-          : addedProduct.images[0],
+        image:  addedProduct.images[addedProduct.variant?.variantProductImageIndex || 0],
         price: addedProduct.price,
         stickerPrice: addedProduct.stickerPrice,
         variant: addedProduct.variant?.name,

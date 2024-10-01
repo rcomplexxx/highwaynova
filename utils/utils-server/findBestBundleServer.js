@@ -37,12 +37,12 @@ function findBestBundleServer(cartProducts) {
         }, {});
 
         if (bestOffer.discountPercentage) {
-            const discountPrice = parseFloat((product.price * cp.quantity * bestOffer.discountPercentage / 100).toFixed(2));
+            const priceOff = parseFloat((product.price * cp.quantity * bestOffer.discountPercentage / 100).toFixed(2));
 
-            if (discountPrice > bestBundle.price) {
+            if (priceOff > bestBundle.priceOff) {
                 bestBundle = {
                     id: cp.id,
-                    price: discountPrice,
+                    priceOff: discountPrice,
                     originalPrice: product.price,
                     percentage: bestOffer.discountPercentage
                 };
@@ -50,7 +50,7 @@ function findBestBundleServer(cartProducts) {
         }
     });
 
-    if (bestBundle.price !== 0) {
+    if (bestBundle.priceOff !== 0) {
         cartProducts = cartProducts.map(cp => {
             if (cp.id === bestBundle.id) {
                 cp.bundledPrice = parseFloat((bestBundle.originalPrice * (100 - bestBundle.percentage) / 100).toFixed(2));
