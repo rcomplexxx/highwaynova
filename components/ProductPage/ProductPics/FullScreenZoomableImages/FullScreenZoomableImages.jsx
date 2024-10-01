@@ -31,7 +31,7 @@ const FullScreenZoomableImage = ({
 
 
   
-  const [swiper, setSwiper] = useState();
+  
 
   const [zoomed, setZoomed] = useState(false);
 
@@ -42,6 +42,7 @@ const FullScreenZoomableImage = ({
  const mouseStartingPointRef=useRef({x:0, y:0})
 
 
+  const swiperRef = useRef();
  
  
   const initialIndexRef = useRef(imageIndex)
@@ -299,7 +300,7 @@ const FullScreenZoomableImage = ({
 
 
   
-    if (zoomed) swiper.zoom.toggle();
+    if (zoomed) swiperRef.current.zoom.toggle();
 
     setClosingFullscreen(true);
 
@@ -405,21 +406,21 @@ const FullScreenZoomableImage = ({
             }`}
           >
             <div className={styles.pagination}>
-              {imageIndex + 1} / {swiper && swiper.slides?.length}
+              {imageIndex + 1} / {swiperRef.current?.slides?.length}
             </div>
 
             <div>
            {zoomed?<ZoomOutIcon
                handleClick={(event) => {
                 event.stopPropagation();
-                swiper.zoom.toggle();
+                swiperRef.current.zoom.toggle();
               }}
 
               styleClassName={styles.zoomButton}
               />:<ZoomInIcon
               handleClick={(event) => {
                event.stopPropagation();
-               swiper.zoom.toggle();
+               swiperRef.current.zoom.toggle();
              }}
 
              styleClassName={styles.zoomButton}
@@ -439,12 +440,12 @@ const FullScreenZoomableImage = ({
 
           <ArrowDown color={'var(--fullscreen-arrow-color)'}
           handleClick={() => {
-              swiper.slidePrev();
+            swiperRef.current.slidePrev();
             }} styleClassName={`${styles.leftArrow} ${navActive && styles.spawnArrow}`}/>
 
 <ArrowDown color={'var(--fullscreen-arrow-color)'}
           handleClick={() => {
-              swiper.slideNext();
+            swiperRef.current.slideNext();
             }} styleClassName={`${styles.leftArrow} ${styles.rightArrow} ${navActive && styles.spawnArrow}`}/>
 
         
@@ -475,9 +476,9 @@ const FullScreenZoomableImage = ({
            
             onSlideChange={(swiper) => {
               zoomed && (swiper.zoom.out(), setZoomed(false));
-              changeImageIndex(swiper.activeIndex);
+              changeImageIndex(swiper.activeIndex, true);
             }}
-            onSwiper={setSwiper}
+            onSwiper={(swiperInstance)=>{swiperRef.current = swiperInstance}}
             modules={[Zoom]}
             className={styles.productImageSwiper}
             grabCursor={true}
@@ -513,7 +514,7 @@ const FullScreenZoomableImage = ({
                       
                         const { x: startX, y: startY } = mouseStartingPointRef.current;
                         if (Math.abs(clientX - startX) < 12 && Math.abs(clientY - startY) < 12) {
-                          swiper.zoom.toggle();
+                          swiperRef.current.zoom.toggle();
                         }
                       }}
                   >

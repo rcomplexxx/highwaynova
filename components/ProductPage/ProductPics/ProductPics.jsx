@@ -17,12 +17,15 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
   
  
   const [spawnAddToCart, setSpawnAddToCart] = useState(false);
-  const [swiper, setSwiper] = useState(null);
-  const [swiperMini, setSwiperMini] = useState(null);
+ 
+  
+  
 
   const router = useRouter();
+
+  const  swiperRef = useRef(), swiperMiniRef = useRef();
   
-  
+  const instantSwipeRef = useRef(variantImageIndex.instant)
   
   const fixedAddToCartRef= useRef();
 
@@ -99,6 +102,16 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
 
 
 
+useLayoutEffect(()=>{
+
+  console.log('REACTIVATED!!!!!!!~~~~~~~~~~~~~~~~~~~~~, variantIndex changed', variantImageIndex, imageIndex)
+
+  if (variantImageIndex.imageIndex===imageIndex)return;
+
+  instantSwipeRef.current=variantImageIndex.instant;
+  setImageIndex(variantImageIndex.imageIndex);
+
+},[variantImageIndex.imageIndex])
 
 
 
@@ -106,18 +119,16 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
 
 
 
-  useLayoutEffect(()=>{
-    
-    
-      if(variantImageIndex.imageIndex>-1 && variantImageIndex.imageIndex < images.length &&
-        swiper?.activeIndex!==variantImageIndex.imageIndex
-      )
-      swiper?.slideTo(variantImageIndex.imageIndex, variantImageIndex.instant?0:400);
-        
-      
-      
-      
-    },[variantImageIndex.imageIndex,swiper])
+
+
+    useLayoutEffect(()=>{
+
+     if(swiperRef.current?.activeIndex!==imageIndex) swiperRef.current?.slideTo(imageIndex, instantSwipeRef.current?0:400, false);
+     if(swiperMiniRef.current?.activeIndex!==imageIndex) swiperMiniRef.current?.slideTo(imageIndex, instantSwipeRef.current?0:400, false);
+     
+     instantSwipeRef.current=false;
+
+    },[imageIndex])
 
 
   
@@ -130,29 +141,29 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
  
  //Ova dva se rucno menjaju
 
-  const handleSlideChangeEffect = useCallback((swiper) => {
+  const handleSlideChangeEffect = useCallback(() => {
     
-    const index = swiper.activeIndex;
+    const index = swiperRef.current?.activeIndex;
     setImageIndex(index);
-    swiperMini.slideTo(index, variantImageIndex.instant?0:400);
+    
    
     
  
-  }, [imageIndex, swiper]);
+  }, [imageIndex]);
 
 
 
 
 
 
-  const handleChangeImage = useCallback((imageIndex, smooth=false)=>{
+  const handleChangeImage = useCallback((imageIndex, instant)=>{
+
+    instantSwipeRef.current= instant;
             
-    if(smooth) swiper.slideTo(imageIndex, 400, false);
-   else
-    swiper.slideTo(imageIndex, 0, false);
+    setImageIndex(imageIndex)
    
    
-   },[swiper])
+   },[])
 
 
 
@@ -171,7 +182,11 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
       <div className={styles.productPicsWrapper}>
         <div className={styles.productImagesWrapper}>
         
-        <Swiper  onSwiper={setSwiper} speed={400} slidesPerView='auto' onSlideChange={handleSlideChangeEffect}
+        <Swiper  onSwiper={(swiperInstance) => {
+        swiperRef.current = swiperInstance;  // Store Swiper instance in ref
+      }}
+      
+      speed={400} slidesPerView='auto' onSlideChange={handleSlideChangeEffect}
        
        initialSlide={variantImageIndex.imageIndex}
         preventClicks={false}
@@ -224,7 +239,7 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
 
 
         <ArrowDown color={'var(--mini-slider-arrow-color)'}
-         handleClick={()=>{handleChangeImage(imageIndex - 1, true)}} 
+         handleClick={()=>{handleChangeImage(imageIndex - 1)}} 
             
             styleClassName={`${styles.leftArrowDiv} ${imageIndex===0 && styles.disabledArrow}`}/>
           
@@ -233,7 +248,7 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
 
 
             <ArrowDown color={'var(--mini-slider-arrow-color)'}
-            handleClick={()=>{handleChangeImage(imageIndex+1, true)}} 
+            handleClick={()=>{handleChangeImage(imageIndex+1)}} 
             
             styleClassName={`${styles.leftArrowDiv} ${styles.rightArrowDiv} ${imageIndex===images.length-1 && styles.disabledArrow}`}/>
            
@@ -246,13 +261,18 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
 
         initialSlide={variantImageIndex.imageIndex}
   
-    className={styles.slider2} onSwiper={setSwiperMini}>
+    className={styles.slider2} 
+    
+    onSwiper={(swiperMiniInstance) => {
+      swiperMiniRef.current = swiperMiniInstance;  // Store Swiper instance in ref
+    }}
+    >
            
           {images.map((img, index) => (
             <SwiperSlide key={index}  className={`carousel-item ${styles.slide2}`}
             
             onClick={() => {
-              handleChangeImage(index, true)
+              handleChangeImage(index)
             }}
             >
               
@@ -290,7 +310,7 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
                     className={`${styles.productImage} ${styles.productImage2Div} ${
                       imageIndex == index && styles.selectedImage
                     }`}
-                    onClick={() => {handleChangeImage(index, window.innerWidth<980) }}
+                    onClick={() => {handleChangeImage(index, window.innerWidth>=980) }}
                     src={img.src}
                     alt={img.alt}
                     sizes="20vw"
