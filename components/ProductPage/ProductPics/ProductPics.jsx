@@ -104,7 +104,7 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
 
 useLayoutEffect(()=>{
 
-  console.log('REACTIVATED!!!!!!!~~~~~~~~~~~~~~~~~~~~~, variantIndex changed', variantImageIndex, imageIndex)
+  
 
   if (variantImageIndex.imageIndex===imageIndex)return;
 

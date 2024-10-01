@@ -6,7 +6,7 @@ import PicWithThumbnail from '../Products/Product/PicWithThumbnail/PicWithThumbn
 import bestSellerProductsInfo from '../../data/bestsellers.json';
 import styles from './bestsellers.module.css';
 import Link from 'next/link';
-import {  useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import products from '@/data/products.json'
 
 
@@ -15,8 +15,7 @@ import "swiper/css";
 import { useGlobalStore } from '@/contexts/AppContext';
 
 export default function BestSellers() {
-  const sliderRef = useRef();
-  const [initialProducts, setInitialProducts] = useState([]);
+
 
 
 
@@ -26,62 +25,53 @@ export default function BestSellers() {
     setCartProducts: state.setCartProducts
   }));
 
+  const [initialProducts, setInitialProducts] = useState(cartProducts.map(product=> {return {id:product.id, variant: product.variant}}));
 
-  useEffect(()=>{
-   setInitialProducts(cartProducts.map(product=> {return {id:product.id, variant: product.variant}}));
-  },[])
+
+
+
+
+
+
+ 
+
+  //Ovde moze jos da se optimizuje
   
 
-  const bestSellerProducts = bestSellerProductsInfo.map((bsp) => {
-
-    
-
-
-    const product= products.find(p=>{return p.id== bsp.id});
-
-    console.log('intialPr', initialProducts, bsp)
-
-    if(!product)return;
-
-    if(initialProducts.find(ip => {
-      return ip.id === bsp.id && (!ip.variant || ip.variant === product?.variants?.[bsp.variantIndex].name)
-    })) return;
-
-    
-
-    console.log('item escaped condition', product.id, 'inprnames', initialProducts);
-
-    let variant;
-    if(bsp.variantIndex){
-    variant =   bsp.variantIndex>0 && bsp.variantIndex<product.variants.length? product?.variants[bsp.variantIndex]:product?.variants[0];
-   
+  const bestSellerProducts = bestSellerProductsInfo
+  .map(bsp => {
+    const product = products.find(p => p.id === bsp.id);
+    if (!product || initialProducts.some(ip => ip.id === bsp.id && ip.variant === product.variants?.[bsp.variantIndex]?.name)) {
+      return null;
     }
 
-    else{
-      variant= product?.variants ? product?.variants[0]: undefined;
-    }
-     return {product:product,variant:variant};
-   
-  }).filter(Boolean).slice(0, 4);
-
-  console.log('context check main', cartProducts,setCartProducts)
+    const variant = product.variants?.[bsp.variantIndex] || product.variants?.[0];
+    return { ...product, variant };
+  })
+  .filter(Boolean)
+  .slice(0, 4);
 
 
 
 
 
-  const onAddToCart = (quantity = 1, addedProduct, addedVariant) => {
+  
+
+
+
+
+  const onAddToCart = (addedProduct, addedVariant) => {
     const updatedCartProducts = [...cartProducts];
     const product = updatedCartProducts.find(
       (cp) => cp.id === addedProduct.id && cp.variant === addedVariant?.name
     );
   
     if (product) {
-      product.quantity += quantity;
+      product.quantity += 1;
     } else {
       updatedCartProducts.push({
         id: addedProduct.id,
-        quantity,
+        quantity: 1,
         name: addedProduct.name,
         image: addedVariant?.variantProductImageIndex > 0
           ? addedProduct.images[addedVariant.variantProductImageIndex]
@@ -94,6 +84,11 @@ export default function BestSellers() {
   
     setCartProducts(updatedCartProducts);
   };
+
+
+
+
+
 
  
 
@@ -135,29 +130,31 @@ export default function BestSellers() {
       <h1 className={styles.bestSellersTitle}>You might also like</h1>
 
 
-      <Swiper {...settings} ref={sliderRef} className={styles.slider}>
+      <Swiper {...settings} className={styles.slider}>
+
+
         {bestSellerProducts.map((bsp, index) => {
 
          
          return <SwiperSlide key={index} className={styles.slide}>
             
             
-            <Link href={`/products/${bsp.product.name.toLowerCase().replace(/\s+/g, "-")}${bsp.variant? '?variant='+bsp.variant.name.toLowerCase().replace(/\s+/g, "-"): ''}`} 
+            <Link href={`/products/${bsp.name.toLowerCase().replace(/\s+/g, "-")}${bsp.variant? '?variant='+bsp.variant.name.toLowerCase().replace(/\s+/g, "-"): ''}`} 
             className={styles.productImageLink}>
             
               
-                <PicWithThumbnail product={bsp.product} variantImage={bsp.product.images[bsp.variant?.variantProductImageIndex || 0]} />
+                <PicWithThumbnail product={bsp} variantImage={bsp.images[bsp.variant?.variantProductImageIndex || 0]} />
              
             
             </Link>
 
-            <span className={styles.productTitle}>{bsp.product.name}</span>
+            <span className={styles.productTitle}>{bsp.name}</span>
 
            {bsp.variant && <span className={styles.productVariant}>{bsp.variant.name}</span>}
             
             <div className={styles.product_price}>
-  ${bsp.product.price.toFixed(2)}
-    {bsp.product.stickerPrice && <span className={styles.product_price_span}>${bsp.product.stickerPrice.toFixed(2)}</span>}
+  ${bsp.price.toFixed(2)}
+    {bsp.stickerPrice && <span className={styles.product_price_span}>${bsp.stickerPrice.toFixed(2)}</span>}
    
   </div>
 
@@ -165,7 +162,7 @@ export default function BestSellers() {
  
 
 
-            <button onClick={()=>{ onAddToCart(1, bsp.product, bsp.variant)}} className={styles.addToCartButton}>
+            <button onClick={()=>{ onAddToCart(bsp, bsp.variant)}} className={styles.addToCartButton}>
             Add
             </button>
             
