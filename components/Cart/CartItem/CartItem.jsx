@@ -27,15 +27,13 @@ const CartItem = ({ item }) => {
   const handleUpdateCartQty = (quantity) => {
     
     setCartProducts(
-      cartProducts
-        .map((cp) => {
-          if (cp.id === item.id && cp.variant === item.variant) {
-            cp.quantity += quantity;
-            return cp.quantity !== 0 ? cp : null;
-          }
-          return cp;
-        })
-        .filter(Boolean)
+      cartProducts.reduce((acc, cp) => {
+        if (cp.id === item.id && cp.variant === item.variant) cp.quantity += quantity;
+       
+        if (cp.quantity !== 0) acc.push(cp);
+        
+        return acc;
+      }, [])
     );
   };
 

@@ -22,19 +22,14 @@ console.log('shrinked cart p', shrinkedCartProductsTemp)
 
   shrinkedCartProductsTemp.forEach(cp => {
     const product = products.find(p => p.id === cp.id);
-    if (!product?.bundle) return cartProductsTemp;
+    if (!product?.bundle) return;
 
-    let offerIndex = -1;
-    for (let i = product.bundle.length - 1; i >= 0; i--) {
-      if (cp.quantity >= product.bundle[i].quantity) {
-        offerIndex = i;
-        break;
-      }
-    }
+   
+    let offerIndex = product.bundle.findLastIndex(b => cp.quantity >= b.quantity);
 
       console.log(offerIndex, cp.quantity, bestBundle.priceOff, '!!!!!~~~~~~~~~~~~~~~~~~~~')
 
-    if (offerIndex === -1) return cartProductsTemp;
+    if (offerIndex === -1) return;
 
     const discount = product.bundle[offerIndex].discountPercentage;
 

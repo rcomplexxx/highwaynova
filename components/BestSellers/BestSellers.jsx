@@ -39,16 +39,14 @@ export default function BestSellers() {
   
 
   const bestSellerProducts = bestSellerProductsInfo
-  .map(bsp => {
+  .reduce((acc, bsp) => {
     const product = products.find(p => p.id === bsp.id);
-    if (!product || initialProducts.some(ip => ip.id === bsp.id && ip.variant === product.variants?.[bsp.variantIndex]?.name)) {
-      return null;
+    if (product && !initialProducts.some(ip => ip.id === bsp.id && ip.variant === product.variants?.[bsp.variantIndex]?.name)) {
+      const variant = product.variants?.[bsp.variantIndex] || product.variants?.[0];
+      acc.push({ ...product, variant });
     }
-
-    const variant = product.variants?.[bsp.variantIndex] || product.variants?.[0];
-    return { ...product, variant };
-  })
-  .filter(Boolean)
+    return acc;
+  }, [])
   .slice(0, 4);
 
 

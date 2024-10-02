@@ -4,57 +4,62 @@ import products from '@/data/products.json'
 function findBestBundleServer(cartProducts) {
     // Aggregate cart products by id using a helper object
    
-    const shrinkedCartProductsTemp = [];
 
-    cartProducts.forEach(cp => {
-        
-        const existingProduct = shrinkedCartProductsTemp.find(scp => scp.id === cp.id);
     
-        if (existingProduct) {
-            
-            existingProduct.quantity += cp.quantity;
-        } else {
-            
-            shrinkedCartProductsTemp.push({ ...cp });
-        }
-    });
+
+
+    const shrinkedCartProductsTemp = cartProducts.reduce((acc, cp) => {
+        const existing = acc.find(scp => scp.id == cp.id);
+        existing?  existing.quantity+=cp.quantity : acc.push({ ...cp });
+        return acc;
+      }, []);
 
     let bestBundle = {
         id: null,
         price: 0,
+        priceOff: 0,
         originalPrice: 0,
         percentage: 0
     };
 
     shrinkedCartProductsTemp.forEach(cp => {
         const product = products.find(p => p.id === cp.id);
-        if (!product || !product.bundle) return;
+        if (!product?.bundle) return;
 
-        let bestOffer = product.bundle.reduce((best, current) => {
-            return (cp.quantity >= current.quantity && current.discountPercentage > (best.discountPercentage || 0))
-                ? current
-                : best;
-        }, {});
+        let offer = product.bundle.findLast(b => cp.quantity >= b.quantity);
 
-        if (bestOffer.discountPercentage) {
-            const priceOff = parseFloat((product.price * cp.quantity * bestOffer.discountPercentage / 100).toFixed(2));
+
+        
+    if (!offer) return;
+
+    
+    
+    const discount = offer.discountPercentage;
+
+        
+            const priceOff = parseFloat((product.price * cp.quantity * discount / 100).toFixed(2));
 
             if (priceOff > bestBundle.priceOff) {
+
+                
                 bestBundle = {
-                    id: cp.id,
-                    priceOff: discountPrice,
+                    id: product.id,
+                    priceOff: priceOff,
                     originalPrice: product.price,
-                    percentage: bestOffer.discountPercentage
+                    percentage: discount
                 };
+
             }
-        }
+      
     });
 
+    
+
     if (bestBundle.priceOff !== 0) {
+
         cartProducts = cartProducts.map(cp => {
-            if (cp.id === bestBundle.id) {
-                cp.bundledPrice = parseFloat((bestBundle.originalPrice * (100 - bestBundle.percentage) / 100).toFixed(2));
-            }
+            if (cp.id === bestBundle.id)  cp.bundledPrice = parseFloat((bestBundle.originalPrice * (100 - bestBundle.percentage) / 100).toFixed(2));
+
             return cp;
         });
     }
