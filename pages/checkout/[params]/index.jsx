@@ -38,13 +38,13 @@ const BuyNowPage = () => {
 
 
 
+    console.log('hello!', variants, quantities)
 
     
-    if (!variants || !quantities || quantities.some(q => isNaN(Number(q))) || variants.length!==quantities.length) {
+    if (!quantities || (variants && quantities.length!==variants.length) || quantities.some(q => isNaN(q))) {
       setLoaded(true);
       return;
     }
-
 
     
     
@@ -104,7 +104,7 @@ const BuyNowPage = () => {
         id: product.id,
         quantity: Number(quantities[0]),
         name: product.name,
-        image: variantIndex>0?product.variants[variantIndex].image:product.images[0],
+        image: product.images[0],
         price: product.price,
         variant: variants?variants[0]:undefined
       });
