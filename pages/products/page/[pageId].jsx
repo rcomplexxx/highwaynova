@@ -35,14 +35,28 @@ export async function getStaticPaths() {
   const productLength = products.length;
   const totalPages = Math.ceil(productLength / 12);
   
-  const paths = Array.from({ length: totalPages-1 }, (_, i) => ({
-    params: { pageId: (i + 2).toString() },
+  let paths = Array.from({ length: totalPages }, (_, i) => ({
+    params: { pageId: (i + 1).toString() },
   }));
+
+ 
 
   return { paths, fallback: false };
 }
 
 export async function getStaticProps(context) {
+
+  console.log('params', context.params)
+
+  if(context.params.pageId==="1")return {
+    redirect: {
+      destination: '/',
+      permanent: true
+    },
+  };
+
+    
+  
   const pageId = parseInt(context.params.pageId, 10);
   const productLength = products.length;
   const totalPageNumber = Math.ceil(productLength / 12);

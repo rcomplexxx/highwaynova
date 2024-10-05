@@ -17,8 +17,8 @@ export default function PageNumber({ mainLink, links, pageId}){
         <ArrowDown styleClassName={styles.rightArrowImg} />
       </Link>
     )}
-    {links.length > 1 &&
-      links.map((link, index) => (
+    {links?.length > 1 &&
+      links?.map((link, index) => (
         <Link
           key={index}
           className={`${styles.pageLink} ${pageId === link ? styles.currentPageLink : ''}`}
@@ -27,7 +27,7 @@ export default function PageNumber({ mainLink, links, pageId}){
           {link}
         </Link>
       ))}
-    {pageId < links.length && (
+    {pageId < links?.length && (
       <Link
         href={`${mainLink}${pageId + 1}`}
         className={`${styles.pageLink} ${styles.arrowLink}`}

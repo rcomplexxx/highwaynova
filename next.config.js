@@ -7,15 +7,7 @@ const path = require('path');
 const nextConfig = {
 
   
-    async redirects() {
-      return [
-        {
-          source: '/products/page/1',
-          destination: '/products',
-          permanent: true, // Set to true for 301 redirects
-        },
-      ];
-    },
+   
 
     experimental: {
         scrollRestoration: true,

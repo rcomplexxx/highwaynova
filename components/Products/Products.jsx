@@ -10,7 +10,7 @@ const Products = ({ products, showAll, productListTitle }) => {
     <div className={styles.toolbar}>
       {productListTitle && <h1>{productListTitle}</h1>}
       <div className={styles.mainGridStyle}>
-        {products.map((product, i) => (
+        {products?.map((product, i) => (
           <Product key={i} product={product} />
         ))}
       </div>
