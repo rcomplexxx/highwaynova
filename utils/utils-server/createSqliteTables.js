@@ -55,16 +55,23 @@ async function createSqliteTables() {
 
 
 
+
+
+
 await dbConnection.query(`
   CREATE TABLE IF NOT EXISTS products (
-                id INT AUTO_INCREMENT PRIMARY KEY,
-                productId TINYINT,
-                description TEXT CHARACTER SET utf8mb4
-                
-           )
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    productId TINYINT UNIQUE,
+    description TEXT CHARACTER SET utf8mb4
+  )
 `);
 
+await dbConnection.query(`
+  CREATE INDEX IF NOT EXISTS idx_productId ON products (productId)
+  `);
 
+
+  
 
 await dbConnection.query(`
   CREATE TABLE IF NOT EXISTS reviews (
@@ -73,7 +80,7 @@ await dbConnection.query(`
                 text TEXT CHARACTER SET utf8mb4,
                 stars TINYINT,
                 imageNames TEXT,
-                product_id INT
+                product_id TINYINT
             )
 `);
 

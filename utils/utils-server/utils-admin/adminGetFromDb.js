@@ -25,6 +25,8 @@ const getFromDb = async(dbConnection, resReturn, table, queryCondition=true, sel
 
       }
 
+    
+
   
 
 else{

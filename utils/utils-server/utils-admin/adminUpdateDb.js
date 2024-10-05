@@ -166,7 +166,7 @@ async function updateDb (dbConnection, resReturn, table, data) {
     
     
          
-            if (table === "reviews" ) {
+            else if (table === "reviews" ) {
     
     
     
@@ -353,6 +353,20 @@ async function updateDb (dbConnection, resReturn, table, data) {
     
            
             } 
+
+            else if(table==="products"){
+
+              await dbConnection.query(
+                `INSERT INTO products (productId, description) 
+                 VALUES (?, ?)
+                 ON DUPLICATE KEY UPDATE description = VALUES(description)`,
+                [data.productId, data.text]
+              );
+
+              return await resReturn(200, { descriptionUpdated: true })
+
+
+            }
            
             
            

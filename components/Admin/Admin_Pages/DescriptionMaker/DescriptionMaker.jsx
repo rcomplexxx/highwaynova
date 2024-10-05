@@ -3,321 +3,231 @@ import  { isValidElement, useRef, useState } from 'react'
 import ReactHtmlParser from "react-html-parser";
 
 import styles from './descriptionmaker.module.css'
-import {  useRouter } from 'next/router';
 
 import productsData from "@/data/products.json";
 
+import Swal from 'sweetalert2';
+
 
 export default function DescriptionMaker() {
-
-
+;
  
     const descriptionTextRef=useRef();
     const descriptionCssTextRef=useRef();
+
     const [previewDescription, setPreviewDescription]= useState();
+
     const [descriptionGetterProductId, setDescriptionGetterProductId]=useState();
     const [productId, setProductId] = useState("");
-    
-    const [savedContent, setSavedContent] = useState();
     
 
     console.log('PreviewContent', previewDescription);
 
     
+    const showError = (message) => {
+      Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: message,
+          confirmButtonText: 'Okay',
+          background: '#333', // Dark background color
+          color: '#fff', // Text color
+          customClass: {
+              popup: 'dark-popup', // Custom class for the popup
+              title: 'dark-title', // Custom class for the title
+              icon: 'dark-icon', // Custom class for the icon
+              confirmButton: 'dark-confirm-button' // Custom class for the button
+          }
+      });
+  };
 
 
 
+    const getCurrentDescription = async () => {
 
-    const getCurrentDescription = async() =>{
-
-
-        if(descriptionGetterProductId===undefined || descriptionGetterProductId===NaN)return;
-
-        const product = productsData.find((product) => descriptionGetterProductId === product.id);
-
-        let productDescription;
-
-       
-        if(product){
-
-
-
-          const response =  await fetch("/api/admincheck", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(
-              { dataType:"get_product_description", data: {productId: product.id} }
-            ),
-          });
+      
+      if (descriptionGetterProductId===undefined || isNaN(descriptionGetterProductId)) return;
+    
+      const product = productsData.find(product => descriptionGetterProductId === product.id);
+      if (!product) return;
 
     
-          if (response.ok) {
-            const data = await response.json();
-         
-            if(data.data && data.data.length === 1){
+      const response = await fetch("/api/admincheck", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ dataType: "get_product_description", data: { productId: product.id } }),
+      });
+    
+      if (!response.ok) return;
+    
+      const { data } = await response.json();
 
-              productDescription = data.data[0].description
-              
-
-            }
-          }
-
-
-
-          
-
+      console.log('hello!', data)
+      
+      if (!data || data.length === 0) {
         
-        if(productDescription) {
-          
-          if(productDescription.split("</style>").length>1){
-
-            
-
-            descriptionTextRef.current.value= productDescription.split("</style>")[1];
-
-          
-            descriptionCssTextRef.current.value =  productDescription.substring(productDescription.indexOf('<style>')+ '<style>'.length,
-            productDescription.indexOf("</style>"));
-
-           
-
-
-          }
-
-          else{
-            descriptionTextRef.current.value= productDescription;
-          }
-
-          setSavedContent(productDescription);
-        }
-
-        
-          
-            setProductId(descriptionGetterProductId)
-          
-            
-       
-
-       
-
+      setProductId(descriptionGetterProductId);
+        return;}
+    
+      
+      const productDescription = data[0].description;
+      if (!productDescription) return;
+    
+      if (productDescription.includes("</style>")) {
+        const [css, description] = productDescription.split("</style>");
+        descriptionTextRef.current.value = description;
+        descriptionCssTextRef.current.value = css.substring(css.indexOf("<style>") + 7);
+      } else {
+        descriptionTextRef.current.value = productDescription;
       }
-    }
+    
+      
+      setProductId(descriptionGetterProductId);
+    };
 
 
 
+    const cleanDescriptionMaker = () => {
+     
 
-
-    const handlePreviewEmail = ()=>{
-        try {
-            // Attempt to parse the HTML
-
-            const finalHtml= `<style>${descriptionCssTextRef.current.value}</style>${descriptionTextRef.current.value}`
-
-
-            console.log(finalHtml);
-            const parsedHtml = ReactHtmlParser(finalHtml);
-        
-            if (Array.isArray(parsedHtml) && parsedHtml.every(isValidElement)) {
-                setPreviewDescription(parsedHtml);
-              } else {
-                // Handle the case where parsing did not result in valid React elements
-                setPreviewDescription("An error occurred while parsing the HTML.");
-              }
-          } catch (error) {
-            // Handle the error (e.g., log it, display an error message, etc.)
-            console.error('Error parsing HTML:', error);
-        
-            // Perform a specific action when there is an error in HTML text
-            setPreviewDescription("An error occurred while parsing the HTML.");
-          }
-    }
-
-
-    const handleSaveDescription = async()=>{
-
-        if( descriptionTextRef.current.value=='')
-        return;
-
-        const answer = window.confirm('Do you want to proceed with replacing current description with new one?');
-      if (!answer) {return;}
-
-      console.log('curr product id is', productId)
-
-      const finalHtml= `<style>${descriptionCssTextRef.current.value}</style>${descriptionTextRef.current.value}`
-        let newDescriptionData = { text:finalHtml, productId:productId };
+      setPreviewDescription("");
+      setDescriptionGetterProductId();
+      setProductId("");
+ 
+   
+    descriptionTextRef.current.value = "";
+    descriptionCssTextRef.current.value = "";
 
     
-     
-        await fetch("/api/admincheck", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ dataType: 'update_new_product_description',
-             data: newDescriptionData }),
-        })
-          .then((response) => {
-            if (response.ok) {
-              console.log(response);
-
-              setSavedContent(finalHtml);
-
-              descriptionTextRef.current.value="";
-              descriptionCssTextRef.current.value="";
-              setPreviewDescription("");
-              setDescriptionGetterProductId()
-              setProductId("");
-              
-              // router.push('/admin');
-            }
-          })
   
-          .catch((error) => {console.log(error)});
+    
+  }
 
-       
 
-     
 
+
+
+    const handlePreviewEmail = () => {
+      try {
+
+        //parsing html
+        const finalHtml = `<style>${descriptionCssTextRef.current.value}</style>${descriptionTextRef.current.value}`;
+        const parsedHtml = ReactHtmlParser(finalHtml);
+    
+        if (Array.isArray(parsedHtml) && parsedHtml.every(isValidElement)) {
+          setPreviewDescription(parsedHtml);
+        } else {
+          setPreviewDescription("An error occurred while parsing the HTML.");
+        }
+      } catch (error) {
+        console.error('Error parsing HTML:', error);
+        setPreviewDescription("An error occurred while parsing the HTML.");
+      }
     };
+    
+
+   const handleSaveDescription = async () => {
+
+    if (!productId) return showError("Product id isn't specified.");
+    if (!descriptionTextRef.current.value) return showError("Description can't be empty.");
+    if (!window.confirm('Do you want to proceed with replacing the current description with the new one?')) return;
+
+  const finalHtml = `<style>${descriptionCssTextRef.current.value}</style>${descriptionTextRef.current.value}`;
+  const newDescriptionData = { text: finalHtml, productId };
+
+  try {
+    const response = await fetch("/api/admincheck", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ dataType: 'update_new_product_description', data: newDescriptionData })
+    });
+
+    if (response.ok) {
+      
+      cleanDescriptionMaker();
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 
 
 
 
   return (
-    <>
-      <h1>Description maker</h1>
-
-
-
-      <div className={styles.mainDiv}>
-      <span className={styles.descriptionMakerInstructionSpan}>
-        You can get current description of product if it exists. 
-      Type product id, and click "Get current description" button.
-      </span>
-      <span className={styles.descriptionMakerInstructionSpan}>It is suggested to write description using html and css. If you click preview, you can see if you have any html error,
-        as description string text is trying to be parsed to html(like it would be on regular page).
-      </span>
-
-      <span className={styles.descriptionMakerInstructionSpan}>{`It's suggested to put images in /public/images/description/product_$productId.`}
-      </span>
-
-      <div className={styles.getCurrentDescriptionWrapper}>
-
-     {productId==="" ? <> <input
-            id="product_id"
-            className={styles.inputProductId}
-            value={descriptionGetterProductId}
-            placeholder="Enter product id to GET current description"
-            onChange={(event) => {
-              const inputNumber = Number(event.target.value);
-              setDescriptionGetterProductId(inputNumber);
-            }}
-          />
-          
-
-        <button onClick={getCurrentDescription} className={`${styles.getCurrentDescrition}`}>Link product by id(and get current description if exist)</button>
-        </>:<>
-        <span className={styles.newDescWarning}>New description is linked to and will affect product with ID: {descriptionGetterProductId}</span>
-        <button className={`${styles.getCurrentDescrition} ${styles.unlinkProductButton}`} 
-        onClick={()=>{ 
-          if(savedContent !=  
-            `<style>${descriptionCssTextRef.current.value}</style>${descriptionTextRef.current.value}`
-          ){
-            const answer = 
-            window.confirm(`You have unsaved html/css content. Changes will not be applied. Are you sure you want to continue?`);
-            if (!answer) {return;}
-          }
-        
-          
-          setProductId("");
-        }}>Unlink product id</button>
-        </>}
-        <div className={styles.featuresWrapper}>
-          <span>Handy options</span>
-        <button className={`${styles.getCurrentDescrition} ${styles.featureButton}`} 
-        onClick={(event)=>{ 
-          navigator.clipboard.writeText(`<div class="descriptionWrapper">\n\n<img alt="description image" class="descriptionImage firstChild" loading="eager" src="/images/description_images/1-3.png"/>\n\n<h1 class="descTitle">My title</h1>\n\n<span class="subText">This is my description text</span>\n\n</div>`);
-          event.target.innerText="Standard html content COPIED!"
-        }}>Copy standard html description content</button>
-         <button className={`${styles.getCurrentDescrition} ${styles.featureButton}`} 
-        onClick={(event)=>{ 
-          navigator.clipboard.writeText(
-            `.descriptionWrapper{\ndisplay:flex;\nflex-direction: column;\nfont-size: 16px;\n}\n\n.descriptionImage{\nwidth: 100%;\nheight: max-content;\nborder-radius: 16px;\nmargin-top: 32px;\nalign-self:center;\n}\n\n.firstChild{\nmargin-top:0;\n}\n\n.descTitle{\nmargin: 32px 0;\nmargin-bottom: 32px;\nfont-weight: 600;\n}\n\n.subText{\ncolor: var(--description-content-color);\n margin: 0 32px;\nfont-size: 18px;\ntext-align: center;\n}`
-      );
-          event.target.innerText="Standard css content COPIED!"
-        
-        }}>Copy standard css description content</button>
-
-       
-        </div>
-        
-        </div>
-   
-
-      <div className={styles.emailContentDiv}>
-
-        <textArea
-        ref={descriptionTextRef}
-        tabIndex={0}
-        contentEditable={true}
-        suppressContentEditableWarning={true}
-        className={styles.textArea}
-        
-        placeholder='Description html content...'
-        onFocus={(event) => {
-          event.target.style.height = event.target.scrollHeight + "px";
-        }}
-        />
-
-<textArea
-        ref={descriptionCssTextRef}
-        tabIndex={0}
-        contentEditable={true}
-        suppressContentEditableWarning={true}
-        className={`${styles.textArea} ${styles.textAreaCss}`}
-        
-        placeholder='Define description css classes here...'
-        onFocus={(event) => {
-          event.target.style.height = event.target.scrollHeight + "px";
-        }}
-        />
-        <div className={styles.newEmailButtons}>
-
-        <button className={styles.previewButton} onClick={handlePreviewEmail}>Preview Email</button>
-       
-        </div>
-        
-      </div>
-
-     { previewDescription && <><div className={styles.previewContent}>
-        {previewDescription}
-      </div> </>}
-
-     {productId==="" ? <input
-            id="product_id"
-            className={styles.inputProductId}
-            value={productId}
-            placeholder="Enter product id to UPDATE description"
-            onChange={(event) => {
-              const inputNumber = Number(event.target.value);
-              setDescriptionGetterProductId()
-               setProductId(inputNumber);
-            }}
-          />:<span className={styles.newDescWarning}>New description will affect product with ID: {descriptionGetterProductId}</span>
-
-        }
-
-        <button onClick={handleSaveDescription} className={`${styles.saveDescription}`}>Save description</button>
-   
+  <>
+  <h1>Description Maker</h1>
+  <div className={styles.mainDiv}>
+    <div className={styles.descriptionMakerInstructionSpan}>
+      <p>Get the current product description if it exists by entering the product ID and clicking "Get current description."</p>
+      <p>It's suggested to write the description using HTML and CSS. Use preview to check for any HTML errors, as the description will be parsed as HTML.</p>
+      <p>Store images in /public/images/description/product_$productId.</p>
     </div>
 
+    <div className={styles.getCurrentDescriptionWrapper}>
+      {productId === "" ? (
+        <>
+          <input
+            className={styles.inputProductId}
+            value={descriptionGetterProductId}
+            placeholder="Enter product ID"
+            onChange={(e) => setDescriptionGetterProductId(Number(e.target.value))}
+          />
+          <button onClick={getCurrentDescription} className={styles.getCurrentDescrition}>
+            Link product and get description
+          </button>
+        </>
+      ) : (
+        <>
+          <span className={styles.newDescWarning}>
+            New description will affect product ID: {descriptionGetterProductId}
+          </span>
+          <button
+            onClick={()=>{ if (!window.confirm("Unsaved changes will be lost. Continue?")) return; cleanDescriptionMaker();}}
+            className={`${styles.getCurrentDescrition} ${styles.unlinkProductButton}`}
+          >
+            Unlink product ID
+          </button>
+        </>
+      )}
 
+      <div className={styles.featuresWrapper}>
+        <span>Handy options</span>
+        <button
+          className={`${styles.getCurrentDescrition} ${styles.featureButton}`}
+          onClick={(e) => {
+            navigator.clipboard.writeText(`<div class="descriptionWrapper">...</div>`);
+            e.target.innerText = "HTML content COPIED!";
+          }}
+        >
+          Copy standard HTML
+        </button>
+        <button
+          className={`${styles.getCurrentDescrition} ${styles.featureButton}`}
+          onClick={(e) => {
+            navigator.clipboard.writeText(`.descriptionWrapper {...}`);
+            e.target.innerText = "CSS content COPIED!";
+          }}
+        >
+          Copy standard CSS
+        </button>
+      </div>
+    </div>
 
+    <div className={styles.emailContentDiv}>
+      <textarea ref={descriptionTextRef} className={styles.textArea} placeholder="Description HTML..." />
+      <textarea ref={descriptionCssTextRef} className={`${styles.textArea} ${styles.textAreaCss}`} placeholder="Description CSS..." />
+      <button className={styles.previewButton} onClick={handlePreviewEmail}>Preview</button>
+    </div>
 
-      </>
+    {previewDescription && <div className={styles.previewContent}>{previewDescription}</div>}
+
+   
+
+    <button onClick={handleSaveDescription} className={styles.saveDescription}>Save description</button>
+  </div>
+</>
   )
 }
 

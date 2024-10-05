@@ -2,7 +2,7 @@
 import { verifyToken } from "@/utils/utils-server/utils-admin/auth.js"; // Adjust the path based on your project structure
 import RateLimiter from "@/utils/utils-server/rateLimiter.js";
 
-import makeNewDescription from "@/utils/utils-server/makeNewDescription.js"
+
 import reorderReviewsByRatingAndImages from '@/utils/utils-server/reorderReviews.jsx';
 
 
@@ -12,7 +12,7 @@ import updateDb from '@/utils/utils-server/utils-admin/adminUpdateDb'
 import getFromDb from '@/utils/utils-server/utils-admin/adminGetFromDb';
 import wipeData from '@/utils/utils-server/utils-admin/adminDataWiper'
 import deleteRow from '@/utils/utils-server/utils-admin/adminDbRowDeleter';
-import {obtainGetDbQueryParams} from "@/utils/utils-server/utils-admin/obtainAdminDbQueryParmas";
+import {obtainDbQueryParams, obtainGetDbQueryParams} from "@/utils/utils-server/utils-admin/obtainAdminDbQueryParmas";
 
 
 const getPool = require('@/utils/utils-server/mariaDbPool');
@@ -44,19 +44,6 @@ let dbConnection;
 
 
 
-
-
-
-
-
-  
-
-
-
-
-
-
- 
 
 
 
@@ -121,37 +108,24 @@ let dbConnection;
       else if (dataType.startsWith("update_")){
 
 
+      
+        const table = obtainDbQueryParams(dataType);
 
 
 
-          let table;
-
-        if (dataType === "update_orders")  table = "orders";
-    
-        else if (dataType === "update_unanswered_messages")   table = "messages";
-
-         else if (dataType === "update_reviews") table = "reviews";
-
-  
-         else if(dataType=== "update_new_email_template")  table = "email_templates";
-
+        
      
-     
-         else if (dataType === "update_email_data") {
+         if (dataType === "update_email_data")  console.log('started email send');
 
-          console.log('started email send');
-     
-          table = "emails";
+
+
            
 
-        }
+        
 
         if(table) return await updateDb(dbConnection, resReturn, table, data);
  
          
-
-
-
 
 
         else {
@@ -170,29 +144,7 @@ let dbConnection;
     } 
      
 
-        else if(dataType === 'update_new_product_description'){
-
-          
-          console.log('update_new_product_description executed.');
-
-    
-
-          const newDescriptionIntegrated = await makeNewDescription(data.text , data.productId, dbConnection);
-
-          if(!newDescriptionIntegrated) return await resReturn(500, { descriptionUpdated: false })
-
-
-
-
-
-          //return true u res ako je uspesno revritowan fajl u kojem je smestena descripcija.
-           return await resReturn(200, { descriptionUpdated: true })
-         
-             
-            
-     
-         
-        }
+       
         else{
         return await resReturn(500, { successfulLogin: false, error: "Wrong data type" })
         }
@@ -209,22 +161,13 @@ let dbConnection;
 
       else if(dataType.startsWith('insert_')){
 
-        let table;
 
-        if (dataType === 'insert_new_return') table = "product_returns";
-
-          
       
-
-        else if (dataType === "insert_new_email")  table = "emails";
-
-        else if(dataType==='insert_new_sequence') table = "email_sequences";
+        const table = obtainDbQueryParams(dataType);
 
        
-        
-        else if(dataType === 'insert_new_capaign') table = "email_campaigns";
 
-        else return await resReturn(500, { successfulLogin: false, error: "Wrong data type" })
+        if(!table) return await resReturn(500, { successfulLogin: false, error: "Wrong data type" })
 
         
 
@@ -244,19 +187,15 @@ let dbConnection;
 
       else if(dataType.startsWith('delete_')){
 
-        let table;
-        
-       if(dataType ==="delete_email_sequence") table = 'email_sequences';
+
       
+    
+        const table = obtainDbQueryParams(dataType);
+
        
 
-          else if(dataType === "delete_email")table = 'emails';
-      
-          
 
-          else if(dataType==="delete_product_return")table = 'product_returns';
-
-          else return await resReturn(500, { successfulLogin: false, error: "Wrong data type" })
+        if(!table) return await resReturn(500, { successfulLogin: false, error: "Wrong data type" })
        
 
          return await deleteRow(dbConnection, resReturn, table, data.deleteId)
@@ -268,44 +207,23 @@ let dbConnection;
       else if(dataType.startsWith('wipe')){
 
 
-        let table; 
-        
-        
-         if(dataType === `wipe_orders`) table= 'orders';
-        
-        else if(dataType === `wipe_messages`) table= 'messages';
-          
-  
-
-
-        else if(dataType ==="wipe_product_returns") table= 'product_returns';
-        
-
-        else if(dataType ==="wipe_emails")  table= 'emails';
-        
-        
-
-        else if(dataType ==="wipe_email_sequences") table= 'email_sequences';
       
         
-        else if(dataType ==="wipe_email_campaigns")  table= 'email_campaigns';
+        const table = obtainDbQueryParams(dataType);
+        
+        
+      
         
 
-        else if(dataType ==="wipe_customers") table= 'customers';
 
-        else if(dataType === `wipe_reviews`){
-          console.log('reviews wiping', data.product_id)
-          return await wipeData(dbConnection,  resReturn,'reviews', data.product_id)
-        }
+        if(!table) return await resReturn(500, { successfulLogin: false, error: "Wrong data type" })
 
-
-
+          if(table==='reviews'){
+            console.log('reviews wiping', data.product_id)
+            return await wipeData(dbConnection,  resReturn,'reviews', data.product_id)
+          }
         
-        if(table) return await wipeData(dbConnection, resReturn, table);
-
-        
-
-        else return await resReturn(500, { successfulLogin: false, error: "Wrong data type" })
+        return await wipeData(dbConnection, resReturn, table);
 
         
 
@@ -314,23 +232,14 @@ let dbConnection;
 
      
 
+      
      
         
-        else {
-          console.error("Wrong data type");
-
-
-          return await resReturn(500, { successfulLogin: false, error: "Wrong data type" })
+        else  return await resReturn(500, { successfulLogin: false, error: "Wrong data type" })
 
 
           
-        }
       
-   
-      
-
-        
-        
 
 
 
