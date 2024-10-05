@@ -44,7 +44,7 @@ color: var(--high-contrast-txt-color);
 
 .priceDiv{
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: wrap-reverse;
 
   
   column-gap: var(--size-3);
@@ -65,14 +65,19 @@ color: var(--high-contrast-txt-color);
 
         color: var(--cart-crossed-price);
 
+
+        vertical-align: bottom;
         text-decoration: line-through;
 
+        font-size: var(--font-size-2) !important;
+
+        
+
+
       }
 
-      .itemStickerPrice{
-        color: var(--cart-weaker-color);
-        font-size: var(--font-size-5);
-      }
+  
+      
 
       .variant{
        

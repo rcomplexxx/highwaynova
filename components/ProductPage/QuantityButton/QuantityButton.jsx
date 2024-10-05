@@ -9,9 +9,8 @@ const QuantityButton = ({ quantity, setQuantity }) => {
   };
 
   const decrementQuantity = () => {
-    if (quantity > 1) {
-      setQuantity(quantity - 1); // Decrement quantity by 1, but ensure it doesn't go below 1
-    }
+    quantity > 1 && setQuantity(quantity - 1) // Decrement quantity by 1, but ensure it doesn't go below 1
+    
   };
 
   return (

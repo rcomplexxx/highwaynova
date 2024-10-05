@@ -1,5 +1,4 @@
-import { useEffect} from "react";
-import { useRouter } from "next/router";
+
 import products from "../../../data/products.json";
 import Products from "@/components/Products/Products.jsx";
 
@@ -12,17 +11,8 @@ import { unimportantPageSeo } from "@/utils/SEO-configs/next-seo.config";
 const ProductPage = ({  pageId, products, links }) => {
   // Redirect to home page if no product
 
-  const router = useRouter();
+ 
 
-  useEffect(() => {
-    if (pageId === 1) {
-      router.push("/products"); // Perform the redirect
-    }
-  }, [pageId]);
-
-  if (pageId === 1) return null;
-
-  //
 
   return (
     <div className={styles.mainDiv}>
@@ -43,31 +33,25 @@ const ProductPage = ({  pageId, products, links }) => {
 
 export async function getStaticPaths() {
   const productLength = products.length;
-  const pagesArray = [];
+  const totalPages = Math.ceil(productLength / 12);
+  
+  const paths = Array.from({ length: totalPages-1 }, (_, i) => ({
+    params: { pageId: (i + 2).toString() },
+  }));
 
-  for (let i = 0; i < Math.floor(productLength / 12) + 1; i++) {
-    pagesArray.push({ params: { pageId: (i + 1).toString() } });
-  }
-
-  return { paths: pagesArray, fallback: false };
+  return { paths, fallback: false };
 }
 
 export async function getStaticProps(context) {
   const pageId = parseInt(context.params.pageId, 10);
   const productLength = products.length;
-  let productArray =
-    (pageId - 1) * 12 > productLength
-      ? null
-      : pageId * 12 > productLength
-      ? products.slice((pageId - 1) * 12, productLength)
-      : products.slice((pageId - 1) * 12, pageId * 12);
-
-  const links = [];
   const totalPageNumber = Math.ceil(productLength / 12);
-
-  for (let i = 1; i <= totalPageNumber; i++) {
-    links.push(i);
-  }
+  
+  const start = (pageId - 1) * 12;
+  const end = Math.min(start + 12, productLength);
+  const productArray = start >= productLength ? [] : products.slice(start, end);
+  
+  const links = Array.from({ length: totalPageNumber }, (_, i) => i + 1);
 
   // Return the data as props
   return {

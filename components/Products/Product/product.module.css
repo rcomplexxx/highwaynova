@@ -23,15 +23,18 @@
 
 
   
-  .media {
+  .thumbnailWrapper {
+
+
     position: relative;
     width: 100%;
     aspect-ratio: 1;
-    transition: scale 0.005s ease-in;
+    
     overflow: clip;
     border-radius: 4px;
     cursor: pointer;
     user-select: none;
+    
   }
  
  

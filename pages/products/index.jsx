@@ -18,17 +18,12 @@ export default function ProductPage({ products, links }) {
 
 export async function getStaticProps() {
   const totalPageNumber = Math.ceil(products.length / 12);
-  const links = [];
-  if (totalPageNumber !== 1) {
-    for (let i = 1; i <= totalPageNumber; i++) {
-      links.push(i);
-    }
-  }
-
+  const links = totalPageNumber > 1 ? Array.from({ length: totalPageNumber }, (_, i) => i + 1) : [];
+  
   return {
     props: {
       products: products.slice(0, 12),
-      links: links,
+      links,
     },
   };
 }

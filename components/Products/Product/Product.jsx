@@ -7,10 +7,11 @@ import {  Stars } from "@/public/images/svgs/svgImages";
 const Product = ({ product}) => {
   return (
     <div className={styles.root}>
-      <Link href={"/products/" + product.name.toLowerCase().replace(/\s+/g, "-")}>
-        <div className={styles.media}>
+      
+      <Link href={"/products/" + product.name.toLowerCase().replace(/\s+/g, "-")} className={styles.thumbnailWrapper}>
+       
           <PicWithThumbnail product={product} />
-        </div>
+        
       </Link>
 
 

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useLayoutEffect } from "react";
 import styles from "./admin.module.css";
 import AdminNavbar from "./Admin_Navbar/AdminNavbar";
 import { useRouter } from "next/router";
@@ -22,190 +22,127 @@ import Customers from "./Admin_Pages/Customers/Customers";
 export default function Admin() {
   const [isAdmin, setIsAdmin] = useState();
   const [triggerRender, setTriggerRender] = useState(false);
-  const [customers, setCustomers] = useState([]);
+
 
   const [emailData, setEmailData] = useState({emails: [], campaigns: []});
 
+  const customers = useRef([]);
   const orders = useRef([]);
   const messages = useRef([]);
   const reviews = useRef([]);
 
+
+
+  const setData = (data, type, typeName) => {
+    type.current = data.length === 1 && data[0] === "reset_data" 
+      ? [] 
+      : data.length === 0 
+      ? [`No ${typeName}`] 
+      : data.map(item => typeName === "reviews" 
+        ? { id: item.id, name: item.name, stars: item.stars, text: item.text, imageNames: item.imageNames } 
+        : item);
+    
+    setTriggerRender(prev => !prev);
+  };
+
+
+
+
   const setOrders = (data) => {
-    let newOrders = [];
-    if (data.length == 1 && data[0] == "reset_data") {
-      orders.current = [];
-      setTriggerRender(!triggerRender);
-      return;
-    }
-
-    if (data.length == 0) {
-      orders.current = ["No orders"];
-      setTriggerRender(!triggerRender);
-      return;
-    }
-
-    for (let i = 0; i < data.length; i++) {
-      const order = data[i];
-      newOrders.push(order);
-    }
-
-    orders.current = newOrders;
-    setTriggerRender(!triggerRender);
+  
+    setData(data, orders, "orders")
   };
 
-  const setMessages = (data) => {
-    let newOrders = [];
-    if (data.length == 1 && data[0] == "reset_data") {
-      messages.current = [];
-      setTriggerRender(!triggerRender);
-      return;
-    }
+  const setMessages = (data) => {setData(data, messages, "messages")}
 
-    if (data.length == 0) {
-      messages.current = ["No Messages"];
-      setTriggerRender(!triggerRender);
-      return;
-    }
+  const setReviews = (data)=>{setData(data, reviews, "reviews")}
 
-    for (let i = 0; i < data.length; i++) {
-      const message = data[i];
-      newOrders.push(message);
-    }
+  const setCustomers = (data)=>{setData(data, customers, "customers")}
 
-    messages.current = newOrders;
-    setTriggerRender(!triggerRender);
-  };
-
-  const setReviews = (data) => {
-    let newReviews = [];
-    if (data.length == 1 && data[0] == "reset_data") {
-      reviews.current = [];
-      setTriggerRender(!triggerRender);
-      return;
-    }
-
-    if (data.length == 0) {
-      reviews.current = ["No Reviews"];
-      setTriggerRender(!triggerRender);
-      return;
-    }
-
-    for (let i = 0; i < data.length; i++) {
-      const review = data[i];
 
   
-      newReviews.push({
-        id: review.id,
-        name: review.name,
-        stars: review.stars,
-        text: review.text,
-        imageNames: review.imageNames,
-      });
-    }
 
-    reviews.current = newReviews;
-    setTriggerRender(!triggerRender);
-  };
+  
 
  
 
-  const checkAdminStatus = async () => {
-    try {
-      const response = await fetch("/api/admincheck");
-      const data = await response.json();
-      setIsAdmin(data.successfulLogin);
-    } catch (error) {
-      setIsAdmin(false);
-      console.error("Error checking admin status:", error);
-    }
-  };
+const checkAdminStatus = async () => {
+  try {
+    const { successfulLogin } = await (await fetch("/api/admincheck")).json();
+    setIsAdmin(successfulLogin);
+  } catch (error) {
+    setIsAdmin(false);
+    console.error("Error checking admin status:", error);
+  }
+};
 
 
 
-  useEffect(() => {
-    // Check if the user is an admin when the component mounts
+  useLayoutEffect(() => {
+    
 
     checkAdminStatus();
-  }, []); // The empty dependency array ensures this effect runs once when the component mounts
+  }, []); 
+  
+  
 
   if (isAdmin === undefined) return <div className={styles.adminMainDiv}>
      <AdminNavbar setIsAdmin={setIsAdmin} />
     <h1>Loading...</h1></div>;
 
-  if (isAdmin) {
+  if (!isAdmin) return <AdminLogin checkAdminStatus={checkAdminStatus} />;
+  
+
+
+
     const router = useRouter();
     const { adminroute } = router.query;
+
+    if(!adminroute?.length) return  <div className={styles.adminMainDiv}>
+    <AdminNavbar setIsAdmin={setIsAdmin} />
+    <AdminHome />
+  </div>
+  
+ 
+
+
+  console.log('admin route', adminroute)
+
+
       
     let content;
-    console.log('new route', adminroute);
-    if (adminroute && adminroute.length!=0) {
+    
 
     
 
-      switch (adminroute[0]) {
-        case "orders":
-          content = <Orders data={orders.current} setData={setOrders} />;
-          break;
-        case "inbox":
-          content = <Inbox data={messages.current} setData={setMessages} />;
-          break;
-        case "customers":
-          content = (
-         
-            <Customers
-            customers={customers}
-              setCustomers={setCustomers}
-            />
-          );
-          break;
-        case "reviews":
-          content = (
-            <Reviews reviews={reviews.current} setReviews={setReviews} />
-          );
-          break;
-          case "emails":
-            if(adminroute.length===2){
-                if(adminroute[1]=='new-email')content= <NewEmail/>
-                else if(adminroute[1]=='campaigns')content = <Campaigns emails={emailData?.emails} sequences={emailData?.sequences} campaignData={emailData?.campaigns}/>
-                else if(adminroute[1]=='sequences')content = <Sequences emails={emailData?.emails} sequences={emailData?.sequences}/>
-               
-                else if(adminroute[1]=='new-campaign')content = <NewCampaign  sequences={emailData?.sequences} setEmailData={setEmailData}/>
-                else if(adminroute[1]=='new-sequence')content = <NewSequence  emailData={emailData} setEmailData={setEmailData}/>
-             
-                else{ 
-               content = <Emails  emailData={emailData} setEmailData={setEmailData}/>
-               }
-            }
-
-            else{
-              content = <Emails  emailData={emailData} setEmailData={setEmailData}/>
-            }
+    const componentsMap = {
+      orders: <Orders data={orders.current} setData={setOrders} />,
+      inbox: <Inbox data={messages.current} setData={setMessages} />,
+      customers: <Customers customers={customers.current} setCustomers={setCustomers} />,
+      reviews: <Reviews reviews={reviews.current} setReviews={setReviews} />,
+      descriptionmaker: <DescriptionMaker />,
+      productreturns: <ProductReturns/>,
+      datawiper: <DataWiper />,
+    };
+    
+    const emailRoutes = {
+      'new-email': <NewEmail />,
+      campaigns: <Campaigns emails={emailData?.emails} sequences={emailData?.sequences} campaignData={emailData?.campaigns} />,
+      sequences: <Sequences emails={emailData?.emails} sequences={emailData?.sequences} />,
+      'new-campaign': <NewCampaign sequences={emailData?.sequences} setEmailData={setEmailData} />,
+      'new-sequence': <NewSequence emailData={emailData} setEmailData={setEmailData} />,
+      default: <Emails emailData={emailData} setEmailData={setEmailData} />,
+    };
+    
+    content = componentsMap[adminroute[0]] || (
+      adminroute[0] === "emails"
+        ? emailRoutes[adminroute[1]] || emailRoutes.default
+        : <h1>Error 404. Page does not exist.</h1>
+    );
+  
 
 
-        
-            break;
 
-            case "descriptionmaker":
-              content = (
-                <DescriptionMaker/>
-              );
-            break;
-
-            case "productreturns":
-              content = (
-                <ProductReturns resetOrders = {()=>{setOrders(["reset_data"])}}/>
-              );
-            break;
-
-            case "datawiper":
-              content = (
-                <DataWiper/>
-              );
-            break;
-        default:
-          content = <h1>Error 404. Page does not exist.</h1>;
-      }
-    } else content = <AdminHome />;
 
     return (
       <div className={styles.adminMainDiv}>
@@ -213,7 +150,6 @@ export default function Admin() {
         {content}
       </div>
     );
-  }
+  
 
-  return <AdminLogin checkAdminStatus={checkAdminStatus} />;
 }

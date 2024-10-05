@@ -1,26 +1,27 @@
 import styles from "./ordercard.module.css";
-import { useEffect, useMemo, useState } from "react";
+import {  useMemo, useState } from "react";
 import SupplierCostInput from "./SupplierCostInput/SupplierCostInput";
+import products from '@/data/products.json'
+import coupons from '@/data/coupons.json'
+import Image from "next/image";
 
 export default function OrderCard({
    index,
   id,
-  total,
   info,
  
   packageStatus,
   existingSupplierCosts,
-  handleChangedOrdersArray,
-  products,
-  coupons,
+  handleChangedOrdersArray= ()=>{},
   productReturnsPageStyle=false
 }) {
 
 
-  const [transactionCovered, setStransactionCovered]= useState(true);
-  const [paymentIdCovered, setPaymentIdCovered] = useState(true);
+   const [cover, setCover]= useState({transaction: true, paymentId: true});
+
+
   
-  const [discountPercent, setDiscountPercent] = useState();
+  
   
   const [supplierCostInputOpen, setSupplierCostInputOpen] = useState(false);
   const [supplierCost, setSupplierCost] = useState('');
@@ -29,37 +30,22 @@ export default function OrderCard({
   
 
 
-   const infoObj = useMemo(() => JSON.parse(info), [info]);
-
-
-    useEffect(()=>{
-
-      console.log('ccCode', infoObj.couponCode)
-
-      if(infoObj.couponCode){
-
-
-         const myCoupon= coupons.find((c)=>{return infoObj.couponCode.toUpperCase()===c.code.toUpperCase()})
-         console.log('coupon', myCoupon);
-         const myDiscountPercent= myCoupon?myCoupon.discountPercentage:0;
+  const infoObj = useMemo(() => {
+   const { items, couponCode, ...rest } = info;
+   const newItems = JSON.parse(items || "[]").map(item => ({
+     ...item, 
+     images: products.find(product => product.id == item.id)?.images
+   }));
    
-        
-   
-       
-         
-         
-   
-         setDiscountPercent(myDiscountPercent);
-         
-       
-         
-                   }
+   const discountPercentOff = coupons.find(c => c.code.toUpperCase() === couponCode?.toUpperCase())?.discountPercentage;
+ 
+   return { ...rest, items: newItems, discountPercentOff };
+ }, [info, products, coupons]);
+
+
+
 
    
-                            
-
-               
-    },[])
 
 
 
@@ -68,29 +54,28 @@ export default function OrderCard({
  
 
 
-  const changePs = () => {
-   
-   if(currentPackageStatus ===4) return;
-
-    if(currentPackageStatus === 0) {setSupplierCostInputOpen(true)}
-
-
-     //Ovaj deo je cudan>>>
-    else if(currentPackageStatus===1){  setCurrentPackageStatus(2); 
-      
-      if(packageStatus===0)handleChangedOrdersArray({id: id, packageStatus:2, supplierCost: parseFloat(parseFloat(supplierCost).toFixed(2))})
-      
-      else handleChangedOrdersArray({id: id, packageStatus:2})
-   
+const changePs = () => {
+   if (currentPackageStatus === 4) return;
+ 
+   if (currentPackageStatus === 0) {
+     setSupplierCostInputOpen(true);
+   } else {
+      const nextStatus = currentPackageStatus < 3 ? currentPackageStatus + 1 : 0;
+     setCurrentPackageStatus(nextStatus);
+ 
+     const update = { id: infoObj.id, packageStatus: nextStatus };
+     if (currentPackageStatus === 1 && packageStatus === 0) {
+       update.supplierCost = parseFloat(supplierCost).toFixed(2);
+     }
+ 
+     handleChangedOrdersArray(update);
    }
+ };
 
-  
+ const statusLabels = ["Not Ordered", "Ordered", "Completed", "Canceled", "Returned"];
 
+ 
 
-    else if(currentPackageStatus===2){  setCurrentPackageStatus(3); handleChangedOrdersArray({id: id, packageStatus:3})}
-    
-    else if(currentPackageStatus===3){  setCurrentPackageStatus(0); handleChangedOrdersArray({id: id, packageStatus:0})}
-  };
 
   return (
     <div className={`${styles.cardMainDiv} ${productReturnsPageStyle && styles.productReturnsPageStyle}`}>
@@ -100,23 +85,16 @@ export default function OrderCard({
       supplierCost={supplierCost} setSupplierCost={setSupplierCost}
       handleChangedOrdersArray={(supplierCost)=>{
          setCurrentPackageStatus(1);
-         handleChangedOrdersArray({id: id, packageStatus:1, supplierCost: supplierCost})}} setSupplierCostInputOpen={setSupplierCostInputOpen}/>}
+         handleChangedOrdersArray({id: infoObj.id, packageStatus:1, supplierCost: supplierCost})}} setSupplierCostInputOpen={setSupplierCostInputOpen}/>}
       <div className={styles.cardRow}>
       <h1 className={styles.identifier}>{index+1}</h1>
     
 
       <p className={styles.orderId}>Order_id {infoObj.id}</p>
 
-      <button className={styles.packageStatusButton} onClick={changePs}>
-        {currentPackageStatus === 0
-          ? "Not Ordered"
-          : currentPackageStatus === 1
-          ? "Ordered"
-          : currentPackageStatus === 2? "Completed"
-          : currentPackageStatus === 3 ? "Canceled"
-          : currentPackageStatus === 4 ? "Returned"
-          : "Undefined"}
-      </button>
+      <button className={styles.packageStatusButton} onClick={changePs}>{statusLabels[currentPackageStatus] || "Undefined"}</button>
+
+      
       </div>
 
 
@@ -156,7 +134,7 @@ export default function OrderCard({
 
       <div className={styles.infoPair}>
          <p>Apt</p>
-         <p>{infoObj.apt?infoObj.apt:'______'}</p>
+         <p>{infoObj.apt || '______'}</p>
       </div>
 
       <div className={styles.infoPair}>
@@ -187,9 +165,13 @@ export default function OrderCard({
       <div className={styles.cardRow}>
       <h1 className={`${styles.rowTitle} ${styles.itemsRow}`}>Items</h1>
       <div className={`${styles.infoRowDiv} ${styles.itemsMiniRow}`}>
-      {JSON.parse(infoObj.items)?.map((item, index)=>{
+
+
+      {infoObj.items?.map((item, index)=>{
         return <div key={index} className={`${styles.cardRow} ${styles.itemInfoRow} ${styles.cardRowNoBorder}`}>
         <p className={styles.itemNumber}>Item {index+1 + ' →'}  </p>
+
+      
 
         <div className={styles.infoPair}>
          <p>Name</p>
@@ -203,24 +185,36 @@ export default function OrderCard({
 
       <div className={styles.infoPair}>
          <p>Variant</p>
-         <p>{item.variant}</p>
-      </div>
+         <p>{item.variant}</p>      </div>
+
+         <div className={styles.productImageDiv}>
+
+         <Image
+            src={`/images/${item.images[0]}`}
+            alt={item.name}
+            className={styles.productImage}
+            height={0} width={0} sizes="72px"
+          />
+
+         </div>
  
    </div>
       })
      
 
   }
+
+  
   </div>
    </div>
    <div className={`${styles.cardRow} ${styles.cardRowNoBorder}`}>
       <h1 className={styles.rowTitle}>Transaction</h1>
-     <div className={`${styles.infoRowDiv}  ${styles.transactionInfoDiv} ${transactionCovered && styles.transactionInfoDivCovered}`}>
+     <div className={`${styles.infoRowDiv}  ${styles.transactionInfoDiv} ${cover.transaction && styles.transactionInfoDivCovered}`}>
 
-     <div className={`${styles.infoPair} ${transactionCovered? styles.shrinkTotal:styles.pumpTotal}`}>
-         <p>Total{(discountPercent && infoObj.tip!=0) ?'(tip & disc. included)':(discountPercent?'(discount included)':
+     <div className={`${styles.infoPair} ${cover.transaction? styles.shrinkTotal:styles.pumpTotal}`}>
+         <p>Total{(infoObj.discountPercentOff && infoObj.tip!=0) ?'(tip & disc. included)':(infoObj.discountPercentOff?'(discount included)':
          infoObj.tip && infoObj.tip!=0 && '(tip included)')}</p>
-         <p>{total}</p>
+         <p>{infoObj.total}</p>
 
 
          
@@ -229,12 +223,12 @@ export default function OrderCard({
     
     
 
-    <div onClick={()=>{setStransactionCovered(false)}} 
-    className={`${styles.transactionCoverableDiv} ${!discountPercent && styles.transactionCoverableDivNoDisc} ${
-      transactionCovered && styles.transactionCovered
+    <div onClick={()=>{setCover(prevCover => ({...prevCover, transaction: false}))}} 
+    className={`${styles.transactionCoverableDiv} ${!infoObj.discountPercentOff && styles.transactionCoverableDivNoDisc} ${
+      cover.transaction && styles.transactionCovered
     }`}>
 
-  { transactionCovered ? <span>Click for details</span> :<> 
+  { cover.transaction ? <span>Click for details</span> :<> 
   
   
    {  existingSupplierCosts >0 && <div className={styles.infoPair}>
@@ -242,10 +236,10 @@ export default function OrderCard({
          <p>{existingSupplierCosts}</p>
       </div>}
   
-  {infoObj.couponCode && discountPercent && 
+  {infoObj.discountPercentOff && 
      <div className={styles.infoPair}>
-         <p>Discount ({discountPercent}%)</p>
-         <p>{(discountPercent*(total-infoObj.tip) / (100 - discountPercent)).toFixed(2)}</p>
+         <p>Discount ({infoObj.discountPercentOff}%)</p>
+         <p>{(infoObj.discountPercentOff*(infoObj.total-infoObj.tip) / (100 - infoObj.discountPercentOff)).toFixed(2)}</p>
       </div>
 }
 
@@ -265,7 +259,7 @@ export default function OrderCard({
 
       <div className={styles.infoPair}>
          <p>Payment id</p>
-         <p onClick={()=>{setPaymentIdCovered(false)}} className={paymentIdCovered && styles.paymentIdCovered}>{paymentIdCovered?'Click to see':infoObj.paymentId}</p>
+         <p onClick={() => setCover(prevCover => ({ ...prevCover, paymentId: false }))} className={cover.paymentId && styles.paymentIdCovered}>{cover.paymentId?'Click to see':infoObj.paymentId}</p>
       </div>
 
       </> 

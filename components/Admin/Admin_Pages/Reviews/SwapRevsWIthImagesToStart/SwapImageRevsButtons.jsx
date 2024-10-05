@@ -4,7 +4,7 @@ import Image from 'next/image'
 
 export default function SwapImageRevsButtons({reviews, setReviewsArray}) {
 
-    const updatedReviewsArrayRef = useRef([]);
+    
     const [swapped, setSwapped] = useState(false);
 
 
@@ -14,76 +14,73 @@ export default function SwapImageRevsButtons({reviews, setReviewsArray}) {
   
 
 
-    const lastRevWithoutImageIdRef= useRef(0);
+    
 
-    const swapRevsWithImagesToBeginning=()=>{
-        if(!reviews || reviews.length===0 || swapped)return;
-
-        for(let i = 0 ; i<=5; i++){
-
-        const reviewsByRating= reviews.filter(review => review.stars == i);
-        console.log('revs of rating' + i+ ' '+ reviewsByRating);
-
-        lastRevWithoutImageIdRef.current=0;
-        reviewsByRating.forEach((review, index)=>{
+    const swapRevsWithImagesToBeginning = () => {
+        if (!reviews || reviews.length === 0 || swapped) return;
+    
+        const updatedReviews = [];
+    
+        for (let i = 1; i <= 5; i++) {
 
 
-            if(review.imageNames){
 
-                console.log('rev with img detected, id: ', review.id);
 
-                console.log('..', lastRevWithoutImageIdRef.current)
-              
-                while(true){
+            let lastRevIdWithoutImage = 0;
 
-                    if(lastRevWithoutImageIdRef.current>=reviewsByRating.length-1)break;
-                    if(lastRevWithoutImageIdRef.current>index)break;
+
+            const reviewsByRating = reviews.filter(review => review.stars === i);
+            console.log(`Reviews of rating ${i}:`, reviewsByRating);
+
+
+            //za svaki review sa ratingom i
+            reviewsByRating.forEach((review, index) => {
+
+                    //ako poseduje sliku
+                if (!review.imageNames) return;
                     
-                    if(!reviewsByRating[lastRevWithoutImageIdRef.current].imageNames){
+                    console.log('Review with image detected, id:', review.id);
 
+                   
+                    
+                        //preispitati sve prethodne reviewe sa ratingom i
+                        for(let j = lastRevIdWithoutImage; i<index; j++){
 
-                        console.log('testid id', review.id)
-
-                        updatedReviewsArrayRef.current.push(
-
-                            {
-                            id: reviewsByRating[lastRevWithoutImageIdRef.current].id,
-                            changed: true,
-                            name:  reviewsByRating[lastRevWithoutImageIdRef.current].name,
-                            text: reviewsByRating[lastRevWithoutImageIdRef.current].text,
-                            stars: reviewsByRating[lastRevWithoutImageIdRef.current].stars,
-                            imageNames: null,
-                            deleted: false,
-                            swapId:review.id
+                            //pronaci taj prethodni review za preispitivanje
+                        const currentReview = reviewsByRating[j];
+                        
+                            //Ako taj review za preispitivanje ne poseduje sliku, izpushati u updatovan array taj review,  
+                            //sa swapId-om reviewa sa slikom radi zamene koja ce se izvrsiti u admin check(preko swap reviewa)
+                        if (!currentReview.imageNames) {
+                            console.log('Swapping id:', review.id);
+    
+                            updatedReviews.push({
+                                id: currentReview.id,
+                                changed: true,
+                                name: currentReview.name,
+                                text: currentReview.text,
+                                stars: currentReview.stars,
+                                imageNames: null,
+                                deleted: false,
+                                swapId: review.id,
+                            });
+    
+                            lastRevIdWithoutImage = j;
+                            break; // Break after a successful swap
                         }
-
-  
-                            
-                            
-                          );
-                          lastRevWithoutImageIdRef.current= lastRevWithoutImageIdRef.current +1;
-                          break;
+    
                         
                     }
+               
+            });
+        }
+    
+        //To se setuje u setReviewsArray, sto se kasnije obradjuje dalje jer se tu smestaju reviewi koji su promenjeni, s toga je changed:true gore 
+        //ubaceno, sto se prepoznaje u adminCheck
+        setReviewsArray(updatedReviews);  
+        setSwapped(true);
+    };
 
-                    lastRevWithoutImageIdRef.current= lastRevWithoutImageIdRef.current+1;
-                    
-                }
-                    
-            }
-
-
-
-        })
-
-    }
-
-       
-                setReviewsArray(updatedReviewsArrayRef.current);
-                updatedReviewsArrayRef.current = [];
-                lastRevWithoutImageIdRef.current=0;
-                setSwapped(true);
-    }
 
 
   return (

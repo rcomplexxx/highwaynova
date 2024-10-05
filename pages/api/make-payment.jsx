@@ -131,7 +131,7 @@ async function generateUniqueId(dbConnection) {
 
 
 
-  if(  (  await dbConnection.query('SELECT 1 FROM orders WHERE id = ?', [uniqueId])   ).length<1  ) return uniqueId;
+  if(  (  await dbConnection.query('SELECT 1 FROM orders WHERE id = ?', [uniqueId])   ).length<1  ) {return uniqueId; break; }
 
   
 }
@@ -144,7 +144,7 @@ async function generateUniqueId(dbConnection) {
 
       
         
-
+console.log('hello!!~~~~~~~~~~~~~~~~~~~~~~~~~~', paymentMethod)
 
 
 
@@ -189,17 +189,18 @@ async function generateUniqueId(dbConnection) {
          
        
 
-          const inserCustomerInfo = (await dbConnection.query(
+          customerId = (await dbConnection.query(
             "INSERT INTO customers (email, totalOrderCount, subscribed, source) VALUES (?, ?, ?, ?)",
             [email, 0, 0, 'make_payment']
-          ))?.[0];
+          ))?.insertId;
+
+   
           
-          customerId = inserCustomerInfo?.insertId;
 
 
         }
 
-
+        console.log('HERE IS MY FUCKING CUSTOMER ID', customerId)
 
 
 
@@ -333,9 +334,9 @@ async function generateUniqueId(dbConnection) {
     
     if(paymentMethod.includes('PAYPAL')){
 
-      console.log('order ship info', req.body.order, req.body.paymentMethod)
+      console.log('order ship info', req.body.order, paymentMethod)
     
-      const requestShipping = (req.body.paymentMethod==='PAYPAL(EXPRESS)' &&  req.body.order.city==="" &&  req.body.order.address==="") || req.body.paymentMethod==='PAYPAL(INSTANT)';
+      const requestShipping = (paymentMethod==='PAYPAL(EXPRESS)' &&  req.body.order.city==="" &&  req.body.order.address==="") || paymentMethod==='PAYPAL(INSTANT)';
     
     const request = await paypalPay(totalPrice, requestShipping);
   
@@ -347,7 +348,7 @@ async function generateUniqueId(dbConnection) {
      
       
      
-      await putInDatabase(req.body.paymentMethod,response.result.id, 0 , dbConnection);
+      await putInDatabase(paymentMethod,response.result.id, 0 , dbConnection);
 
      
       return await resReturn(200, { success: true, paymentId: response.result.id });
@@ -363,6 +364,7 @@ async function generateUniqueId(dbConnection) {
     }
 
   }
+
 
 
 
@@ -404,6 +406,7 @@ async function generateUniqueId(dbConnection) {
       });
 
 
+      console.log('paymentMethod',paymentMethod)
 
 
       const dbPaymentMethod = paymentMethod==="GPAY"?'GPAY(STRIPE)':'STRIPE';

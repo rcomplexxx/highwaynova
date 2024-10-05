@@ -78,11 +78,14 @@ export default function Reviews({ reviews, setReviews }) {
     }
 
     setReviewsArray(newReviewsArray);
+
+    setReviews(data);
+    
   };
 
 
 
-  if (reviews.length === 1 && reviews[0] === "No Reviews")
+  if (reviews.length === 1 && reviews[0] === "No reviews")
     return (
       <>
         <h1>Reviews</h1>
@@ -103,8 +106,8 @@ export default function Reviews({ reviews, setReviews }) {
             name="Reviews"
             reqData={{ product_id: productId }}
             dataType={"get_reviews"}
-            setData={setReviews}
-            initializeData={initializeReviewsData}
+            setData={initializeReviewsData}
+            
           />
 
          
@@ -121,7 +124,7 @@ export default function Reviews({ reviews, setReviews }) {
           <>
           <ReviewsSaveButton
             reviews={reviewsArray}
-            setOldReviews={setReviews}
+            setData={setReviews}
             clearAfterReviewsSave={clearAfterDataSave}
           />
 
@@ -129,7 +132,7 @@ export default function Reviews({ reviews, setReviews }) {
  {/* <SortByRating reviews={reviews}  setReviewsArray={setReviewsArray} / > 
           <SwapImageRevsButtons reviews={reviews}  setReviewsArray={setReviewsArray} / >  */}
           <SortByRatingAndImages productId={productId}  
-          setOldReviews={setReviews}
+          setData={setReviews}
             clearAfterReviewsSave={clearAfterDataSave}/>
          
 
@@ -153,8 +156,8 @@ export default function Reviews({ reviews, setReviews }) {
               name="Reviews"
               reqData={{ product_id: productId }}
               dataType={"get_reviews"}
-              setData={setReviews}
-              initializeData={initializeReviewsData}
+              setData={initializeReviewsData}
+              
             />
              
           </div>

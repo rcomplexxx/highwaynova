@@ -14,35 +14,23 @@ export default function LinkCard({title, children}) {
 
 
     
-   const handleCardExpend=()=>{
+    const handleCardExpend = () => {
       clearTimeout(maxHeightTimoutAdj.current);
-  
       const cardContentDiv = cardContentRef.current;
-     
-    if(!cardOpen){
-  
-       
-   
-        cardContentDiv.style.maxHeight=`${cardContentDiv.scrollHeight}px`;
-  
     
-     
-       maxHeightTimoutAdj.current=setTimeout(()=>{
-        cardContentDiv.style.maxHeight=`none`;
-        
-       }, 300)
-    }
-
-    else{
-        cardContentDiv.style.transition=`max-height 0s ease`;
-        cardContentDiv.style.maxHeight=`${cardContentDiv.scrollHeight}px`;
-        setTimeout(()=>{
-            cardContentDiv.style.transition=`max-height 0.3s ease`;
-            cardContentDiv.style.maxHeight=`0`;
-         }, 1)
-    }
-    setCardOpen(!cardOpen);
-  
+      if (!cardOpen) {
+        cardContentDiv.style.maxHeight = `${cardContentDiv.scrollHeight}px`;
+        maxHeightTimoutAdj.current = setTimeout(() => cardContentDiv.style.maxHeight = 'none', 300);
+      } else {
+        cardContentDiv.style.transition = 'max-height 0s ease';
+        cardContentDiv.style.maxHeight = `${cardContentDiv.scrollHeight}px`;
+        setTimeout(() => {
+          cardContentDiv.style.transition = 'max-height 0.3s ease';
+          cardContentDiv.style.maxHeight = '0';
+        }, 1);
+      }
+    
+      setCardOpen(!cardOpen);
     };
 
 

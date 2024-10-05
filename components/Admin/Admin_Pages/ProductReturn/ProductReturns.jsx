@@ -1,17 +1,17 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import styles from './productreturns.module.css'
 import PickReturnProducts from './PickReturnProducts/PickReturnProducts';
 import OrderCard from '../Orders/OrderCard/OrderCard';
-import products from '@/data/products.json'
-import coupons from '@/data/coupons.json'
 
 
-export default function ProductReturns({resetOrders}) {
+
+export default function ProductReturns() {
 
 const [emailToFindOrders, setEmailToFindOrders] = useState();
 const [foundOrders, setFoundOrders] = useState();
 
 const [linkedOrder, setLinkedOrder] = useState();
+
 
 const [linkOrderIdValue, setLinkOrderIdValue] = useState();
 
@@ -26,167 +26,114 @@ const [myProductReturns , setMyProductReturns] = useState();
 
 
 
+
+
+
+
+
 const getProductReturns = async () => {
-
-
-
-
-  
-
-
-  await fetch("/api/admincheck", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ dataType: 'get_product_returns'}),
-  })
-    .then((response) => {
-      if (response.ok) {
-        return response.json(); // Parse the response as JSON
-      } else {
-        throw new Error('Network response was not ok');
-      }
-    }).then((data) => {
-      setMyProductReturns(data.data);
-      resetOrders();
-    
-      console.log('orders found',data.data);
-    
-    })
-
-    .catch((error) => {console.log(error)});
-
-}
-
-
-
-  const getOrdersByEmail= async()=>{
-
-    if(!emailToFindOrders || emailToFindOrders=="")return;
-
-
-  
-
-
-    await fetch("/api/admincheck", {
+  try {
+    const response = await fetch("/api/admincheck", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ dataType: 'get_orders_by_email', data: { email:emailToFindOrders}}),
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response.json(); // Parse the response as JSON
-        } else {
-          throw new Error('Network response was not ok');
-        }
-      }).then((data) => {
-
-
-        const orders = data.data; 
-        setFoundOrders(orders)
-        console.log('orders found',orders);
-      
-      })
-
-      .catch((error) => {console.log(error)});
-
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ dataType: 'get_product_returns' }),
+    });
+    
+    if (!response.ok) throw new Error('Network response was not ok');
+    
+    const data = await response.json();
+    setMyProductReturns(data.data);
    
+    console.log('orders found', data.data);
+  } catch (error) {
+    console.log(error);
   }
-
-  const linkReturnToOrder = async()=>{
-
-
-    
+};
 
 
-    
 
-    await fetch("/api/admincheck", {
+const getOrdersByEmail = async () => {
+  if (!emailToFindOrders) return;
+
+  try {
+    const response = await fetch("/api/admincheck", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ dataType: 'get_order_by_orderId', data: {orderId: linkOrderIdValue} }),
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response.json(); // Parse the response as JSON
-          
-        } else {
-          throw new Error('Network response was not ok');
-        }
-      }).then((data) => {
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ dataType: 'get_orders_by_email', data: { email: emailToFindOrders } }),
+    });
 
-        console.log('order found',data);
-        setLinkedOrder(data.data[0]);
-      //data
-      
-      })
+    if (!response.ok) throw new Error('Network response was not ok');
 
-      .catch((error) => {console.log(error)});
-
+    const data = await response.json();
+    setFoundOrders(data.data);
+    console.log('orders found', data.data);
+  } catch (error) {
+    console.log(error);
   }
+};
 
 
 
 
-const saveNewReturn = async()=>{
+const linkReturnToOrder = async () => {
+  try {
+    const response = await fetch("/api/admincheck", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ dataType: 'get_order_by_orderId', data: { orderId: linkOrderIdValue } }),
+    });
 
-  console.log('return data', returnProducts ,linkedOrder);
+    if (!response.ok) throw new Error('Network response was not ok');
+
+    const data = await response.json();
+    console.log('order found', data);
+    setLinkedOrder(data.data[0]);
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 
-  if(!linkedOrder || returnProducts.length ===0 || 
-    
-    returnProducts.find(rp =>{return rp.id==undefined 
-      
-      || rp.id==="" || rp.quantity===0}) ||  returnProducts.find(rp=>{return rp.id === "" || rp.quantity === 0}))return;
-  
 
 
-  
- 
- 
-  
+const saveNewReturn = async () => {
+  console.log('return data', returnProducts, linkedOrder);
+
+  if (!linkedOrder || !returnProducts.length || 
+      returnProducts.some(rp => !rp.id || rp.quantity === 0)) return;
+
   const totalPrice= parseFloat(parseFloat(returnCost).toFixed(2));
 
+  const newReturnData = {
+    orderId: linkedOrder.id,
+    products: JSON.stringify(returnProducts),
+    couponCode: linkedOrder.couponCode,
+    tip: shouldReturnTip ? linkedOrder.tip : "0.00",
+    returnCost: totalPrice
+  };
 
-    let newReturnData = { orderId: linkedOrder.id, products:JSON.stringify(returnProducts), 
-      couponCode: linkedOrder.couponCode, tip:shouldReturnTip?linkedOrder.tip:"0.00", returnCost: totalPrice };
-
-
-    await fetch("/api/admincheck", {
+  try {
+    const response = await fetch("/api/admincheck", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ dataType: 'insert_new_return', data: newReturnData }),
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response.json(); // Parse the response as JSON
-          
-        } else {
-          throw new Error('Network response was not ok');
-        }
-      }).then((data) => {
-          console.log('Were saving new return successful?', data.data_saved);
+    });
 
-          if(data.data_saved){
-            setLinkedOrder();
-            setReturnProducts([]);
-            setLinkOrderIdValue();
-          }
+    if (!response.ok) throw new Error('Network response was not ok');
 
-      //data
-      
-      })
+    const data = await response.json();
+    console.log('Were saving new return successful?', data.data_saved);
 
-      .catch((error) => {console.log(error)});
-
+    if (data.data_saved) {
+      setLinkedOrder();
+      setReturnProducts([]);
+      setLinkOrderIdValue();
+    }
+  } catch (error) {
+    console.log(error);
   }
+};
+
 
 
   if(myProductReturns && myProductReturns.length!=0) return  <>
@@ -216,34 +163,27 @@ return <div className={styles.productReturnInfoPair}>
 <button onClick={async()=>{
 
 const result = window.confirm('Are you sure you want to proceed?');
-if (result) {
+if(!result)return;
+
 
   
 
-    try {
-      const response = await fetch("/api/admincheck", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ dataType:"delete_product_return", data: {deleteId: product.id} }),
-      });
+try {
+  const response = await fetch("/api/admincheck", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ dataType: "delete_product_return", data: { deleteId: product.id } }),
+  });
 
-      if(response.ok){
-        setMyProductReturns(myProductReturns.filter(pr=>{return pr.id!==product.id}));
-      }
-
-
-    } catch (error) {
-   
-      
-
-      console.error("Error deleting return:", error);
-    }
-
+  if (response.ok) {
+    setMyProductReturns(myProductReturns.filter(pr => pr.id !== product.id));
+  }
+} catch (error) {
+  console.error("Error deleting return:", error);
+}
 
     
-}
+
 
 
 }}>Delete return</button>
@@ -281,20 +221,15 @@ if (result) {
 
                 index={0}
                
-                id={linkedOrder.id}
-                total = {linkedOrder.total}
-                info={
-                  JSON.stringify({id:linkedOrder.id, email:linkedOrder.email, firstName:linkedOrder.firstName, lastName:linkedOrder.lastName, address:linkedOrder.address, apt: linkedOrder.apt, country: linkedOrder.country, zipcode:linkedOrder.zipcode, state:linkedOrder.state, city:linkedOrder.city, phone: linkedOrder.phone, couponCode:linkedOrder.couponCode,
-                tip:linkedOrder.tip,items:linkedOrder.items, paymentMethod: linkedOrder.paymentMethod,paymentId:linkedOrder.paymentId })}
+                
+                
+                info={{id:linkedOrder.id, email:linkedOrder.email, firstName:linkedOrder.firstName, lastName:linkedOrder.lastName, address:linkedOrder.address, apt: linkedOrder.apt, country: linkedOrder.country, zipcode:linkedOrder.zipcode, state:linkedOrder.state, city:linkedOrder.city, phone: linkedOrder.phone, couponCode:linkedOrder.couponCode,
+                tip:linkedOrder.tip,items:linkedOrder.items, total: linkedOrder.total, paymentMethod: linkedOrder.paymentMethod,paymentId:linkedOrder.paymentId }}
                
                
-             
-
-
                 packageStatus={linkedOrder.packageStatus}
-                handlePackageStatusChange={()=>{}}
-                products={products}
-                coupons={coupons}
+                
+               
                 productReturnsPageStyle ={true}
               />
 
@@ -323,13 +258,13 @@ className={`${styles.saveDescription} ${styles.fileNewReturnButton}`}>Save new r
             id="product_id"
             className={styles.inputProductId}
             value={linkOrderIdValue}
+
+            onChange={(event)=>{setLinkOrderIdValue(event.target.value)}}
             
             placeholder="Enter order id of order of returned product(s)"
          
-               onChange={(event) => {
-              const linkedOrderIdValue = event.target.value;
-              setLinkOrderIdValue(linkedOrderIdValue);
-            }}
+              
+            
           />
           
       
@@ -378,16 +313,15 @@ className={`${styles.saveDescription} ${styles.fileNewReturnButton}`}>Save new r
                 key={index}
                 index={index}
                
-                id={order.id}
-                total = {order.total}
-                info={
-                  JSON.stringify({id:order.id, email:order.email, firstName:order.firstName, lastName:order.lastName, address:order.address, apt: order.apt, country: order.country, zipcode:order.zipcode, state:order.state, city:order.city, phone: order.phone, couponCode:order.couponCode,
-                tip:order.tip,items:order.items, paymentMethod: order.paymentMethod,paymentId:order.paymentId })}
+                
+                
+                info={{id:order.id, email:order.email, firstName:order.firstName, lastName:order.lastName, address:order.address, apt: order.apt, country: order.country, zipcode:order.zipcode, state:order.state, city:order.city, phone: order.phone, couponCode:order.couponCode,
+                tip:order.tip,items:order.items, total: order.total, paymentMethod: order.paymentMethod,paymentId:order.paymentId }}
                
                 packageStatus={order.packageStatus}
-                handlePackageStatusChange={()=>{}}
-                products={products}
-                coupons={coupons}
+            
+               
+                
               />
 
             })}

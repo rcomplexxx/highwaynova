@@ -11,7 +11,7 @@ export default function BenefitSwiper() {
     
 
 
-    const [swiper, setSwiper] = useState(null);
+    const [swiper, setSwiper] = useState();
  
     const swiperAutoPlayStopTimoutRef= useRef();
 

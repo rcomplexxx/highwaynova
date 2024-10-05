@@ -77,47 +77,29 @@ export default function SubscribePopup({setEmailPopup}){
 
  
 
-    const handleSignUp=async () => {
-
-      if(subscribeLoading)return;
-        const emailPattern = /^\w+@\w+\.\w+$/;
-        if (!emailPattern.test(emailFieldRef.current.value)) {
-          setError("Please enter a valid email address.");
-          return;
-        } else {
-
-          setSubscribeLoading(true);
-
-          fetch("/api/sqlliteapi", {
+      const handleSignUp = async () => {
+        if (subscribeLoading) return;
+      
+        const email = emailFieldRef.current.value;
+        if (!/^\w+@\w+\.\w+$/.test(email)) return setError("Please enter a valid email address.");
+      
+        setSubscribeLoading(true);
+        try {
+          const response = await fetch("/api/sqlliteapi", {
             method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              type: "subscribe",
-              email: emailFieldRef.current.value,
-              source: "popUp10%"
-            }), // Send the form data as JSON
-          })
-            .then((response) => {
-              if (response.ok) {
-                setSuccessfullySugnedUp(true);
-                setError();
-              } else {
-                console.log(response);
-                setError("Server error");
-              }
-            })
-            .catch((error) => {
-                console.log(error);
-              setError("Server error");
-            })
-            .finally(() => {
-                emailFieldRef.current.value = "";
-                setSubscribeLoading(false);
-            });
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ type: "subscribe", email, source: "popUp10%" }),
+          });
+          response.ok ? setSuccessfullySugnedUp(true) : setError("Server error");
+        } catch {
+          setError("Server error");
+        } finally {
+          emailFieldRef.current.value = "";
+          setSubscribeLoading(false);
         }
       };
+
+      
 
       const popupRequestContent= ()=>{
         return <> 

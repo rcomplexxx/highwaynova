@@ -42,44 +42,34 @@ export default function App({ Component, pageProps }) {
     setCartProductsInitialized: state.setCartProductsInitialized
   }));
 
-
+  //Na ovaj nacin koristim ref da bi imao najnoviju vrednost deepLinka
   const deepLinkLevelRef = useRef(useGlobalStore.getState().deepLinkLevel);
 
 
   useEffect(() => {
-    const unsubscribe = useGlobalStore.subscribe(
+    const globalStoreUnsubscribe = useGlobalStore.subscribe(
       (newState) => {
         deepLinkLevelRef.current = newState.deepLinkLevel;
       },
       (state) => state.deepLinkLevel // Select the deepLinkLevel from the state
     );
 
-    return unsubscribe;
+    return globalStoreUnsubscribe;
   }, []);
 
 
 
-  useEffect(()=>{
-    
-    router.beforePopState((state) => {
-      
-      state.options.scroll = false;
-        
-      return true;
-   
-    });
+  useEffect(() => {
 
-    
-
-    document.querySelector("html").className=`${inter.variable} ${eb_Garamond.variable}`;
-
-    const storedCartProducts = JSON.parse(localStorage.getItem("cartProducts"));
-    setCartProducts(storedCartProducts || []);
+    //PAZNJA!!!!!!!!!!!!!! OVA FUNKCIJA SE AKTIVIRA SAMO KAD USER KLIKNE BACK ILI SE AKTIVIRA ROUTER.BACK. NI U JEDNOM DRUGOM SLUCAJU!
+    //Ako stavim false kao drugi argument, funkcija nece da ide nazad.
+    router.beforePopState(state => (state.options.scroll = true, true));
+    document.querySelector("html").className = `${inter.variable} ${eb_Garamond.variable}`;
+  
+    const storedCartProducts = JSON.parse(localStorage.getItem("cartProducts")) || [];
+    setCartProducts(storedCartProducts);
     setCartProductsInitialized(true);
-
-
-
-  },[])
+  }, []);
  
   
 
@@ -87,16 +77,8 @@ export default function App({ Component, pageProps }) {
 
 
 
-    
-
-
 
     let popupTimeout;
-
-
-
-
-
 
 
 
@@ -109,98 +91,46 @@ export default function App({ Component, pageProps }) {
 
    
 
+      const handlePopupTurning = () => {
+        console.log('my deep link level is', deepLinkLevelRef.current, "trying to turn on email popup");
       
+        const validUrls = ['/', '/our-story', '/faq'];
+        if (url !== '/404' && (validUrls.includes(url) || url.includes('/products') || url.includes('/collection'))) {
 
-
-
-
-
-
-
-      const handlePopupTurning = ()=>{
-
-
-   
-        console.log('my deep link level is', deepLinkLevelRef.current,"trying to turn on email popup")
+          //Ako je deepLink 0, tj. ni jedna druga deep-link komponenta nije prisutna(write review, fullscreen zoom), prikazati popup
+          //Ako je prisutna, cekati 7 sekundi radi ponovne provere. 
+          const showPopup = () => {
+            if (deepLinkLevelRef.current === 0) {
+              setEmailPopup(true);
+              localStorage.setItem("popupShownDateInDays", Math.floor(Date.now() / 86400000));
+              router.events.off('routeChangeStart', handleRouteChangeStart);
+            } else {
+              popupTimeout = setTimeout(showPopup, 7000);
+            }
+          };
+      
+          showPopup();
+        } else {
+          setEmailPopup(false);
+        }
+      };
+        //Funkcija se moze aktivirati tek nakon 30 sekunde od ulaska u link.
+        popupTimeout = setTimeout(handlePopupTurning, 30000);
+      
     
- 
-       if(  url!=='/404' && (url==='/' || url.includes('/products') || url.includes('/collection') || url==='/our-story' || url==='/faq')){
- 
-         if(deepLinkLevelRef.current===0){
-        
-         setEmailPopup(true); 
-         localStorage.setItem("popupShownDateInDays", Math.floor(Date.now() / 86400000));
-         router.events.off('routeChangeStart', handleRouteChangeStart);
-         }
- 
-         else{
-
-          const handlePopupTurningAfterDeepLink = ()=>{
-
-        
-                if(deepLinkLevelRef.current===0){
-
-                  setEmailPopup(true); 
-                  localStorage.setItem("popupShownDateInDays", Math.floor(Date.now() / 86400000));
-                  router.events.off('routeChangeStart', handleRouteChangeStart);
-                  
-                }
-                else{
-                  popupTimeout = setTimeout( handlePopupTurningAfterDeepLink, 7000)
-                }
-
-              
-
-          }
-          
-          popupTimeout = setTimeout( handlePopupTurningAfterDeepLink, 5000)
-         
-         }
-       
-    
-       
-       }
-
-       else{
-
-        setEmailPopup(false);
-        
-       }
-       
-      
-       }
-
-      
-      popupTimeout= setTimeout( handlePopupTurning, 30000);
-      
-    };
-    
+    }
 
 
-
-
-  
-    if(localStorage.getItem("popupShownDateInDays")){
-      
-      const emailPopupTimeChecker = Math.floor(Date.now() / 86400000)-localStorage.getItem("popupShownDateInDays");
 
       const daysBetweenEmailPopups = 14;
 
-     
-
-      if(emailPopupTimeChecker>=daysBetweenEmailPopups){
+      const popupShownDate = localStorage.getItem("popupShownDateInDays");
+      const emailPopupTimeChecker = popupShownDate ? Math.floor(Date.now() / 86400000) - popupShownDate : null;
       
-      handleRouteChangeStart(router.pathname);
-      router.events.on('routeChangeStart', handleRouteChangeStart);
+      if (!popupShownDate || emailPopupTimeChecker >= daysBetweenEmailPopups) {
+        handleRouteChangeStart(router.pathname);
+        router.events.on('routeChangeStart', handleRouteChangeStart);
       }
-
-      
-    }
-    else{
-      handleRouteChangeStart(router.pathname);
-      router.events.on('routeChangeStart', handleRouteChangeStart);
-    }
-    
 
   
 
@@ -210,11 +140,6 @@ export default function App({ Component, pageProps }) {
     clearTimeout(popupTimeout); 
       router.events.off('routeChangeStart', handleRouteChangeStart);
     };
-
-
-  
-
-
 
 
   }, []);
@@ -247,7 +172,7 @@ export default function App({ Component, pageProps }) {
       router.events.off('routeChangeComplete', handleComplete);
       router.events.off('routeChangeError', handleComplete);
     };
-  }, [router]);
+  }, []);
 
 
 
@@ -271,31 +196,12 @@ export default function App({ Component, pageProps }) {
 
 
   return (
- 
-     
-    
-    <div
-      id="hronika"
-      className={`hronika`}>
-    
-   
-   
-        <DefaultSeo {...SEO}/>
-       
-      
-      {emailPopup && <SubscribePopup setEmailPopup={setEmailPopup}/>}
-    {!router.pathname.includes('admin') && <Navbar/>}
-
-      
-      
-        <Component {...pageProps} />
-   
-   
-      
-      {!router.pathname.includes('admin') &&  <Footer />}
-       </div>
-   
-     
-  
+    <div id="hronika" className="hronika">
+      <DefaultSeo {...SEO} />
+      {emailPopup && <SubscribePopup setEmailPopup={setEmailPopup} />}
+      {!router.pathname.includes('admin') && <Navbar />}
+      <Component {...pageProps} />
+      {!router.pathname.includes('admin') && <Footer />}
+    </div>
   );
 }

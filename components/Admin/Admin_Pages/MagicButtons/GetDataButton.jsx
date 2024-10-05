@@ -5,46 +5,30 @@ export default function GetDataButton({
   secondStyle = undefined,
   reqData = undefined,
   dataType,
-  setData,
-  initializeData,
+  setData
 }) {
   const handleGetData = async () => {
     try {
       const response = await fetch("/api/admincheck", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(
-          reqData ? { dataType, data: reqData } : { dataType },
-        ),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ dataType, ...(reqData && { data: reqData }) }),
       });
-
-      if (response.ok) {
-        const data = await response.json();
-        console.log("Maine DATA!", data);
-        setData(data.data);
-        initializeData(data.data);
-      } else {
-        throw new Error("Network response was not ok.");
-      }
+  
+      if (!response.ok) throw new Error("Network response was not ok.");
+      
+      const { data } = await response.json();
+      console.log("Maine DATA!", data);
+      setData(data);
     } catch (error) {
-      console.error(
-        "There has been a problem with your fetch operation:",
-        error,
-      );
+      console.error("Fetch error:", error);
     }
   };
   // 'get_fulfilled_orders' 'get_answered_messages'
 
   return (
     <button
-      className={
-         `${styles.magicButton} ${secondStyle &&
-        (secondStyle === "firstButton"
-          ? styles.secondStyle
-          : styles.secondStyleSecButton)}`
-      }
+      className={`${styles.magicButton} ${secondStyle && styles[secondStyle === "firstButton" ? "secondStyle" : "secondStyleSecButton"]}`}
       onClick={handleGetData}
     >
       Get {name}

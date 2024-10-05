@@ -7,25 +7,23 @@ export default function SaveOrdersButton({
   setData,
   clearAfterDataSave,
 }) {
-  const saveData = async () => {
-   
-   
-    
-      await fetch("/api/admincheck", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ dataType: dataType, data: newData }),
-      })
-        .then((response) => {
-          if (response.ok) {
-            setData(["reset_data"]);
-            clearAfterDataSave();
-          }
-        })
 
-        .catch((error) => {});
+  
+  const saveData = async () => {
+    try {
+      const response = await fetch("/api/admincheck", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ dataType, data: newData }),
+      });
+  
+      if (response.ok) {
+        setData(["reset_data"]);
+        clearAfterDataSave();
+      }
+    } catch (error) {
+      console.error("Fetch error:", error);
+    }
   };
 
   return (

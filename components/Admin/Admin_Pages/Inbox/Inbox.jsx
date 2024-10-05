@@ -38,12 +38,10 @@ export default function Inbox({ data, setData }) {
     setPage(0);
   };
 
-  const initializeMsgStatusData = (data) => {
+ 
+  
 
-    
-  };
-
-  if (data.length === 1 && data[0] === "No Messages")
+  if (data.length === 1 && data[0] === "No messages")
     return (
       <>
         <h1>Inbox</h1>
@@ -51,7 +49,7 @@ export default function Inbox({ data, setData }) {
           name="Messages"
           dataType={"get_unanswered_messages"}
           setData={setData}
-          initializeData={initializeMsgStatusData}
+          
         />
         <p>All/No messages answered for now.</p>
       </>
@@ -76,7 +74,7 @@ export default function Inbox({ data, setData }) {
             secondStyle={true}
             dataType={"get_answered_messages"}
             setData={setData}
-            initializeData={initializeMsgStatusData}
+            
           />
         )}
       </div>
@@ -85,7 +83,7 @@ export default function Inbox({ data, setData }) {
           name="Messages"
           dataType={"get_unanswered_messages"}
           setData={setData}
-          initializeData={initializeMsgStatusData}
+          
         />
       )}
       {data.length !== 0 && data.length >= page * 10 && (

@@ -1,11 +1,12 @@
 import GetDataButton from "../MagicButtons/GetDataButton";
 import SaveOrdersButton from "../MagicButtons/SaveOrdersButton";
 import OrderCard from "./OrderCard/OrderCard";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styles from "./orders.module.css";
 import PageIndexButtons from "../MagicButtons/PageIndexButtons";
-import products from '@/data/products.json'
-import coupons from '@/data/coupons.json'
+
+
+
 
 export default function Orders({ data, setData }) {
   const [changedOrdersArray, setChangedOrdersArray] = useState([]);
@@ -15,11 +16,17 @@ export default function Orders({ data, setData }) {
 
 
   const handleChangedOrdersArray = (changedOrder) => {
-    const updatedChangedOrdersArray = [...changedOrdersArray].filter(status => {
-      return status.id !== changedOrder.id
+
+    
+
+    const updatedChangedOrdersArray = changedOrdersArray.filter(order => {
+      return order.id !== changedOrder.id
     });
 
     updatedChangedOrdersArray.push(changedOrder)
+
+    
+    console.log('changed order', changedOrdersArray)
  
 
     setChangedOrdersArray(updatedChangedOrdersArray);
@@ -32,9 +39,6 @@ export default function Orders({ data, setData }) {
     setPage(0);
   };
 
-  const initializePackageStatusData = (data) => {
-   
-  };
   
 
   
@@ -46,7 +50,7 @@ export default function Orders({ data, setData }) {
           name="Orders"
           dataType={"get_unfulfilled_orders"}
           setData={setData}
-          initializeData={initializePackageStatusData}
+          
         />
         <p>All orders fulfilled for now.</p>
       </>
@@ -72,7 +76,7 @@ export default function Orders({ data, setData }) {
           name="orders - NEW"
           dataType={"get_unfulfilled_orders"}
           setData={setData}
-          initializeData={initializePackageStatusData}
+          
         />
 
 
@@ -80,14 +84,14 @@ export default function Orders({ data, setData }) {
               name="orders - ORDERED"
               dataType={"get_ordered_orders"}
               setData={setData}
-              initializeData={initializePackageStatusData}
+              
             />
 
 <GetDataButton
               name="orders - COMPLETED"
               dataType={"get_completed_orders"}
               setData={setData}
-              initializeData={initializePackageStatusData}
+              
             />
      
      
@@ -99,14 +103,14 @@ export default function Orders({ data, setData }) {
               name="Orders - UNAPPROVED"
               dataType={"get_unapproved_orders"}
               setData={setData}
-              initializeData={initializePackageStatusData}
+              
             />
 
 <GetDataButton
               name="Orders - CANCELED"
               dataType={"get_canceled_orders"}
               setData={setData}
-              initializeData={initializePackageStatusData}
+              
             />
 
 
@@ -114,7 +118,7 @@ export default function Orders({ data, setData }) {
               name="orders - RETURNED"
               dataType={"get_returned_orders"}
               setData={setData}
-              initializeData={initializePackageStatusData}
+              
             />
 
 
@@ -123,7 +127,7 @@ export default function Orders({ data, setData }) {
         )}
       </div>
      
-      {data.length !== 0 && data.length >= page * 10 && (
+      {data.length > page * 10 && (
         <>
           {data
             .slice(
@@ -137,17 +141,15 @@ export default function Orders({ data, setData }) {
               <OrderCard
                 key={page * 10 + index}
                 index={page * 10 + index}
-                id={order.id}
-                total = {order.total}
-                info={
-                  JSON.stringify({id:order.id, email:order.email, firstName:order.firstName, lastName:order.lastName, address:order.address, apt: order.apt, country: order.country, zipcode:order.zipcode, state:order.state, city:order.city, phone: order.phone, couponCode:order.couponCode,
-                tip:order.tip,items:order.items, paymentMethod: order.paymentMethod,paymentId:order.paymentId })}
+               
+                info={{id:order.id, email:order.email, firstName:order.firstName, lastName:order.lastName, address:order.address, apt: order.apt, country: order.country, zipcode:order.zipcode, state:order.state, city:order.city, phone: order.phone, couponCode:order.couponCode,
+                tip:order.tip,items:order.items, total: order.total, paymentMethod: order.paymentMethod,paymentId:order.paymentId }}
                
                 packageStatus={data[index + page * 10].packageStatus}
                 existingSupplierCosts = {data[index + page * 10].supplyCost}
                 handleChangedOrdersArray={handleChangedOrdersArray}
-                products={products}
-                coupons={coupons}
+               
+                
               />
             ))}
         </>

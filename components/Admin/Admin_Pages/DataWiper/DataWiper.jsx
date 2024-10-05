@@ -38,50 +38,43 @@ const handleVerify = async(event)=>{
 }
 
 
-const handleWipeData = (databaseTable)=>{
-  if(!verified) return;
+
+
+const handleWipeData = async(databaseTable)=>{
+
   
-  if(databaseTable=='reviews' && productId===undefined)return;
-
-
-  const answer = window.confirm('Warning! Data cannot be recovered. Do you still wish to proceed?');
-  if (!answer) {return;}
+  if (!verified || (databaseTable === 'reviews' && productId === undefined)) return;
+  if (!window.confirm('Warning! Data cannot be recovered. Do you still wish to proceed?')) return;
 
 
   console.log('wiping')
 
  
-    fetch("/api/admincheck", {
+     try {
+    const response = await fetch("/api/admincheck", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ dataType: `wipe_${databaseTable}`, data: databaseTable=='reviews'?{product_id: productId}:undefined }),
-    })
-      .then((response) => {
-        
-        if (response.ok) {
-          response.json()
-        .then(data => {
-            console.log(data);
-            if(data.data_wiped)
-            console.log('data wiped.')
-            setDataWipedTable(databaseTable);
-          
-        })
-        .catch(error => {
-            console.error('Error parsing JSON:', error);
-        });
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ dataType: `wipe_${databaseTable}`, data: databaseTable === 'reviews' ? { product_id: productId } : undefined }),
+    });
 
+    if (response.ok) {
+      const data = await response.json();
+      if (data.data_wiped) {
+        console.log('Data wiped:', data);
+        setDataWipedTable(databaseTable);
       }
-         
-      })
-
-      .catch((error) => {console.log('wipe data error', error)});
+    }
+  } catch (error) {
+    console.error('Wipe data error:', error);
+  }
 
 
 
 }
+
+
+
+
 
 if(dataWipedTable && dataWipedTable!=="")return  <div className={styles.mainDiv}>
 <h1>Data wiper</h1>

@@ -3,23 +3,20 @@ import styles from "./customers.module.css";
 import { useState } from "react";
 
 export default function Customers({ customers, setCustomers }) {
-  const initializeCustomersData = (data) => {
-    console.log('data s', data)
-    if (data && data.length == 0) setCustomers("No customers exist in database.");
+
+
+
  
 
-    setCustomers(data);
-  };
-
-  if (customers && customers[0] === "No customers exist in database.")
+  if (customers && customers[0] === "No customers")
     return (
       <>
         <h1>Customers</h1>
         <GetDataButton
           name="Customers"
           dataType={"get_customers"}
-          setData={() => {}}
-          initializeData={initializeCustomersData}
+          setData={setCustomers}
+          
         />
         <p>Noone subscribed yet bro :/</p>
       </>
@@ -35,15 +32,15 @@ export default function Customers({ customers, setCustomers }) {
       <GetDataButton
         name="Customers"
         dataType={"get_customers"}
-        setData={() => {}}
-        initializeData={initializeCustomersData}
+        setData={setCustomers}
+        
       />
 
 <GetDataButton
       name="Customers bh"
       dataType={"get_customers_bh"}
-      setData={() => {}}
-      initializeData={initializeCustomersData}
+      setData={setCustomers}
+      
     />
 
     </div>
@@ -53,7 +50,7 @@ export default function Customers({ customers, setCustomers }) {
 
     const customersLength = customers.length;
     
-    return <> <button className={styles.dismissCustomersButton} onClick={()=>{setCustomers([])}}>
+    return <> <button className={styles.dismissCustomersButton} onClick={()=>{setCustomers(["reset_data"])}}>
     Dismiss customer list
   </button>
   
@@ -67,7 +64,7 @@ export default function Customers({ customers, setCustomers }) {
           <p key={index+number} className={styles.emailP}>Email: {customers[index+number]?.email}</p>
           <p key={index+number} className={styles.emailP}>Order number/Money spent: {customers[index+number]?.totalOrderCount}/{customers[index+number]?.money_spent}</p>
           <p key={index+number} className={styles.source}>Source: {customers[index+number]?.source}</p>
-          <p key={index+number} className={styles.source}>used d; {customers[index+number]?.used_discounts}</p>
+          <p key={index+number} className={styles.source}>Used coupons: {customers[index+number]?.used_discounts}</p>
           </div> :<></>
         })}
         </div>

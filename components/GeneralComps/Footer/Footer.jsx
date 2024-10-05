@@ -14,45 +14,24 @@ export default function Footer() {
   const [loadingSubscribe, setLoadingSubscribe] = useState(false);
 
   const handleSubscribe = useCallback(async () => {
-
-
-    if(loadingSubscribe) return;
-
-    const email= document.getElementById('subscribe');
-    const emailPattern = /^\w+@\w+\.\w+$/;
-    if (!emailPattern.test(email.value)) {
-      setError("Please enter a valid email address.");
-      return;
-    } else {
-
-
-      setLoadingSubscribe(true);
-
-      try {
-        const response = await fetch("/api/sqlliteapi", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            type: "subscribe",
-            email: email.value,
-            source: "footer",
-          }),
-        });
-    
-        if (response.ok) {
-          setSuccessful(true);
-          setError();
-        } else {
-          setError("Server error");
-        }
-      } catch (error) {
-        setError("Server error");
-      } finally {
-        email.value = "";
-        setLoadingSubscribe(false);
-      }
+    if (loadingSubscribe) return;
+  
+    const email = document.getElementById('subscribe').value;
+    if (!/^\w+@\w+\.\w+$/.test(email)) return setError("Please enter a valid email address.");
+  
+    setLoadingSubscribe(true);
+    try {
+      const response = await fetch("/api/sqlliteapi", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ type: "subscribe", email, source: "footer" }),
+      });
+      response.ok ? setSuccessful(true) : setError("Server error");
+    } catch {
+      setError("Server error");
+    } finally {
+      document.getElementById('subscribe').value = "";
+      setLoadingSubscribe(false);
     }
   });
 
