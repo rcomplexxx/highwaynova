@@ -39,7 +39,7 @@ export const useGlobalStore = create((set) => {
     decreaseDeepLinkLevel: () => set((state) => ({ deepLinkLevel: state.deepLinkLevel - 1 })),
 
     emailPopupOn: false,
-    changeEmailPopupOn: () => set((state) => ({ emailPopupOn: !state.emailPopupOn })),
+    changeEmailPopupOn: () => set((state) => { !state.emailPopupOn?state.increaseDeepLinkLevel():state.decreaseDeepLinkLevel(); return { emailPopupOn: !state.emailPopupOn }}),
     
   };
 });

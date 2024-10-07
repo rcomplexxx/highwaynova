@@ -32,7 +32,7 @@
         "variantIndex": 1
       }
     ],
-    "reviewNumber": 100,
+    "reviewNumber": 86,
     "bundle": [
       {
         "quantity": 2,
@@ -53,7 +53,7 @@
         "variantProductImageIndex": 1
       }
     ],
-    "rating": 5
+    "rating": 3.5
   },
   {
     "id": 1,
@@ -146,7 +146,5 @@
     ],
     "rating": 4.7,
     "reviewNumber": 32
-    
-    
   }
 ]

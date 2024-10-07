@@ -29,13 +29,7 @@ cron.schedule(date, async () => await emailSendJob(campaignId));
  async function emailSendJob(campaignId) {
 
 
-//
-
-   
-
-
-
-
+  
 
   
 

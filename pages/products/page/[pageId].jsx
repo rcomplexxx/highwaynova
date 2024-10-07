@@ -41,19 +41,14 @@ export async function getStaticPaths() {
 
  
 
-  return { paths, fallback: false };
+  return { paths, fallback: true };
 }
 
 export async function getStaticProps(context) {
 
   console.log('params', context.params)
 
-  if(context.params.pageId==="1")return {
-    redirect: {
-      destination: '/',
-      permanent: true
-    },
-  };
+ 
 
     
   

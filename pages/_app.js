@@ -29,14 +29,16 @@ export default function App({ Component, pageProps }) {
   
 
   
-  const [emailPopup, setEmailPopup] = useState(false);
+  
 
   const router = useRouter();
 
 
 
 
-  const { cartProducts, setCartProducts, setCartProductsInitialized} = useGlobalStore((state) => ({
+  const { emailPopupOn, changeEmailPopupOn,cartProducts, setCartProducts, setCartProductsInitialized} = useGlobalStore((state) => ({
+    emailPopupOn: state.emailPopupOn,
+    changeEmailPopupOn: state.changeEmailPopupOn,
     cartProducts: state.cartProducts,
     setCartProducts: state.setCartProducts,
     setCartProductsInitialized: state.setCartProductsInitialized
@@ -49,13 +51,20 @@ export default function App({ Component, pageProps }) {
   useEffect(() => {
     const globalStoreUnsubscribe = useGlobalStore.subscribe(
       (newState) => {
+        
+       console.log('deep link level', newState.deepLinkLevel)
         deepLinkLevelRef.current = newState.deepLinkLevel;
       },
       (state) => state.deepLinkLevel // Select the deepLinkLevel from the state
     );
 
+    
+
     return globalStoreUnsubscribe;
   }, []);
+
+ 
+  
 
 
 
@@ -63,13 +72,15 @@ export default function App({ Component, pageProps }) {
 
     //PAZNJA!!!!!!!!!!!!!! OVA FUNKCIJA SE AKTIVIRA SAMO KAD USER KLIKNE BACK ILI SE AKTIVIRA ROUTER.BACK. NI U JEDNOM DRUGOM SLUCAJU!
     //Ako stavim false kao drugi argument, funkcija nece da ide nazad.
-    router.beforePopState(state => (state.options.scroll = true, true));
+    
+    router.beforePopState(state => (state.options.scroll = true, false));
     document.querySelector("html").className = `${inter.variable} ${eb_Garamond.variable}`;
   
     const storedCartProducts = JSON.parse(localStorage.getItem("cartProducts")) || [];
     setCartProducts(storedCartProducts);
     setCartProductsInitialized(true);
   }, []);
+  
  
   
 
@@ -92,7 +103,8 @@ export default function App({ Component, pageProps }) {
    
 
       const handlePopupTurning = () => {
-        console.log('my deep link level is', deepLinkLevelRef.current, "trying to turn on email popup");
+        
+        
       
         const validUrls = ['/', '/our-story', '/faq'];
         if (url !== '/404' && (validUrls.includes(url) || url.includes('/products') || url.includes('/collection'))) {
@@ -101,7 +113,7 @@ export default function App({ Component, pageProps }) {
           //Ako je prisutna, cekati 7 sekundi radi ponovne provere. 
           const showPopup = () => {
             if (deepLinkLevelRef.current === 0) {
-              setEmailPopup(true);
+              changeEmailPopupOn();
               localStorage.setItem("popupShownDateInDays", Math.floor(Date.now() / 86400000));
               router.events.off('routeChangeStart', handleRouteChangeStart);
             } else {
@@ -110,19 +122,17 @@ export default function App({ Component, pageProps }) {
           };
       
           showPopup();
-        } else {
-          setEmailPopup(false);
-        }
+        } 
       };
         //Funkcija se moze aktivirati tek nakon 30 sekunde od ulaska u link.
-        popupTimeout = setTimeout(handlePopupTurning, 30000);
+        popupTimeout = setTimeout(handlePopupTurning, 3000);
       
     
     }
 
 
 
-      const daysBetweenEmailPopups = 14;
+      const daysBetweenEmailPopups = 0;
 
       const popupShownDate = localStorage.getItem("popupShownDateInDays");
       const emailPopupTimeChecker = popupShownDate ? Math.floor(Date.now() / 86400000) - popupShownDate : null;
@@ -152,13 +162,13 @@ export default function App({ Component, pageProps }) {
     NProgress.configure({ showSpinner: false });
 
     const handleStart = () => {
-      if (deepLinkLevelRef.current === 0) {
+      if (!deepLinkLevelRef.current) {
           NProgress.start();
       }
   };
 
   const handleComplete = () => {
-      if (deepLinkLevelRef.current === 0) {
+      if (!deepLinkLevelRef.current) {
           NProgress.done();
       }
   };
@@ -198,7 +208,7 @@ export default function App({ Component, pageProps }) {
   return (
     <div id="hronika" className="hronika">
       <DefaultSeo {...SEO} />
-      {emailPopup && <SubscribePopup setEmailPopup={setEmailPopup} />}
+      {emailPopupOn && <SubscribePopup />}
       {!router.pathname.includes('admin') && <Navbar />}
       <Component {...pageProps} />
       {!router.pathname.includes('admin') && <Footer />}

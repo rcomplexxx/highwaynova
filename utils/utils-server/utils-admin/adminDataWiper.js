@@ -96,7 +96,7 @@ const wipeData = async(dbConnection, resReturn, tableName, product_id)=>{
             catch(error){console.log('Error deleting messages', error);}
               
             try{  await dbConnection.query(`DROP TABLE IF EXISTS email_campaigns`);}
-           catch(error){console.log('Error deleting email_capaigns', error);}
+           catch(error){console.log('Error deleting email_campaigns', error);}
              
 
           
@@ -114,10 +114,10 @@ const wipeData = async(dbConnection, resReturn, tableName, product_id)=>{
           else if (tableName ==='emails'){
 
             try{  await dbConnection.query(`DROP TABLE IF EXISTS email_campaigns`);}
-            catch(error){console.log('Error deleting email_capaigns', error);}
+            catch(error){console.log('Error deleting email_campaigns', error);}
 
             try{await dbConnection.query(`DROP TABLE IF EXISTS email_sequences`);}
-            catch(error){console.log('Error deleting email_capaigns', error);}
+            catch(error){console.log('Error deleting email_campaigns', error);}
 
 
           }
@@ -126,7 +126,7 @@ const wipeData = async(dbConnection, resReturn, tableName, product_id)=>{
           else if (tableName ==='email_sequences'){
 
             try{  await dbConnection.query(`DROP TABLE IF EXISTS email_campaigns`);}
-            catch(error){console.log('Error deleting email_capaigns', error);}
+            catch(error){console.log('Error deleting email_campaigns', error);}
 
           }
 

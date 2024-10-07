@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import styles from './popupcart.module.css'
 import Image from 'next/image';
-import { useEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 import { CorrectIcon } from '@/public/images/svgs/svgImages';
 import { useGlobalStore } from '@/contexts/AppContext';
@@ -30,48 +30,39 @@ const { increaseDeepLinkLevel, decreaseDeepLinkLevel } = useGlobalStore((state) 
 
 
 
+useLayoutEffect(()=>{
+  
+  popCartRef.current.style.height= `${popCartRef.current.scrollHeight}px`;
+},[])
+
+
 
 
 useEffect(()=>{
 
 
 
-  
 
-
-  const popCart= popCartRef.current;
-  popCart.style.height= `${popCart.scrollHeight}px`;
-  console.log('pop', popCart.scrollHeight)
- 
-
-
-  window.history.pushState(null, null, router.asPath);
-  history.go(1);
-  increaseDeepLinkLevel();
-
-
-  const handlePopState = (event)=>{
+  const handlePopState = ()=>{
 
     
-    if(nextLink.current)router.push(nextLink.current);
-   
-   
+  
+    decreaseDeepLinkLevel();
     setNewProducts([]);
     window?.removeEventListener("popstate", handlePopState);
+
+    if(nextLink.current)router.push(nextLink.current);
+   
   
   }
 
-  const navBar = document.getElementById('navBar')
+
+
   const handleClick = (event) => {
   
-    if (!navBar.contains(event.target)) {
-
-
     
-      history.back();
-      decreaseDeepLinkLevel();
+    if (!document.getElementById('navBar').contains(event.target))  history.back();
       
-    }
 
     else if(document.getElementById('cart').contains(event.target) || document.getElementById('mobileMenuSpawn').contains(event.target)){
         setNewProducts([]);
@@ -79,13 +70,12 @@ useEffect(()=>{
     }
 
     
-
-      
-  
     
-    // }
   };
      
+
+  window.history.pushState(null, null, router.asPath);
+  increaseDeepLinkLevel();
 
 
   window?.addEventListener("popstate", handlePopState);
@@ -106,18 +96,19 @@ useEffect(()=>{
 },[])
 
 
-console.log('my new product', newProducts)
 
-// useEffect(()=>{ popupCart.focus();},[])
 
-const handlePopCartLinkClick=(event, nextLinkHref)=>{
-  event.preventDefault();
+const handlePopCartLinkClick=(url)=>{
+  
  
-    nextLink.current= nextLinkHref;
+    nextLink.current= url;
   history.back();
-  decreaseDeepLinkLevel();
 
 }
+
+
+
+
 
     return <div id='popCart' ref={popCartRef} className={`${styles.cartPopup}`} >
   
@@ -153,7 +144,8 @@ const handlePopCartLinkClick=(event, nextLinkHref)=>{
 
   <Link href='/cart'  className={`${styles.viewCartButton} mainButton`}
   onClick={(event)=>{
-    handlePopCartLinkClick(event, '/cart')
+    event.preventDefault();
+    handlePopCartLinkClick('/cart')
   }}
      >
 
@@ -163,7 +155,8 @@ const handlePopCartLinkClick=(event, nextLinkHref)=>{
 
     <Link href='/checkout' className={styles.checkoutButton} 
      onClick={(event)=>{
-      handlePopCartLinkClick(event, '/checkout')
+      event.preventDefault();
+      handlePopCartLinkClick('/checkout')
     }}
     >
     
@@ -171,7 +164,7 @@ const handlePopCartLinkClick=(event, nextLinkHref)=>{
   
     </Link>
     
-    <span className={styles.continue_shopping}  onClick={()=>{ history.back();decreaseDeepLinkLevel();}}>Continue shopping</span>
+    <span className={styles.continue_shopping}  onClick={()=>{ history.back();}}>Continue shopping</span>
     
 
  

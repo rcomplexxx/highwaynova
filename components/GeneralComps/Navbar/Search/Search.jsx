@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { CancelIcon, SearchIcon } from '@/public/images/svgs/svgImages';
 import { useGlobalStore } from '@/contexts/AppContext';
+import Link from 'next/link';
 
 
 
@@ -29,7 +30,7 @@ export default function Search({searchOpen, setSearchOpen}){
 
   
 
-    const { deepLinkLevel, increaseDeepLinkLevel, decreaseDeepLinkLevel } = useGlobalStore((state) => ({
+    const {increaseDeepLinkLevel, decreaseDeepLinkLevel } = useGlobalStore((state) => ({
       deepLinkLevel: state.deepLinkLevel,
       increaseDeepLinkLevel: state.increaseDeepLinkLevel,
       decreaseDeepLinkLevel: state.decreaseDeepLinkLevel,
@@ -39,9 +40,7 @@ export default function Search({searchOpen, setSearchOpen}){
     
 
 
-    useEffect(()=>{
-      console.log('deep link level', deepLinkLevel)
-    },[deepLinkLevel])
+    
 
 
    
@@ -60,18 +59,18 @@ export default function Search({searchOpen, setSearchOpen}){
       
      
 
-        const handlePopState = (event)=>{
-          if(nextLink.current){
-            router.push(nextLink.current); 
-            nextLink.current=undefined;
-
-
-          }
+        const handlePopState = ()=>{
+         
        
-     
+         
           decreaseDeepLinkLevel();
           setSearchOpen(false);
           window?.removeEventListener("popstate", handlePopState);
+
+          if(nextLink.current) router.push(nextLink.current); 
+
+
+          
         
         }
 
@@ -79,41 +78,33 @@ export default function Search({searchOpen, setSearchOpen}){
        const handleClickOutside = (event)=>{
        
         
-        if (!(document.getElementById('searchIcon')?.contains(event.target) || searchInputRef.current?.contains(event.target) || searchBoxRef.current?.contains(event.target))) {
+        if (!(document.getElementById('searchIcon')?.contains(event.target) || searchInputRef.current?.contains(event.target) || 
+        searchBoxRef.current?.contains(event.target))) history.back();
           // Clicked outside the floating div, so close the dialog
           
-            
-          
-     
-          
-          history.back();
+         
         
-        }
       };
+
+
 
       if(searchOpen){
 
 
         const inputElement = document.getElementById('search');
-        if (inputElement) {
-          inputElement.focus();
-        }
+        if (inputElement) inputElement.focus();
+        
 
 
        
         window.history.pushState(null, null, router.asPath);
-        history.go(1);
         increaseDeepLinkLevel();
 
 
         document.addEventListener('click', handleClickOutside);
         window?.addEventListener("popstate", handlePopState);
       }
-      else{
-       
-        document.removeEventListener('click', handleClickOutside);
-        document?.removeEventListener("popstate", handlePopState);
-      }
+     
   
         
 
@@ -206,7 +197,7 @@ export default function Search({searchOpen, setSearchOpen}){
 
           {filteredcollections.length>0 && <div className={styles.resultProductsLabel}>Collections</div>}
             {filteredcollections.map((collection, index) => (
-              <span key={index} className={styles.resultItem} 
+              <Link key={index} className={styles.resultItem} 
               onClick={(event)=>{
             
                 event.preventDefault();
@@ -217,13 +208,15 @@ export default function Search({searchOpen, setSearchOpen}){
           setSearchTerm('');
               
               }}
+
+              href={`/collection/${collection.name.toLowerCase().replace(/ /g, '-')}/page/1`}
               onMouseDown={(event)=>{event.preventDefault()}}
            
               >
                 <Image height={36} width={64} src={`/images/${collection.image}`} className={styles.searchItemImg}/>
                 <strong>{collection.name}</strong>
                 
-              </span>
+              </Link>
             ))}
 
 
@@ -232,7 +225,7 @@ export default function Search({searchOpen, setSearchOpen}){
 
             {filteredProducts.length>0 && <div className={styles.resultProductsLabel}>Products</div>}
             {filteredProducts.map((product, index) => (
-              <span key={index} className={styles.resultItem} 
+              <Link key={index} className={styles.resultItem} 
               onClick={(event)=>{
             
                 event.preventDefault();
@@ -244,13 +237,15 @@ export default function Search({searchOpen, setSearchOpen}){
           setSearchTerm('');
               
               }}
-              onMouseDown={(event)=>{event.preventDefault()}}
+
+              href={`/products/${product.name.toLowerCase().replace(/\s+/g, "-")}`}
+              
               >
                 
                 <Image height={36} width={64} src={`/images/${product.images[0]}`} className={styles.searchItemImg}/>
                 <strong>{product.name}</strong>
                 
-              </span>
+              </Link>
             ))}
           </div>
          

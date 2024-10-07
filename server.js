@@ -53,7 +53,8 @@ const campaigns= await dbConnection.query(` SELECT
     email_campaigns.sendingDateInUnix,
     email_sequences.emails
   FROM email_campaigns
-  JOIN email_sequences ON email_campaigns.sequenceId = email_sequences.id`);
+  JOIN email_sequences ON email_campaigns.sequenceId = email_sequences.id
+  WHERE email_campaigns.finished = 0`);
 
 
 
@@ -75,7 +76,6 @@ for(const campaign of campaigns){
 
 
 
-  if(currentEmailIndex < campaign.emails.length ){
 
 
 
@@ -105,7 +105,7 @@ for(const campaign of campaigns){
 
       
       await scheduleEmailSendJob(dateCalculated, campaign.id);
-  }
+  
 
 
   

@@ -101,7 +101,7 @@ export default function NewCampaign({sequences, setEmailData}) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ dataType: 'insert_new_capaign', data: newCampaignData }),
+        body: JSON.stringify({ dataType: 'insert_new_campaign', data: newCampaignData }),
       })
         .then((response) => {
           if (response.ok) {

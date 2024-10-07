@@ -18,9 +18,12 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
     
 
     const nextLink= useRef();
-    const subMenuBackDone= useRef(false);
 
-    const whiteButtonCancelRef= useRef(false);
+    const doubleBackRef = useRef(false);
+
+
+
+    
 
 
     const { emailPopupOn } = useGlobalStore((state) => ({
@@ -36,7 +39,7 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
 
 
       window.history.pushState(null, null, router.asPath);
-                   history.go(1);
+     
    
          
        },[])
@@ -56,37 +59,37 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
           window.removeEventListener("popstate", handlePopState);
           setTimeout(() => setIsMenuOpen(false), 500);
         };
+
+        const handlePopState = () => {
+          if (emailPopupOn) return;
+
+          subMenu !== 0 ? (doubleBackRef.current?closeMenu():setSubMenu(0)) : closeMenu();
+          
+          if(nextLink.current && nextLink.current !== router.asPath) router.push(nextLink.current);
+          
+        
+          
+
+
+
+        };
+
+
       
         const handleClickOutside = (event) => {
           if (emailPopupOn || document.getElementById('mobileMenu').contains(event.target) || document.getElementById('mobileMenuSpawn').contains(event.target)) return;
           event.preventDefault();
-          closeMenu();
-          subMenu !== 0 && history.back();
-          history.back();
+          if(subMenu !== 0) { doubleBackRef.current; history.go(-2);}
+          else history.back();
         };
       
-        const handlePopState = () => {
-          if (emailPopupOn) return;
-          if (whiteButtonCancelRef.current) {
-            closeMenu();
-            subMenu !== 0 && history.back();
-            return;
-          }
-          if (nextLink.current) {
-            if (subMenu !== 0 && !subMenuBackDone.current) {
-              subMenuBackDone.current = true;
-              history.back();
-              return;
-            }
-            window.removeEventListener("popstate", handlePopState);
-            closeMenu();
-            router.push(nextLink.current, undefined, { shallow: true });
-            return;
-          }
-          subMenu !== 0 ? setSubMenu(0) : closeMenu();
-        };
+       
+
       
-        subMenu !== 0 && history.go(1);
+        if(subMenu !== 0) {  
+          window.history.pushState(null, null, router.asPath);
+          
+        }
         
         window.addEventListener("resize", handleResize);
         window.addEventListener("popstate", handlePopState);
@@ -105,7 +108,19 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
  
     
     
+      const beforeLinkExecuted = (url) => {
+       
+          
 
+            nextLink.current=url;
+            if(subMenu !== 0) { 
+             doubleBackRef.current=true; history.go(-2);
+            }
+
+           else history.back();
+           
+        
+      }
 
   
    
@@ -121,8 +136,8 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
     >
     
    <CancelIcon color={`var(--mobile-nav-cancel-icon-color)`} styleClassName={styles.menuItem_x_button} handleClick={()=>{
-        whiteButtonCancelRef.current= true
-         history.back();
+          if(subMenu !== 0) { doubleBackRef.current=true; history.go(-2);}
+          else history.back();
          
         // setIsMenuOpen(false); 
         }}/>
@@ -138,12 +153,7 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
         className={`${styles.linkStyle} ${pathname === "/" && styles.currentLinkMobile}`}
         onClick={(event) => {
           event.preventDefault();
-          if(pathname !== "/") { 
-            nextLink.current='/';
-           
-           history.back();
-
-          }
+          beforeLinkExecuted ('/');
         }}
       >
        Home
@@ -154,11 +164,7 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
         className={`${styles.linkStyle} ${pathname === "/products" && styles.currentLinkMobile}`}
         onClick={(event) => {
           event.preventDefault();
-          if(pathname !== "/products") { 
-            nextLink.current='/products';
-            history.back();
-
-          }
+          beforeLinkExecuted ('/products');
         }}
       >
         Products
@@ -172,12 +178,9 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
         }`}
         onClick={(event) => {
           event.preventDefault();
-          if(pathname !== "/collection/sale/page/1") { 
-            nextLink.current='/collection/sale/page/1';
-           history.back();
-
-          }
+          beforeLinkExecuted ("/collection/sale/page/1");
         }}
+       
       >
         Sale
       </Link>
@@ -215,13 +218,8 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
        
         onClick={(event) => {
           event.preventDefault();
-          if(pathname !== "/contact-us") { 
-            nextLink.current='/contact-us';
-           history.back();
-
-          }
-        }
-      }
+          beforeLinkExecuted ("/contant-us");
+        }}
       >
         Contact us
       </Link></>
@@ -247,15 +245,13 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
         className={`${styles.linkStyle} ${
           pathname === "/our-story" &&  styles.currentLinkMobile
         }`}
-  
+
         onClick={(event) => {
           event.preventDefault();
-          if(pathname !== "/our-story") { 
-            nextLink.current='/our-story';
-           history.back();
-
-          }
+          beforeLinkExecuted ('/our-story');
         }}
+  
+      
       >
         Our story
       </Link>
@@ -269,12 +265,9 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
        
         onClick={(event) => {
           event.preventDefault();
-          if(pathname !== "/faq") { 
-            nextLink.current="/faq";
-           history.back();
-
-          }
+          beforeLinkExecuted ('/faq');
         }}
+       
       >
         FAQ
       </Link>
@@ -284,14 +277,11 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
         className={`${styles.linkStyle} ${
           pathname === "/terms-of-service" && styles.currentLinkMobile
         }`}
-    
         onClick={(event) => {
           event.preventDefault();
-          if(pathname !== "/terms-of-service") { 
-            nextLink.current="/terms-of-service";
-           history.back();
-          }
+          beforeLinkExecuted ("/terms-of-service");
         }}
+       
       >
         Terms of service
       </Link>
@@ -301,14 +291,12 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
         className={`${styles.linkStyle} ${
           pathname === "/privacy-policy" && styles.currentLinkMobile
         }`}
+
         onClick={(event) => {
           event.preventDefault();
-          if(pathname !== "/privacy-policy") { 
-        
-            nextLink.current="/privacy-policy";
-           history.back();
-          }
+          beforeLinkExecuted ("/privacy-policy");
         }}
+        
       >
        Privacy policy
       </Link>
@@ -318,14 +306,14 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
         className={`${styles.linkStyle} ${
           pathname === "/shipping-policy" && styles.currentLinkMobile
         }`}
+
+
         onClick={(event) => {
           event.preventDefault();
-          if(pathname !== "/shipping-policy") { 
-       
-            nextLink.current="/shipping-policy";
-           history.back();
-          }
+          beforeLinkExecuted ("/shipping-policy");
         }}
+
+       
       >
         Shipping policy
       </Link>
@@ -333,15 +321,13 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
         className={`${styles.linkStyle} ${
           pathname === "/refund-policy" && styles.currentLinkMobile
         }`}
+
+
         onClick={(event) => {
-        
           event.preventDefault();
-          if(pathname !== "/refund-policy") { 
-         
-            nextLink.current="/refund-policy";
-           history.back();
-          }
+          beforeLinkExecuted ("/refund-policy");
         }}
+      
       >
         Refund policy
       </Link>
@@ -365,15 +351,13 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
   className={`${styles.linkStyle} ${
     pathname === `/collection/${c.name.toLowerCase().replace(/ /g, '-')}/page/1` && styles.currentLinkMobile
   }`}
+
   onClick={(event) => {
     event.preventDefault();
-    if(pathname !== `/collection/${c.name.toLowerCase().replace(/ /g, '-')}/page/1`) { 
-
-      nextLink.current=`/collection/${c.name.toLowerCase().replace(/ /g, '-')}/page/1`;
-     history.back();
-    }
-    
+    beforeLinkExecuted (`/collection/${c.name.toLowerCase().replace(/ /g, '-')}/page/1`);
   }}
+ 
+  
   >
  {c.name}
   </Link>

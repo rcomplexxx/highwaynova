@@ -1,6 +1,6 @@
 import paypal from "@paypal/checkout-server-sdk";
 import Stripe from 'stripe';
-import productsData from "@/data/products.json";
+import products from "@/data/products.json";
 import findBestBundleServer from '@/utils/utils-server/findBestBundleServer'
 
 import RateLimiter from "@/utils/utils-server/rateLimiter.js";
@@ -307,7 +307,7 @@ console.log('hello!!~~~~~~~~~~~~~~~~~~~~~~~~~~', paymentMethod)
 
     const orderItems = (couponCode ? items : findBestBundleServer(items)).map(product => ({ 
       ...product, 
-      price: product.bundledPrice || productsData.find(item => item.id === product.id)?.price || 0 
+      price: product.bundledPrice || products.find(item => item.id === product.id)?.price || 0 
     }));
     console.log('items and orderItems', items, orderItems)
     

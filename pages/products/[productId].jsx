@@ -317,11 +317,11 @@ const currentVariant = variantQuery ? (product.variants.find(v => formatQuery(v.
                 ? bundleVariants.reduce((total, cp) => total + cp.quantity, 0) 
                 : quantity;
 
-                
-                const bundleDiscount = product.bundle?.[product.bundle.findIndex(b => b.quantity > totalQuantity) - 1]?.discountPercentage ?? product.bundle?.[product.bundle.length - 1]?.discountPercentage ?? 0;
+                const bundleDiscount = product.bundle?.findLast(b => totalQuantity >= b.quantity)?.discountPercentage ?? 0;
 
                 
                 const clientTotal= ((product.price * (100 -  bundleDiscount) / 100).toFixed(2)  * totalQuantity).toFixed(2)
+                
                   
                   
                 console.log('order paypal info', bundleDiscount, clientTotal)
@@ -361,7 +361,7 @@ const currentVariant = variantQuery ? (product.variants.find(v => formatQuery(v.
   href={bundleVariants.length 
     ? `/checkout/buynow?productid=${product.id}&variant=${bundleVariants.map(bv => bv.name.toLowerCase().replace(/\s+/g, "-")).join(',')}&quantity=${bundleVariants.map(bv => bv.quantity).join(',')}` 
     : `/checkout/buynow?productid=${product.id}${variant ? `&variant=${variant.name.toLowerCase().replace(/\s+/g, "-")}` : ""}&quantity=${quantity}`} 
-  shallow
+ 
 >
             More payment options
           </Link>

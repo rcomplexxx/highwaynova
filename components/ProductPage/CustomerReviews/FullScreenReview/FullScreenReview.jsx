@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import Image from "next/image";
 import styles from './fullscreenreview.module.css';
 import ReactHtmlParser from "react-html-parser";
@@ -8,6 +8,8 @@ import { useGlobalStore } from '@/contexts/AppContext';
     
 
 export default function FullScreenReview({authorName, text, stars, imageSrc, setFullScreenReview}) {
+
+
     const [imageLoaded, setImageLoaded] = useState(false);
   
    
@@ -26,7 +28,6 @@ export default function FullScreenReview({authorName, text, stars, imageSrc, set
 
 
 
-const mainReviewDiv= useRef();
 
 
 
@@ -41,33 +42,24 @@ useEffect(()=>{
 
  
 
+  const handlePopState = (event)=>{
 
-
-
-  document.documentElement.classList.add("hideScroll");
-
-
+    event.preventDefault();
+    decreaseDeepLinkLevel();
+    setFullScreenReview(false);
+  
+  }
 
 
 
 
   window.history.pushState(null, null, location.href);
-  history.go(1);
-
-  console.log('should increase level', increaseDeepLinkLevel)
   increaseDeepLinkLevel();
 
 
-  const handlePopState = (event)=>{
-    event.preventDefault();
-    setFullScreenReview(false);
-    console.log('decreasing!!!')
-    decreaseDeepLinkLevel();
-   
-  
-  }
 
   window?.addEventListener("popstate", handlePopState);
+  document.documentElement.classList.add("hideScroll");
  
 
 
@@ -79,13 +71,14 @@ useEffect(()=>{
     document.documentElement.classList.remove("hideScroll");
    
 
-   
-
   }
+  
 },[])
 
 
-useEffect(()=>{
+
+
+useLayoutEffect(()=>{
   if(imageLoaded && imageSrc  && window.innerWidth>600) {
     const { naturalWidth, naturalHeight, clientWidth, clientHeight } = reviewImageRef.current;
     const widthIsBigger = naturalWidth > naturalHeight;
@@ -119,7 +112,7 @@ useEffect(()=>{
     <div onClick={()=>{if(window.innerWidth>600) history.back();}} className={styles.mainWrapper}>
 
       
-<div ref={mainReviewDiv} onClick={(event)=>{event.stopPropagation()}} className={`${styles.mainDiv} 
+<div onClick={(event)=>{event.stopPropagation()}} className={`${styles.mainDiv} 
 ${(imageSrc?imageLoaded:true) && styles.spawnFullScreenReview}`}>
 
 <CancelIcon color={"var(--fullscreen-customer-cancel-icon-color)"} styleClassName={`${styles.closeFullScreen} ${!imageSrc && styles.closeFullScreenNoImg}`}  handleClick={()=>{history.back();}}

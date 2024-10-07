@@ -8,7 +8,7 @@ import { useGlobalStore } from '@/contexts/AppContext';
 
 
 
-export default function SubscribePopup({setEmailPopup}){
+export default function SubscribePopup(){
     const [error, setError] = useState();
     const [successfullySignedUp, setSuccessfullySugnedUp] = useState(false);
     const [subscribeLoading, setSubscribeLoading] = useState(false);
@@ -26,34 +26,37 @@ export default function SubscribePopup({setEmailPopup}){
 
 
 
+
+
+
+
+
+    
+
     useEffect(() => {
 
 
 
-   
-      changeEmailPopupOn();
-
-      
-
-  document.documentElement.classList.add("hideScroll");
+  
       
 
         const handlePopState = ()=>{
           
-          setEmailPopup(false);
+          changeEmailPopupOn();
           window?.removeEventListener("popstate", handlePopState);
         }
 
-        window?.addEventListener("popstate", handlePopState);
-        
-  
+       
        
    
        
   
        
          window.history.pushState(null, null, router.asPath);
-        history.go(1);
+
+         window?.addEventListener("popstate", handlePopState);
+         document.documentElement.classList.add("hideScroll");
+  
   
         
 
@@ -62,7 +65,7 @@ export default function SubscribePopup({setEmailPopup}){
 
           document.documentElement.classList.remove("hideScroll");
          
-          changeEmailPopupOn();
+          
       
           window?.removeEventListener("popstate", handlePopState);
 
@@ -77,7 +80,7 @@ export default function SubscribePopup({setEmailPopup}){
 
  
 
-      const handleSignUp = async () => {
+      const handleSusbscribe = async () => {
         if (subscribeLoading) return;
       
         const email = emailFieldRef.current.value;
@@ -101,7 +104,7 @@ export default function SubscribePopup({setEmailPopup}){
 
       
 
-      const popupRequestContent= ()=>{
+      const popupSubscribeContent= ()=>{
         return <> 
         <span className={styles.signUpText}>Sign up and get</span> 
         <span className={styles.discountText}>10% OFF!</span> 
@@ -114,7 +117,7 @@ export default function SubscribePopup({setEmailPopup}){
           onKeyDown={(e)=>{
    
               if (e.key === 'Enter') {
-                handleSignUp();
+                handleSusbscribe();
               }
            
           }}
@@ -122,7 +125,7 @@ export default function SubscribePopup({setEmailPopup}){
           {error && <span className={styles.emailError}><ErrorIcon/>{error}</span>}
           
          
-          <button className={`${styles.sendEmailButton} ${subscribeLoading && styles.emailButtonLoading}`} onClick={handleSignUp}>Sign up</button>
+          <button className={`${styles.sendEmailButton} ${subscribeLoading && styles.emailButtonLoading}`} onClick={handleSusbscribe}>Sign up</button>
            </div>
         
            </>
@@ -152,7 +155,7 @@ export default function SubscribePopup({setEmailPopup}){
 
         
            
-               { !successfullySignedUp ?popupRequestContent():thankYouContent()}
+               { !successfullySignedUp ?popupSubscribeContent():thankYouContent()}
 
 
                
