@@ -6,15 +6,18 @@ import styles from './writereviewvisible.module.css';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import SortReviewsButton from './SortReviewsButton/SortReviewsButton';
-import { ArrowDown, STARPATH, Stars } from '@/public/images/svgs/svgImages';
+import { ArrowDown, Stars } from '@/public/images/svgs/svgImages';
 
 
 const WriteReview = dynamic(() => import('./WriteReview'));
 
 
 export default function WriteReviewVisible({ratingData, sortingType, setSortingType}) {
+
+
+
     const [openRatingInfo, setOpenRatingInfo]=useState(false);
-    const  [infoDivOpen, setInfoDivOpen] = useState(undefined);
+    const [writeReviewOpen, setWriteReviewOpen] = useState(undefined);
 
     const router = useRouter();
 
@@ -22,62 +25,22 @@ export default function WriteReviewVisible({ratingData, sortingType, setSortingT
 
 
     useEffect(() => {
-
-      if(infoDivOpen===undefined){
-        if(router.asPath.includes("#write-review"))
-        router.push(router.asPath.split('#write-review')[0]);
-      
-        return;
+      if (writeReviewOpen === undefined && router.asPath.includes("#write-review")) {
+        router.replace(router.asPath.replace("#write-review", ""));
       }
-      
-      if (infoDivOpen) {
-        if(!router.asPath.includes("#write-review")) router.push(router.asPath + "#write-review");
+    }, [writeReviewOpen]);
 
 
-        
    
+  
+  
+  
 
-      }
-  
-      else{
-  
-      if (router.asPath.includes("#write-review")) {
-        if(global.stopRouteExecution)global.stopRouteExecution=false;
-        else router.back();
-      }
+
+
+
     
-      }
 
-  
-  
-    
-    }, [infoDivOpen]);
-
-
-   
-  
-  
-  
-
-
-
-
-
-   
-    useEffect(()=>{
-
-        if(infoDivOpen) { 
-          
-        //  document.body.classList.add('hideScroll'); 
-        document.documentElement.classList.add("hideScroll");
-      }
-       
-     
-         else document.documentElement.classList.remove("hideScroll");
-        // document.body.classList.remove('hideScroll');
-
-       
-     },[infoDivOpen]);
 
   return (<>
     <div className={styles.writeReviewDiv}>
@@ -107,7 +70,7 @@ export default function WriteReviewVisible({ratingData, sortingType, setSortingT
 
         <button
           onClick={() => {
-            setInfoDivOpen(!infoDivOpen);
+            setWriteReviewOpen(!writeReviewOpen);
           }}
           className={styles.writeReviewButton}
         >
@@ -115,7 +78,7 @@ export default function WriteReviewVisible({ratingData, sortingType, setSortingT
         </button>
         <SortReviewsButton sortingType={sortingType} setSortingType={setSortingType}/>
       </div>
-          {infoDivOpen &&  <WriteReview infoDivOpen={infoDivOpen} setInfoDivOpen={setInfoDivOpen}/>}
+          {writeReviewOpen &&  <WriteReview writeReviewOpen={writeReviewOpen} setWriteReviewOpen={setWriteReviewOpen}/>}
       </>
   )
 }

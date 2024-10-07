@@ -79,7 +79,7 @@ export default function Search({searchOpen, setSearchOpen}){
        
         
         if (!(document.getElementById('searchIcon')?.contains(event.target) || searchInputRef.current?.contains(event.target) || 
-        searchBoxRef.current?.contains(event.target))) history.back();
+        searchBoxRef.current?.contains(event.target))) router.back();
           // Clicked outside the floating div, so close the dialog
           
          
@@ -97,7 +97,7 @@ export default function Search({searchOpen, setSearchOpen}){
 
 
        
-        window.history.pushState(null, null, router.asPath);
+        history.pushState(null, null, router.asPath);
         increaseDeepLinkLevel();
 
 
@@ -181,7 +181,7 @@ export default function Search({searchOpen, setSearchOpen}){
               
              
 
-              history.back();
+              router.back();
 
             }
             else{
@@ -203,7 +203,7 @@ export default function Search({searchOpen, setSearchOpen}){
                 event.preventDefault();
                 event.stopPropagation();
             nextLink.current=`/collection/${collection.name.toLowerCase().replace(/ /g, '-')}/page/1`;
-           history.back();
+           router.back();
               
           setSearchTerm('');
               
@@ -231,7 +231,7 @@ export default function Search({searchOpen, setSearchOpen}){
                 event.preventDefault();
                 event.stopPropagation();
             nextLink.current=`/products/${product.name.toLowerCase().replace(/\s+/g, "-")}`;
-           history.back();
+           router.back();
         
            
           setSearchTerm('');

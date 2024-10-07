@@ -38,7 +38,7 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
     useEffect(()=>{
 
 
-      window.history.pushState(null, null, router.asPath);
+      history.pushState(null, null, router.asPath);
      
    
          
@@ -80,14 +80,14 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
           if (emailPopupOn || document.getElementById('mobileMenu').contains(event.target) || document.getElementById('mobileMenuSpawn').contains(event.target)) return;
           event.preventDefault();
           if(subMenu !== 0) { doubleBackRef.current; history.go(-2);}
-          else history.back();
+          else router.back();
         };
       
        
 
       
         if(subMenu !== 0) {  
-          window.history.pushState(null, null, router.asPath);
+          history.pushState(null, null, router.asPath);
           
         }
         
@@ -108,7 +108,7 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
  
     
     
-      const beforeLinkExecuted = (url) => {
+      const handleLinkExecution = (url) => {
        
           
 
@@ -117,7 +117,7 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
              doubleBackRef.current=true; history.go(-2);
             }
 
-           else history.back();
+           else router.back();
            
         
       }
@@ -137,7 +137,7 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
     
    <CancelIcon color={`var(--mobile-nav-cancel-icon-color)`} styleClassName={styles.menuItem_x_button} handleClick={()=>{
           if(subMenu !== 0) { doubleBackRef.current=true; history.go(-2);}
-          else history.back();
+          else router.back();
          
         // setIsMenuOpen(false); 
         }}/>
@@ -153,7 +153,7 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
         className={`${styles.linkStyle} ${pathname === "/" && styles.currentLinkMobile}`}
         onClick={(event) => {
           event.preventDefault();
-          beforeLinkExecuted ('/');
+          handleLinkExecution ('/');
         }}
       >
        Home
@@ -164,7 +164,7 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
         className={`${styles.linkStyle} ${pathname === "/products" && styles.currentLinkMobile}`}
         onClick={(event) => {
           event.preventDefault();
-          beforeLinkExecuted ('/products');
+          handleLinkExecution ('/products');
         }}
       >
         Products
@@ -178,7 +178,7 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
         }`}
         onClick={(event) => {
           event.preventDefault();
-          beforeLinkExecuted ("/collection/sale/page/1");
+          handleLinkExecution ("/collection/sale/page/1");
         }}
        
       >
@@ -211,14 +211,14 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
       <ArrowDown color={'var(--navbar-arrow-color)'} styleClassName={styles.subMenuArrow}/>
       </div>
      
-      <Link href="/contant-us"
+      <Link href="/contact-us"
         className={`${styles.linkStyle} ${
           pathname === "/contact-us" && styles.currentLinkMobile
         }`}
        
         onClick={(event) => {
           event.preventDefault();
-          beforeLinkExecuted ("/contant-us");
+          handleLinkExecution ("/contact-us");
         }}
       >
         Contact us
@@ -233,7 +233,7 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
        className={`${styles.linkStyle}`}
        onClick={() => {
         
-        history.back();
+        router.back();
        }}
      >
        <ArrowDown color={'var(--navbar-arrow-color)'} styleClassName={`${styles.subMenuArrow} ${styles.subMenuBackArrow}`}/>
@@ -248,7 +248,7 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
 
         onClick={(event) => {
           event.preventDefault();
-          beforeLinkExecuted ('/our-story');
+          handleLinkExecution ('/our-story');
         }}
   
       
@@ -265,7 +265,7 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
        
         onClick={(event) => {
           event.preventDefault();
-          beforeLinkExecuted ('/faq');
+          handleLinkExecution ('/faq');
         }}
        
       >
@@ -279,7 +279,7 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
         }`}
         onClick={(event) => {
           event.preventDefault();
-          beforeLinkExecuted ("/terms-of-service");
+          handleLinkExecution ("/terms-of-service");
         }}
        
       >
@@ -294,7 +294,7 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
 
         onClick={(event) => {
           event.preventDefault();
-          beforeLinkExecuted ("/privacy-policy");
+          handleLinkExecution ("/privacy-policy");
         }}
         
       >
@@ -310,7 +310,7 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
 
         onClick={(event) => {
           event.preventDefault();
-          beforeLinkExecuted ("/shipping-policy");
+          handleLinkExecution ("/shipping-policy");
         }}
 
        
@@ -325,7 +325,7 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
 
         onClick={(event) => {
           event.preventDefault();
-          beforeLinkExecuted ("/refund-policy");
+          handleLinkExecution ("/refund-policy");
         }}
       
       >
@@ -340,7 +340,7 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
        
        className={`${styles.linkStyle} ${styles.subMenuTitle}`}
        onClick={() => {
-         history.back();
+         router.back();
        }}
      >
        <ArrowDown color={'var(--navbar-arrow-color)'} styleClassName={`${styles.subMenuArrow} ${styles.subMenuBackArrow}`}/>
@@ -354,7 +354,7 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
 
   onClick={(event) => {
     event.preventDefault();
-    beforeLinkExecuted (`/collection/${c.name.toLowerCase().replace(/ /g, '-')}/page/1`);
+    handleLinkExecution (`/collection/${c.name.toLowerCase().replace(/ /g, '-')}/page/1`);
   }}
  
   

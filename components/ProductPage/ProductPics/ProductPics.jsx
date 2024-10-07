@@ -31,22 +31,14 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
 
 
   
-
   useEffect(() => {
-    if (fullScreenOn === undefined) {
-      if (router.asPath.includes("#zoom")) router.push(router.asPath.split('#zoom')[0]);
+    if (fullScreenOn === undefined && router.asPath.includes("#zoom")) router.replace(router.asPath.replace("#zoom", ""));
       
-      return;
-    }
-  
-    const hasZoom = router.asPath.includes("#zoom");
-    if (fullScreenOn && !hasZoom) {
-      router.push(`${router.asPath}#zoom`);
-    } else if (!fullScreenOn && hasZoom) {
-      document.documentElement.classList.remove("hideScroll");
-      router.back();
-    }
+ 
   }, [fullScreenOn]);
+
+
+
 
 
 
@@ -347,7 +339,7 @@ useLayoutEffect(()=>{
           changeImageIndex={handleChangeImage}
             
          
-          fullScreenChange={setFullScreenOn}
+          setFullScreenOn={setFullScreenOn}
           images={images}
         />
        }

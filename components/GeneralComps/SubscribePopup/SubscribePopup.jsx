@@ -52,7 +52,7 @@ export default function SubscribePopup(){
        
   
        
-         window.history.pushState(null, null, router.asPath);
+        history.pushState(null, null, router.asPath);
 
          window?.addEventListener("popstate", handlePopState);
          document.documentElement.classList.add("hideScroll");
@@ -136,7 +136,7 @@ export default function SubscribePopup(){
         {/* <span className={styles.thankYouTitle}>Welcome!</span>
         <span className={styles.thankYouMessage}>You have successfully subscribed! Ps. check your email for discount.</span>
        
-        <button onClick={()=>{history.back();  }} className={styles.sendEmailButton}>Continue shopping</button> */}
+        <button onClick={()=>{router.back();  }} className={styles.sendEmailButton}>Continue shopping</button> */}
 
         <span className={styles.thankYouMessage2}>Thank you for signing up!</span>
      
@@ -151,7 +151,7 @@ export default function SubscribePopup(){
     
 
 
-              <CancelIcon handleClick={()=>{history.back()}} color={"var(--email-cancel-icon-color)"} styleClassName={styles.cancelIcon}/>
+              <CancelIcon handleClick={()=>{router.back()}} color={"var(--email-cancel-icon-color)"} styleClassName={styles.cancelIcon}/>
 
         
            

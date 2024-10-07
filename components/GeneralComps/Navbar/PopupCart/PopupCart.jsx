@@ -61,7 +61,7 @@ useEffect(()=>{
   const handleClick = (event) => {
   
     
-    if (!document.getElementById('navBar').contains(event.target))  history.back();
+    if (!document.getElementById('navBar').contains(event.target))  router.back();
       
 
     else if(document.getElementById('cart').contains(event.target) || document.getElementById('mobileMenuSpawn').contains(event.target)){
@@ -74,7 +74,7 @@ useEffect(()=>{
   };
      
 
-  window.history.pushState(null, null, router.asPath);
+  history.pushState(null, null, router.asPath);
   increaseDeepLinkLevel();
 
 
@@ -102,7 +102,7 @@ const handlePopCartLinkClick=(url)=>{
   
  
     nextLink.current= url;
-  history.back();
+  router.back();
 
 }
 
@@ -164,7 +164,7 @@ const handlePopCartLinkClick=(url)=>{
   
     </Link>
     
-    <span className={styles.continue_shopping}  onClick={()=>{ history.back();}}>Continue shopping</span>
+    <span className={styles.continue_shopping}  onClick={()=>{ router.back();}}>Continue shopping</span>
     
 
  

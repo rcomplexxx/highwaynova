@@ -2,9 +2,10 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import Image from "next/image";
 import styles from './fullscreenreview.module.css';
 import ReactHtmlParser from "react-html-parser";
-import { STARPATH, Stars } from '@/public/images/svgs/svgImages';
+import {  Stars } from '@/public/images/svgs/svgImages';
 import { CancelIcon } from '@/public/images/svgs/svgImages';
 import { useGlobalStore } from '@/contexts/AppContext';
+import { useRouter } from 'next/router';
     
 
 export default function FullScreenReview({authorName, text, stars, imageSrc, setFullScreenReview}) {
@@ -26,7 +27,7 @@ export default function FullScreenReview({authorName, text, stars, imageSrc, set
     
 
 
-
+    const router = useRouter();
 
 
 
@@ -42,9 +43,8 @@ useEffect(()=>{
 
  
 
-  const handlePopState = (event)=>{
+  const handlePopState = ()=>{
 
-    event.preventDefault();
     decreaseDeepLinkLevel();
     setFullScreenReview(false);
   
@@ -53,7 +53,7 @@ useEffect(()=>{
 
 
 
-  window.history.pushState(null, null, location.href);
+  history.pushState(null, null, router.asPath);
   increaseDeepLinkLevel();
 
 
@@ -109,13 +109,13 @@ useLayoutEffect(()=>{
 
 
   return (
-    <div onClick={()=>{if(window.innerWidth>600) history.back();}} className={styles.mainWrapper}>
+    <div onClick={()=>{if(window.innerWidth>600) router.back();}} className={styles.mainWrapper}>
 
       
 <div onClick={(event)=>{event.stopPropagation()}} className={`${styles.mainDiv} 
 ${(imageSrc?imageLoaded:true) && styles.spawnFullScreenReview}`}>
 
-<CancelIcon color={"var(--fullscreen-customer-cancel-icon-color)"} styleClassName={`${styles.closeFullScreen} ${!imageSrc && styles.closeFullScreenNoImg}`}  handleClick={()=>{history.back();}}
+<CancelIcon color={"var(--fullscreen-customer-cancel-icon-color)"} styleClassName={`${styles.closeFullScreen} ${!imageSrc && styles.closeFullScreenNoImg}`}  handleClick={()=>{router.back();}}
    />
    {imageSrc && <div className={styles.reviewImageDiv}>
 

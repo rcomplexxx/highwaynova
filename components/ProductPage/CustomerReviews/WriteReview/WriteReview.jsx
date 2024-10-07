@@ -8,7 +8,7 @@ import { ErrorIcon, STARPATH } from "@/public/images/svgs/svgImages";
 import { BackIcon, CancelIcon } from "@/public/images/svgs/svgImages";
 import { useGlobalStore } from "@/contexts/AppContext";
 
-export default function WriteReview({ setInfoDivOpen }) {
+export default function WriteReview({ setWriteReviewOpen }) {
  
   
   const [rating, setRating] = useState(5);
@@ -24,7 +24,10 @@ export default function WriteReview({ setInfoDivOpen }) {
     increaseDeepLinkLevel: state.increaseDeepLinkLevel,
     decreaseDeepLinkLevel: state.decreaseDeepLinkLevel,
   }));
+
+
   
+  const router = useRouter();
  
 
   useEffect(()=>{
@@ -35,86 +38,79 @@ export default function WriteReview({ setInfoDivOpen }) {
   
 
 
-    const handlePopState=(event)=>{  
-      event.preventDefault(); 
-      global.stopRouteExecution=true; 
-      setInfoDivOpen(false);}
+    const handlePopState=()=>{  
+      
+      
+      window?.removeEventListener("popstate", handlePopState);
+      setWriteReviewOpen(false);
+    
+    }
 
  
+    router.push(`${router.asPath}#write-review`)
 
     window?.addEventListener("popstate", handlePopState);
+    
     increaseDeepLinkLevel();
+    document.documentElement.classList.add("hideScroll");
 
    return ()=>{
     window?.removeEventListener("popstate", handlePopState);
     decreaseDeepLinkLevel();
+    document.documentElement.classList.remove("hideScroll");
    }
   },[])
 
 
 
 
-  const handleImageUpload = useCallback((e) => {
-
-    const files = e.target.files;
-    
-    const newImages = [...images];
-    let arrayMax = 5 - images.length;
-    if(files.length>arrayMax) setErrors({...errors, images5:true}); else setErrors({...errors,images5:false});
-
-    for (
-      let i = 0;
-      i < (files.length < arrayMax ? files.length : arrayMax);
-      i++
-    ) {
-      if (files[i]) {
-        const uploadedImagePath = URL.createObjectURL(files[i]);
-        newImages.push(uploadedImagePath);
-      }
-    }
+  const handleImageUpload = useCallback(({ target: { files } }) => {
+    const arrayMax = Math.min(files.length, 5 - images.length);
+    setErrors({ ...errors, images5: files.length > arrayMax });
+  
+    const newImages = [
+      ...images,
+      ...Array.from(files).slice(0, arrayMax).map((file) => URL.createObjectURL(file))
+    ];
+  
     setImages(newImages);
+  }, [images, errors]);
 
- 
-  },[images]);
+//Videti da li trebam errors da stavim kao dependency ili ne
 
-  const handleNext = useCallback(() => {
 
-    
-    const outAnimationTime = 500;
-    const inAnimationTime = 200;
-    if (animation) return;
 
-    setAnimation("swipeOutLeft");
+const handleNext = useCallback(() => {
+  if (animation) return;
 
-    setTimeout(() => {
-      setRatingPage(ratingPage + 1);
+  setAnimation("swipeOutLeft");
 
-      setAnimation("swipeInRight");
-      setTimeout(() => {
-        setAnimation();
-      }, inAnimationTime);
-    }, outAnimationTime);
-  },[ratingPage, animation]);
+  setTimeout(() => {
+    setRatingPage(prev => prev + 1);
+    setAnimation("swipeInRight");
+
+    setTimeout(() => setAnimation(), 200);
+  }, 500);
+}, [animation]);
 
   
 
-  const handleBack = useCallback(() => {
-    const outAnimationTime = 500;
-    const inAnimationTime = 200;
-    if (animation) return;
+const handleBack = useCallback(() => {
+  if (animation) return;
 
-    setAnimation("swipeOutRight");
+  setAnimation("swipeOutRight");
 
-    setTimeout(() => {
-     
-      setRatingPage(ratingPage>0?ratingPage-1:0);
+  setTimeout(() => {
+    setRatingPage(prev => Math.max(prev - 1, 0));
+    setAnimation("swipeInLeft");
 
-      setAnimation("swipeInLeft");
-      setTimeout(() => {
-        setAnimation(undefined);
-      }, inAnimationTime);
-    }, outAnimationTime);
-  },[ratingPage, animation]);
+    setTimeout(() => setAnimation(), 200);
+  }, 500);
+}, [animation]);
+
+
+
+
 
 
 
@@ -356,7 +352,7 @@ export default function WriteReview({ setInfoDivOpen }) {
 
               <CancelIcon color={"var(--cancel-write-review-color)"}
               styleClassName={styles.closeButton} handleClick={() => {
-                setInfoDivOpen(false);
+                router.back();
              
               }}
               />

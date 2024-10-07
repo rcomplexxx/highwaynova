@@ -1,4 +1,4 @@
-import { useCallback,  useLayoutEffect, useRef, useState } from "react";
+import { useCallback,  useEffect, useLayoutEffect, useRef, useState } from "react";
 import styles from "./fullscreenzoomableimage.module.css";
 import { Zoom } from "swiper/core";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -11,6 +11,7 @@ import { ArrowDown, CancelIcon, ZoomInIcon, ZoomOutIcon } from "@/public/images/
 import { useGlobalStore } from "@/contexts/AppContext";
 
 import { transformColorToRgb } from "@/utils/utils-client/transformColorToRgba";
+import { useRouter } from "next/router";
 
 
 
@@ -19,7 +20,7 @@ import { transformColorToRgb } from "@/utils/utils-client/transformColorToRgba";
 const FullScreenZoomableImage = ({
   imageIndex,
   changeImageIndex,
-  fullScreenChange,
+  setFullScreenOn,
   images,
 }) => {
   const [navActive, setNavActive] = useState(false);
@@ -49,6 +50,8 @@ const FullScreenZoomableImage = ({
   const fixedZoomDivRef= useRef();
   const fullImageRef= useRef();
 
+  const blockPopState = useRef();
+
   const { increaseDeepLinkLevel, decreaseDeepLinkLevel } = useGlobalStore((state) => ({
     increaseDeepLinkLevel: state.increaseDeepLinkLevel,
     decreaseDeepLinkLevel: state.decreaseDeepLinkLevel,
@@ -56,12 +59,12 @@ const FullScreenZoomableImage = ({
 
 
 
-
+  const router = useRouter();
   
 
 
   useLayoutEffect(() => {
-    const mainImg = document.getElementById(`mainImage${imageIndex}`);
+    const mainImg = document.getElementById(`mainImage${swiperRef.current.activeIndex}`);
     const fullImg = fullImageRef.current;
   
     const isBiggerWidth =
@@ -106,7 +109,7 @@ const FullScreenZoomableImage = ({
   useLayoutEffect(() => {
     if (!imageLoaded) return;
   
-    const mainImg = document.getElementById(`mainImage${imageIndex}`);
+    const mainImg = document.getElementById(`mainImage${swiperRef.current.activeIndex}`);
     const fullImg = fullImageRef.current;
     const fixedZoomDiv = fixedZoomDivRef.current;
   
@@ -144,22 +147,24 @@ const FullScreenZoomableImage = ({
 
 
 
-  useLayoutEffect(() => {
-    const handlePopState = (event) => {
-      event.preventDefault();
-      setNavActive(false);
-      killFullScreen();
+  useEffect(() => {
+    const handlePopState = () => {
+      if(!blockPopState.current) killFullScreen();
     };
+    
+    router.push(`${router.asPath}#zoom`)
     
     window.addEventListener("popstate", handlePopState);
     return () => window.removeEventListener("popstate", handlePopState);
-  }, [imageIndex, zoomed]);
+  }, []);
+
+  
 
 
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const fixedZoomDiv = fixedZoomDivRef.current;
-  const imgDiv = document.getElementById(`zoomDiv${imageIndex}`);
+  const imgDiv = document.getElementById(`zoomDiv${swiperRef.current.activeIndex}`);
   const getRgbValues = (opacity) => transformColorToRgb(
     getComputedStyle(document.documentElement).getPropertyValue('--bg-color'), opacity
   );
@@ -287,7 +292,7 @@ const FullScreenZoomableImage = ({
       window.removeEventListener("touchmove", handleTouchYMove, true);
       window.removeEventListener("touchend", handleTouchEnd);
   };
-  }, [imageIndex,zoomed]);
+  }, [zoomed]);
 
 
 
@@ -319,7 +324,10 @@ const FullScreenZoomableImage = ({
         if(!fullImg)return;
 
 
-        const mainImg = document.getElementById(`mainImage${imageIndex}`);
+        
+        setNavActive(false);
+
+        const mainImg = document.getElementById(`mainImage${swiperRef.current.activeIndex}`);
 
         const fullImgRect = fullImg.getBoundingClientRect();
         const mainImgRect = mainImg.getBoundingClientRect();
@@ -375,12 +383,15 @@ const FullScreenZoomableImage = ({
 
        
        
-              setNavActive(false);
         
 
         setTimeout(function () {
-          fullScreenChange(false);
+          setFullScreenOn(false);
           document.documentElement.classList.remove("hideScroll");
+          if(currY>0){
+            blockPopState.current=true;
+            router.back();
+          }
       
         }, 300);
 
@@ -388,7 +399,7 @@ const FullScreenZoomableImage = ({
       },
       zoomed ? 300 : 0
     );
-  },[zoomed, imageIndex]);
+  },[zoomed]);
 
 
  
@@ -430,7 +441,7 @@ const FullScreenZoomableImage = ({
 
               <CancelIcon color={`var(--fullscreen-cancel-image-color)`} styleClassName={styles.close_button} handleClick={(event) => {
                   event.stopPropagation();
-                  killFullScreen();
+                  router.back();
                 }}/>
               
             </div>
