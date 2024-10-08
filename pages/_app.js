@@ -73,7 +73,7 @@ export default function App({ Component, pageProps }) {
     //PAZNJA!!!!!!!!!!!!!! OVA FUNKCIJA SE AKTIVIRA SAMO KAD USER KLIKNE BACK ILI SE AKTIVIRA ROUTER.BACK. NI U JEDNOM DRUGOM SLUCAJU!
     //Ako stavim false kao drugi argument, funkcija nece da ide nazad.
     
-    router.beforePopState(state => {state.options.scroll = false; return true;});
+    // router.beforePopState(state => {state.options.scroll = false; return true;});
 
     
     document.querySelector("html").className = `${inter.variable} ${eb_Garamond.variable}`;
