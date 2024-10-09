@@ -151,22 +151,14 @@ export default function PickReturnProducts({orderProducts, returnProducts, setRe
 
 
   onChange={(event) => {
-  
-
-  
-  const newReturnProduct= orderProducts[event.target.value];
-
-
-  console.log('sdsd', newReturnProduct)
-
-    const newReturnProductsArray= returnProducts.map((rp, i)=>{
-        if(index===i) return {id:newReturnProduct.id, variant: newReturnProduct.variant, quantity: 1};
-        else return rp;
-    });
-
-
- console.log( 'new ret pr', newReturnProductsArray)
-
+    const newReturnProduct = orderProducts[event.target.value];
+    const newReturnProductsArray = returnProducts.map((rp, i) =>
+      i === index
+        ? event.target.value === ""
+          ? { id: undefined, variant: undefined, quantity: 1 }
+          : { id: newReturnProduct.id, variant: newReturnProduct.variant, quantity: 1 }
+        : rp
+    );
     setReturnProducts(newReturnProductsArray);
   }}
 >

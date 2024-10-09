@@ -26,8 +26,8 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
     
 
 
-    const { emailPopupOn, increaseDeepLinkLevel, decreaseDeepLinkLevel } = useGlobalStore((state) => ({
-      emailPopupOn: state.emailPopupOn,
+    const {  increaseDeepLinkLevel, decreaseDeepLinkLevel } = useGlobalStore((state) => ({
+     
       increaseDeepLinkLevel: state.increaseDeepLinkLevel,
       decreaseDeepLinkLevel: state.decreaseDeepLinkLevel,
     }));
@@ -70,7 +70,7 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
         };
 
         const handlePopState = () => {
-          if (emailPopupOn) return;
+        
 
           subMenu !== 0 ? (doubleBackRef.current?closeMenu():setSubMenu(0)) : closeMenu();
           
@@ -90,7 +90,9 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
 
       
         const handleClickOutside = (event) => {
-          if (emailPopupOn || document.getElementById('mobileMenu').contains(event.target) || document.getElementById('mobileMenuSpawn').contains(event.target)) return;
+          if (document.getElementById('mobileMenu').contains(event.target) || document.getElementById('mobileMenuSpawn').contains(event.target)) return;
+         
+          event.stopPropagation();
           event.preventDefault();
           if(subMenu !== 0) { doubleBackRef.current; history.go(-2);}
           else router.back();
@@ -113,7 +115,7 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
           window.removeEventListener("popstate", handlePopState);
           document.removeEventListener('click', handleClickOutside, true);
         };
-      }, [subMenu, emailPopupOn]);
+      }, [subMenu]);
 
 
 

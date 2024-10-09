@@ -17,6 +17,7 @@
     min-height: var(--size-9-5);
     width: 100%;
     display: flex;
+    gap: var(--size-6);
 
     border: 1px solid gray;
     margin-bottom: var(--size-7);

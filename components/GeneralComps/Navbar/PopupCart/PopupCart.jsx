@@ -22,18 +22,30 @@ const nextLink = useRef();
 
 
 
-const { increaseDeepLinkLevel, decreaseDeepLinkLevel } = useGlobalStore((state) => ({
+
+
+const { deepLinkLevel, increaseDeepLinkLevel, decreaseDeepLinkLevel } = useGlobalStore((state) => ({
+  deepLinkLevel: state.deepLinkLevel,
   increaseDeepLinkLevel: state.increaseDeepLinkLevel,
   decreaseDeepLinkLevel: state.decreaseDeepLinkLevel,
 }));
 
 
-
+const deepLinkLevelRef = useRef(deepLinkLevel);
 
 useLayoutEffect(()=>{
   
   popCartRef.current.style.height= `${popCartRef.current.scrollHeight}px`;
+
+
 },[])
+
+
+
+useEffect(()=>{
+
+  deepLinkLevelRef.current = deepLinkLevel
+}, [deepLinkLevel])
 
 
 
@@ -45,8 +57,10 @@ useEffect(()=>{
 
   const handlePopState = ()=>{
 
+    console.log('LINK!', deepLinkLevelRef.current)
+
+    if(deepLinkLevelRef.current>1) return;
     
-  
     setNewProducts([]);
     window?.removeEventListener("popstate", handlePopState);
 
@@ -58,13 +72,28 @@ useEffect(()=>{
 
 
   const handleClick = (event) => {
+
+    if(deepLinkLevelRef.current>1) return;
   
     
-    if (!document.getElementById('navBar').contains(event.target))  router.back();
+    if (!document.getElementById('navBar').contains(event.target)){  
+
+      event.stopPropagation();
+      event.preventDefault();
+    
+      router.back();
+
+    }
       
 
-    else if(document.getElementById('cart').contains(event.target) || document.getElementById('mobileMenuSpawn').contains(event.target)){
-        setNewProducts([]);
+    else if(document.getElementById('cart').contains(event.target)){
+
+
+      event.stopPropagation();
+      event.preventDefault();
+      nextLink.current = '/cart';
+      router.back();
+      
     
     }
 
@@ -74,19 +103,19 @@ useEffect(()=>{
      
 
   history.pushState(null, null, router.asPath);
-  increaseDeepLinkLevel();
+  
 
 
   window?.addEventListener("popstate", handlePopState);
-  document.addEventListener('click', handleClick);
+  document.addEventListener('click', handleClick, true);
   
-
+  increaseDeepLinkLevel();
 
   return ()=>{
 
    
     window?.removeEventListener("popstate", handlePopState);
-    document.removeEventListener('click', handleClick);
+    document.removeEventListener('click', handleClick, true);
     decreaseDeepLinkLevel();
 
    

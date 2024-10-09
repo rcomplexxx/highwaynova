@@ -100,7 +100,8 @@ const saveNewReturn = async () => {
   console.log('return data', returnProducts, linkedOrder);
 
   if (!linkedOrder || !returnProducts.length || 
-      returnProducts.some(rp => !rp.id || rp.quantity === 0)) return;
+      returnProducts.some(rp => rp.id===undefined || rp.quantity === 0)) return;
+      
 
   const totalPrice= parseFloat(parseFloat(returnCost).toFixed(2));
 
@@ -111,6 +112,7 @@ const saveNewReturn = async () => {
     tip: shouldReturnTip ? linkedOrder.tip : "0.00",
     returnCost: totalPrice
   };
+
 
   try {
     const response = await fetch("/api/admincheck", {
