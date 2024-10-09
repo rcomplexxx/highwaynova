@@ -40,6 +40,11 @@ const nextConfig = {
         return config;
       },
 
+      experimental: {
+        concurrentFeatures: true,
+        // Other experimental features can be enabled here
+      },
+
       // compiler: {
       //   removeConsole: {
       //     exclude: ['error'],

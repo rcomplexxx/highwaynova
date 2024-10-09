@@ -184,9 +184,7 @@ useLayoutEffect(()=>{
         preventClicks={false}
         // preventClicksPropagation={false}
         touchStartPreventDefault={false}
-        preloadImages={false}
-        lazy={true}
-        
+      
         
 
         >
