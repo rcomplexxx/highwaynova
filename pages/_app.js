@@ -47,6 +47,8 @@ export default function App({ Component, pageProps }) {
   //Na ovaj nacin koristim ref da bi imao najnoviju vrednost deepLinka
   const deepLinkLevelRef = useRef(useGlobalStore.getState().deepLinkLevel);
 
+  
+
 
   useEffect(() => {
     const globalStoreUnsubscribe = useGlobalStore.subscribe(
@@ -114,11 +116,12 @@ export default function App({ Component, pageProps }) {
           //Ako je deepLink 0, tj. ni jedna druga deep-link komponenta nije prisutna(write review, fullscreen zoom), prikazati popup
           //Ako je prisutna, cekati 7 sekundi radi ponovne provere. 
           const showPopup = () => {
-            if (deepLinkLevelRef.current === 0) {
+            if (deepLinkLevelRef.current === 0 && !global.isRouteProcessing) {
               changeEmailPopupOn();
               localStorage.setItem("popupShownDateInDays", Math.floor(Date.now() / 86400000));
               router.events.off('routeChangeStart', handleRouteChangeStart);
             } else {
+              
               popupTimeout = setTimeout(showPopup, 7000);
             }
           };
@@ -127,14 +130,14 @@ export default function App({ Component, pageProps }) {
         } 
       };
         //Funkcija se moze aktivirati tek nakon 30 sekunde od ulaska u link.
-        popupTimeout = setTimeout(handlePopupTurning, 30000);
+        popupTimeout = setTimeout(handlePopupTurning, 3000);
       
     
     }
 
 
 
-      const daysBetweenEmailPopups = 14;
+      const daysBetweenEmailPopups = 0;
 
       const popupShownDate = localStorage.getItem("popupShownDateInDays");
       const emailPopupTimeChecker = popupShownDate ? Math.floor(Date.now() / 86400000) - popupShownDate : null;
@@ -167,12 +170,18 @@ export default function App({ Component, pageProps }) {
       if (!deepLinkLevelRef.current) {
           NProgress.start();
       }
+
+      global.isRouteProcessing = true;
   };
 
   const handleComplete = () => {
       if (!deepLinkLevelRef.current) {
           NProgress.done();
       }
+
+      global.isRouteProcessing=false;
+
+      
   };
 
     router.events.on('routeChangeStart', handleStart);

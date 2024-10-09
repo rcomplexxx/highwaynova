@@ -200,6 +200,7 @@ useLayoutEffect(()=>{
             id={`mainImage${index}`}
             
             onClick={() => {
+              if(!global.isRouteProcessing)
               setFullScreenOn(true);
             }}
            
