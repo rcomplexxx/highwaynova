@@ -9,7 +9,7 @@ const nextConfig = {
   async redirects() {
     return [
       {
-        source: '/en/products/page/1',
+        source: '/products/page/1',
         destination: '/', // Redirect to the home page
         permanent: true,  // This is a permanent redirect (301)
       },

@@ -130,14 +130,14 @@ export default function App({ Component, pageProps }) {
         } 
       };
         //Funkcija se moze aktivirati tek nakon 30 sekunde od ulaska u link.
-        popupTimeout = setTimeout(handlePopupTurning, 3000);
+        popupTimeout = setTimeout(handlePopupTurning, 30000);
       
     
     }
 
 
 
-      const daysBetweenEmailPopups = 0;
+      const daysBetweenEmailPopups = 14;
 
       const popupShownDate = localStorage.getItem("popupShownDateInDays");
       const emailPopupTimeChecker = popupShownDate ? Math.floor(Date.now() / 86400000) - popupShownDate : null;
