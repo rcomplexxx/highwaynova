@@ -10,7 +10,7 @@ const nextConfig = {
     return [
       {
         source: '/products/page/1',
-        destination: '/', // Redirect to the home page
+        destination: '/products', // Redirect to the home page
         permanent: true,  // This is a permanent redirect (301)
       },
     ];
