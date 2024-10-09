@@ -23,7 +23,7 @@ export const getStartReviews= async(productId, limit = 20)=>{
 
   
      
-      const result =  await dbConnection.query(`SELECT * FROM reviews WHERE product_id = ? LIMIT ?`, [productId, limit]);
+      const result =  await dbConnection.query(`SELECT * FROM reviews WHERE product_id = ? ORDER BY id ASC LIMIT ?`, [productId, limit]);
 
       
   

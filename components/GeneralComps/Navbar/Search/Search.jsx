@@ -31,7 +31,6 @@ export default function Search({searchOpen, setSearchOpen}){
   
 
     const {increaseDeepLinkLevel, decreaseDeepLinkLevel } = useGlobalStore((state) => ({
-      deepLinkLevel: state.deepLinkLevel,
       increaseDeepLinkLevel: state.increaseDeepLinkLevel,
       decreaseDeepLinkLevel: state.decreaseDeepLinkLevel,
     }));

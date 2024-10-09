@@ -92,7 +92,7 @@ const getReviews = async (req, res) => {
    if(sortingType === "featured"){
     
 
-    const result = await dbConnection.query(`SELECT * FROM reviews WHERE product_id = ? LIMIT ? OFFSET ?`, [product_id, limit, starting_position]);
+    const result = await dbConnection.query(`SELECT * FROM reviews WHERE product_id = ? ORDER BY id ASC LIMIT ? OFFSET ?`, [product_id, limit, starting_position]);
 
     
 
@@ -143,9 +143,9 @@ const getReviews = async (req, res) => {
       const query = craftShuffledArrayQuery(newArraySliced);
      
 
-
+     
       
-    const result = await dbConnection.query(query);
+    const result = query===`SELECT * FROM reviews WHERE id IN ()`?[]:await dbConnection.query(query);
 
     
 
@@ -189,12 +189,13 @@ const getReviews = async (req, res) => {
     }
 
   
-    
-    const query= craftShuffledArrayQuery(ratingArrayIds.slice(starting_position, starting_position+limit))
+    const newArraySliced = ratingArrayIds.slice(starting_position, starting_position+limit);
+
+    const query= craftShuffledArrayQuery(newArraySliced);
 
 
 
-    const myReviews= await dbConnection.query(query);
+    const myReviews= query===`SELECT * FROM reviews WHERE id IN ()`?[]:await dbConnection.query(query);
 
 
     return await resReturn(200, { reviews: myReviews } )
