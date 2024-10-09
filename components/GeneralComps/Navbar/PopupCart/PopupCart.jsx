@@ -47,7 +47,6 @@ useEffect(()=>{
 
     
   
-    decreaseDeepLinkLevel();
     setNewProducts([]);
     window?.removeEventListener("popstate", handlePopState);
 
@@ -88,7 +87,7 @@ useEffect(()=>{
    
     window?.removeEventListener("popstate", handlePopState);
     document.removeEventListener('click', handleClick);
-   
+    decreaseDeepLinkLevel();
 
    
 

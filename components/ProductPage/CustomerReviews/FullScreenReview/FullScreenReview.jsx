@@ -45,7 +45,6 @@ useEffect(()=>{
 
   const handlePopState = ()=>{
 
-    decreaseDeepLinkLevel();
     setFullScreenReview(false);
   
   }
@@ -54,13 +53,14 @@ useEffect(()=>{
 
 
   history.pushState(null, null, router.asPath);
-  increaseDeepLinkLevel();
+  
 
 
 
   window?.addEventListener("popstate", handlePopState);
   document.documentElement.classList.add("hideScroll");
- 
+  
+  increaseDeepLinkLevel();
 
 
 
@@ -69,6 +69,8 @@ useEffect(()=>{
    
     window?.removeEventListener("popstate", handlePopState);
     document.documentElement.classList.remove("hideScroll");
+    
+    decreaseDeepLinkLevel();
    
 
   }

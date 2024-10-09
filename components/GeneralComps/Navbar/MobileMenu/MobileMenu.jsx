@@ -26,8 +26,10 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
     
 
 
-    const { emailPopupOn } = useGlobalStore((state) => ({
+    const { emailPopupOn, increaseDeepLinkLevel, decreaseDeepLinkLevel } = useGlobalStore((state) => ({
       emailPopupOn: state.emailPopupOn,
+      increaseDeepLinkLevel: state.increaseDeepLinkLevel,
+      decreaseDeepLinkLevel: state.decreaseDeepLinkLevel,
     }));
 
 
@@ -39,6 +41,12 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
 
 
       history.pushState(null, null, router.asPath);
+      increaseDeepLinkLevel();
+
+
+      return ()=>{
+        decreaseDeepLinkLevel();
+      }
      
    
          

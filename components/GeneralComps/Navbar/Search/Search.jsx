@@ -63,7 +63,6 @@ export default function Search({searchOpen, setSearchOpen}){
          
        
          
-          decreaseDeepLinkLevel();
           setSearchOpen(false);
           window?.removeEventListener("popstate", handlePopState);
 
@@ -116,6 +115,8 @@ export default function Search({searchOpen, setSearchOpen}){
           if(searchOpen) {
             document.removeEventListener('click', handleClickOutside);
             window?.removeEventListener("popstate", handlePopState);
+            
+             decreaseDeepLinkLevel();
           }
         };
     
