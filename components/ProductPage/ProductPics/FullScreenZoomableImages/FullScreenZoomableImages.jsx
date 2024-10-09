@@ -292,7 +292,7 @@ const FullScreenZoomableImage = ({
       window.removeEventListener("touchmove", handleTouchYMove, true);
       window.removeEventListener("touchend", handleTouchEnd);
   };
-  }, [zoomed]);
+  }, [zoomed,swiperRef.current?.activeIndex]);
 
 
 
@@ -399,7 +399,7 @@ const FullScreenZoomableImage = ({
       },
       zoomed ? 300 : 0
     );
-  },[zoomed]);
+  },[zoomed,swiperRef.current?.activeIndex]);
 
 
  
