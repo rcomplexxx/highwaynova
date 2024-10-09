@@ -23,6 +23,7 @@ const FreqProduct = ({ productId, variantIndex, onAddToCart }) => {
     <div className={styles.product_style_div}>
       <Link
         href={`/products/${product.name.toLowerCase().replace(/\s+/g, "-")}${variant? '?variant='+variant.name.toLowerCase().replace(/\s+/g, "-"): ''}`}
+        shallow={false}
       >
         <Image
         height={0} width={0}
