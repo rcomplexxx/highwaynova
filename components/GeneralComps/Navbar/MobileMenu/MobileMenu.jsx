@@ -45,7 +45,7 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
 
 
       return ()=>{
-        if(!nextLink.current)
+        if(!nextLink.current && nextLink.current !== router.asPath)
         decreaseDeepLinkLevel();
       }
      
