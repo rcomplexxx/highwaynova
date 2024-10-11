@@ -32,7 +32,7 @@ export default function ToastMessage({showToastMessage, setShowToastMessage}) {
         }
       }
     
-    }, [showToastMessage, toastRef]);
+    }, [showToastMessage]);
 
 
    

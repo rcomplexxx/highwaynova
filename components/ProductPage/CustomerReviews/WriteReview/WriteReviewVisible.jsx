@@ -24,11 +24,7 @@ export default function WriteReviewVisible({ratingData, sortingType, setSortingT
   
 
 
-    useEffect(() => {
-      if (writeReviewOpen === undefined && router.asPath.includes("#write-review")) {
-        router.replace(router.asPath.replace("#write-review", ""));
-      }
-    }, [writeReviewOpen]);
+ 
 
 
    

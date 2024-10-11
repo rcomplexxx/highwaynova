@@ -22,6 +22,7 @@ const FullScreenZoomableImage = ({
   changeImageIndex,
   setFullScreenOn,
   images,
+  mainImageRef
 }) => {
   const [navActive, setNavActive] = useState(false);
 
@@ -50,7 +51,9 @@ const FullScreenZoomableImage = ({
   const fixedZoomDivRef= useRef();
   const fullImageRef= useRef();
 
-  const blockPopState = useRef();
+  const zoomDivRef = useRef();
+
+  const backPressedRef = useRef();
 
   const { increaseDeepLinkLevel, decreaseDeepLinkLevel } = useGlobalStore((state) => ({
     increaseDeepLinkLevel: state.increaseDeepLinkLevel,
@@ -64,7 +67,7 @@ const FullScreenZoomableImage = ({
 
 
   useLayoutEffect(() => {
-    const mainImg = document.getElementById(`mainImage${swiperRef.current.activeIndex}`);
+    const mainImg = mainImageRef.current;
     const fullImg = fullImageRef.current;
   
     const isBiggerWidth =
@@ -100,6 +103,7 @@ const FullScreenZoomableImage = ({
     
     return ()=>{
       decreaseDeepLinkLevel();
+      document.documentElement.classList.remove("hideScroll");
     }
   }, []);
  
@@ -109,7 +113,7 @@ const FullScreenZoomableImage = ({
   useLayoutEffect(() => {
     if (!imageLoaded) return;
   
-    const mainImg = document.getElementById(`mainImage${swiperRef.current.activeIndex}`);
+    const mainImg = mainImageRef.current;
     const fullImg = fullImageRef.current;
     const fixedZoomDiv = fixedZoomDivRef.current;
   
@@ -149,13 +153,19 @@ const FullScreenZoomableImage = ({
 
   useEffect(() => {
     const handlePopState = () => {
-      if(!blockPopState.current) killFullScreen();
+      
+      window.removeEventListener("popstate", handlePopState);
+      backPressedRef.current = true;
+      killFullScreen();
     };
     
     router.push(`${router.asPath}#zoom`)
     
     window.addEventListener("popstate", handlePopState);
-    return () => window.removeEventListener("popstate", handlePopState);
+    return () => {
+      if(!backPressedRef.current)router.back();
+      window.removeEventListener("popstate", handlePopState);
+    }
   }, []);
 
   
@@ -164,7 +174,7 @@ const FullScreenZoomableImage = ({
 
   useEffect(() => {
     const fixedZoomDiv = fixedZoomDivRef.current;
-  const imgDiv = document.getElementById(`zoomDiv${swiperRef.current.activeIndex}`);
+  const imgDiv = zoomDivRef.current;
   const getRgbValues = (opacity) => transformColorToRgb(
     getComputedStyle(document.documentElement).getPropertyValue('--bg-color'), opacity
   );
@@ -327,7 +337,7 @@ const FullScreenZoomableImage = ({
         
         setNavActive(false);
 
-        const mainImg = document.getElementById(`mainImage${swiperRef.current.activeIndex}`);
+        const mainImg = mainImageRef.current;
 
         const fullImgRect = fullImg.getBoundingClientRect();
         const mainImgRect = mainImg.getBoundingClientRect();
@@ -387,11 +397,7 @@ const FullScreenZoomableImage = ({
 
         setTimeout(function () {
           setFullScreenOn(false);
-          document.documentElement.classList.remove("hideScroll");
-          if(currY>0){
-            blockPopState.current=true;
-            router.back();
-          }
+        
       
         }, 300);
 
@@ -503,7 +509,7 @@ const FullScreenZoomableImage = ({
               >
                 
                   <div
-                    id={"zoomDiv" + index}
+                    ref={index===imageIndex?zoomDivRef:undefined}
                     className={`${styles.productImageDiv} ${
                       zoomed && styles.productImageDivZoomed //zoomedChange
                     } swiper-zoom-target`}

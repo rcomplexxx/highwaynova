@@ -21,8 +21,6 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
   
   
 
-  const router = useRouter();
-
   const  swiperRef = useRef(), swiperMiniRef = useRef();
   
   const instantSwipeRef = useRef(variantImageIndex.instant)
@@ -30,51 +28,37 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
   const fixedAddToCartRef= useRef();
 
 
+  const mainImageRef = useRef();
   
-  useEffect(() => {
-    if (fullScreenOn === undefined && router.asPath.includes("#zoom")) router.replace(router.asPath.replace("#zoom", ""));
-      
  
-  }, [fullScreenOn]);
 
 
 
 
 
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const addToCartEl = document.getElementById("addToCart");
     const masonryEl = document.getElementById("masonry");
-
-    const checkSpawnAddToCart = () => {
-        return (
-            addToCartEl.getBoundingClientRect().bottom < 0 &&
-            masonryEl.getBoundingClientRect().bottom > window.innerHeight
-        );
-    };
-
-    setSpawnAddToCart(checkSpawnAddToCart());
-
     let destroyFixedCartTimeout;
 
-    const handleScroll = () => {
-   
-      
+    const checkSpawnAddToCart = () =>
+        addToCartEl.getBoundingClientRect().bottom < 0 &&
+        masonryEl.getBoundingClientRect().bottom > window.innerHeight;
 
+    const handleScroll = () => {
         if (checkSpawnAddToCart()) {
             setSpawnAddToCart(true);
-
             if (destroyFixedCartTimeout) {
                 clearTimeout(destroyFixedCartTimeout);
                 destroyFixedCartTimeout = null;
             }
-            
         } else if (fixedAddToCartRef.current) {
-
-            fixedAddToCartRef.current.style.opacity = 0;
-            fixedAddToCartRef.current.style.transform = 'translateY(100%)';
-            destroyFixedCartTimeout = setTimeout(() => {setSpawnAddToCart(false); }, 300);
-
+            Object.assign(fixedAddToCartRef.current.style, {
+                opacity: 0,
+                transform: 'translateY(100%)',
+            });
+            destroyFixedCartTimeout = setTimeout(() => setSpawnAddToCart(false), 300);
         }
     };
 
@@ -82,7 +66,7 @@ export default function ProductPics({ images, onAddToCart, variantImageIndex }) 
 
     return () => {
         window.removeEventListener("scroll", handleScroll);
-        if (destroyFixedCartTimeout) clearTimeout(destroyFixedCartTimeout); // Clean up the timeout
+        if (destroyFixedCartTimeout) clearTimeout(destroyFixedCartTimeout);
     };
 }, []);
 
@@ -98,7 +82,6 @@ useLayoutEffect(()=>{
 
   
 
-  if (variantImageIndex.imageIndex===imageIndex)return;
 
   instantSwipeRef.current=variantImageIndex.instant;
   setImageIndex(variantImageIndex.imageIndex);
@@ -197,7 +180,7 @@ useLayoutEffect(()=>{
        >
          
             <Image
-            id={`mainImage${index}`}
+            ref={imageIndex===index?mainImageRef:undefined}
             
             onClick={() => {
               if(!global.isRouteProcessing)
@@ -342,6 +325,7 @@ useLayoutEffect(()=>{
          
           setFullScreenOn={setFullScreenOn}
           images={images}
+          mainImageRef={mainImageRef}
         />
        }
       

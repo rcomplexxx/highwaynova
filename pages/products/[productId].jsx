@@ -61,6 +61,7 @@ export default function ProductPage({ product, description, images, startReviews
  
 
   const [quantity, setQuantity] = useState(1);
+  const [variant, setVariant]=useState(product.variants?.[0]);
   const [bundleVariants, setBundleVariants] = useState([]);
 
   const baseUrlRef = useRef();
@@ -82,30 +83,24 @@ export default function ProductPage({ product, description, images, startReviews
   const router = useRouter();
   
 
-   const {variant:variantQuery} = router.query;
 
-   const obtainInitialVariant = ()=>{
-
-    if (!product.variants) {
-      
-      shouldInitializeVariantRef.current = {initialize: false, instant:true};
-      
-      return undefined;
-    }
+  useEffect(() => {
+    if (!router.isReady) return;
   
-    const formatQuery = query => query?.toLowerCase().replace(/\s+/g, "-");
-
-const currentVariant = variantQuery ? (product.variants.find(v => formatQuery(v.name) === formatQuery(variantQuery)) || product.variants[0]): product.variants[0];
+    const path = router.asPath;
+    const cleanedPath = path.replace("#zoom", "").replace("#write-review", "");
   
-return currentVariant;
-   }
+    if (cleanedPath !== path)  router.replace(cleanedPath);
+    
+  }, [router.isReady]);
 
-   
-  const [variant, setVariant]=useState(obtainInitialVariant());
+  
+
+  //  const {variant:variantQuery} = router.query;
 
 
 
-   useLayoutEffect(() => {
+ useLayoutEffect(() => {
 
     if(baseUrlRef.current === router.asPath.split('#')[0])return;
 
@@ -116,10 +111,21 @@ return currentVariant;
     baseUrlRef.current=router.asPath;
 
     
-    
+    const variantQuery = new URLSearchParams(window.location.search).get('variant');
 
     
-    const currentVariant= obtainInitialVariant();
+    
+  
+    if (!product.variants) {
+      
+      shouldInitializeVariantRef.current = {initialize: false, instant:true};
+      setVariant();
+      return;
+    }
+  
+    const formatQuery = query => query?.toLowerCase().replace(/\s+/g, "-");
+
+const currentVariant = variantQuery ? (product.variants.find(v => formatQuery(v.name) === formatQuery(variantQuery)) || product.variants[0]): product.variants[0];
   
 
 
