@@ -94,6 +94,10 @@ export default function ProductPage({ product, description, images, startReviews
    
   const [variant, setVariant]=useState(currentVariant);
 
+  useLayoutEffect(()=>{
+    setVariant(currentVariant);
+  },[currentVariant])
+
 
 
   useLayoutEffect(() => {
@@ -108,18 +112,7 @@ export default function ProductPage({ product, description, images, startReviews
 
     
     
-
-  
-    const formatQuery = query => query?.toLowerCase().replace(/\s+/g, "-");
-
-    const currentVariant = variantQuery ? (product.variants?.find(v => formatQuery(v.name) === formatQuery(variantQuery)) || product.variants?.[0]): product.variants?.[0];
-  
-
-    shouldInitializeVariantRef.current = {initialize:!variantQuery || !product.variants?false:true, instant:true};
-    setVariant(currentVariant);
-
     
-
   
     
   }, [router.asPath]);
