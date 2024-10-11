@@ -64,7 +64,6 @@ export default function ProductPage({ product, description, images, startReviews
   const [variant, setVariant]=useState(product.variants?.[0]);
   const [bundleVariants, setBundleVariants] = useState([]);
 
-  const baseUrlRef = useRef();
 
   const shouldInitializeVariantRef = useRef({initialize: false, instant: true});
   
@@ -102,13 +101,19 @@ export default function ProductPage({ product, description, images, startReviews
 
  useLayoutEffect(() => {
 
-    if(baseUrlRef.current === router.asPath.split('#')[0])return;
+  if (router.asPath.includes('#'))return;
+
 
     
     setQuantity(1);
 
     
-    baseUrlRef.current=router.asPath;
+
+
+
+
+
+
 
     
     const variantQuery = new URLSearchParams(window.location.search).get('variant');

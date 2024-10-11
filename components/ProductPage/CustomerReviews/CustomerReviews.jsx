@@ -38,7 +38,7 @@ export default function CustomerReviews({ product_id, ratingData, startReviews }
 
     setSortingType("featured")
 
-      setReviews(startReviews);
+      setReviews(startReviews || []);
 
     
 
@@ -49,7 +49,7 @@ export default function CustomerReviews({ product_id, ratingData, startReviews }
   
 
 
-  },[product_id, startReviews])
+  },[product_id])
 
 
 

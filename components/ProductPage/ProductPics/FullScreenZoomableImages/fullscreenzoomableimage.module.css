@@ -16,7 +16,9 @@
     user-select: none;
     z-index: 12;
     
+    
   overscroll-behavior: contain;
+  
   }
 
   .disabeFullScreen{
