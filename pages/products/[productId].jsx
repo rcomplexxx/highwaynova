@@ -44,7 +44,15 @@ export default function ProductPage({ product, description, images, startReviews
   
 
   
-
+  if (!product) return   <div className={styles.notFoundDiv}>
+    
+  
+  <h1 className={styles.title404}>We don't sell that product anymore</h1>
+  <span className={styles.notification404}>But we have many cool things we'd love you to see.</span>
+  
+  <Link href='/collections' className={`${styles.shopNow} mainButton`}>Check some cool stuff</Link>
+  
+  </div>
 
 
 
@@ -74,45 +82,52 @@ export default function ProductPage({ product, description, images, startReviews
   const router = useRouter();
   
 
-   
-  const {variant:variantQuery} = router.query;
+   const {variant:variantQuery} = router.query;
 
-   const currentVariant = useMemo(()=>{
+   const obtainInitialVariant = ()=>{
 
-
+    if (!product.variants) {
+      
+      shouldInitializeVariantRef.current = {initialize: false, instant:true};
+      setVariant();
+      return;
+    }
+  
     const formatQuery = query => query?.toLowerCase().replace(/\s+/g, "-");
 
-    const currentVariant = variantQuery ? (product?.variants?.find(v => formatQuery(v.name) === formatQuery(variantQuery)) || product.variants?.[0]): product?.variants?.[0];
+const currentVariant = variantQuery ? (product.variants.find(v => formatQuery(v.name) === formatQuery(variantQuery)) || product.variants[0]): product.variants[0];
   
-
-    shouldInitializeVariantRef.current = {initialize:!variantQuery || !product?.variants?false:true, instant:true};
-
-    return currentVariant;
-
-   }, [router.query])
+return currentVariant;
+   }
 
    
-  const [variant, setVariant]=useState(currentVariant);
-
-  useLayoutEffect(()=>{
-    setVariant(currentVariant);
-  },[currentVariant])
+  const [variant, setVariant]=useState(obtainInitialVariant());
 
 
 
-  useLayoutEffect(() => {
+   useLayoutEffect(() => {
 
     if(baseUrlRef.current === router.asPath.split('#')[0])return;
-
-    baseUrlRef.current=router.asPath;
-
 
     
     setQuantity(1);
 
     
+    baseUrlRef.current=router.asPath;
+
     
     
+
+    
+    const currentVariant= obtainInitialVariant();
+  
+
+
+    shouldInitializeVariantRef.current = {initialize:variantQuery?true:false, instant:true};
+    setVariant(currentVariant);
+
+    
+
   
     
   }, [router.asPath]);
@@ -175,15 +190,7 @@ export default function ProductPage({ product, description, images, startReviews
 
 
 
-  if (!product) return   <div className={styles.notFoundDiv}>
-    
-  
-  <h1 className={styles.title404}>We don't sell that product anymore</h1>
-  <span className={styles.notification404}>But we have many cool things we'd love you to see.</span>
-  
-  <Link href='/collections' className={`${styles.shopNow} mainButton`}>Check some cool stuff</Link>
-  
-  </div>
+
 
 
   
