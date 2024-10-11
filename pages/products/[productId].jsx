@@ -89,8 +89,8 @@ export default function ProductPage({ product, description, images, startReviews
     if (!product.variants) {
       
       shouldInitializeVariantRef.current = {initialize: false, instant:true};
-      setVariant();
-      return;
+      
+      return undefined;
     }
   
     const formatQuery = query => query?.toLowerCase().replace(/\s+/g, "-");
