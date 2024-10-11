@@ -44,15 +44,7 @@ export default function ProductPage({ product, description, images, startReviews
   
 
   
-  if (!product) return   <div className={styles.notFoundDiv}>
-    
-  
-  <h1 className={styles.title404}>We don't sell that product anymore</h1>
-  <span className={styles.notification404}>But we have many cool things we'd love you to see.</span>
-  
-  <Link href='/collections' className={`${styles.shopNow} mainButton`}>Check some cool stuff</Link>
-  
-  </div>
+
 
 
 
@@ -61,7 +53,6 @@ export default function ProductPage({ product, description, images, startReviews
  
 
   const [quantity, setQuantity] = useState(1);
-  const [variant, setVariant]=useState(product.variants?.[0]);
   const [bundleVariants, setBundleVariants] = useState([]);
 
   const baseUrlRef = useRef();
@@ -83,7 +74,25 @@ export default function ProductPage({ product, description, images, startReviews
   const router = useRouter();
   
 
-   const {variant:variantQuery} = router.query;
+   
+  const {variant:variantQuery} = router.query;
+
+   const currentVariant = useMemo(()=>{
+
+
+    const formatQuery = query => query?.toLowerCase().replace(/\s+/g, "-");
+
+    const currentVariant = variantQuery ? (product.variants?.find(v => formatQuery(v.name) === formatQuery(variantQuery)) || product.variants?.[0]): product.variants?.[0];
+  
+
+    shouldInitializeVariantRef.current = {initialize:!variantQuery || !product.variants?false:true, instant:true};
+
+    return currentVariant;
+
+   }, [router.query])
+
+   
+  const [variant, setVariant]=useState(currentVariant);
 
 
 
@@ -173,7 +182,15 @@ export default function ProductPage({ product, description, images, startReviews
 
 
 
-
+  if (!product) return   <div className={styles.notFoundDiv}>
+    
+  
+  <h1 className={styles.title404}>We don't sell that product anymore</h1>
+  <span className={styles.notification404}>But we have many cool things we'd love you to see.</span>
+  
+  <Link href='/collections' className={`${styles.shopNow} mainButton`}>Check some cool stuff</Link>
+  
+  </div>
 
 
   
