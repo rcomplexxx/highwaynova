@@ -2,7 +2,10 @@ import { create } from "zustand";
 import findBestBundle from '@/utils/utils-client/findBestBundle.js'
 import currency from "currency.js";
 
-export const useGlobalStore = create((set) => {
+export const useGlobalStore = create((set, get) => {
+
+  global.deepLinkLevel = 0;
+
   return {
 
     newProducts:[],
@@ -34,13 +37,71 @@ export const useGlobalStore = create((set) => {
     giftDiscount: false,
     
     setGiftDiscount: (newGiftDiscount) => set({ giftDiscount: newGiftDiscount }),
-    deepLinkLevel: 0,
-    increaseDeepLinkLevel: () => set((state) => ({ deepLinkLevel: state.deepLinkLevel + 1 })),
-    decreaseDeepLinkLevel: () => set((state) => ({ deepLinkLevel: state.deepLinkLevel - 1 })),
+    deepLink: [],
+    increaseDeepLink: (source) => {
 
-    emailPopupOn: false,
-    changeEmailPopupOn: () => set((state) => { !state.emailPopupOn?state.increaseDeepLinkLevel():state.decreaseDeepLinkLevel(); return { emailPopupOn: !state.emailPopupOn }}),
+      global.deepLinkLastSource = source;
+
+      global.deepLinkLevel= global.deepLinkLevel + 1;
+
+      set((state) => ({ deepLink: [...state.deepLink, source]}))
     
+    },
+
+    decreaseDeepLink: (executeNextLink) => {
+
+      const executeLink = () => {
+
+        if(global.deepLinkLevel===0){
+         
+          if(global.executeNextLink !== get().router.asPath)get().router.push(global.executeNextLink);
+
+          global.executeNextLink=false;
+          return true;
+       
+        }
+        return false;
+
+      }
+
+      if(global.executeNextLink){
+        global.deepLinkLevel =  global.deepLinkLevel - 1;
+        executeLink();
+        set((state)=> ({deepLink: []}))
+        global.deepLinkLastSource=undefined;
+      }
+
+      else if(executeNextLink){
+        global.executeNextLink = executeNextLink;
+
+        
+        
+        global.deepLinkLevel =  global.deepLinkLevel - 1;
+        if(!executeLink())
+        window.history.go(-global.deepLinkLevel)
+
+       else{
+        set((state)=> ({deepLink: []}))
+        global.deepLinkLastSource=undefined;
+       }
+        
+        
+        
+      }
+
+      else{
+
+      global.deepLinkLevel= global.deepLinkLevel - 1;
+      
+      set((state) => { const newDeepLink = state.deepLink.slice(0, -1); global.deepLinkLastSource = newDeepLink?.[newDeepLink.length - 1]; return { deepLink: newDeepLink }})
+
+      }
+      
+    },
+    emailPopupOn: false,
+    changeEmailPopupOn: () => set((state) => { return { emailPopupOn: !state.emailPopupOn }}),
+    router: null, // initially null
+    setRouter: (router) => set({ router }),
   };
 });
 

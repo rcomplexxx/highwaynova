@@ -24,14 +24,14 @@ const nextLink = useRef();
 
 
 
-const { deepLinkLevel, increaseDeepLinkLevel, decreaseDeepLinkLevel } = useGlobalStore((state) => ({
-  deepLinkLevel: state.deepLinkLevel,
-  increaseDeepLinkLevel: state.increaseDeepLinkLevel,
-  decreaseDeepLinkLevel: state.decreaseDeepLinkLevel,
+const { deepLink, increaseDeepLink, decreaseDeepLink } = useGlobalStore((state) => ({
+  deepLink: state.deepLink,
+  increaseDeepLink: state.increaseDeepLink,
+  decreaseDeepLink: state.decreaseDeepLink,
 }));
 
 
-const deepLinkLevelRef = useRef(deepLinkLevel);
+
 
 useLayoutEffect(()=>{
   
@@ -42,10 +42,7 @@ useLayoutEffect(()=>{
 
 
 
-useEffect(()=>{
 
-  deepLinkLevelRef.current = deepLinkLevel
-}, [deepLinkLevel])
 
 
 
@@ -57,14 +54,17 @@ useEffect(()=>{
 
   const handlePopState = ()=>{
 
-    console.log('LINK!', deepLinkLevelRef.current)
+    console.log('LINK!', global.deepLinkLastSource)
 
-    if(deepLinkLevelRef.current>1) return;
+    // if(!global.executeNextLink  && global.deepLinkLastSource !== 'pop_cart') return;
+    if(!global.executeNextLink && global.deepLinkLastSource !== 'pop_cart')return;
+
+    console.log('proso ovo sranje')
     
     setNewProducts([]);
     window?.removeEventListener("popstate", handlePopState);
 
-    if(nextLink.current)router.push(nextLink.current);
+   
    
   
   }
@@ -73,7 +73,7 @@ useEffect(()=>{
 
   const handleClick = (event) => {
 
-    if(deepLinkLevelRef.current>1) return;
+    if(!global.executeNextLink && global.deepLinkLastSource !== 'pop_cart') return;
   
     
     if (!document.getElementById('navBar').contains(event.target)){  
@@ -109,14 +109,15 @@ useEffect(()=>{
   window?.addEventListener("popstate", handlePopState);
   document.addEventListener('click', handleClick, true);
   
-  increaseDeepLinkLevel();
+  increaseDeepLink('pop_cart');
 
   return ()=>{
 
+    console.log('end of this shit!', nextLink.current)
    
     window?.removeEventListener("popstate", handlePopState);
     document.removeEventListener('click', handleClick, true);
-    decreaseDeepLinkLevel();
+    decreaseDeepLink(nextLink.current);
 
    
 

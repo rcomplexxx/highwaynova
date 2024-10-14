@@ -19,7 +19,9 @@ export default function SubscribePopup(){
 
   
     
-    const { changeEmailPopupOn } = useGlobalStore((state) => ({
+    const { increaseDeepLink, decreaseDeepLink, changeEmailPopupOn } = useGlobalStore((state) => ({
+      increaseDeepLink: state.increaseDeepLink,
+      decreaseDeepLink: state.decreaseDeepLink,
       changeEmailPopupOn: state.changeEmailPopupOn,
     }));
 
@@ -57,8 +59,8 @@ export default function SubscribePopup(){
          window?.addEventListener("popstate", handlePopState);
          document.documentElement.classList.add("hideScroll");
   
-  
-        
+        increaseDeepLink('subscribe_popup')
+            
 
 
         return () => {
@@ -68,6 +70,8 @@ export default function SubscribePopup(){
           
       
           window?.removeEventListener("popstate", handlePopState);
+
+          decreaseDeepLink()
 
         
 

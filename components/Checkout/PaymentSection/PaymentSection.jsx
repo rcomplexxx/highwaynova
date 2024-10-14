@@ -18,6 +18,8 @@ export default function PaymentSection({ checkFields }) {
     const paypalPaymentFieldsRef = useRef();
     const blockNextMoreCardsMobileClick = useRef(true);
 
+    const moreCardsDivRef = useRef();
+
     
   useEffect(()=>{
    
@@ -87,7 +89,7 @@ export default function PaymentSection({ checkFields }) {
        
       
         <div className={`${styles.paymentOptionDiv} ${paymentMethod==="creditcard" && styles.selectedOption}`} 
-        onClick={(event)=>{if(!document.getElementById("moreCards")?.contains(event.target))setPaymentMethod("creditcard")}}>
+        onClick={(event)=>{if(!moreCardsDivRef.current.contains(event.target))setPaymentMethod("creditcard")}}>
            
            
            <div className={styles.pickOption}>
@@ -103,7 +105,7 @@ export default function PaymentSection({ checkFields }) {
             <MasterCard styleClassName={styles.creditCardLogo}/>
             <Amex styleClassName={`${styles.creditCardLogo} ${styles.lastInLineCard}`}/>
            
-            <div id="moreCards" className={styles.moreCards} 
+            <div ref={moreCardsDivRef} className={styles.moreCards} 
          
             onMouseLeave={()=>{ blockNextMoreCardsMobileClick.current= true;setAllowMoreCardsPopup(true) }}
           

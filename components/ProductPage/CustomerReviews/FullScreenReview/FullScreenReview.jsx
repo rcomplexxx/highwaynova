@@ -18,10 +18,10 @@ export default function FullScreenReview({authorName, text, stars, imageSrc, set
   
 
   
-    const {increaseDeepLinkLevel, decreaseDeepLinkLevel } = useGlobalStore((state) => ({
+    const {increaseDeepLink, decreaseDeepLink } = useGlobalStore((state) => ({
    
-      increaseDeepLinkLevel: state.increaseDeepLinkLevel,
-      decreaseDeepLinkLevel: state.decreaseDeepLinkLevel,
+      increaseDeepLink: state.increaseDeepLink,
+      decreaseDeepLink: state.decreaseDeepLink,
     }));
 
     
@@ -45,6 +45,8 @@ useEffect(()=>{
 
   const handlePopState = ()=>{
 
+    if(global.deepLinkLastSource !== 'review_zoomed') return;
+
     setFullScreenReview(false);
   
   }
@@ -60,7 +62,7 @@ useEffect(()=>{
   window?.addEventListener("popstate", handlePopState);
   document.documentElement.classList.add("hideScroll");
   
-  increaseDeepLinkLevel();
+  increaseDeepLink('review_zoomed');
 
 
 
@@ -70,7 +72,7 @@ useEffect(()=>{
     window?.removeEventListener("popstate", handlePopState);
     document.documentElement.classList.remove("hideScroll");
     
-    decreaseDeepLinkLevel();
+    decreaseDeepLink();
    
 
   }

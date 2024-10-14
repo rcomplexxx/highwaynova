@@ -15,21 +15,23 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
     const router = useRouter();
     const pathname = router.asPath;
   
+    const mobileMenuRef= useRef();
     
 
     const nextLink= useRef();
 
     const doubleBackRef = useRef(false);
+    
 
 
 
     
 
 
-    const {  increaseDeepLinkLevel, decreaseDeepLinkLevel } = useGlobalStore((state) => ({
+    const {  increaseDeepLink, decreaseDeepLink } = useGlobalStore((state) => ({
      
-      increaseDeepLinkLevel: state.increaseDeepLinkLevel,
-      decreaseDeepLinkLevel: state.decreaseDeepLinkLevel,
+      increaseDeepLink: state.increaseDeepLink,
+      decreaseDeepLink: state.decreaseDeepLink,
     }));
 
 
@@ -41,13 +43,11 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
 
 
       history.pushState(null, null, router.asPath);
-      increaseDeepLinkLevel();
+      increaseDeepLink('mobile_menu');
 
 
-      return ()=>{
-        if(!nextLink.current || nextLink.current === router.asPath)
-        decreaseDeepLinkLevel();
-      }
+    
+      
      
    
          
@@ -64,21 +64,23 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
         const handleResize = () => window.innerWidth > 980 && setIsMenuOpen(false);
       
         const closeMenu = () => {
-          document.getElementById('mobileMenu').classList.add(styles.menuClosed);
+          decreaseDeepLink(nextLink.current);
+          mobileMenuRef.current.classList.add(styles.menuClosed);
           window.removeEventListener("popstate", handlePopState);
           setTimeout(() => setIsMenuOpen(false), 500);
         };
 
         const handlePopState = () => {
         
+          if(!global.executeNextLink && global.deepLinkLastSource !== 'mobile_menu') return;
+
 
           subMenu !== 0 ? (doubleBackRef.current?closeMenu():setSubMenu(0)) : closeMenu();
+
+          // console.log('asas',global.deepLinkLevel)
+          // if(global.deepLinkLevel >0) history.back();
           
-          if(nextLink.current && nextLink.current !== router.asPath) 
-            {
-              decreaseDeepLinkLevel();
-              router.push(nextLink.current);
-            }
+     
           
         
           
@@ -90,7 +92,7 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
 
       
         const handleClickOutside = (event) => {
-          if (document.getElementById('mobileMenu').contains(event.target) || document.getElementById('mobileMenuSpawn').contains(event.target)) return;
+          if (mobileMenuRef.current.contains(event.target) || document.getElementById('mobileMenuSpawn').contains(event.target)) return;
          
           event.stopPropagation();
           event.preventDefault();
@@ -145,7 +147,7 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
 
 
     return <div
-    id='mobileMenu'
+    ref={mobileMenuRef}
       className={`${styles.mainMenuCard}` }
       
     >

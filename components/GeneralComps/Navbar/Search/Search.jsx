@@ -21,6 +21,8 @@ export default function Search({searchOpen, setSearchOpen}){
     const searchBoxRef = useRef();
     
     const searchInputRef = useRef();
+
+    
     const nextLink= useRef();
 
 
@@ -30,18 +32,16 @@ export default function Search({searchOpen, setSearchOpen}){
 
   
 
-    const {increaseDeepLinkLevel, decreaseDeepLinkLevel } = useGlobalStore((state) => ({
-      increaseDeepLinkLevel: state.increaseDeepLinkLevel,
-      decreaseDeepLinkLevel: state.decreaseDeepLinkLevel,
+    const {deepLink, increaseDeepLink, decreaseDeepLink } = useGlobalStore((state) => ({
+      deepLink: state.deepLink,
+      increaseDeepLink: state.increaseDeepLink,
+      decreaseDeepLink: state.decreaseDeepLink,
     }));
 
 
     
 
-
     
-
-
    
 
 
@@ -53,20 +53,24 @@ export default function Search({searchOpen, setSearchOpen}){
 
 
   
-  
-
-      
      
 
         const handlePopState = ()=>{
          
-       
+          
          
+    if(!global.executeNextLink && global.deepLinkLastSource !== 'search') return;
+    
+          console.log('deepstate', global.deepLinkLastSource)
+
+          
           setSearchOpen(false);
           window?.removeEventListener("popstate", handlePopState);
 
-          if(nextLink.current) router.push(nextLink.current); 
+          // for(let i = 0; i < global.deepLinkLevel +1; i++)
+          //   router.back();
 
+          
 
           
         
@@ -96,7 +100,7 @@ export default function Search({searchOpen, setSearchOpen}){
 
        
         history.pushState(null, null, router.asPath);
-        increaseDeepLinkLevel();
+        increaseDeepLink('search');
 
 
         document.addEventListener('click', handleClickOutside);
@@ -115,7 +119,7 @@ export default function Search({searchOpen, setSearchOpen}){
             document.removeEventListener('click', handleClickOutside);
             window?.removeEventListener("popstate", handlePopState);
             
-             decreaseDeepLinkLevel();
+             decreaseDeepLink(nextLink.current);
           }
         };
     

@@ -36,34 +36,21 @@ export default function App({ Component, pageProps }) {
 
 
 
-  const { emailPopupOn, changeEmailPopupOn,cartProducts, setCartProducts, setCartProductsInitialized} = useGlobalStore((state) => ({
+  const {  emailPopupOn, changeEmailPopupOn,cartProducts, setCartProducts, setCartProductsInitialized, setRouter} = useGlobalStore((state) => ({
+    
     emailPopupOn: state.emailPopupOn,
     changeEmailPopupOn: state.changeEmailPopupOn,
     cartProducts: state.cartProducts,
     setCartProducts: state.setCartProducts,
-    setCartProductsInitialized: state.setCartProductsInitialized
+    setCartProductsInitialized: state.setCartProductsInitialized,
+    setRouter: state.setRouter
   }));
 
-  //Na ovaj nacin koristim ref da bi imao najnoviju vrednost deepLinka
-  const deepLinkLevelRef = useRef(useGlobalStore.getState().deepLinkLevel);
+
 
   
 
 
-  useEffect(() => {
-    const globalStoreUnsubscribe = useGlobalStore.subscribe(
-      (newState) => {
-        
-       console.log('deep link level', newState.deepLinkLevel)
-        deepLinkLevelRef.current = newState.deepLinkLevel;
-      },
-      (state) => state.deepLinkLevel // Select the deepLinkLevel from the state
-    );
-
-    
-
-    return globalStoreUnsubscribe;
-  }, []);
 
  
   
@@ -83,6 +70,9 @@ export default function App({ Component, pageProps }) {
     const storedCartProducts = JSON.parse(localStorage.getItem("cartProducts")) || [];
     setCartProducts(storedCartProducts);
     setCartProductsInitialized(true);
+
+    setRouter(router);
+
   }, []);
   
  
@@ -116,7 +106,7 @@ export default function App({ Component, pageProps }) {
           //Ako je deepLink 0, tj. ni jedna druga deep-link komponenta nije prisutna(write review, fullscreen zoom), prikazati popup
           //Ako je prisutna, cekati 7 sekundi radi ponovne provere. 
           const showPopup = () => {
-            if (deepLinkLevelRef.current === 0 && !global.isRouteProcessing) {
+            if (!global.deepLinkLastSource && !global.isRouteProcessing) {
               changeEmailPopupOn();
               localStorage.setItem("popupShownDateInDays", Math.floor(Date.now() / 86400000));
               router.events.off('routeChangeStart', handleRouteChangeStart);
@@ -164,10 +154,11 @@ export default function App({ Component, pageProps }) {
 
 
   useEffect(() => {
+
     NProgress.configure({ showSpinner: false });
 
     const handleStart = () => {
-      if (!deepLinkLevelRef.current) {
+      if (!global.deepLinkLastSource) {
           NProgress.start();
       }
 
@@ -175,7 +166,7 @@ export default function App({ Component, pageProps }) {
   };
 
   const handleComplete = () => {
-      if (!deepLinkLevelRef.current) {
+      if (!global.deepLinkLastSource) {
           NProgress.done();
       }
 

@@ -20,9 +20,9 @@ export default function WriteReview({ setWriteReviewOpen }) {
   });
   const [errors, setErrors] = useState({  email: false, images5: false });
   
-  const { increaseDeepLinkLevel, decreaseDeepLinkLevel } = useGlobalStore((state) => ({
-    increaseDeepLinkLevel: state.increaseDeepLinkLevel,
-    decreaseDeepLinkLevel: state.decreaseDeepLinkLevel,
+  const { increaseDeepLink, decreaseDeepLink } = useGlobalStore((state) => ({
+    increaseDeepLink: state.increaseDeepLink,
+    decreaseDeepLink: state.decreaseDeepLink,
   }));
 
 
@@ -40,7 +40,7 @@ export default function WriteReview({ setWriteReviewOpen }) {
 
     const handlePopState=()=>{  
       
-      
+      if(global.deepLinkLastSource !== 'write_review') return;
       window?.removeEventListener("popstate", handlePopState);
       setWriteReviewOpen(false);
     
@@ -53,13 +53,13 @@ export default function WriteReview({ setWriteReviewOpen }) {
     
     
     document.documentElement.classList.add("hideScroll");
-    increaseDeepLinkLevel();
+    increaseDeepLink('write_review');
 
    return ()=>{
     window?.removeEventListener("popstate", handlePopState);
     
     document.documentElement.classList.remove("hideScroll");
-    decreaseDeepLinkLevel();
+    decreaseDeepLink();
    }
   },[])
 

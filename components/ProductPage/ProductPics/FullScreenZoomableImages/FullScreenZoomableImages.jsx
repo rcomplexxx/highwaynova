@@ -55,9 +55,9 @@ const FullScreenZoomableImage = ({
 
   const backPressedRef = useRef();
 
-  const { increaseDeepLinkLevel, decreaseDeepLinkLevel } = useGlobalStore((state) => ({
-    increaseDeepLinkLevel: state.increaseDeepLinkLevel,
-    decreaseDeepLinkLevel: state.decreaseDeepLinkLevel,
+  const { increaseDeepLink, decreaseDeepLink } = useGlobalStore((state) => ({
+    increaseDeepLink: state.increaseDeepLink,
+    decreaseDeepLink: state.decreaseDeepLink,
   }));
 
 
@@ -98,11 +98,10 @@ const FullScreenZoomableImage = ({
     fullImg.style.transform = `translate(${deltaX}px, ${deltaY}px) scale(${scaleRatio})`;
     fullImg.style.transition = "transform 0.3s ease";
   
-    increaseDeepLinkLevel();
+    increaseDeepLink('zoom');
 
     
     return ()=>{
-      decreaseDeepLinkLevel();
       document.documentElement.classList.remove("hideScroll");
     }
   }, []);
@@ -153,6 +152,8 @@ const FullScreenZoomableImage = ({
 
   useEffect(() => {
     const handlePopState = () => {
+
+      if(global.deepLinkLastSource !== 'zoom') return;
       
       window.removeEventListener("popstate", handlePopState);
       backPressedRef.current = true;
@@ -315,6 +316,7 @@ const FullScreenZoomableImage = ({
 
 
   
+    decreaseDeepLink();
     if (zoomed) swiperRef.current.zoom.toggle();
 
     setClosingFullscreen(true);

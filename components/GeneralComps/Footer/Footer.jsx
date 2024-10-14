@@ -1,4 +1,4 @@
-import { useState,  useCallback } from "react";
+import { useState,  useCallback, useRef } from "react";
 import Link from "next/link";
 import styles from "./footer.module.css";
 import Image from "next/image";
@@ -12,11 +12,12 @@ export default function Footer() {
   const [error, setError] = useState();
   const [successful, setSuccessful] = useState(false);
   const [loadingSubscribe, setLoadingSubscribe] = useState(false);
+  const emailInputRef = useRef();
 
   const handleSubscribe = useCallback(async () => {
     if (loadingSubscribe) return;
   
-    const email = document.getElementById('subscribe').value;
+    const email = emailInputRef.current.value;
     if (!/^\w+@\w+\.\w+$/.test(email)) return setError("Please enter a valid email address.");
   
     setLoadingSubscribe(true);
@@ -30,7 +31,7 @@ export default function Footer() {
     } catch {
       setError("Server error");
     } finally {
-      document.getElementById('subscribe').value = "";
+      emailInputRef.current.value = "";
       setLoadingSubscribe(false);
     }
   });
@@ -91,7 +92,7 @@ export default function Footer() {
         </span>
         <div className={styles.subscribeWrapper}>
         <input
-          id="subscribe"
+          ref={emailInputRef}
           autoComplete="email"
           className={styles.subscribeInput}
           placeholder="Enter your email address"

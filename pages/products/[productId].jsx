@@ -36,6 +36,7 @@ import { useRouter } from "next/router";
 import getConnection from "@/utils/utils-server/mariaDbConnection";
 
 const PayPalButton = dynamic(() => import("@/components/Checkout/ExpressCheckout/PayPal/PayPal"));
+import { useSearchParams } from 'next/navigation'
 
 
 export default function ProductPage({ product, description, images, startReviews, ratingData }) {
@@ -61,7 +62,6 @@ export default function ProductPage({ product, description, images, startReviews
  
 
   const [quantity, setQuantity] = useState(1);
-  const [variant, setVariant]=useState(product.variants?.[0]);
   const [bundleVariants, setBundleVariants] = useState([]);
 
 
@@ -76,26 +76,19 @@ export default function ProductPage({ product, description, images, startReviews
     cartProducts: state.cartProducts,
     setCartProducts: state.setCartProducts,
   }));
+
+
+  
+  const [variant, setVariant]=useState(product.variants?.[0]);
   
 
 
   const router = useRouter();
   
 
-
-  useEffect(() => {
-    if (!router.isReady) return;
+ 
   
-    const path = router.asPath;
-    const cleanedPath = path.replace("#zoom", "").replace("#write-review", "");
   
-    if (cleanedPath !== path)  router.replace(cleanedPath);
-    
-  }, [router.isReady]);
-
-  
-
-  //  const {variant:variantQuery} = router.query;
 
 
 
@@ -118,24 +111,23 @@ export default function ProductPage({ product, description, images, startReviews
     
     const variantQuery = new URLSearchParams(window.location.search).get('variant');
 
+    console.log('qqq', variantQuery, router.query?.variant)
+
     
     
-  
-    if (!product.variants) {
-      
-      shouldInitializeVariantRef.current = {initialize: false, instant:true};
-      setVariant();
-      return;
-    }
   
     const formatQuery = query => query?.toLowerCase().replace(/\s+/g, "-");
 
-const currentVariant = variantQuery ? (product.variants.find(v => formatQuery(v.name) === formatQuery(variantQuery)) || product.variants[0]): product.variants[0];
-  
-
-
-    shouldInitializeVariantRef.current = {initialize:variantQuery?true:false, instant:true};
-    setVariant(currentVariant);
+    const currentVariant = product.variants 
+      ? (variantQuery 
+          ? product.variants.find(v => formatQuery(v.name) === formatQuery(variantQuery)) || product.variants[0] 
+          : product.variants[0])
+      : (shouldInitializeVariantRef.current = { initialize: false, instant: true }, setVariant(), null);
+    
+    if (currentVariant) {
+      shouldInitializeVariantRef.current = { initialize: !!variantQuery, instant: true };
+      setVariant(currentVariant);
+    }
 
     
 
@@ -149,7 +141,15 @@ const currentVariant = variantQuery ? (product.variants.find(v => formatQuery(v.
   
   
 
-
+  useEffect(() => {
+    if (!router.isReady) return;
+  
+    const path = router.asPath;
+    const cleanedPath = path.replace("#zoom", "").replace("#write-review", "");
+  
+    if (cleanedPath !== path)  router.replace(cleanedPath);
+    
+  }, [router.isReady]);
 
 
 
