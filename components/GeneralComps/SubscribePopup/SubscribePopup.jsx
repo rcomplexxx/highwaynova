@@ -50,17 +50,17 @@ export default function SubscribePopup(){
 
        
        
-   
-       
   
        
         history.pushState(null, null, router.asPath);
 
+        
+        increaseDeepLink('subscribe_popup')
+            
+
          window?.addEventListener("popstate", handlePopState);
          document.documentElement.classList.add("hideScroll");
   
-        increaseDeepLink('subscribe_popup')
-            
 
 
         return () => {
