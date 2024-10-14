@@ -52,6 +52,7 @@ export const useGlobalStore = create((set, get) => {
 
       const executeLink = () => {
 
+
         if(global.deepLinkLevel===0){
          
           if(global.executeNextLink !== get().router.asPath)get().router.push(global.executeNextLink);

@@ -120,6 +120,7 @@ export default function Search({searchOpen, setSearchOpen}){
             window?.removeEventListener("popstate", handlePopState);
             
              decreaseDeepLink(nextLink.current);
+             nextLink.current=undefined;
           }
         };
     
