@@ -168,7 +168,7 @@ const handleCouponApply = () => {
   
                 </div>
                 <div className={styles.productTitleDiv}>
-                <span> {cp.name}</span>
+                <span>{cp.name}</span>
                 <span className={styles.variant}>
                   {cp.variant}
                 </span>

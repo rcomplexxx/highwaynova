@@ -490,18 +490,25 @@ p {
   --shopping-cart-color: var(--neutral-7);
  
   
-  --popcart-correct-icon-color: var(--success-color);
   --cart-button-items-number-color: black;
   --cart-button-items-number-bg: var(--main-color-5);
 
-  --view-cart-color: var(--high-contrast-txt-color);
-  --view-cart-bg: transparent;
-  --view-cart-border-color: var(--main-color-4);
 
- 
 
+  --popcart-correct-icon-color: var(--success-color);
+
+  
+  --popcart-badge-color: var(--neutral-0);
+  --popcart-badge-bg: var(--accent-color-2);
+  
+
+  --popcart-view-cart-color: var(--high-contrast-txt-color);
+  --popcart-view-cart-bg: transparent;
+  --popcart-view-cart-border-color: var(--main-color-4);
 
   --popcart-checkout-button-border: var(--accent-color-4);
+ 
+
 
 
 
@@ -835,8 +842,8 @@ p {
   --checkout-order-summery-bg-mobile: var(--main-color-0);
 
 
-  --checkout-item-badge-bg: var(--accent-color-4);
-  --checkout-item-badge-color: black;
+  --checkout-item-badge-bg: var(--accent-color-2);
+  --checkout-item-badge-color: var(--neutral-0);
  
   --summery-variant-color: var(--neutral-7);
 

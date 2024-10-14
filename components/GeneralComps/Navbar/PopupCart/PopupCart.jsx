@@ -158,7 +158,14 @@ const handlePopCartLinkClick=(url)=>{
  
  
  return <div key = {index} className={styles.productWrapper}> 
+
+ <div className={styles.productImageWrapper}>
  <Image height={64} width={64} src={`/images/${newProduct.image}`} alt='Bought product image' className={styles.productImage}/> 
+
+ <div className={styles.badgeDiv}>{newProduct.quantity}</div>
+
+
+ </div>
  <div className={styles.productTitleDiv}>
  <span className={styles.productTitle}>{newProduct.name}</span>
  <span className={styles.productVariant}>{newProduct.variant}</span>
