@@ -64,7 +64,7 @@ export default function App({ Component, pageProps }) {
     
     // router.beforePopState(state => {state.options.scroll = false; return true;});
 
-    history.scrollRestoration = 'manual';
+    // history.scrollRestoration = 'manual';
     document.querySelector("html").className = `${inter.variable} ${eb_Garamond.variable}`;
   
     const storedCartProducts = JSON.parse(localStorage.getItem("cartProducts")) || [];
