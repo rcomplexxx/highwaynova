@@ -17,7 +17,7 @@ const nextConfig = {
   },
    
 
-  scrollRestoration: true,
+ 
   experimental: {
     scrollRestoration: true
   },
