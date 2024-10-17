@@ -13,6 +13,7 @@ import getFromDb from '@/utils/utils-server/utils-admin/adminGetFromDb';
 import wipeData from '@/utils/utils-server/utils-admin/adminDataWiper'
 import deleteRow from '@/utils/utils-server/utils-admin/adminDbRowDeleter';
 import {obtainDbQueryParams, obtainGetDbQueryParams} from "@/utils/utils-server/utils-admin/obtainAdminDbQueryParmas";
+import products from '@/data/products.json'
 
 
 const getPool = require('@/utils/utils-server/mariaDbPool');
@@ -31,6 +32,15 @@ export default async function adminCheckHandler(req, res) {
 
 
 let dbConnection;
+
+
+const revalidateReviews = async()=>{
+
+  // await res.revalidate('/posts/1')
+  // await res.revalidateTag('review_data_revalidation');
+
+  await res.revalidate('/products');
+}
 
 
   const resReturn = async(statusNumber, jsonObject)=>{
@@ -123,7 +133,7 @@ let dbConnection;
 
         
 
-        if(table) return await updateDb(dbConnection, resReturn, table, data);
+        if(table) return await updateDb(dbConnection, resReturn, table, data, revalidateReviews);
  
          
 
@@ -220,7 +230,7 @@ let dbConnection;
 
           if(table==='reviews'){
             console.log('reviews wiping', data.product_id)
-            return await wipeData(dbConnection,  resReturn,'reviews', data.product_id)
+            return await wipeData(dbConnection,  resReturn,'reviews', data.product_id, revalidateReviews)
           }
         
         return await wipeData(dbConnection, resReturn, table);

@@ -32,7 +32,6 @@
         "variantIndex": 1
       }
     ],
-    "reviewNumber": 86,
     "bundle": [
       {
         "quantity": 2,
@@ -52,8 +51,7 @@
         "name": "Black",
         "variantProductImageIndex": 1
       }
-    ],
-    "rating": 3.5
+    ]
   },
   {
     "id": 1,
@@ -92,8 +90,6 @@
         "variantIndex": 0
       }
     ],
-    "rating": 4.7,
-    "reviewNumber": 32,
     "bundle": [
       {
         "quantity": 2,
@@ -143,8 +139,6 @@
         "id": 1,
         "variantIndex": 0
       }
-    ],
-    "rating": 4.7,
-    "reviewNumber": 32
+    ]
   }
 ]

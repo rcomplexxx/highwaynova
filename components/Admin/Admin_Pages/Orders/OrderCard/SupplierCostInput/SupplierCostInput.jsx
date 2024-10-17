@@ -1,6 +1,5 @@
 import { CancelIcon } from '@/public/images/svgs/svgImages';
 import styles from './suppliercostinput.module.css'
-import { useState } from 'react';
 
 export default function SupplierCostInput({
     handleChangedOrdersArray, setSupplierCostInputOpen,

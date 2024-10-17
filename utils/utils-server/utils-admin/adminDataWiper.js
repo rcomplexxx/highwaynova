@@ -42,7 +42,7 @@ function  deleteReviewImageFolder(product_id) {
 
 
 
-const wipeData = async(dbConnection, resReturn, tableName, product_id)=>{
+const wipeData = async(dbConnection, resReturn, tableName, product_id, revalidateReviews)=>{
 
 
 
@@ -72,6 +72,9 @@ const wipeData = async(dbConnection, resReturn, tableName, product_id)=>{
         
           await dbConnection.query(`UPDATE reviews SET id = id - ? WHERE product_id > ?`, [deletedItemsNumber, product_id]);
         }
+
+       await revalidateReviews();
+
         }
 
 

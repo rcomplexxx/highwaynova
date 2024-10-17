@@ -43,14 +43,14 @@ const   moveImagesToDeletedImagesFolder = (reviewProductImages, productId, shoul
 
 
 
-async function updateDb (dbConnection, resReturn, table, data) {
+async function updateDb (dbConnection, resReturn, table, data, revalidateReviews) {
 
 
    
 
 
 
-    
+  
         
           
           console.log('proso up db', 'should be created')
@@ -349,7 +349,7 @@ async function updateDb (dbConnection, resReturn, table, data) {
             }
     
     
-    
+     await revalidateReviews();
     
            
             } 

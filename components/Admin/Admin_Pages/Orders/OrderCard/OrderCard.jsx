@@ -17,7 +17,7 @@ export default function OrderCard({
 }) {
 
 
-   const [cover, setCover]= useState({transaction: true, paymentId: true});
+   const [cover, setCover]= useState({customerInfo: true, transaction: true, paymentId: true});
 
 
   
@@ -80,14 +80,9 @@ const changePs = () => {
   return (
     <div className={`${styles.cardMainDiv} ${productReturnsPageStyle && styles.productReturnsPageStyle}`}>
 
-      {supplierCostInputOpen && <SupplierCostInput
-      
-      supplierCost={supplierCost} setSupplierCost={setSupplierCost}
-      handleChangedOrdersArray={(supplierCost)=>{
-         setCurrentPackageStatus(1);
-         handleChangedOrdersArray({id: infoObj.id, packageStatus:1, supplierCost: supplierCost})}} setSupplierCostInputOpen={setSupplierCostInputOpen}/>}
+    
       <div className={styles.cardRow}>
-      <h1 className={styles.identifier}>{index+1}</h1>
+      <span className={styles.identifier}>{index+1}</span>
     
 
       <p className={styles.orderId}>Order_id {infoObj.id}</p>
@@ -99,8 +94,10 @@ const changePs = () => {
 
 
       <div className={styles.cardRow}>
-        <h1 className={styles.rowTitle}>Basic info</h1>
+        <h1 className={styles.rowTitle}>Customer info</h1>
       <div className={styles.infoRowDiv}>
+         {cover.customerInfo?<span onClick={()=>{setCover(prevCover => ({...prevCover, customerInfo: false}))}} 
+   className={styles.fieldCovered}>Click for details</span>:<>
       <div className={styles.infoPair}>
          <p>Email</p>
          <p>{infoObj.email}</p>
@@ -120,11 +117,10 @@ const changePs = () => {
          <p>{infoObj.phone}</p>
       </div>
 
-      </div>
-      </div>
-      <div  className={styles.cardRow}>
-      <h1 className={styles.rowTitle}>Address</h1>
-      <div className={styles.infoRowDiv}>
+
+
+
+
 
 
       <div className={styles.infoPair}>
@@ -156,11 +152,18 @@ const changePs = () => {
          <p>Zip code</p>
          <p>{infoObj.zipcode}</p>
       </div>
+      </>}
 
-   
+      
 
       </div>
       </div>
+
+
+
+
+    
+    
 
       <div className={styles.cardRow}>
       <h1 className={`${styles.rowTitle} ${styles.itemsRow}`}>Items</h1>
@@ -169,34 +172,41 @@ const changePs = () => {
 
       {infoObj.items?.map((item, index)=>{
         return <div key={index} className={`${styles.cardRow} ${styles.itemInfoRow} ${styles.cardRowNoBorder}`}>
-        <p className={styles.itemNumber}>Item {index+1 + ' →'}  </p>
 
-      
+         <div className={styles.groupedInfo}>
+   
+
+<Image
+   src={`/images/${item.images[0]}`}
+   alt={item.name}
+   className={styles.productImage}
+   height={0} width={0} sizes="72px"
+ />
+
 
         <div className={styles.infoPair}>
          <p>Name</p>
          <p>{products.find(product=>{return item.id==product.id}).name}</p>
       </div>
 
-      <div className={styles.infoPair}>
-         <p>Quantity</p>
-         <p>{item.quantity}</p>
       </div>
+
+   
 
       <div className={styles.infoPair}>
          <p>Variant</p>
-         <p>{item.variant}</p>      </div>
+         <p>{item.variant}</p>     
+          </div>
 
-         <div className={styles.productImageDiv}>
-
-         <Image
-            src={`/images/${item.images[0]}`}
-            alt={item.name}
-            className={styles.productImage}
-            height={0} width={0} sizes="72px"
-          />
-
-         </div>
+         <div className={styles.infoPair}>
+         <p>Quantity</p>
+         <p>{item.quantity}</p>
+      </div>
+{/* 
+      <div className={styles.infoPair}>
+         <p>Product Link</p>
+         <p>Under construction</p>
+      </div> */}
  
    </div>
       })
@@ -209,9 +219,11 @@ const changePs = () => {
    </div>
    <div className={`${styles.cardRow} ${styles.cardRowNoBorder}`}>
       <h1 className={styles.rowTitle}>Transaction</h1>
+
+
      <div className={`${styles.infoRowDiv}  ${styles.transactionInfoDiv} ${cover.transaction && styles.transactionInfoDivCovered}`}>
 
-     <div className={`${styles.infoPair} ${cover.transaction? styles.shrinkTotal:styles.pumpTotal}`}>
+     <div className={`${styles.infoPair}`}>
          <p>Total{(infoObj.discountPercentOff && infoObj.tip!=0) ?'(tip & disc. included)':(infoObj.discountPercentOff?'(discount included)':
          infoObj.tip && infoObj.tip!=0 && '(tip included)')}</p>
          <p>{infoObj.total}</p>
@@ -223,12 +235,10 @@ const changePs = () => {
     
     
 
-    <div onClick={()=>{setCover(prevCover => ({...prevCover, transaction: false}))}} 
-    className={`${styles.transactionCoverableDiv} ${!infoObj.discountPercentOff && styles.transactionCoverableDivNoDisc} ${
-      cover.transaction && styles.transactionCovered
-    }`}>
 
-  { cover.transaction ? <span>Click for details</span> :<> 
+
+  { cover.transaction ? <span onClick={()=>{setCover(prevCover => ({...prevCover, transaction: false}))}} 
+   className={styles.fieldCovered}>Click for details</span> :<> 
   
   
    {  existingSupplierCosts >0 && <div className={styles.infoPair}>
@@ -259,15 +269,21 @@ const changePs = () => {
 
       <div className={styles.infoPair}>
          <p>Payment id</p>
-         <p onClick={() => setCover(prevCover => ({ ...prevCover, paymentId: false }))} className={cover.paymentId && styles.paymentIdCovered}>{cover.paymentId?'Click to see':infoObj.paymentId}</p>
+         <p onClick={() => setCover(prevCover => ({ ...prevCover, paymentId: false }))} className={cover.paymentId && styles.paymentIdCovered}>{cover.paymentId?'Click for details':infoObj.paymentId}</p>
       </div>
 
       </> 
 }
-      </div>
+
       
       </div>
       </div>
+      {supplierCostInputOpen && <SupplierCostInput
+      
+      supplierCost={supplierCost} setSupplierCost={setSupplierCost}
+      handleChangedOrdersArray={(supplierCost)=>{
+         setCurrentPackageStatus(1);
+         handleChangedOrdersArray({id: infoObj.id, packageStatus:1, supplierCost: supplierCost})}} setSupplierCostInputOpen={setSupplierCostInputOpen}/>}
       </div>
 
 

@@ -7,6 +7,7 @@ import styles from "@/styles/productlist.module.css";
 import PageNumber from "@/components/PageNumbers/PageNumbers";
 import { NextSeo } from "next-seo";
 import { unimportantPageSeo } from "@/utils/SEO-configs/next-seo.config";
+import getRatingData from "@/utils/utils-server/getRatingData";
 
 const ProductPage = ({  pageId, products, links }) => {
   // Redirect to home page if no product
@@ -55,18 +56,23 @@ export async function getStaticProps(context) {
   const pageId = parseInt(context.params.pageId, 10);
   const productLength = products.length;
   const totalPageNumber = Math.ceil(productLength / 12);
-  
-  const start = (pageId - 1) * 12;
-  const end = Math.min(start + 12, productLength);
-  const productArray = start >= productLength ? [] : products.slice(start, end);
-  
   const links = Array.from({ length: totalPageNumber }, (_, i) => i + 1);
+
+  
+  
+
+  const productData = await Promise.all(
+    products.slice((pageId - 1) * 12, pageId * 12).map(async product => {
+      const { rating, reviewsNumber } = await getRatingData(product.id);
+      return { ...product, rating, reviewsNumber };
+    })
+  );
 
   // Return the data as props
   return {
     props: {
      
-      products: productArray,
+      products: productData,
       pageId: pageId,
       links,
     },

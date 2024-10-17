@@ -15,7 +15,7 @@ export default function CustomerReviews({ product_id, ratingData, startReviews }
  
   const [reviews, setReviews] = useState(startReviews || []);
   
-  const [loadButtonExists, setLoadButtonExists] = useState(true);
+  
   const [isLoading, setIsLoading] = useState(false);
   
   const [sortingType, setSortingType] = useState("featured");
@@ -45,7 +45,7 @@ export default function CustomerReviews({ product_id, ratingData, startReviews }
       newReviewsRef.current = startReviews; // Load 6 more reviews
       
  
-      setLoadButtonExists(true);
+      
   
 
 
@@ -73,7 +73,7 @@ export default function CustomerReviews({ product_id, ratingData, startReviews }
         const data = await response.json();
         newReviewsRef.current = data.reviews;
         setReviews(data.reviews);
-        setLoadButtonExists(true);
+        
       } else {
         console.error('Response error:', response);
       }
@@ -122,7 +122,7 @@ export default function CustomerReviews({ product_id, ratingData, startReviews }
         const data = await response.json();
 
         if (data.reviews.length === 0) {
-          setLoadButtonExists(false);
+          
           setReviews((prev) => [
             ...prev,
             ...(newReviewsRef.current.slice(index + 1)) // Load all remaining reviews
@@ -200,7 +200,7 @@ export default function CustomerReviews({ product_id, ratingData, startReviews }
           })}
        </div>
        
-      {loadButtonExists && (
+      {reviews.length < ratingData.reviewsNumber && (
         <button
        
           className={styles.showMoreButton}

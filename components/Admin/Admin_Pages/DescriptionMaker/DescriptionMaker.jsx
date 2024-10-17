@@ -10,7 +10,7 @@ import Swal from 'sweetalert2';
 
 
 export default function DescriptionMaker() {
-;
+
  
     const descriptionTextRef=useRef();
     const descriptionCssTextRef=useRef();

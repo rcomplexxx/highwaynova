@@ -24,7 +24,7 @@ const Product = ({ product}) => {
         <Stars ratingNumber={product.rating?product.rating:4.7} starWrapperClassName={styles.starWrapperClassName} starClassName={styles.starClassName}/>
 
 
- <span className={styles.product_rating_reviews_number}>({product.reviewNumber})</span>
+ <span className={styles.product_rating_reviews_number}>({product.reviewsNumber})</span>
  </div>
  
 <div className={styles.product_price}>

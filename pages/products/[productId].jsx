@@ -232,7 +232,7 @@ export default function ProductPage({ product, description, images, startReviews
     
     
             
-            <Stars ratingNumber={ratingData.rating?ratingData.rating:4.7} starClassName={styles.starClassName}/>
+            <Stars ratingNumber={ratingData.rating} starClassName={styles.starClassName}/>
             <span className={styles.product_rating_reviews_number}>{ratingData.reviewsNumber} reviews</span>
           </div>
           <div className={styles.product_price}>
