@@ -2,7 +2,7 @@
 
 
 import Image from "next/image";
-import styles from '../styles/ourstory.module.css'
+import styles from './ourstory.module.css'
 
 export default function OurStory() {
   return (

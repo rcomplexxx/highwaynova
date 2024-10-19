@@ -7,7 +7,7 @@
 
 .reviewIdInput{
     color: rgb(225, 236, 238);
-    background-color: var(--email-input-bg);
+    background-color: var(--admin-email-input-bg);
     
     width: auto;
     align-self: flex-start;

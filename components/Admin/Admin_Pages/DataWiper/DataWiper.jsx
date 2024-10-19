@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react'
 import styles from './datawiper.module.css'
 import AdminNavbar from '../../Admin_Login/AdminLogin';
+import Swal from 'sweetalert2';
 
 export default function DataWiper() {
 
@@ -42,8 +43,38 @@ const handleVerify = async(event)=>{
 
 const handleWipeData = async(databaseTable)=>{
 
+  if(!verified)  return Swal.fire({
+    icon: 'error',
+    title: 'Error',
+    text: `Needs to verify admin to continue wiping data.`,
+    confirmButtonText: 'Okay',
+    background: '#333', // Dark background color
+    color: '#fff', // Text color
+    customClass: {
+        popup: 'dark-popup', // Custom class for the popup
+        title: 'dark-title', // Custom class for the title
+        icon: 'dark-icon', // Custom class for the icon
+        confirmButton: 'dark-confirm-button' // Custom class for the button
+    }
+});
+
   
-  if (!verified || (databaseTable === 'reviews' && productId === undefined)) return;
+  if (databaseTable === 'reviews' && (productId === undefined || productId === ""))  return Swal.fire({
+    icon: 'error',
+    title: 'Error',
+    text: `Required to enter productId or 'All'(for wiping all reviews) to continue.`,
+    confirmButtonText: 'Okay',
+    background: '#333', // Dark background color
+    color: '#fff', // Text color
+    customClass: {
+        popup: 'dark-popup', // Custom class for the popup
+        title: 'dark-title', // Custom class for the title
+        icon: 'dark-icon', // Custom class for the icon
+        confirmButton: 'dark-confirm-button' // Custom class for the button
+    }
+});
+
+
   if (!window.confirm('Warning! Data cannot be recovered. Do you still wish to proceed?')) return;
 
 
@@ -89,15 +120,18 @@ if(dataWipedTable && dataWipedTable!=="")return  <div className={styles.mainDiv}
         <span className={styles.warning}>Warning! Dangerous operation. Once deleted, data can never be recovered again.</span>
         <span className={styles.warning}>Admin verification required before operation can be executed.</span>
         {!verified?<form onSubmit={handleVerify} className={styles.loginBox}>
-        <input type="text" placeholder="Username" ref={usernameRef} required />
+        <input className={styles.adminInput}  type="text" placeholder="Username" ref={usernameRef} required />
         <input
+          className={styles.adminInput} 
           type="password"
           placeholder="Password"
           ref={passwordRef}
           required
         />
-        <button type="submit">Verify</button>
+        <button className={styles.verify} type="submit">Verify</button>
       </form>:<span className={styles.adminVerified}>Admin verified. Operation can be initialized.</span>}
+
+
         <button onClick={()=>{handleWipeData("orders")}} className={styles.wipeButton}>Wipe orders</button>
         <button onClick={()=>{handleWipeData("messages")}} className={styles.wipeButton}>Wipe inbox</button>
         <button onClick={()=>{handleWipeData("product_returns")}} className={styles.wipeButton}>Wipe product returns</button>

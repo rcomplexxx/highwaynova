@@ -8,35 +8,54 @@
    
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
+
     color: var(--admin-txt-color);
-    background: url('/images/admin_login_bg2.jpg');
-    background-size: contain;
-    background-color: var(--gray-9-elegant);
+ 
+
+    box-sizing: border-box;
+    padding-bottom: var(--size-9-5);
+
+    
 }
 
-.loginTitle{
-    color: var(--admin-txt-color);
-}
+.adminMainDiv::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('/images/admin_login_2.jpeg') no-repeat;
+    background-size: cover;
+    filter: blur(2px) brightness(0.6); /* Adjust blur value as needed */
+    z-index: -1; /* Behind content */
+  }
+
+
 .loginBox{
-    
     width: var(--size-13);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+
+    background-color: black;
+    border-radius: 8px;
+
+    padding: var(--size-7);
 }
 
-
-.centerLogin{
-   
-    margin-top: var(--size-7);
-   
+.loginTitle{
+    color: var(--admin-login-title);
+    margin-top: 0;
 }
+
 
 
 .loginInput{
-    color: rgb(225, 236, 238);
-    background-color: var(--email-input-bg);
+    color: var(--admin-login-color);
+    background-color: var(--admin-login-btn-bg);
     
     width: 100%;
   
@@ -51,12 +70,15 @@
 }
 
 .loginInput::placeholder{
+    
+    color: var(--admin-login-placeholder);
     font-size: var(--font-size-1);
+    
 }
 
 .loginButton{
     height: var(--size-7);
-    color: rgb(225, 236, 238);
+    color: var(--admin-login-color);
     background-color: var(--admin-login-btn-bg);
 
     margin-top: var(--size-7);

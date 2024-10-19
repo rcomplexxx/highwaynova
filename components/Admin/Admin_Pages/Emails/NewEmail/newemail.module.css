@@ -64,7 +64,7 @@
 
 .titleInput{
     color: rgb(225, 236, 238);
-    background-color: var(--email-input-bg);
+    background-color: var(--admin-email-input-bg);
     
     width: 100%;
     align-self: flex-start;
@@ -90,7 +90,7 @@
 
 .textArea{
     color: rgb(225, 236, 238);
-    background-color: var(--email-input-bg);
+    background-color: var(--admin-email-input-bg);
     min-height: var(--size-16);
     max-height: var(--size-17);
     width: 100%;

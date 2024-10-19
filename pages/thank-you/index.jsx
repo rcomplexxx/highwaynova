@@ -1,5 +1,5 @@
 import Image from "next/image";
-import styles from "../styles/thankyou.module.css";
+import styles from "./thankyou.module.css";
 import  { useEffect } from "react";
 import Link from "next/link";
 import { NextSeo } from "next-seo";

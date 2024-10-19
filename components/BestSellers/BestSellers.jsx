@@ -3,7 +3,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 
 import PicWithThumbnail from '../Products/Product/PicWithThumbnail/PicWithThumbnail';
 
-import bestSellerProductsInfo from '../../data/bestsellers.json';
+import bestSellerProductsInfo from '@/data/bestsellers.json';
 import styles from './bestsellers.module.css';
 import Link from 'next/link';
 import { useState } from 'react';

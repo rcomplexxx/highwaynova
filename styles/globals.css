@@ -390,11 +390,11 @@ p {
 
 
   --gray-10:#030a08;
-  --gray-9: #0A0A09;
+  
   --gray-10: #030404;
   --gray-9-elegant:#02050a;
   --gray-9-elegant-op08: #02050acc;
-  --gray-9-elegant-original:#010203;
+  
   
   
 
@@ -962,22 +962,45 @@ color-scheme: light only;
 
 
   /*~Admin sector colors*/
-  --nav-site-title-color: var(--main-color-4);
-  --admin-txt-color-weak: rgb(120, 120, 131);
-  --admin-txt-color-mid: rgb(149, 149, 161);
-  --admin-txt-color: rgb(178, 178, 194);
-  --admin-txt-color-darker: rgb(160, 160, 177);
-  --admin-login-btn-bg: rgb(8, 10, 12);
 
-  --package-status-button-bg: rgb(20, 50, 48);
+  --admin-neutral-1: #E8EAED;
+  --admin-neutral-2: #D2D5DB;
+  --admin-neutral-3: #BBC0C9;
+  --admin-neutral-4: #a1a7b3;
+  --admin-neutral-5: #8E95A4;
+  --admin-neutral-6: #778092;
+  --admin-neutral-7: #646C7D;
+  --admin-neutral-8: #494F5B;
+  --admin-neutral-9: #24272D;
+  --admin-neutral-10: #090A0B;
+  --admin-neutral-11: black;
 
-  --order-cover-details-color: rgb(10, 12, 19);
 
-  --email-input-bg: rgb(15, 15, 14);
+  --admin-txt-color-weak: var(--admin-neutral-4);
+  --admin-txt-color-mid: var(--admin-neutral-3);
+  --admin-txt-color-strong: var(--admin-neutral-2);
   
 
+  --admin-txt-color: var(--admin-txt-color-mid);
+  
+  --admin-nav-site-title-color: var(--admin-txt-color-strong);
+  --admin-title: var(--admin-txt-color-weak);
+  --admin-bg: var(--admin-neutral-10);
 
-  --campaign-display-emails-bg:rgba(43, 35, 35, 0.145);
+  
+  --admin-login-title: var(--admin-neutral-3);
+  --admin-login-color: var(--admin-neutral-2);
+  --admin-login-placeholder: var(--admin-neutral-4);
+  --admin-login-btn-bg: var(--admin-neutral-10);
+
+
+  --admin-package-status-button-bg: var(--admin-neutral-10);
+  --admin-order-cover-details-color: var(--admin-neutral-10);
+
+
+  --admin-email-input-bg: rgb(15, 15, 14);
+
+  --admin-campaign-display-emails-bg:rgba(43, 35, 35, 0.145);
 
   --admin-campaign-type-options-bg: rgb(76, 46, 46);
 

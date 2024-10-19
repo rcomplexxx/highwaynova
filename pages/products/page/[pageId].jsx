@@ -1,8 +1,7 @@
 
-import products from "../../../data/products.json";
+import products from "@/data/products.json";
 import Products from "@/components/Products/Products.jsx";
 
-import styles from "@/styles/productlist.module.css";
 
 import PageNumber from "@/components/PageNumbers/PageNumbers";
 import { NextSeo } from "next-seo";
@@ -16,7 +15,7 @@ const ProductPage = ({  pageId, products, links }) => {
 
 
   return (
-    <div className={styles.mainDiv}>
+    <>
       
       <NextSeo {...unimportantPageSeo(`/products/page/${pageId + 1}`)}/>
       <Products
@@ -26,7 +25,7 @@ const ProductPage = ({  pageId, products, links }) => {
       
       />
       <PageNumber mainLink='/products/page/' links={links} pageId={pageId}/>
-    </div>
+    </>
   );
 };
 

@@ -13,11 +13,11 @@
     flex-direction: column;
     align-items: center;
     color: var(--admin-txt-color);
-    background-color: var(--gray-9-elegant);
+    background-color: var(--admin-neutral-11);
 }
 
 .adminMainDiv h1{
-    color: rgb(236, 236, 246);
+    color: var(--admin-title);
 }
 
 

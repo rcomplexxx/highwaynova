@@ -50,7 +50,7 @@
 
 .sequenceInput{
     color: rgb(225, 236, 238);
-    background-color: var(--email-input-bg);
+    background-color: var(--admin-email-input-bg);
     min-width: var(--size-14);
     width: 100%;
     align-self: flex-start;

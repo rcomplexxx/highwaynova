@@ -1,6 +1,6 @@
 
-import products from '../../data/products.json'
-import collections from '../../data/collections.json'
+import products from '@/data/products.json'
+import collections from '@/data/collections.json'
 
 
 

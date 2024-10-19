@@ -5,8 +5,8 @@ import OrderDetails, {
 } from "@/components/Checkout/OrderDetails";
 import  { useState, useEffect } from "react";
 
-import products from "../../../data/products.json";
-import Head from "next/head";
+import products from "@/data/products.json";
+
 import styles from "../checkout.module.css";
 import CheckoutLogo from "@/components/Checkout/CheckoutLogo/CheckoutLogo";
 import Link from "next/link";

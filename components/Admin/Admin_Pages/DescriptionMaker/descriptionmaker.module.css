@@ -98,7 +98,7 @@
 
 .textArea{
     color: rgb(225, 236, 238);
-    background-color: var(--email-input-bg);
+    background-color: var(--admin-email-input-bg);
     min-height: var(--size-14);
     max-height: var(--size-17);
     width: 100%;
@@ -167,7 +167,7 @@
 
 .inputProductId{
     color: rgb(225, 236, 238);
-    background-color: var(--email-input-bg);
+    background-color: var(--admin-email-input-bg);
     
     width: auto;
   

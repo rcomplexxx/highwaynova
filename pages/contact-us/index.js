@@ -3,7 +3,7 @@
 import  { useRef, useState } from "react";
 
 
-import styles from '../styles/contactus.module.css'
+import styles from './contactus.module.css'
 import Link from "next/link";
 import { unimportantPageSeo } from "@/utils/SEO-configs/next-seo.config";
 import { NextSeo } from "next-seo";

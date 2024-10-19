@@ -179,7 +179,7 @@
     min-height: var(--size-8);
     flex: 1 1 0;
     color: rgba(255, 255, 255, 0.405);
-    background-color: var(--order-cover-details-color);
+    background-color: var(--admin-order-cover-details-color);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -200,7 +200,7 @@
 
 .paymentIdCovered{
     color: rgba(255, 255, 255, 0.848);
-    background-color: var(--order-cover-details-color);
+    background-color: var(--admin-order-cover-details-color);
     font-size: var(--font-size-2);
     padding: var(--size-2) var(--size-3);
 
@@ -215,7 +215,7 @@
 
    
     color: var(--admin-txt-color);
-        background-color: var(--package-status-button-bg);
+        background-color: var(--admin-package-status-button-bg);
         padding: var(--size-3) var(--size-6);
         border-radius: 2px;
         border: 1px solid var(--border-color-strong);

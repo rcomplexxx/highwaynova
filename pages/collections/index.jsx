@@ -1,8 +1,7 @@
-import Products from "@/components/Products/Products.jsx";
-import collections from "../../data/collections.json";
+
+import collections from "@/data/collections.json";
 import Link from "next/link";
 import styles from "./collections.module.css";
-import Head from "next/head";
 import Image from "next/image";
 import { NextSeo } from "next-seo";
 import { collectionsPageSeo, unimportantPageSeo } from "@/utils/SEO-configs/next-seo.config";

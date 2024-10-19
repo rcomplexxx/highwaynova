@@ -1,5 +1,5 @@
 import  { useCallback, useEffect, useLayoutEffect, useMemo, useRef } from "react";
-import products from "../../data/products.json";
+import products from "@/data/products.json";
 import Image from "next/image";
 import {useGlobalStore} from "@/contexts/AppContext";
 import CustomerReviews from "@/components/ProductPage/CustomerReviews/CustomerReviews.jsx";
@@ -30,13 +30,12 @@ import { Stars } from "@/public/images/svgs/svgImages";
 import { Amex,Discover, Jcb, MasterCard, Visa } from "@/public/images/svgs/svgImages";
 import Link from "next/link";
 
-import styles from "../../styles/productpage.module.css";
+import styles from "./productpage.module.css";
 import BundleOffer from "@/components/ProductPage/BundleOffer/BundleOffer";
 import { useRouter } from "next/router";
 import getConnection from "@/utils/utils-server/mariaDbConnection";
 
 const PayPalButton = dynamic(() => import("@/components/Checkout/ExpressCheckout/PayPal/PayPal"));
-import { useSearchParams } from 'next/navigation'
 
 
 export default function ProductPage({ product, description, images, startReviews, ratingData }) {
