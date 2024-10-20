@@ -11,7 +11,7 @@ export default function GetDataButton({
   const handleGetData = async () => {
     try {
 
-      if(dataType === "get_reviews" && isNaN(parseInt(reqData.product_id))) return adminAlert('error','Error', 'Incorect product id provided.')    
+      if(dataType === "get_reviews" && isNaN(Number(reqData.product_id))) return adminAlert('error','Error', 'Incorect product id provided.')    
 
       const response = await fetch("/api/admincheck", {
         method: "POST",

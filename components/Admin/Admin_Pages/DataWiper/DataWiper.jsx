@@ -46,9 +46,11 @@ const handleWipeData = async(databaseTable)=>{
   if(!verified) return adminAlert('error', 'Error', `Needs to verify admin to continue wiping data.`);  
 
   
-  if (databaseTable === 'reviews' && (productId === undefined || productId === "")) return adminAlert('error', 'Error', `Required to enter productId or 'All'(for wiping all reviews) to continue.`);  
   
 
+  if (databaseTable === 'reviews' && (isNaN(Number(productId))) && productId!=="All" ) return adminAlert('error', 'Error', `Required to enter productId or 'All'(for wiping all reviews) to continue.`);  
+  
+  
 
   if (!await adminConfirm('Warning! Data cannot be recovered. Do you still wish to proceed?')) return;
 
@@ -111,7 +113,7 @@ if(dataWipedTable && dataWipedTable!=="")return  <div className={styles.mainDiv}
         <button onClick={()=>{handleWipeData("messages")}} className={styles.wipeButton}>Wipe inbox</button>
         <button onClick={()=>{handleWipeData("product_returns")}} className={styles.wipeButton}>Wipe product returns</button>
         
-        <span className={styles.enterIdSpan}>Enter id of product to wipe reviews from, or enter "All" to wipe allr reviews</span>
+        <span className={styles.enterIdSpan}>Enter id of product to wipe reviews from, or enter "All" to wipe all reviews</span>
         <input
             id="product_id"
             className={styles.reviewIdInput}

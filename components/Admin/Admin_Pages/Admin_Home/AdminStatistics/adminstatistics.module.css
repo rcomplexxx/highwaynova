@@ -60,13 +60,7 @@
    
 }
 
-.pickPeriod{
 
-}
-
-.finalResult{
-
-}
 
 .datePickerWrapper{
     flex:1;
@@ -81,8 +75,11 @@
 
 .datePicker{
     background-color: black !important;
+
  
 }
+
+
 
 .dateRangeLabel{
     margin-left: var(--size-1);
@@ -91,10 +88,16 @@
 }
 
 .dateInput{
-    color: var(--admin-txt-color);
+  height: 100%;
+  width: auto;
+  
     background-color: black ;
     padding: var(--size-2);
-    border: 1px solid var(--border-color-strong);
+    
+    
+      
+      font-size: var(--font-size-1);
+    
   
 }
 

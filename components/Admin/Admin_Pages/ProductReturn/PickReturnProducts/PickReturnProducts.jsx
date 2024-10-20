@@ -31,7 +31,7 @@ export default function PickReturnProducts({orderProducts, returnProducts, setRe
 
     <input
     id='returnCostInput'
-    className={`${styles.inputProductId}`}
+    className={`${styles.productReturnsInput}`}
     value={`$${returnCost}`} onChange={(event)=>{
 
       const newValue = event.target.value.substring(1);
@@ -52,7 +52,7 @@ export default function PickReturnProducts({orderProducts, returnProducts, setRe
 
 
 <input
-    className={`${styles.inputProductId}`}
+    className={`${styles.productReturnsInput}`}
     value={returnProductsNumberInputValue}
     placeholder="How many different types of products user wants to return?"
 
@@ -141,7 +141,7 @@ export default function PickReturnProducts({orderProducts, returnProducts, setRe
     
     <select
     
-  className={styles.inputProductId}
+  className={`${styles.productReturnsInput} ${styles.selectItem}`}
   defaultValue={""}
 
 
@@ -192,7 +192,7 @@ export default function PickReturnProducts({orderProducts, returnProducts, setRe
 
 
 <input
-    className={`${styles.inputProductId} ${styles.productQuantity}`}
+    className={styles.productReturnsInput}
     value={returnProducts[index].quantity}
     placeholder="Quantity"
     onChange={(event) => {

@@ -38,7 +38,7 @@
   
 
 
-.adminMainDiv input {
+.adminMainDiv input, .adminMainDiv select {
 
     
         color: var(--admin-txt-color);

@@ -22,7 +22,7 @@ export default function DelayPicker({sendTimeGap, setSendTimeGap}) {
         if(delay?.length!=8) return;
         const delayValues = delay.split(':');
         if(delayValues.length!=3)return;
-        if(delayValues.filter(value=>{return value.length==2 && !isNaN(parseInt(value))} ).length != 3)return;
+        if(delayValues.filter(value=>{return value.length==2 && !isNaN(Number(value))} ).length != 3)return;
 
         if(delayValues[0]<0 || delayValues[0]>31){
             console.log('warning!! Days')
