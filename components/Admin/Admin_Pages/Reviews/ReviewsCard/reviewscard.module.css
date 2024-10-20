@@ -32,7 +32,7 @@
     align-items: center;
     font-size: 56px;
     font-weight: 400;
-    color: rgb(184, 189, 182);
+    color: var(--admin-txt-color-weak);
     margin: var(--size-4) var(--size-5);
   
     box-shadow: 0 0 4px rgb(60, 119, 85);
@@ -42,19 +42,14 @@
 
 
 .reviewEditButton{
-    margin: var(--size-4) var(--size-5);
+ 
     margin-top: var(--size-7);
-    color: var(--admin-txt-color);
-    background-color: transparent;
-    padding: var(--size-3) var(--size-6);
-    border-radius: 2px;
-    border: 1px solid var(--border-color-strong);
-    cursor: pointer;
-    user-select: none;
+   
+
+    
 }
 
 .deleteReviewButton{
-    color: rgba(255, 255, 255, 0.845);
     border: 1px solid rgb(49, 29, 29);
 }
 
@@ -88,9 +83,7 @@
  position:relative;   
 }
 
-.swiperDiv input{
-    border: 1px solid rgba(169, 175, 184, 0.678);
-   }
+
 
 .swiperLabelCurrentId{
     position: absolute;
@@ -114,8 +107,10 @@
     opacity: 0.5;
 }
 
+
+
 .textAreaName{
-    position: relative;
+    
     color: rgb(225, 236, 238);
     background-color: var(--admin-email-input-bg);
     
@@ -127,6 +122,17 @@
     line-height: var(--size-7);
    margin-bottom: var(--size-7);
    border-radius: 8px;
+}
+
+.swapIdInput{
+    
+    
+    
+    
+    
+    padding: var(--size-3) var(--size-6);
+   
+    
 }
 
 .ratingDiv{

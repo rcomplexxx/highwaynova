@@ -55,17 +55,12 @@
    outline: none;
 }
 
-.saveDescription{
+.productReturnButton{
     
-    color: var(--admin-txt-color);
-    background-color: transparent;
-    padding: var(--size-3) var(--size-6);
-    border-radius: 2px;
-    border: 1px solid var(--border-color-strong);
+   
     margin-top: var(--size-5);
     margin-bottom: var(--size-3);
-    cursor: pointer;
-    user-select: none;
+ 
 }
 
 .clearProductReturns{

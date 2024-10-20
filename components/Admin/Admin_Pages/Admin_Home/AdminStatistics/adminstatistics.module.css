@@ -183,21 +183,19 @@
 
 
 .revealInstructionsButton{
-    color: var(--admin-txt-color);
-    background-color: transparent;
-
+   
+  
     
     margin-bottom: var(--size-3);
-    padding: var(--size-4) var(--size-6);
-   
-    border-radius: 2px;
-    border: 1px solid var(--border-color-strong);
+      
+  
+    
 
     font-weight: 400;
 
     align-self: flex-start;
-    cursor: pointer;
-    user-select: none;
+   
+    
 }
 
 

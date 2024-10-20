@@ -94,16 +94,14 @@
 
 .explainTargetTrafficButton {
 
-    color: var(--admin-txt-color-mid);
-    background-color: transparent;
+   
+    
 
     height: 40px;
 
     
  
-   
-    border-radius: 2px;
-    border: 1px solid var(--border-color-mid);
+    
     font-weight: 400;
     align-self: flex-start;
 
@@ -180,18 +178,13 @@
 
 .unlinkSequenceButton{
 
-    color: var(--admin-txt-color);
-    background-color: transparent;
-
+  
+    
     
     margin-top: var(--size-3);
   
-    padding: var(--size-3) var(--size-6);
-   
-    border-radius: 2px;
-    border: 1px solid var(--border-color-strong);
-    cursor: pointer;
-    user-select: none;
+  
+    
 
 }
 
@@ -200,11 +193,9 @@
     
     margin: var(--size-4) var(--size-5);
     margin-top: var(--size-7);
-    color: var(--admin-txt-color);
-    background-color: transparent;
-    padding: var(--size-3) var(--size-6);
-    border-radius: 2px;
+    
+    
     border: 1px solid rgb(22, 168, 51);
-    cursor: pointer;
-    user-select: none;
+    
+    
 }

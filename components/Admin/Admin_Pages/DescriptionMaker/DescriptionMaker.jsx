@@ -6,7 +6,8 @@ import styles from './descriptionmaker.module.css'
 
 import productsData from "@/data/products.json";
 
-import Swal from 'sweetalert2';
+import { adminAlert } from '@/utils/utils-client/utils-admin/adminAlert';
+import { adminConfirm } from '@/utils/utils-client/utils-admin/adminConfirm';
 
 
 export default function DescriptionMaker() {
@@ -25,20 +26,10 @@ export default function DescriptionMaker() {
 
     
     const showError = (message) => {
-      Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: message,
-          confirmButtonText: 'Okay',
-          background: '#333', // Dark background color
-          color: '#fff', // Text color
-          customClass: {
-              popup: 'dark-popup', // Custom class for the popup
-              title: 'dark-title', // Custom class for the title
-              icon: 'dark-icon', // Custom class for the icon
-              confirmButton: 'dark-confirm-button' // Custom class for the button
-          }
-      });
+
+      adminAlert('error', 'Error', message)
+ 
+      
   };
 
 
@@ -128,9 +119,9 @@ export default function DescriptionMaker() {
 
    const handleSaveDescription = async () => {
 
-    if (!productId) return showError("Product id isn't specified.");
+    if (!productId && productId!==0) return showError("Product id isn't specified.");
     if (!descriptionTextRef.current.value) return showError("Description can't be empty.");
-    if (!window.confirm('Do you want to proceed with replacing the current description with the new one?')) return;
+    if (!await adminConfirm('Do you want to proceed with replacing the current description with the new one?')) return;
 
   const finalHtml = `<style>${descriptionCssTextRef.current.value}</style>${descriptionTextRef.current.value}`;
   const newDescriptionData = { text: finalHtml, productId };
@@ -160,9 +151,10 @@ export default function DescriptionMaker() {
   <h1>Description Maker</h1>
   <div className={styles.mainDiv}>
     <div className={styles.descriptionMakerInstructionSpan}>
-      <p>Get the current product description if it exists by entering the product ID and clicking "Get current description."</p>
-      <p>It's suggested to write the description using HTML and CSS. Use preview to check for any HTML errors, as the description will be parsed as HTML.</p>
-      <p>Store images in /public/images/description/product_$productId.</p>
+      <p>Link product and get current description</p>
+      <p>Write description using HTML and CSS.</p>
+      <p>Use preview to parse written code and check for any errors in final design.</p>
+      <p>Store description images in /public/images/description/product_$productId.</p>
     </div>
 
     <div className={styles.getCurrentDescriptionWrapper}>
@@ -184,7 +176,7 @@ export default function DescriptionMaker() {
             New description will affect product ID: {descriptionGetterProductId}
           </span>
           <button
-            onClick={()=>{ if (!window.confirm("Unsaved changes will be lost. Continue?")) return; cleanDescriptionMaker();}}
+            onClick={async()=>{ if (!await adminConfirm("Unsaved changes will be lost. Continue?")) return; cleanDescriptionMaker();}}
             className={`${styles.getCurrentDescrition} ${styles.unlinkProductButton}`}
           >
             Unlink product ID

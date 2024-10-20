@@ -36,8 +36,6 @@ export default function Admin() {
   const setData = (data, type, typeName) => {
     type.current = data.length === 1 && data[0] === "reset_data" 
       ? [] 
-      : data.length === 0 
-      ? [`No ${typeName}`] 
       : data.map(item => typeName === "reviews" 
         ? { id: item.id, name: item.name, stars: item.stars, text: item.text, imageNames: item.imageNames } 
         : item);

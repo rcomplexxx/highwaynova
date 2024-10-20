@@ -5,26 +5,8 @@
     align-items: center;
 }
 
-.reviewIdInput{
-    color: rgb(225, 236, 238);
-    background-color: var(--admin-email-input-bg);
-    
-    width: auto;
-    align-self: flex-start;
-    box-sizing: border-box;
-    padding: var(--size-3);
-    font-size: var(--font-size-5);
-    line-height: var(--size-7);
-   margin-bottom: var(--size-7);
-   border: 1px solid var(--border-color-strong);
-   border-radius: 8px;
-   outline: none;
-}
 
-.reviewIdInput:focus{
-    border: 1px solid #4fabe0;
-    box-shadow: 0 0 8px #4fabe0;
-}
+
 
 .reviewGetterDiv{
     display: flex;
@@ -34,6 +16,7 @@
 
 .reviewGetterDiv input{
     margin-top: var(--size-2);
+    
 }
 
 .reviewGetterDiv button{

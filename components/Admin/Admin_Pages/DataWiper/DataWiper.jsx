@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react'
 import styles from './datawiper.module.css'
-import AdminNavbar from '../../Admin_Login/AdminLogin';
-import Swal from 'sweetalert2';
+import { adminAlert } from '@/utils/utils-client/utils-admin/adminAlert';
+import { adminConfirm } from '@/utils/utils-client/utils-admin/adminConfirm';
 
 export default function DataWiper() {
 
@@ -43,39 +43,14 @@ const handleVerify = async(event)=>{
 
 const handleWipeData = async(databaseTable)=>{
 
-  if(!verified)  return Swal.fire({
-    icon: 'error',
-    title: 'Error',
-    text: `Needs to verify admin to continue wiping data.`,
-    confirmButtonText: 'Okay',
-    background: '#333', // Dark background color
-    color: '#fff', // Text color
-    customClass: {
-        popup: 'dark-popup', // Custom class for the popup
-        title: 'dark-title', // Custom class for the title
-        icon: 'dark-icon', // Custom class for the icon
-        confirmButton: 'dark-confirm-button' // Custom class for the button
-    }
-});
+  if(!verified) return adminAlert('error', 'Error', `Needs to verify admin to continue wiping data.`);  
 
   
-  if (databaseTable === 'reviews' && (productId === undefined || productId === ""))  return Swal.fire({
-    icon: 'error',
-    title: 'Error',
-    text: `Required to enter productId or 'All'(for wiping all reviews) to continue.`,
-    confirmButtonText: 'Okay',
-    background: '#333', // Dark background color
-    color: '#fff', // Text color
-    customClass: {
-        popup: 'dark-popup', // Custom class for the popup
-        title: 'dark-title', // Custom class for the title
-        icon: 'dark-icon', // Custom class for the icon
-        confirmButton: 'dark-confirm-button' // Custom class for the button
-    }
-});
+  if (databaseTable === 'reviews' && (productId === undefined || productId === "")) return adminAlert('error', 'Error', `Required to enter productId or 'All'(for wiping all reviews) to continue.`);  
+  
 
 
-  if (!window.confirm('Warning! Data cannot be recovered. Do you still wish to proceed?')) return;
+  if (!await adminConfirm('Warning! Data cannot be recovered. Do you still wish to proceed?')) return;
 
 
   console.log('wiping')
@@ -117,8 +92,8 @@ if(dataWipedTable && dataWipedTable!=="")return  <div className={styles.mainDiv}
   return (
     <div className={styles.mainDiv}>
         <h1>Data wiper</h1>
-        <span className={styles.warning}>Warning! Dangerous operation. Once deleted, data can never be recovered again.</span>
-        <span className={styles.warning}>Admin verification required before operation can be executed.</span>
+        <span className={styles.warning}>Warning! Dangerous operation. Once deleted, data can never be recovered again. <br />Admin verification required before operation can be executed</span>
+   
         {!verified?<form onSubmit={handleVerify} className={styles.loginBox}>
         <input className={styles.adminInput}  type="text" placeholder="Username" ref={usernameRef} required />
         <input

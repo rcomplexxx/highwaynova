@@ -120,7 +120,7 @@ export default function ReviewsCard({
         deleted && styles.cardMainDivDeleted
       }`}
     >
-      <h1 className={styles.identifier}>{index}</h1>
+      <span className={styles.identifier}>{index}</span>
 
       <div className={styles.headDiv}>
      
@@ -149,7 +149,7 @@ export default function ReviewsCard({
           </label>
           <input
             placeholder="Enter id"
-            className={styles.textAreaName}
+            className={styles.swapIdInput}
             disabled={changed}
             onChange={(event) => {
               const value = event.target.value;

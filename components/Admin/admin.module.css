@@ -21,3 +21,53 @@
 }
 
 
+@layer lowPriority{
+.adminMainDiv button {
+    color: var(--admin-txt-color);
+    background-color: transparent;
+    padding: var(--size-3) var(--size-6);
+    border-radius: 2px;
+    border: 1px solid var(--border-color-strong);
+    cursor: pointer;
+    user-select: none;
+}
+
+
+
+  
+  
+
+
+.adminMainDiv input {
+
+    
+        color: var(--admin-txt-color);
+        background-color: var(--admin-neutral-10);
+        
+
+        box-sizing: border-box;
+        padding: var(--size-3);
+
+        font-size: var(--font-size-5);
+        line-height: var(--size-7);
+       
+       border: 1px solid var(--border-color-strong);
+       border-radius: 8px;
+    
+    
+  
+}
+
+.adminMainDiv input::placeholder {
+    color: var(--admin-txt-color-weak);
+    
+    font-size: var(--font-size-2);
+}
+
+.adminMainDiv input:focus {
+    border: 1px solid #4fabe0;
+    box-shadow: 0 0 8px #4fabe0;
+}
+
+
+}

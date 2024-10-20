@@ -2,6 +2,7 @@ import { useState } from 'react'
 import styles from './productreturns.module.css'
 import PickReturnProducts from './PickReturnProducts/PickReturnProducts';
 import OrderCard from '../Orders/OrderCard/OrderCard';
+import { adminConfirm } from '@/utils/utils-client/utils-admin/adminConfirm';
 
 
 
@@ -143,7 +144,7 @@ const saveNewReturn = async () => {
 
   <div className={styles.mainDiv}>
   <button onClick={()=>{setMyProductReturns();}} 
-  className={`${styles.saveDescription} ${styles.clearProductReturns}`}>Clear product returns</button>
+  className={`${styles.productReturnButton} ${styles.clearProductReturns}`}>Clear product returns</button>
    { myProductReturns.map((product, index) =>{
     
     return <div key={index} className={styles.productReturnWrapper}>
@@ -164,8 +165,7 @@ return <div className={styles.productReturnInfoPair}>
   }
 <button onClick={async()=>{
 
-const result = window.confirm('Are you sure you want to proceed?');
-if(!result)return;
+if(!await adminConfirm('Are you sure you want to proceed?'))return;
 
 
   
@@ -237,7 +237,7 @@ try {
 
           <button 
           onClick={()=>{setLinkedOrder(); setLinkOrderIdValue();}}
-          className={`${styles.saveDescription} ${styles.fileNewReturnButton}`}>Unlink order</button>
+          className={`${styles.productReturnButton} ${styles.fileNewReturnButton}`}>Unlink order</button>
 
        <PickReturnProducts returnProducts={returnProducts} setReturnProducts={setReturnProducts} 
        orderProducts={JSON.parse(linkedOrder.items)} returnCost={returnCost} setReturnCost={setReturnCost} coupon={linkedOrder.couponCode}
@@ -246,7 +246,7 @@ try {
 
 <button 
 onClick={saveNewReturn}
-className={`${styles.saveDescription} ${styles.fileNewReturnButton}`}>Save new return</button>
+className={`${styles.productReturnButton} ${styles.fileNewReturnButton}`}>Save new return</button>
 
 </>
 :
@@ -254,7 +254,7 @@ className={`${styles.saveDescription} ${styles.fileNewReturnButton}`}>Save new r
 
 <button 
           onClick={getProductReturns}
-          className={`${styles.saveDescription} ${styles.fileNewReturnButton}`}>Get product returns</button>
+          className={`${styles.productReturnButton} ${styles.fileNewReturnButton}`}>Get product returns</button>
        
         <input
             id="product_id"
@@ -276,7 +276,7 @@ className={`${styles.saveDescription} ${styles.fileNewReturnButton}`}>Save new r
 
         <button 
           onClick={linkReturnToOrder}
-        className={`${styles.saveDescription} ${styles.fileNewReturnButton}`}>Link return with order</button>
+        className={`${styles.productReturnButton} ${styles.fileNewReturnButton}`}>Link return with order</button>
     
         
         <h2>Handful features</h2>
@@ -298,7 +298,7 @@ className={`${styles.saveDescription} ${styles.fileNewReturnButton}`}>Save new r
         <button 
         // onClick={handleSaveDescription} 
         
-        className={`${styles.saveDescription}`}
+        className={`${styles.productReturnButton}`}
         
         
         onClick={getOrdersByEmail} 

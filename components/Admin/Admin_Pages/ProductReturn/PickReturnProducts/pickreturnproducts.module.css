@@ -19,26 +19,21 @@
 
 .tipReturnButton{
 
-    color: var(--admin-txt-color);
+  
 
-    height: var(--size-6);
-    width: var(--size-8);
-    background-color: transparent;
-
+    padding: var(--size-2) var(--size-3);
+    
+    border: 1px solid var(--admin-neutral-9) ;
 
     
     margin-left: var(--size-4);
-    border: none;
-    outline: 1px solid rgb(24, 24, 22);
-
-    cursor: pointer;
-
-   
+    
+    
 
 }
 
 .tipReturnButtonSelected{
-    outline: 1px solid rgb(84, 114, 151);
+    border: 1px solid rgb(84, 114, 151);
 }
 
 

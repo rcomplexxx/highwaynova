@@ -76,6 +76,7 @@
     
 }
 
+
 .loginButton{
     height: var(--size-7);
     color: var(--admin-login-color);
@@ -84,12 +85,12 @@
     margin-top: var(--size-7);
     padding: var(--size-3);
     border-radius: 8px;
-   outline: none;
+   
+    
    box-sizing: border-box;
    border: 1px solid var(--border-color-strong);
 
-   cursor: pointer;
-   user-select: none;
+   
 
 }
 

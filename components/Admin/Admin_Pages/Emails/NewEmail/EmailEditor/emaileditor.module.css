@@ -5,7 +5,7 @@
 
 .editorBar{
 
-    background-color: var(--neutral-0-5);
+    background-color: var(--admin-neutral-10);
     width: 100%;
 
     display: flex;
@@ -14,13 +14,12 @@
 }
 
 .editorBar button{
-    background-color: var(--neutral-2);
-    outline: none;
+    background-color: var(--admin-neutral-9);
 }
 
 .editorBar select{
    
-    background-color: var(--neutral-2);
+    background-color: var(--admin-neutral-9);
     outline: none;
     box-sizing: border-box;
     margin: 4px;
@@ -46,9 +45,7 @@
 
 
 
-.changeFontSelect{
-   
-}
+
 
 .emailFontValueSelect{
 
@@ -66,7 +63,7 @@
 
 .fontSizeInput{
     width: var(--size-12);
-    background-color: var(--neutral-2);
+    background-color: var(--admin-neutral-9);
     height: 100%;
     font-weight: 500;
 }

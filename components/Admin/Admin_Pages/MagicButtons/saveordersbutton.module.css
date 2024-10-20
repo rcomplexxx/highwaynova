@@ -3,15 +3,8 @@
 
 
 .saveButton{
-    color: var(--admin-txt-color);
-        background-color: transparent;
-        padding: var(--size-3) var(--size-6);
-        border-radius: 2px;
-        border: 1px solid var(--border-color-strong);
-        cursor: pointer;
-        user-select: none;
-
-
+  
         margin-top: var(--size-5);
   
 }
+

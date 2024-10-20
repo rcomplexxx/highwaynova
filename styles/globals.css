@@ -107,6 +107,8 @@ body{
   overflow-anchor: none;
 }
 
+@layer lowPriority{
+
 
 h1{
   color: var(--high-contrast-txt-color);
@@ -153,6 +155,8 @@ button{
 }
 
 input{
+
+  width: 100%;
   min-width: 0;
 
   box-sizing: border-box;
@@ -207,6 +211,8 @@ p {
 
   font-family: var(--font-neutral);
   
+
+}
 
 }
 
@@ -986,7 +992,7 @@ color-scheme: light only;
   --admin-nav-site-title-color: var(--admin-txt-color-strong);
   --admin-title: var(--admin-txt-color-weak);
   --admin-bg: var(--admin-neutral-10);
-
+  --admin-input-bg: var(--admin-neutral-10);
   
   --admin-login-title: var(--admin-neutral-3);
   --admin-login-color: var(--admin-neutral-2);

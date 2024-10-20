@@ -7,6 +7,7 @@ import ReviewsCard from "./ReviewsCard/ReviewsCard";
 
 
 import SortByRatingAndImages from "./SortByRatingAndImages/SortByRatingAndImages";
+import { adminAlert } from "@/utils/utils-client/utils-admin/adminAlert";
 
 export default function Reviews({ reviews, setReviews }) {
   const [page, setPage] = useState(0);
@@ -16,53 +17,22 @@ export default function Reviews({ reviews, setReviews }) {
   
  
 
-  const handleReviewsChange = (
-    id,
-    changed,
-    name,
-    text,
-    imageNames,
-    stars,
-    deleted,
-    swapId,
-  ) => {
+  const handleReviewsChange = (id, changed, name, text, imageNames, stars, deleted, swapId) => {
 
 
-    
-    let updatedReviewsArray = [...reviewsArray];
-    let idAlreadyIncluded = false;
-    updatedReviewsArray = updatedReviewsArray.map((r) => {
-      if (r.id == id) {
-        idAlreadyIncluded = true;
-        return {
-          id: id,
-          changed: changed,
-          name: name,
-          text: text,
-          imageNames: imageNames,
-          stars: stars,
-          deleted: deleted,
-          swapId,
-        };
-      }
-      return r;
-    });
-    if (!idAlreadyIncluded) {
-      reviews.map((r, rId) => {
-        if (id === rId)
-          updatedReviewsArray.push({
-            id: id,
-            changed: changed,
-            name: name,
-            text: text,
-            imageNames: imageNames,
-            stars: stars,
-            deleted: deleted,
-            swapId,
-          });
-      });
-    }
+    if(!reviews.find(review => review.id == swapId)) 
+      return adminAlert('error', 'Error', `Cannot swap review ${id} with a non-existent review, or review from a different product (${swapId}).`) 
+   
 
+    const updatedReviewsArray = reviewsArray.some((r) => r.id === id)
+      ? reviewsArray.map((r) =>
+          r.id === id ? { id, changed, name, text, imageNames, stars, deleted, swapId } : r
+        )
+      : [
+          ...reviewsArray,
+          { id, changed, name, text, imageNames, stars, deleted, swapId }
+        ];
+  
     setReviewsArray(updatedReviewsArray);
   };
 
@@ -72,49 +42,15 @@ export default function Reviews({ reviews, setReviews }) {
   };
 
   const initializeReviewsData = (data) => {
-    let newReviewsArray = [];
-    for (let i = 0; i < data.length; i++) {
-      newReviewsArray.push({ id: data[i].id, changed: false });
-    }
-
+    const newReviewsArray = data.map(({ id }) => ({ id, changed: false }));
     setReviewsArray(newReviewsArray);
-
     setReviews(data);
-    
   };
 
 
 
-  if (reviews.length === 1 && reviews[0] === "No reviews")
-    return (
-      <>
-        <h1>Reviews</h1>
-        <div className={styles.reviewGetterDiv}>
-          <label>Product id</label>
-          <input
-            id="product_id"
-           
-            value={productId}
-            placeholder="Enter product id"
-            onChange={(event) => {
-              const inputNumber = event.target.value;
-              if (!isNaN(inputNumber)) setProductId(inputNumber);
-            }}
-          />
 
-          <GetDataButton
-            name="Reviews"
-            reqData={{ product_id: productId }}
-            dataType={"get_reviews"}
-            setData={initializeReviewsData}
-            
-          />
-
-         
-        </div>
-        <p>No reviews imported.</p>
-      </>
-    );
+  
 
   return (
     <>
@@ -129,8 +65,6 @@ export default function Reviews({ reviews, setReviews }) {
           />
 
 
- {/* <SortByRating reviews={reviews}  setReviewsArray={setReviewsArray} / > 
-          <SwapImageRevsButtons reviews={reviews}  setReviewsArray={setReviewsArray} / >  */}
           <SortByRatingAndImages productId={productId}  
           setData={setReviews}
             clearAfterReviewsSave={clearAfterDataSave}/>

@@ -41,19 +41,7 @@ export default function Inbox({ data, setData }) {
  
   
 
-  if (data.length === 1 && data[0] === "No messages")
-    return (
-      <>
-        <h1>Inbox</h1>
-        <GetDataButton
-          name="Messages"
-          dataType={"get_unanswered_messages"}
-          setData={setData}
-          
-        />
-        <p>All/No messages answered for now.</p>
-      </>
-    );
+  
 
   return (
     <>

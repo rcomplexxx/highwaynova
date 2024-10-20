@@ -42,19 +42,7 @@ export default function Orders({ data, setData }) {
   
 
   
-  if (data.length === 1 && data[0] === "No orders")
-    return (
-      <>
-        <h1>Orders</h1>
-        <GetDataButton
-          name="Orders"
-          dataType={"get_unfulfilled_orders"}
-          setData={setData}
-          
-        />
-        <p>All orders fulfilled for now.</p>
-      </>
-    );
+  
 
   return (
     <>

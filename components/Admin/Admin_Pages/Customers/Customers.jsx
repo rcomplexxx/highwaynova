@@ -8,19 +8,8 @@ export default function Customers({ customers, setCustomers }) {
 
  
 
-  if (customers && customers[0] === "No customers")
-    return (
-      <>
-        <h1>Customers</h1>
-        <GetDataButton
-          name="Customers"
-          dataType={"get_customers"}
-          setData={setCustomers}
-          
-        />
-        <p>Noone subscribed yet bro :/</p>
-      </>
-    );
+
+  
 
 
 

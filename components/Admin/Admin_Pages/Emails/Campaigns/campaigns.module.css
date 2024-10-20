@@ -104,14 +104,14 @@
 
 
 .showEmailButton{
-    color: var(--admin-txt-color);
-    background-color: transparent;
-    border: 1px solid rgb(36, 47, 58);
-    cursor: pointer;
+  
+    
+    border: 1px solid var(--admin-neutral-9);
+    
 }
 
 .showEmailButton:active{
-    background-color: rgb(24, 32, 41);
+    background-color: var(--admin-neutral-9);
 }
 
 

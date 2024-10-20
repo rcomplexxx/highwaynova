@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import styles from './sequences.module.css'
 import EmailCard from '../EmailCard/EmailCard'
+import { adminConfirm } from '@/utils/utils-client/utils-admin/adminConfirm'
 
 export default function Sequences({emails,sequences}) {
 
@@ -54,7 +55,9 @@ const SequenceCard = ({id, title, sequenceEmails, emails})=>{
 
 
 <buttons onClick={async ()=>{
-  if (window.confirm("Are you sure you want to delete this sequence?")) {
+
+
+  if (!await adminConfirm("Are you sure you want to delete this email?"))  return;
 
 
     try {
@@ -87,7 +90,7 @@ const SequenceCard = ({id, title, sequenceEmails, emails})=>{
     }
 
 
-  }
+  
 }} className={styles.deleteSequenceButton}>Delete sequence</buttons>
 
 

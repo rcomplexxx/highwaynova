@@ -4,6 +4,7 @@ import ReactHtmlParser from "react-html-parser";
 
 import styles from './emailcard.module.css'
 import { useRouter } from 'next/router';
+import { adminConfirm } from '@/utils/utils-client/utils-admin/adminConfirm';
 
 
 export default function EmailCard({id,title, text, handleSaveEmail}) {
@@ -77,7 +78,8 @@ export default function EmailCard({id,title, text, handleSaveEmail}) {
     const handleDeleteEmail = async()=>{
 
 
-      if (!window.confirm("Are you sure you want to delete this email?")) return;
+      if (!await adminConfirm("Are you sure you want to delete this email?")) return;
+
 
 
       try {
