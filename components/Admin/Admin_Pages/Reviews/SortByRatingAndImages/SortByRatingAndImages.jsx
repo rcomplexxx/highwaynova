@@ -2,7 +2,7 @@ import { useRef, useState } from 'react'
 import styles from './sortbyratingandimages.module.css'
 import Image from 'next/image'
 
-export default function SortByRatingAndImages({productId,  setOldReviews, clearAfterReviewsSave}) {
+export default function SortByRatingAndImages({productId,  setOldReviews}) {
 
     const sort = async()=>{
 
@@ -22,8 +22,7 @@ export default function SortByRatingAndImages({productId,  setOldReviews, clearA
             })
               .then((response) => {
                 if (response.ok) {
-                  setOldReviews(["reset_data"]);
-                  clearAfterReviewsSave();
+                  setOldReviews();
               
                 }
               })

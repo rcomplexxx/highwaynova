@@ -120,7 +120,7 @@ export default function ReviewsCard({
         deleted && styles.cardMainDivDeleted
       }`}
     >
-      <span className={styles.identifier}>{index}</span>
+      <span className={styles.identifier}>{index + 1}</span>
 
       <div className={styles.headDiv}>
      

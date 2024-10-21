@@ -7,7 +7,7 @@ import Image from "next/image";
 
 export default function OrderCard({
    index,
-  id,
+   
   info,
  
   packageStatus,

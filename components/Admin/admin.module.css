@@ -3,6 +3,9 @@
 
 
 .adminMainDiv{
+
+    color: var(--admin-txt-color);
+    background-color: var(--admin-neutral-11);
     
     min-height: 100vh;
 
@@ -12,16 +15,19 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    color: var(--admin-txt-color);
-    background-color: var(--admin-neutral-11);
+ 
 }
 
-.adminMainDiv h1{
-    color: var(--admin-title);
-}
+
 
 
 @layer lowPriority{
+
+    .adminMainDiv h1{
+        color: var(--admin-title);
+    }
+    
+
 .adminMainDiv button {
     color: var(--admin-txt-color);
     background-color: transparent;
@@ -66,7 +72,7 @@
 
 .adminMainDiv input:focus {
     border: 1px solid #4fabe0;
-    box-shadow: 0 0 8px #4fabe0;
+    box-shadow: 0 0 2px #4fabe0;
 }
 
 

@@ -1,7 +1,7 @@
 import GetDataButton from "../MagicButtons/GetDataButton";
 import SaveOrdersButton from "../MagicButtons/SaveOrdersButton";
 import OrderCard from "./OrderCard/OrderCard";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./orders.module.css";
 import PageIndexButtons from "../MagicButtons/PageIndexButtons";
 
@@ -9,8 +9,13 @@ import PageIndexButtons from "../MagicButtons/PageIndexButtons";
 
 
 export default function Orders({ data, setData }) {
-  const [changedOrdersArray, setChangedOrdersArray] = useState([]);
+  
   const [page, setPage] = useState(0);
+
+
+  useEffect(()=>{
+    if(data.length===0)setPage(0);
+  },[data])
   
 
 
@@ -18,26 +23,28 @@ export default function Orders({ data, setData }) {
   const handleChangedOrdersArray = (changedOrder) => {
 
     
-
-    const updatedChangedOrdersArray = changedOrdersArray.filter(order => {
-      return order.id !== changedOrder.id
-    });
-
-    updatedChangedOrdersArray.push(changedOrder)
-
     
-    console.log('changed order', changedOrdersArray)
+
+    const updatedOrders = data.map(order => order.id === changedOrder.id ?{...order, ...changedOrder, changed: true}:order)
+
+  
+    
+    setData(updatedOrders)
  
 
-    setChangedOrdersArray(updatedChangedOrdersArray);
+    
 
 
   };
 
-  const clearAfterDataSave = () => {
-    setChangedOrdersArray([]);
-    setPage(0);
-  };
+
+ 
+  
+  
+
+
+
+  
 
   
 
@@ -52,9 +59,9 @@ export default function Orders({ data, setData }) {
           <SaveOrdersButton
             dataType="update_orders"
            
-            newData={changedOrdersArray}
+            newData={data.filter(order => order.changed)}
             setData={setData}
-            clearAfterDataSave={clearAfterDataSave}
+            
           />
         ) : (
           <div className={styles.getButtonsWrapper}>
@@ -115,33 +122,22 @@ export default function Orders({ data, setData }) {
         )}
       </div>
      
-      {data.length > page * 10 && (
-        <>
-          {data
-            .slice(
-              page * 10,
-              (page + 1) * 10 > data.length - 1
-                ? data.length 
-                : (page + 1) * 10,
-            )
-            
-            .map((order, index) => (
-              <OrderCard
-                key={page * 10 + index}
-                index={page * 10 + index}
-               
-                info={{id:order.id, email:order.email, firstName:order.firstName, lastName:order.lastName, address:order.address, apt: order.apt, country: order.country, zipcode:order.zipcode, state:order.state, city:order.city, phone: order.phone, couponCode:order.couponCode,
-                tip:order.tip,items:order.items, total: order.total, paymentMethod: order.paymentMethod,paymentId:order.paymentId }}
-               
-                packageStatus={data[index + page * 10].packageStatus}
-                existingSupplierCosts = {data[index + page * 10].supplyCost}
-                handleChangedOrdersArray={handleChangedOrdersArray}
-               
-                
-              />
-            ))}
-        </>
-      )}
+      
+      {data.slice(page * 10, (page + 1) * 10).map((order, index) => (
+  <OrderCard
+    key={page * 10 + index}
+    index={page * 10 + index}
+   
+    
+    info={{id:order.id, email:order.email, firstName:order.firstName, lastName:order.lastName, address:order.address, apt: order.apt, country: order.country, zipcode:order.zipcode, state:order.state, city:order.city, phone: order.phone, couponCode:order.couponCode,
+      tip:order.tip,items:order.items, total: order.total, paymentMethod: order.paymentMethod,paymentId:order.paymentId }}
+     
+    packageStatus={order.packageStatus}
+    existingSupplierCosts={order.supplyCost}
+    handleChangedOrdersArray={handleChangedOrdersArray}
+  />
+))}
+      
 
       <PageIndexButtons data={data} page={page} setPage={setPage} />
     </>

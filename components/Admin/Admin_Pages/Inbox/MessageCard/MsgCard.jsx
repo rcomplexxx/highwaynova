@@ -3,6 +3,7 @@ import { useState } from "react";
 
 export default function MessageCard({
   id,
+  index,
   name,
   email,
   totalOrderCount,
@@ -22,28 +23,17 @@ const [currentStatus, setCurrentStatus] = useState(msgStatus);
 
     console.log('changing status.')
 
-    if(currentStatus === 0){
+    const nextStatus = currentStatus === 2 ? 0 : currentStatus + 1;
+    setCurrentStatus(nextStatus);
+    handleChangedMessagesArray({ id, msgStatus: nextStatus });
 
-      setCurrentStatus(1);
-      handleChangedMessagesArray({id: id, msgStatus: 1})
-
-    }
-    else if(currentStatus === 1){
-      setCurrentStatus(2);
-      handleChangedMessagesArray({id: id, msgStatus: 2})
-    }
-    else if(currentStatus===2){
-      setCurrentStatus(0);
-      handleChangedMessagesArray({id: id, msgStatus: 0});
-    }
-
-
+   
   };
 
   return (
     <div className={styles.cardMainDiv}>
       <div className={styles.mainInfo}>
-      <h1 className={styles.identifier}>{id + 1}</h1>
+      <h1 className={styles.identifier}>{index + 1}</h1>
       <div className={styles.infoPair}>
          <p className={styles.infoLabel}>Name</p>
          <p className={styles.info}>{name}</p>

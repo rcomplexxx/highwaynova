@@ -3,7 +3,6 @@ import styles from "./getdatabutton.module.css";
 
 export default function GetDataButton({
   name,
-  secondStyle = undefined,
   reqData = undefined,
   dataType,
   setData
@@ -42,7 +41,7 @@ export default function GetDataButton({
 
   return (
     <button
-      className={`${styles.magicButton} ${secondStyle && styles[secondStyle === "firstButton" ? "secondStyle" : "secondStyleSecButton"]}`}
+      className={styles.magicButton}
       onClick={handleGetData}
     >
       Get {name}

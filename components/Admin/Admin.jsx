@@ -34,15 +34,15 @@ export default function Admin() {
 
 
   const setData = (data, type, typeName) => {
-    type.current = data.length === 1 && data[0] === "reset_data" 
-      ? [] 
-      : data.map(item => typeName === "reviews" 
-        ? { id: item.id, name: item.name, stars: item.stars, text: item.text, imageNames: item.imageNames } 
-        : item);
+
+    console.log('data here', data)
+
+    type.current = data;
+        
     
     setTriggerRender(prev => !prev);
   };
-
+  
 
 
 
@@ -108,9 +108,8 @@ const checkAdminStatus = async () => {
 
 
       
-    let content;
-    
-
+  
+  
     
 
     const componentsMap = {
@@ -132,7 +131,7 @@ const checkAdminStatus = async () => {
       default: <Emails emailData={emailData} setEmailData={setEmailData} />,
     };
     
-    content = componentsMap[adminroute[0]] || (
+    const content = componentsMap[adminroute[0]] || (
       adminroute[0] === "emails"
         ? emailRoutes[adminroute[1]] || emailRoutes.default
         : <h1>Error 404. Page does not exist.</h1>

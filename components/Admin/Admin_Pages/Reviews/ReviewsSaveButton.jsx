@@ -6,7 +6,7 @@ export default function SaveButton({
 
   reviews,
   setData,
-  clearAfterReviewsSave,
+  
   
 }) {
 
@@ -16,7 +16,6 @@ export default function SaveButton({
 
  const saveData = async () => {
   const data = reviews
-    .filter(r => r.changed)
     .map(({ id, name, text, imageNames, stars, deleted, swapId }) => ({
       id: id.toString(),
       name,
@@ -41,16 +40,16 @@ export default function SaveButton({
       });
 
       if (response.ok) {
-        setData(["reset_data"]);
-        clearAfterReviewsSave();
+        setData([]);
+        
       }
     } catch (error) {
       // handle error if needed
     }
   } else {
     console.log("data je 0");
-    setData(["reset_data"]);
-    clearAfterReviewsSave();
+    setData([]);
+    
   }
 };
 

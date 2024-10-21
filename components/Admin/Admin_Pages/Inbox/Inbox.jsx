@@ -1,16 +1,21 @@
 import GetDataButton from "../MagicButtons/GetDataButton";
 import SaveOrdersButton from "../MagicButtons/SaveOrdersButton";
 import MessageCard from "./MessageCard/MsgCard";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./inbox.module.css";
 import PageIndexButtons from "../MagicButtons/PageIndexButtons";
 
 export default function Inbox({ data, setData }) {
   const [page, setPage] = useState(0);
-  const [changedMessagesArray, setChangedMessagesArray] = useState([]);
+  
 
 
-  console.log('hello', data)
+  useEffect(()=>{
+    if(data.length===0)setPage(0);
+  },[data])
+
+
+  
 
 
 
@@ -18,25 +23,25 @@ export default function Inbox({ data, setData }) {
   const handleChangedMessagesArray = (changedMessage) => {
 
     
+    const updatedMessages = data.map(message => message.id === changedMessage.id?{...message, ...changedMessage, changed:true}: message)
 
-    let updatedChangedMessagesArray = [...changedMessagesArray].filter(status => {
-      return status.id !== changedMessage.id
-    });
+   
+    
 
-    updatedChangedMessagesArray.push(changedMessage)
+    
  
 
-    setChangedMessagesArray(updatedChangedMessagesArray);
+    setData(updatedMessages);
+
+   
+    
 
 
   };
 
 
 
-  const clearAfterDataSave = () => {
-    setChangedMessagesArray([]);
-    setPage(0);
-  };
+  
 
  
   
@@ -45,47 +50,46 @@ export default function Inbox({ data, setData }) {
 
   return (
     <>
-      <div className={styles.titleDiv}>
+      <div className={styles.mainCommandDiv}>
         <h1>Inbox</h1>
         {data.length !== 0 ? (
           <SaveOrdersButton
             dataType="update_unanswered_messages"
             
             
-            newData={changedMessagesArray}
+            newData={data.filter(message => message.changed)}
             setData={setData}
-            clearAfterDataSave={clearAfterDataSave}
           />
         ) : (
+          <>
           <GetDataButton
             name="Answered Messages"
-            secondStyle={true}
+          
             dataType={"get_answered_messages"}
             setData={setData}
             
           />
-        )}
-      </div>
-      {data.length === 0 && (
-        <GetDataButton
+          <GetDataButton
           name="Messages"
           dataType={"get_unanswered_messages"}
           setData={setData}
           
         />
-      )}
-      {data.length !== 0 && data.length >= page * 10 && (
-        <>
-          {data
-            .slice(
+        </>
+        )}
+      </div>
+    
+    
+   
+   
+          {data.slice(
               page * 10,
-              (page + 1) * 10 > data.length - 1
-                ? data.length 
-                : (page + 1) * 10,
+               (page + 1) * 10,
             )
             .map((msg, index) => (
               <MessageCard
                 key={page * 10 + index}
+                index= {page*10+index}
                 id={msg.id}
                 name={msg.name}
                 email={msg.email}
@@ -94,9 +98,11 @@ export default function Inbox({ data, setData }) {
                 msgStatus={data[index].msgStatus}
                 handleChangedMessagesArray={handleChangedMessagesArray}
               />
-            ))}
-        </>
-      )}
+            ))
+            
+            }
+       
+       
 
       <PageIndexButtons data={data} page={page} setPage={setPage} />
     </>

@@ -5,7 +5,7 @@ export default function SaveOrdersButton({
  
   newData,
   setData,
-  clearAfterDataSave,
+  
 }) {
 
   
@@ -18,8 +18,8 @@ export default function SaveOrdersButton({
       });
   
       if (response.ok) {
-        setData(["reset_data"]);
-        clearAfterDataSave();
+        setData([]);
+        
       }
     } catch (error) {
       console.error("Fetch error:", error);

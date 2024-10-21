@@ -1,55 +1,13 @@
 
 
 
-.cardMainDiv{
-   
-    width:100%;
-    max-width: var(--size-18);
-    height: var(--size-13);
-    margin-top: var(--size-9);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border: 1px solid rgb(143, 151, 156);
-}
 
 
-.identifier{
-    font-size: 128px;
-    color: rgb(184, 189, 182);
-    margin: var(--size-4) var(--size-5);
-}
-
-
-.infoPair{
+.mainCommandDiv{
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    
-}
-
-.infoPair > :first-child{
-    margin: 0;
-    opacity: 0.5;
-    font-size: var(--font-size-1);
-}
-
-.infoPair *{
-    margin-top: var(--size-1);
-    font-size: var(--font-size-5);
-
 }
 
 
 
 
-
-.messageStatusButton{
-    color: var(--admin-txt-color);
-    background-color: transparent;
-    padding: var(--size-3) var(--size-6);
-    border-radius: 2px;
-    border: 1px solid var(--border-color-strong);
-    cursor: pointer;
-    user-select: none;
-}
