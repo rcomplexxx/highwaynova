@@ -38,21 +38,16 @@
 
 
 .inputProductId{
-    color: rgb(225, 236, 238);
-    background-color: var(--admin-email-input-bg);
+   
+    
     min-width: var(--size-14);
-    width: 100%;
-    align-self: flex-start;
-    box-sizing: border-box;
-    padding: var(--size-3);
-    font-size: var(--font-size-5);
-    line-height: var(--size-7);
+   
+    
+   
+    
    margin-bottom: var(--size-6);
-   /* border: 1px solid var(--border-color-strong); */
-   border: none;
- 
-   border-radius: 8px;
-   outline: none;
+  
+   
 }
 
 .productReturnButton{

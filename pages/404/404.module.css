@@ -4,7 +4,7 @@
 .mainDiv{
     width: 100%;
     min-height: calc(100vh - var(--navbar-height));
-    min-height: calc(100svh - var(--navbar-height));
+    
     display: flex;
     flex-direction: column;
     justify-content: center;

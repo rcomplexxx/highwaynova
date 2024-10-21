@@ -3,6 +3,7 @@ import styles from './productreturns.module.css'
 import PickReturnProducts from './PickReturnProducts/PickReturnProducts';
 import OrderCard from '../Orders/OrderCard/OrderCard';
 import { adminConfirm } from '@/utils/utils-client/utils-admin/adminConfirm';
+import { adminAlert } from '@/utils/utils-client/utils-admin/adminAlert';
 
 
 
@@ -18,7 +19,7 @@ const [linkOrderIdValue, setLinkOrderIdValue] = useState();
 
 const [returnProducts, setReturnProducts] = useState([]);
 
-const [returnCost, setReturnCost] = useState('');
+const [returnCost, setReturnCost] = useState('0.00');
 
 const [shouldReturnTip, setShouldReturnTip] = useState(false);
 
@@ -65,8 +66,12 @@ const getOrdersByEmail = async () => {
 
     if (!response.ok) throw new Error('Network response was not ok');
 
-    const data = await response.json();
-    setFoundOrders(data.data);
+    const {data} = await response.json();
+    if(data.length===0) {
+      setFoundOrders();
+      return adminAlert('error', `No orders found.`, `Order(s) from customer with email ${emailToFindOrders} not found.`)
+    }
+    setFoundOrders(data);
     console.log('orders found', data.data);
   } catch (error) {
     console.log(error);
@@ -86,9 +91,11 @@ const linkReturnToOrder = async () => {
 
     if (!response.ok) throw new Error('Network response was not ok');
 
-    const data = await response.json();
-    console.log('order found', data);
-    setLinkedOrder(data.data[0]);
+    const {data} = await response.json();
+    console.log('order found', data, data[0]);
+    if(data.length===0)  return adminAlert('error', `No order found.`, `Order with reference id #${linkOrderIdValue} not found.`)
+      setFoundOrders();
+    setLinkedOrder(data[0]);
   } catch (error) {
     console.log(error);
   }
@@ -100,8 +107,8 @@ const linkReturnToOrder = async () => {
 const saveNewReturn = async () => {
   console.log('return data', returnProducts, linkedOrder);
 
-  if (!linkedOrder || !returnProducts.length || 
-      returnProducts.some(rp => rp.id===undefined || rp.quantity === 0)) return;
+  if ((!returnProducts.length || 
+      returnProducts.some(rp => rp.id===undefined || rp.quantity === 0)) && !shouldReturnTip) return adminAlert('error', 'Return data required.', 'Fill return of either products, or tip.');
       
 
   const totalPrice= parseFloat(parseFloat(returnCost).toFixed(2));

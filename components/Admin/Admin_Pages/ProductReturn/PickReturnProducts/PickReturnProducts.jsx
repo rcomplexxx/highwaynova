@@ -23,11 +23,11 @@ export default function PickReturnProducts({orderProducts, returnProducts, setRe
     <>
     <h2 className={styles.pickProductsTitle}>Return information</h2>
     
-    {coupon && <span className={styles.discountWarning}>Warning! Order has DISCOUNT. Calculate return cost with DISCOUNT!</span>}
+    {coupon && <span className={styles.discountWarning}>Warning! Order has DISCOUNT. Calculate return cost with DISCOUNT and TIP!</span>}
 
     
 
-    <label className={`${styles.inputLabel}`} htmlFor='returnCostInput'>Return cost</label>
+    <label className={`${styles.inputLabel}`} htmlFor='returnCostInput'>Return cost{tipExist?' (including tip)':''}</label>
 
     <input
     id='returnCostInput'

@@ -120,8 +120,6 @@ export default {
 
 
 
-
-
   }
 
   export function unimportantPageSeo(pagePath){
@@ -133,9 +131,9 @@ export default {
     
     const description = pagePath==='/collections'?siteMiniDescription:null
  
-    const noFollow = (pagePath.includes('checkout') || pagePath.includes('policy') || pagePath.includes('terms-of-service'|| pagePath==='/404'))?true:null;
+    const noFollow = (pagePath.includes('checkout') || pagePath.includes('policy') || pagePath.includes('terms-of-service') || pagePath.includes('admin') )?true:null;
     const noIndex = (noFollow ||
-    pagePath.includes('/products') || pagePath === '/cart' || pagePath === '/faq' || pagePath ==='/contact-us' || pagePath==='/thank-you')?true:null;
+    pagePath.includes('/products') || pagePath === '/cart' || pagePath === '/faq' || pagePath ==='/contact-us' || pagePath==='/thank-you' || pagePath==='/404')?true:null;
   
   
     return createPageSeo(title, description, pagePath, null, title, null, noFollow, noIndex);
@@ -188,6 +186,10 @@ export default {
 
 
 
+  }
+
+  export function adminPageSeo(){
+    
   }
 
 

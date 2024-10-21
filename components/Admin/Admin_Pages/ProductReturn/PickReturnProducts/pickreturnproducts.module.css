@@ -17,25 +17,32 @@
 
 .tipReturnWrapper{
     align-self: flex-end;
+    display: flex;
+    align-items: center;
+    gap: var(--size-4);
+
 }
 
 .tipReturnButton{
 
   
+    height: auto;
+    min-width: var(--size-8);
 
     padding: var(--size-2) var(--size-3);
     
     border: 1px solid var(--admin-neutral-9) ;
 
     
-    margin-left: var(--size-4);
+    
     
     
 
 }
 
 .tipReturnButtonSelected{
-    border: 1px solid rgb(84, 114, 151);
+    border: 1px solid #4fabe0;
+    box-shadow: 0 0 2px #4fabe0;
 }
 
 
