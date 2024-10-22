@@ -170,7 +170,7 @@ const customerSubscribedRef = useRef(customerSubscribed);
 
       const cancelHandler = async () => { setPaypalError('Payment is canceled.') };
 
-      // return <></>;
+      
       
 
 

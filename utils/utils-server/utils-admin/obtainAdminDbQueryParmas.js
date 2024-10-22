@@ -27,32 +27,32 @@ const getDataTypeConfig = {
   },
   "get_ordered_orders": {
     table: "orders JOIN customers ON orders.customer_id = customers.id",
-    queryCondition: "packageStatus = 1 ORDER BY orders.createdDate",
+    queryCondition: "packageStatus = 1 ORDER BY orders.createdDate DESC",
     selectVariables: "orders.*, customers.email"
   },
   "get_completed_orders": {
     table: "orders JOIN customers ON orders.customer_id = customers.id",
-    queryCondition: "packageStatus = 2 ORDER BY orders.createdDate",
+    queryCondition: "packageStatus = 2 ORDER BY orders.createdDate DESC",
     selectVariables: "orders.*, customers.email"
   },
   "get_canceled_orders": {
     table: "orders JOIN customers ON orders.customer_id = customers.id",
-    queryCondition: "packageStatus = 3 ORDER BY orders.createdDate",
+    queryCondition: "packageStatus = 3 ORDER BY orders.createdDate DESC",
     selectVariables: "orders.*, customers.email"
   },
   "get_returned_orders": {
     table: "orders JOIN customers ON orders.customer_id = customers.id",
-    queryCondition: "packageStatus = 4 ORDER BY orders.createdDate",
+    queryCondition: "packageStatus = 4 ORDER BY orders.createdDate DESC",
     selectVariables: "orders.*, customers.email"
   },
   "get_orders_by_email": {
     table: "orders JOIN customers ON orders.customer_id = customers.id",
-    queryCondition: (data) => `email = '${data.email}'`,
+    queryCondition: (data) => `email = '${data.email}' ORDER BY orders.createdDate DESC`,
     selectVariables: "orders.*, customers.email"
   },
   "get_order_by_orderId": {
     table: "orders JOIN customers ON orders.customer_id = customers.id",
-    queryCondition: (data) => `orders.id = '${data.orderId}'`,
+    queryCondition: (data) => `orders.id = '${data.orderId}' ORDER BY orders.createdDate DESC`,
     selectVariables: "orders.*, customers.email"
   },
   "get_unanswered_messages": {
@@ -72,12 +72,12 @@ const getDataTypeConfig = {
   },
   "get_customers": {
     table: "customers",
-    queryCondition: "subscribed = 1",
+    queryCondition: "subscribed = 1 ORDER BY id DESC",
     selectVariables: "*"
   },
   "get_customers_bh": {
     table: "customers",
-    queryCondition: "subscribed = 0",
+    queryCondition: "subscribed = 0 ORDER BY id DESC",
     selectVariables: "*"
   },
   "get_email_templates": {

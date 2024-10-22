@@ -30,7 +30,7 @@ export const getStartReviews= async(productId, limit = 20)=>{
 
   
   
-      return result.length<limit?result.slice(0, limit):result;
+      return result.slice(0, limit);
 
 
 

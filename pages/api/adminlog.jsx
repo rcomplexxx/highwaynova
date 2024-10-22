@@ -14,8 +14,8 @@ export default async function logHandler(req, res) {
 
     const clientIp = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
 
-    if (!(await limiterPerHour.rateLimiterGate(clientIp)))
-      return res.status(429).json({ error: "Too many requests." });
+    // if (!(await limiterPerHour.rateLimiterGate(clientIp)))
+    //   return res.status(429).json({ error: "Too many requests." });
 
     // Retrieve user data from the database based on the username
 
@@ -54,6 +54,6 @@ export default async function logHandler(req, res) {
     // Send a success response
     return res.status(200).json({ success: true });
   } catch (e) {
-    res.status(500).json({ success: false, error: e });
+    res.status(500).json({ success: false, error: 'Server error.' });
   }
 }

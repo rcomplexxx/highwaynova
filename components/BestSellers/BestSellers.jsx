@@ -121,7 +121,7 @@ export default function BestSellers() {
   console.log('bsp final', bestSellerProducts)
 
 
-  if(bestSellerProducts?.length===0) return <></>;
+  if(bestSellerProducts?.length===0) return null;
 
   return (
     <div className={`${styles.mainDiv}`}>

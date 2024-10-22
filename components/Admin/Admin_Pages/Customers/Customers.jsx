@@ -1,4 +1,5 @@
 import GetDataButton from "../MagicButtons/GetDataButton";
+import PageIndexButtons from "../MagicButtons/PageIndexButtons";
 import styles from "./customers.module.css";
 import { useState } from "react";
 
@@ -6,6 +7,7 @@ export default function Customers({ customers, setCustomers }) {
 
 
 
+  const [page, setPage] = useState(0);
  
 
 
@@ -17,15 +19,11 @@ export default function Customers({ customers, setCustomers }) {
     <>
       <h1>Customers</h1>
 
-      <div className={styles.customersWrapper}>
        
       <div className={styles.customersMain}>
       
       {
 
-
-    
-    
 
 
 customers.length === 0?
@@ -46,29 +44,70 @@ customers.length === 0?
 
 </div>
 :
-<> <button className={styles.dismissCustomersButton} onClick={()=>{setCustomers([])}}>
+<> <button className={styles.dismissCustomersButton} onClick={()=>{setPage(0);setCustomers([])}}>
 Dismiss customer list
 </button>
 
-{customers?.map((customer,index)=>{
-  if((index)%5==0){
-    return <div className={styles.customersRowWrapper}>
-    <h1 className={styles.identifier}>{index==0?index:index/5}</h1>
-    <div className={styles.customersRow}>
-    {[0,1,2,3,4].map((number) => {
-      return customers.length>index+number?<div className={styles.customerPair}>
-      <p key={index+number} className={styles.emailP}>Email: {customers[index+number]?.email}</p>
-      <p key={index+number} className={styles.emailP}>Order number/Money spent: {customers[index+number]?.totalOrderCount}/{customers[index+number]?.money_spent}</p>
-      <p key={index+number} className={styles.source}>Source: {customers[index+number]?.source}</p>
-      <p key={index+number} className={styles.source}>Used coupons: {customers[index+number]?.used_discounts}</p>
-      </div> :<></>
-    })}
-    </div>
-  </div>
-  }
-})}</>}
+<div className={styles.customerGrid}>
+{customers.slice(page * 30, (page + 1) * 30).map((customer,index)=> 
+
+<CustomerCard key={page * 30 + index} index={page * 30 + index+1} email={customer.email} 
+totalOrderCount={customer.totalOrderCount} money_spent={customer.money_spent} 
+source={customer.source} used_discounts={customer.used_discounts}/>
+   
+)}
+
+</div>
+
+
+</>
+}
       </div>
-      </div>
+
+      
+      <PageIndexButtons data={customers} elementsPerPage = {30} page={page} setPage={setPage} />
     </>
   );
+}
+
+
+
+const CustomerCard = ({index, id, email, totalOrderCount, money_spent, source, used_discounts})=>{
+
+  
+
+  return <div className={styles.customersRowWrapper}>
+  <h1 className={styles.identifier}>{index}</h1>
+  
+      <div className={styles.customerCardPair}>
+        <span>Email</span>
+      <span>{email}</span>
+      </div>
+
+
+      <div className={styles.customerCardPair}>
+      <span>Order number | Money spent</span>
+      <span>{totalOrderCount} | {money_spent}</span>
+      </div>
+
+      
+      
+
+      <div className={styles.customerCardPair}>
+
+      <span>Source</span>
+      
+      <span>{source}</span>
+      </div>
+
+
+      {<div className={styles.customerCardPair}>
+      <span>Used coupons</span>
+      <span>{used_discounts==='[]'?'N/A':used_discounts}</span>
+      </div>
+      }
+    
+    
+      </div>
+
 }

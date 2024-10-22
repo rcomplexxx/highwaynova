@@ -9,7 +9,7 @@ function adminAlert(type, title, message) {
             title: title,
             text: message,
             confirmButtonText: 'Okay',
-            background: '#333', // Dark background color
+            background: '#222222', // 333 Dark background color
             color: '#fff', // Text color
             customClass: {
                 popup: 'dark-popup', // Custom class for the popup

@@ -37,7 +37,7 @@ const SequenceCard = ({id, title, sequenceEmails, emails})=>{
     const [showEmailInfo, setShowEmailInfo] = useState(false);
     const [hideSequence, setHideSequence] = useState(false);
 
-    if(hideSequence)return <></>
+    if(hideSequence) return null;
 
 
     return <div className={styles.campaignDiv}>

@@ -3,14 +3,14 @@ import styles from "./pageindexbuttons.module.css";
 import { useCallback } from "react";
 import { ArrowDown } from "@/public/images/svgs/svgImages";
 
-export default function PageIndexButtons({ data, page, setPage }) {
+export default function PageIndexButtons({ data, page, setPage, elementsPerPage=10 }) {
 
 
 
   if (!data.length) return;
 
   const getPageNumbersArray = useCallback(() => {
-    const max = Math.ceil(data.length / 10);
+    const max = Math.ceil(data.length / elementsPerPage);
     
     if (max < 18) return Array.from({ length: max }, (_, index) => index);
     
@@ -40,7 +40,7 @@ export default function PageIndexButtons({ data, page, setPage }) {
       </div>
     ))}
 
-    {page < Math.ceil(data.length / 10) - 1 && (
+    {page < Math.ceil(data.length / elementsPerPage) - 1 && (
       <div className={styles.linkDivPageNumber} onClick={() => setPage(page + 1)}>
         <ArrowDown
           color="var(--neutral-10)"

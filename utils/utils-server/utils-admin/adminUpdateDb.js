@@ -208,21 +208,15 @@ async function updateDb (dbConnection, resReturn, table, data, revalidateReviews
     
                
     
-              await dbConnection.query(
-                  `DELETE FROM reviews WHERE id = ?`
-                ,[data[i].id]);
-               
-                
-                await dbConnection.query(`UPDATE reviews SET id = id - 1 WHERE id > ?`, [data[i].id] );
-    
-                console.log('Deleted. Now minus')
-    
-                for(let j =i+1; j<data.length; j++){
-                  data[j].id = data[j].id -1;
-                }
-    
-    
-                console.log('deleted',data[i].deleted)
+              await dbConnection.query('DELETE FROM reviews WHERE id = ?', [data[i].id]);
+              await dbConnection.query('UPDATE reviews SET id = id - 1 WHERE id > ?', [data[i].id]);
+              
+              console.log('Deleted. Now minus');
+              
+              // Adjust the `id` values for remaining data entries
+              data.slice(i + 1).forEach((item) => item.id--);
+              
+              console.log('deleted', data[i].deleted);
     
     
               } 

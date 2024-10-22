@@ -1,10 +1,6 @@
 
 
-.customersWrapper{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-}
+
 
 
 
@@ -19,8 +15,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    border-radius: 2px;
-    box-sizing: border-box;
+  
+
+    
     
    
    
@@ -31,9 +28,8 @@
     flex-direction: column;
 }
 
-.customersMain > :last-child{
-    border: none !important;
-}
+
+
 
 
 
@@ -44,54 +40,63 @@
 }
 
 
+.customerGrid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 equal columns */
+    grid-gap: var(--size-5); /* Gap between grid items */
+}
+
+
 .customersRowWrapper{
+    min-width: 0;
     width: 100%;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--size-5);
 
     margin-bottom: var(--size-5);
 
+    box-sizing: border-box;
+    padding: var(--size-5);
+
     outline: 1px solid var(--border-color-strong);
+
+    box-sizing: border-box;
    
     
 }
 
-.customersRow{
-    flex:1;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-}
 
-.customerPair{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid gray;
-}
+
+
 
 .identifier{
-    height: 100%;
-    width: var(--size-10);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-sizing: border-box;
-   padding: var(--size-3);
-
-   border-right: 1px solid var(--border-color-strong);
-}
-
-.emailP{
     
-    padding: var(--size-3) var(--size-5);
-    font-size: var(--font-size-5);
+   
+    
+   padding: 0;
+   margin: 0;
+
+   
 }
 
-.source{
-    padding: var(--size-3) var(--size-5);
-    font-size: var(--font-size-3);
+.customerCardPair{
+    display: flex;
+    flex-direction: column;
+}
+
+.customerCardPair :first-child{
+    
+    
+    font-size: var(--font-size-1);
     opacity: 0.7;
 }
+
+.customerCardPair >  :nth-child(2){
+    font-size: var(--font-size-3);
+    
+    word-break: break-all;
+}
+
+

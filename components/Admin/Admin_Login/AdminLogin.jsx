@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import styles from "./adminlogin.module.css";
+import { adminAlert } from "@/utils/utils-client/utils-admin/adminAlert";
 
 const AdminLogin = ({ checkAdminStatus }) => {
   const usernameRef = useRef();
@@ -21,12 +22,14 @@ const AdminLogin = ({ checkAdminStatus }) => {
 
       const data = await response.json();
       if (data.success) {
-        checkAdminStatus();
+        await checkAdminStatus();
       } else {
         console.error("Login failed:", data.error);
+        return adminAlert('error', 'Login failed', data.error)
       }
     } catch (error) {
       console.error("Login error:", error);
+      return adminAlert('error', 'Login failed', 'Server side error.')
     }
   };
 
