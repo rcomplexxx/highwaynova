@@ -74,8 +74,10 @@ export default function EmailList({emails}) {
 
     return <div className={styles.emailListWrapper}>
 
-{emails.map(email => {
-            return <div> {email.sendTimeGap && <div className={styles.timeGapDiv}>Delay after last email sent: {(email.sendTimeGap / (24*60*60 *1000)).toFixed(2)} days</div>} {makeEmailCard(email)} </div>
+{emails.map((email,index) => {
+            return <div key={index}> 
+              {email.sendTimeGap && <div className={styles.timeGapDiv}>Delay after last email sent: {(email.sendTimeGap / (24*60*60 *1000)).toFixed(2)} days</div>} 
+              {makeEmailCard(email)} </div>
 
                   })}
     </div>

@@ -1,7 +1,6 @@
 
 .cardMainDiv{
     position: relative;
-    color: rgb(225, 236, 238);
     width:100%;
     max-width: var(--size-18);
     min-height: var(--size-13);
@@ -10,7 +9,7 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    border: 1px solid rgb(143, 151, 156);
+    border: 1px solid var(--admin-card-border-color);
     border-radius: 8px;
     padding: var(--size-7);
 }
@@ -66,7 +65,6 @@
 
 
 .textArea{
-    color: rgb(225, 236, 238);
     background-color: var(--admin-email-input-bg);
     min-height: 96px;
     width: 100%;
@@ -111,7 +109,6 @@
 
 .textAreaName{
     
-    color: rgb(225, 236, 238);
     background-color: var(--admin-email-input-bg);
     
     width: auto;

@@ -11,8 +11,8 @@ export default function SequenceList({sequenceData, linkSequence}) {
 //brisi sve kad se promeni sequenceType
   return (
     <div className = {styles.emailsListDiv}>
-      {sequenceData?.map(sequence=>{
-         return <SequenceElement id={sequence.id} title={sequence.title} emails={sequence.emails} linkSequence={linkSequence}/>
+      {sequenceData?.map((sequence, index)=>{
+         return <SequenceElement key={index} id={sequence.id} title={sequence.title} emails={sequence.emails} linkSequence={linkSequence}/>
 
       })}
       </div>

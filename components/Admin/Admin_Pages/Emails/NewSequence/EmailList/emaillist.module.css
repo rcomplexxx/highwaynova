@@ -37,7 +37,7 @@ align-items: center;
 
 .datePicker{
   
-    background-color: black !important;
+    background-color: var(--admin-neutral-11);
 
 }
 
@@ -49,7 +49,7 @@ align-items: center;
 
 .dateInput{
     color: var(--admin-txt-color);
-    background-color: black ;
+    background-color: var(--admin-neutral-11);
     padding: var(--size-2);
     margin: var(--size-3) 0;
     border: 1px solid var(--border-color-strong);

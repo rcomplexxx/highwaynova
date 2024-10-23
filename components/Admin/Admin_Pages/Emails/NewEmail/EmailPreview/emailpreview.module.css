@@ -1,55 +1,59 @@
+
 .emailContentDiv{
     width: 100%;
-    
-    padding-bottom: var(--size-8);
-    padding-top: var(--size-8);
-    border-bottom: 1px solid green;
+}
 
-   
+.backToEditorButton{
+    align-self: flex-start;
 }
 
 
-.idDiv{
-    width:100%;
+.emailHelperWrapper{
+
+    width: 100%;
+
     display:flex;
-    justify-content: flex-end;
-    align-items: flex-end;
-   
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--size-3);
 }
 
-.currentId{
-   
-    font-size: var(--font-size-8);
-    color: rgb(134, 149, 180);
-    margin-left: var(--size-2);
-    margin-right: var(--size-2);
+
+.instructionsWrapper{
+    display: flex;
+    flex-direction: column;
+
+    padding: var(--size-5) 0;
 }
 
-.currentIdText{
-    font-size: var(--font-size-7);
-    opacity: 0.18;
-    color: var(--admin-txt-color);
+
+.emailMakerInstructionSpan{
+    align-self: flex-start;
+    margin-bottom: var(--size-5);
+   
+    font-size: var(--font-size-3);
 }
+
+
+
+
+
+
 
 
 
 .titleInput{
    
     
-    min-width: var(--size-14);
- 
+   
     
     align-self: flex-start;
    
     
-  
-    
    margin-bottom: var(--size-6);
-   /* border: 1px solid var(--border-color-strong); */
- 
+
    
 }
-
 
 
 
@@ -59,49 +63,49 @@
 .textArea{
     color: var(--admin-txt-color);
     background-color: var(--admin-email-input-bg);
-    max-height: var(--size-14);
-    min-height: var(--size-12);
+    min-height: var(--size-16);
+    max-height: var(--size-17);
     width: 100%;
     box-sizing: border-box;
     padding: var(--size-6);
     font-size: var(--font-size-5);
-    line-height: var(--size-7);
-  
+    line-height: var(--size-6);
+
+   
+    padding-bottom: 128px;
     border-radius: 8px;
     border: none;
+
+    font-size: var(--font-size-2);
     outline: none;
     resize: none;
 }
 
 .textAreaCss{
-    margin-top: var(--size-5);
+    margin-top: var(--size-7);
 }
+
 /* .textArea:focus{
     border: 1px solid #4fabe0;
     box-shadow: 0 0 8px #4fabe0;
 } */
 
-.buttonBar{
+.newEmailButtons{
     width: 100%;
     display: flex;
-
+    justify-content: space-between;
 }
 
 .previewButton{
-    margin: var(--size-4) var(--size-5);
+    margin: var(--size-4) var(--size-2);
     margin-top: var(--size-7);
    
     
 }
 
-
-
-.deleteEmail{
-  margin-left: auto;
+.saveButton{
+    align-self: flex-end;
 }
-
-
-
 
 
 .previewContent{
@@ -115,7 +119,20 @@
     align-items: center;
     border: 1px solid var(--admin-card-border-color);
     border-radius: 8px;
-    margin-top: var(--size-5);
+    margin-top: var(--size-9);
     box-sizing: border-box;
     padding: var(--size-7);
+}
+
+.previewContent h1{
+    margin: unset;
+    padding: unset;
+
+    font-size: unset;
+}
+
+.previewContent p{
+    margin: unset;
+    padding: unset;
+    font-size: unset;
 }

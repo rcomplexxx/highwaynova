@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import EasyEmailEditor from './EmailEditor/EmailEditor';
-import EmailPreview from './EmailPreview'
+import EmailPreview from './EmailPreview/EmailPreview'
 import styles from './newemail.module.css'
 
 import { useRouter } from 'next/router';

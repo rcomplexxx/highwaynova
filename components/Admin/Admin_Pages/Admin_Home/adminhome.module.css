@@ -35,5 +35,5 @@
     width: 100%;
     margin-top: var(--size-7);
     margin-bottom: var(--size-7);
-    border: 2px dashed #3498db;
+    border: 2px dashed var(--admin-home-sector-borderLine-color);
 }

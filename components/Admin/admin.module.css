@@ -73,8 +73,8 @@
 }
 
 .adminMainDiv input:focus {
-    border: 1px solid #4fabe0;
-    box-shadow: 0 0 2px #4fabe0;
+    border: 1px solid var(--admin-input-focus-border-color);
+    box-shadow: 0 0 2px var(--admin-input-focus-border-color);
 }
 
 

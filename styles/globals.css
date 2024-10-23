@@ -993,11 +993,17 @@ color-scheme: light only;
   --admin-title: var(--admin-txt-color-weak);
   --admin-bg: var(--admin-neutral-10);
   --admin-input-bg: var(--admin-neutral-10);
+  --admin-input-focus-border-color: #4fabe0;
+
+  --admin-card-border-color: rgb(143, 151, 156);
   
   --admin-login-title: var(--admin-neutral-3);
   --admin-login-color: var(--admin-neutral-2);
   --admin-login-placeholder: var(--admin-neutral-4);
   --admin-login-btn-bg: var(--admin-neutral-10);
+
+
+  --admin-home-sector-borderLine-color: #3498db;
 
 
   --admin-package-status-button-bg: var(--admin-neutral-10);

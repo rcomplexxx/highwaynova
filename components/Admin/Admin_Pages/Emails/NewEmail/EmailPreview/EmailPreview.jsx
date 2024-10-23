@@ -9,7 +9,7 @@ import ReactHtmlParser from "react-html-parser";
 
 import {useRouter } from 'next/router';
 
-import styles from './newemail.module.css'
+import styles from './emailpreview.module.css'
 import { adminConfirm } from '@/utils/utils-client/utils-admin/adminConfirm';
 
 

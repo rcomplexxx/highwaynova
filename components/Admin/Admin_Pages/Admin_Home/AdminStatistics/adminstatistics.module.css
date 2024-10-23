@@ -74,7 +74,7 @@
 }
 
 .datePicker{
-    background-color: black !important;
+    background-color: var(--admin-neutral-11);
 
  
 }
@@ -91,7 +91,8 @@
   height: 100%;
   width: auto;
   
-    background-color: black ;
+  background-color: var(--admin-neutral-11);
+
     padding: var(--size-2);
     
     

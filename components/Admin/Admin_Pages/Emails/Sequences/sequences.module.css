@@ -70,28 +70,15 @@
 
 .campaignInput{
     
-    color: rgb(225, 236, 238);
-    background-color: var(--admin-email-input-bg);
   
-    width: 100%;
-
-    box-sizing: border-box;
-    padding: var(--size-3);
-    font-size: var(--font-size-5);
-    line-height: var(--size-7);
+    
    margin-bottom: var(--size-6);
-   /* border: 1px solid var(--border-color-strong); */
+
    
-   border: none;
- 
-   border-radius: 8px;
-   outline: none;
 }
 
-.campaignInput:focus{
-    border: 1px solid #4fabe0;
-    box-shadow: 0 0 8px #4fabe0;
-}
+
+
 
 .campaignEmailsDiv{
 
@@ -123,12 +110,12 @@
 .showEmailButton{
     color: var(--admin-txt-color);
     background-color: transparent;
-    border: 1px solid rgb(36, 47, 58);
+    background-color: var(--admin-neutral-11);
     cursor: pointer;
 }
 
 .showEmailButton:active{
-    background-color: rgb(24, 32, 41);
+     background-color: var(--admin-neutral-11);
 }
 
 

@@ -13,9 +13,12 @@
    
 }
 
+@layer lowPriority{
+
 .editorBar button{
     background-color: var(--admin-neutral-9);
 }
+
 
 .editorBar select{
    
@@ -25,7 +28,7 @@
     margin: 4px;
 }
 
-
+}
 
 
 .fontmatchesSpan{
