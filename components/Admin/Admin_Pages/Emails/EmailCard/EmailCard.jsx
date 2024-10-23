@@ -3,7 +3,7 @@ import {useEffect, useState } from 'react'
 import ReactHtmlParser from "react-html-parser";
 
 import styles from './emailcard.module.css'
-import { useRouter } from 'next/router';
+
 import { adminConfirm } from '@/utils/utils-client/utils-admin/adminConfirm';
 
 

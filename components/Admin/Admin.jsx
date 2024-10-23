@@ -2,6 +2,9 @@ import { useState, useEffect, useRef, useLayoutEffect } from "react";
 import styles from "./admin.module.css";
 import AdminNavbar from "./Admin_Navbar/AdminNavbar";
 import { useRouter } from "next/router";
+
+import { Spinner2 } from "@/public/images/svgs/svgImages";
+
 import AdminLogin from "./Admin_Login/AdminLogin";
 import AdminHome from "./Admin_Pages/Admin_Home/AdminHome";
 import Orders from "./Admin_Pages/Orders/Orders";
@@ -93,8 +96,11 @@ const checkAdminStatus = async () => {
   
 
   if (isAdmin === undefined) return <div className={styles.adminMainDiv}>
-     <AdminNavbar setIsAdmin={setIsAdmin} />
-    <h1>Loading...</h1></div>;
+     
+     <div className={styles.loadingDiv}>
+     <Spinner2 style={{justifySelf: 'flex-start'}}/>
+     </div>
+     </div>;
 
   if (!isAdmin) return <AdminLogin checkAdminStatus={checkAdminStatus} />;
   

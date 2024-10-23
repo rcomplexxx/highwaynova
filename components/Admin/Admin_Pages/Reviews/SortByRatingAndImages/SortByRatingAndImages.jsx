@@ -1,17 +1,19 @@
-import { useRef, useState } from 'react'
-import styles from './sortbyratingandimages.module.css'
-import Image from 'next/image'
 
-export default function SortByRatingAndImages({productId,  setOldReviews}) {
+
+import { adminConfirm } from '@/utils/utils-client/utils-admin/adminConfirm';
+import styles from './sortbyratingandimages.module.css'
+
+
+export default function SortByRatingAndImages({productId,  setReviews}) {
 
     const sort = async()=>{
 
 
-        const answer = confirm("Continue with sorting reviews? Changes cannot be undone.");
+      
+        if (!await adminConfirm("Continue with sorting reviews? Changes cannot be automatically undone.")) return;
 
 
-
-        if(!answer)return;
+        
 
             await fetch("/api/admincheck", {
               method: "POST",
@@ -22,7 +24,7 @@ export default function SortByRatingAndImages({productId,  setOldReviews}) {
             })
               .then((response) => {
                 if (response.ok) {
-                  setOldReviews();
+                  setReviews([]);
               
                 }
               })

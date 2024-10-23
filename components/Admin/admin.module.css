@@ -21,6 +21,8 @@
 
 
 
+
+
 @layer lowPriority{
 
     .adminMainDiv h1{
@@ -76,4 +78,12 @@
 }
 
 
+}
+
+
+.loadingDiv{
+
+  margin: auto;
+
+ 
 }

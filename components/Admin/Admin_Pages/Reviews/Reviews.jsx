@@ -23,7 +23,7 @@ export default function Reviews({ reviews, setReviews }) {
  
 
   const handleReviewsChange = (id, changed, name, text, imageNames, stars, deleted, swapId) => {
-    if (swapId && !reviews.some(review => review.id === swapId)) {
+    if (swapId && !reviews.some(review => review.id === Number(swapId))) {
       return adminAlert('error', 'Error', `Cannot swap review ${id} with a non-existent or different product review (${swapId}).`);
     }
   
@@ -61,7 +61,7 @@ export default function Reviews({ reviews, setReviews }) {
 
 
           <SortByRatingAndImages productId={productId}  
-          setData={setReviews}
+          setReviews={setReviews}
             />
          
 

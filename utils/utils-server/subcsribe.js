@@ -83,27 +83,27 @@ async function subscribe(email, source, extraData,dbConnectionArg) {
 
       // No further checks needed since a new customer can't be from checkout
     } else {
-      // If re-subscribe, just update subscription status
-      if (source === 're_subscribe') {
-        await dbConnection.query("UPDATE customers SET subscribed = 1 WHERE email = ?", [email]);
-        return true;
-      }
+
+      
+      
 
       // Handle post-buying sequence if source indicates checkout
       if (source.includes("checkout")) {
         await sendAutomatedSequence("post_buying_sequence", result.totalOrderCount);
       }
 
-      // Determine if the user should be subscribed (non-checkout and not already subscribed)
-      const newSubscribe = !result.subscribed && source !== "checkout x";
+       // Determine if the user should be subscribed (non-checkout and not already subscribed)
+     
+      if(result.subscribed || source === "checkout x") return true;
 
-      // Update subscription if required
-      if (newSubscribe) {
+     
+      
         await dbConnection.query("UPDATE customers SET subscribed = 1 WHERE email = ?", [email]);
         await sendAutomatedSequence("subscribe_sequence");
-      }
+    
+        
 
-      console.log("Successfully subscribed. Is person new subscriber?", newSubscribe, email);
+        
     }
 
     return true;

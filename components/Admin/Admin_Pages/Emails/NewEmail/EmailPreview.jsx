@@ -10,6 +10,7 @@ import ReactHtmlParser from "react-html-parser";
 import {useRouter } from 'next/router';
 
 import styles from './newemail.module.css'
+import { adminConfirm } from '@/utils/utils-client/utils-admin/adminConfirm';
 
 
 const EmailPreview = ({previewHtml, setFinalPreview, emailTitle, setEmailTitle}) => {
@@ -83,14 +84,16 @@ const EmailPreview = ({previewHtml, setFinalPreview, emailTitle, setEmailTitle})
     }
 
 
-    const backToEditor = ()=>{
+    const backToEditor = async()=>{
 
 
-      const userResponse = confirm('Manual changes will be lost. Proceed?');
-
-if (userResponse) {
+       if (!await adminConfirm('Manual changes will be lost. Proceed?')) return;
+  
+       
+       
   setFinalPreview(false)
-} 
+
+  
 
     }
   

@@ -8,20 +8,14 @@ const path = require('path');
 
 
 
-const   moveImagesToDeletedImagesFolder = (reviewProductImages, productId, shouldRecover)=>{
-  if(reviewProductImages && reviewProductImages.length>0 ){
+const deleteOrRecoverImages = (reviewProductImages, productId, shouldRecover)=>{
+  
+  if (!reviewProductImages?.length) return;
    
-    const basePath = path.join(
-        process.cwd(),
-        'public',
-        'images',
-        'review_images',
-        `productId_${productId}`
-      );
+  const basePath = path.join(process.cwd(), 'public', 'images', 'review_images', `productId_${productId}`);
     const deletedImagesPath = path.join(basePath,`deleted_images`);
 
-    const moveFrom = shouldRecover?deletedImagesPath:basePath;
-    const moveTo = shouldRecover?basePath:deletedImagesPath;
+    const [moveFrom, moveTo] = shouldRecover ? [deletedImagesPath, basePath] : [basePath, deletedImagesPath];
   
   
     if (!fs.existsSync(deletedImagesPath))fs.mkdirSync(deletedImagesPath, { recursive: true });
@@ -38,8 +32,14 @@ const   moveImagesToDeletedImagesFolder = (reviewProductImages, productId, shoul
     
     });
   
-  }
+  
 }
+
+
+
+
+
+
 
 
 
@@ -204,7 +204,7 @@ async function updateDb (dbConnection, resReturn, table, data, revalidateReviews
     
                 
                   //imageNames
-              moveImagesToDeletedImagesFolder(reviewProductImages, productId, true)
+              deleteOrRecoverImages(reviewProductImages, productId, true)
     
                
     
@@ -223,59 +223,40 @@ async function updateDb (dbConnection, resReturn, table, data, revalidateReviews
               
               
               
+
+
+
+
               
               else {
     
     
                 console.log('checking data of i imagenames', data[i].imageNames)
                   //nije imageNames
-                  let reviewImages= JSON.parse(data[i].imageNames) || [];
+                  const updatedReviewImages = JSON.parse(data[i].imageNames || '[]') || [];
     
                   
-                console.log(reviewImages, 'and', );
-               
-                
-                
-                const deletedImages= reviewProductImages?.filter((img)=>!reviewImages.find(rImg => rImg===img));
+                  const deletedImages = reviewProductImages?.filter(img => !updatedReviewImages.includes(img));
     
+                deleteOrRecoverImages(deletedImages, productId, false);
                 
-                moveImagesToDeletedImagesFolder(deletedImages, productId, false);
-                
-
 
     
-          const recycledReviewImages= reviewImages?.filter((img)=>img?.split('deleted_images/')?.[1]);
-
-          
-          
+                const recycledReviewImages = updatedReviewImages.filter(img => img.split('deleted_images/')[1]);
 
           
           console.log('recycled Review Images, data', recycledReviewImages, data);
     
-          
-    
+            deleteOrRecoverImages(recycledReviewImages, productId, true)
 
-            moveImagesToDeletedImagesFolder(recycledReviewImages, productId, true)
-
-
-            let newImageNames = reviewImages?.map(img => img.startsWith('deleted_images/') ? img.split('deleted_images/')[1] : img);
+            let newImageNames = updatedReviewImages.map(img => img.startsWith('deleted_images/') ? img.split('deleted_images/')[1] : img);
             
             newImageNames = newImageNames.length ? JSON.stringify(newImageNames) : null;
-            
-            
 
             
             
-    
-           
-    
-        
-      
-    
-    
-    
-    
             
+
     
                 await dbConnection.query(`UPDATE reviews SET name = ?, text = ?, imageNames = ?, stars = ? WHERE id = ?`, [
                   data[i].name,
@@ -290,6 +271,10 @@ async function updateDb (dbConnection, resReturn, table, data, revalidateReviews
     
     
     
+
+
+
+
     
                 if (data[i].swapId) {
     
@@ -299,41 +284,23 @@ async function updateDb (dbConnection, resReturn, table, data, revalidateReviews
                   const swappingTargetRow = (await dbConnection.query(`SELECT * FROM reviews WHERE id = ?`, [data[i].id]))[0];
               
                   const swapRow = (await dbConnection.query(`SELECT * FROM reviews WHERE id = ?`,[data[i].swapId]))[0];
-    
-                  if (swapRow) {
-                    await dbConnection.query(
-                      `UPDATE reviews SET name = ?, text = ?, stars = ?, imageNames = ? WHERE id = ?`,
-                    [
-                      swapRow.name,
-                      swapRow.text,
-                      swapRow.stars,
-                      swapRow.imageNames,
-                      data[i].id]
-                    );
-    
-                    await dbConnection.query(
-                      `UPDATE reviews SET name = ?, text = ?, stars = ?, imageNames = ? WHERE id = ?`,
-                   [
-                      swappingTargetRow.name,
-                      swappingTargetRow.text,
-                      swappingTargetRow.stars,
-                      swappingTargetRow.imageNames,
-                      data[i].swapId
-                   ]
-                    );
-                  } 
-                  
-                  else {
-    
-         
-                    return await resReturn(500, { successfulLogin: false, error: "Swap id doesn't exist." })
+
+
+                  if (!swapRow) {
+                    return await resReturn(500, { successfulLogin: false, error: "Swap id doesn't exist." });
                   }
+
+                  const updateQuery = `UPDATE reviews SET name = ?, text = ?, stars = ?, imageNames = ? WHERE id = ?`;
     
+                  await dbConnection.query(updateQuery, [swapRow.name, swapRow.text, swapRow.stars, swapRow.imageNames, data[i].id]);
+                  await dbConnection.query(updateQuery, [swappingTargetRow.name, swappingTargetRow.text, swappingTargetRow.stars, swappingTargetRow.imageNames, data[i].swapId]);
+               
     
-    
-    
+
     
                 }
+
+
     
     
                 
@@ -343,10 +310,13 @@ async function updateDb (dbConnection, resReturn, table, data, revalidateReviews
             }
     
     
-     await revalidateReviews();
+                               await revalidateReviews();
     
-           
-            } 
+                              } 
+
+
+
+                              
 
             else if(table==="products"){
 

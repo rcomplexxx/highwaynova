@@ -8,6 +8,7 @@ import LoadTemplate from './TemplateManipulation/LoadTemplate';
 import SaveTemplate from './TemplateManipulation/SaveTemplate';
 import EditorHtmlSnippets from './EditorHtmlSnippets/EditorHtmlSnippets';
 import { transformColorToHex } from '@/utils/utils-client/transformColorToRgba';
+import { adminConfirm } from '@/utils/utils-client/utils-admin/adminConfirm';
 
 
 
@@ -77,11 +78,13 @@ const handleSaveTemplate = async(templateType) => {
 
   await emailEditorRef.current?.editor?.exportHtml(async(data) => {
 
-    const userResponse = confirm('Current main template will be overriden. Proceed?');
 
-    if (!userResponse) {
-     return;
-    } 
+    
+
+    if (!await adminConfirm('Current main template will be overriden. Proceed?')) return;
+
+ 
+    
 
 
     const { design } = data;
@@ -114,14 +117,9 @@ const handleSaveTemplate = async(templateType) => {
 const handleLoadTemplate = async(displayWarning, templateType) => {
 
 
-  if(displayWarning){
-  const userResponse = confirm('Current progress will be lost. Proceed?');
+  if(displayWarning && !await adminConfirm('Current progress will be lost. Proceed?'))return;
 
-  if (!userResponse) {
-   return;
-  } 
-
-}
+ 
 
 
 
