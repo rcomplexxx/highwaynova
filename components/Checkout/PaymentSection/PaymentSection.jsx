@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import dynamic from "next/dynamic";
-const PayPalButton = dynamic(() => import("@/components/Checkout/ExpressCheckout/PayPal/PayPal"));
+import PayPalButton from "../ExpressCheckout/PayPal/PayPal";
 import StripeWrapper from "../Stripe/Stripe";
 import styles from "./paymentmethodwrapper.module.css";
 import Image from "next/image";

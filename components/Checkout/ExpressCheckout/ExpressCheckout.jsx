@@ -1,10 +1,9 @@
-
-
+import { useContext } from "react";
 import GooglePay from "./GooglePay/GooglePay";
-
+import PayPalButton from "./PayPal/PayPal";
 import styles from "./expresscheckout.module.css";
-import dynamic from "next/dynamic";
-const PayPalButton = dynamic(() => import("@/components/Checkout/ExpressCheckout/PayPal/PayPal"));
+
+
 
 export default function ExpressCheckout({
 

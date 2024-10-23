@@ -35,7 +35,7 @@ import BundleOffer from "@/components/ProductPage/BundleOffer/BundleOffer";
 import { useRouter } from "next/router";
 import getConnection from "@/utils/utils-server/mariaDbConnection";
 
-const PayPalButton = dynamic(() => import("@/components/Checkout/ExpressCheckout/PayPal/PayPal"));
+
 
 
 export default function ProductPage({ product, description, images, startReviews, ratingData }) {
@@ -304,66 +304,7 @@ export default function ProductPage({ product, description, images, startReviews
             Add to Cart
           </button>
 
-            <PayPalButton type='instant' color='gold' organizeUserDataArg={
-               useCallback((paymentMethod) => {
-
-
-
-                const defaultFields = {
-                  email: "",
-                  firstName: "",
-                  lastName: "",
-                  address: "",
-                  apt: "",
-                  country: "",
-                  zipcode: "",
-                  state: "",
-                  city: "",
-                  phone: ""
-                };
-
-                
-
-               
-              
-                const items = bundleVariants.length > 0
-                ? bundleVariants.map(cp => ({ id: product.id, quantity: cp.quantity, variant: cp.name }))
-                : [{ id: product.id, quantity, variant: variant?.name }];
-
-                const totalQuantity = product.bundle && bundleVariants.length > 0 
-                ? bundleVariants.reduce((total, cp) => total + cp.quantity, 0) 
-                : quantity;
-
-                const bundleDiscount = product.bundle?.findLast(b => totalQuantity >= b.quantity)?.discountPercentage ?? 0;
-
-                
-                const clientTotal= ((product.price * (100 -  bundleDiscount) / 100).toFixed(2)  * totalQuantity).toFixed(2)
-                
-                  
-                  
-                console.log('order paypal info', bundleDiscount, clientTotal)
-
-                
-              
-                const requestData = {
-                  order: {
-                    ...defaultFields,
-                    items,
-                    customerSubscribed: false,
-                    couponCode: "",
-                    tip: "0.00",
-                    
-                    clientTotal: clientTotal
-                  },
-                  paymentMethod,
-                  paymentToken: undefined
-                  // Include other payment-related data if required
-                };
-              
-                return requestData;
-              }
-            
-  ,[quantity, variant, bundleVariants])}/>
+         
         
 
 
