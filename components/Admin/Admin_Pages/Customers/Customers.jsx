@@ -51,9 +51,7 @@ Dismiss customer list
 <div className={styles.customerGrid}>
 {customers.slice(page * 30, (page + 1) * 30).map((customer,index)=> 
 
-<CustomerCard key={page * 30 + index} index={page * 30 + index+1} email={customer.email} 
-totalOrderCount={customer.totalOrderCount} money_spent={customer.money_spent} 
-source={customer.source} used_discounts={customer.used_discounts}/>
+<CustomerCard key={page * 30 + index} index={page * 30 + index+1} customerInfo = {customer}/>
    
 )}
 
@@ -72,7 +70,7 @@ source={customer.source} used_discounts={customer.used_discounts}/>
 
 
 
-const CustomerCard = ({index, id, email, totalOrderCount, money_spent, source, used_discounts})=>{
+const CustomerCard = ({ index, customerInfo: { id, email, totalOrderCount, money_spent, source, used_discounts, createdDate } })=>{
 
   
 
@@ -83,6 +81,9 @@ const CustomerCard = ({index, id, email, totalOrderCount, money_spent, source, u
         <span>Email</span>
       <span>{email}</span>
       </div>
+
+    
+    
 
 
       <div className={styles.customerCardPair}>

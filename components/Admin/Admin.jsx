@@ -18,6 +18,7 @@ import ProductReturns from "./Admin_Pages/ProductReturn/ProductReturns";
 import NewSequence from "./Admin_Pages/Emails/NewSequence/NewSequence";
 import Sequences from "./Admin_Pages/Emails/Sequences/Sequences";
 import Customers from "./Admin_Pages/Customers/Customers";
+import { adminAlert } from "@/utils/utils-client/utils-admin/adminAlert";
 
 export default function Admin() {
   const [isAdmin, setIsAdmin] = useState();
@@ -34,12 +35,19 @@ export default function Admin() {
 
 
   const setData = (data, type, typeName) => {
-
-    console.log('data here', data)
-
+    if (!data.length) {
+      const alerts = {
+        reviews: ['No reviews found.', 'No reviews imported yet, or incorrect product id.'],
+        orders: ['No orders found.', 'All orders fulfilled for now.'],
+        messages: ['No messages found.', 'All messages answered for now.'],
+        customers: ['No customers found.', 'Noone subscribed yet bro.']
+      };
+  
+      const alert = alerts[Object.keys(alerts).find(key => typeName.includes(key))];
+      if (alert && !type.current.length) return adminAlert('info', alert[0], alert[1]);
+    }
+  
     type.current = data;
-        
-    
     setTriggerRender(prev => !prev);
   };
   

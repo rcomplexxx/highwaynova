@@ -25,11 +25,11 @@ const AdminLogin = ({ checkAdminStatus }) => {
         await checkAdminStatus();
       } else {
         console.error("Login failed:", data.error);
-        return adminAlert('error', 'Login failed', data.error)
+        return adminAlert('error', 'Admin login failed', data.error)
       }
     } catch (error) {
       console.error("Login error:", error);
-      return adminAlert('error', 'Login failed', 'Server side error.')
+      return adminAlert('error', 'Login failed', `Can't process your login request at the moment.`)
     }
   };
 

@@ -190,8 +190,8 @@ console.log('hello!!~~~~~~~~~~~~~~~~~~~~~~~~~~', paymentMethod)
        
 
           customerId = (await dbConnection.query(
-            "INSERT INTO customers (email, totalOrderCount, subscribed, source) VALUES (?, ?, ?, ?)",
-            [email, 0, 0, 'make_payment']
+            "INSERT INTO customers (email, totalOrderCount, subscribed, source, createdDate) VALUES (?, ?, ?, ?, ?)",
+            [email, 0, 0, 'make_payment', Date.now()]
           ))?.insertId;
 
    

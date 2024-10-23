@@ -2,12 +2,12 @@ import styles from "./messagecard.module.css";
 import { useState } from "react";
 
 export default function MessageCard({
-  id,
+ 
+  
   index,
-  name,
-  email,
-  totalOrderCount,
-  message,
+ 
+  
+  messageInfo: { id, name, email, totalOrderCount, message},
   msgStatus,
   handleChangedMessagesArray,
 }) {
@@ -38,6 +38,8 @@ const [currentStatus, setCurrentStatus] = useState(msgStatus);
          <p className={styles.infoLabel}>Name</p>
          <p className={styles.info}>{name}</p>
       </div>
+
+    
 
       <div className={styles.infoPair}>
          <p className={styles.infoLabel}>Order count</p>

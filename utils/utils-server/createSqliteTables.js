@@ -103,7 +103,8 @@ await dbConnection.query(
                 money_spent DECIMAL(10, 2) DEFAULT 0,
                 subscribed TINYINT,
                 source TEXT,
-                used_discounts TEXT DEFAULT '[]'
+                used_discounts TEXT DEFAULT '[]',
+                createdDate BIGINT
             )
       `,
       );
@@ -172,7 +173,7 @@ await dbConnection.query(
 
  
 
-
+        
 
 
       await dbConnection.query(
@@ -182,7 +183,8 @@ await dbConnection.query(
                 customer_id INT REFERENCES customers(id),
                 name TEXT,
                 message TEXT,
-                msgStatus TINYINT DEFAULT 0
+                msgStatus TINYINT DEFAULT 0,
+                createdDate BIGINT
         )
       `,
       );

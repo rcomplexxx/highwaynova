@@ -8,7 +8,7 @@
 }
 
 .warning{
-    text-align: center;
+    text-align: left;
     margin-bottom: var(--size-7);
     color: rgb(230, 239, 51)
 }
@@ -102,7 +102,7 @@
 
 .adminVerified{
     color: green;
-    margin-bottom: var(--size-9);
+    margin-bottom: var(--size-7);
 }
 
 

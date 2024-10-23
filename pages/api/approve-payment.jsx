@@ -136,7 +136,7 @@ const paypalExpressChecker=  (await dbConnection.query(`SELECT address, city FRO
 
 
           const customerInfo = (await dbConnection.query("SELECT id, JSON_CONTAINS(used_discounts, JSON_QUOTE(?), '$') as used_discount_exists FROM customers WHERE email = ?", [orderData.couponCode, email]))[0];
-          const customerId = customerInfo?.id || (await dbConnection.query("INSERT INTO customers (email, totalOrderCount, subscribed, source) VALUES (?, ?, ?, ?)", [email, 0, 0, 'make_payment'])).insertId;
+          const customerId = customerInfo?.id || (await dbConnection.query("INSERT INTO customers (email, totalOrderCount, subscribed, source, createdDate) VALUES (?, ?, ?, ?, ?)", [email, 0, 0, 'make_payment', Date.now()])).insertId;
 
         
 

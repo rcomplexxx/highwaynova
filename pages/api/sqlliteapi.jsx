@@ -103,7 +103,7 @@ let dbConnection;
             let customerId = (await dbConnection.query(`SELECT id FROM customers WHERE email = ? LIMIT 1`, [email]))[0]?.id;
 
           if(!customerId)
-            customerId =(await dbConnection.query(`INSERT INTO customers (email, totalOrderCount, subscribed, source) VALUES (?, ?, ?, ?)`, [email, 0, 0, 'message' ])).insertId;
+            customerId =(await dbConnection.query(`INSERT INTO customers (email, totalOrderCount, subscribed, source, createdDate) VALUES (?, ?, ?, ?, ?)`, [email, 0, 0, 'message', Date.now()])).insertId;
 
 
 
@@ -117,8 +117,8 @@ let dbConnection;
 
           // Insert message data into the messages table
           await dbConnection.query(
-            `INSERT INTO messages (customer_id, name, message) VALUES (?, ?, ?)`,
-          [customerId, name, message]);
+            `INSERT INTO messages (customer_id, name, message, createdDate) VALUES (?, ?, ?, ?)`,
+          [customerId, name, message, Date.now()]);
 
           console.log("Message sent successfully.");
 

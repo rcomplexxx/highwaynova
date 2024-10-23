@@ -53,16 +53,16 @@ const getDataTypeConfig = {
   "get_order_by_orderId": {
     table: "orders JOIN customers ON orders.customer_id = customers.id",
     queryCondition: (data) => `orders.id = '${data.orderId}' ORDER BY orders.createdDate DESC`,
-    selectVariables: "orders.*, customers.email"
+    selectVariables: "orders.*, customers.email" 
   },
   "get_unanswered_messages": {
     table: "messages JOIN customers ON messages.customer_id = customers.id",
-    queryCondition: "msgStatus = 0",
+    queryCondition: "msgStatus = 0 ORDER BY messages.createdDate DESC",
     selectVariables: "messages.*, customers.email, customers.totalOrderCount"
   },
   "get_answered_messages": {
     table: "messages JOIN customers ON messages.customer_id = customers.id",
-    queryCondition: "msgStatus != 0",
+    queryCondition: "msgStatus != 0 ORDER BY messages.createdDate DESC",
     selectVariables: "messages.*, customers.email, customers.totalOrderCount"
   },
   "get_reviews": {
@@ -87,22 +87,22 @@ const getDataTypeConfig = {
   },
   "get_emails": {
     table: "emails",
-    queryCondition: "true",
+    queryCondition: "true ORDER BY id DESC",
     selectVariables: "*"
   },
   "get_email_sequences": {
     table: "email_sequences",
-    queryCondition: "true",
+    queryCondition: "true ORDER BY id DESC",
     selectVariables: "*"
   },
   "get_email_campaigns": {
     table: "email_campaigns",
-    queryCondition: "true",
+    queryCondition: "true ORDER BY id DESC",
     selectVariables: "*"
   },
   "get_product_returns": {
     table: "product_returns",
-    queryCondition: "true",
+    queryCondition: "true ORDER BY createdDate DESC",
     selectVariables: "*"
   },
   "get_product_description": {

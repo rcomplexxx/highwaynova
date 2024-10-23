@@ -23,13 +23,7 @@ export default function GetDataButton({
       const { data } = await response.json();
       console.log("Maine DATA!", data);
 
-      if(data.length === 0){
-
-        if(dataType.includes("reviews")) return adminAlert('info','No reviews found.', 'No reviews imported yet, or incorrect product id.') 
-          else if (dataType.includes("orders")) return adminAlert('info','No orders found.', 'All orders fulfilled for now.') 
-            else if (dataType.includes("messages")) return adminAlert('info','No messages found.', 'All messages answered for now.') 
-              else if (dataType.includes("customers")) return adminAlert('info','No customers found.', 'Noone subscribed yet bro.') 
-      }
+      
 
        
       setData(data);

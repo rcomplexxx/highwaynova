@@ -76,8 +76,8 @@ async function subscribe(email, source, extraData,dbConnectionArg) {
     // If no customer found, insert new customer and trigger subscription sequence
     if (!result) {
       await dbConnection.query(
-        "INSERT INTO customers (email, totalOrderCount, subscribed, source) VALUES (?, ?, ?, ?)",
-        [email, 0, 1, source]
+        "INSERT INTO customers (email, totalOrderCount, subscribed, source, createdDate) VALUES (?, ?, ?, ?, ?)",
+        [email, 0, 1, source, Date.now()]
       );
       await sendAutomatedSequence("subscribe_sequence");
 

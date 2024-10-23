@@ -31,10 +31,11 @@ const handleVerify = async(event)=>{
       if (data.success) {
         setVerified(true);
       } else {
-        console.error("Login failed:", data.error);
+        
+        return adminAlert('error', 'Admin verification failed', data.error);
       }
     } catch (error) {
-      console.error("Login error:", error);
+      return adminAlert('error', 'Admin verification failed', `Can't process your verification request at the moment.`);
     }
 }
 
@@ -43,7 +44,7 @@ const handleVerify = async(event)=>{
 
 const handleWipeData = async(databaseTable)=>{
 
-  if(!verified) return adminAlert('error', 'Error', `Needs to verify admin to continue wiping data.`);  
+  if(!verified) return adminAlert('error', 'Error', `Needs admin verification to continue wiping data.`);  
 
   
   
@@ -94,7 +95,7 @@ if(dataWipedTable && dataWipedTable!=="")return  <div className={styles.mainDiv}
   return (
     <div className={styles.mainDiv}>
         <h1>Data wiper</h1>
-        <span className={styles.warning}>Warning! Dangerous operation. Once deleted, data can never be recovered again. <br />Admin verification required before operation can be executed</span>
+        <span className={styles.warning}>Warning! Dangerous operation. Once deleted, data can never be recovered.{!verified && <><br />Admin verification required to execute operation.</>}</span>
    
         {!verified?<form onSubmit={handleVerify} className={styles.loginBox}>
         <input className={styles.adminInput}  type="text" placeholder="Username" ref={usernameRef} required />
@@ -106,7 +107,7 @@ if(dataWipedTable && dataWipedTable!=="")return  <div className={styles.mainDiv}
           required
         />
         <button className={styles.verify} type="submit">Verify</button>
-      </form>:<span className={styles.adminVerified}>Admin verified. Operation can be initialized.</span>}
+      </form>:<span className={styles.adminVerified}>Admin verified. Operation can be executed.</span>}
 
 
         <button onClick={()=>{handleWipeData("orders")}} className={styles.wipeButton}>Wipe orders</button>
