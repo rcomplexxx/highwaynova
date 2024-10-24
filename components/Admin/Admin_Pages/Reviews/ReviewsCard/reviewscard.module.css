@@ -11,6 +11,8 @@
     align-items: center;
     border: 1px solid var(--admin-card-border-color);
     border-radius: 8px;
+
+    box-sizing: border-box;
     padding: var(--size-7);
 }
 
@@ -19,26 +21,58 @@
     box-shadow: 0 0 6px #5e550a;
 }
 
-
-
-
-.identifier{
-    height: var(--size-9);
-    width: auto;
-    padding: var(--size-1)  var(--size-5);
+.idDiv{
+    
+    width:100%;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    font-size: 56px;
-    font-weight: 400;
-    color: var(--admin-txt-color-weak);
-    margin: var(--size-4) var(--size-5);
-  
-    box-shadow: 0 0 4px rgb(60, 119, 85);
-    border-radius: 8px;
+    
+   margin-bottom: var(--size-6);
+
+   
 }
 
 
+.identifier{
+   
+    
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   
+    height: var(--size-7);
+    aspect-ratio: 1;
+   
+    color: var(--border-color-mid);
+   
+    border-radius: 2px;
+    border: 1px solid var(--border-color-mid);
+    
+    font-size: var(--font-size-4);
+    
+    
+    
+}
+
+.swapperLabelCurrentId{
+    display: block;
+
+   
+    
+    color: var(--admin-txt-color-weak);
+
+    font-size: var(--font-size-7);
+}
+
+.swapperLabelCurrentId span{
+  
+    color: var(--admin-txt-color);
+
+    font-size: var(--font-size-6);
+    opacity: 0.18;
+}
 
 .reviewEditButton{
  
@@ -49,7 +83,7 @@
 }
 
 .deleteReviewButton{
-    border: 1px solid rgb(49, 29, 29);
+    border: 1px solid var(--admin-review-delete-button);
 }
 
 
@@ -60,12 +94,15 @@
     width:100%;
     display: flex;
     justify-content: space-between;
+    align-items: flex-end;
+    
+   margin-bottom: var(--size-7);
 }
 
 
 
 .textArea{
-    background-color: var(--admin-email-input-bg);
+    background-color: var(--admin-textArea-bg);
     min-height: 96px;
     width: 100%;
     box-sizing: border-box;
@@ -77,30 +114,25 @@
 }
 
 
-.swiperDiv{
- position:relative;   
+.swapperDiv{
+    
+ 
+    
+ max-width: var(--size-13);
+
+ display: flex;
+ flex-direction: column;
+ gap:var(--size-3);
+
 }
 
 
 
-.swiperLabelCurrentId{
-    position: absolute;
-    top:calc(-1 * var(--size-9));
-    left:var(--size-1);
-    font-size: var(--font-size-8);
-    color: rgb(134, 149, 180);
-}
 
-.swiperLabelCurrentId span{
-    font-size: var(--font-size-7);
-    opacity: 0.18;
-    color: var(--admin-txt-color);
-}
 
-.swiperLabelDescription{
-    position: absolute;
-    top:-20px;
-    left:var(--size-1);
+
+.swapperLabelDescription{
+   
     font-size: var(--font-size-2);
     opacity: 0.5;
 }
@@ -109,28 +141,20 @@
 
 .textAreaName{
     
-    background-color: var(--admin-email-input-bg);
+    background-color: var(--admin-textArea-bg);
     
+    min-width: var(--size-12);
     width: auto;
-    align-self: flex-start;
+    
     box-sizing: border-box;
-    padding: var(--size-3) var(--size-6);
+    padding: var(--size-3);
     font-size: var(--font-size-5);
     line-height: var(--size-7);
-   margin-bottom: var(--size-7);
    border-radius: 8px;
 }
 
-.swapIdInput{
-    
-    
-    
-    
-    
-    padding: var(--size-3) var(--size-6);
-   
-    
-}
+
+
 
 .ratingDiv{
     position: absolute;
@@ -141,8 +165,8 @@
     border-radius: 2px;
 
     font-size: var(--font-size-5);
-    background-color: var(--admin-email-input-bg);
-    color: rgb(77, 82, 90);
+    background-color: var(--admin-textArea-bg);
+ 
 }
 
 
@@ -152,23 +176,27 @@
 .imagesDiv{
     height: auto;
     width: calc(100% +  var(--size-5));
-    margin-top: var(--size-2);
-    margin-left: -16px;
+
+    
+   
     padding-right:  var(--size-5);
     display: flex;
     justify-content: flex-start;
     align-self: flex-start;
+    gap: var(--size-6);
     flex-wrap: wrap;
+
+    
+    margin-top: var(--size-6);
+    margin-bottom:var(--size-6);
    
 }
 
 
 
 
-.imagesDiv *{
-    margin-bottom:var(--size-6);
-    margin-left:  var(--size-5);
-}
+
+
 
 .addImage{
 
@@ -177,8 +205,8 @@
     width: 40px;
    
 
-    margin-bottom:var(--size-6);
-    margin-left: var(--size-7);
+    
+    margin-left: var(--size-3);
     align-self: center;
     border-radius: 100%;
     cursor: pointer;
@@ -186,6 +214,8 @@
 
 .addImage:hover{
 }
+
+
 
 .addImageIcon{
     height: 100%;

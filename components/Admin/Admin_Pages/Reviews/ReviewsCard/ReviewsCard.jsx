@@ -62,57 +62,39 @@ export default function ReviewsCard({
 
   console.log('img names', images)
 
-  const addImage = (imageName) => {
-    console.log('IMAGE NAME', imageName)
-    if (changed || images?.find(img=> {return img===imageName})) return;
-    // const imageName = window.prompt("Enter link of new pic:");
-    fetch(`/images/review_images/productId_${productId}/${imageName}`, {
-      method: "HEAD",
-    })
-      .then((response) => {
+  const addImage = async (imageName) => {
+    try {
+        console.log('IMAGE NAME', imageName);
+
+        // Check if the image has changed or already exists
+        if (changed || images?.find(img => img.imageName === imageName)) return;
+
+        // Check if the image exists in the main path
+        let response = await fetch(`/images/review_images/productId_${productId}/${imageName}`, { method: "HEAD" });
+
         if (response.ok) {
-          setImages((prevImages) => {
-            if (prevImages == null) return [{ imageName, deleted: false }];
+            // If image exists, update the state
+            setImages((prevImages) => [
+                ...(prevImages || []),
+                { imageName, deleted: false }
+            ]);
+        } else {
+            // Check if the image exists in the deleted_images path
+            response = await fetch(`/images/review_images/productId_${productId}/deleted_images/${imageName}`, { method: "HEAD" });
 
-            let newImages = [...prevImages];
-
-            newImages.push({ imageName, deleted: false });
-            return newImages;
-          });
+            if (response.ok) {
+                setImages((prevImages) => [
+                    ...(prevImages || []),
+                    { imageName, deleted: false }
+                ]);
+            }
         }
-        else{
-
-
-          fetch(`/images/review_images/productId_${productId}/deleted_images/${imageName}`, {
-            method: "HEAD",
-          })
-            .then((response) => {
-              if (response.ok) {
-                setImages((prevImages) => {
-                  if (prevImages == null) return [{ imageName:`deleted_images/${imageName}`, deleted: false }];
-      
-                  let newImages = [...prevImages];
-      
-                  newImages.push({ imageName:`deleted_images/${imageName}`, deleted: false });
-                  return newImages;
-                });
-              }
-            })
-  
-
-
-        }
-      })
-      .catch((error) => {
-
-
-     
-
-
-
+    } catch (error) {
         console.error("Error:", error);
-      });
-  };
+    }
+};
+
+
 
   return (
     <div
@@ -120,11 +102,17 @@ export default function ReviewsCard({
         deleted && styles.cardMainDivDeleted
       }`}
     >
+
+<div className={styles.idDiv}>
       <span className={styles.identifier}>{index + 1}</span>
+      <span className={styles.swapperLabelCurrentId}>
+            {id}<span> current id</span>
+          </span>
+      </div>
 
       <div className={styles.headDiv}>
      
-        <div
+        <span
           ref={divEditorRefName}
           contentEditable={!changed}
           suppressContentEditableWarning={true}
@@ -132,24 +120,25 @@ export default function ReviewsCard({
         >
            
           {name}
-        </div>
+        </span>
         
-        <div className={styles.swiperDiv}>
+        <div className={styles.swapperDiv}>
 
 
        
 
 
-          <label className={styles.swiperLabelCurrentId}>
-            {id}
-            <span> current id</span>
-          </label>
-          <label className={styles.swiperLabelDescription}>
-            Enter review id to swap positions with
-          </label>
+         
+
+
+          <span className={styles.swapperLabelDescription}>
+            Enter review id to swap positions
+          </span>
+
+
           <input
             placeholder="Enter id"
-            className={styles.swapIdInput}
+            
             disabled={changed}
             onChange={(event) => {
               const value = event.target.value;
@@ -204,8 +193,8 @@ export default function ReviewsCard({
            className={styles.addImageIcon}
           height={40}
           width={40}
-          // onClick={addImage}
-        ></Image>
+          
+        />
         <input  className={styles.addImagePathInput} type="file"
           onChange={(event)=>{ 
             const files = event.target.files;

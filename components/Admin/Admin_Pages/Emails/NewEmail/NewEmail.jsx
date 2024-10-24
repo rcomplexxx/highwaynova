@@ -9,15 +9,14 @@ import { useRouter } from 'next/router';
 
 export default function NewEmail() {
 
- const [finalPreview, setFinalPreview] = useState(false);
- const [previewHtml,  setPreviewHtml] = useState();
+  
+ const [previewHtml,  setPreviewHtml] = useState({final: false, html: undefined});
  const [editorDesign, setEditorDesign]= useState();
  const [emailFontValue, setEmailFontValue] = useState("");
  const [emailWidthMode, setEmailWidthMode] = useState('clear_max_width');
  const [mainBackgroundColor, setMainBackgroundColor]= useState(`#000000`);
 
 
- const [emailTitle, setEmailTitle] = useState('');
 
 
  const router = useRouter();
@@ -45,11 +44,10 @@ export default function NewEmail() {
     <div className={styles.mainDiv}>
       <h1>New email</h1>
 
-      {finalPreview?<EmailPreview previewHtml={previewHtml} setFinalPreview={setFinalPreview}
-        emailTitle={emailTitle}
-        setEmailTitle={setEmailTitle}
-        />:
-      <EasyEmailEditor setFinalPreview={setFinalPreview}  setPreviewHtml={ setPreviewHtml} 
+      {previewHtml.final?
+      <EmailPreview previewHtml={previewHtml} setPreviewHtml={setPreviewHtml} />
+      :
+      <EasyEmailEditor  setPreviewHtml={ setPreviewHtml} 
       editorDesign={editorDesign} setEditorDesign={setEditorDesign} 
       emailFontValue={emailFontValue} setEmailFontValue={setEmailFontValue}
       emailWidthMode={emailWidthMode} setEmailWidthMode={setEmailWidthMode}

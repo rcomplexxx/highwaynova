@@ -10,7 +10,7 @@
 .warning{
     text-align: left;
     margin-bottom: var(--size-7);
-    color: rgb(230, 239, 51)
+    color: var(--admin-warning-color);
 }
 
 

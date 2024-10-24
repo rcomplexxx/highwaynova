@@ -32,8 +32,10 @@ const [currentStatus, setCurrentStatus] = useState(msgStatus);
 
   return (
     <div className={styles.cardMainDiv}>
+
+
       <div className={styles.mainInfo}>
-      <h1 className={styles.identifier}>{index + 1}</h1>
+      <span className={styles.identifier}>{index + 1}</span>
       <div className={styles.infoPair}>
          <p className={styles.infoLabel}>Name</p>
          <p className={styles.info}>{name}</p>
@@ -61,7 +63,7 @@ const [currentStatus, setCurrentStatus] = useState(msgStatus);
      
 
    
-      <button className={styles.msgStatusButton} onClick={changeMsgStatus}>
+      <button onClick={changeMsgStatus}>
         {currentStatus === 0
           ? "Not Answered"
           : currentStatus === 1

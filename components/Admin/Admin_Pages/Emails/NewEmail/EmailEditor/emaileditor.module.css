@@ -41,7 +41,7 @@
 .fontWarningSpan{
 
     margin: var(--size-5) var(--size-2) ;
-    color:rgb(242, 231, 67);
+    color:var(--admin-warning-color);
 
 }
 

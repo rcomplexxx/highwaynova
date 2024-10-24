@@ -35,7 +35,7 @@
     background-color: transparent;
     padding: var(--size-3) var(--size-6);
     border-radius: 2px;
-    border: 1px solid var(--border-color-strong);
+    border: 1px solid var(--admin-button-border-color);
     cursor: pointer;
     user-select: none;
 }
@@ -50,7 +50,7 @@
 
     
         color: var(--admin-txt-color);
-        background-color: var(--admin-neutral-10);
+        background-color: var(--admin-input-bg);
         
 
         box-sizing: border-box;

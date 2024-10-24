@@ -5,14 +5,17 @@
     
     width: auto;
 
-    margin-top: var(--size-6);
 
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
+    gap: var(--size-5);
 
+    border-radius: 8px;
+    background-color: var(--admin-neutral-10);
 
+    padding: var(--size-7);
    
 }
 
@@ -20,12 +23,14 @@
     position: absolute;
     top: 0;
     right: 0;
-    transform: translateX(50%) translateY(-50%);
     height: 14px;
     width: 14px;
     padding: 2px;
     border-radius: 50%;
     border: 1px solid var(--error-color);
+
+    
+    transform: translateX(50%) translateY(-50%);
     cursor: pointer;
 
 }
@@ -37,16 +42,16 @@
 .reviewImage{
     height: 160px;
    width: auto;
-   border: 2px solid rgb(74, 228, 125);
-   box-shadow: 0 0 2px #4fabe0;
+   border: 2px solid var(--admin-review-image-border-positive);
+   box-shadow: 0 0 2px var(--admin-review-image-border-positive);
   
 }
 
 
 .deletedImage{
     
-    border: 2px solid red;
-    box-shadow: 0 0 6px #5e550a;
+    border: 2px solid var(--admin-review-image-border-negative);
+    box-shadow: 0 0 2px var(--admin-review-image-border-negative);
     cursor: pointer;
 }
 
@@ -56,16 +61,6 @@
     cursor: auto;
 }
 
-.validateCodeWrapper{
-    margin-left: 0;
-    margin: 0;
-    flex-shrink: 0;
-    width: 100%;
-    
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-}
 
 .copyImgName{
    
@@ -76,23 +71,25 @@
     font-size: 10px;
     font-weight: 400;
 
-    margin-bottom: var(--size-4);
+    
+    
 
     
 
 }
 
+
+
+
+
+
+
 .validateCode{
-    margin: 0;
+    
     padding-left: var(--size-1);
     font-size: var(--font-size-1);
     opacity: 0.9;
     font-weight: 300;
 }
 
-.validateCodeLabel{
-    margin: 0;
-    padding-left: var(--size-5);
-    font-size: 10px;
-    opacity: 0.7;
-}
+

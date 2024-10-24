@@ -158,10 +158,10 @@ export default function EmailCard({id,title, text, handleSaveEmail}) {
         <button className={`${styles.previewButton} ${styles.deleteEmail}`} onClick={handleDeleteEmail}>Delete Email</button>
        
         </div>
-        { previewEmailContent && <><div className={styles.previewContent}>
+        { previewEmailContent && <div className={styles.previewContent}>
         {previewEmailContent}
       </div> 
-      </>} 
+      } 
       </div>
 
     

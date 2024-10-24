@@ -13,7 +13,7 @@ import { adminConfirm } from '@/utils/utils-client/utils-admin/adminConfirm';
 
 
 
-const EasyEmailEditor = ({setFinalPreview, setPreviewHtml, setEditorDesign, editorDesign, emailFontValue, setEmailFontValue, emailWidthMode, setEmailWidthMode, mainBackgroundColor, setMainBackgroundColor}) => {
+const EasyEmailEditor = ({setPreviewHtml, setEditorDesign, editorDesign, emailFontValue, setEmailFontValue, emailWidthMode, setEmailWidthMode, mainBackgroundColor, setMainBackgroundColor}) => {
 
  
   const [websiteFontWarning, setWebsiteFontWarning] = useState('not_website_font');
@@ -258,8 +258,8 @@ optimizedHtml = optimizedHtml.replace(/(body\s*{)([^}]*)(})/, (match, p1, p2, p3
             }
             
 
-            setPreviewHtml(optimizedHtml);
-            setFinalPreview(true)
+            setPreviewHtml({final: true, html:optimizedHtml});
+
           });
         };
       

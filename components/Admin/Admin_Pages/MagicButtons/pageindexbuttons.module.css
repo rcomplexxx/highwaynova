@@ -14,12 +14,11 @@
     flex-direction: row;
     margin-top: var(--size-7);
     margin-bottom: var(--size-8);
+    gap: var(--size-6);
   }
   
   .linkDivPageNumber {
-    color: rgb(239, 241, 217);
-    margin-left:  var(--size-4);
-    margin-right:  var(--size-4);
+   
     font-size: var(--font-size-6);
     height: var(--size-7);
     width:var(--size-7);

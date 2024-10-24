@@ -20,7 +20,7 @@
 .currentId{
    
     font-size: var(--font-size-8);
-    color: rgb(134, 149, 180);
+    color: var(--admin-txt-color-weak);
     margin-left: var(--size-2);
     margin-right: var(--size-2);
 }
@@ -58,7 +58,7 @@
 
 .textArea{
     color: var(--admin-txt-color);
-    background-color: var(--admin-email-input-bg);
+    background-color: var(--admin-textArea-bg);
     max-height: var(--size-14);
     min-height: var(--size-12);
     width: 100%;

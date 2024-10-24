@@ -94,7 +94,7 @@
 
 .textArea{
     color: var(--admin-txt-color);
-    background-color: var(--admin-email-input-bg);
+    background-color: var(--admin-textArea-bg);
     min-height: var(--size-14);
     max-height: var(--size-17);
     width: 100%;

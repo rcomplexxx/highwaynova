@@ -12,7 +12,6 @@
 
 
 .campaignDiv{
-    color: rgb(134, 149, 180);
     width: 100%;
     padding-top: var(--size-6);
     padding-bottom: var(--size-9);
@@ -30,7 +29,7 @@
 .currentId{
    
     font-size: var(--font-size-8);
-    color: rgb(134, 149, 180);
+    color: var(--admin-txt-color-weak);
    
 }
 

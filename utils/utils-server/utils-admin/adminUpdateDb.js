@@ -26,7 +26,7 @@ const deleteOrRecoverImages = (reviewProductImages, productId, shouldRecover)=>{
       
       fs.rename(path.join(moveFrom,imageName), path.join(moveTo,imageName),function (err) {
         if (err) throw err
-        console.log('Successfully renamed - AKA moved!')
+        console.log('Successfully renamed - AKA moved!', imageName)
       });
       
     
@@ -242,16 +242,16 @@ async function updateDb (dbConnection, resReturn, table, data, revalidateReviews
                 
 
     
-                const recycledReviewImages = updatedReviewImages.filter(img => img.split('deleted_images/')[1]);
+                const recycledReviewImages = updatedReviewImages?.filter(img => !reviewProductImages.includes(img));
 
           
           console.log('recycled Review Images, data', recycledReviewImages, data);
     
             deleteOrRecoverImages(recycledReviewImages, productId, true)
 
-            let newImageNames = updatedReviewImages.map(img => img.startsWith('deleted_images/') ? img.split('deleted_images/')[1] : img);
             
-            newImageNames = newImageNames.length ? JSON.stringify(newImageNames) : null;
+            
+            const newImageNames = updatedReviewImages.length ? JSON.stringify(updatedReviewImages) : null;
 
             
             

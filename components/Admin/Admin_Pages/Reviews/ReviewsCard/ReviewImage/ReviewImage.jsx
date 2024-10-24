@@ -44,9 +44,11 @@ export default function ReviewsCard({
      
     />
     <button onClick={()=>{navigator.clipboard.writeText(imageName);setImgNameCopied(true);}} className={styles.copyImgName}>{imgNameCopied?"Img name copied!":"Copy img name"}</button>
-    <div className={styles.validateCodeWrapper}>
-   <span className={styles.validateCodeLabel}>...</span><span className={styles.validateCode}>{imageName.match(/(.{4})\./)[1]}{imageName.match(/\.(.*)$/)[0]}</span>
-   </div>
+  
+  
+   <span className={styles.validateCode}>...{imageName.match(/(.{4})\./)[1]}{imageName.match(/\.(.*)$/)[0]}</span>
+  
+  
     </div>
   );
 }

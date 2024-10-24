@@ -17,21 +17,32 @@
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid var(--border-color-strong);
+
+    box-sizing: border-box;
+    padding: var(--size-4) var(--size-5);
 }
 
 
 .identifier{
+   
+    
+
     display: flex;
     justify-content: center;
     align-items: center;
    
-    padding: var(--size-1) var(--size-3);
-    font-size: var(--font-size-6);
-    color: rgb(184, 189, 182);
-    margin: var(--size-4) var(--size-5);
+    height: var(--size-6);
+    aspect-ratio: 1;
+   
+    color: var(--border-color-mid);
+   
     border-radius: 2px;
-    border: 1px solid var(--border-color-strong);
-    opacity: 0.5;
+    border: 1px solid var(--border-color-mid);
+    
+    font-size: var(--font-size-4);
+    
+    
+    
 }
 
 
@@ -85,12 +96,8 @@
     
 }
 
-.msgStatusButton{
 
-  
-    
-    margin: var(--size-4) var(--size-5);
-}
+
 
 
 .messagePair{

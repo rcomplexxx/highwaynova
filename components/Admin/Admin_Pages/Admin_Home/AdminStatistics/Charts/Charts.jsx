@@ -3,6 +3,7 @@ import { Line } from 'react-chartjs-2';
 import 'chartjs-adapter-moment';
 import { Chart, LinearScale, PointElement, LineElement, Tooltip, Legend, TimeScale, Filler } from 'chart.js';
 import styles from './chart.module.css';
+import { transformColorToRgb } from '@/utils/utils-client/transformColorToRgba';
 
 Chart.register(LinearScale, LineElement, PointElement, Tooltip, Legend, TimeScale, Filler);
 
@@ -30,14 +31,22 @@ export default function Charts({ title, chartData }) {
       })
     ).filter(({ y }) => y > 0); // Only include dates where yMetric is greater than 0
 
+    const chartBg = transformColorToRgb(
+      getComputedStyle(document.documentElement).getPropertyValue('--admin-chart-bg')
+    );
+
+    const chartBorderColor = transformColorToRgb(
+      getComputedStyle(document.documentElement).getPropertyValue('--admin-chart-border-color')
+    );
+
     setChartFinalData({
       datasets: [
         {
           label: title,
           data: formatedChartData,
           fill: 'origin',
-          backgroundColor: 'rgba(21, 23, 27, 0.507)',
-          borderColor: 'rgba(63, 96, 79, 0.85)',
+          backgroundColor: chartBg,
+          borderColor: chartBorderColor,
           tension: 0.1,
           pointHoverBorderWidth: 2,
           pointHitRadius: 40,

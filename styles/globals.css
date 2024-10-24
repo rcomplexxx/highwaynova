@@ -982,6 +982,15 @@ color-scheme: light only;
   --admin-neutral-11: black;
 
 
+  --admin-main-1: #74B9E7;
+  --admin-main-2: #52A7E0;
+  --admin-main-3: #2F96DA;
+  --admin-main-4: #2280BF;
+  --admin-main-5: #185D8B;
+  --admin-main-6: #0F3A57;
+  --admin-main-7: #061723;
+
+
   --admin-txt-color-weak: var(--admin-neutral-4);
   --admin-txt-color-mid: var(--admin-neutral-3);
   --admin-txt-color-strong: var(--admin-neutral-2);
@@ -992,10 +1001,17 @@ color-scheme: light only;
   --admin-nav-site-title-color: var(--admin-txt-color-strong);
   --admin-title: var(--admin-txt-color-weak);
   --admin-bg: var(--admin-neutral-10);
+  --admin-button-border-color: var(--admin-neutral-8);
   --admin-input-bg: var(--admin-neutral-10);
-  --admin-input-focus-border-color: #4fabe0;
+  --admin-input-focus-border-color: var(--admin-main-5);
+  --admin-warning-color: rgb(230, 239, 51);
+  --admin-positive-color: rgb(22, 168, 51);
 
   --admin-card-border-color: rgb(143, 151, 156);
+
+  --admin-textArea-bg: rgb(15, 15, 14);
+
+  
   
   --admin-login-title: var(--admin-neutral-3);
   --admin-login-color: var(--admin-neutral-2);
@@ -1003,14 +1019,22 @@ color-scheme: light only;
   --admin-login-btn-bg: var(--admin-neutral-10);
 
 
-  --admin-home-sector-borderLine-color: #3498db;
+  --admin-home-sector-borderLine-color: var(--admin-main-6);
+  --admin-chart-bg: rgba(21, 23, 27, 0.507);
+  --admin-chart-border-color: rgba(63, 96, 79, 0.85);
 
 
+  --admin-order-item-separater-color: rgb(105, 79, 12);
   --admin-package-status-button-bg: var(--admin-neutral-10);
-  --admin-order-cover-details-color: var(--admin-neutral-10);
+  --admin-order-cover-details-color: rgba(255, 255, 255, 0.405);
+  --admin-order-cover-details-bg: var(--admin-neutral-10);
 
 
-  --admin-email-input-bg: rgb(15, 15, 14);
+  
+  --admin-review-image-border-positive: rgb(74, 228, 125);
+  --admin-review-image-border-negative: #5e550a;
+  --admin-review-delete-button: rgb(49, 29, 29);
+
 
   --admin-campaign-display-emails-bg:rgba(43, 35, 35, 0.145);
 

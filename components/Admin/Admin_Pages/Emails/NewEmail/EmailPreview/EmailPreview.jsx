@@ -1,7 +1,7 @@
 
 
 
-import React, { useRef, useEffect } from 'react';
+import React, { useRef } from 'react';
 
 import  { useState } from 'react'
 
@@ -13,7 +13,10 @@ import styles from './emailpreview.module.css'
 import { adminConfirm } from '@/utils/utils-client/utils-admin/adminConfirm';
 
 
-const EmailPreview = ({previewHtml, setFinalPreview, emailTitle, setEmailTitle}) => {
+const EmailPreview = ({previewHtml, setPreviewHtml}) => {
+
+  const [emailTitle, setEmailTitle] = useState('');
+
 
     
   const emailTextRef=useRef();
@@ -22,65 +25,41 @@ const EmailPreview = ({previewHtml, setFinalPreview, emailTitle, setEmailTitle})
     const router = useRouter();
 
 
-    useEffect(()=>{
-
-      emailTextRef.current.value = previewHtml;
-    },[])
+  
 
 
-
-
-    const handlePreviewEmail = ()=>{
-        try {
-
-          const finalHtml= emailTextRef.current.value;
-
-            // Attempt to parse the HTML
-            const parsedHtml = ReactHtmlParser(finalHtml);
-            
-        
-          
-                setPreviewEmailContent(parsedHtml);
-          
-          } catch (error) {
-            // Handle the error (e.g., log it, display an error message, etc.)
-            console.error('Error parsing HTML:', error);
-        
-            // Perform a specific action when there is an error in HTML text
-            setPreviewEmailContent(<div>An error occurred while parsing the HTML.</div>);
-          }
-    }
+    const handlePreviewEmail = () => {
+      const finalHtml = emailTextRef.current.value;
+    
+      try {
+        setPreviewEmailContent(ReactHtmlParser(finalHtml));
+      } catch (error) {
+        console.error('Error parsing HTML:', error);
+        setPreviewEmailContent(<div>An error occurred while parsing the HTML.</div>);
+      }
+    };
 
 
     const handleSaveEmail = async()=>{
 
 
-      if(emailTitle === '' || emailTextRef.current.value=='')return;
+      if (!emailTitle || !emailTextRef.current.value) return;
 
+      const newEmailData = { title: emailTitle, text: emailTextRef.current.value };
 
-      const finalHtml= emailTextRef.current.value;
-
-      let newEmailData = {title:emailTitle, text:finalHtml };
 
     
-     
-        await fetch("/api/admincheck", {
+      try {
+        const response = await fetch("/api/admincheck", {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ dataType: "insert_new_email", data: newEmailData }),
-        })
-          .then((response) => {
-
-            console.log('save resp', response)
-            if (response.ok) {
-              console.log(response);
-              router.push('/admin/emails');
-            }
-          })
-  
-          .catch((error) => {console.log(error)});
+        });
+    
+        if (response.ok) router.push('/admin/emails');
+      } catch (error) {
+        console.log(error);
+      }
     }
 
 
@@ -91,7 +70,8 @@ const EmailPreview = ({previewHtml, setFinalPreview, emailTitle, setEmailTitle})
   
        
        
-  setFinalPreview(false)
+       
+  setPreviewHtml(prev => ({...prev, final: false}));
 
   
 
@@ -107,14 +87,11 @@ const EmailPreview = ({previewHtml, setFinalPreview, emailTitle, setEmailTitle})
     <div className={styles.instructionsWrapper}>
 
 
-    <span className={styles.emailMakerInstructionSpan}>{`- You can code fixed width or height where needed(like on buttons).`}
-    </span>
+    <span>{`- You can code fixed width or height where needed(like on buttons).`} </span>
 
-   <span className={styles.emailMakerInstructionSpan}>{`- You can code additional css properties like box-shadow.`}
-   </span>
+   <span>{`- You can code additional css properties like box-shadow.`} </span>
 
-   <span className={styles.emailMakerInstructionSpan}>{`- You can code additional support for different @media screen sizes(like font-size).`}
-   </span>
+   <span>{`- You can code additional support for different @media screen sizes(like font-size).`}</span>
 
 
    </div>
@@ -127,8 +104,9 @@ const EmailPreview = ({previewHtml, setFinalPreview, emailTitle, setEmailTitle})
         <div className={styles.emailContentDiv}>
         <input value={emailTitle} onChange={(event)=>{setEmailTitle(event.target.value)}} className={styles.titleInput} placeholder='Email title...'/>
 
-        <textArea
+        <textarea
         ref={emailTextRef}
+        defaultValue={previewHtml.html}
         tabIndex={0}
         contentEditable={true}
         suppressContentEditableWarning={true}
@@ -151,9 +129,9 @@ const EmailPreview = ({previewHtml, setFinalPreview, emailTitle, setEmailTitle})
         
       </div>
 
-     { previewEmailContent && <><div className={styles.previewContent}>
+     { previewEmailContent && <div className={styles.previewContent}>
         {previewEmailContent}
-      </div> </>}
+      </div> }
         
         </>
 

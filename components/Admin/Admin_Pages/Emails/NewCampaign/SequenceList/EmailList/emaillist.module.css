@@ -4,7 +4,7 @@
 
 .timeGapDiv{
   
-  background-color: var(--admin-email-input-bg);
+  background-color: var(--admin-textArea-bg);
   min-width: var(--size-14);
   width: 100%;
   align-self: flex-start;

@@ -1,5 +1,6 @@
 import  {  useState } from 'react'
 import styles from './delaypicker.module.css'
+import { adminAlert } from '@/utils/utils-client/utils-admin/adminAlert';
 
 export default function DelayPicker({sendTimeGap, setSendTimeGap}) {
     const [delay, setDelay] = useState();
@@ -7,42 +8,28 @@ export default function DelayPicker({sendTimeGap, setSendTimeGap}) {
   
 
 
-    const handleChange= (event)=>{
-        let value = event.target.value
-
-        if(value.length>8) return;
-        if(value.length==2 || value.length==5)value=value+':';
-        else if(value.length == 3 || value.length == 5)value = value.slice(0, value.length-1);
-
+    const handleChange = (event) => {
+        let { value } = event.target;
+      
+        if (value.length > 8) return;
+         //value.slice(0, -1) znaci da se oduzima poslednji karakter iz niza.
+        value = value.length === 2 || value.length === 5 ? value + ':' : value.length === 3 || value.length === 6 ? value.slice(0, -1) : value;
+       
+      
         setDelay(value);
-    }
+      };
 
-    const handleConfirmEmailDelay = ()=>{
-
-        if(delay?.length!=8) return;
-        const delayValues = delay.split(':');
-        if(delayValues.length!=3)return;
-        if(delayValues.filter(value=>{return value.length==2 && !isNaN(Number(value))} ).length != 3)return;
-
-        if(delayValues[0]<0 || delayValues[0]>31){
-            console.log('warning!! Days')
-            return;
+    const handleConfirmEmailDelay = () => {
+        if (delay?.length !== 8) return adminAlert('error', 'Error', 'Invalid delay input');
+        const [days, hours, mins] = delay.split(':').map(Number);
+        if ([days, hours, mins].some(isNaN) || days < 0 || days > 31 || hours < 0 || hours > 24 || mins < 0 || mins > 60) {
+        
+          return adminAlert('error', 'Error', 'Invalid delay input');
         }
-        if(delayValues[1]<0 || delayValues[1]>24){
-            console.log('warning!! hours')
-            return;
-        }
-        if(delayValues[2]<0 || delayValues[2]>60 ){
-            console.log('warning!! mins')
-            return;
-        }
-
-        //takodje i uslovi da day sme da bude max 30, itd.
-        //ovde setovati starting date u unix.
-        const unixDelay =  (delayValues[0] * 24 * 60 * 60 + delayValues[1] * 60 * 60 + delayValues[2] * 60) * 1000;
-  
-        setSendTimeGap(unixDelay)
-    }
+      
+        const unixDelay = (days * 86400 + hours * 3600 + mins * 60) * 1000;
+        setSendTimeGap(unixDelay);
+      };
 
 
     if(sendTimeGap)return  <div className={styles.delayPickerDiv}>Time gap confirmed</div>
