@@ -66,6 +66,10 @@
   
 }
 
+
+
+
+
 .adminMainDiv input::placeholder {
     color: var(--admin-txt-color-weak);
     
@@ -75,6 +79,27 @@
 .adminMainDiv input:focus {
     border: 1px solid var(--admin-input-focus-border-color);
     box-shadow: 0 0 2px var(--admin-input-focus-border-color);
+}
+
+
+.adminMainDiv textarea {
+    
+    color: var(--admin-txt-color);
+    background-color: var(--admin-textArea-bg);
+    max-height: var(--size-14);
+    min-height: var(--size-12);
+    width: 100%;
+    box-sizing: border-box;
+    padding: var(--size-6);
+    padding-bottom: var(--size-8);
+    font-size: var(--font-size-5);
+    line-height: var(--size-7);
+  
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    resize: none;
+
 }
 
 

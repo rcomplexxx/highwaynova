@@ -83,7 +83,8 @@ const EmailPreview = ({previewHtml, setPreviewHtml}) => {
    return <>
    
    <button onClick={backToEditor} className={styles.backToEditorButton}>Back to editor</button>
-   <div className={styles.emailHelperWrapper}>
+ 
+ 
     <div className={styles.instructionsWrapper}>
 
 
@@ -98,7 +99,7 @@ const EmailPreview = ({previewHtml, setPreviewHtml}) => {
 
   
      
-        </div>
+     
         
         
         <div className={styles.emailContentDiv}>
@@ -123,8 +124,8 @@ const EmailPreview = ({previewHtml, setPreviewHtml}) => {
 
         <div className={styles.newEmailButtons}>
 
-        <button className={styles.previewButton} onClick={handlePreviewEmail}>Preview Email</button>
-        <button onClick={handleSaveEmail} className={`${styles.previewButton} ${styles.saveButton}`}>Save Email</button>
+        <button onClick={handlePreviewEmail}>Preview Email</button>
+        <button onClick={handleSaveEmail}>Save Email</button>
         </div>
         
       </div>

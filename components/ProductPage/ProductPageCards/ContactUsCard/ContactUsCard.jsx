@@ -59,16 +59,15 @@ export default function ContactUsCard() {
           },
         });
   
-        if (response.ok) {
+        if (!response.ok) return console.error("Error sending question:", response.statusText);
           console.log("Question sent successfully.");
           // Reset form fields if needed
           setMessageSent(true)
           nameRef.current.value = "";
           emailRef.current.value = "";
           messageRef.current.value = "";
-        } else {
-          console.error("Error sending question:", response.statusText);
-        }
+       
+          
       } catch (error) {
         console.error("Error sending question:", error);
       } finally{setMessageLoading(false);}

@@ -39,10 +39,9 @@ export default function SaveButton({
         body: JSON.stringify({ dataType: "update_reviews", data }),
       });
 
-      if (response.ok) {
-        setData([]);
+      if (response.ok) setData([]);
         
-      }
+      
     } catch (error) {
       // handle error if needed
     }

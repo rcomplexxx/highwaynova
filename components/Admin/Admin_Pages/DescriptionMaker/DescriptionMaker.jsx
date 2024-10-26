@@ -101,9 +101,8 @@ export default function DescriptionMaker() {
     const handlePreviewEmail = () => {
       try {
 
-        //parsing html
-        const finalHtml = `<style>${descriptionCssTextRef.current.value}</style>${descriptionTextRef.current.value}`;
-        const parsedHtml = ReactHtmlParser(finalHtml);
+        
+        const parsedHtml = ReactHtmlParser(`<style>${descriptionCssTextRef.current.value}</style>${descriptionTextRef.current.value}`);
     
         if (Array.isArray(parsedHtml) && parsedHtml.every(isValidElement)) {
           setPreviewDescription(parsedHtml);
@@ -133,10 +132,8 @@ export default function DescriptionMaker() {
       body: JSON.stringify({ dataType: 'update_new_product_description', data: newDescriptionData })
     });
 
-    if (response.ok) {
-      
-      cleanDescriptionMaker();
-    }
+    if (response.ok) cleanDescriptionMaker();
+    
   } catch (error) {
     console.error(error);
   }
@@ -150,11 +147,11 @@ export default function DescriptionMaker() {
   <>
   <h1>Description Maker</h1>
   <div className={styles.mainDiv}>
-    <div className={styles.descriptionMakerInstructionSpan}>
-      <p>Link product and get current description</p>
-      <p>Write description using HTML and CSS.</p>
-      <p>Use preview to parse written code and check for any errors in final design.</p>
-      <p>Store description images in /public/images/description/product_$productId.</p>
+    <div className={styles.descriptionMakerInstructions}>
+      <p>1. Link product and get current description</p>
+      <p>2. Write description using HTML and CSS.</p>
+      <p>3. Use preview to parse written code and check for any errors in final design.</p>
+      <p>4. Store description images in /public/images/description/product_$productId.</p>
     </div>
 
     <div className={styles.getCurrentDescriptionWrapper}>
@@ -166,18 +163,16 @@ export default function DescriptionMaker() {
             placeholder="Enter product ID"
             onChange={(e) => setDescriptionGetterProductId(Number(e.target.value))}
           />
-          <button onClick={getCurrentDescription} className={styles.getCurrentDescrition}>
+          <button onClick={getCurrentDescription} >
             Link product and get description
           </button>
         </>
       ) : (
         <>
-          <span className={styles.newDescWarning}>
-            New description will affect product ID: {descriptionGetterProductId}
-          </span>
+          <span>New description will affect product ID: {descriptionGetterProductId}</span>
           <button
             onClick={async()=>{ if (!await adminConfirm("Unsaved changes will be lost. Continue?")) return; cleanDescriptionMaker();}}
-            className={`${styles.getCurrentDescrition} ${styles.unlinkProductButton}`}
+         
           >
             Unlink product ID
           </button>
@@ -187,7 +182,6 @@ export default function DescriptionMaker() {
       <div className={styles.featuresWrapper}>
         <span>Handy options</span>
         <button
-          className={`${styles.getCurrentDescrition} ${styles.featureButton}`}
           onClick={(e) => {
             navigator.clipboard.writeText(`<div class="descriptionWrapper">...</div>`);
             e.target.innerText = "HTML content COPIED!";
@@ -196,7 +190,6 @@ export default function DescriptionMaker() {
           Copy standard HTML
         </button>
         <button
-          className={`${styles.getCurrentDescrition} ${styles.featureButton}`}
           onClick={(e) => {
             navigator.clipboard.writeText(`.descriptionWrapper {...}`);
             e.target.innerText = "CSS content COPIED!";
@@ -209,7 +202,7 @@ export default function DescriptionMaker() {
 
     <div className={styles.emailContentDiv}>
       <textarea ref={descriptionTextRef} className={styles.textArea} placeholder="Description HTML..." />
-      <textarea ref={descriptionCssTextRef} className={`${styles.textArea} ${styles.textAreaCss}`} placeholder="Description CSS..." />
+      <textarea ref={descriptionCssTextRef} className={styles.textArea} placeholder="Description CSS..." />
       <button className={styles.previewButton} onClick={handlePreviewEmail}>Preview</button>
     </div>
 
@@ -217,7 +210,7 @@ export default function DescriptionMaker() {
 
    
 
-    <button onClick={handleSaveDescription} className={styles.saveDescription}>Save description</button>
+    <button onClick={handleSaveDescription}>Save description</button>
   </div>
 </>
   )

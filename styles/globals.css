@@ -1011,7 +1011,7 @@ color-scheme: light only;
 
   --admin-textArea-bg: rgb(15, 15, 14);
 
-  
+  --admin-handy-features-border-color: var(--admin-neutral-9);
   
   --admin-login-title: var(--admin-neutral-3);
   --admin-login-color: var(--admin-neutral-2);

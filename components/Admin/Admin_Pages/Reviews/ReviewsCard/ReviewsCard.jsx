@@ -72,22 +72,20 @@ export default function ReviewsCard({
         // Check if the image exists in the main path
         let response = await fetch(`/images/review_images/productId_${productId}/${imageName}`, { method: "HEAD" });
 
-        if (response.ok) {
-            // If image exists, update the state
-            setImages((prevImages) => [
+        if (response.ok)  setImages((prevImages) => [
                 ...(prevImages || []),
                 { imageName, deleted: false }
             ]);
-        } else {
+
+         else {
             // Check if the image exists in the deleted_images path
             response = await fetch(`/images/review_images/productId_${productId}/deleted_images/${imageName}`, { method: "HEAD" });
 
-            if (response.ok) {
-                setImages((prevImages) => [
+            if (response.ok) setImages((prevImages) => [
                     ...(prevImages || []),
                     { imageName, deleted: false }
                 ]);
-            }
+            
         }
     } catch (error) {
         console.error("Error:", error);

@@ -8,7 +8,7 @@ import EmailList from './EmailList/EmailList';
 export default function NewSequence({emailData, setEmailData}) {
 
   const [sequenceEmails, setSequenceEmails] = useState([]);
-  const [keySequenceType, setKeySequenceType] = useState();
+  const [isEssencialFlow, setIsEssencialFlow] = useState();
   
   const titleRef = useRef();
 
@@ -19,143 +19,103 @@ export default function NewSequence({emailData, setEmailData}) {
   console.log('camp emails', sequenceEmails);
 
 
-  const getKeySequenceSelector = ()=>{
-
-    console.log('key sequences', emailData.keySequences)
-    let keySequencesSelectorExists=  false;
+    //Slect if the sequence is essencial(only should be shown if sequence is flow), like thank you or welcome flow
+    const essencialFlowSelector = () => {
+      const availableKeySequences = Object.keys(emailData.keySequences).filter(
+        (key) => !emailData.keySequences[key] && key !== "id"
+      );
     
+      if (!availableKeySequences.length) return null;
     
-
-    for (const key in emailData.keySequences) {
-      if(!emailData.keySequences[key])
-        keySequencesSelectorExists=true;
-      
-    }
-
-    if(keySequencesSelectorExists){
-
-      return <select
-      id="targetTrafficSelect"
-      className={styles.targetTrafficSelect}
-      value={keySequenceType}
-      onChange={(e) => {setKeySequenceType(e.target.value)}}
-      >
-        <option value={undefined}>Select key sequence type</option>
-        <option value={undefined}>Sequence is not key sequence</option>
-
-     { Object.keys(emailData.keySequences).map(keySequence => {
-      if(!emailData.keySequences[keySequence] && keySequence!="id" )
-        return <option value={keySequence}>{keySequence}</option>
-      })
-
-    }
-      
-      
-      </select>
-
-      
-    }
-    
-
-  }
+      return (
+        <select
+          id="essencialFlowSelect"
+          className={styles.essencialFlowSelect}
+          value={isEssencialFlow}
+          onChange={(e) => setIsEssencialFlow(e.target.value)}
+        >
+          <option value={undefined}>Select key sequence type</option>
+          <option value={undefined}>Sequence is not key sequence</option>
+          {availableKeySequences.map((keySequence) => (
+            <option key={keySequence} value={keySequence}>
+              {keySequence}
+            </option>
+          ))}
+        </select>
+      );
+    };
 
 
 
 
-  let sequenceEmailsInputString = useMemo(()=>{
-    
-    let inputString=``;
-    sequenceEmails.forEach(email=>{inputString=inputString+ 
-        `{Id: ${email.id}, title: ${email.title}${email.sendTimeGap?`, sendTimeGap: ${email.sendTimeGap}`:''}}`});
-    return inputString;
-  },[sequenceEmails])
+    const sequenceEmailsInputString = useMemo(() =>
+      sequenceEmails
+        .map(email => `{Id: ${email.id}, title: ${email.title}${email.sendTimeGap ? `, sendTimeGap: ${email.sendTimeGap}` : ''}}`)
+        .join('')
+    , [sequenceEmails]);
   
 
     useEffect(()=>{
-        if(emailData.emails.length==0){
+        if(emailData.emails.length!==0) return;
 
-            (async function() {
+          (async function() {
             try {
-                const response = await fetch("/api/admincheck", {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify(
-                   { dataType:'get_emails' } 
-                  ),
-                });
+              const response = await fetch("/api/admincheck", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ dataType: 'get_emails' })
+              });
           
-                if (response.ok) {
-                  const data = await response.json();
-                  console.log("Maine DATA!", data);
-                  //Ovde takodje zatraziti emails campaign kasnije .
-                  //na slican princip kao sto sam trazio emails.
-                  setEmailData(data.data);
-                  console.log('Email data', data);
-                 
-                 
-                } else {
-                  throw new Error("Network response was not ok.");
-                }
-              } catch (error) {
-                console.error(
-                  "There has been a problem with your fetch operation:",
-                  error
-                );
-              }
+              if (!response.ok) throw new Error("Network response was not ok.");
+          
+              const { data } = await response.json();
+              console.log("Maine DATA!", data);
+              setEmailData(data);
+            } catch (error) {
+              console.error("Fetch operation error:", error);
+            }
+          })();
 
-            })();
-
-        }
+        
     },[])
 
-    const addEmail=(newEmail)=>{
-      console.log('add', sequenceEmails.findIndex((email)=>{return email.id==newEmail.id}))
-      if(
-        sequenceEmails.findIndex((email)=>{return email.id==newEmail.id})!==-1
-      )return;
-      setSequenceEmails([...sequenceEmails, newEmail])
-    }
 
-    const handleSaveSequence = async()=>{
-      if(titleRef.current.value=='' || sequenceEmails.length==0)return;
-      
-   
-      let newSequenceData = {title:titleRef.current.value, emails:JSON.stringify(sequenceEmails.map((email)=>{
-      
 
-       return {id:email.id, sendTimeGap:email.sendTimeGap}
-      })), key_sequence_type: keySequenceType
-      
-      };
+   const addEmail = (newEmail) => {
+      if (sequenceEmails.some((email) => email.id === newEmail.id)) return;
+      setSequenceEmails([...sequenceEmails, newEmail]);
+    };
 
-  
-     
-      await fetch("/api/admincheck", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ dataType: 'insert_new_sequence', data: newSequenceData  }),
-      })
-        .then((response) => {
-          if (response.ok) {
-            console.log(response);
-            router.push('/admin/emails');
-          }
-        })
 
-        .catch((error) => {console.log(error)});
-    }
+
+    const handleSaveSequence = async () => {
+  if (!titleRef.current.value || !sequenceEmails.length) return;
+
+  const newSequenceData = {
+    title: titleRef.current.value,
+    emails: JSON.stringify(sequenceEmails.map(({ id, sendTimeGap }) => ({ id, sendTimeGap }))),
+    key_sequence_type: isEssencialFlow,
+  };
+
+  try {
+    const response = await fetch("/api/admincheck", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ dataType: 'insert_new_sequence', data: newSequenceData }),
+    });
+
+    if (response.ok) router.push('/admin/emails');
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 
 
 
-const filteredEmails = emailData?.emailsUnusedInSequences?.filter(email=>{
-  
-  
-  return sequenceEmails.findIndex((seqEmail)=>{return seqEmail.id===email.id})==-1})
+const filteredEmails = emailData?.emailsUnusedInSequences?.filter(
+  (email) => !sequenceEmails.some((seqEmail) => seqEmail.id === email.id)
+);
 
 
 

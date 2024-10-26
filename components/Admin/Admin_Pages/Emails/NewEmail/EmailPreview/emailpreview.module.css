@@ -1,22 +1,16 @@
 
-.emailContentDiv{
-    width: 100%;
-}
+
+
+
+
+
 
 .backToEditorButton{
     align-self: flex-start;
 }
 
 
-.emailHelperWrapper{
 
-    width: 100%;
-
-    display:flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: var(--size-3);
-}
 
 
 .instructionsWrapper{
@@ -24,6 +18,8 @@
     flex-direction: column;
 
     padding: var(--size-5) 0;
+    margin-bottom: var(--size-3);
+    align-self: flex-start;
 }
 
 .instructionsWrapper > span{
@@ -43,7 +39,12 @@
 
 
 
-
+.emailContentDiv{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-6);
+}
 
 
 .titleInput{
@@ -54,62 +55,52 @@
     align-self: flex-start;
    
     
-   margin-bottom: var(--size-6);
+    
 
    
 }
-
-
 
 
 
 
 .textArea{
-    color: var(--admin-txt-color);
-    background-color: var(--admin-textArea-bg);
+ 
+    
     min-height: var(--size-16);
     max-height: var(--size-17);
-    width: 100%;
-    box-sizing: border-box;
-    padding: var(--size-6);
-    font-size: var(--font-size-5);
+   
+    
     line-height: var(--size-6);
 
    
-    padding-bottom: 128px;
-    border-radius: 8px;
-    border: none;
+    
+    
+    
 
     font-size: var(--font-size-2);
-    outline: none;
-    resize: none;
+   
+    
 }
 
-.textAreaCss{
-    margin-top: var(--size-7);
-}
 
-/* .textArea:focus{
-    border: 1px solid #4fabe0;
-    box-shadow: 0 0 8px #4fabe0;
-} */
+
+
 
 .newEmailButtons{
     width: 100%;
     display: flex;
     justify-content: space-between;
-}
 
-.previewButton{
-    margin: var(--size-4) var(--size-2);
-    margin-top: var(--size-7);
-   
+    margin-top: var(--size-3);
+    box-sizing: border-box;
+    padding: 0 var(--size-2);
     
 }
 
-.saveButton{
-    align-self: flex-end;
-}
+
+
+
+
 
 
 .previewContent{

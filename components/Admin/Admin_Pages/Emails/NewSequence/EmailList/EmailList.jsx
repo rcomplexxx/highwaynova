@@ -1,8 +1,6 @@
 import  {  useState } from 'react'
 import styles from './emaillist.module.css'
-import DatePicker from 'react-multi-date-picker';
 import "react-multi-date-picker/styles/backgrounds/bg-dark.css"
-import TimePicker from 'react-multi-date-picker/plugins/time_picker';
 import DelayPicker from './DelayPicker/DelayPicker';
 import { adminAlert } from '@/utils/utils-client/utils-admin/adminAlert';
 
@@ -31,18 +29,13 @@ const EmailElement= ({id, title, addEmail, isFirstEmail})=>{
   const handleAddEmail = () => {
     if (isFirstEmail) return addEmail({ id, title });
     if (!sendTimeGap) return adminAlert('error', 'Error', 'Time gap not added or confirmed.');
-  
-    console.log('email time gap', sendTimeGap);
     addEmail({ id, title, sendTimeGap });
   };
 
 
 
   return <div className={styles.emailDiv}>
-            <div className={styles.emailInfoDiv}>
-              <span>{id}</span>
-              <span>{title}</span>
-              </div>
+            <div className={styles.emailInfoDiv}><span>{id}</span><span>{title}</span> </div>
 
            {!isFirstEmail && <DelayPicker sendTimeGap={sendTimeGap} setSendTimeGap={setSendTimeGap}/>}
            

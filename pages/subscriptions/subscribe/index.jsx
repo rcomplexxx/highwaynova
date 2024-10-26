@@ -36,12 +36,10 @@ export default function Subscribe() {
               }),
             });
         
-            if (response.ok) {
-              setSubscribeSuccess(true);
+            if (response.ok)  setSubscribeSuccess(true);
              
-            } else {
-              setEmailFieldError("Server error. Please try again later.")
-            }
+            else  setEmailFieldError("Server error. Please try again later.")
+            
           } catch (error) {
             setEmailFieldError("Server error. Please try again later.")
           } finally {

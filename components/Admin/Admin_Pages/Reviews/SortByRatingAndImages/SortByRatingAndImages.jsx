@@ -15,21 +15,13 @@ export default function SortByRatingAndImages({productId,  setReviews}) {
 
         
 
-            await fetch("/api/admincheck", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({ dataType: "update_reviews_reorder", data: {product_id: productId} }),
-            })
-              .then((response) => {
-                if (response.ok) {
-                  setReviews([]);
-              
-                }
-              })
-      
-              .catch((error) => {});
+        await fetch("/api/admincheck", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ dataType: "update_reviews_reorder", data: { product_id: productId } })
+        })
+          .then(response => response.ok && setReviews([]))
+          .catch(() => {});
          
         };
 

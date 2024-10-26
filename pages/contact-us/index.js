@@ -65,16 +65,15 @@ export default function ContactUs() {
         },
       });
 
-      if (response.ok) {
+      if (response.ok) return  console.error("Error sending message:", response.statusText);
         console.log("Message sent successfully.");
         // Reset form fields if needed
         setMessageSent(true)
         nameRef.current.value = "";
         emailRef.current.value = "";
         messageRef.current.value = "";
-      } else {
-        console.error("Error sending message:", response.statusText);
-      }
+     
+        
     } catch (error) {
       console.error("Error sending message:", error);
     } finally{setMessageLoading(false);}

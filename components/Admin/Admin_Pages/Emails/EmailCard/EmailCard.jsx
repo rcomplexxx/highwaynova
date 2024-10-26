@@ -9,8 +9,8 @@ import { adminConfirm } from '@/utils/utils-client/utils-admin/adminConfirm';
 
 export default function EmailCard({id,title, text, handleSaveEmail}) {
 
-    const [emailTitle, setEmailTitle] = useState()
-    const [emailTextHtml, setemailTextHtmlHtml] = useState();
+    const [emailTitle, setEmailTitle] = useState(title)
+    const [emailTextHtml, setemailTextHtmlHtml] = useState(text);
     
     const [previewEmailContent, setPreviewEmailContent]= useState();
 
@@ -21,26 +21,9 @@ export default function EmailCard({id,title, text, handleSaveEmail}) {
 
     useEffect(()=>{
 
-
-
-
-
-
       setEmailTitle(title);
-
-
-
-
-    
-
-
         setemailTextHtmlHtml(text)
       
-
-
-
-
-
 
 
     },[id])
@@ -60,9 +43,9 @@ export default function EmailCard({id,title, text, handleSaveEmail}) {
           
 
 
-            const parsedHtml = ReactHtmlParser(emailTextHtml);
+          
         
-                setPreviewEmailContent(parsedHtml);
+                setPreviewEmailContent(ReactHtmlParser(emailTextHtml));
             
           } catch (error) {
             // Handle the error (e.g., log it, display an error message, etc.)
@@ -93,17 +76,14 @@ export default function EmailCard({id,title, text, handleSaveEmail}) {
           ),
         });
   
-        if (response.ok) {
+        if (!response.ok) throw new Error("Network response was not ok.");
+
           const data = await response.json();
           console.log("Maine DATA!", data);
          
           
   
-         
-         
-        } else {
-          throw new Error("Network response was not ok.");
-        }
+          
       } catch (error) {
         console.error(
           "There has been a problem with your fetch operation:",
@@ -120,7 +100,7 @@ export default function EmailCard({id,title, text, handleSaveEmail}) {
 
 
   return (
-  <>
+
       <div className={styles.emailContentDiv}>
      
 
@@ -143,7 +123,7 @@ export default function EmailCard({id,title, text, handleSaveEmail}) {
         tabIndex={0}
         contentEditable={true}
         suppressContentEditableWarning={true}
-        className={styles.textArea}
+        
         
         placeholder='Email html content...'
         onFocus={(event) => {
@@ -153,9 +133,9 @@ export default function EmailCard({id,title, text, handleSaveEmail}) {
 
 
         <div className={styles.buttonBar}>
-        <button className={styles.previewButton} onClick={handlePreviewEmail}>Preview Email</button>
-        {handleSaveEmail && <button onClick={()=>{handleSaveEmail(id, emailTitle, emailTextHtml)}} className={`${styles.previewButton} ${styles.saveButton}`}>Save Email</button> }
-        <button className={`${styles.previewButton} ${styles.deleteEmail}`} onClick={handleDeleteEmail}>Delete Email</button>
+        <button onClick={handlePreviewEmail}>Preview Email</button>
+        {handleSaveEmail && <button onClick={()=>{handleSaveEmail(id, emailTitle, emailTextHtml)}}>Save Email</button> }
+        <button className={styles.deleteEmail} onClick={handleDeleteEmail}>Delete Email</button>
        
         </div>
         { previewEmailContent && <div className={styles.previewContent}>
@@ -166,6 +146,5 @@ export default function EmailCard({id,title, text, handleSaveEmail}) {
 
     
      
-      </>
   )
 }

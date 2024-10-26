@@ -43,10 +43,10 @@ const getProductReturns = async () => {
     
     if (!response.ok) throw new Error('Network response was not ok');
     
-    const data = await response.json();
-    setMyProductReturns(data.data);
+    const {data} = await response.json();
+    setMyProductReturns(data);
    
-    console.log('orders found', data.data);
+    console.log('orders found', data);
   } catch (error) {
     console.log(error);
   }
@@ -72,7 +72,7 @@ const getOrdersByEmail = async () => {
       return adminAlert('error', `No orders found.`, `Order(s) from customer with email ${emailToFindOrders} not found.`)
     }
     setFoundOrders(data);
-    console.log('orders found', data.data);
+    console.log('orders found', data);
   } catch (error) {
     console.log(error);
   }
@@ -131,14 +131,15 @@ const saveNewReturn = async () => {
 
     if (!response.ok) throw new Error('Network response was not ok');
 
-    const data = await response.json();
-    console.log('Were saving new return successful?', data.data_saved);
+    const {data_saved} = await response.json();
+    console.log('Were saving new return successful?', data_saved);
 
-    if (data.data_saved) {
+    if (!data_saved) return;
+    
       setLinkedOrder();
       setReturnProducts([]);
       setLinkOrderIdValue();
-    }
+    
   } catch (error) {
     console.log(error);
   }
@@ -184,9 +185,8 @@ try {
     body: JSON.stringify({ dataType: "delete_product_return", data: { deleteId: product.id } }),
   });
 
-  if (response.ok) {
-    setMyProductReturns(myProductReturns.filter(pr => pr.id !== product.id));
-  }
+  if (response.ok)  setMyProductReturns(myProductReturns.filter(pr => pr.id !== product.id));
+  
 } catch (error) {
   console.error("Error deleting return:", error);
 }

@@ -1,15 +1,16 @@
 .mainDiv{
-    position: relative;
+    
     
     width:100%;
     max-width: var(--size-18);
-    min-height: var(--size-13);
+    
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    
     align-items: center;
     
-    border-radius: 8px;
+  
+    box-sizing: border-box;
     padding: var(--size-7);
     padding-top: 0;
 }
@@ -21,16 +22,16 @@
 }
 
 
+
+
+
       
-.targetTrafficSelect{
+.essencialFlowSelect{
     align-self: flex-start;
-    color: var(--admin-txt-color);
+    
     background-color: transparent;
 
     height: 40px;
-
-  
-  
     margin-bottom: var(--size-6);
     padding: var(--size-3) var(--size-6);
    
@@ -41,7 +42,7 @@
   
 }
 
-.targetTrafficSelect option{
+.essencialFlowSelect option{
     background-color: var(--admin-campaign-type-options-bg);
     margin: 40px;
 }

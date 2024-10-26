@@ -12,25 +12,26 @@
     width: 100%;
 
     box-sizing: border-box;
-    padding: 0 ;
+    padding: 0 var(--size-3);
   
     display: flex;
     flex-direction: row;
+   
+    gap: var(--size-5);
     
   
 }
 
 .lastCcInputRow{
   margin-bottom: var(--size-5);
+
+ 
 }
 
-.ccInputRow > :first-child{
-  margin-left: var(--size-3);
-}
 
-.ccInputRow > :last-child{
-  margin-right: var(--size-3);
-}
+
+
+
 
 .payNowButton{
    
@@ -96,8 +97,8 @@
 .form_group {
     position: relative;
     width: 100%;
-    margin-left: var(--size-3);
-    margin-right: var(--size-3);
+    
+    
       flex-grow: 1;
       display: flex;
       flex-direction: column;
@@ -315,12 +316,9 @@ font-size: var(--size-4);
             width: 100% ;
           }
 
-          .ccInputRow > :first-child{
-            margin-left: 0;
-          }
-          
-          .ccInputRow > :last-child{
-            margin-right: 0;
+          .ccInputRow {
+            padding: 0 ;
+          gap: 0;
           }
      
         

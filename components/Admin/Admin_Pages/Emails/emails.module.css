@@ -1,27 +1,24 @@
 
 
 .mainDiv{
+    
+    max-width: var(--size-17);
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
 .interfaceDiv{
+   
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: var(--size-9);
+    gap: var(--size-3);
+    margin-bottom: var(--size-7);
 }
 
 
-.magicButton{
-   
-
-    margin-bottom: var(--size-3);
-  
-}
-
-
-.emailLink{
-    margin-top: var(--size-3);
+.marginBottomClass{
+    margin-bottom: var(--size-5);
 }

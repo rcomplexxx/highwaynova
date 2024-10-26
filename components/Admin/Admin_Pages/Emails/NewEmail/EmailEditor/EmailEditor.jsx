@@ -88,25 +88,29 @@ const handleSaveTemplate = async(templateType) => {
 
 
     const { design } = data;
+if (!design) return;
 
-    if(!design) return;
-
-
-  await fetch("/api/admincheck", {
+try {
+  const response = await fetch("/api/admincheck", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ dataType: 'update_new_email_template', data: {designJson: JSON.stringify(design), emailFontValue: emailFontValue, emailFontSize: generalFontSize, emailWidthModeValue: emailWidthMode, mainBackgroundColor: mainBackgroundColor, templateType: templateType } }),
-  })
-    .then((response) => {
-      if (response.ok) {
-        console.log(response);
-      
-      }
-    })
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      dataType: 'update_new_email_template',
+      data: {
+        designJson: JSON.stringify(design),
+        emailFontValue,
+        emailFontSize: generalFontSize,
+        emailWidthModeValue: emailWidthMode,
+        mainBackgroundColor,
+        templateType,
+      },
+    }),
+  });
 
-    .catch((error) => {console.log(error)});
+  if (response.ok) console.log(response);
+} catch (error) {
+  console.log(error);
+}
 
 })
 

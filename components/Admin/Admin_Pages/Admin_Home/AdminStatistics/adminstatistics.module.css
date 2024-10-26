@@ -48,7 +48,7 @@
     align-items: center;
 }
 
-.saleStat h2, .statName{
+.saleStat h2, .saleStat span{
   width: 100%;
     flex:1;
     display: flex;
@@ -76,21 +76,19 @@
 .datePicker{
     background-color: var(--admin-neutral-11);
 
+    margin: var(--size-3) 0;
  
 }
 
 
 
-.dateRangeLabel{
-    margin-left: var(--size-1);
-    font-size: var(--font-size-3);
-    font-weight: 400;
-}
+
 
 .dateInput{
   height: 100%;
   width: auto;
-  
+
+ 
   background-color: var(--admin-neutral-11);
 
     padding: var(--size-2);
@@ -203,9 +201,11 @@
 }
 
 
-
-.readStatsInstructionsSpan{
-    line-height: var(--size-7);
-    align-self: flex-start;
+.statsReadingInstructionsDiv span{
+  line-height: var(--size-7);
+  
 }
+
+
+
 

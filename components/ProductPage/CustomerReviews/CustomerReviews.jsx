@@ -69,14 +69,13 @@ export default function CustomerReviews({ product_id, ratingData, startReviews }
         }),
       });
   
-      if (response.ok) {
-        const data = await response.json();
-        newReviewsRef.current = data.reviews;
-        setReviews(data.reviews);
+      if (!response.ok) return console.error('Response error:', response);
+        const {reviews} = await response.json();
+        newReviewsRef.current = reviews;
+        setReviews(reviews);
         
-      } else {
-        console.error('Response error:', response);
-      }
+     
+        
     };
   
     setTimeout(async () => {

@@ -148,14 +148,14 @@ const customerSubscribedRef = useRef(customerSubscribed);
             
             router.push("/thank-you");
           } else {
-            const data = await response.json();
+            const {error} = await response.json();
     
-            if (data.error === "INSTRUMENT_DECLINED") {
-              console.log(data.error);
+            if (error === "INSTRUMENT_DECLINED") {
+              console.log(error);
               return actions.restart();
             } else {
-              console.log(data.error);
-              setPaypalError( data.error);
+              console.log(error);
+              setPaypalError(error);
     
               // Handle other payment errors here
             }

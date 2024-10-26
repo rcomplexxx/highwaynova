@@ -14,6 +14,7 @@
 .campaignDiv{
     color: var(--admin-txt-color-weak);
     width: 100%;
+    
     padding-top: var(--size-6);
     padding-bottom: var(--size-9);
     border-bottom: 1px solid green;
@@ -87,23 +88,23 @@
     max-width: var(--size-17);
     width: 100%;
 
-    padding: 0 var(--size-3);
+    box-sizing: border-box;
+    padding: var(--size-3);
 
     display:flex;
     flex-direction: column;
-  
+    gap: var(--size-3);
    
 
 }
 
 
-.campaignEmailDiv{
+.campaignEmailsDiv > div{
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
 
-    margin-top: var(--size-3);
 }
 
 

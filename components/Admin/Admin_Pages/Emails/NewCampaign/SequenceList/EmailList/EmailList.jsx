@@ -23,18 +23,17 @@ export default function EmailList({emails}) {
                   ),
                 });
           
-                if (response.ok) {
-                  const data = await response.json();
+                if (!response.ok) throw new Error("Network response was not ok.");
+
+                  const {data} = await response.json();
                   console.log("Maine DATA!!!!!", data);
                   //Ovde takodje zatraziti emails campaign kasnije .
                   //na slican princip kao sto sam trazio emails.
-                  setAllEmailsData(data.data.emails);
+                  setAllEmailsData(data.emails);
                   console.log('Email data', data);
                  
                  
-                } else {
-                  throw new Error("Network response was not ok.");
-                }
+               
               } catch (error) {
                 console.error(
                   "There has been a problem with your fetch operation:",

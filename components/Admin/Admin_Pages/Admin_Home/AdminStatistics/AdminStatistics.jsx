@@ -35,33 +35,31 @@ export default function AdminStatistics(){
             });
             return response.ok ? response.json() : Promise.reject("Network response not ok.");
           };
-    
-          const returnCashResponse = await fetchApi("get_product_returns");
-          const returnCashInfo = returnCashResponse.data?.map(({ returnCost, createdDate }) => ({
+      
+          const { data: returns } = await fetchApi("get_product_returns");
+          const returnCashInfo = returns?.map(({ returnCost, createdDate }) => ({
             returnCost,
             createdDate: Math.floor(createdDate / dayInMs),
           })) || [];
-    
+      
           setReturnCashData(returnCashInfo);
           console.log("return cash", returnCashInfo);
-    
-          const orderCashDataType = shouldUseOnlyFulfilledOrders
+      
+          const orderDataType = shouldUseOnlyFulfilledOrders
             ? "get_order_cash_info_only_fulfilled_orders"
             : "get_order_cash_info";
-          const orderCashResponse = await fetchApi(orderCashDataType);
+          const orderCashResponse = await fetchApi(orderDataType);
     
-          const cashInfo = orderCashResponse.data.map((orderInfo) => {
-            const { total, tip = 0, supplyCost, createdDate, couponCode } = orderInfo;
-            const coupon = coupons.find((c) => c.code.toLowerCase() === couponCode.toLowerCase());
-            const discountPercentage = coupon?.discountPercentage || 0;
+          const cashInfo = orderCashResponse.data.map(({ total, tip = 0, supplyCost, createdDate, couponCode }) => {
+            const discountPercentage = coupons.find(c => c.code.toLowerCase() === couponCode.toLowerCase())?.discountPercentage || 0;
             const discountLostMoney = Number(((total - tip) * discountPercentage / (100 - discountPercentage)).toFixed(2));
-    
+          
             return {
               createdDate: Math.floor(createdDate / dayInMs),
               cashObtained: Number(total.toFixed(2)),
               discountLostMoney,
               supplyCost,
-              tip: parseFloat(tip),
+              tip: +tip,
             };
           });
     
@@ -107,7 +105,7 @@ export default function AdminStatistics(){
               }}
             />
             </div>
-            {Array(8).fill(<span className={styles.statName}>N/A</span>)}
+            {Array(8).fill(<span>N/A</span>)}
             
           </div>
         );
@@ -127,32 +125,23 @@ export default function AdminStatistics(){
       };
       startPeriod = startPeriod || (endPeriod - (periodMap[period] ?? endPeriod));
     
-      // Initialize variables
-      let stats = {
-        orderNumber: 0,
-        total: 0,
-        discountLostMoney: 0,
-        supplyCost: 0,
-        tip: 0,
-        lostInReturns: 0,
-      };
-    
-      // Process cashData and returnCashData
-      cashData?.forEach(({ createdDate, cashObtained, discountLostMoney, supplyCost, tip }) => {
+   
+
+      const stats = cashData?.reduce((acc, { createdDate, cashObtained, discountLostMoney, supplyCost, tip }) => {
         if (createdDate >= startPeriod && createdDate <= endPeriod) {
-          stats.orderNumber++;
-          stats.total += cashObtained;
-          stats.discountLostMoney += discountLostMoney;
-          stats.supplyCost += supplyCost;
-          stats.tip += tip;
+          acc.orderNumber++;
+          acc.total += cashObtained;
+          acc.discountLostMoney += discountLostMoney;
+          acc.supplyCost += supplyCost;
+          acc.tip += tip;
         }
-      });
+        return acc;
+      }, { orderNumber: 0, total: 0, discountLostMoney: 0, supplyCost: 0, tip: 0, lostInReturns: 0 });
+      
     
-      returnCashData?.forEach(({ createdDate, returnCost }) => {
-        if (createdDate >= startPeriod && createdDate <= endPeriod) {
-          stats.lostInReturns += returnCost;
-        }
-      });
+      stats.lostInReturns = returnCashData?.reduce((acc, { createdDate, returnCost }) => {
+        return createdDate >= startPeriod && createdDate <= endPeriod ? acc + returnCost : acc;
+      }, 0);
     
       // Format numbers
       const formatNum = (num) => num.toFixed(2);
@@ -174,7 +163,7 @@ export default function AdminStatistics(){
       return (
         <div className={styles.saleStat}>
           {period !== 'Custom date' ? (
-            <span className={styles.statName}>{period}</span>
+            <span>{period}</span>
           ) : (
             <div className={styles.datePickerWrapper}>
             <DatePicker
@@ -194,14 +183,14 @@ export default function AdminStatistics(){
             />
             </div>
           )}
-          <span className={styles.statName}>{stats.orderNumber}</span>
-          <span className={styles.statName}>${stats.total}</span>
-          <span className={styles.statName}>${stats.discountLostMoney}</span>
-          <span className={styles.statName}>${stats.tip}</span>
-          <span className={styles.statName}>${stats.supplyCost}</span>
-          <span className={styles.statName}>${stats.lostInReturns}</span>
-          <span className={styles.statName}>${averageOrderValue}</span>
-          <span className={styles.statName}>${profit}</span>
+          <span>{stats.orderNumber}</span>
+          <span>${stats.total}</span>
+          <span>${stats.discountLostMoney}</span>
+          <span>${stats.tip}</span>
+          <span>${stats.supplyCost}</span>
+          <span>${stats.lostInReturns}</span>
+          <span>${averageOrderValue}</span>
+          <span>${profit}</span>
         </div>
       );
     };
@@ -212,26 +201,25 @@ export default function AdminStatistics(){
 
 
 
-    const getAovChartData = ()=>{
-      
-      const AovChartData = [];
-      
-
-      cashData.forEach(item => {
-        const indexOfCreatedDate = AovChartData.findIndex(data => {return data.createdDate == item.createdDate});
-        if(indexOfCreatedDate == -1)
-          AovChartData.push({createdDate:item.createdDate, profit: Number(item.cashObtained) - Number(item.supplyCost)+Number(item.tip), orderNumber: 1})
-        else {
-          AovChartData[indexOfCreatedDate].profit += Number(item.cashObtained) - Number(item.supplyCost)+Number(item.tip);
-          AovChartData[indexOfCreatedDate].orderNumber += 1;
-        }
-      })
-
+    const getAovChartData = () => {
+      const AovChartData = cashData.reduce((acc, { createdDate, cashObtained, supplyCost, tip }) => {
+        const index = acc.findIndex(data => data.createdDate === createdDate);
+        const profit = Number(cashObtained) - Number(supplyCost) + Number(tip);
     
-
-      return AovChartData.map(item => {return {createdDate:item.createdDate,yMetric: (item.profit/item.orderNumber).toFixed(2)}});
-
-    }
+        if (index === -1) {
+          acc.push({ createdDate, profit, orderNumber: 1 });
+        } else {
+          acc[index].profit += profit;
+          acc[index].orderNumber += 1;
+        }
+        return acc;
+      }, []);
+    
+      return AovChartData.map(({ createdDate, profit, orderNumber }) => ({
+        createdDate,
+        yMetric: (profit / orderNumber).toFixed(2)
+      }));
+    };
 
 
 
@@ -307,18 +295,18 @@ ${shouldUseOnlyFulfilledOrders && styles.onlyFulfilledOrdersChecked}`}
             </div>
 
 
-            {revealStatsReadingInstructions && <>
-    <span className={styles.readStatsInstructionsSpan}>PERIOD - Period is specified time in which metrics are measured.</span>
-    <span className={styles.readStatsInstructionsSpan}>TO - Total orders is the number of orders placed.</span>
-    <span className={styles.readStatsInstructionsSpan}>SR - Sales revenue is the money obtained just from sales(product costs minus discounts, excluding tips).</span>
-    <span className={styles.readStatsInstructionsSpan}>LID - Lost in discounts is money lost in discounts. Ps. Discounts let you get more customers, and more long-term value.</span>
-    <span className={styles.readStatsInstructionsSpan}>TIPS - Tips is money generously donated by customers.</span>
-    <span className={styles.readStatsInstructionsSpan}>SC - Supplier costs is the money spent on suppliers to purchase products to fulfill orders.</span>
-    <span className={styles.readStatsInstructionsSpan}>LIR - Lost in returns is money lost in product returns. It affect profit metric, but it is not set to affect revenue,discounts, tips for now.</span>
-    <span className={styles.readStatsInstructionsSpan}>AOV - Average order value is the average profit per order.</span>
+            {revealStatsReadingInstructions && <div className={styles.statsReadingInstructionsDiv}> 
+    <span>PERIOD - Period is specified time in which metrics are measured.</span>
+    <span>TO - Total orders is the number of orders placed.</span>
+    <span>SR - Sales revenue is the money obtained just from sales(product costs minus discounts, excluding tips).</span>
+    <span>LID - Lost in discounts is money lost in discounts. Ps. Discounts let you get more customers, and more long-term value.</span>
+    <span>TIPS - Tips is money generously donated by customers.</span>
+    <span>SC - Supplier costs is the money spent on suppliers to purchase products to fulfill orders.</span>
+    <span>LIR - Lost in returns is money lost in product returns. It affect profit metric, but it is not set to affect revenue,discounts, tips for now.</span>
+    <span>AOV - Average order value is the average profit per order.</span>
     
-    <span className={styles.readStatsInstructionsSpan}>PROFIT - Profit is the amount of money remaining after deducting Supplier costs from Revenue, and adding tips.</span>
-    </>
+    <span>PROFIT - Profit is the amount of money remaining after deducting Supplier costs from Revenue, and adding tips.</span>
+    </div>
 }
 
 {showCharts && <>

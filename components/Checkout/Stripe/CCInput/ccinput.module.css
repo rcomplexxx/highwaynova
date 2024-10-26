@@ -4,8 +4,8 @@
 .form_group {
     position: relative;
     width: 100%;
-    margin-left: var(--size-3);
-    margin-right: var(--size-3);
+  
+    
       flex-grow: 1;
       display: flex;
       flex-direction: column;
@@ -117,8 +117,8 @@
   
       .form_group{
         margin-bottom: var(--size-4);
-        margin-left: 0;
-        margin-right: 0;
+      
+        
       }
 
       .error{

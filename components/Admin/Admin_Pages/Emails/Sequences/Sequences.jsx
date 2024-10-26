@@ -71,7 +71,8 @@ const SequenceCard = ({id, title, sequenceEmails, emails})=>{
         ),
       });
 
-      if (response.ok) {
+      if (!response.ok) throw new Error("Network response was not ok.");
+      
         const data = await response.json();
         console.log("Maine DATA!", data);
        
@@ -79,9 +80,8 @@ const SequenceCard = ({id, title, sequenceEmails, emails})=>{
 
        
        
-      } else {
-        throw new Error("Network response was not ok.");
-      }
+   
+        
     } catch (error) {
       console.error(
         "There has been a problem with your fetch operation:",
@@ -119,28 +119,25 @@ Emails
 {showEmailInfo && <EmailCard id={showEmailInfo.id} title={showEmailInfo.title} text={showEmailInfo.text} 
 
 
-handleSaveEmail={(id, emailTitle, emailTextHtml)=>{
+handleSaveEmail = {async (id, emailTitle, emailTextHtml) => {
+  const emailData = [{ id, title: emailTitle, text: emailTextHtml }];
 
+  try {
+    const response = await fetch("/api/admincheck", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ dataType: "update_email_data", data: emailData }),
+    });
 
-  let emailData = [{ id: id, 
-    title:emailTitle, text:emailTextHtml }];
-
-   fetch("/api/admincheck", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ dataType: "update_email_data", data: emailData }),
-  })
-    .then((response) => {
-      if (response.ok) {
-        console.log(response);
-        setShowEmailInfo(false);
-      }
-    })
-
-    .catch((error) => {console.log(error)});
-  
+    if (response.ok) {
+      console.log(response);
+      setShowEmailInfo(false);
+    }
+  } catch (error) {
+    console.log(error);
+  }
 }}
 
 />}

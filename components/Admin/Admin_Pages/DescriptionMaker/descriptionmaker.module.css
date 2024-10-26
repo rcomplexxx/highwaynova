@@ -1,5 +1,5 @@
 .mainDiv{
-    position: relative;
+    
     
     width:100%;
     max-width: var(--size-18);
@@ -8,21 +8,20 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    gap: var(--size-7);
     border-radius: 8px;
-    padding: var(--size-7);
-    padding-top: 0;
+    
+    margin-bottom: var(--size-8);
 }
 
 
-.descriptionMakerInstructionSpan{
+.descriptionMakerInstructions{
 
     align-self: flex-start;
-    margin-bottom: var(--size-5);
+    margin-top: var(--size-5);
 }
 
-.emailContentDiv{
-    width: 100%;
-}
+
 
 
 
@@ -33,40 +32,23 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    gap: var(--size-5);
 
-    margin-top: var(--size-5);
-    margin-bottom: var(--size-5);
-
-
-
-
-
-}
-
-.newDescWarning{
-    margin-top: var(--size-8);
-}
-
-
-.getCurrentDescrition{
-   
     
-    
-    margin-top: var(--size-5);
-    margin-bottom: var(--size-3);
-    margin-left: var(--size-5);
-   
-    
-}
 
 
-.unlinkProductButton{
 
 
-    margin-top: var(--size-3) !important;
-   
 
 }
+
+
+
+
+
+
+
+
 
 
 .featuresWrapper{
@@ -74,44 +56,54 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: var(--size-4);
 
-    padding: var(--size-5) var(--size-3);
-    border: 1px solid var(--admin-neutral-8);
+    padding: var(--size-3) var(--size-3);
+    border: 1px solid var(--admin-handy-features-border-color);
     margin-left: auto;
 }
 
-.featureButton{
-
+.featuresWrapper button {
     margin: 0;
-    margin-top: var(--size-3);
+    
     padding: var(--size-3) var(--size-2);
     font-size: 12px;
- 
+}
+
+
+
+
+
+
+.emailContentDiv{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-7);
 }
 
 
 
 
 .textArea{
-    color: var(--admin-txt-color);
-    background-color: var(--admin-textArea-bg);
+   
     min-height: var(--size-14);
     max-height: var(--size-17);
-    width: 100%;
-
-    box-sizing: border-box;
-    padding: var(--size-6);
-    font-size: var(--font-size-5);
-    line-height: var(--size-7);
-    padding-bottom: 128px;
-    border-radius: 8px;
-    border: none;
-    outline: none;
-    resize: none;
+   
+    
+    
+    
 }
 
-.textAreaCss{
-    margin-top: var(--size-7);
+
+
+
+.previewButton{
+    width: min-content;
+
+    margin: 0 var(--size-2);
+  
+    
 }
 
 /* .textArea:focus{
@@ -125,12 +117,7 @@
     justify-content: space-between;
 }
 
-.previewButton{
-    margin: var(--size-4) var(--size-2);
-    margin-top: var(--size-7);
-  
-    
-}
+
 
 .saveButton{
     align-self: flex-end;
@@ -148,7 +135,7 @@
     align-items: center;
     border: 1px solid var(--admin-card-border-color);
     border-radius: 8px;
-    margin-top: var(--size-9);
+    
     box-sizing: border-box;
     padding: var(--size-7);
 }
@@ -162,20 +149,7 @@
     width: auto;
   
  
-   margin-top: var(--size-3);
    
 }
 
-.inputProductId::placeholder{
-    font-size: var(--font-size-1);
-}
 
-.saveDescription{
-    
-  
-    
-    margin-top: var(--size-5);
-    margin-bottom: var(--size-3);
-   
-    
-}

@@ -17,10 +17,9 @@ export default function SaveOrdersButton({
         body: JSON.stringify({ dataType, data: newData }),
       });
   
-      if (response.ok) {
-        setData([]);
+      if (response.ok)  setData([]);
         
-      }
+      
     } catch (error) {
       console.error("Fetch error:", error);
     }

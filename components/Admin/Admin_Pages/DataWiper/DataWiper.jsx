@@ -66,13 +66,14 @@ const handleWipeData = async(databaseTable)=>{
       body: JSON.stringify({ dataType: `wipe_${databaseTable}`, data: databaseTable === 'reviews' ? { product_id: productId } : undefined }),
     });
 
-    if (response.ok) {
-      const data = await response.json();
-      if (data.data_wiped) {
+    if (!response.ok) throw new Error('Data wiping error')
+      const {data_wiped} = await response.json();
+      if (!data_wiped) return;
+      
         console.log('Data wiped:', data);
         setDataWipedTable(databaseTable);
-      }
-    }
+      
+    
   } catch (error) {
     console.error('Wipe data error:', error);
   }

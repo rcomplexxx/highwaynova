@@ -141,7 +141,7 @@ export default function PickReturnProducts({orderProducts, returnProducts, setRe
     
     <select
     
-  className={`${styles.productReturnsInput} ${styles.selectItem}`}
+  className={styles.selectItem}
   defaultValue={""}
 
 
