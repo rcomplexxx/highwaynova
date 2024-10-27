@@ -60,13 +60,7 @@
 
 
 
-.campaignType{
-    width: min-content;
-    margin-bottom: var(--size-3);
-    padding:var(--size-3) var(--size-5);
-    border: 1px solid var(--border-color-strong);
 
-}
 
 
 .campaignInput{
@@ -99,7 +93,7 @@
 }
 
 
-.campaignEmailsDiv > div{
+.campaignEmailDiv{
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -109,18 +103,12 @@
 
 
 .showEmailButton{
-    color: var(--admin-txt-color);
-    background-color: transparent;
+    
+    
     background-color: var(--admin-neutral-11);
-    cursor: pointer;
-}
-
-.showEmailButton:active{
-     background-color: var(--admin-neutral-11);
+    
+    
 }
 
 
-.campaignInputEmail{
-   
-    resize:vertical;
-}
+

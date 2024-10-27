@@ -41,13 +41,7 @@
 
 
 
-.campaignType{
-    width: min-content;
-    margin-bottom: var(--size-3);
-    padding:var(--size-3) var(--size-5);
-    border: 1px solid var(--border-color-strong);
 
-}
 
 
 .campaignInput{
@@ -103,8 +97,5 @@
 }
 
 
-.campaignInputEmail{
-   
-    resize:vertical;
-}
+
 

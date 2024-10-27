@@ -52,16 +52,10 @@ export default function ExpressCheckout({
 
         <div className={styles.paymentDiv}>
        
-          <GooglePay
-          
-          
-          
-            
-          
-            
-          />
+          <GooglePay />
         
         </div>
+        
       </div>
 
       <div className={styles.expressCheckoutBottomBorder}>

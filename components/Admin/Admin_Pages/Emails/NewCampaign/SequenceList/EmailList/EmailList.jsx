@@ -50,9 +50,9 @@ export default function EmailList({emails}) {
     const makeEmailCard = (email) =>{
 
         const myEmail= allEmailsData?.find(email2 => {return email2.id==email.id});
-        if(!myEmail)return;
+        if(myEmail)return <EmailCard id={myEmail.id} title={myEmail.title} text={myEmail.text}/>;
 
-        return <EmailCard id={myEmail.id} title={myEmail.title} text={myEmail.text}/>
+       
     }
 
 

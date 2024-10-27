@@ -6,19 +6,33 @@
     height: max-content;
     
   
-
-   
-   
-    margin-bottom: var(--size-9);
-    border-radius: var(--size-2);
+    gap: var(--size-10);
+    
     overflow: hidden;
   }
 
 
-  
 
- 
+
   
+  .mainDiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: var(--size-8);
+   
+    user-select: none;
+     contain: layout;
+  }
+
+
+  .slider{
+    margin-bottom: var(--size-6);
+width: 100vw ;
+
+  }
+
+
   .reviewDiv { 
 
   
@@ -32,44 +46,31 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    gap: var(--size-2);
+    
+    
     box-sizing: border-box;
     border-radius: 4px;
     padding: var(--size-4);
+    padding-top: 20px;
 
-    margin: 0 var(--size-6);
   
 
     font-size: var(--font-size-4);
     font-weight: 400;
-    line-height: 24px;
+    line-height: var(--size-6);
     
     box-shadow: var(--home-review-box-shadow);
     
   }
 
-  
- 
 
-
-
-  
-  .mainDiv {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    min-height: max-content;
-    width: max-content;
-    user-select: none;
-     contain: layout;
-  }
 
 
 
 .starWrapperClassName{
 
   width: 100%;
-  margin-top: var(--size-3);
-  margin-bottom: var(--size-4);
 }
 
   .starClassName{
@@ -82,6 +83,19 @@
 
    
 
+  
+  
+  .reviewText{
+
+    color: var(--home-review-txt-color);
+    text-align: left;
+ 
+    
+   }
+
+
+
+   
   .authorDiv{
 
     
@@ -109,58 +123,45 @@
     color: var(--home-review-author-color);
   }
 
-  
-  
-  .reviewText{
-
-    color: var(--home-review-txt-color);
-    text-align: left;
- 
-    
-   }
  
   
 
  
 
-  .slider{
-    margin-bottom: var(--size-6);
-width: 100vw ;
+  
+ 
+ 
 
+
+
+
+
+
+  
+
+
+
+@media (max-width: 1620px) {
+  .mainDiv{
+    gap: var(--size-9);
   }
- 
- 
 
-
-
-
-
-
-@media (min-width: 1620px) {
-  .reviewDiv {
-    margin-left: var(--size-8);
-    margin-right: var(--size-8);
-  }
 }
 
+@media (max-width: 1420px){
 
-
-@media (min-width: 1420px) {
-  .reviewDiv {
-    margin-left: var(--size-7);
-    margin-right: var(--size-7);
+  .mainDiv{
+    gap: var(--size-8);
   }
+  
 }
 
 
 @media (max-width: 980px)  {
 
-
-  .mainReviewDiv{
-    
-    margin-bottom: var(--size-8);
+  .mainDiv{
+    gap: var(--size-9);
   }
-
  
 
   
@@ -170,7 +171,7 @@ width: 100vw ;
     max-width: var(--size-13);
     max-height: var(--size-13-5);
     width: calc(100vw - var(--size-11));
-    height: calc((100vw - var(--size-11)) * 5 / 4);
+    aspect-ratio: 5/4;
   
     margin-left: var(--size-7);
     margin-right: var(--size-7);
@@ -187,7 +188,7 @@ width: 100vw ;
     .reviewDiv {
       
       width: calc(100vw - var(--size-7));
-      height: calc((100vw - var(--size-7)) * 5 / 4);
+      
       margin-left: var(--size-5);
     margin-right:  var(--size-5);
     }

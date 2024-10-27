@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useLayoutEffect } from "react";
 import styles from "./homeReviews.module.css";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -70,7 +70,7 @@ export default function HomeReviews() {
     variableWidth: true,
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
     };
@@ -99,16 +99,17 @@ export default function HomeReviews() {
         ) : (
           <>
             <Slider {...settings} className={styles.slider}>
-              {reviews.map((review) => (
-                <div className={`carousel-item`} key={review.id}>
+              {reviews.map((review, index) => (
+                
                   <Review
+                    key={index}
                     smallScreen={true}
                     title={review.title}
                     reviewText={review.reviewText}
                     author={review.author}
                     authorImage={review.authorImage}
                   />
-                </div>
+              
               ))}
             </Slider>
           </>

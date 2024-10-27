@@ -52,9 +52,9 @@ const HomePage = ({ products }) => {
 
 
 
-        <Link id='heroShopNow' href="/products" className={styles.linkButton}>
-          Shop Now
-        </Link>
+        <Link id='heroShopNow' href="/products" className={styles.linkButton}>Shop Now</Link>
+
+        
         </picture>
 
       

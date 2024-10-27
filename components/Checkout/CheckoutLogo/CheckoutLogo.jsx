@@ -8,20 +8,11 @@ export default function CheckoutLogo() {
     <div className={styles.logoWrapper}>
     <div className={styles.logoDiv}>
       <Link href='/cart' className={styles.cartLink}>
-      {/* <Image
-                  height={0}
-                  width={0}
-                  sizes="48px"
-                  src="/images/bag.png"
-                  
-                  className={styles.bagImg}
-                  alt="cart"
-                /> */}
-
-                
+             
 <CartIcon styleClassName={styles.bagImg}/>
 
       </Link>
+
       <Link href='/'>
       <Image className={styles.logo} src="/images/lightbook11.png" alt={`logo`} height={0} width={0} sizes={'128px'}/>
       </Link>

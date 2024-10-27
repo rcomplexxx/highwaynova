@@ -22,21 +22,9 @@
     margin-bottom: var(--size-8);
 }
 
-.adminInput{
-    color: var(--admin-login-color);
-    background-color: var(--admin-login-btn-bg);
-    
-    width: 100%;
-  
-    box-sizing: border-box;
-    padding: var(--size-3);
-    font-size: var(--font-size-3);
-    line-height: var(--size-7);
 
-   border: 1px solid var(--border-color-strong);
-   border-radius: 8px;
-   outline: none;
-}
+
+
 
 .verify{
     height: var(--size-7);
@@ -44,16 +32,16 @@
     background-color: var(--admin-login-btn-bg);
 
     margin-top: var(--size-4);
-    padding: var(--size-3);
+ 
     border-radius: 8px;
-   outline: none;
-   box-sizing: border-box;
+
    border: 1px solid var(--border-color-strong);
 
-   cursor: pointer;
-   user-select: none;
+   
 
 }
+
+
 
 .wipeButton{
    
