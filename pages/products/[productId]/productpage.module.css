@@ -359,7 +359,9 @@
 
 
   .notFoundDiv{
+   
     width: 100%;
+
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -368,6 +370,8 @@
     box-sizing: border-box;
     padding: 0 var(--size-6);
    padding-bottom: var(--size-8);
+
+margin: auto;
   
 }
 
