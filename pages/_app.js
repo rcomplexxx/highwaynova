@@ -208,12 +208,16 @@ export default function App({ Component, pageProps }) {
 
 
   return (
-    <div id="hronika" className="hronika">
+    <>
+    
       <DefaultSeo {...SEO} />
       {emailPopupOn && <SubscribePopup />}
-      {!router.pathname.includes('admin') && <Navbar />}
+      
+      {!router.pathname.includes('admin') && !router.pathname.includes('checkout') &&  <Navbar />}
+      <div id="hronika" className="hronika">
       <Component {...pageProps} />
-      {!router.pathname.includes('admin') && <Footer />}
-    </div>
+      </div>
+      {!router.pathname.includes('admin') && !router.pathname.includes('checkout') &&  <Footer />}
+      </>
   );
 }

@@ -8,9 +8,8 @@
 }
 
 .checkoutMainContainer {
-  position: absolute;
-  top:0;
-  left:0;
+
+  
   background-color: var(--checkout-bg);
   width:100%;
     display: flex;
