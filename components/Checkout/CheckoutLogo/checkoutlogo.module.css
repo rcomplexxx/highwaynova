@@ -22,10 +22,7 @@
 
 }
 
-.bagImg{
-    height: var(--size-6);
-    width: var(--size-6);
-}
+
 
 .cartLink{
     position: absolute;
@@ -34,7 +31,10 @@
     transform: translateY(-50%);
 }
 
-
+.bagImg{
+    height: var(--size-6);
+    width: var(--size-6);
+}
 
 
 .logo{

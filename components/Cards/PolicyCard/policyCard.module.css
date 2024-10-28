@@ -8,10 +8,6 @@
 
 .policy_main_div{
   
-  
-  
-   min-height: calc(100vh - var(--navbar-height));
-    min-height: calc(100svh - var(--navbar-height));
  
   width: calc(100% - var(--size-10));
   max-width: var(--size-17);
