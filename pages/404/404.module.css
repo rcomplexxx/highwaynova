@@ -10,6 +10,7 @@
     box-sizing: border-box;
     padding: 0 var(--size-6);
    padding-bottom: var(--size-8);
+   margin: auto;
 }
 
 .title404{
