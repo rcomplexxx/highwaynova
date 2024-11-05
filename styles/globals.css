@@ -1,5 +1,6 @@
 
 
+
  .hronika{
  
   position: relative;
@@ -18,17 +19,13 @@
 
 }
 
-.mainDiv{
-
-  width: 100%;
- min-height: calc(100vh - var(--size-9));
 
 
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
+
+
+
+
+
 
 
 
@@ -296,6 +293,7 @@ p {
   --size-18: 1024px;
   --size-18-5: 1102px;
   --size-19: 1280px;
+  --size-20: 1680px;
 
 
   --navbar-height: 104px;

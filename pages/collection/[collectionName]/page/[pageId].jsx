@@ -25,6 +25,8 @@ export default function Collection({
       {/* <Products showAll={true} products={products}></Products> */}
 
       <div className={styles.collectionInfo}>
+
+
         <div className={styles.collectionText}>
           <h1 className={styles.collectionName}>{collectionFullName}</h1>
           <span className={styles.collectionDescription}>
@@ -32,7 +34,7 @@ export default function Collection({
           </span>
         </div>
      
-     <div className={styles.collectionImageDiv}>
+    
           <Image
             src={`/images/${collectionImage}`}
             priority={true}
@@ -44,7 +46,6 @@ export default function Collection({
             height={0}
           />
        
-       </div>
       </div>
 
      

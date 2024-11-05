@@ -49,10 +49,12 @@
 
 .masonry{
 
+  width: 100%;
 
-  width: calc(100% - var(--size-7));
+
    
   box-sizing: border-box;
+  padding: 0 var(--size-5);
   padding-bottom: var(--size-6);
 
  column-count: 4;
@@ -211,9 +213,9 @@ column-fill:balance;
 
     .masonry{
   
-      width: calc(100% - var(--size-11));
-     
-   
+      
+      padding: 0 var(--size-9);
+      padding-bottom: var(--size-6);
   }
 
 
@@ -250,8 +252,8 @@ column-fill:balance;
 
     .masonry{
   
-      width: calc(100% - var(--size-8));
-     
+      padding: 0 var(--size-6);
+      padding-bottom: var(--size-6);
    
   }
 
@@ -283,8 +285,8 @@ column-fill:balance;
 
     .masonry{
   
-      width: calc(100% - var(--size-7));
-     
+      padding: 0 var(--size-5);
+      padding-bottom: var(--size-6);
    
   }
 

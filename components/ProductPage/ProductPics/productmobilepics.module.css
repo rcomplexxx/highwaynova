@@ -125,26 +125,20 @@
   .grid_container {
     width: 100%;
     margin-top: var(--size-5);
+
+    display: grid;
   
     grid-template-columns: repeat(4, 1fr); /* Two columns */
-    grid-gap: var(--size-4); /* Gap between grid items */
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    flex-wrap: wrap;
+    gap: var(--size-4); /* Gap between grid items */
+   
+    
+    
    
     
   }
 
 
-  .productImage2Div{
-    width: calc(25% - 9px);
-   
   
-    
- 
-  }
-
   
 
 
@@ -321,14 +315,8 @@
         display: inline-block !important;
       }
   
-      .productImage{
-        
-        width:100%;
-      height: 100%;
-      object-fit: cover;
-      
     
-      }
+      
 
       .grid_container{
         display:none;
@@ -339,16 +327,7 @@
      
   
       
-  
-  
-  
-    .productImage2{
       
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-  
-    }
   
 
   }

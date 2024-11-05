@@ -287,7 +287,10 @@
     .checkout_left{
       margin-right: var(--size-6);
       margin-left: var(--size-6);
-      width: calc(100% - var(--size-11));
+      width: 100%;
+
+      box-sizing: border-box;
+      padding: 0 var(--size-9);
     }
 
    
@@ -316,7 +319,8 @@
 
   @media (max-width: 600px)  {
     .checkout_left{
-      width: calc(100% - var(--size-8));
+
+      padding: 0 var(--size-6);
     }
 
     .checkoutFooter{

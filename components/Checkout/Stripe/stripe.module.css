@@ -41,9 +41,9 @@
     color: var(--paynow-stripe-button-color);
     background-color: var(--paynow-stripe-button-bg);
    
-    margin-top: var(--size-6) ;
+    margin: var(--size-6) auto;
     margin-bottom: var(--size-5);
-    margin-left: var(--size-3);
+   
     
     border: 1px solid var(--main-button-border-color);
     border-radius: 4px;

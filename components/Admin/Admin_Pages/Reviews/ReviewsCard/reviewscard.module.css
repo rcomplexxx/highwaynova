@@ -175,11 +175,10 @@
 
 .imagesDiv{
     height: auto;
-    width: calc(100% +  var(--size-5));
+    
 
     
    
-    padding-right:  var(--size-5);
     display: flex;
     justify-content: flex-start;
     align-self: flex-start;

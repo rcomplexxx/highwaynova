@@ -33,8 +33,8 @@
     max-width: var(--size-17);
     max-height: var(--size-17);
 
-    height: calc(100% - var(--size-7));
-    width: calc(100% - var(--size-7));
+    height: 100%;
+    width: 100%;
 
     display: flex;
     flex-direction: column;
@@ -255,20 +255,22 @@
 
   .userImagesDivWrapper{
    
+    
     width: 100%;
    
+    margin-top: var(--size-9);
+    margin-bottom: var(--size-9);
    
   }
 
   .userImagesDiv{
     position: relative;
    
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    flex-wrap:wrap;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* Creates 5 equal columns */
    
-    margin: var(--size-9) 0;
+    
+   
     padding: var(--size-3);
     box-sizing: border-box;
     border: 1px solid var(--writing-accent-color);
@@ -287,7 +289,7 @@
     display: flex;
     align-items: center;
   
-    width: calc(100% / 5 - var(--size-4));
+    
     aspect-ratio: 1;
     margin: 6px;
     position: relative;
@@ -329,7 +331,31 @@
   }
 
  
+  .addImageDiv{
 
+    
+    aspect-ratio: 1;
+
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
+
+
+    border-radius: 4px;
+    
+    margin: 6px;
+
+    border: 1px solid var(--writing-accent-color);
+
+    
+
+    font-size: var(--font-size-3);
+   
+   cursor: pointer;
+  }
 
 
 
@@ -452,28 +478,7 @@
 
 
 
-  .addImageDiv{
-
-    width: calc(100% / 5 - var(--size-4));
-    aspect-ratio: 1;
-
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-
-    box-sizing: border-box;
-    border: 1px solid var(--writing-accent-color);
-
-    border-radius: 4px;
-    margin: 6px;
-    
-
-    font-size: var(--font-size-3);
-   
-   cursor: pointer;
-  }
+ 
 
 
   @media (hover: hover) {
@@ -579,12 +584,20 @@
     display:flex;
     justify-content: space-between;
     align-items: flex-start;
+    gap: var(--size-5);
     margin: var(--size-7);
   }
 
-  .personInfoDiv{
-    width: calc(50% - var(--size-3))
+  .personInfo > div{
+    flex:1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .personInfo label{
     
+    display: flex;
+    align-items: center;
   }
 
 
@@ -610,11 +623,7 @@
     
   }
 
-  .personInfoDiv label{
-    
-    display: flex;
-    align-items: center;
-  }
+
 
 
   .personEmailDiv{
@@ -663,7 +672,7 @@
   .requiredError{
 
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     color: var(--error-color);
     margin-left: var(--size-1);
     font-size: var(--font-size-2);
@@ -719,26 +728,40 @@
   
   @media (max-width: 980px)  {
   
+
+    .userImagesDivWrapper{
+   
+    
+      width: 100%;
+     
+      margin-top: var(--size-8);
+    margin-bottom: var(--size-5);
+    }
   
    
 
-    .personInfoDiv{
-      width: calc(50% - var(--size-2))
+    .personInfo{
+      gap: var(--size-3);
       
     }
-  
 
+    
+  
 
 
   }
 
-  @media( max-width: 900px){
+
+
+
+
+  @media(max-width: 900px){
     .mainReviewDiv{
       position: relative;
       max-width: none;
       max-height: none;
-      height: 100%;
-      width: 100%;
+ 
+      
       transform: translatey(100%), scale(1);
       
       animation: spawnWriteReviewMob 0.5s ease forwards;
@@ -746,16 +769,13 @@
 
  
 
-    .addImageDiv{
-      
-      width: calc(100% / 3 - var(--size-4));
-     
-    }
+  
+    
   
 
-    .userImageDiv{
+    .userImagesDiv{
     
-      width: calc(100% / 3 - var(--size-4));
+      grid-template-columns: repeat(3, 1fr); 
      
     }
 
@@ -767,10 +787,14 @@
    
 
   
-
-    .reviewInfoDiv{
-      width: calc(100% - var(--size-8));
+    .userImagesDivWrapper{
+   
+    
+    
+    margin-bottom: var(--size-5);
     }
+ 
+    
 
     .writeReviewFooterMobile{
       display: flex;

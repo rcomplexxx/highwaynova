@@ -283,7 +283,7 @@ const handleBack = useCallback(() => {
                   <h1>About you</h1>
                   <div className={styles.personInfo}>
 
-                    <div className={styles.personInfoDiv}>
+                    <div>
                       <label>
                         First Name <span className={styles.required}>*</span>
                       </label>
@@ -298,7 +298,7 @@ const handleBack = useCallback(() => {
                       
                     </div>
 
-                    <div className={styles.personInfoDiv}>
+                    <div>
                       <label>Last Name</label>
                       <input
                         className={styles.personInfoInput}

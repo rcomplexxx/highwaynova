@@ -213,11 +213,11 @@ export default function App({ Component, pageProps }) {
       <DefaultSeo {...SEO} />
       {emailPopupOn && <SubscribePopup />}
       
-      {!router.pathname.includes('admin') && !router.pathname.includes('checkout') &&  <Navbar />}
+      {!router.pathname.startsWith('/admin') && !router.pathname.startsWith('/checkout') && !router.pathname.startsWith('/thank-you') &&  <Navbar />}
       <div id="hronika" className="hronika">
       <Component {...pageProps} />
       </div>
-      {!router.pathname.includes('admin') && !router.pathname.includes('checkout') &&  <Footer />}
+      {!router.pathname.startsWith('/admin') && !router.pathname.startsWith('/checkout')&& !router.pathname.startsWith('/thank-you') &&  <Footer />}
       </>
   );
 }

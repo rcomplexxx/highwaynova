@@ -149,7 +149,7 @@ export default function PaymentSection({ checkFields }) {
 
 
 
-        <div className={`${styles.paymentOptionDiv} ${styles.lastPaymentOptionField} ${paymentMethod==="paypal" && styles.selectedOption +" "+ styles.lastOptionSelected}`} onClick={()=>{setPaymentMethod("paypal")}} >
+        <div className={`${styles.paymentOptionDiv} ${styles.lastPaymentOptionField} ${paymentMethod==="paypal" && `${styles.selectedOption} ${styles.lastOptionSelected}`}`} onClick={()=>{setPaymentMethod("paypal")}} >
 
 
            <div className={styles.pickOption}>

@@ -572,10 +572,14 @@ const handleCCBlur= ()=>{
 
 
 
-    <button className={`${styles.payNowButton} ${(paymentProcessed || paymentProcessing) && styles.payNowButtonPaying}`} onClick={handleStripePay}>{paymentProcessed?<CorrectIcon styleClassName={styles.correctIcon}/>:
+    <button className={`${styles.payNowButton} ${(paymentProcessed || paymentProcessing) && styles.payNowButtonPaying}`} 
+    onClick={handleStripePay}>{
+      paymentProcessed?<CorrectIcon styleClassName={styles.correctIcon}/>:
     paymentProcessing?
     <Spinner/>
     :"Pay now"}</button>
+
+
     {stripeError?.stripeServerError && <span className={styles.paymentError}><ErrorIcon/>{stripeError.stripeServerError}</span>}
     </div>
   );

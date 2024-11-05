@@ -283,7 +283,7 @@ useLayoutEffect(()=>{
                 
                   <Image
                   key={index}
-                    className={`${styles.productImage} ${styles.productImage2Div} ${
+                    className={`${styles.productImage} ${
                       imageIndex == index && styles.selectedImage
                     }`}
                     onClick={() => {handleChangeImage(index, window.innerWidth>=980) }}

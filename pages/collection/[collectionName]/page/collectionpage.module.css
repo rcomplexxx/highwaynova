@@ -15,6 +15,8 @@
 
 
 .collectionInfo{
+  
+  background-color: var(--collection-info-bg);
 
   height: var(--size-14);
   width: 100%;
@@ -24,11 +26,11 @@
   align-items: center;
   gap: var(--size-9);
 
-  padding: var(--size-7);
-  margin-bottom: var(--size-8);
-  background-color: var(--collection-info-bg);
 
   box-sizing: border-box;
+  padding: var(--size-7);
+  margin-bottom: var(--size-8);
+
   
   
   contain: content;
@@ -36,12 +38,16 @@
 
 
 .collectionText{
+
+  flex: 1;
+
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   
   max-width: var(--size-15);
-  width: calc(50% - var(--size-5));
+
+ 
   box-sizing: border-box;
 
 
@@ -60,7 +66,7 @@
 
 .collectionDescription{
   color: var(--collection-description-txt-color);
-  margin-bottom: 0;
+ 
   font-size: var(--font-size-2);
   font-style: italic;
   font-weight: 400;
@@ -68,19 +74,20 @@
 }
 
 
-.collectionImageDiv{
 
-  max-width: var(--size-15);
-  width: calc(50% - var(--size-5));
-  height: 100%;
 
-}
+
+
+
 
 
 .collectionImage{
 
+  flex: 1;
+
 height: 100%;
-width: 100%;
+max-width: var(--size-15);
+
 
  object-fit: contain;
   border-radius: 4px;
@@ -94,11 +101,11 @@ width: 100%;
   
 
   .collectionInfo{
-    padding: var(--size-4) var(--size-4);
+    padding: var(--size-4);
     height: auto;
     width: calc(100% - var(--size-10));
     flex-direction: column;
-    align-items: center;
+    
     gap: var(--size-7);
     border-radius: 4px;
   }
@@ -108,7 +115,7 @@ width: 100%;
     margin-top: var(--size-2);
   }
 
-  .collectionImageDiv{
+  .collectionImage{
 
     max-width: none;
     width: 100%;
@@ -135,7 +142,7 @@ width: 100%;
 
 @media (max-width: 600px){
   .collectionInfo{
-    padding: var(--size-3) var(--size-3);
+    padding: var(--size-3);
     width: calc(100% - 40px);
 
   }
