@@ -237,7 +237,7 @@ useLayoutEffect(()=>{
 
         initialSlide={variantImageIndex.imageIndex}
   
-    className={styles.slider2} 
+         
     
     onSwiper={(swiperMiniInstance) => {
       swiperMiniRef.current = swiperMiniInstance;  // Store Swiper instance in ref

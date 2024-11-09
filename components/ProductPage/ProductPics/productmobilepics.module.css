@@ -99,6 +99,7 @@
 
 
   .slider2Suiter{
+    display: none;
     position: relative;
     width: 100%;
     contain: content;
@@ -106,11 +107,7 @@
 
 
 
-  .leftArrowDiv{
-    display: none;
- 
-  }
-
+  
 
   
  
@@ -174,18 +171,12 @@
   }
 
   
-@media(min-width: 980px){
 
-
- 
-
-  .slider2Suiter{
-    display: none;
-  }
-}
-
+  
 
   @media(max-width: 980px){
+
+  
 
     .productPicsWrapper{
       margin-top: var(--size-6);
@@ -234,14 +225,19 @@
 
 
 
-  .slider2{
-    width: calc(100% - var(--size-10)) !important;
-    margin-bottom: var(--size-6);
-    margin-top: var(--size-6);
 
+  .slider2Suiter{
+    display: block;
 
+    
+
+    box-sizing: border-box;
+    padding: var(--size-6) var(--size-8);
   }
 
+
+
+  
   
 
 
@@ -365,15 +361,18 @@
   }
 
   @media (max-width: 380px) {
-    .slider2{
+ 
     
-      margin-top: var(--size-5);
-  
-  
-    }
+
+    .slider2Suiter{
+    
+      
+      padding: var(--size-6) var(--size-8);
   
     
   }
+
+}
 
 
   @keyframes spawnAddToCart {
