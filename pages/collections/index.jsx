@@ -23,13 +23,15 @@ export default function Collections({ collections}) {
 
 
 
-      <div className={styles.toolbar}>
+      <div className={styles.mainDiv}>
       <h1>Collections</h1>
       <div className={styles.mainGridStyle}>
         {collections.map((collection, i) => (
         
         <div key={i} className={styles.root}>
         <Link href={"collection/" + collection.name.toLowerCase().replace(/ /g, '-')+'/page/1'}>
+
+        
           <div className={styles.media}>
            
            
@@ -49,7 +51,7 @@ export default function Collections({ collections}) {
           </div>
         </Link>
      
-          <p className={styles.cardContentText}>{collection.name}</p>
+          <span className={styles.cardContentText}>{collection.name}</span>
          
        
   

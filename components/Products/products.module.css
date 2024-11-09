@@ -1,4 +1,4 @@
-.toolbar {
+.mainDiv {
   max-width: var(--size-19);
     width: 100%;
 
@@ -53,7 +53,7 @@
 
 
   @media (max-width: 980px)  {
-    .toolbar{
+    .mainDiv{
       padding: 0 var(--size-9);
     }
 
@@ -76,7 +76,7 @@
   }
 
   @media (max-width: 900px){
-    .toolbar{
+    .mainDiv{
       padding: 0 var(--size-8);
     }
   }
@@ -84,7 +84,7 @@
  
   
   @media (max-width: 600px)  {
-    .toolbar{
+    .mainDiv{
       padding: 0 20px;
    
     }
@@ -105,7 +105,7 @@
 
   @media (max-width: 340px) {
 
-    .toolbar{
+    .mainDiv{
       padding: 0 var(--size-4);
     }
 

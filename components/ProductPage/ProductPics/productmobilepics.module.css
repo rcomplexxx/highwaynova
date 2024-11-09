@@ -252,7 +252,7 @@
     aspect-ratio: 1;
     overflow: hidden;
    
-    margin: 0 var(--size-3) !important;
+    margin: 0 var(--size-3);
   }
 
   .leftArrowDiv{
@@ -302,10 +302,6 @@
 
 
 
-
-
-
- 
 
 
      

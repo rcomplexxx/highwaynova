@@ -6,9 +6,10 @@ import styles from './ourstory.module.css'
 
 export default function OurStory() {
   return (
-    <div className="centered">
+    
   
       <div className={styles.mainDiv}>
+        
         <h1>Our story</h1>
         <div className={styles.mainContent}>
         <Image src='/images/our_story1.jpeg' className={styles.ourStoryImage} sizes="100vw" height={0} width={0}/>
@@ -48,7 +49,7 @@ export default function OurStory() {
         <p>Thank you for taking time to read my story.</p>
         </div>
       </div>
-      </div>
+      
     </div>
   );
 }

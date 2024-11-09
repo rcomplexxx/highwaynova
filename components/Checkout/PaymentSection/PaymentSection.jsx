@@ -132,16 +132,15 @@ export default function PaymentSection({ checkFields }) {
         </div>
 
 
-        <div id='creditCardFields' ref={creditCardPaymentFieldsRef}  className={`${styles.paymentFields} ${styles.creditCardField} 
-        ${paymentMethod==="creditcard" && styles.selectedField}`}>
-            <div className={styles.paymentFieldsSpaceAdjuster}> 
+        <div id='creditCardFields' ref={creditCardPaymentFieldsRef}  
+        className={`${styles.paymentFields} ${styles.creditCardField} ${paymentMethod==="creditcard" && styles.selectedField}`}>
+        
           <StripeWrapper
-       
+       //aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
        
        
             checkFields={checkFields}
           />
-          </div>
         </div>
 
 
@@ -149,7 +148,9 @@ export default function PaymentSection({ checkFields }) {
 
 
 
-        <div className={`${styles.paymentOptionDiv} ${styles.lastPaymentOptionField} ${paymentMethod==="paypal" && `${styles.selectedOption} ${styles.lastOptionSelected}`}`} onClick={()=>{setPaymentMethod("paypal")}} >
+        <div className={`${styles.paymentOptionDiv} ${styles.lastPaymentOptionField} ${paymentMethod==="paypal" && `${styles.selectedOption} ${styles.lastOptionSelected}`}`} 
+        
+        onClick={()=>{setPaymentMethod("paypal")}} >
 
 
            <div className={styles.pickOption}>
