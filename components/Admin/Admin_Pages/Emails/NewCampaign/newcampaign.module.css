@@ -115,7 +115,7 @@
     box-sizing: border-box;
 
     padding: var(--size-5);
-    border: 1px solid var(--border-color-strong);
+    border: 1px solid var(--admin-border-color-mid);
 
     gap: var(--size-4);
     

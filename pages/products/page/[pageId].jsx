@@ -19,9 +19,10 @@ const ProductPage = ({  pageId, products, links }) => {
       
       <NextSeo {...unimportantPageSeo(`/products/page/${pageId + 1}`)}/>
       <Products
-        showAll={true}
+      
+      
         products={products}
-        productListTitle= "Trending products"
+        gridTitle= "Trending products"
       
       />
       <PageNumber mainLink='/products/page/' links={links} pageId={pageId}/>

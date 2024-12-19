@@ -9,7 +9,7 @@ export default function ProductPage({ products, links }) {
   return (
     <>
       <NextSeo {...unimportantPageSeo('/products')}/>
-      <Products showAll={true} products={products} productListTitle="Trending products"/>
+      <Products  products={products} gridTitle="Trending products"/>
 
       <PageNumber mainLink='/products/page/' links={links} pageId={1}/>
       

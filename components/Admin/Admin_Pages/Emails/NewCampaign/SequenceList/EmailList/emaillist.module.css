@@ -4,24 +4,31 @@
 
 .timeGapDiv{
   
-  background-color: var(--admin-textArea-bg);
+  
   min-width: var(--size-14);
   width: 100%;
   align-self: flex-start;
 
-  box-sizing: border-box;
-  padding:var(--size-3);
+
+
+
 
   margin-top: var(--size-3);
   margin-bottom: calc(-1 * var(--size-7));
- /* border: 1px solid var(--border-color-strong); */
- border: none;
+  
+  box-sizing: border-box;
+  padding: 0 var(--size-3);
 
- border-radius: 8px;
 
-  font-size: var(--font-size-5);
+  
+
+  
+
+  font-size: var(--font-size-3);
   line-height: var(--size-7);
  
 
- outline: none;
+  
 }
+
+

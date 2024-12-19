@@ -1,14 +1,24 @@
 .emailContentDiv{
     width: 100%;
     
-    box-sizing: border-box;
-    padding-bottom: var(--size-8);
-    padding-top: var(--size-8);
-    border-bottom: 1px solid green;
+ 
+    
+    
 
     display: flex;
     flex-direction: column;
     gap: var(--size-6);
+
+    
+
+    box-sizing: border-box;
+    
+    padding: var(--size-5);
+    margin-top: var(--size-7);
+    margin-bottom: var(--size-7);
+
+    border: 1px solid var(--admin-border-color-mid);
+    border-radius: 4px;
 
    
 }
@@ -55,7 +65,7 @@
   
     
     
-   /* border: 1px solid var(--border-color-strong); */
+    
  
    
 }

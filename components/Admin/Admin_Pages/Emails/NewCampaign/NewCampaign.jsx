@@ -76,6 +76,7 @@ export default function NewCampaign({sequences, setEmailData}) {
    
 
       let newCampaignData = {title:title, sequenceId: linkedSequenceId, sendingDateInUnix:sendDate,
+        targetType: targetTraffic,
         targetCustomers: targetTraffic, markTraffic: markTraffic
       };
 

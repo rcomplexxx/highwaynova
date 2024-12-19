@@ -224,7 +224,7 @@ try {
 
         
       
-          <h2>Linked order</h2>
+      
           <OrderCard
             
 
@@ -239,7 +239,7 @@ try {
                 packageStatus={linkedOrder.packageStatus}
                 
                
-                productReturnsPageStyle ={true}
+                productReturnOrderLinkedCard ={true}
               />
 
           <button 

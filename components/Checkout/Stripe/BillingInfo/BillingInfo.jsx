@@ -78,11 +78,8 @@ export default function BillingInfo({isOpen, errors, setErrors}){
            id="billingEmail"
            placeHolder='Email'
               type="text"
-              name="name"
               handleChange={handleChange} 
-            //  handleBlur={(event)=>{if(!cardStatesEntered.cardHolderName) return;
-       
-            //   if(event.target.value==='') setErrors({ ...errors, cardHolderName: 'Enter a valid card number' });}}
+            
              error={errors.billingEmail}
             />
     
@@ -112,11 +109,8 @@ export default function BillingInfo({isOpen, errors, setErrors}){
            id="billingAddress"
            placeHolder='Address'
               type="text"
-              name="name"
               handleChange={handleChange} 
-            //  handleBlur={(event)=>{if(!cardStatesEntered.cardHolderName) return;
-       
-            //   if(event.target.value==='') setErrors({ ...errors, cardHolderName: 'Enter a valid card number' });}}
+            
              error={errors.billingAddress}
             />
     
@@ -134,11 +128,9 @@ export default function BillingInfo({isOpen, errors, setErrors}){
                        id="billingApt"
                        placeHolder='Apartment, suite, etc. (Optional)'
                           type="text"
-                          name="name"
                           handleChange={handleChange}   
-                        //  handleBlur={(event)=>{if(!cardStatesEntered.cardHolderName) return;
-                   
-                        //   if(event.target.value==='') setErrors({ ...errors, cardHolderName: 'Enter a valid card number' });}}
+                    
+                          
                          error={errors.billingApt}
                         />:<span className={styles.aptAdder} onClick={()=>{setShowApt(true);}}>+ Add apartment, suite etc.</span>}
                 
@@ -152,11 +144,9 @@ export default function BillingInfo({isOpen, errors, setErrors}){
            id="billingCity"
            placeHolder='City'
               type="text"
-              name="name"
               handleChange={handleChange}
-            //  handleBlur={(event)=>{if(!cardStatesEntered.cardHolderName) return;
-       
-            //   if(event.target.value==='') setErrors({ ...errors, cardHolderName: 'Enter a valid card number' });}}
+        
+              
              error={errors.billingCity}
             />
 
@@ -164,11 +154,10 @@ export default function BillingInfo({isOpen, errors, setErrors}){
            id="billingState"
            placeHolder='State'
               type="text"
-              name="name"
+             
               handleChange={handleChange}
-            //  handleBlur={(event)=>{if(!cardStatesEntered.cardHolderName) return;
-       
-            //   if(event.target.value==='') setErrors({ ...errors, cardHolderName: 'Enter a valid card number' });}}
+           
+              
              error={errors.billingState}
             />
 
@@ -176,11 +165,9 @@ export default function BillingInfo({isOpen, errors, setErrors}){
            id="billingZipcode"
            placeHolder='ZIP code'
               type="text"
-              name="name"
+              
               handleChange={handleChange} 
-            //  handleBlur={(event)=>{if(!cardStatesEntered.cardHolderName) return;
-       
-            //   if(event.target.value==='') setErrors({ ...errors, cardHolderName: 'Enter a valid card number' });}}
+            
              error={errors.billingZipcode}
             />
     
@@ -194,11 +181,9 @@ export default function BillingInfo({isOpen, errors, setErrors}){
            id="billingPhone"
            placeHolder='Phone (optional)'
               type="text"
-              name="name"
+              
               handleChange={handleChange}  
-            //  handleBlur={(event)=>{if(!cardStatesEntered.cardHolderName) return;
-       
-            //   if(event.target.value==='') setErrors({ ...errors, cardHolderName: 'Enter a valid card number' });}}
+            
              error={errors.billingPhone}
              children={ <FloatingBadge message={'In case we need to contact you about your order'}/>}
             />

@@ -65,8 +65,8 @@ async function updateDb (dbConnection, resReturn, table, data, revalidateReviews
               
               
                if(changedOrder.supplierCost!==undefined) 
-                await dbConnection.query(`UPDATE orders SET packageStatus = ?, supplyCost = ? WHERE id = ?`, [changedOrder.packageStatus, changedOrder.supplierCost, changedOrder.id]);
-               else await dbConnection.query(`UPDATE orders SET packageStatus = ? WHERE id = ?`, [changedOrder.packageStatus, changedOrder.id]);
+                await dbConnection.query(`UPDATE orders SET packageStatus = ?, supplyCost = ?, items = ? WHERE id = ?`, [changedOrder.packageStatus, changedOrder.supplierCost, changedOrder.items, changedOrder.id]);
+               else await dbConnection.query(`UPDATE orders SET packageStatus = ?, items = ? WHERE id = ?`, [changedOrder.packageStatus, changedOrder.items, changedOrder.id]);
     
             }
     

@@ -327,8 +327,8 @@ export default function ProductPage({ product, description, images, startReviews
                
               
                 const items = bundleVariants.length > 0
-                ? bundleVariants.map(cp => ({ id: product.id, quantity: cp.quantity, variant: cp.name }))
-                : [{ id: product.id, quantity, variant: variant?.name }];
+                ? bundleVariants.map(cp => ({ id: product.id, quantity: cp.quantity, variant: cp.name, ordered: false }))
+                : [{ id: product.id, quantity, variant: variant?.name, ordered: false }];
 
                 const totalQuantity = product.bundle && bundleVariants.length > 0 
                 ? bundleVariants.reduce((total, cp) => total + cp.quantity, 0) 

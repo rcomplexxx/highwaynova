@@ -43,14 +43,10 @@ const SequenceCard = ({id, title, sequenceEmails, emails})=>{
     return <div className={styles.campaignDiv}>
      
 
-<div className={styles.idDiv}> 
+<div className={styles.campaignHeader}> 
 
 
-<div className={styles.currentId}>
-
-<span className={styles.currentIdSpan}>sequence id: </span>
-{id}
-</div>
+<span className={styles.id}>{id}</span>
 
 
 
@@ -97,8 +93,10 @@ const SequenceCard = ({id, title, sequenceEmails, emails})=>{
 </div>
 
 
-<input value={title} className={styles.campaignInput} placeholder='Campaign title'/>
-{/* {campaign.emails.map(email=>{return })} */}
+<input value={title} placeholder='Campaign title'/>
+
+
+<div className={styles.infoArea}>
 Emails
 <div className={`${styles.campaignEmailsDiv}`} placeholder='Included emails'>
 
@@ -109,7 +107,7 @@ Emails
 </div>
 })}
 
-
+</div>
 
 </div>
 
@@ -141,6 +139,9 @@ handleSaveEmail = {async (id, emailTitle, emailTextHtml) => {
 }}
 
 />}
+
+
+
 </div>
 
 }

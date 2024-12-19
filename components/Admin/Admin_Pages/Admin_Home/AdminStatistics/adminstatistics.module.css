@@ -56,7 +56,7 @@
     align-items: center;
     margin:  0;
     padding: var(--size-3) 0;
-    border-bottom: 1px solid var(--border-color-weak);
+    border-bottom: 1px solid var(--admin-border-color-weak);
    
 }
 
@@ -70,7 +70,7 @@
     flex-direction: column;
     align-items: center;
     padding: var(--size-3) 0;
-    border-bottom: 1px solid var(--border-color-weak);
+    border-bottom: 1px solid var(---admin-border-color-weak);
 }
 
 .datePicker{
@@ -130,10 +130,10 @@
     justify-content: center;
     align-items: center;
     border-radius: 4px;
-    border: 1px solid var(--checkout-input-border-color);
+    border: 1px solid var(--admin-border-color-mid);
     flex-shrink: 0;
 
-    box-shadow: var(--checkbox-unchecked-box-shadow);
+    box-shadow: var(--admin-checkbox-unchecked-box-shadow);
 
     transition: box-shadow 0.2s ease;
 
@@ -144,12 +144,12 @@
 
 
   .onlyFulfilledOrdersDiv:focus  .onlyFulfilledOrdersChecker{
-    border: 1px solid var(--checkbox-checked-bg-color);
+    border: 1px solid var(--admin-checkbox-checked-bg);
   }
   
 
   .onlyFulfilledOrdersChecked{
-    box-shadow: var( --checkbox-checked-box-shadow);
+    box-shadow: var( --admin-checkbox-checked-box-shadow);
   }
 
   

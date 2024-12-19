@@ -12,17 +12,27 @@
 
 
 .campaignDiv{
-    color: var(--admin-txt-color-weak);
     width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-6);
+
+    box-sizing: border-box;
     
-    padding-top: var(--size-6);
-    padding-bottom: var(--size-9);
-    border-bottom: 1px solid green;
+    padding: var(--size-5);
+    margin-top: var(--size-7);
+    margin-bottom: var(--size-7);
+
+    border: 1px solid var(--admin-border-color-weak);
+    border-radius: 4px;
 }
 
 
 
-.idDiv{
+
+
+.campaignHeader{
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -30,18 +40,23 @@
     margin-bottom: var(--size-3);
 }
 
-.currentId{
-   
-    font-size: var(--font-size-8);
-    
-   
+
+
+.id{
+
+    height: max-content;
+    width: max-content;
+    aspect-ratio: 1;
+    font-size: var(--font-size-7);
+
+    box-sizing: border-box;
+    padding: var(--size-3);
+    border: 1px solid var(--admin-border-color-weak);
+
 }
 
-.currentIdSpan{
-    font-size: var(--font-size-4);
-    opacity: 0.18;
-    color: var(--admin-txt-color);
-}
+
+
 
 
 .deleteSequenceButton{
@@ -63,15 +78,13 @@
 
 
 
-.campaignInput{
-    
-  
-    
-   margin-bottom: var(--size-6);
 
-   
+
+.infoArea{
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-3);
 }
-
 
 
 

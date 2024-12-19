@@ -4,6 +4,9 @@ import SupplierCostInput from "./SupplierCostInput/SupplierCostInput";
 import products from '@/data/products.json'
 import coupons from '@/data/coupons.json'
 import Image from "next/image";
+import { CorrectIcon, ExternalUrl } from "@/public/images/svgs/svgImages";
+import Link from "next/link";
+import productLinks from '@/data/server_data/product_links.json'
 
 export default function OrderCard({
    index,
@@ -13,7 +16,7 @@ export default function OrderCard({
   packageStatus,
   existingSupplierCosts,
   handleChangedOrdersArray= ()=>{},
-  productReturnsPageStyle=false
+  productReturnOrderLinkedCard
 }) {
 
 
@@ -72,22 +75,57 @@ const changePs = () => {
    }
  };
 
+
+ const changeItemStatus = (itemId, variant) => {
+
+   console.log('hello!')
+
+   
+
+   const newItems= infoObj.items.map(item=>{return item.id===itemId && variant===item.variant?{...item, ordered: !item.ordered} : item});
+ 
+     const update = { id: infoObj.id, items: JSON.stringify(newItems) };
+
+     if(newItems.every(item => item.ordered)) {
+      
+      if(currentPackageStatus=== 0) setCurrentPackageStatus(1)
+
+     }
+
+     else{
+      if(currentPackageStatus===1 || currentPackageStatus=== 2) setCurrentPackageStatus(0)
+
+     }
+     
+ 
+     
+ 
+     handleChangedOrdersArray(update);
+   
+ };
+
+
+
  const statusLabels = ["Not Ordered", "Ordered", "Completed", "Canceled", "Returned"];
 
  
 
 
   return (
-    <div className={`${styles.cardMainDiv} ${productReturnsPageStyle && styles.productReturnsPageStyle}`}>
+    <div className={styles.cardMainDiv}>
 
     
       <div className={styles.cardRow}>
+
+         {productReturnOrderLinkedCard ? <span className={styles.orderId}>Linked_order_id {infoObj.id}</span>:
+         <>
       <span className={styles.identifier}>{index+1}</span>
     
 
-      <p className={styles.orderId}>Order_id {infoObj.id}</p>
+      <span className={styles.orderId}>Order_id {infoObj.id}</span>
 
       <button className={styles.packageStatusButton} onClick={changePs}>{statusLabels[currentPackageStatus] || "Undefined"}</button>
+      </>}
 
       
       </div>
@@ -166,22 +204,34 @@ const changePs = () => {
     
 
       <div className={styles.cardRow}>
-      <h1 className={`${styles.rowTitle} ${styles.itemsRow}`}>Items</h1>
+      <h1 className={`${styles.rowTitle} ${styles.itemsRow}`}>Items( 
+         {infoObj.items.reduce((count, item) => count + (item.ordered ? 1 : 0), 0)}/{infoObj.items.length})</h1>
       <div className={`${styles.infoRowDiv} ${styles.itemsMiniRow}`}>
 
 
       {infoObj.items?.map((item, index)=>{
+
+
+         const itemUrl = productLinks.find(link => link.id === item.id)?.url;
+
+
         return <div key={index} className={`${styles.cardRow} ${styles.itemInfoRow} ${styles.cardRowNoBorder}`}>
 
          <div className={styles.groupedInfo}>
    
 
+<div className = {styles.productImageDiv}>
 <Image
    src={`/images/${item.images[0]}`}
    alt={item.name}
    className={styles.productImage}
    height={0} width={0} sizes="72px"
  />
+
+ <span className={styles.productImageQuantityMark}>
+      {item.quantity}
+ </span>
+ </div>
 
 
         <div className={styles.infoPair}>
@@ -191,22 +241,31 @@ const changePs = () => {
 
       </div>
 
-   
 
+
+   
+         {item.variant ?
       <div className={styles.infoPair}>
          <p>Variant</p>
          <p>{item.variant}</p>     
-          </div>
+          </div>:
+          <div className={styles.infoPair}/>
 
-         <div className={styles.infoPair}>
-         <p>Quantity</p>
-         <p>{item.quantity}</p>
+
+          
+      }
+
+      {itemUrl && <Link target="_blank" href={itemUrl} ><ExternalUrl color={"var(--admin-external-url-color)"} styleClassName={styles.externalUrl}/></Link>
+      
+      }
+
+      <div onClick={()=>{changeItemStatus(item.id, item.variant)}} className={styles.orderPlacedBox}>
+     {item.ordered && <CorrectIcon  color={'var(--admin-success-color)'} styleClassName={styles.orderPlacedImage}/>}
       </div>
-{/* 
-      <div className={styles.infoPair}>
-         <p>Product Link</p>
-         <p>Under construction</p>
-      </div> */}
+
+     
+
+      
  
    </div>
       })

@@ -26,7 +26,7 @@ export default function PageIndexButtons({ data, page, setPage, elementsPerPage=
   <div className={styles.linkDiv}>
     {page > 0 && (
       <div className={styles.linkDivPageNumber} onClick={() => setPage(page - 1)}>
-        <ArrowDown color="var(--neutral-10)" styleClassName={styles.leftArrowImg} />
+        <ArrowDown color="var(--admin-neutral-1)" styleClassName={styles.arrow} />
       </div>
     )}
 
@@ -43,8 +43,8 @@ export default function PageIndexButtons({ data, page, setPage, elementsPerPage=
     {page < Math.ceil(data.length / elementsPerPage) - 1 && (
       <div className={styles.linkDivPageNumber} onClick={() => setPage(page + 1)}>
         <ArrowDown
-          color="var(--neutral-10)"
-          styleClassName={`${styles.leftArrowImg} ${styles.rightArrowImg}`}
+          color="var(--admin-neutral-1)"
+          styleClassName={`${styles.arrow} ${styles.rightArrow}`}
         />
       </div>
     )}

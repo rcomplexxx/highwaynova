@@ -9,8 +9,8 @@
     align-items: center;
     
     border-radius: 8px;
-    padding: var(--size-7);
-    padding-top: 0;
+    padding: var(--size-5);
+
 }
 
 .productReturnWrapper{

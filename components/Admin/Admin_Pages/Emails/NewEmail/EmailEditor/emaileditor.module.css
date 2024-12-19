@@ -33,7 +33,7 @@
 
 .fontmatchesSpan{
     margin: var(--size-5) var(--size-2) ;
-    color: var(--success-color);
+    color: var(--admin-success-color);
 
     align-self: center;
 }
@@ -72,7 +72,7 @@
 }
 
 .fontSizeLabel{
-    color: var(--neutral-4);
+    color: var(--admin-neutral-5);
     position: absolute;
     top: -16px;
     left: 2px;

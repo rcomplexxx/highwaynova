@@ -1,25 +1,20 @@
-import Link from "next/link";
+
+import GridCard from "../Cards/GridCard/GridCard";
 import Product from "./Product/Product";
-import styles from "./products.module.css";
 
 
-const Products = ({ products, showAll, productListTitle }) => {
+
+const Products = ({ products, partlyShown, gridTitle }) => {
  
 
   return (
-    <div className={styles.mainDiv}>
-      {productListTitle && <h1>{productListTitle}</h1>}
-      <div className={styles.mainGridStyle}>
+   
+   <GridCard partlyShown={partlyShown && products.length >= 6} gridTitle={gridTitle}>
         {products?.map((product, i) => (
           <Product key={i} product={product} />
         ))}
-      </div>
-      {(!showAll && products.length >= 6) && (
-        <Link href="/products" className={styles.viewAllLink}>
-          View All
-        </Link>
-      )}
-    </div>
+    </GridCard>
+
   );
 };
 

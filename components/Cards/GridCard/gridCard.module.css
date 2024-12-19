@@ -1,0 +1,148 @@
+
+.mainDiv {
+
+    max-width: var(--size-19);
+      width: 100%;
+  
+     
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+  
+  
+      box-sizing: border-box;
+      padding: 0 var(--size-9-5);
+      border-radius: 4px;
+  
+  
+  
+      contain: layout;
+      z-index: 2;
+    
+    }
+  
+   
+  
+    
+   
+    
+    .mainGridStyle {
+      flex-wrap: wrap;
+      width:100%;
+      display: flex;
+      justify-content: flex-start;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr); /* 3 items per column by default */
+      column-gap: var(--size-7);
+      row-gap: var(--size-8);
+     
+   
+      
+    }
+   
+    
+  
+  
+  
+  
+   
+    .viewAllLink {
+     
+      color: var(--view-all-products-color);
+    
+  
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  
+  
+      margin-top:  var(--size-6);
+     
+      box-sizing: border-box;
+      padding: var(--size-4) var(--size-6);
+      border-radius: var(--size-2);
+      border: solid var(--border-color-strong) 1px;
+  
+      
+      font-size: var(--font-size-7);
+    
+  
+  
+    }
+  
+  
+  
+  
+    @media (max-width: 980px)  {
+      .mainDiv{
+        padding: 0 var(--size-9);
+      }
+  
+      .mainGridStyle{
+        row-gap: var(--size-6);
+      }
+  
+  
+      
+    
+      
+    }
+  
+    @media(max-width: 900px){
+  
+      .mainDiv{
+        padding: 0 var(--size-8);
+      }
+  
+      .mainGridStyle{
+        grid-template-columns: repeat(2, 1fr);
+        column-gap: var(--size-6);
+      }
+    }
+  
+  
+    
+  
+   
+    
+    @media (max-width: 600px)  {
+      .mainDiv{
+        padding: 0 20px;
+     
+      }
+  
+    
+  
+      .mainGridStyle{
+  
+      
+        column-gap: var(--size-6);
+        
+          row-gap: var(--size-6);
+      
+      }
+  
+    
+    }
+  
+  
+    @media(max-width: 480px) {
+      
+      .mainGridStyle{
+  
+      }
+    }
+    
+    
+  
+    @media (max-width: 340px) {
+  
+      .mainDiv{
+        padding: 0 var(--size-4);
+      }
+  
+      .mainGridStyle{
+        column-gap: var(--size-5);
+      }
+      
+    }

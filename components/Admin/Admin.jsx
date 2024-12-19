@@ -140,7 +140,9 @@ const checkAdminStatus = async () => {
       'new-email': <NewEmail />,
       campaigns: <Campaigns emails={emailData?.emails} sequences={emailData?.sequences} campaignData={emailData?.campaigns} />,
       sequences: <Sequences emails={emailData?.emails} sequences={emailData?.sequences} />,
-      'new-campaign': <NewCampaign sequences={emailData?.sequences} setEmailData={setEmailData} />,
+      'new-campaign': <NewCampaign 
+      sequences = {emailData?.sequences?.filter(sequence => !emailData?.specialCampaignIds.includes(sequence.id.toString()))} 
+      setEmailData={setEmailData} />,
       'new-sequence': <NewSequence emailData={emailData} setEmailData={setEmailData} />,
       default: <Emails emailData={emailData} setEmailData={setEmailData} />,
     };

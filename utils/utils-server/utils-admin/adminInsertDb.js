@@ -141,23 +141,22 @@ const insertInDb = async(dbConnection, resReturn, table, data) => {
     
             console.log('in table email_campaigns');
     
-            if(data.sequenceId.toString()=== process.env.WELCOME_SEQUENCE_ID || data.sequenceId.toString()=== process.env.THANK_YOU_SEQUENCE_ID
-          || data.sequenceId.toString()=== process.env.THANK_YOU_SEQUENCE_FIRST_ORDER_ID)
-          return await resReturn(500, { success: false })
-     
           
+     
+            
     
             const targets = JSON.stringify(await getTargets(data.targetCustomers, false, dbConnection))
           
             console.log('targets for campaign are ', targets)
     
-            const campaignId =   (await dbConnection.query(`INSERT INTO email_campaigns (title, sequenceId, sendingDateInUnix, emailSentCounter,  retryCounter, targetCustomers, reserveTargetedCustomers) VALUES (?, ?, ?, ?, ?, ?, ?)`,
+            const campaignId =   (await dbConnection.query(`INSERT INTO email_campaigns (title, sequenceId, sendingDateInUnix, emailSentCounter,  retryCounter, targetCustomers, targetType, reserveTargetedCustomers) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
             [ data.title,
               data.sequenceId,
               data.sendingDateInUnix,
               0,
               0,
               targets,
+              data.targetType,
               data.markTraffic==="mark_with_current_campaign"?1:0
             ]
               

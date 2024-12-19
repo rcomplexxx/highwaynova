@@ -1,10 +1,5 @@
-.arrowSpan{
-   
-  }
-  
-  /* .arrowLink{
-       background-color: var(--arrow-bg);
-  } */
+
+
 
 
   
@@ -12,9 +7,15 @@
   .linkDiv {
     display: flex;
     flex-direction: row;
-    margin-top: var(--size-7);
-    margin-bottom: var(--size-8);
     gap: var(--size-6);
+
+
+    margin-top: auto;
+    margin-bottom: var(--size-8);
+
+    box-sizing: border-box;
+    padding-top: var(--size-7);
+  
   }
   
   .linkDivPageNumber {
@@ -29,16 +30,17 @@
    
   }
 
-  .leftArrowImg {
-    position:relative;  
+  .arrow {
+      
     height: var(--size-7);
     width:var(--size-7);
     height:var(--size-6); 
     width:8px;
     transform: rotate(90deg);
+    cursor: pointer;
   }
 
-  .rightArrowImg{
+  .rightArrow{
     transform: rotate(-90deg);
   }
 

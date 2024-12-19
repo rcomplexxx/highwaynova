@@ -10,7 +10,7 @@
     padding: var(--size-2);
     opacity: 1;
     border-radius: 100%;
-    background-color: var(--gray-9-elegant-op08);
+    background-color: var(--swiper-zoomin-icon-bg);
     display:none;
     
   }

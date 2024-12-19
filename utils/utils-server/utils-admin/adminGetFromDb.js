@@ -11,17 +11,19 @@ const getFromDb = async(dbConnection, resReturn, table, queryCondition=true, sel
 
       if(table==="emails"){
         
-       const rows1 = await dbConnection.query(`SELECT * FROM emails`);
+       const emails = await dbConnection.query(`SELECT * FROM emails`);
 
 
-       const rows2 = await dbConnection.query(`SELECT * FROM email_sequences`);
+       const sequences = await dbConnection.query(`SELECT * FROM email_sequences`);
 
      
         
-       const rows3 = await dbConnection.query(`SELECT * FROM email_campaigns`);
+       const campaigns = await dbConnection.query(`SELECT * FROM email_campaigns`);
+
+       const specialCampaignIds =   [process.env.WELCOME_SEQUENCE_ID, process.env.THANK_YOU_SEQUENCE_ID, process.env.THANK_YOU_SEQUENCE_FIRST_ORDER_ID];
       
        
-       rows= {emails: rows1, sequences: rows2,  campaigns: rows3};
+       rows= {emails, sequences,  campaigns, specialCampaignIds};
 
       }
 

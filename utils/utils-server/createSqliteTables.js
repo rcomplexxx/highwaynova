@@ -285,6 +285,7 @@ await dbConnection.query(
                 sendingDateInUnix BIGINT,
                 emailSentCounter INT,
                 retryCounter INT,
+                targetType TEXT,
                 targetCustomers TEXT,
                 extraData TEXT,
                 reserveTargetedCustomers INT DEFAULT 0,

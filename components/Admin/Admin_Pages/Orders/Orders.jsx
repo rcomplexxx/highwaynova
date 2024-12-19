@@ -122,6 +122,7 @@ export default function Orders({ data, setData }) {
         )}
       </div>
      
+     <div className={styles.orders}>
       
       {data.slice(page * 10, (page + 1) * 10).map((order, index) => (
   <OrderCard
@@ -137,6 +138,8 @@ export default function Orders({ data, setData }) {
     handleChangedOrdersArray={handleChangedOrdersArray}
   />
 ))}
+
+</div>
       
 
       <PageIndexButtons data={data} page={page} setPage={setPage} />

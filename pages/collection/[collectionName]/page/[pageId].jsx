@@ -22,7 +22,7 @@ export default function Collection({
     <div className={styles.mainDiv}>
       <NextSeo {...collectionPageSeo(`/collection/${collectionName}/page/${pageId}`)}/>
       
-      {/* <Products showAll={true} products={products}></Products> */}
+      
 
       <div className={styles.collectionInfo}>
 
@@ -51,7 +51,7 @@ export default function Collection({
      
      
       
-        <Products showAll={true} products={products} />
+        <Products products={products} />
         <PageNumber
           mainLink={`/collection/${collectionName}/page/`}
           links={links}

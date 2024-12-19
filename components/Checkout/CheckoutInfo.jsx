@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback, useContext } from "react";
+import { useState,  useEffect, useCallback, useContext } from "react";
 import styles from "./checkoutinfo.module.css";
 import InputField from "./Input/InputField";
 import CountryInput from "./Input/CountryInput/CountryInput";
@@ -10,7 +10,7 @@ import Link from "next/link";
 import PaymentSection from "./PaymentSection/PaymentSection";
 import Tip from "./Tip/Tip";
 import { CheckoutContext } from "@/contexts/CheckoutContext";
-import { CorrectIcon, ErrorIcon, correctIcon } from "@/public/images/svgs/svgImages";
+import { CorrectIcon} from "@/public/images/svgs/svgImages";
 
 
 
@@ -173,11 +173,8 @@ return false;
                   handleChange={handleChange}
                   error={errors.email}
                   
-                >
-                  {errors.email && (
-                    <p className={styles.error}><ErrorIcon/>{errors.email}</p>
-                  )}
-                </InputField>
+                />
+                 
 
 
 

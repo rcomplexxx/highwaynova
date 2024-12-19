@@ -5,6 +5,7 @@ import styles from "./collections.module.css";
 import Image from "next/image";
 import { NextSeo } from "next-seo";
 import { collectionsPageSeo, unimportantPageSeo } from "@/utils/SEO-configs/next-seo.config";
+import GridCard from "@/components/Cards/GridCard/GridCard";
 
 export default function Collections({ collections}) {
   return (
@@ -19,14 +20,10 @@ export default function Collections({ collections}) {
 
 
 
+    <GridCard gridTitle={'Collections' }>
 
 
-
-
-      <div className={styles.mainDiv}>
-      <h1>Collections</h1>
-      <div className={styles.mainGridStyle}>
-        {collections.map((collection, i) => (
+    {collections.map((collection, i) => (
         
         <div key={i} className={styles.root}>
         <Link href={"collection/" + collection.name.toLowerCase().replace(/ /g, '-')+'/page/1'}>
@@ -59,21 +56,12 @@ export default function Collections({ collections}) {
       </div>
 
         ))}
-      </div>
-     
-    </div>
+    </GridCard>
 
 
 
-
-
-
-
-
-
-
-
-
+   
+   
 
 
 
@@ -81,6 +69,10 @@ export default function Collections({ collections}) {
     </>
   );
 }
+
+
+
+
 
 export async function getStaticProps() {
 

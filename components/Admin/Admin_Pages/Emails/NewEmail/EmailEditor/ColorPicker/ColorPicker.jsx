@@ -44,7 +44,7 @@ export default function ColorPicker({mainBackgroundColor, setMainBackgroundColor
         
         <div id = 'colorPickerWrapper' className={styles.colorPickerWrapper}>
             {showColorPicker &&  <div className={styles.colorPickerDiv}> < SketchPicker color={mainBackgroundColor} onChange={(color,event)=>{setMainBackgroundColor(color.hex); setMainBgBrightness(color.rgb.b)}} /></div>}
-            <span className={styles.pickedColorSpan} style={{backgroundColor:mainBackgroundColor, color:mainBgBrightness<50?"var(--neutral-9)":"var(--neutral-0)"}}  onClick={()=>{ setShowColorPicker(!showColorPicker)}}>Main email bg color{mainBackgroundColor}</span>
+            <span className={styles.pickedColorSpan} style={{backgroundColor:mainBackgroundColor, color:mainBgBrightness<50?"var(--admin-neutral-0)":"var(--admin-neutral-9)"}}  onClick={()=>{ setShowColorPicker(!showColorPicker)}}>Main email bg color{mainBackgroundColor}</span>
         </div>
         
       

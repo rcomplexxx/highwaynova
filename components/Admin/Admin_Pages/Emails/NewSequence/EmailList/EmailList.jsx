@@ -41,7 +41,7 @@ const EmailElement= ({id, title, addEmail, isFirstEmail})=>{
            
      
      
-         <button className={styles.addEmail} onClick={handleAddEmail}>Add email</button>
+         <button onClick={handleAddEmail}>Add email</button>
       
       
          </div>

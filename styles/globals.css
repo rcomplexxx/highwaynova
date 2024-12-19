@@ -392,12 +392,8 @@ p {
   --red-2: #B87F65;
 
 
-
-  --gray-10:#030a08;
   
-  --gray-10: #030404;
-  --gray-9-elegant:#02050a;
-  --gray-9-elegant-op08: #02050acc;
+  
   
   
   
@@ -485,6 +481,7 @@ p {
   --search-bg: transparent;
   --search-autofill-color: var(--navbar-bg);
   --search-cancel-icon-color: var(--neutral-5);
+  --search-result-label: var(--neutral-6);
   --mobile-nav-cancel-icon-color: var(--search-cancel-icon-color);
   --menu-icon-color: var(--neutral-8);
   --nav-links-color: var(--main-color-4);
@@ -541,6 +538,7 @@ p {
  --shop-now-hero-button-box-shadow: 0 1px 4px var(--neutral-1);
 
  
+ --view-all-products-color: var(--neutral-10);
 
   --home-review-author-color: var(--neutral-10);
  --home-review-txt-color: var(--neutral-9);
@@ -577,6 +575,7 @@ p {
  --selected-product-image-border:var(--accent-color-3);
 
  --swiper-zoomin-icon-color: var(--neutral-8);
+ --swiper-zoomin-icon-bg: var(--neutral-0);
  --mini-slider-arrow-bg:var(--main-color-2);
  --mini-slider-arrow-color: var(--neutral-9);
 
@@ -897,6 +896,9 @@ p {
   --thank-you-pharagraph-color:var(--neutral-8);
   
 
+          /*Policy pages*/
+
+  --policy-card-hr-border-color: var(--neutral-4);
 
 
 
@@ -989,12 +991,19 @@ color-scheme: light only;
   --admin-main-7: #061723;
 
 
+  --admin-success-color: #43A146;
+  --admin-error-color: red;
+
+
   --admin-txt-color-weak: var(--admin-neutral-4);
   --admin-txt-color-mid: var(--admin-neutral-3);
   --admin-txt-color-strong: var(--admin-neutral-2);
-  
-
   --admin-txt-color: var(--admin-txt-color-mid);
+
+  --admin-border-color-weak: var(--admin-neutral-9);
+  --admin-border-color-mid: var(--admin-neutral-8);
+  --admin-border-color-strong: var(--admin-neutral-7);
+
   
   --admin-nav-site-title-color: var(--admin-txt-color-strong);
   --admin-title: var(--admin-txt-color-weak);
@@ -1005,7 +1014,7 @@ color-scheme: light only;
   --admin-warning-color: rgb(230, 239, 51);
   --admin-positive-color: rgb(22, 168, 51);
 
-  --admin-card-border-color: rgb(143, 151, 156);
+  --admin-card-border-color: var(--admin-border-color-mid);
 
   --admin-textArea-bg: rgb(15, 15, 14);
 
@@ -1018,14 +1027,22 @@ color-scheme: light only;
 
 
   --admin-home-sector-borderLine-color: var(--admin-main-6);
+
+  --admin-checkbox-checked-bg: var(--admin-main-2);
+  --admin-checkbox-unchecked-box-shadow: 0 0 0 0 var(--admin-border-color-strong) inset;
+  --admin-checkbox-checked-box-shadow: 0 0 0 var(--size-3) var(--admin-checkbox-checked-bg) inset;
+ 
+  
+
   --admin-chart-bg: rgba(21, 23, 27, 0.507);
   --admin-chart-border-color: rgba(63, 96, 79, 0.85);
 
-
+  --admin-order-row-title-color: var(--admin-neutral-5);
   --admin-order-item-separater-color: rgb(105, 79, 12);
   --admin-package-status-button-bg: var(--admin-neutral-10);
   --admin-order-cover-details-color: rgba(255, 255, 255, 0.405);
   --admin-order-cover-details-bg: var(--admin-neutral-10);
+  --admin-external-url-color: var(--admin-neutral-8);
 
 
   

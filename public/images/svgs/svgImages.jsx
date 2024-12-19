@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import styles from './svgimages.module.css'
 
 
@@ -578,4 +579,13 @@ export const Atom = ()=>{
   <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M8.737 8.737a21.49 21.49 0 0 1 3.308-2.724m0 0c3.063-2.026 5.99-2.641 7.331-1.3 1.827 1.828.026 6.591-4.023 10.64-4.049 4.049-8.812 5.85-10.64 4.023-1.33-1.33-.736-4.218 1.249-7.253m6.083-6.11c-3.063-2.026-5.99-2.641-7.331-1.3-1.827 1.828-.026 6.591 4.023 10.64m3.308-9.34a21.497 21.497 0 0 1 3.308 2.724m2.775 3.386c1.985 3.035 2.579 5.923 1.248 7.253-1.336 1.337-4.245.732-7.295-1.275M14 12a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z"/>
 </svg>
 
+}
+
+
+
+export const ExternalUrl = ({color, styleClassName}) =>{
+	return <svg className={styleClassName} width="800px" height="800px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="none" stroke={color} stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
+	<polyline points="8.25 2.75,2.75 2.75,2.75 13.25,13.25 13.25,13.25 7.75"/>
+	<path d="m13.25 2.75-5.5 5.5m3-6.5h3.5v3.5"/>
+	</svg>
 }

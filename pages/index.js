@@ -65,7 +65,7 @@ const HomePage = ({ products }) => {
       <div className={styles.content}>
      
 
-        <Products showAll={false} products={products} productListTitle="Trending now" />
+        <Products partlyShown={true} products={products} gridTitle="Trending now" />
         <HomeReviews />
       </div>
     </>

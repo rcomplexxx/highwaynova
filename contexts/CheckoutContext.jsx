@@ -149,7 +149,7 @@ const organizeUserData = useCallback((paymentMethod, paymentToken) => {
 
 
   
-  const items = cartProducts.map(({ id, quantity, variant }) => ({ id, quantity, variant }));
+  const items = cartProducts.map(({ id, quantity, variant }) => ({ id, quantity, variant, ordered: false }));
 
   
   const requestData = {

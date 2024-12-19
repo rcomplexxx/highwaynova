@@ -11,6 +11,7 @@ import {
   
 import { CheckoutContext } from "@/contexts/CheckoutContext";
 import { ArrowDown, CancelIcon, DiscountIcon, DiscountIconTotal, ErrorIcon } from "@/public/images/svgs/svgImages";
+import InputField from "./Input/InputField";
   
   export default function OrderDetails() {
     const [showAnswer, setShowAnswer] = useState(false);
@@ -196,27 +197,18 @@ const handleCouponApply = () => {
           ))}
                   <div className={styles.coupon_code}>
                     <div className={styles.form_group}>
-                      <input
-                        id="coupon_code"
-                        type="text"
-                        value={tempCouponCode}
-                        onChange={(event) => {
-                          setTemptempCouponCode(event.target.value);
-                        }}
-                        onKeyUp={(e) => e.key === 'Enter' && handleCouponApply()}
-                        className={`${styles.coupon_code_input} ${
-                          couponError === 'Incorrect coupon code' && styles.coupon_code_input_error
-                        }`}
-                        placeholder={" "}
-                      />
-                      <label htmlFor={"coupon_code"} className={styles.myLabel}>
-                        Coupon code
-                      </label>
-                      {couponError ==='Incorrect coupon code' && (
-                    <span className={styles.couponError}>
-                      <ErrorIcon/>Enter a valid discount code.
-                    </span>
-                  )}
+                     
+                     
+
+
+              <InputField
+                  id="coupon_code"
+                  placeHolder="Coupon code"
+                  type="text"
+                  handleChange={(event) => {setTemptempCouponCode(event.target.value);}}
+                  handleKeyUp = {(e) => e.key === 'Enter' && handleCouponApply()}
+                  error={couponError ==='Incorrect coupon code' && "Enter a valid discount code."}
+                />
 
 
 
