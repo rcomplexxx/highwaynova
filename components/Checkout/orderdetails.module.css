@@ -202,48 +202,12 @@
     }
 
 
-  .coupon_code_input {
-    width: 100%;
-      height: var(--size-8);
-      background-color: var(--checkout-input-bg);
-      color: var(--checkout-input-color);
-    
-      
-      padding-top: 24px;
-    
-      
-      align-self: center;
-     
-      
-      box-sizing: border-box;
-      border: solid 1px var(--checkout-input-border-color);
  
-      font-size: var(--font-size-2);
-  }
-
-  .coupon_code_input_error{
-    border: 1px solid var(--error-box-shadow-color);
-   
-  }
-
-  .coupon_code_input:focus { 
     
-    border: solid 2px var(--checkout-input-border-color-focused);
-   
-}
 
-.couponError{
+    
 
-  display: flex;
-  align-items: center;
-  
-  color: var(--error-color);
-  padding-top: var(--size-3);
-  margin-bottom: 0;
-  margin-left: var(--size-1) !important;
-  font-size: var(--font-size-2);
-  
-}
+    
 
 
 .weakCouponError{
@@ -464,15 +428,8 @@
   font-weight: 600;
 }
 
-.myLabel{
-    color: var(--checkout-input-placeholder);
-    position: absolute;
-    left: var(--size-3);
-    top: 14px;
-    transition: all 0.3s ease;
-    pointer-events: none;
-   
-  }
+
+
 
   .totalDiscount{
     width: 100%;
@@ -510,14 +467,6 @@
   }
 
 
-  .coupon_code_input:focus + .myLabel,
-  .coupon_code_input:not(:placeholder-shown) + .myLabel {
-   
-    color: var(--checkout-input-placeholder-floating);
-  top: 8px;
-  font-size: var(--size-4);
-  
-  }
   
 
 

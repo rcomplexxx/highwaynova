@@ -55,7 +55,7 @@ export default function CountryInput({ id, setErrors, error }) {
         
        
       />
-      <ArrowDown color={'var(--checkout-input-placeholder)'} styleClassName={styles.arrowDown}/>
+     
      
       <label
         htmlFor={id}
@@ -63,14 +63,18 @@ export default function CountryInput({ id, setErrors, error }) {
       >
         Country
       </label>
-      <span
-        
-        className={`${styles.countryNameLabel} ${
-          country != "" && styles.countryNameLabelEnabled
-        }`}
-      >
-        {country != "" ? country : ""}
+
+
+      <span className={styles.countryNameLabel} >
+        {country}
+
       </span>
+
+
+
+      <ArrowDown color={'var(--checkout-input-placeholder)'} styleClassName={styles.arrowDown}/>
+
+
     </div>
   );
 }

@@ -32,6 +32,7 @@
    
     
     border: solid 1px var(--checkout-input-border-color);
+    border-radius: 2px;
   
     font-size: var(--font-size-2);
     

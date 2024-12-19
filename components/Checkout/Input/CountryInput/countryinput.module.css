@@ -1,3 +1,7 @@
+
+
+
+
 .countrySelectStyle{
     width: 100%;
     height: var(--size-8);
@@ -15,6 +19,9 @@
     cursor: pointer;
     font-size: var(--font-size-2);
   }
+
+
+  
 
   .countryFocused{
    
@@ -36,17 +43,26 @@
 
 
   .countrySelectStyle option{
-    background-color: var(--bg-color);
+    
     color: var(--txt-color);
   }
 
+ 
+
+
+
+  
+
 
   .form_group {
+
+    
     position: relative;
-    width: 100%;
-    border-radius: 2px;
+   
+    
+   
     background-color: var(--checkout-input-bg);
-    border: solid 1px var( --checkout-input-border-color);
+   
    
     
       flex-grow: 1;
@@ -54,23 +70,19 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
+
+
       box-sizing: border-box;
+      border: solid 1px var( --checkout-input-border-color);
+      border-radius: 2px;
+
+
     }
     
   
-    .form_group:focus-within {
-      /* Define the styles for the parent when any child is focused */
-      
-    }
-
+ 
     
 
-
-    .input_error{
-    
-      border: 2px solid var(--error-box-shadow-color);
-    }
-    
 
     .label{
       color: var(--checkout-input-placeholder);
@@ -98,28 +110,28 @@
       pointer-events: none;
       
       opacity: 0;
-      transition: all 0.21s ease;
-      transition-delay: 0.09s;
+      transition: all 0.21s ease 0.09s;
     }
 
-    .countryNameLabelEnabled{
+    .labelDown + .countryNameLabel{
       opacity: 1;
     }
+
+    
+
+
+    .input_error{
+    
+      border: 2px solid var(--error-box-shadow-color);
+    }
+    
+
+   
 
    
 
 
   
 
-    @media (max-width: 980px)  {
 
-        .form_group{
     
-          
-          margin-left: 0;
-          margin-right: 0;
-        }
-      
-      
-       
-      }
