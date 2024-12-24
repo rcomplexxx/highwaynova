@@ -38,21 +38,26 @@ export default function StripeWrapper({ checkFields}){
                
 
 const Stripe = ({checkFields}) => {
-    const [billingAddressSameAsShipping, setBillingAddressSameAsShipping] = useState(true);
-    const [billingErrors, setBillingErrors]= useState({});
+    const [billingRequired, setBillingRequired] = useState(false);
+    
     const [focusedField, setFocusedField]= useState();
+    
     const [paymentProcessing, setPaymentProcessing]= useState(false);
     const [paymentProcessed, setPaymentProcessed] = useState(false);
-    const [cardHolderName, setCardHolderName]= useState('');
-    const [nonEmptyFields, setNonEmptyFields] = useState({cardNumber:false, expiryDate:false, cvv:false})
-   
     
-    const [stripeError, setStripeError]= useState();
+    const [filledFields, setFilledFields] = useState({cardNumber:false, expiryDate:false, cvv:false})
+
+
+
     const [errors, setErrors] = useState({});
+    const [stripeError, setStripeError]= useState();
+   
     const errorhelperRef=useRef({});
 
 
     const router = useRouter();
+
+
 
     const {organizeUserData} = useContext(CheckoutContext);
 
@@ -81,90 +86,8 @@ const Stripe = ({checkFields}) => {
   
    
    
-    const checkBillingFields=()=>{
-
-      if(billingAddressSameAsShipping)return true;
-
-
-      const testBillingErrors = ()=>{
-
-      
-
-      let newErrors = {};
-      // if(document.getElementById('email').value==='') return actions.reject();
-      const testId = (id) => {
-        if (document.getElementById(id).value === "") {
-          newErrors = { ...newErrors, [id]: `${id} is a required field.` };
-          return newErrors;
-        }
-      };
-  
-      if (document.getElementById("billingEmail").value === "") {
-        newErrors = { ...newErrors, billingEmail: "Email is a required field." };
-        return newErrors;
-      }
-      if (
-        !/^\S{3,}@\S{3,}\.\S{2,}$/.test(document.getElementById("billingEmail").value)
-      ) {
-        newErrors = {
-          ...newErrors,
-          billingEmail: "Please enter a valid email address.",
-        };
-      }
+ 
     
-  
-     
-      testId("billingAddress");
-      testId("billingCountry");
-      testId("billingZipcode");
-      testId("billingState");
-      testId("billingCity");
-  
-      const phone = document.getElementById("billingPhone").value; //
-      if (phone.length < 5){
-        newErrors = { ...newErrors, phone: "Invalid phone" };
-        return newErrors;
-    }
-      else {
-        for (let i = 0; i < phone.length; i++) {
-          const char = phone[i];
-          if (
-            !(
-              (char >= "0" && char <= "9") ||
-              ["+", "-", "(", ")", " ", ".", "/"].includes(char)
-            )
-          ) {
-            newErrors = { ...newErrors, phone: "Invalid phone" };
-            return newErrors;
-          }
-        }
-      }
-  
-      return newErrors;
-
-    }
-
-    const billingError = testBillingErrors();
-    setBillingErrors(billingError);
-  
-      const errorsExist=Object.keys(billingError).length !== 0;
-      console.log('errorsExist?', errorsExist)
-      if (errorsExist) {
-        window.scrollTo({
-          top:
-            document
-              .getElementById(Object.keys(billingError)[0])
-              .getBoundingClientRect().top +
-            window.scrollY -
-            12,
-          behavior: "smooth",
-        });
-  
-     
-    }
-  
-    return !errorsExist;
-  }
 
  
 
@@ -174,112 +97,73 @@ const handleStripePay= async(event)=>{
   event.preventDefault();
   if(paymentProcessing)return;
 
-  console.log('billErr', billingErrors);
+  
   setPaymentProcessing(true);
   setStripeError();
 
+
+
+  const cardErrors = { ...errors };
+
+  if (!filledFields.cardNumber) cardErrors.cardNumber = "Enter a valid card number";
+  else if (!filledFields.expiryDate) cardErrors.expiryDate = "Enter a valid expiry date";
+  else if (!filledFields.cvv) cardErrors.cvv = "Enter a valid security number";
   
- 
+
   
   
   
   
-  if(!checkFields()){
-    setPaymentProcessing(false);return;
+  if(!checkFields({method:'stripe', billingRequired, cardErrors, setCardErrors: setErrors})){
+    return setPaymentProcessing(false);
   }
   
 
   
 
-  const clickPass= !errors.cardNumber && !errors.expiryDate && !errors.cvv && !errors.cardHolderName ;
- 
-  if(!clickPass) { setPaymentProcessing(false);return;}
-
-  if(!nonEmptyFields.cardNumber){
-    setErrors({...errors, cardNumber:"Enter a valid card number"});
-    setPaymentProcessing(false);
-    return;
-
-  }
-  if(!nonEmptyFields.expiryDate){
-    setErrors({...errors, expiryDate:"Enter a valid expiry date"});
-    setPaymentProcessing(false);
-    return;
-
-  }
-
-  if(!nonEmptyFields.cvv){
-    setErrors({...errors, cvv:"Enter a valid security number"});
-    setPaymentProcessing(false);
-    return;
-
-  }
-
-  if(cardHolderName ===""){
-    setErrors({...errors, cardHolderName:"Enter a valid card name"});
-    setPaymentProcessing(false);
-    return;
-   }
-
-  if(!checkBillingFields()){setPaymentProcessing(false);return;}
+  
+  
 
   const cardElement = elements.getElement(CardNumberElement);
 
   const requestData = organizeUserData('STRIPE');
 
   
-  console.log('THE BILLING FUCKING DATA!',requestData);
+  
 
-  let transactionError, transactionPaymentMethod;
-
-
-
-
-  let billingAddress;
-  let billingApt;
-  let billingCountry;
-  let billingZipcode;
-  let billingState;
-  let billingCity;
-  let billingPhone;
+  
 
 
 
-  if(billingAddressSameAsShipping){
+ 
+  let billingAddress, billingApt, billingCountry, billingZipcode, billingState, billingCity, billingPhone;
 
-
-
-
-    billingAddress = requestData.order.address;
-    billingApt = requestData.order.apt?requestData.order.apt:null;
-    billingCountry = requestData.order.country;
-    billingZipcode = requestData.order.zipcode;
-    billingState = requestData.order.state;
-    billingCity = requestData.order.city;
-    billingPhone = requestData.order.phone;
+  if (!billingRequired) {
+    const { address, apt, country, zipcode, state, city, phone } = requestData.order;
+    billingAddress = address;
+    billingApt = apt || null;
+    billingCountry = country;
+    billingZipcode = zipcode;
+    billingState = state;
+    billingCity = city;
+    billingPhone = phone || null;
+  } else {
+    const getValue = (id) => document.getElementById(id)?.value || "";
+    billingAddress = getValue("billingAddress");
+    billingApt = getValue("billingApt") || null;
+    billingCountry = swapCountryCode(getValue("billingCountry"));
+    billingZipcode = getValue("billingZipcode");
+    billingState = getValue("billingState");
+    billingCity = getValue("billingCity");
+    billingPhone = getValue("billingPhone") || null;
   }
-
-  else{
-    billingAddress = document.getElementById("address").value;
-    billingApt = document.getElementById("apt")?.value;
-    billingCountry = document.getElementById("country").value;
-    billingZipcode = document.getElementById("zipcode").value;
-    billingState = document.getElementById("state").value;
-    billingCity = document.getElementById("city").value;
-    billingPhone = document.getElementById("phone").value;
-
-   
-
-  }
-
-
-  billingApt = billingApt!=""?billingApt:null;
-  billingCountry= swapCountryCode(billingCountry);
-  billingPhone = billingPhone!=""?billingPhone:null;
 
     
+  const cardHolderName = document.getElementById("cardHolderName").value;
 
-      const {error, paymentMethod} = await stripe.createPaymentMethod({
+
+
+      const {error: transactionError, paymentMethod: transactionPaymentMethod} = await stripe.createPaymentMethod({
       type: "card",
       card: cardElement,
       billing_details: {
@@ -288,10 +172,10 @@ const handleStripePay= async(event)=>{
           address: {
             line1: billingAddress,
             line2: billingApt,
-              city: billingCity,
-              state: billingState,
-              postal_code: billingZipcode,
-              country: swapCountryCode(billingCountry)
+            city: billingCity,
+            state: billingState,
+            postal_code: billingZipcode,
+            country: billingCountry
           },
           phone:  billingPhone
       }
@@ -299,77 +183,50 @@ const handleStripePay= async(event)=>{
 
 
 
-
-  transactionError= error; 
-  transactionPaymentMethod= paymentMethod;
-  
-
-
-
-
        
 
 
-        if(!transactionError) {
-          try {
+  if (!transactionError) {
 
-
-
-            
-
-
-
-
-              const {id} = transactionPaymentMethod
-             
-           
-              
-
+    
+    try {
+      const { id } = transactionPaymentMethod;
+      const response = await fetch("/api/make-payment", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...requestData, stripeId: id }),
+      });
+      const data = await response.json();
+      console.log('rp', data);
   
-
-       
-              
-
-              const response = await fetch("/api/make-payment", {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                  ...requestData, stripeId:id
-                }),
-              });
-              const data=await response.json();
-              console.log('rp',data);
-              console.log('ss', data.clientSecret)
-              if(data.success) {
-               
-               
-               console.log('pay success');
-               
-               setGiftDiscount(data.giftDiscount);
-               setPaymentProcessed(true);
-              //  setPaymentProcessing(false);
-
-              setTimeout(()=>{router.push("/thank-you");},500)
-                
-                  
-                  
-                
-             
-              }
-              else{setStripeError({stripeServerError: data.error});setPaymentProcessing(false);
-              //Ovde izbaci gresku
+      if (data.success) {
+        console.log('pay success');
+        setGiftDiscount(data.giftDiscount);
+        setPaymentProcessed(true);
+        setTimeout(() => router.push("/thank-you"), 500);
+      } else {
+        setStripeError({ stripeServerError: data.error });
+   
+        
+        //Ovde izbaci gresku
               // setStripeError({stripeServerError: 'Error occured. Payment was not processed.'})
-              }
-  
-          } catch (error) {
-            console.log('error',error)
-            setPaymentProcessing(false);
+      }
+    } catch (error) {
+        
+            console.log('stripe error',error)
             setStripeError({stripeServerError: 'Error occured. Payment was not processed.'});
           }
+
+          finally {
+            setPaymentProcessing(false);
+          }
+
+
+
       } else {
-        console.log(transactionError)
+
+        
+        
         if(transactionError.code==='incomplete_number' || transactionError.code==='invalid_number')setErrors({...errors,cardNumber:'Enter a valid card number'})
         else if( transactionError.code === 'incomplete_expiry') setErrors({...errors,expiryDate:'Enter a valid exipry date'})
         else if( transactionError.code === 'incomplete_cvc') setErrors({...errors,cvv:'Enter a valid security code'})
@@ -384,41 +241,45 @@ const handleStripePay= async(event)=>{
       }
 
 
+
+
 }
 
 const handleCCChange=   (event) => {
 
   
   const stripeField= event.elementType==='cardNumber'?'cardNumber':(event.elementType==='cardExpiry'?'expiryDate':'cvv')
-  const errorName = `Enter a valid ${stripeField==='cardNumber'?'card number':(stripeField==='expiryDate'?'expiry date':'security number')}`
-  setErrors({...errors, [stripeField]: undefined});
  
+  setErrors({...errors, [stripeField]: undefined});
+
+
   
-  errorhelperRef.current[stripeField]=(!event.complete || event.error || event.empty) && errorName;
+  
+  errorhelperRef.current[stripeField]=(!event.complete || event.error || event.empty) && `Enter a valid ${stripeField==='cardNumber'?'card number':(stripeField==='expiryDate'?'expiry date':'security number')}`;
 
-  setNonEmptyFields({...nonEmptyFields, [stripeField]: !event.empty})
+  setFilledFields({...filledFields, [stripeField]: !event.empty})
 
-  console.log('changed field', nonEmptyFields)
+  
  
   
 };
 
-const handleCCBlur= ()=>{
-  
-  setErrors(errorhelperRef.current);
-  
+const handleCCBlur = () => {
+  setErrors({ ...errors, [focusedField]: errorhelperRef.current[focusedField] });
   setFocusedField();
-}
+};
   
     
 
   return (
     <div className={styles.creditCardForm}>
     
-     
+    
     <div className={styles.ccInputRow}>
-    <div className={styles.form_group}>
-    <div className={styles.inputWrapper}>
+
+
+
+    <StripeCardWrapper label={{text:'Card number', floating:filledFields.cardNumber}} error  = {errors.cardNumber}>
     <CardNumberElement
     onBlur={handleCCBlur}
     onChange={handleCCChange}
@@ -442,24 +303,24 @@ const handleCCBlur= ()=>{
         className={`${styles.input_field} ${errors.cardNumber && styles.input_error} ${focusedField==='cardNumber' && styles.stripeFieldFocused}`}
       /> 
       <FloatingBadge makeLockBadge={true}/>
-      <span className={`${styles.label} ${nonEmptyFields.cardNumber && styles.floatingLabel}`}>Card number</span>
+      
+      
 
-</div>
+      </StripeCardWrapper>
+
+
 {/* defaultValues */}
 {/* https://stripe.com/docs/js/elements_object/create_payment_element#payment_element_create-options */}
 
 
 
-      {errors.cardNumber && <p className={styles.stripeError}><ErrorIcon/>{errors.cardNumber}</p>}
-        </div>
+     
 </div>
       <div className={styles.ccInputRow}>
 
 
 
-       <div className={styles.form_group}>
-
-       <div className={styles.inputWrapper}>
+      <StripeCardWrapper  label={{text:'Expiration Date (MM / YY)', floating:filledFields.expiryDate}} error={errors.expiryDate}>
       <CardExpiryElement id="expiryDate"
  onBlur={handleCCBlur}
  onFocus={()=>{
@@ -481,21 +342,16 @@ const handleCCBlur= ()=>{
     />
 
     
-    <span className={`${styles.label} ${nonEmptyFields.expiryDate && styles.floatingLabel}`}>Expiration Date (MM / YY)</span>
-   
-    </div>
-
-
     
-    {errors.expiryDate && <p className={styles.stripeError}><ErrorIcon/>{errors.expiryDate}</p>}
+   
+      </StripeCardWrapper>
 
 
 
 
-    </div>
-     <div className={styles.form_group}>
+  
+  <StripeCardWrapper   label={{text:'Security code', floating:filledFields.cvv}}  error  = {errors.cvv}>
 
-      <div className={styles.inputWrapper}>
   <CardCvcElement  id="cvv" 
    onBlur={handleCCBlur}
    onChange={handleCCChange}
@@ -515,42 +371,31 @@ const handleCCBlur= ()=>{
   }}}
   className={`${styles.input_field} ${errors.cvv && styles.input_error} ${focusedField==='cvv' && styles.stripeFieldFocused}`}/>
   <FloatingBadge message={'3-digit security code usually found on the back of your card. American Express cards have a 4-digit code located on the front.'}/>
-  <span className={`${styles.label} ${nonEmptyFields.cvv && styles.floatingLabel}`}>Security code</span>
-   </div>
- 
-  {errors.cvv && <p className={styles.stripeError}><ErrorIcon/>{errors.cvv}</p>}
+  
+  
 
-
-  </div>
-      
+  </StripeCardWrapper> 
 
 </div>
        
 <div className={`${styles.ccInputRow} ${styles.lastCcInputRow}`}>
+
+
 <InputField
        id="cardHolderName"
        placeHolder='Name on card'
           type="text"
-          name="name"
-         value={cardHolderName}
-         handleChange={(event)=>{
           
-          setErrors({...errors, "cardHolderName": undefined});
-          
-          setCardHolderName(event.target.value)}
-
-        
-        }
-
-
-         
      
-        
-         error={errors.cardHolderName}
+          
+
+          
         />
       </div>
-      <div tabIndex={0} className={styles.billingCheckboxDiv} onClick={()=>{setBillingAddressSameAsShipping(!billingAddressSameAsShipping)}}>
-      <div id="isShippingBilling" className={`${styles.addressTypeChecker} ${billingAddressSameAsShipping && styles.addressTypeCheckerChecked}`} 
+
+
+      <div tabIndex={0} className={styles.billingCheckboxDiv} onClick={()=>{setBillingRequired(!billingRequired)}}>
+      <div id="billingRequired" className={`${styles.addressTypeChecker} ${!billingRequired && styles.addressTypeCheckerChecked}`} 
      
       >
         <CorrectIcon styleClassName={styles.addressCheckerImage}/>
@@ -561,11 +406,7 @@ const handleCCBlur= ()=>{
     </div>
 
 
-  <BillingInfo isOpen={!billingAddressSameAsShipping} errors={billingErrors} setErrors={setBillingErrors}/>
-
-
-
-
+  <BillingInfo isOpen={billingRequired} />
 
 
 
@@ -587,7 +428,26 @@ const handleCCBlur= ()=>{
 
 
 
+const StripeCardWrapper = ({label, error, children}) =>{
 
+
+  return <div className={styles.form_group}>
+
+  <div className={styles.inputWrapper}>
+
+    {children}
+
+   
+    <span className={`${styles.label} ${label.floating && styles.floatingLabel}`}>{label.text}</span>
+
+  </div>
+
+{error && <span className={styles.stripeError}><ErrorIcon/>{error}</span>}
+
+
+</div>
+
+}
 
 
 

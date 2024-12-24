@@ -9,7 +9,8 @@
 }
 
 .ccInputRow{
-    width: 100%;
+ 
+  
 
     box-sizing: border-box;
     padding: 0 var(--size-3);
@@ -45,6 +46,7 @@
     margin-bottom: var(--size-5);
    
     
+    box-sizing: border-box;
     border: 1px solid var(--main-button-border-color);
     border-radius: 4px;
     font-size: var(--font-size-4);
@@ -94,16 +96,7 @@
 }
 
 
-.form_group {
-    position: relative;
-    width: 100%;
-    
-    
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-      margin-bottom: var(--size-5);
-    }
+
 
    
 
@@ -136,21 +129,8 @@
       cursor: text;
 
     }
+    
 
-
-    .inputHelper{
-      padding: var(--size-3);
-      padding-top: 32px;
-    }
-
-    /**/
-    /* padding: var(--size-3);
-    padding-top: 18px; */
-    /* rgb(74, 85, 187) */
-    /* background-color: #202020; */
-    /* rgba(53, 60, 110, 0.459); */
-    /* rgb(134, 110, 114); */
-    /* var(--checkout-input-autofill-bg); */
 
     .stripeFieldFocused { 
 
@@ -158,10 +138,7 @@
   
   }
   
-    .input_field:focus { 
-      border: 2px solid var(--checkout-input-border-color-focused);
-      border:none;
-  }
+  
   
 
   
@@ -189,16 +166,10 @@
 
 
     
-  .stripeFieldFocused { 
 
-    border: 2px solid var(--checkout-input-border-color-focused);
+    
 
-}
-
-  .input_field:focus { 
-    border: 2px solid var(--checkout-input-border-color-focused);
-    border:none;
-}
+  
 
 
     
@@ -216,18 +187,17 @@
   
 
 
-     .stripeFieldFocused ~ .label {
+     .stripeFieldFocused ~ .label, .floatingLabel {
   color: var(--checkout-input-placeholder-floating);
 top: 8px;
 font-size: var(--size-4);
 
 }
 
-.floatingLabel{
-  color: var(--checkout-input-placeholder-floating);
-  top: 8px;
-  font-size: var(--size-4);
-}
+
+
+
+
 
 
 
@@ -235,6 +205,17 @@ font-size: var(--size-4);
   .inputWrapper{
     position: relative;
   }
+
+  .form_group {
+    position: relative;
+    width: 100%;
+    
+    
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      margin-bottom: var(--size-5);
+    }
   
   
   .stripeError{
@@ -243,10 +224,19 @@ font-size: var(--size-4);
     align-items: center;
 
     color: var(--error-color);
-    margin-top: var(--size-3);
-    margin-bottom: var(--size-1);
+    padding-top: var(--size-3);
+
+  
+    margin-left: var(--size-1);
     font-size: var(--font-size-2);
   }
+
+
+  
+
+
+
+  
 
   .billingCheckboxDiv{
     display: flex;

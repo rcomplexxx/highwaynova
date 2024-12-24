@@ -1,16 +1,33 @@
 import { ErrorIcon } from "@/public/images/svgs/svgImages";
 import styles from "./inputfield.module.css";
 
+import { CheckoutContext } from "@/contexts/CheckoutContext";
+import { useContext } from "react";
+
 export default function InputField({
   id,
   autocomplete,
   placeHolder,
   type,
-  handleChange,
   handleKeyUp,
-  error,
+  
   children,
 }) {
+
+  const {errors, setErrors} = useContext(CheckoutContext);
+
+
+
+  const handleChange = () => {
+    if (errors[id]) {
+      const newErrors = { ...errors };
+      delete newErrors[id];
+      setErrors(newErrors);
+    }
+  };
+
+
+
   return (
     <div className={styles.form_group}>
       <div className={styles.inputWrapper}>
@@ -22,7 +39,7 @@ export default function InputField({
         onKeyUp={handleKeyUp}
         maxLength={127}
         autoComplete={autocomplete}
-        className={`${styles.input_field} ${error && styles.input_error}`}
+        className={`${styles.input_field} ${errors[id] && styles.input_error}`}
       />
 
 <label htmlFor={id} className={styles.label}>
@@ -35,7 +52,7 @@ export default function InputField({
       
       
      
-      {error && <span className={`${styles.error} ${id==="coupon_code" && styles.couponError}`}><ErrorIcon/>{error}</span>}
+      {errors[id] && <span className={`${styles.error} ${id==="coupon_code" && styles.couponError}`}><ErrorIcon/>{errors[id]}</span>}
     </div>
   );
 }

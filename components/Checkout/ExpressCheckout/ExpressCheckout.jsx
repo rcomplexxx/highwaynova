@@ -1,20 +1,14 @@
-import { useContext } from "react";
+
 import GooglePay from "./GooglePay/GooglePay";
 import PayPalButton from "./PayPal/PayPal";
 import styles from "./expresscheckout.module.css";
 
-
-
-export default function ExpressCheckout({
-
-  checkFields,
-  
- 
-  
-}) 
+import { CheckoutContext } from "@/contexts/CheckoutContext";
+import { useContext } from "react";
 
 
 
+export default function ExpressCheckout() 
 
 
 
@@ -25,7 +19,7 @@ export default function ExpressCheckout({
 
 
 
-  
+  const {checkFields} = useContext(CheckoutContext);
 
 
 

@@ -8,13 +8,15 @@ import InputField from '../../Input/InputField';
 
 
 
-
-
-export default function BillingInfo({isOpen, errors, setErrors}){
+export default function BillingInfo({isOpen}){
     const [showApt, setShowApt] = useState(false);
     const mounted= useRef(false);
     const visibilityTimeout= useRef();
     const billingInfoDivRef = useRef();
+
+
+   
+
    
 
     useEffect(()=>{
@@ -56,15 +58,7 @@ export default function BillingInfo({isOpen, errors, setErrors}){
        
         
         
-        const handleChange = (event) => {
-         if (errors.hasOwnProperty(event.target.id)) {
-           const newErrors = { ...errors };
-           const field = event.target.id;
-           delete newErrors[field];
-           setErrors(newErrors);
-         }
-       };
-    
+     
 
     return <div ref={billingInfoDivRef} className={`${styles.billingAddressWrapper}`}> 
         
@@ -78,9 +72,8 @@ export default function BillingInfo({isOpen, errors, setErrors}){
            id="billingEmail"
            placeHolder='Email'
               type="text"
-              handleChange={handleChange} 
             
-             error={errors.billingEmail}
+            
             />
     
 
@@ -89,9 +82,7 @@ export default function BillingInfo({isOpen, errors, setErrors}){
 
         <CountryInput
                   id="billingCountry"
-                  setErrors={setErrors}
-                  error={errors.billingCountry}
-                  inputNumber={9}
+                
                 />
 
 
@@ -109,9 +100,8 @@ export default function BillingInfo({isOpen, errors, setErrors}){
            id="billingAddress"
            placeHolder='Address'
               type="text"
-              handleChange={handleChange} 
+              
             
-             error={errors.billingAddress}
             />
     
 
@@ -128,10 +118,9 @@ export default function BillingInfo({isOpen, errors, setErrors}){
                        id="billingApt"
                        placeHolder='Apartment, suite, etc. (Optional)'
                           type="text"
-                          handleChange={handleChange}   
+                            
                     
                           
-                         error={errors.billingApt}
                         />:<span className={styles.aptAdder} onClick={()=>{setShowApt(true);}}>+ Add apartment, suite etc.</span>}
                 
             
@@ -144,10 +133,9 @@ export default function BillingInfo({isOpen, errors, setErrors}){
            id="billingCity"
            placeHolder='City'
               type="text"
-              handleChange={handleChange}
+              
         
               
-             error={errors.billingCity}
             />
 
 <InputField
@@ -155,10 +143,9 @@ export default function BillingInfo({isOpen, errors, setErrors}){
            placeHolder='State'
               type="text"
              
-              handleChange={handleChange}
+              
            
               
-             error={errors.billingState}
             />
 
 <InputField
@@ -166,9 +153,8 @@ export default function BillingInfo({isOpen, errors, setErrors}){
            placeHolder='ZIP code'
               type="text"
               
-              handleChange={handleChange} 
+              
             
-             error={errors.billingZipcode}
             />
     
 
@@ -182,9 +168,8 @@ export default function BillingInfo({isOpen, errors, setErrors}){
            placeHolder='Phone (optional)'
               type="text"
               
-              handleChange={handleChange}  
+               
             
-             error={errors.billingPhone}
              children={ <FloatingBadge message={'In case we need to contact you about your order'}/>}
             />
        

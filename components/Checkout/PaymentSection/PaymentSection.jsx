@@ -5,7 +5,10 @@ import styles from "./paymentmethodwrapper.module.css";
 import Image from "next/image";
 import {Amex, Discover, Jcb, MasterCard, UntionPay, Visa} from '@/public/images/svgs/svgImages.jsx'
 
-export default function PaymentSection({ checkFields }) {
+import { CheckoutContext } from "@/contexts/CheckoutContext";
+import { useContext } from "react";
+
+export default function PaymentSection() {
     const [paymentMethod, setPaymentMethod] = useState("creditcard");
     
     const [allowMoreCardsPopup, setAllowMoreCardsPopup] = useState(true);
@@ -19,6 +22,10 @@ export default function PaymentSection({ checkFields }) {
     const blockNextMoreCardsMobileClick = useRef(true);
 
     const moreCardsDivRef = useRef();
+
+
+ 
+const {checkFields} = useContext(CheckoutContext);
 
     
   useEffect(()=>{
@@ -136,8 +143,8 @@ export default function PaymentSection({ checkFields }) {
         className={`${styles.paymentFields} ${styles.creditCardField} ${paymentMethod==="creditcard" && styles.selectedField}`}>
         
           <StripeWrapper
-       //aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-       
+    
+    
        
             checkFields={checkFields}
           />

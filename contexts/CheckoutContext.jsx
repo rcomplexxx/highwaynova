@@ -34,6 +34,119 @@ export const CheckoutContext = createContext({cartProducts: [], total:'0.00',sub
     const [coupon, setCoupon] = useState({code: "", discount: 0});
     const [tip, setTip]= useState('0.00');
     const [cartProducts, setCartProducts] = useState(buyNowProduct?findBestBundle(buyNowProduct):[...useGlobalStore(state => state.cartProducts)])
+    const [errors, setErrors] = useState({});
+
+
+    
+
+
+
+    const checkFields=useCallback((specificPaymentData)=>{
+
+
+      const findError = () => {
+        const testId = (id) => {
+
+         
+          const inputEl = document.getElementById(id);
+
+          console.log('test', id, inputEl.value)
+          if (!inputEl.value) {
+            return setErrors({ [id]: `${inputEl.labels[0]?.textContent.trim()} is a required field.` }) || id;
+          
+          }
+        };
+      
+        const emailTest = (id) => {
+          const value = document.getElementById(id).value;
+          if (testId(id)) return id;
+          if (!/^\S{3,}@\S{3,}\.\S{2,}$/.test(value)) {
+            setErrors({ email: "Please enter a valid email address." });
+            return id;
+          }
+        };
+      
+        const phoneTest = (id) => {
+          const value = document.getElementById(id).value;
+          if (id === "billingPhone") return false;
+          if (testId(id)) return id;
+          if (value.length < 5 || [...value].some(char => !/[0-9+\-(). /]/.test(char))) {
+            setErrors({ phone: "Invalid phone" });
+            return id;
+          }
+        };
+      
+        const validateFields = (fields) => {
+    
+          return Object.values(fields).find((field) => testId(field))
+
+            
+        }
+
+
+      
+        if (emailTest("email")) return "email";
+        const fieldsValidation = validateFields(["country", "firstName", "lastName", "address", "city", "state", "zipcode"]);
+        if (fieldsValidation) return fieldsValidation;
+      
+        if (phoneTest("phone")) return "phone";
+
+
+
+
+
+
+
+
+
+      
+
+        if(specificPaymentData?.method ==="stripe"){
+
+          if (Object.values(specificPaymentData.cardErrors).some(Boolean)) {
+           return specificPaymentData.setCardErrors(specificPaymentData.cardErrors) || "iregularField";
+          }
+
+          const cardHolderNameInput = document.getElementById('cardHolderName');
+          if (!cardHolderNameInput.value) {
+            setErrors({ ["cardHolderName"]: `Please enter a valid card name.` });
+            return "cardHolderName";
+          }
+
+          
+
+        if (specificPaymentData.billingRequired) {
+         
+         
+        
+
+
+          if (emailTest("billingEmail")) return "billingEmail";
+
+
+          const fieldsValidation = validateFields(["billingCountry", "billingAddress", "billingCity", "billingState", "billingZipcode"]);
+          if (fieldsValidation) return fieldsValidation;
+
+
+          if (phoneTest("billingPhone")) return "billingPhone";
+        }
+      }
+
+
+      
+        return false;
+      };
+      
+   
+  
+  
+      const errorFieldId = findError();
+      if (errorFieldId && errorFieldId!=="iregularField") window.scrollTo({ top: document.getElementById(errorFieldId).getBoundingClientRect().top + window.scrollY - 12, behavior: "smooth" });
+  
+    return !(errorFieldId  && errorFieldId!=="iregularField");
+  },[])
+  
+  
   
 
     
@@ -56,6 +169,11 @@ export const CheckoutContext = createContext({cartProducts: [], total:'0.00',sub
       setCoupon({ code: "BUNDLE", discount: bundleDiscount.toFixed(2) });
       setCartProducts(newCartProducts);
     }, [coupon.code]);
+
+
+
+
+
 
 
 
@@ -176,7 +294,7 @@ const organizeUserData = useCallback((paymentMethod, paymentToken) => {
 
   
     return (
-      <CheckoutContext.Provider value={{cartProducts, total,subTotal, coupon, setAndValidateCoupon, tip, setTip, customerSubscribed, setCustomerSubscribed, organizeUserData }}>
+      <CheckoutContext.Provider value={{cartProducts, total,subTotal, coupon, setAndValidateCoupon, tip, setTip, customerSubscribed, setCustomerSubscribed, organizeUserData, errors, setErrors, checkFields }}>
         {children}
       </CheckoutContext.Provider>
     );

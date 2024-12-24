@@ -4,16 +4,24 @@ import styles from "./countryinput.module.css";
 
 import { ArrowDown } from "@/public/images/svgs/svgImages";
 
-export default function CountryInput({ id, setErrors, error }) {
+import { CheckoutContext } from "@/contexts/CheckoutContext";
+import { useContext } from "react";
+
+export default function CountryInput({ id }) {
   const [country, setCountry] = useState("");
   const [isFocused, setIsFocused]= useState(false);
 
+
+  const {errors, setErrors} = useContext(CheckoutContext);
+
+
   const handleChange = (c) => {
-    console.log(c);
+ 
+    
 
     setCountry(c);
 
-    if (error && c !== "" && c !== null) {
+    if (errors[country] && c !== "" && c !== null) {
       setErrors((prevErrors) => {
         const newErrors = { ...prevErrors };
 
@@ -38,7 +46,7 @@ export default function CountryInput({ id, setErrors, error }) {
   };
 
   return (
-    <div className={`${styles.form_group} ${isFocused && styles.countryFocused} ${error && styles.input_error}`}>
+    <div className={`${styles.form_group} ${isFocused && styles.countryFocused} ${errors[id] && styles.input_error}`}>
       <CountryDropdown
         id={id}
         value={country}
@@ -66,8 +74,7 @@ export default function CountryInput({ id, setErrors, error }) {
 
 
       <span className={styles.countryNameLabel} >
-        {country}
-
+        {country != "" && country}
       </span>
 
 
