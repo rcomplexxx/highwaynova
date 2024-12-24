@@ -79,7 +79,7 @@ export default function ContactForm({messageLabel="Message"}) {
 <div className={styles.messageField}>
 
 <textarea
-placeholder=""
+placeholder=" "
   ref={fieldRefs.message}
   onChange={()=>{setMessageSent(false);
  setErrors({...errors, message: false})
