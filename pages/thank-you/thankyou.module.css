@@ -1,19 +1,5 @@
 
-.thankYouWrapper{
 
-    width: 100%;
-    background-color: var(--bg-color);
-    position: absolute;
-    top:0;
-    left:0;
-    display: flex;
-    justify-content: center;
-
-
-    overflow: hidden;
-    
-    z-index: 99;
-}
 
 .mainDiv{
     

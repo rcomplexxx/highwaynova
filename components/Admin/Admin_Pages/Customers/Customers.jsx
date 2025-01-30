@@ -1,15 +1,19 @@
+import { useAdminStore } from "../../AdminZustand";
 import GetDataButton from "../MagicButtons/GetDataButton";
 import PageIndexButtons from "../MagicButtons/PageIndexButtons";
 import styles from "./customers.module.css";
 import { useState } from "react";
 
-export default function Customers({ customers, setCustomers }) {
+export default function Customers() {
+
+
 
 
 
   const [page, setPage] = useState(0);
  
 
+  const {customers, setCustomers } = useAdminStore();
 
   
 
@@ -44,7 +48,7 @@ customers.length === 0?
 
 </div>
 :
-<> <button className={styles.dismissCustomersButton} onClick={()=>{setPage(0);setCustomers([])}}>
+<> <button className={styles.dismissCustomersButton} onClick={()=>{setCustomers([], true)}}>
 Dismiss customer list
 </button>
 

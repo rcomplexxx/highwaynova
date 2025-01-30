@@ -19,7 +19,7 @@ export default function Collection({
   links,
 }) {
   return (
-    <div className={styles.mainDiv}>
+    <>
       <NextSeo {...collectionPageSeo(`/collection/${collectionName}/page/${pageId}`)}/>
       
       
@@ -59,7 +59,7 @@ export default function Collection({
         />
      
      
-    </div>
+    </>
   );
 }
 

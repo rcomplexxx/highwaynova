@@ -34,11 +34,26 @@ export default function OrderCard({
 
 
   const infoObj = useMemo(() => {
+
+
    const { items, couponCode, ...rest } = info;
-   const newItems = JSON.parse(items || "[]").map(item => ({
+
+
+
+ 
+
+   const newItems = JSON.parse(items || "[]").map(item => {
+
+      const variantImageIndex = products.find(product => product.id == item.id)?.variants?.find(variant => variant.name===item.variant)?.variantProductImageIndex || 0;
+
+     const coverImageName = products.find(product => product.id == item.id)?.images[variantImageIndex];
+      
+      
+      return {
      ...item, 
-     images: products.find(product => product.id == item.id)?.images
-   }));
+     coverImageName
+   }
+  });
    
    const discountPercentOff = coupons.find(c => c.code.toUpperCase() === couponCode?.toUpperCase())?.discountPercentage;
  
@@ -49,7 +64,7 @@ export default function OrderCard({
 
 
    
-
+//  product.images[variant?variant.variantProductImageIndex:0]
 
 
 
@@ -222,7 +237,7 @@ const changePs = () => {
 
 <div className = {styles.productImageDiv}>
 <Image
-   src={`/images/${item.images[0]}`}
+   src={`/images/${item.coverImageName}`}
    alt={item.name}
    className={styles.productImage}
    height={0} width={0} sizes="72px"

@@ -2,8 +2,13 @@ import { useState } from 'react'
 import styles from './sequences.module.css'
 import EmailCard from '../EmailCard/EmailCard'
 import { adminConfirm } from '@/utils/utils-client/utils-admin/adminConfirm'
+import { useAdminStore } from '@/components/Admin/AdminZustand';
 
-export default function Sequences({emails,sequences}) {
+export default function Sequences() {
+
+
+    const emailData = useAdminStore((state) => state.emailData);
+    const { emails, sequences } = emailData || {};
 
 
 
@@ -36,6 +41,10 @@ const SequenceCard = ({id, title, sequenceEmails, emails})=>{
 
     const [showEmailInfo, setShowEmailInfo] = useState(false);
     const [hideSequence, setHideSequence] = useState(false);
+
+    const setEmailDataUpdate = useAdminStore((state) => state.setEmailDataUpdate);
+   
+    
 
     if(hideSequence) return null;
 
@@ -73,7 +82,7 @@ const SequenceCard = ({id, title, sequenceEmails, emails})=>{
         console.log("Maine DATA!", data);
        
         setHideSequence(true)
-
+        setEmailDataUpdate(true)
        
        
    
@@ -117,7 +126,7 @@ Emails
 {showEmailInfo && <EmailCard id={showEmailInfo.id} title={showEmailInfo.title} text={showEmailInfo.text} 
 
 
-handleSaveEmail = {async (id, emailTitle, emailTextHtml) => {
+handleUpdateEmail = {async (id, emailTitle, emailTextHtml) => {
   const emailData = [{ id, title: emailTitle, text: emailTextHtml }];
 
   try {
@@ -132,9 +141,11 @@ handleSaveEmail = {async (id, emailTitle, emailTextHtml) => {
     if (response.ok) {
       console.log(response);
       setShowEmailInfo(false);
+      return adminAlert('success', 'Email data updated.', 'Email data has been sucessfully updated')
     }
   } catch (error) {
     console.log(error);
+    return adminAlert('error', `Can't update email data`, 'Server error occured.');
   }
 }}
 

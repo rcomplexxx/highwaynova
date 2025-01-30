@@ -1,21 +1,22 @@
 import GetDataButton from "../MagicButtons/GetDataButton";
-import SaveOrdersButton from "../MagicButtons/SaveOrdersButton";
+import UpdateDataButton from "../MagicButtons/UpdateDataButton";
 import OrderCard from "./OrderCard/OrderCard";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styles from "./orders.module.css";
 import PageIndexButtons from "../MagicButtons/PageIndexButtons";
+import { useAdminStore } from "../../AdminZustand";
 
 
 
 
-export default function Orders({ data, setData }) {
+export default function Orders() {
+  
   
   const [page, setPage] = useState(0);
 
 
-  useEffect(()=>{
-    if(data.length===0)setPage(0);
-  },[data])
+
+    const {orders, setOrders } = useAdminStore();
   
 
 
@@ -25,11 +26,11 @@ export default function Orders({ data, setData }) {
     
     
 
-    const updatedOrders = data.map(order => order.id === changedOrder.id ?{...order, ...changedOrder, changed: true}:order)
+    const updatedOrders = orders.map(order => order.id === changedOrder.id ?{...order, ...changedOrder, changed: true}:order)
 
   
     
-    setData(updatedOrders)
+    setOrders(updatedOrders)
  
 
     
@@ -55,12 +56,14 @@ export default function Orders({ data, setData }) {
     <>
       <div className={styles.titleDiv}>
         <h1>Orders</h1>
-        {data.length !== 0 ? (
-          <SaveOrdersButton
+        {orders.length !== 0 ? (
+          <UpdateDataButton
+          dataName={'orders'}
             dataType="update_orders"
            
-            newData={data.filter(order => order.changed)}
-            setData={setData}
+            newData={orders.filter(order => order.changed)}
+            
+            
             
           />
         ) : (
@@ -70,7 +73,7 @@ export default function Orders({ data, setData }) {
 <GetDataButton
           name="orders - NEW"
           dataType={"get_unfulfilled_orders"}
-          setData={setData}
+          setData={setOrders}
           
         />
 
@@ -78,14 +81,14 @@ export default function Orders({ data, setData }) {
 <GetDataButton
               name="orders - ORDERED"
               dataType={"get_ordered_orders"}
-              setData={setData}
+              setData={setOrders}
               
             />
 
 <GetDataButton
               name="orders - COMPLETED"
               dataType={"get_completed_orders"}
-              setData={setData}
+              setData={setOrders}
               
             />
      
@@ -97,22 +100,21 @@ export default function Orders({ data, setData }) {
             <GetDataButton
               name="Orders - UNAPPROVED"
               dataType={"get_unapproved_orders"}
-              setData={setData}
+              setData={setOrders}
               
             />
 
 <GetDataButton
               name="Orders - CANCELED"
               dataType={"get_canceled_orders"}
-              setData={setData}
-              
+              setData={setOrders}
             />
 
 
 <GetDataButton
               name="orders - RETURNED"
               dataType={"get_returned_orders"}
-              setData={setData}
+              setData={setOrders}
               
             />
 
@@ -124,7 +126,7 @@ export default function Orders({ data, setData }) {
      
      <div className={styles.orders}>
       
-      {data.slice(page * 10, (page + 1) * 10).map((order, index) => (
+     {orders.slice(page * 10, (page + 1) * 10).map((order, index) => (
   <OrderCard
     key={page * 10 + index}
     index={page * 10 + index}
@@ -142,7 +144,7 @@ export default function Orders({ data, setData }) {
 </div>
       
 
-      <PageIndexButtons data={data} page={page} setPage={setPage} />
+      <PageIndexButtons data={orders} page={page} setPage={setPage} />
     </>
   );
 }

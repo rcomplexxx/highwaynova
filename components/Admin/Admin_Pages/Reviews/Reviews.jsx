@@ -1,6 +1,6 @@
 import styles from "./reviews.module.css";
-import ReviewsSaveButton from "./ReviewsSaveButton";
-import { useEffect, useState } from "react";
+
+import { useState } from "react";
 import GetDataButton from "../MagicButtons/GetDataButton";
 import PageIndexButtons from "../MagicButtons/PageIndexButtons";
 import ReviewsCard from "./ReviewsCard/ReviewsCard";
@@ -8,15 +8,17 @@ import ReviewsCard from "./ReviewsCard/ReviewsCard";
 
 import SortByRatingAndImages from "./SortByRatingAndImages/SortByRatingAndImages";
 import { adminAlert } from "@/utils/utils-client/utils-admin/adminAlert";
+import UpdateDataButton from "../MagicButtons/UpdateDataButton";
+import { useAdminStore } from "../../AdminZustand";
 
-export default function Reviews({ reviews, setReviews }) {
+export default function Reviews() {
   const [page, setPage] = useState(0);
   const [productId, setProductId] = useState();
 
 
-  useEffect(()=>{
-    if(reviews.length===0)setPage(0);
-  },[reviews])
+ 
+  
+    const { reviews, setReviews } = useAdminStore();
   
 
   
@@ -53,9 +55,21 @@ export default function Reviews({ reviews, setReviews }) {
         <h1>Reviews{reviews && <span> ({reviews.length})</span>}</h1>
         {reviews.length !== 0 ? (
           <>
-          <ReviewsSaveButton
-            reviews={reviews.filter(r => r.changed)}
-            setData={setReviews}
+          <UpdateDataButton
+
+           dataName={'reviews'}  
+            newData={reviews.filter(r => r.changed) .map(({ id, name, text, imageNames, stars, deleted, swapId }) => ({
+              id: id.toString(),
+              name,
+              text,
+              imageNames,
+              stars,
+              deleted: deleted || false,
+              swapId: swapId || null,
+            })
+          
+          )}
+            dataType="update_reviews"
            
           />
 

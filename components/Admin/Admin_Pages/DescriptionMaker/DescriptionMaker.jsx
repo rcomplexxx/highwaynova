@@ -37,10 +37,10 @@ export default function DescriptionMaker() {
     const getCurrentDescription = async () => {
 
       
-      if (descriptionGetterProductId===undefined || isNaN(descriptionGetterProductId)) return;
+      if (descriptionGetterProductId===undefined || isNaN(descriptionGetterProductId)) return adminAlert('error','Unable to link product', `Product id is inavlid.`);
     
       const product = productsData.find(product => descriptionGetterProductId === product.id);
-      if (!product) return;
+      if (!product) return adminAlert('error','Unable to link product', `Product with id ${descriptionGetterProductId} not found`);;
 
     
       const response = await fetch("/api/admincheck", {
@@ -55,10 +55,8 @@ export default function DescriptionMaker() {
 
       console.log('hello!', data)
       
-      if (!data || data.length === 0) {
-        
-      setProductId(descriptionGetterProductId);
-        return;}
+      if (!data || data.length === 0) return setProductId(descriptionGetterProductId);
+      
     
       
       const productDescription = data[0].description;

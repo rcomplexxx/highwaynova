@@ -3,7 +3,7 @@ import GooglePayButton from "@google-pay/button-react";
 import styles from "./googlepay.module.css";
 import classNames from "classnames";
 import { useRouter } from "next/router";
-import swapCountryCode from "@/utils/utils-client/countryList";
+
 import { CheckoutContext } from "@/contexts/CheckoutContext";
 import { ErrorIcon } from "@/public/images/svgs/svgImages";
 
@@ -17,6 +17,8 @@ const GooglePay = () => {
 
   const totalRef = useRef(total);
 const organizeUserDataRef = useRef(organizeUserData)
+
+
 
 
   useEffect(()=>{
@@ -45,91 +47,100 @@ const paymentToken = JSON.parse(paymentData.paymentMethodData.tokenizationData.t
 
 
 
-// Extract first and last name
-const [firstName = "", lastName = ""] = paymentData.shippingAddress.name.split(" ");
 
-// Build requestData
-
-const requestDataTemplate = {...organizeUserDataRef.current("GPAY", paymentToken)};
-
-const requestData = {
-  ...requestDataTemplate, 
-  
-  order: {
-    ...requestDataTemplate.order,  
-    email: paymentData.email,
-  firstName: firstName,
-  lastName: lastName,
-  address: paymentData.shippingAddress.address1,
-  apt: undefined,
-  country: paymentData.shippingAddress.countryCode,
-  zipcode: paymentData.shippingAddress.postalCode,
-  state: paymentData.shippingAddress.administrativeArea,
-  city: paymentData.shippingAddress.locality,
-  phone: paymentData.shippingAddress.phoneNumber
- 
-  
-}
-};
+        const [firstName = "", lastName = ""] = paymentData.shippingAddress.name.split(" ");
+        const { address1, countryCode, postalCode, administrativeArea, locality, phoneNumber } = paymentData.shippingAddress;
 
 
 
-      
+        // Build requestData
 
-      console.log("mydata", requestData);
-      return await fetch("/api/make-payment", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          ...requestData,
-          items: JSON.stringify(requestData.items),
-        }),
-      })
-        .then((response) => response.json())
-        .then((validation) => {
-          if (validation.success) {
-            console.log("Validation true", validation.message);
+        const requestDataTemplate = {...organizeUserDataRef.current("GPAY", paymentToken)};
 
-            
-            router.push("/thank-you");
+        const requestData = {
+          ...requestDataTemplate, 
+          
+          order: {
+            ...requestDataTemplate.order,  
+            email: paymentData.email,
+          firstName: firstName,
+          lastName: lastName,
+          address: address1,
+          apt: undefined,
+          country: countryCode,
+          zipcode: postalCode,
+          state: administrativeArea,
+          city: locality,
+          phone: phoneNumber,
+        
+          
+        }
+        };
 
-            return { transactionState: "SUCCESS" };
-          } else {
-            console.log(validation.error);
 
-            if (validation.error === "amount_incorrect")
-              return {
-                transactionState: "ERROR",
-                error: {
-                  reason: "OFFER_INVALID",
-                  message: "Amount of products is not correct on server side.",
-                  intent: "OFFER",
-                },
-              };
-
-            else
-              return {
-                transactionState: "ERROR",
-                error: {
-                  reason: "OTHER_ERROR",
-                  message: validation.error,
-                  intent: "PAYMENT_AUTHORIZATION",
-                },
-              };
-          }
-        })
-        .catch((error) => {
-          // Handle errors that occur during the fetch or processing of the response
-          console.error("Error creating order:", error);
-          throw error; // Rethrow the error for the calling code to handle
+        const response = await fetch("/api/make-payment", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            ...requestData,
+            items: JSON.stringify(requestData.items),
+          }),
         });
-    } catch (err) {
-      console.log(err);
+      
+        const validation = await response.json();
+
+
+
+        if (validation.success) {
+          console.log("Validation true", validation.message);
+          router.push("/thank-you");
+          return { transactionState: "SUCCESS" };
+        } 
+        
+        
+        else {
+          console.log(validation.error);
+      
+          if (validation.error === "amount_incorrect") {
+            return {
+              transactionState: "ERROR",
+              error: {
+                reason: "OFFER_INVALID",
+                message: "Amount of products is not correct on server side.",
+                intent: "OFFER",
+              },
+            };
+          } 
+          
+          else {
+            return {
+              transactionState: "ERROR",
+              error: {
+                reason: "OTHER_ERROR",
+                message: validation.error,
+                intent: "PAYMENT_AUTHORIZATION",
+              },
+            };
+          }
+
+
+
+        }
+
+
+ 
+
+
+    } catch (error) {
+      console.log(error);
       return { success: false, error: {message: "Payment was not approved."} };
     }
   };
+
+
+
 
   return (
     <>

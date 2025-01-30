@@ -1,7 +1,7 @@
 import paypal from "@paypal/checkout-server-sdk";
 import RateLimiter from "@/utils/utils-server/rateLimiter.js";
-import subscribe from '@/utils/utils-server/subcsribe'
-import swapCountryCode from "@/utils/utils-client/countryList";
+import sendEssencialSequence from '@/utils/utils-server/sendEssencialSequence'
+
 const getPool = require('@/utils/utils-server/mariaDbPool');
 
 
@@ -156,7 +156,7 @@ const paypalExpressChecker=  (await dbConnection.query(`SELECT address, city FRO
   
             
       
-          await subscribe(email, customerSubscribed? "checkout": "checkout x", {orderId:orderData.id}, dbConnection);
+          await sendEssencialSequence(email, customerSubscribed? "checkout": "checkout x", {orderId:orderData.id}, dbConnection);
    
 
          

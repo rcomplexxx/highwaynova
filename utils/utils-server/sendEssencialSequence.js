@@ -2,7 +2,7 @@ const getPool = require('@/utils/utils-server/mariaDbPool');
 import {emailSendJob} from "@/utils/utils-server/sendEmailJob";
 
 
-async function subscribe(email, source, extraData,dbConnectionArg) {
+async function sendEssencialSequence(email, source, extraData,dbConnectionArg) {
 
   let dbConnection;
 
@@ -37,7 +37,7 @@ async function subscribe(email, source, extraData,dbConnectionArg) {
 
       
 
-      const columns = ['title', 'sequenceId', 'sendingDateInUnix', 'emailSentCounter', 'retryCounter', 'targetCustomers'];
+      const columns = ['title', 'sequenceId', 'sendingDateInUnix', 'emailSentCounter', 'sendFailCounter', 'targetCustomers'];
       const values = [campaignName, sequenceId, Date.now() + 5000, 0, 0, JSON.stringify([email])];
     
       // If in buying sequence and extraData.orderId is provided, add it to the query
@@ -69,33 +69,39 @@ async function subscribe(email, source, extraData,dbConnectionArg) {
 
 
    
-    const result = (await dbConnection.query(
+    const customerRecord = (await dbConnection.query(
       "SELECT totalOrderCount, subscribed FROM customers WHERE email = ? LIMIT 1", [email]
     ))[0];
 
-    // If no customer found, insert new customer and trigger subscription sequence
-    if (!result) {
+
+
+
+
+
+    // If no customer record found, insert new customer and trigger subscription sequence
+      // Customeri su vec insertovani prilikom make payment. Pa se samo u slucaju subscribe desava da ne postoji customer record!
+    if (!customerRecord) {
       await dbConnection.query(
         "INSERT INTO customers (email, totalOrderCount, subscribed, source, createdDate) VALUES (?, ?, ?, ?, ?)",
         [email, 0, 1, source, Date.now()]
       );
       await sendAutomatedSequence("subscribe_sequence");
 
-      // No further checks needed since a new customer can't be from checkout
-    } else {
+      return true;
+
+    
+    } 
+    
+    
 
       
+      if (source.includes("checkout")) await sendAutomatedSequence("post_buying_sequence", customerRecord.totalOrderCount);
       
 
-      // Handle post-buying sequence if source indicates checkout
-      if (source.includes("checkout")) {
-        await sendAutomatedSequence("post_buying_sequence", result.totalOrderCount);
-      }
+        
 
        // Determine if the user should be subscribed (non-checkout and not already subscribed)
-     
-      if(result.subscribed || source === "checkout x") return true;
-
+        if(customerRecord.subscribed || source === "checkout x") return true;
      
       
         await dbConnection.query("UPDATE customers SET subscribed = 1 WHERE email = ?", [email]);
@@ -103,10 +109,11 @@ async function subscribe(email, source, extraData,dbConnectionArg) {
     
         
 
-        
-    }
+
 
     return true;
+
+
   } catch (error) {
     console.log('subscribe error', error);
     return false;
@@ -119,4 +126,4 @@ async function subscribe(email, source, extraData,dbConnectionArg) {
 
 
 
-module.exports =  subscribe;
+module.exports =  sendEssencialSequence;

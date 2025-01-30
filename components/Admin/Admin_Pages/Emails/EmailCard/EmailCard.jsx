@@ -7,7 +7,7 @@ import styles from './emailcard.module.css'
 import { adminConfirm } from '@/utils/utils-client/utils-admin/adminConfirm';
 
 
-export default function EmailCard({id,title, text, handleSaveEmail}) {
+export default function EmailCard({id,title, text, handleUpdateEmail, setEmailDataUpdate}) {
 
     const [emailTitle, setEmailTitle] = useState(title)
     const [emailTextHtml, setemailTextHtmlHtml] = useState(text);
@@ -80,6 +80,8 @@ export default function EmailCard({id,title, text, handleSaveEmail}) {
 
           const data = await response.json();
           console.log("Maine DATA!", data);
+
+          setEmailDataUpdate(true);
          
           
   
@@ -134,7 +136,7 @@ export default function EmailCard({id,title, text, handleSaveEmail}) {
 
         <div className={styles.buttonBar}>
         <button onClick={handlePreviewEmail}>Preview Email</button>
-        {handleSaveEmail && <button onClick={()=>{handleSaveEmail(id, emailTitle, emailTextHtml)}}>Save Email</button> }
+        {handleUpdateEmail && <button onClick={()=>{handleUpdateEmail(id, emailTitle, emailTextHtml)}}>Update Email</button> }
         <button className={styles.deleteEmail} onClick={handleDeleteEmail}>Delete Email</button>
        
         </div>

@@ -15,11 +15,11 @@ export default function ContactUs() {
   return (
 
 
-    <div className={styles.mainDiv}>
+    <>
       <NextSeo {...unimportantPageSeo('/contact-us')}/>
         <h1>Contact Us</h1>
 
-
+        <div className={styles.contactDiv}>
 
         <div className={styles.contactUsTextDiv}>
 
@@ -32,12 +32,12 @@ export default function ContactUs() {
         </div>  
 
         <ContactForm/>
-        
+        </div>  
 
 
 
 
-        </div>
+        </>
      
   );
 }

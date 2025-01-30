@@ -7,43 +7,24 @@
   
 
   
-    const targetConditions = async()=>{
+  const targetConditions = async () => {
+    const conditionsMap = {
+      cold_traffic: "subscribed = 1 AND totalOrderCount <= 1",
+      warm_traffic: "subscribed = 1 AND totalOrderCount = 2",
+      hot_traffic: "subscribed = 1 AND totalOrderCount >= 3 AND totalOrderCount < 5",
+      loyal_traffic: "subscribed = 1 AND totalOrderCount >= 5",
+      all: "subscribed = 1",
+      bh_customers: "subscribed = 0",
+    };
   
-      let myTargets;
-   
-    if(campaignTargets==='cold_traffic'){
-      myTargets = (await dbConnection.query(`SELECT email FROM customers WHERE subscribed = 1 AND totalOrderCount <= 1`))?.map(row => row.email);
-  
+    if (conditionsMap[campaignTargets]) {
+      const condition = conditionsMap[campaignTargets]; 
+      return (await dbConnection.query(`SELECT email FROM customers WHERE emailBounceCount < 4 AND ${condition}`))?.map(row => row.email);
+    } else {
+      console.log("tpack", campaignTargets);
+      return JSON.parse(campaignTargets);
     }
-      else if(campaignTargets==='warm_traffic'){
-        myTargets = (await dbConnection.query(`SELECT email FROM customers WHERE subscribed = 1 AND totalOrderCount = 2`))?.map(row => row.email);
-  
-      }
-        else if(campaignTargets==='hot_traffic') {
-          myTargets = (await dbConnection.query(`SELECT email FROM customers WHERE subscribed = 1 AND totalOrderCount >= 3 AND totalOrderCount <5`))?.map(row => row.email);
-  
-        } 
-        else if(campaignTargets==='loyal_traffic'){
-  
-          myTargets = (await dbConnection.query(`SELECT email FROM customers WHERE subscribed = 1 AND totalOrderCount >= 5`))?.map(row => row.email);
-  
-        }
-  
-        else  if(campaignTargets==='all'){
-          myTargets =  (await dbConnection.query(`SELECT email FROM customers WHERE subscribed = 1`))?.map(row => row.email);
-        }
-        else if(campaignTargets==='bh_customers'){
-       
-          myTargets = (await dbConnection.query(`SELECT email FROM customers WHERE subscribed = 0`))?.map(row => row.email);
-        }
-        else{
-            console.log('tpack',campaignTargets)
-          myTargets = JSON.parse(campaignTargets);
-        }
-  
-        return myTargets
-  
-      }
+  };
 
 
 

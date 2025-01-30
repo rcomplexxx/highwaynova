@@ -2,54 +2,22 @@ import { useState } from 'react'
 import Link from 'next/link';
 import EmailCard from './EmailCard/EmailCard';
 import styles from './emails.module.css'
+import { useAdminStore } from '../../AdminZustand';
+import { Spinner2 } from '@/public/images/svgs/svgImages';
+import { adminAlert } from '@/utils/utils-client/utils-admin/adminAlert';
 
-export default function Emails({emailData, setEmailData}) {
+export default function Emails() {
 
   const [updatedEmailData, setUpdatedEmailData] = useState([]);
  
 
   
-
-    const getEmailData=async()=>{
-
-        try {
-            const response = await fetch("/api/admincheck", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(
-               { dataType:'get_emails' } 
-              ),
-            });
-      
-            if (!response.ok) throw new Error("Network response was not ok.");
-
-              const {data} = await response.json();
-              console.log("Maine DATA!", data);
-              //Ovde takodje zatraziti emails campaign kasnije .
-              //na slican princip kao sto sam trazio emails.
-
-             
-              const emailsPresentedInSequences = data?.sequences.reduce((acc, sequence) => {
-                return acc.concat(JSON.parse(sequence.emails).map(email => email.id));
-              }, []) || [];
-
-              const emailsUnusedInSequences = data?.emails.filter(email => 
-                !emailsPresentedInSequences.includes(email.id)
-              );
-
-              setEmailData({...data, emailsUnusedInSequences:emailsUnusedInSequences});
-
-              
-          } catch (error) {
-            console.error("There has been a problem with your fetch operation:", error);
-          }
-
-    }
+const {emailData, setEmailData, emailDataUpdate, setEmailDataUpdate} = useAdminStore();
+ 
+  
 
     const handleUpdateEmailsInDb = async () => {
-  if (!updatedEmailData.length) return;
+  if (!updatedEmailData.length) return adminAlert('error', `Can't update email data`, 'No changes have been made.');
 
   try {
     const response = await fetch("/api/admincheck", {
@@ -57,18 +25,32 @@ export default function Emails({emailData, setEmailData}) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ dataType: 'update_email_data', data: updatedEmailData }),
     });
-    if (response.ok) setEmailData({ ...emailData, emails: [] });
+
+    if (!response.ok) throw new Error("Network response was not ok.");
+    setEmailData((emailData)=>{ return {...emailData, emails: [] }});
+
+    setUpdatedEmailData([])
+    setEmailDataUpdate(true);
+
+    return adminAlert('success', 'Email data updated.', 'Email data has been sucessfully updated')
   } catch (error) {
     console.log(error);
+   return adminAlert('error', `Can't update email data`, 'Server error occured.');
   }
 };
 
     
 
-const handleSaveEmail = (id, title, text) => {
-  const newEmailData = updatedEmailData.some((emData) => emData.id === id)
-      ? updatedEmailData.map((data) => (data.id === id ? { id, title, text } : data))
-      : [...emailData.emails, { id, title, text }]
+
+
+const handleUpdateEmail = (id, title, text) => {
+  const newEmailData = updatedEmailData.map((data) =>
+    data.id === id ? { id, title, text } : data
+  );
+  
+  if (!updatedEmailData.some((emData) => emData.id === id)) {
+    newEmailData.push({ id, title, text });
+  }
  
 
   setUpdatedEmailData(newEmailData);
@@ -77,13 +59,21 @@ const handleSaveEmail = (id, title, text) => {
 
 
 
+if(emailDataUpdate)return  <div className={styles.mainDiv}>
+      <h1>Emails</h1>
+      <Spinner2/>
+      </div>
+
+
 
   return (
     <div className={styles.mainDiv}>
       <h1>Emails</h1>
       <div className={styles.interfaceDiv}>
-      <button onClick={getEmailData}>Get email data</button>
-      <button className={styles.marginBottomClass} onClick={handleUpdateEmailsInDb}>Save email data</button>
+    
+        
+       <button className={styles.marginBottomClass} onClick={handleUpdateEmailsInDb}>Save email data</button>
+       {emailData.emails.lenght===0 && <button className={styles.marginBottomClass} onClick={()=>{setEmailDataUpdate(true)}}>Get email data</button>}
       
       <Link href='/admin/emails/campaigns'>Campaigns</Link>
       <Link href='/admin/emails/sequences'>Sequences</Link>
@@ -92,9 +82,9 @@ const handleSaveEmail = (id, title, text) => {
       <Link href='/admin/emails/new-campaign'>New campaign.</Link>
       
       </div>
-      {emailData?.emailsUnusedInSequences?.map((email, index)=>{
+      {emailData?.unsequencedEmails?.map((email, index)=>{
        
-       return <EmailCard key={index} id={email.id} title={email.title} text={email.text} handleSaveEmail={handleSaveEmail}/>
+       return <EmailCard key={index} id={email.id} title={email.title} text={email.text} handleUpdateEmail={handleUpdateEmail} setEmailDataUpdate={setEmailDataUpdate}/>
       })}
    
     </div>

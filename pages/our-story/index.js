@@ -8,7 +8,7 @@ export default function OurStory() {
   return (
     
   
-      <div className={styles.mainDiv}>
+      <>
         
         <h1>Our story</h1>
         <div className={styles.mainContent}>
@@ -50,7 +50,7 @@ export default function OurStory() {
         </div>
       </div>
       
-    </div>
+    </>
   );
 }
 

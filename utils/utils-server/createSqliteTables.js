@@ -104,13 +104,17 @@ await dbConnection.query(
                 subscribed TINYINT,
                 source TEXT,
                 used_discounts TEXT DEFAULT '[]',
-                createdDate BIGINT
+                createdDate BIGINT,
+                emailBounceCount TINYINT DEFAULT 0
             )
       `,
       );
 
+    
+  
+      
 
-
+      
 
 
       await dbConnection.query(`
@@ -284,11 +288,11 @@ await dbConnection.query(
                 sequenceId INT REFERENCES email_sequences(id),
                 sendingDateInUnix BIGINT,
                 emailSentCounter INT,
-                retryCounter INT,
                 targetType TEXT,
                 targetCustomers TEXT,
                 extraData TEXT,
                 reserveTargetedCustomers INT DEFAULT 0,
+                sendFailCounter  TINYINT,
                 finished TINYINT DEFAULT 0
              
 
@@ -301,11 +305,14 @@ await dbConnection.query(
 
       // await dbConnection.query(`
       //   ALTER TABLE email_campaigns
-      //   MODIFY sendingDateInUnix BIGINT;
+      //   CHANGE retryCounter sendFailCounter TINYINT;
       // `);
 
 
-
+  // await dbConnection.query(`
+      //   ALTER TABLE email_campaigns
+      //   MODIFY sendingDateInUnix BIGINT;
+      // `);
 
    
 

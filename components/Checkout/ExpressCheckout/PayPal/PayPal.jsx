@@ -119,7 +119,8 @@ const customerSubscribedRef = useRef(customerSubscribed);
 
       const handlePayPalButtonApprove = async (data, actions) => {
         try {
-          console.log("mail to be sent:" + document.getElementById("email")?.value);
+        
+          
         
           console.log('customerSubscribed',customerSubscribedRef.current);
           

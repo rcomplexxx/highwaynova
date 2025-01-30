@@ -7,10 +7,11 @@ import  { useState } from 'react'
 
 import ReactHtmlParser from "react-html-parser";
 
-import {useRouter } from 'next/router';
+
 
 import styles from './emailpreview.module.css'
 import { adminConfirm } from '@/utils/utils-client/utils-admin/adminConfirm';
+import { useAdminStore } from '@/components/Admin/AdminZustand';
 
 
 const EmailPreview = ({previewHtml, setPreviewHtml}) => {
@@ -22,7 +23,10 @@ const EmailPreview = ({previewHtml, setPreviewHtml}) => {
   const emailTextRef=useRef();
   const [previewEmailContent, setPreviewEmailContent]= useState();
 
-    const router = useRouter();
+
+  const {setEmailDataUpdate} = useAdminStore();
+
+  
 
 
   
@@ -56,7 +60,7 @@ const EmailPreview = ({previewHtml, setPreviewHtml}) => {
           body: JSON.stringify({ dataType: "insert_new_email", data: newEmailData }),
         });
     
-        if (response.ok) router.push('/admin/emails');
+        if (response.ok) setEmailDataUpdate(true);
       } catch (error) {
         console.log(error);
       }

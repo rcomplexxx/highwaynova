@@ -11,7 +11,7 @@ async function scheduleEmailSendJob(dateInUnix, campaignId){
 
 
   const date =formatDateToCron(dateInUnix);
-console.log('setting email cron scheduler', date, new Date(dateInUnix));
+console.log('Scheduling email for', date, new Date(dateInUnix));
 
 
 
@@ -28,8 +28,6 @@ cron.schedule(date, async () => await emailSendJob(campaignId));
 
  async function emailSendJob(campaignId) {
 
-
-  
 
   
 
@@ -58,185 +56,229 @@ cron.schedule(date, async () => await emailSendJob(campaignId));
 
 
 
-    const campaign = (await dbConnection.query(`
-      SELECT ec.*, JSON_EXTRACT(es.emails, '$') AS sequenceEmailPointers
-  FROM email_campaigns ec
-      JOIN email_sequences es ON ec.sequenceId = es.id
-      WHERE ec.id = ?
-    `, [campaignId]))[0];
-
-
-    
-    if(!campaign) throw new Error('campaign_deleted')
-
-
-
-  
-
-    const currentEmailIndex = campaign.emailSentCounter
-
-    const email = (await dbConnection.query(`SELECT title, text FROM emails WHERE id = ?`,[campaign.sequenceEmailPointers[currentEmailIndex]?.id]))[0];
-    
- 
-    
+      const campaign = (await dbConnection.query(`
+        SELECT ec.*, JSON_EXTRACT(es.emails, '$') AS sequenceEmailPointers
+        FROM email_campaigns ec
+        JOIN email_sequences es ON ec.sequenceId = es.id
+        WHERE ec.id = ?
+      `, [campaignId]))[0];
+      
+      if (!campaign) throw new Error('Campaign error. Campaign deleted.');
 
 
 
-        if(!email) throw new Error('email_doesnt_exist')
+      const currentEmailIndex = campaign.emailSentCounter;
+      
+      const isLastEmail = currentEmailIndex === campaign.sequenceEmailPointers.length - 1;
+
+      const nextEmailIndex = currentEmailIndex + 1;
 
 
 
+      
+      const email = (await dbConnection.query(`
+        SELECT title, text FROM emails 
+        WHERE id = ?
+      `, [campaign.sequenceEmailPointers[currentEmailIndex]?.id]))[0];
+      
+      if (!email) throw new Error('email_doesnt_exist');
 
-
-        
-        let targets= JSON.parse(campaign.targetCustomers);
-
-
-        console.log('targets', targets)
-
-         
-         
-              
-       
-      //odraditi neku foru da izvucem da li ova kampanja markuje iz campaigne
-             
-          
-
-              
-         
-         
-         
-        
-
-
-
-          
       
 
-              let campaignCorrect = false;
-
-
-              for(const target of targets){
-
-                
-              const finalEmailText = await finalizeEmailText(email.text, target, campaign.extraData, dbConnection)
-
-              console.log('Sending email! _______________________________', campaign.title);
-
-              
-             try{
-
-             const transporter = nodemailer.createTransport({
-               host: process.env.EMAIL_HOST,
-               port: Number(process.env.EMAIL_PORT),
-               auth: {
-                 user: process.env.EMAIL_USER,
-                 pass: process.env.EMAIL_PASSWORD,
-               },
-             });
-   
-             await transporter.sendMail({
-               //   from: 'orderconfirmed@selling-game-items-next.com',
-               from: process.env.EMAIL_USER,
-               to: target,
-               subject: email.title,
-               html: finalEmailText,
-             });
-
-
-             
-
-             
-             if(currentEmailIndex===campaign.sequenceEmailPointers.lenght-1)
-                await dbConnection.query(`UPDATE customers SET currentCampaign = ? WHERE email = ?`, [
-                  null,
-                  target.email
-                ]
-              );
-
-              
-
-              campaignCorrect=true;
-
-              console.log('email sent successfuly!')
-                
-              
-
-            }
-            catch(error){
-              console.log('ooops, one email failed', error);
-            }
-
-
-
-              }
 
 
 
 
 
 
+      let campaignLegit;
 
+      const emailPromises = [];
+
+      const removedTargets=[];
+
+      
+
+
+    
+
+      const targets = JSON.parse(campaign.targetCustomers);
+      
+      // Pre-configure the transporter outside the loop
+      const transporter = nodemailer.createTransport({
+        host: process.env.EMAIL_HOST,
+        port: Number(process.env.EMAIL_PORT),
+        auth: {
+          user: process.env.EMAIL_USER,
+          pass: process.env.EMAIL_PASSWORD,
+        },
+      });
+
+
+
+
+      const sendEmail = async(target, resolve= undefined)=>{
+
+        console.log('Send email function activated! Target:', target);
+
+     
         
 
-              if (campaignCorrect) {
+       const localDbConnection = resolve ? await getPool().getConnection() : dbConnection;
 
-            
-                  
+        try {
+
+          console.log('Checking resolve information',resolve)
+        
+          
+          
+          const finalEmailText = await finalizeEmailText(email.text, target, campaign.extraData, dbConnection);
+          console.log('Email title:', campaign.title);
+      
+          await transporter.sendMail({
+            from: process.env.EMAIL_USER,
+            to: target,
+            subject: email.title,
+            html: finalEmailText,
+          });
+      
+          console.log('Email sending succeeded');
+
+
+          await localDbConnection.query(`UPDATE customers SET emailBounceCount = 0 WHERE email = ?`, [ target]);
+        
+          campaignLegit = true;
+
+        
+          if (resolve) resolve();
+
+        } catch (error) {
+
+
+          console.error('Email sending failed:', error);
+
+          //Ovde pokupim bounce, i ako je manji od 3 pozovem ponovo funkciju  sendEmail za 15 sekunde preko timeOut sa isti target, a ako nije, iskuliram
+
+         
+          await localDbConnection.query(
+            `UPDATE customers SET emailBounceCount = emailBounceCount + 1 WHERE email = ?`,
+            [target]
+          );
+
+          const [{ emailBounceCount }] = await localDbConnection.query(
+        `SELECT emailBounceCount FROM customers WHERE email = ?`, 
+        [target]
+      );
+
+          console.log(`emailBouncCount for customer ${target} is`, emailBounceCount)
+
+          
+
+          if (emailBounceCount < 4) {
+            const retryEmail = (resolve) => setTimeout(async() => await sendEmail(target, resolve), 15000);
+            resolve ? retryEmail(resolve) : emailPromises.push(new Promise((res) => retryEmail(res)));
+          } else  if(resolve)
+          {
+            removedTargets.push(target);
+            resolve();}
+          
+
+        }
+
+        finally{
+            if(resolve)await localDbConnection.release();
+        }
+
+      
+        
+
+      }
+
+
+      
+      for (const target of targets)  {
+        await sendEmail(target);
+      }
+
+      if(emailPromises.length>0){
+        console.log('promises are being held', emailPromises)
+      await dbConnection.release();
+      await Promise.all(emailPromises);
+      dbConnection=await getPool().getConnection();
+
+      }
+
+
+      
     
-                    //Ako counter jos uvek nije dostigao zadnji mejl, posalji sledeci mejl, i povecaj counter. U suprotnom deletaj campanju/stavi finished.
-                    
-                    if (currentEmailIndex < campaign.sequenceEmailPointers.length - 1) {
+      if (removedTargets.length > 0) {
+        const remainingTargets =  targets.filter((target) => !removedTargets.includes(target));
+
+        
+        //Ovde updatujem kampanju zamenom targeta za preostale targete(bez removedTargets)
+        const query = remainingTargets.length
+          ? `DELETE FROM email_campaigns WHERE id = ?`
+          : `UPDATE email_campaigns SET targetCustomers = ? WHERE id = ?`;
+        
+        await dbConnection.query(query, remainingTargets.length ? [JSON.stringify(remainingTargets), campaign.id] : [campaign.id]);
+      }
+
+    
 
 
-                      
+
+
+
+
+
+              
+              const updateCampaignStatus = async()=>{
 
                 
-                      //odrediti trenutan datum.
-                        
-                          const dateCalculated =  campaign.sequenceEmailPointers
-                            .slice(0, currentEmailIndex + 1)
-                            .reduce((acc, emailPointer) => acc + (parseInt(emailPointer.sendTimeGap) || 0), parseInt(campaign.sendingDateInUnix));
-                        
-
-
-
-                      
-                      await dbConnection.query(`UPDATE email_campaigns SET emailSentCounter = ?, retryCounter = ? WHERE id = ?`, [currentEmailIndex + 1, 0, campaign.id]);
-                      
-                      console.log(`SCHEDULING NEXT EMAIL FOR`, new Date(Math.max(Date.now()+61000, dateCalculated)));
-
-                      await scheduleEmailSendJob(dateCalculated, campaignId);
-
-                      
-                    } else {
-                      const isThankYouOrWelcome = [process.env.THANK_YOU_SEQUENCE_ID, process.env.THANK_YOU_SEQUENCE_FIRST_ORDER_ID, process.env.WELCOME_SEQUENCE_ID]
-                        .includes(campaign.sequenceId.toString());
-                  
-                      isThankYouOrWelcome
-                        ? await dbConnection.query(`DELETE FROM email_campaigns WHERE id = ?`, [campaignId])
-                        : await dbConnection.query(`UPDATE email_campaigns SET finished = 1 WHERE id = ?`, [campaign.id]);
-                    }
-               
-              } else {
-
-                //Ako postoji greska u email sendingu.
-
-                console.log("Campaign not working as expected", `/n retryCounter is`, campaign.retryCounter + 1);
+              const campaignCleaning = async () => {
+                const isSpecialSequence = [
+                  process.env.THANK_YOU_SEQUENCE_ID,
+                  process.env.THANK_YOU_SEQUENCE_FIRST_ORDER_ID,
+                  process.env.WELCOME_SEQUENCE_ID,
+                ].includes(campaign.sequenceId.toString());
               
-                if (campaign.retryCounter < 10) {
-                  await dbConnection.query(`UPDATE email_campaigns SET retryCounter = retryCounter + 1 WHERE id = ?`, [campaign.id]);
-                  await scheduleEmailSendJob(Date.now() + ((campaign.retryCounter + 1) % 3 === 0 ? 7200000 : 61000), campaignId);
-                } else {
-                  const isThankYouOrWelcome = [process.env.THANK_YOU_SEQUENCE_ID, process.env.THANK_YOU_SEQUENCE_FIRST_ORDER_ID, process.env.WELCOME_SEQUENCE_ID]
-                    .includes(campaign.sequenceId.toString());
+          
+                
               
-                  isThankYouOrWelcome
-                    ? await dbConnection.query(`DELETE FROM email_campaigns WHERE id = ?`, [campaignId])
-                    : await dbConnection.query(`UPDATE email_campaigns SET finished = 1 WHERE id = ?`, [campaign.id]);
-                }
-               
+                const query = isSpecialSequence
+                  ? `DELETE FROM email_campaigns WHERE id = ?`
+                  : `UPDATE email_campaigns SET finished = 1 WHERE id = ?`;
+              
+                await dbConnection.query(query, [campaignId]);
+              };
+
+                
+              if (!campaignLegit) {
+                if (campaign.sendFailCounter >= 10) return await campaignCleaning();
+                console.log("Campaign not working as expected", `\n sendFailCounter is`, campaign.sendFailCounter + 1);
+                await dbConnection.query(`UPDATE email_campaigns SET sendFailCounter = sendFailCounter + 1 WHERE id = ?`, [campaignId]);
+                await scheduleEmailSendJob(Date.now() + ((campaign.sendFailCounter + 1) % 3 === 0 ? 7200000 : 61000), campaignId);
+                return;
               }
+            
+              console.log('W in the chat! Campaign legit, done!');
+              if (isLastEmail) return await campaignCleaning();
+            
+              const nextEmailUnixDate = campaign.sequenceEmailPointers
+                .slice(0, nextEmailIndex)
+                .reduce((acc, emailPointer) => acc + (parseInt(emailPointer.sendTimeGap) || 0), parseInt(campaign.sendingDateInUnix));
+            
+              await dbConnection.query(`UPDATE email_campaigns SET emailSentCounter = ?, sendFailCounter = ? WHERE id = ?`, [nextEmailIndex, 0, campaignId]);
+              await scheduleEmailSendJob(nextEmailUnixDate, campaignId);
+
+
+              }
+
+
+              await updateCampaignStatus();
+              
+              
+            
 
     
            
@@ -246,12 +288,7 @@ cron.schedule(date, async () => await emailSendJob(campaignId));
 
   }
     catch(error){
-
-      if (error.message === 'campaign_deleted') {
-        console.log(' Campaign error', error);
-      }
-
-        else { console.log('cron error', error)}
+        console.log('cron error', error)
     }
 
  
@@ -264,14 +301,23 @@ cron.schedule(date, async () => await emailSendJob(campaignId));
 
 
 
-
-
-
-
-
-
-
  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

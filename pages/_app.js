@@ -203,6 +203,7 @@ export default function App({ Component, pageProps }) {
 
 
 
+  const shouldShowLayout = !['/admin', '/checkout', '/thank-you'].some((path) => router.pathname.startsWith(path));
 
 
 
@@ -213,11 +214,11 @@ export default function App({ Component, pageProps }) {
       <DefaultSeo {...SEO} />
       {emailPopupOn && <SubscribePopup />}
       
-      {!router.pathname.startsWith('/admin') && !router.pathname.startsWith('/checkout') && !router.pathname.startsWith('/thank-you') &&  <Navbar />}
-      <div id="hronika" className="hronika">
-      <Component {...pageProps} />
-      </div>
-      {!router.pathname.startsWith('/admin') && !router.pathname.startsWith('/checkout')&& !router.pathname.startsWith('/thank-you') &&  <Footer />}
+            {shouldShowLayout && <Navbar />}
+          <div id="hronika" className="hronika">
+            <Component {...pageProps} />
+          </div>
+          {shouldShowLayout && <Footer />}
       </>
   );
 }

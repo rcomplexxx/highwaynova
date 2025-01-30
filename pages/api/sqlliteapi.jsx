@@ -1,17 +1,17 @@
 
 import RateLimiter from "@/utils/utils-server/rateLimiter.js";
-import subscribe from '@/utils/utils-server/subcsribe.js'
+import sendEssencialSequence from '@/utils/utils-server/sendEssencialSequence.js'
 const getPool = require('@/utils/utils-server/mariaDbPool');
 
 
 
-const limiterPerMinute = new RateLimiter({
+const limiterPerDay = new RateLimiter({
   apiNumberArg: 0,
   tokenNumberArg: 6,
   expireDurationArg: 86400, //secs
 });
 
-const dailyMessageLimit = new RateLimiter({
+const minuteMessageLimit = new RateLimiter({
   apiNumberArg: 1,
   tokenNumberArg: 4,
   expireDurationArg: 60, //secs
@@ -46,14 +46,19 @@ let dbConnection;
   try {
 
 
-    const clientIp = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
 
-    // Perform rate limiting checks
 
     dbConnection = await getPool().getConnection();
 
 
-  //   if (!(await limiterPerMinute.rateLimiterGate(clientIp, dbConnection)))
+
+
+    const clientIp = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
+
+    
+
+
+  //   if (!(await limiterPerDay.rateLimiterGate(clientIp, dbConnection)))
   //  return await resReturn(429, { error: "Too many requests." })
 
 
@@ -61,30 +66,26 @@ let dbConnection;
   //   if (!(await limiterPerWeek.rateLimiterGate(clientIp, dbConnection)))
   //     return await resReturn(429, { error: "Too many requests." })
 
-    // Rate limiting checks passed, proceed with API logic
+   
+  
 
     
     
         if (!req.body.type)  throw new Error('Request type not provided')
 
-        if (req.body.type === "subscribe") {
-          // Create a new SQLite database connection
+          if (req.body.type === "subscribe") {
+            const success = await sendEssencialSequence(req.body.email, req.body.source, undefined, dbConnection);
+            return resReturn(success ? 201 : 500, { message: success ? "Successfully subscribed." : "Internal Server Error" });
+          }
 
-          if(await subscribe(req.body.email, req.body.source, undefined, dbConnection))
-            return await resReturn(201, { message: "Successfully subscribed." })
-            
-          
-
-        
-        } 
         
         else if (req.body.type === "message") {
-          // Create a new SQLite database connection
+    
+          
 
 
-          if (!(await dailyMessageLimit.rateLimiterGate(clientIp, dbConnection)))
-            
-              return await resReturn(429, { error: "Too many messages sent." })
+          if (!(await minuteMessageLimit.rateLimiterGate(clientIp, dbConnection))) 
+            return await resReturn(429, { error: "Too many messages sent." })
            
      
             
@@ -102,8 +103,7 @@ let dbConnection;
 
             let customerId = (await dbConnection.query(`SELECT id FROM customers WHERE email = ? LIMIT 1`, [email]))[0]?.id;
 
-          if(!customerId)
-            customerId =(await dbConnection.query(`INSERT INTO customers (email, totalOrderCount, subscribed, source, createdDate) VALUES (?, ?, ?, ?, ?)`, [email, 0, 0, 'message', Date.now()])).insertId;
+          if(!customerId) customerId =(await dbConnection.query(`INSERT INTO customers (email, totalOrderCount, subscribed, source, createdDate) VALUES (?, ?, ?, ?, ?)`, [email, 0, 0, 'message', Date.now()])).insertId;
 
 
 
@@ -120,7 +120,7 @@ let dbConnection;
             `INSERT INTO messages (customer_id, name, message, createdDate) VALUES (?, ?, ?, ?)`,
           [customerId, name, message, Date.now()]);
 
-          console.log("Message sent successfully.");
+          
 
           return await resReturn(201, { message: "Message sent successfully." })
 
@@ -128,6 +128,7 @@ let dbConnection;
           
         
         }
+        
 
         return await resReturn(500, { error: "Internal Server Error"  })
 

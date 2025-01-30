@@ -5,7 +5,7 @@ import findBestBundleServer from '@/utils/utils-server/findBestBundleServer'
 
 import RateLimiter from "@/utils/utils-server/rateLimiter.js";
 import coupons from '@/data/coupons.json'
-import subscribe from '@/utils/utils-server/subcsribe.js'
+import sendEssencialSequence from '@/utils/utils-server/sendEssencialSequence.js'
 
 const getPool = require('@/utils/utils-server/mariaDbPool');
 
@@ -256,7 +256,7 @@ console.log('hello!!~~~~~~~~~~~~~~~~~~~~~~~~~~', paymentMethod)
            
             
        
-          await subscribe(email, customerSubscribed?"checkout":"checkout x",  {orderId:uniqueId}, dbConnection);
+          await sendEssencialSequence(email, customerSubscribed?"checkout":"checkout x",  {orderId:uniqueId}, dbConnection);
 
         
 

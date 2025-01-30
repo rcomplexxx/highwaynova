@@ -45,10 +45,14 @@ const getProductReturns = async () => {
     
     const {data} = await response.json();
     setMyProductReturns(data);
+
+    if(data.length===0)    return adminAlert('info', `Error`, `No product return data found.`)
    
     console.log('orders found', data);
   } catch (error) {
+   
     console.log(error);
+    return adminAlert('error', `Error`, `Can't get product return data.`)
   }
 };
 

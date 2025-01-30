@@ -1,13 +1,15 @@
 import Image from "next/image";
 import styles from "./pageindexbuttons.module.css";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { ArrowDown } from "@/public/images/svgs/svgImages";
 
 export default function PageIndexButtons({ data, page, setPage, elementsPerPage=10 }) {
 
 
+  useEffect(()=>{
+    if(data.length===0)setPage(0);
+  },[data])
 
-  if (!data.length) return;
 
   const getPageNumbersArray = useCallback(() => {
     const max = Math.ceil(data.length / elementsPerPage);
@@ -20,6 +22,9 @@ export default function PageIndexButtons({ data, page, setPage, elementsPerPage=
         ? Array.from({ length: 18 }, (_, index) => max - 18 + index)
         : Array.from({ length: 18 }, (_, index) => page - 9 + index);
   }, [page]);
+
+  
+  if (!data.length) return;
 
 
  return (

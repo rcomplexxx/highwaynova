@@ -1,19 +1,25 @@
-import { useMemo, useState } from 'react'
+import {  useState } from 'react'
 import styles from './campaigns.module.css'
 import EmailCard from '../EmailCard/EmailCard'
+import { useAdminStore } from '@/components/Admin/AdminZustand';
 
-export default function Campaigns({sequences, campaignData, emails}) {
+export default function Campaigns() {
+
+
+  const emailData = useAdminStore((state) => state.emailData);
+  const { emails, sequences, campaigns } = emailData || {};
 
 
 
-console.log('hello!', campaignData);
+
+console.log('hello!', campaigns);
 
 
   return (
   
      <div className={styles.mainDiv}>
       <h1>Campaigns</h1>
-      {campaignData?.map(campaign=>{
+      {campaigns?.map(campaign=>{
 
         const currentSequenceEmails= sequences.find(seq =>{return seq.id == campaign.sequenceId})?.emails;
 

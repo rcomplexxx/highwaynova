@@ -1,9 +1,10 @@
-import  { useEffect, useState } from 'react'
+import  { useState } from 'react'
 import styles from './newcampaign.module.css'
-import {useRouter} from 'next/router'
+
 import SequenceList from './SequenceList/SequenceList';
 import DatePicker from 'react-multi-date-picker';
 import TimePicker from 'react-multi-date-picker/plugins/time_picker';
+import { useAdminStore } from '@/components/Admin/AdminZustand';
 
 
 
@@ -19,9 +20,11 @@ import TimePicker from 'react-multi-date-picker/plugins/time_picker';
 
 
 
-export default function NewCampaign({sequences, setEmailData}) {
+export default function NewCampaign() {
 
 
+const {emailData, setEmailDataUpdate } = useAdminStore();
+const sequences = emailData?.sequences?.filter(sequence => !emailData?.specialCampaignIds.includes(sequence.id.toString()));
 
   const [explainTargetTraffic, setExplainTargetTraffic] = useState(false);
 
@@ -33,7 +36,6 @@ export default function NewCampaign({sequences, setEmailData}) {
  
 
 
-  const router = useRouter();
 
 
 
@@ -42,28 +44,8 @@ export default function NewCampaign({sequences, setEmailData}) {
 
   
 
-    useEffect(()=>{
-      if (!sequences?.length) {
-        (async () => {
-          try {
-            const response = await fetch("/api/admincheck", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ dataType: 'get_emails' }),
-            });
-      
-            if (!response.ok)  throw new Error("Network response was not ok.");
-            
-              const {data} = await response.json();
-              console.log("Main DATA!!!!!", data);
-              setEmailData(data);
-            
-          } catch (error) {
-            console.error("Fetch operation problem:", error);
-          }
-        })();
-      }
-    },[])
+
+  
 
   
 
@@ -90,8 +72,9 @@ export default function NewCampaign({sequences, setEmailData}) {
         });
         
         if (!response.ok) return;
-          setTitle()
-          router.push('/admin/emails');
+         
+        
+          setEmailDataUpdate(true);
       } catch (error) {
         console.log(error);
       }

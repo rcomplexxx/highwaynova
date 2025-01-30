@@ -70,7 +70,7 @@ const handleWipeData = async(databaseTable)=>{
       const {data_wiped} = await response.json();
       if (!data_wiped) return;
       
-        console.log('Data wiped:', data);
+        console.log('Data wiped:', data_wiped);
         setDataWipedTable(databaseTable);
       
     

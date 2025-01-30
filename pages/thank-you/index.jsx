@@ -24,7 +24,7 @@ export default function ThankYou() {
   const bonusMessage = giftDiscount?"Ps. We also left you a surprise in there 🎁":"";
 
   return (
-    <div className={styles.thankYouWrapper}>
+    <>
      <NextSeo {...unimportantPageSeo('/thank-you')}/>
     <div className={styles.mainDiv}>
 
@@ -67,6 +67,6 @@ export default function ThankYou() {
           />
 
     </div>
-    </div>
+    </>
   );
 }

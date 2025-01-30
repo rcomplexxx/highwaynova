@@ -1,18 +1,23 @@
-import  { useEffect, useMemo, useRef, useState } from 'react'
+import  { useMemo, useRef, useState } from 'react'
 import styles from './newsequence.module.css'
-import {useRouter} from 'next/router'
+
 
 
 import EmailList from './EmailList/EmailList';
+import { useAdminStore } from '@/components/Admin/AdminZustand';
 
-export default function NewSequence({emailData, setEmailData}) {
+export default function NewSequence() {
+
+
+  
+  const {emailData, setEmailDataUpdate} = useAdminStore();
 
   const [sequenceEmails, setSequenceEmails] = useState([]);
   const [isEssencialFlow, setIsEssencialFlow] = useState();
   
   const titleRef = useRef();
 
-  const router = useRouter();
+  
 
 
 
@@ -20,30 +25,30 @@ export default function NewSequence({emailData, setEmailData}) {
 
 
     //Slect if the sequence is essencial(only should be shown if sequence is flow), like thank you or welcome flow
-    const essencialFlowSelector = () => {
-      const availableKeySequences = Object.keys(emailData.keySequences).filter(
-        (key) => !emailData.keySequences[key] && key !== "id"
-      );
+    // const essencialFlowSelector = () => {
+    //   const availableKeySequences = Object.keys(emailData.keySequences).filter(
+    //     (key) => !emailData.keySequences[key] && key !== "id"
+    //   );
     
-      if (!availableKeySequences.length) return null;
+    //   if (!availableKeySequences.length) return null;
     
-      return (
-        <select
-          id="essencialFlowSelect"
-          className={styles.essencialFlowSelect}
-          value={isEssencialFlow}
-          onChange={(e) => setIsEssencialFlow(e.target.value)}
-        >
-          <option value={undefined}>Select key sequence type</option>
-          <option value={undefined}>Sequence is not key sequence</option>
-          {availableKeySequences.map((keySequence) => (
-            <option key={keySequence} value={keySequence}>
-              {keySequence}
-            </option>
-          ))}
-        </select>
-      );
-    };
+    //   return (
+    //     <select
+    //       id="essencialFlowSelect"
+    //       className={styles.essencialFlowSelect}
+    //       value={isEssencialFlow}
+    //       onChange={(e) => setIsEssencialFlow(e.target.value)}
+    //     >
+    //       <option value={undefined}>Select key sequence type</option>
+    //       <option value={undefined}>Sequence is not key sequence</option>
+    //       {availableKeySequences.map((keySequence) => (
+    //         <option key={keySequence} value={keySequence}>
+    //           {keySequence}
+    //         </option>
+    //       ))}
+    //     </select>
+    //   );
+    // };
 
 
 
@@ -55,29 +60,10 @@ export default function NewSequence({emailData, setEmailData}) {
     , [sequenceEmails]);
   
 
-    useEffect(()=>{
-        if(emailData.emails.length!==0) return;
+  
+    
 
-          (async function() {
-            try {
-              const response = await fetch("/api/admincheck", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ dataType: 'get_emails' })
-              });
-          
-              if (!response.ok) throw new Error("Network response was not ok.");
-          
-              const { data } = await response.json();
-              console.log("Maine DATA!", data);
-              setEmailData(data);
-            } catch (error) {
-              console.error("Fetch operation error:", error);
-            }
-          })();
 
-        
-    },[])
 
 
 
@@ -104,7 +90,14 @@ export default function NewSequence({emailData, setEmailData}) {
       body: JSON.stringify({ dataType: 'insert_new_sequence', data: newSequenceData }),
     });
 
-    if (response.ok) router.push('/admin/emails');
+    
+
+    if (response.ok) {
+
+      setEmailDataUpdate(true);
+      
+
+    }
   } catch (error) {
     console.error(error);
   }
@@ -113,7 +106,7 @@ export default function NewSequence({emailData, setEmailData}) {
 
 
 
-const filteredEmails = emailData?.emailsUnusedInSequences?.filter(
+const filteredEmails = emailData?.unsequencedEmails?.filter(
   (email) => !sequenceEmails.some((seqEmail) => seqEmail.id === email.id)
 );
 

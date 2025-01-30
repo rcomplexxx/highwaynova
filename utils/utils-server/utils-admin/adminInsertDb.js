@@ -149,7 +149,7 @@ const insertInDb = async(dbConnection, resReturn, table, data) => {
           
             console.log('targets for campaign are ', targets)
     
-            const campaignId =   (await dbConnection.query(`INSERT INTO email_campaigns (title, sequenceId, sendingDateInUnix, emailSentCounter,  retryCounter, targetCustomers, targetType, reserveTargetedCustomers) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+            const campaignId =   (await dbConnection.query(`INSERT INTO email_campaigns (title, sequenceId, sendingDateInUnix, emailSentCounter,  sendFailCounter, targetCustomers, targetType, reserveTargetedCustomers) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
             [ data.title,
               data.sequenceId,
               data.sendingDateInUnix,
