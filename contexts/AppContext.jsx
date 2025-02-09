@@ -75,6 +75,8 @@ export const useGlobalStore = create((set, get) => {
 
         if(isFirstCall)window.history.go(-global.deepLinkLevel);
 
+        global.deepLinkLevel =  0;
+
       }
 
     
@@ -82,18 +84,23 @@ export const useGlobalStore = create((set, get) => {
 
 
       
-      global.deepLinkLevel =  global.deepLinkLevel - 1;
 
 
-      if(global.executeNextLink) executeLink();
+      if(global.executeNextLink) return executeLink();
+
+
+      
      
-      else if(executeNextLink){
+
+     
+      if(executeNextLink){
         global.executeNextLink = executeNextLink;
         executeLink(true);
        
       }
 
       else{
+        global.deepLinkLevel =  global.deepLinkLevel - 1;
       set((state) => { const newDeepLink = state.deepLink.slice(0, -1); 
         global.deepLinkLastSource = newDeepLink?.at(-1);
         return { deepLink: newDeepLink }})
