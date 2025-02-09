@@ -10,7 +10,7 @@ import { create } from "zustand";
 
 // Create the store with Zustand
 export const useAdminStore = create((set, get) => ({
-  isAdmin: false,
+  isAdmin: undefined,
   customers: [],
   orders: [],
   messages: [],

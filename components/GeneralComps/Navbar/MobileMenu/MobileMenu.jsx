@@ -1,17 +1,18 @@
 import { useRouter } from "next/router";
 import styles from "./mobilemenu.module.css";
-import {  useEffect, useRef } from "react";
+import {  useEffect, useLayoutEffect, useRef } from "react";
 import collections from '@/data/collections.json'
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowDown, CancelIcon } from "@/public/images/svgs/svgImages";
 import { useGlobalStore } from "@/contexts/AppContext";
+import useIsLargeScreen from "@/Hooks/useIsLargeScreen";
 
-export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
+export default function MobileMenu({ isMenuOpen, setIsMenuOpen, subMenu, setSubMenu}){
 
  
   
-
+  const isLargeScreen = useIsLargeScreen();
     const router = useRouter();
     const pathname = router.asPath;
   
@@ -42,14 +43,14 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
     useEffect(()=>{
 
 
-      history.pushState(null, null, router.asPath);
+      
       increaseDeepLink('mobile_menu');
 
 
     
       
      
-   
+      return ()=>{ decreaseDeepLink(nextLink.current);}
          
        },[])
 
@@ -60,14 +61,14 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
 
 
    
-       useEffect(() => {
-        const handleResize = () => window.innerWidth > 980 && setIsMenuOpen(false);
+       useLayoutEffect(() => {
       
         const closeMenu = () => {
-          decreaseDeepLink(nextLink.current);
+         
           mobileMenuRef.current.classList.add(styles.menuClosed);
-          window.removeEventListener("popstate", handlePopState);
-          setTimeout(() => setIsMenuOpen(false), 500);
+          // window.removeEventListener("popstate", handlePopState);
+          // setTimeout(() => setIsMenuOpen(false), 500);
+          setIsMenuOpen(false);
         };
 
         const handlePopState = () => {
@@ -96,8 +97,9 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
          
           event.stopPropagation();
           event.preventDefault();
-          if(subMenu !== 0) { doubleBackRef.current; history.go(-2);}
+          if(subMenu !== 0) { doubleBackRef.current=true; history.go(-2);}
           else router.back();
+        
         };
       
        
@@ -108,16 +110,29 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
           
         }
         
-        window.addEventListener("resize", handleResize);
         window.addEventListener("popstate", handlePopState);
         document.addEventListener('click', handleClickOutside, true);
       
         return () => {
-          window.removeEventListener("resize", handleResize);
           window.removeEventListener("popstate", handlePopState);
           document.removeEventListener('click', handleClickOutside, true);
         };
       }, [subMenu]);
+
+
+
+
+
+      useLayoutEffect(()=>{
+
+        if(isLargeScreen && isMenuOpen){
+          if(subMenu !== 0) { doubleBackRef.current=true; history.go(-2);}
+          else router.back();
+        };
+      
+        }
+
+      ,[isLargeScreen, isMenuOpen])
 
 
 
@@ -156,7 +171,7 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
           if(subMenu !== 0) { doubleBackRef.current=true; history.go(-2);}
           else router.back();
          
-        // setIsMenuOpen(false); 
+          
         }}/>
                       
                     

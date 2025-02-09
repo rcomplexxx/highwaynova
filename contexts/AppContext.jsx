@@ -38,11 +38,19 @@ export const useGlobalStore = create((set, get) => {
     
     setGiftDiscount: (newGiftDiscount) => set({ giftDiscount: newGiftDiscount }),
     deepLink: [],
-    increaseDeepLink: (source) => {
+    increaseDeepLink: (source, sourceTag) => {
+
+      console.log('curr user path', get().pathname)
+
+       history.pushState(null, null, `${get().pathname}${sourceTag?`#${sourceTag}`:''}`);
 
       global.deepLinkLastSource = source;
 
       global.deepLinkLevel= global.deepLinkLevel + 1;
+
+      
+
+   
 
       set((state) => ({ deepLink: [...state.deepLink, source]}))
     
@@ -50,59 +58,56 @@ export const useGlobalStore = create((set, get) => {
 
     decreaseDeepLink: (executeNextLink) => {
 
-      const executeLink = () => {
+      const executeLink = (isFirstCall) => {
 
 
         if(global.deepLinkLevel===0){
          
-          if(global.executeNextLink !== get().router.asPath)get().router.push(global.executeNextLink);
+          if(global.executeNextLink !== get().pathname)get().router.push(global.executeNextLink);
 
 
           set((state)=> ({deepLink: []}))
           global.deepLinkLastSource=undefined;
           global.executeNextLink=undefined;
-          return true;
+          return;
        
         }
-        return false;
+
+        if(isFirstCall)window.history.go(-global.deepLinkLevel);
 
       }
+
+    
+      
 
 
       
       global.deepLinkLevel =  global.deepLinkLevel - 1;
 
-      if(global.executeNextLink){
-        executeLink();
-     
-      }
 
+      if(global.executeNextLink) executeLink();
+     
       else if(executeNextLink){
         global.executeNextLink = executeNextLink;
-
-        
-        
-        if(!executeLink())
-        window.history.go(-global.deepLinkLevel)
-
+        executeLink(true);
        
-        
-        
-        
       }
 
       else{
-
-      
-      set((state) => { const newDeepLink = state.deepLink.slice(0, -1); global.deepLinkLastSource = newDeepLink?.[newDeepLink.length - 1]; return { deepLink: newDeepLink }})
-
+      set((state) => { const newDeepLink = state.deepLink.slice(0, -1); 
+        global.deepLinkLastSource = newDeepLink?.[newDeepLink.length - 1]; 
+        return { deepLink: newDeepLink }})
       }
+
+
       
     },
     emailPopupOn: false,
     changeEmailPopupOn: () => set((state) => { return { emailPopupOn: !state.emailPopupOn }}),
     router: null, // initially null
     setRouter: (router) => set({ router }),
+    pathname: '/',
+    setPathname: (pathname)=> set({pathname})
   };
 });
 

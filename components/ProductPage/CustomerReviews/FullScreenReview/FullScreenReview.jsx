@@ -54,15 +54,14 @@ useEffect(()=>{
 
 
 
-  history.pushState(null, null, router.asPath);
   
+  increaseDeepLink('review_zoomed',true);
 
 
 
   window?.addEventListener("popstate", handlePopState);
   document.documentElement.classList.add("hideScroll");
   
-  increaseDeepLink('review_zoomed');
 
 
 

@@ -23,7 +23,6 @@
     "@paypal/react-paypal-js": "^8.1.4",
     "@stripe/react-stripe-js": "^1.16.5",
     "@stripe/stripe-js": "^1.54.2",
-    "better-sqlite3": "^8.7.0",
     "chart.js": "^4.4.1",
     "chartjs-adapter-moment": "^1.0.1",
     "classnames": "^2.5.1",
@@ -52,6 +51,7 @@
     "react-email-editor": "^1.7.11",
     "react-html-parser": "^2.0.2",
     "react-multi-date-picker": "^4.4.1",
+    "react-responsive": "^10.0.0",
     "react-router-dom": "^5.2.0",
     "react-select": "^5.8.0",
     "react-slick": "^0.29.0",
@@ -66,6 +66,9 @@
     "zustand": "^4.5.2"
   },
   "devDependencies": {
+    "@babel/core": "^7.26.8",
+    "@babel/preset-env": "^7.26.8",
+    "@babel/preset-react": "^7.26.3",
     "@fullhuman/postcss-purgecss": "^5.0.0",
     "eslint-config-next": "^14.1.0",
     "sass": "^1.74.1"

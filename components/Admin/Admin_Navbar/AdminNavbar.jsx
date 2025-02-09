@@ -1,8 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   Toolbar,
-  IconButton,
-  Badge,
   MenuItem,
   Typography,
 } from "@mui/material";
@@ -11,11 +9,14 @@ import { useRouter } from "next/router";
 import styles from "./navbaradmin.module.css";
 import Image from "next/image";
 import { MenuIcon } from "@/public/images/svgs/svgImages";
+import useWindowWidth from "@/Hooks/useWindowDimensions";
 
 const AdminNavbar = ({ setIsAdmin }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMenuClosing, setIsMenuClosing] = useState(false);
-  const [windowWidth, setWindowWidth] = useState(0);
+ 
+
+  const windowWidth = useWindowWidth();
 
   const router = useRouter();
   const { adminroute } = router.query;
@@ -34,16 +35,8 @@ const AdminNavbar = ({ setIsAdmin }) => {
     }, 500);
   };
 
-  useEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-    window.addEventListener("resize", handleResize);
-    setWindowWidth(window.innerWidth);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+
+  
 
   return (
     <>

@@ -98,7 +98,6 @@ const FullScreenZoomableImage = ({
     fullImg.style.transform = `translate(${deltaX}px, ${deltaY}px) scale(${scaleRatio})`;
     fullImg.style.transition = "transform 0.3s ease";
   
-    increaseDeepLink('zoom');
 
     
     return ()=>{
@@ -160,7 +159,9 @@ const FullScreenZoomableImage = ({
       killFullScreen();
     };
     
-    router.push(`${router.asPath}#zoom`)
+   
+    
+    increaseDeepLink('zoom', 'zoom');
     
     window.addEventListener("popstate", handlePopState);
     return () => {

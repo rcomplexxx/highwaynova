@@ -32,7 +32,7 @@ export default function Search({searchOpen, setSearchOpen}){
 
   
 
-    const {deepLink, increaseDeepLink, decreaseDeepLink } = useGlobalStore((state) => ({
+    const {increaseDeepLink, decreaseDeepLink } = useGlobalStore((state) => ({
       deepLink: state.deepLink,
       increaseDeepLink: state.increaseDeepLink,
       decreaseDeepLink: state.decreaseDeepLink,
@@ -99,7 +99,7 @@ export default function Search({searchOpen, setSearchOpen}){
 
 
        
-        history.pushState(null, null, router.asPath);
+        
         increaseDeepLink('search');
 
 

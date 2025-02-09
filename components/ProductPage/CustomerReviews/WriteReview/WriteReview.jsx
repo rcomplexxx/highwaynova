@@ -47,13 +47,14 @@ export default function WriteReview({ setWriteReviewOpen }) {
     }
 
  
-    router.push(`${router.asPath}#write-review`)
+    
+     increaseDeepLink('write_review', 'write-review');
 
     window?.addEventListener("popstate", handlePopState);
     
     
     document.documentElement.classList.add("hideScroll");
-    increaseDeepLink('write_review');
+   
 
    return ()=>{
     window?.removeEventListener("popstate", handlePopState);

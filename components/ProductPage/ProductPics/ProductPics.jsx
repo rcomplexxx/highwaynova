@@ -3,7 +3,7 @@ import styles from "./productmobilepics.module.css";
 
 import { useCallback, useEffect,   useLayoutEffect,   useRef,   useState } from "react";
 import Image from "next/image";
-import { useRouter } from "next/router";
+
 import { Swiper, SwiperSlide } from 'swiper/react';
 import "swiper/css";
 import FullScreenZoomableImage from "./FullScreenZoomableImages/FullScreenZoomableImages";
@@ -176,7 +176,7 @@ useLayoutEffect(()=>{
       {images.map((img, index) => (
        
         <SwiperSlide key={index}   
-        className={`carousel-item ${styles.slide} ${index===images.length-1 && styles.lastSlide}`}
+        className={`${styles.slide} ${index===images.length-1 && styles.lastSlide}`}
        >
          
             <Image
@@ -245,7 +245,7 @@ useLayoutEffect(()=>{
     >
            
           {images.map((img, index) => (
-            <SwiperSlide key={index}  className={`carousel-item ${styles.slide2}`}
+            <SwiperSlide key={index}  className={styles.slide2}
             
             onClick={() => {
               handleChangeImage(index)

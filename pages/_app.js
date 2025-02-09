@@ -12,6 +12,7 @@ import { inter, eb_Garamond } from "@/utils/utils-client/fonts";
 import { DefaultSeo } from "next-seo";
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css'; // Import CSS for NProgress
+import { usePathname } from "next/navigation";
 
 
 
@@ -33,17 +34,20 @@ export default function App({ Component, pageProps }) {
 
   const router = useRouter();
 
+  const pathname = usePathname();
 
 
 
-  const {  emailPopupOn, changeEmailPopupOn,cartProducts, setCartProducts, setCartProductsInitialized, setRouter} = useGlobalStore((state) => ({
+
+  const {  emailPopupOn, changeEmailPopupOn,cartProducts, setCartProducts, setCartProductsInitialized, setRouter, setPathname} = useGlobalStore((state) => ({
     
     emailPopupOn: state.emailPopupOn,
     changeEmailPopupOn: state.changeEmailPopupOn,
     cartProducts: state.cartProducts,
     setCartProducts: state.setCartProducts,
     setCartProductsInitialized: state.setCartProductsInitialized,
-    setRouter: state.setRouter
+    setRouter: state.setRouter,
+    setPathname: state.setPathname
   }));
 
 
@@ -74,6 +78,10 @@ export default function App({ Component, pageProps }) {
     setRouter(router);
 
   }, []);
+
+  useEffect(()=>{
+    setPathname(pathname)
+  },[pathname ])
   
  
   

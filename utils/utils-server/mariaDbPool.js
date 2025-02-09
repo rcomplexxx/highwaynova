@@ -9,11 +9,11 @@ const { createPool } = require("mariadb");
 const getPool = ()=>{
 
 
-    console.log('Get Pool is called! ----------------------------')
+    
 
     if (!global.pool) {
     
-        console.log('WARNING! NEW POOL INITIALIZATION! ----------------------------')
+        console.log('Initializing new pool.')
         
 
         

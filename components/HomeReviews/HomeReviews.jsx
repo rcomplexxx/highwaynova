@@ -5,6 +5,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Image from "next/image";
 import { Stars } from "@/public/images/svgs/svgImages";
+import useIsLargeScreen from "@/Hooks/useIsLargeScreen";
 
 const reviews = [
   {
@@ -35,10 +36,10 @@ const reviews = [
   },
   
 ];
-//
+
 
 function Review({ reviewText, author, authorImage }) {
-  console.log('authorImage', `/images/${authorImage}`);
+  
   return (
     <div className={styles.reviewDiv}>
       
@@ -57,7 +58,9 @@ function Review({ reviewText, author, authorImage }) {
 }
 
 export default function HomeReviews() {
-  const [windowWidth, setWindowWidth] = useState(0);
+  
+
+  const isLargeScreen = useIsLargeScreen();
 
   const settings = {
     speed: 400,
@@ -69,24 +72,16 @@ export default function HomeReviews() {
     centerPadding: "0", // Set padding between centered items to 0
     variableWidth: true,
   };
+  
 
-  useLayoutEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-    window.addEventListener("resize", handleResize);
-    handleResize();
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+ 
+  
 
   return (
     <div className={styles.mainReviewDiv}>
       <h1>Customer reviews</h1>
       <div className={styles.mainDiv}>
-        {windowWidth > 980 ? (
+        {isLargeScreen ? (
           reviews.map((review, index) => (
             <Review
               key={review.id}

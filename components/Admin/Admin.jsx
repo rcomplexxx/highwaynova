@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useLayoutEffect } from "react";
+import {  useEffect } from "react";
 import styles from "./admin.module.css";
 import AdminNavbar from "./Admin_Navbar/AdminNavbar";
 import { useRouter } from "next/router";
@@ -51,7 +51,7 @@ export default function Admin() {
 
 
 
-    useLayoutEffect(() => {
+    useEffect(() => {
       
 
       checkAdminStatus();
@@ -87,8 +87,7 @@ export default function Admin() {
  
 
 
-  console.log('admin route', adminroute)
-
+    
 
       
   

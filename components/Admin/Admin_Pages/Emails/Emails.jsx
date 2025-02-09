@@ -73,7 +73,7 @@ if(emailDataUpdate)return  <div className={styles.mainDiv}>
     
         
        <button className={styles.marginBottomClass} onClick={handleUpdateEmailsInDb}>Save email data</button>
-       {emailData.emails.lenght===0 && <button className={styles.marginBottomClass} onClick={()=>{setEmailDataUpdate(true)}}>Get email data</button>}
+       {emailData.emails.length===0 && <button className={styles.marginBottomClass} onClick={()=>{setEmailDataUpdate(true)}}>Get email data</button>}
       
       <Link href='/admin/emails/campaigns'>Campaigns</Link>
       <Link href='/admin/emails/sequences'>Sequences</Link>

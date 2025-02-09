@@ -52,10 +52,10 @@ export default function SubscribePopup(){
        
   
        
-        history.pushState(null, null, router.asPath);
+         
+        increaseDeepLink('subscribe_popup');
 
-        
-        increaseDeepLink('subscribe_popup')
+
             
 
          window?.addEventListener("popstate", handlePopState);
