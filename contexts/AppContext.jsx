@@ -90,7 +90,7 @@ export const useGlobalStore = create((set, get) => {
 
 
       
-     
+      global.deepLinkLevel =  global.deepLinkLevel - 1;
 
      
       if(executeNextLink){
@@ -100,7 +100,7 @@ export const useGlobalStore = create((set, get) => {
       }
 
       else{
-        global.deepLinkLevel =  global.deepLinkLevel - 1;
+      
       set((state) => { const newDeepLink = state.deepLink.slice(0, -1); 
         global.deepLinkLastSource = newDeepLink?.at(-1);
         return { deepLink: newDeepLink }})
