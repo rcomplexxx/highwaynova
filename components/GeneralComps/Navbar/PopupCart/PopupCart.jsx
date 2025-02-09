@@ -75,6 +75,9 @@ useEffect(()=>{
 
     if(!global.executeNextLink && global.deepLinkLastSource !== 'pop_cart') return;
   
+
+    console.log('hello FROM COMPONENT');
+
     
     if (!document.getElementById('navBar').contains(event.target)){  
 
@@ -181,6 +184,7 @@ const handlePopCartLinkClick=(url)=>{
   <Link href='/cart'  className={`${styles.viewCartButton} mainButton`}
   onClick={(event)=>{
     event.preventDefault();
+   
     handlePopCartLinkClick('/cart')
   }}
      >
@@ -192,6 +196,7 @@ const handlePopCartLinkClick=(url)=>{
     <Link href='/checkout' className={styles.checkoutButton} 
      onClick={(event)=>{
       event.preventDefault();
+  
       handlePopCartLinkClick('/checkout')
     }}
     >
