@@ -95,7 +95,7 @@ export const useGlobalStore = create((set, get) => {
 
       else{
       set((state) => { const newDeepLink = state.deepLink.slice(0, -1); 
-        global.deepLinkLastSource = newDeepLink?.[newDeepLink.length - 1]; 
+        global.deepLinkLastSource = newDeepLink?.at(-1);
         return { deepLink: newDeepLink }})
       }
 
