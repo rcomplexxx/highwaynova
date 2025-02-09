@@ -59,7 +59,7 @@ function findBundleDiscount(orderCardItems) {
                     id: fullItem.id,
                     bundleItemDiscount: bundleItemDiscount,
                     discountPercentage: discountPercentage,
-                    bundleLabel: `${offer.quantity}${offer.quantity===fullItem.bundle[fullItem.bundle.length - 1] || offer.quantity +1 < fullItem.bundle[offerIndex+1]?'+':''}`
+                    bundleLabel: `${offer.quantity}${offer.quantity===fullItem.bundle?.at(-1) || offer.quantity +1 < fullItem.bundle[offerIndex+1]?'+':''}`
                 };
 
             }

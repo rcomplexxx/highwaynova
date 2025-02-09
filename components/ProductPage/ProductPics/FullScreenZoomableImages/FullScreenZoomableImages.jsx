@@ -53,7 +53,9 @@ const FullScreenZoomableImage = ({
 
   const zoomDivRef = useRef();
 
-  const backPressedRef = useRef();
+  const finalYDistance = useRef(0);
+
+  
 
   const { increaseDeepLink, decreaseDeepLink } = useGlobalStore((state) => ({
     increaseDeepLink: state.increaseDeepLink,
@@ -155,7 +157,8 @@ const FullScreenZoomableImage = ({
       if(global.deepLinkLastSource !== 'zoom') return;
       
       window.removeEventListener("popstate", handlePopState);
-      backPressedRef.current = true;
+     
+      
       killFullScreen();
     };
     
@@ -165,8 +168,10 @@ const FullScreenZoomableImage = ({
     
     window.addEventListener("popstate", handlePopState);
     return () => {
-      if(!backPressedRef.current)router.back();
+    
+      
       window.removeEventListener("popstate", handlePopState);
+      decreaseDeepLink();
     }
   }, []);
 
@@ -254,8 +259,8 @@ const FullScreenZoomableImage = ({
 
         const lastTouch = event.changedTouches[0];
         if (Math.abs(currY) > 128) {
-        
-          killFullScreen(currY);
+          finalYDistance.current = currY;
+          router.back();
         } else if (Math.abs(currY) > 16) {//
           
             if (!zoomed) {
@@ -313,18 +318,18 @@ const FullScreenZoomableImage = ({
 
   
 
-  const killFullScreen = useCallback((currY = 0) => {
+  const killFullScreen = useCallback(() => {
 
 
   
-    decreaseDeepLink();
+   
     if (zoomed) swiperRef.current.zoom.toggle();
 
     setClosingFullscreen(true);
 
     
     if (!global.toastMessageNotShowable) {
-      setShowToastMessage(currY !== 0 ? 2 : 3);
+      setShowToastMessage(finalYDistance.current !== 0 ? 2 : 3);
   }
 
 
@@ -376,7 +381,7 @@ const FullScreenZoomableImage = ({
 
 
             const YTr = isBiggerWidth
-            ? mainImgRect.top - 48 - ((window.innerHeight - 48 - (window.innerWidth * fullImg.naturalHeight) / fullImg.naturalWidth) / 2) * scaleRatio - currY
+            ? mainImgRect.top - 48 - ((window.innerHeight - 48 - (window.innerWidth * fullImg.naturalHeight) / fullImg.naturalWidth) / 2) * scaleRatio - finalYDistance.current 
             : distanceY;
 
            
