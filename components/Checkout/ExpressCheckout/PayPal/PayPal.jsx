@@ -1,3 +1,5 @@
+'use client'
+
 import  { useContext, useEffect, useRef, useState } from "react";
 
 import { useRouter } from "next/router";
@@ -182,7 +184,7 @@ const customerSubscribedRef = useRef(customerSubscribed);
     }}
   >
 
-{/* "AQB3vOguzerJ-HXgJavEAMlivjs3DTNyWi2W7yKI94arI23zXOAaSJx4Zf4JzTO9RjvJdr5AflrFHWp1", */}
+
       <PayPalButtons
               fundingSource={`${method}`}
               onClick={handlePayPalButtonClick}

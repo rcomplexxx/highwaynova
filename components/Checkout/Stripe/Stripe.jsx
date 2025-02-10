@@ -1,3 +1,6 @@
+'use client'
+
+
 import { useCallback, useContext, useRef, useState } from 'react';
 
 import styles from './stripe.module.css'

@@ -1,3 +1,6 @@
+'use client'
+
+
 import  { useContext, useEffect, useMemo, useRef, useState } from "react";
 import GooglePayButton from "@google-pay/button-react";
 import styles from "./googlepay.module.css";
