@@ -53,7 +53,7 @@ const FullScreenZoomableImage = ({
 
   const zoomDivRef = useRef();
 
-  const finalYDistance = useRef(0);
+  const finalYDistance = useRef();
 
   
 
@@ -196,6 +196,7 @@ const FullScreenZoomableImage = ({
   };
 
   const handleTouchStart = ({ touches }) => {
+    if(finalYDistance.current || finalYDistance.current===0)return;
     if (touches.length > 1) return;
     imgDiv.style.transition = "transform 0s ease";
     startingTouchCoordinates = { x: touches[0].clientX, y: touches[0].clientY };
@@ -208,6 +209,7 @@ const FullScreenZoomableImage = ({
   
 
     const handleTouchYMove = (event) => {
+      if(finalYDistance.current || finalYDistance.current===0)return;
       if(event.touches.length > 1)return;
       else{multiTouchDetected=false;} //detected
       if (swipeYLock || zoomed || multiTouchDetected) return;
@@ -241,6 +243,8 @@ const FullScreenZoomableImage = ({
 
 
     const handleTouchEnd = (event) => {
+
+      if(finalYDistance.current || finalYDistance.current===0)return;
       
       if(zoomed){
         fixedZoomDiv.style.backgroundColor = getRgbValues(1);
@@ -329,7 +333,7 @@ const FullScreenZoomableImage = ({
 
     
     if (!global.toastMessageNotShowable) {
-      setShowToastMessage(finalYDistance.current !== 0 ? 2 : 3);
+      setShowToastMessage((finalYDistance.current && finalYDistance.current !== 0) ? 2 : 3);
   }
 
 
@@ -381,7 +385,7 @@ const FullScreenZoomableImage = ({
 
 
             const YTr = isBiggerWidth
-            ? mainImgRect.top - 48 - ((window.innerHeight - 48 - (window.innerWidth * fullImg.naturalHeight) / fullImg.naturalWidth) / 2) * scaleRatio - finalYDistance.current 
+            ? mainImgRect.top - 48 - ((window.innerHeight - 48 - (window.innerWidth * fullImg.naturalHeight) / fullImg.naturalWidth) / 2) * scaleRatio - (finalYDistance.current || 0) 
             : distanceY;
 
            
