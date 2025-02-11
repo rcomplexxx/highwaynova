@@ -80,7 +80,7 @@ export default function Search({searchOpen, setSearchOpen}){
        const handleClickOutside = (event)=>{
        
         
-        if (!(document.getElementById('searchIcon')?.contains(event.target) || searchInputRef.current?.contains(event.target) || 
+        if ( global.deepLinkLastSource!=="search" || !(document.getElementById('searchIcon')?.contains(event.target) || searchInputRef.current?.contains(event.target) ||  
         searchBoxRef.current?.contains(event.target))) router.back();
           // Clicked outside the floating div, so close the dialog
           
