@@ -78,21 +78,23 @@ export default function Search({searchOpen, setSearchOpen}){
 
            
        const handleClickOutside = (event)=>{
-       
+        
+        
         
         if(global.deepLinkLastSource!=="search"){
           event.stopPropagation();
         event.preventDefault();
         return;
         }
-        
 
-        if ( !(document.getElementById('searchIcon')?.contains(event.target) || searchInputRef.current?.contains(event.target) ||  
-        searchBoxRef.current?.contains(event.target))) {
+         
+
+        if ( document.getElementById('navBar')?.contains(event.target)) return; 
+        
           event.stopPropagation();
           event.preventDefault();
           router.back();
-        }
+        
           // Clicked outside the floating div, so close the dialog
           
          

@@ -100,7 +100,21 @@ export default function MobileMenu({ isMenuOpen, setIsMenuOpen, subMenu, setSubM
           return;
           }
 
-          if ( mobileMenuRef.current.contains(event.target) || document.getElementById('mobileMenuSpawn').contains(event.target)) return;
+          if (document.getElementById('navBar')?.contains(event.target)) {
+            
+            if(document.getElementById('cart').contains(event.target)){
+
+
+              event.stopPropagation();
+              event.preventDefault();
+              nextLink.current = '/cart';
+              router.back();
+              
+            
+            }
+
+            return;
+          }
          
           event.stopPropagation();
           event.preventDefault();

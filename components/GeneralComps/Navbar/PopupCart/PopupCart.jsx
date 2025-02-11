@@ -86,28 +86,34 @@ useEffect(()=>{
     
 
     
-    if (!document.getElementById('navBar').contains(event.target)){  
+    if (document.getElementById('navBar').contains(event.target)) {
+
+      if(document.getElementById('cart').contains(event.target)){
+
+
+        event.stopPropagation();
+        event.preventDefault();
+        nextLink.current = '/cart';
+        router.back();
+        
+      
+      }
+      
+      return;
+
+    }
+    
+     
 
       event.stopPropagation();
       event.preventDefault();
     
       router.back();
 
-    }
+    
       
 
-    else if(document.getElementById('cart').contains(event.target)){
-
-
-      event.stopPropagation();
-      event.preventDefault();
-      nextLink.current = '/cart';
-      router.back();
       
-    
-    }
-
-    
     
   };
      
