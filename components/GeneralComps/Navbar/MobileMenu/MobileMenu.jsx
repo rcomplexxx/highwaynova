@@ -93,7 +93,14 @@ export default function MobileMenu({ isMenuOpen, setIsMenuOpen, subMenu, setSubM
 
       
         const handleClickOutside = (event) => {
-          if (global.deepLinkLastSource!=="mobile_menu" || mobileMenuRef.current.contains(event.target) || document.getElementById('mobileMenuSpawn').contains(event.target)) return;
+
+          if(global.deepLinkLastSource!=="mobile_menu"){
+            event.stopPropagation();
+          event.preventDefault();
+          return;
+          }
+
+          if ( mobileMenuRef.current.contains(event.target) || document.getElementById('mobileMenuSpawn').contains(event.target)) return;
          
           event.stopPropagation();
           event.preventDefault();

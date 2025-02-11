@@ -73,10 +73,17 @@ useEffect(()=>{
 
   const handleClick = (event) => {
 
-    if(!global.executeNextLink && global.deepLinkLastSource !== 'pop_cart') return;
+   
+    
+
+    if(global.deepLinkLastSource !== 'pop_cart'){
+      event.stopPropagation();
+    event.preventDefault();
+    return;
+    }
   
 
-    console.log('hello FROM COMPONENT');
+    
 
     
     if (!document.getElementById('navBar').contains(event.target)){  
