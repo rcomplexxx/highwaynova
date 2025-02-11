@@ -80,7 +80,7 @@ export default function Search({searchOpen, setSearchOpen}){
        const handleClickOutside = (event)=>{
        
         
-        if(!global.deepLinkLastSource!=="search")return;
+        if(global.deepLinkLastSource!=="search")return;
 
         if ( !(document.getElementById('searchIcon')?.contains(event.target) || searchInputRef.current?.contains(event.target) ||  
         searchBoxRef.current?.contains(event.target))) router.back();
