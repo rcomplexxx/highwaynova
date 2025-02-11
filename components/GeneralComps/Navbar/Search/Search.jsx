@@ -83,7 +83,11 @@ export default function Search({searchOpen, setSearchOpen}){
         if(global.deepLinkLastSource!=="search")return;
 
         if ( !(document.getElementById('searchIcon')?.contains(event.target) || searchInputRef.current?.contains(event.target) ||  
-        searchBoxRef.current?.contains(event.target))) router.back();
+        searchBoxRef.current?.contains(event.target))) {
+          event.stopPropagation();
+          event.preventDefault();
+          router.back();
+        }
           // Clicked outside the floating div, so close the dialog
           
          
