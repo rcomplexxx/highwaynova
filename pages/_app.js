@@ -128,7 +128,7 @@ export default function App({ Component, pageProps }) {
         } 
       };
         //Funkcija se moze aktivirati tek nakon 30 sekunde od ulaska u link.
-        popupTimeout = setTimeout(handlePopupTurning, 30000);
+        popupTimeout = setTimeout(handlePopupTurning, 7000);
       
     
     }
