@@ -66,11 +66,7 @@ export default function SubscribePopup(){
         return () => {
 
           document.documentElement.classList.remove("hideScroll");
-         
-          
-      
           window?.removeEventListener("popstate", handlePopState);
-
           decreaseDeepLink()
 
         
@@ -118,9 +114,9 @@ export default function SubscribePopup(){
           
 
           <input ref={emailFieldRef} placeholder='Enter email here'  autoComplete="email"
-          onKeyDown={(e)=>{
+          onKeyDown={(event)=>{
    
-              if (e.key === 'Enter') {
+              if (event.key === 'Enter') {
                 handleSusbscribe();
               }
            
@@ -136,15 +132,9 @@ export default function SubscribePopup(){
       }
 
       const thankYouContent=()=>{
-        return <>
-        {/* <span className={styles.thankYouTitle}>Welcome!</span>
-        <span className={styles.thankYouMessage}>You have successfully subscribed! Ps. check your email for discount.</span>
-       
-        <button onClick={()=>{router.back();  }} className={styles.sendEmailButton}>Continue shopping</button> */}
-
-        <span className={styles.thankYouMessage2}>Thank you for signing up!</span>
+        return  <span className={styles.thankYouMessage2}>Thank you for signing up!</span>
      
-        </>
+       
       }
 
 

@@ -111,10 +111,10 @@ export default function App({ Component, pageProps }) {
         const validUrls = ['/', '/our-story', '/faq'];
         if (url !== '/404' && (validUrls.includes(url) || url.includes('/products') || url.includes('/collection'))) {
 
-          //Ako je deepLink 0, tj. ni jedna druga deep-link komponenta nije prisutna(write review, fullscreen zoom), prikazati popup
-          //Ako je prisutna, cekati 7 sekundi radi ponovne provere. 
+          //Ako je deepLink 0 ili je mobile_menu ili search, i ne procesuira se ni jedna ruta,  prikazati popup. U suprotnom, cekati 7 sekundi radi ponovne provere. 
+          
           const showPopup = () => {
-            if (!global.deepLinkLastSource && !global.isRouteProcessing) {
+            if ((!global.deepLinkLastSource || global.deepLinkLastSource==='mobile_menu' || global.deepLinkLastSource==='search') && !global.isRouteProcessing) {
               changeEmailPopupOn();
               localStorage.setItem("popupShownDateInDays", Math.floor(Date.now() / 86400000));
               router.events.off('routeChangeStart', handleRouteChangeStart);
@@ -135,7 +135,7 @@ export default function App({ Component, pageProps }) {
 
 
 
-      const daysBetweenEmailPopups = 14;
+      const daysBetweenEmailPopups = 0;
 
       const popupShownDate = localStorage.getItem("popupShownDateInDays");
       const emailPopupTimeChecker = popupShownDate ? Math.floor(Date.now() / 86400000) - popupShownDate : null;

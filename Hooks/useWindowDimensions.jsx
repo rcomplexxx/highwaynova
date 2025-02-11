@@ -15,7 +15,7 @@ export default function useWindowWidth() {
   useEffect(() => {
     if (hasWindow) {
       function handleResize() {
-        setWindowDimensions(getWindowWidth());
+        setWindowWidth(getWindowWidth());
       }
 
       window.addEventListener('resize', handleResize);
@@ -23,5 +23,5 @@ export default function useWindowWidth() {
     }
   }, [hasWindow]);
 
-  return windowDimensions;
+  return windowWidth;
 }

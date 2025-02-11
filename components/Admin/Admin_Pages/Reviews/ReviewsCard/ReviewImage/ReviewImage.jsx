@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import styles from "./reviewimage.module.css";
 import Image from "next/image";
 import { CancelIcon, CorrectIcon } from "@/public/images/svgs/svgImages";
+import { adminCopycat } from "@/utils/utils-client/utils-admin/adminCopycat";
 
 export default function ReviewsCard({
   productId,
@@ -11,7 +12,7 @@ export default function ReviewsCard({
   setImages,
   changed
 }) {
-  const [imgNameCopied, setImgNameCopied] = useState(false);
+  
 
 
   const handleImgCancelClick = () => {
@@ -43,9 +44,9 @@ export default function ReviewsCard({
       className={`${styles.reviewImage} ${deleted && styles.deletedImage} ${changed && styles.imageChanged}`}
      
     />
-    <button onClick={()=>{navigator.clipboard.writeText(imageName);setImgNameCopied(true);}} className={styles.copyImgName}>{imgNameCopied?"Img name copied!":"Copy img name"}</button>
-  
-  
+    <button onClick={async(e)=>{   if( await adminCopycat(imageName)) e.target.innerHTML = 'Img name copied!'}}>
+  Copy img name</button>
+
    <span className={styles.validateCode}>...{imageName.match(/(.{4})\./)[1]}{imageName.match(/\.(.*)$/)[0]}</span>
   
   

@@ -10,18 +10,28 @@ export default function useIsLargeScreen() {
     return isLargeScreen;
   }
 
-  const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
+  const [isLargeScreen, setIsLargeScreen] = useState(undefined);
 
   useEffect(() => {
-    if (hasWindow) {
-      function handleResize() {
-        setWindowDimensions(getWindowDimensions());
-      }
+
+    console.log('hello! From large sc check')
+    if (!hasWindow) return;
+
+    function handleResize() {
+      setIsLargeScreen(getWindowDimensions());
+    }
+
+    // Run once to set initial value
+    handleResize();
 
       window.addEventListener('resize', handleResize);
       return () => window.removeEventListener('resize', handleResize);
-    }
-  }, [hasWindow]);
+    
 
-  return windowDimensions;
+
+
+
+  }, []);
+
+  return isLargeScreen;
 }

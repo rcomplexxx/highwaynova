@@ -8,6 +8,7 @@ import productsData from "@/data/products.json";
 
 import { adminAlert } from '@/utils/utils-client/utils-admin/adminAlert';
 import { adminConfirm } from '@/utils/utils-client/utils-admin/adminConfirm';
+import { adminCopycat } from '@/utils/utils-client/utils-admin/adminCopycat';
 
 
 export default function DescriptionMaker() {
@@ -180,19 +181,11 @@ export default function DescriptionMaker() {
       <div className={styles.featuresWrapper}>
         <span>Handy options</span>
         <button
-          onClick={(e) => {
-            navigator.clipboard.writeText(`<div class="descriptionWrapper">...</div>`);
-            e.target.innerText = "HTML content COPIED!";
-          }}
+          onClick={async(e) => { if(await adminCopycat(`<div class="descriptionWrapper">...</div>`)) e.target.innerHTML = 'Standard HTML copied!'; }}
         >
           Copy standard HTML
         </button>
-        <button
-          onClick={(e) => {
-            navigator.clipboard.writeText(`.descriptionWrapper {...}`);
-            e.target.innerText = "CSS content COPIED!";
-          }}
-        >
+        <button onClick={async(e) => { if(await adminCopycat(`.descriptionWrapper {...}`)) e.target.innerHTML = 'Standard CSS copied!'}} >
           Copy standard CSS
         </button>
       </div>

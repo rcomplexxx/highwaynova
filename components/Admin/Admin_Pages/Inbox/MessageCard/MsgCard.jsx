@@ -1,3 +1,4 @@
+import { adminCopycat } from "@/utils/utils-client/utils-admin/adminCopycat";
 import styles from "./messagecard.module.css";
 import { useState } from "react";
 
@@ -12,7 +13,7 @@ export default function MessageCard({
   handleChangedMessagesArray,
 }) {
 
-const [emailCopied, setEmailCopied] = useState(false);
+  
 const [currentStatus, setCurrentStatus] = useState(msgStatus);
 
 
@@ -52,11 +53,8 @@ const [currentStatus, setCurrentStatus] = useState(msgStatus);
       <div className={styles.infoPair}>
          <div className={styles.infoLabelWrapper}>
           <p className={styles.infoLabel}>Email</p> 
-         <span onClick={()=>{
-          navigator.clipboard.writeText(email);
-          setEmailCopied(true);
-         }} className={styles.copySpan}>
-          {!emailCopied?'Click here to copy email':'Email copied!'}</span></div>
+         <span onClick={async(e)=>{if(await adminCopycat(email))  e.target.innerHTML = 'Email copied!'}} className={styles.copySpan}>
+          Click here to copy email</span></div>
          <p className={styles.info}>{email}</p>
       </div>
 

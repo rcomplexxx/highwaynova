@@ -1,4 +1,5 @@
-import { useState, useLayoutEffect } from "react";
+
+
 import styles from "./homeReviews.module.css";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -77,7 +78,7 @@ export default function HomeReviews() {
  
   
 
-  return (
+  return ( isLargeScreen !== undefined &&
     <div className={styles.mainReviewDiv}>
       <h1>Customer reviews</h1>
       <div className={styles.mainDiv}>
