@@ -67,9 +67,7 @@ export default function Search({searchOpen, setSearchOpen}){
           setSearchOpen(false);
           window?.removeEventListener("popstate", handlePopState);
 
-          // for(let i = 0; i < global.deepLinkLevel +1; i++)
-          //   router.back();
-
+      
           
 
           
@@ -77,33 +75,19 @@ export default function Search({searchOpen, setSearchOpen}){
         }
 
            
-       const handleClickOutside = (event)=>{
+        const handleClickOutside = (event) => {
+          if (global.deepLinkLastSource !== 'search') {
+            event.stopPropagation();
+            event.preventDefault();
+            return;
+          }
         
+          if (document.getElementById('navBar')?.contains(event.target)) return;
         
-        
-        if(global.deepLinkLastSource!=='search'){
-          event.stopPropagation();
-        event.preventDefault();
-        return;
-        }
-
-         
-        console.log('proso je prvi test, znaci sad bam bam bam', document.getElementById('navBar')?.contains(event.target))
-
-        if ( document.getElementById('navBar')?.contains(event.target)) return; 
-
-
-        console.log('nav nije ispostovan!')
-
           event.stopPropagation();
           event.preventDefault();
           router.back();
-        
-          // Clicked outside the floating div, so close the dialog
-          
-         
-        
-      };
+        };
 
 
 

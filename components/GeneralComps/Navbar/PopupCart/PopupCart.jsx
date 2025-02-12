@@ -72,49 +72,26 @@ useEffect(()=>{
 
 
   const handleClick = (event) => {
-
-   
-    
-
-    if(global.deepLinkLastSource !== 'pop_cart'){
-      event.stopPropagation();
-    event.preventDefault();
-    return;
-    }
-  
-
-    
-
-    
-    if (document.getElementById('navBar').contains(event.target)) {
-
-      if(document.getElementById('cart').contains(event.target)){
-
-
-        event.stopPropagation();
-        event.preventDefault();
-        nextLink.current = '/cart';
-        router.back();
-        
-      
-      }
-      
-      return;
-
-    }
-    
-     
-
+    if (global.deepLinkLastSource !== 'pop_cart') {
       event.stopPropagation();
       event.preventDefault();
-    
+      return;
+    }
+  
+    const target = event.target;
+    const isInNavBar = document.getElementById('navBar').contains(target);
+    const isInCart = document.getElementById('cart').contains(target);
+  
+    if (isInNavBar && isInCart) {
+      event.stopPropagation();
+      event.preventDefault();
+      nextLink.current = '/cart';
       router.back();
-
-    
-      
-
-      
-    
+    } else if(!isInNavBar) {
+      event.stopPropagation();
+      event.preventDefault();
+      router.back();
+    }
   };
      
 

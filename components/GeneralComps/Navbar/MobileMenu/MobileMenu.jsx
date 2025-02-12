@@ -93,41 +93,26 @@ export default function MobileMenu({ isMenuOpen, setIsMenuOpen, subMenu, setSubM
 
       
         const handleClickOutside = (event) => {
-
-          if(global.deepLinkLastSource!=="mobile_menu"){
+          if (global.deepLinkLastSource !== "mobile_menu") {
             event.stopPropagation();
-          event.preventDefault();
-          return;
-          }
-
-
-
-          
-
-          if (document.getElementById('navBar')?.contains(event.target)) {
-
-            if(document.getElementById('cart').contains(event.target)){
-
-
-              event.stopPropagation();
-              event.preventDefault();
-              nextLink.current = '/cart';
-              router.back();
-              
-            
-            }
-
+            event.preventDefault();
             return;
           }
-         
-
-
-
-          event.stopPropagation();
-          event.preventDefault();
-          if(subMenu !== 0) { doubleBackRef.current=true; history.go(-2);}
-          else router.back();
         
+          const target = event.target;
+          const isInNavBar = document.getElementById('navBar')?.contains(target);
+          const isInCart = document.getElementById('cart').contains(target);
+        
+          if (isInNavBar && isInCart) {
+            event.stopPropagation();
+            event.preventDefault();
+            nextLink.current = '/cart';
+            router.back();
+          } else if(!isInNavBar) {
+            event.stopPropagation();
+            event.preventDefault();
+            subMenu !== 0 ? (doubleBackRef.current = true, history.go(-2)) : router.back();
+          }
         };
 
 
