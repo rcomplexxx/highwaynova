@@ -51,7 +51,7 @@ export default function Search({searchOpen, setSearchOpen}){
 
 
 
-
+      history.pushState(null, null, router.asPath);
   
      
 
@@ -90,7 +90,7 @@ export default function Search({searchOpen, setSearchOpen}){
          
 
         if ( document.getElementById('navBar')?.contains(event.target)) return; 
-        
+
           event.stopPropagation();
           event.preventDefault();
           router.back();
