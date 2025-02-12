@@ -65,8 +65,6 @@ export default function App({ Component, pageProps }) {
 
     //PAZNJA!!!!!!!!!!!!!! OVA FUNKCIJA SE AKTIVIRA SAMO KAD USER KLIKNE BACK ILI SE AKTIVIRA ROUTER.BACK. NI U JEDNOM DRUGOM SLUCAJU!
     //Ako stavim false kao drugi argument, funkcija nece da ide nazad.
-
-    
     
     router.beforePopState(state => {state.options.scroll = false; return true;});
 
@@ -80,11 +78,6 @@ export default function App({ Component, pageProps }) {
     setRouter(router);
 
   }, []);
-
-
-
-
-
 
   useEffect(()=>{
     setPathname(pathname)
@@ -135,14 +128,14 @@ export default function App({ Component, pageProps }) {
         } 
       };
         //Funkcija se moze aktivirati tek nakon 30 sekunde od ulaska u link.
-        popupTimeout = setTimeout(handlePopupTurning, 7000);
+        popupTimeout = setTimeout(handlePopupTurning, 30000);
       
     
     }
 
 
 
-      const daysBetweenEmailPopups = 0;
+      const daysBetweenEmailPopups = 14;
 
       const popupShownDate = localStorage.getItem("popupShownDateInDays");
       const emailPopupTimeChecker = popupShownDate ? Math.floor(Date.now() / 86400000) - popupShownDate : null;

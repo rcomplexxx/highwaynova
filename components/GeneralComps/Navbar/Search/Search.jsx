@@ -81,15 +81,19 @@ export default function Search({searchOpen, setSearchOpen}){
         
         
         
-        if(global.deepLinkLastSource!=="search"){
+        if(global.deepLinkLastSource!=='search'){
           event.stopPropagation();
         event.preventDefault();
         return;
         }
 
          
+        console.log('proso je prvi test, znaci sad bam bam bam', document.getElementById('navBar')?.contains(event.target))
 
         if ( document.getElementById('navBar')?.contains(event.target)) return; 
+
+
+        console.log('nav nije ispostovan!')
 
           event.stopPropagation();
           event.preventDefault();
@@ -116,7 +120,7 @@ export default function Search({searchOpen, setSearchOpen}){
         increaseDeepLink('search');
 
 
-        document.addEventListener('click', handleClickOutside);
+        document.addEventListener('click', handleClickOutside, true);
         window?.addEventListener("popstate", handlePopState);
       }
      
@@ -129,7 +133,7 @@ export default function Search({searchOpen, setSearchOpen}){
     
         return () => {
           if(searchOpen) {
-            document.removeEventListener('click', handleClickOutside);
+            document.removeEventListener('click', handleClickOutside, true);
             window?.removeEventListener("popstate", handlePopState);
             
              decreaseDeepLink(nextLink.current);

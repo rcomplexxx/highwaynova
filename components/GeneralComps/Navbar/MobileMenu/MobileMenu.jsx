@@ -100,8 +100,12 @@ export default function MobileMenu({ isMenuOpen, setIsMenuOpen, subMenu, setSubM
           return;
           }
 
+
+
+          
+
           if (document.getElementById('navBar')?.contains(event.target)) {
-            
+
             if(document.getElementById('cart').contains(event.target)){
 
 
@@ -116,12 +120,22 @@ export default function MobileMenu({ isMenuOpen, setIsMenuOpen, subMenu, setSubM
             return;
           }
          
+
+
+
           event.stopPropagation();
           event.preventDefault();
           if(subMenu !== 0) { doubleBackRef.current=true; history.go(-2);}
           else router.back();
         
         };
+
+
+
+
+
+
+
       
        
 
