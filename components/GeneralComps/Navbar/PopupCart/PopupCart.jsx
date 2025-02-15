@@ -80,6 +80,7 @@ useEffect(()=>{
     const target = event.target;
     const isInNavBar = document.getElementById('navBar').contains(target);
     const isInCart = document.getElementById('cart').contains(target);
+    const isInLogo = document.getElementById('logo').contains(target);
 
     if(isInNavBar){
       if(isInCart){
@@ -88,6 +89,12 @@ useEffect(()=>{
         nextLink.current = '/cart';
         router.back();
      
+      }
+      else if(isInLogo){
+        event.stopPropagation();
+        event.preventDefault();
+        nextLink.current = '/';
+        router.back();
       }
      return;
     }

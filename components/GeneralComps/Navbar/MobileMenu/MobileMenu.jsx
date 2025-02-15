@@ -101,6 +101,9 @@ export default function MobileMenu({ isMenuOpen, setIsMenuOpen, subMenu, setSubM
           const target = event.target;
           const isInNavBar = document.getElementById('navBar')?.contains(target);
           const isInCart = document.getElementById('cart').contains(target);
+          const isInLogo = document.getElementById('logo').contains(target);
+
+
 
           if(isInNavBar){
             if(isInCart){
@@ -109,6 +112,13 @@ export default function MobileMenu({ isMenuOpen, setIsMenuOpen, subMenu, setSubM
               nextLink.current = '/cart';
               router.back();
            
+            }
+
+            else if(isInLogo){
+              event.stopPropagation();
+              event.preventDefault();
+              nextLink.current = '/';
+              router.back();
             }
            return;
           }
@@ -168,7 +178,7 @@ export default function MobileMenu({ isMenuOpen, setIsMenuOpen, subMenu, setSubM
       const handleLinkExecution = (url) => {
        
           
-        if (global.deepLinkLastSource !== "mobile_menu")  return;
+
             nextLink.current=url;
             if(subMenu !== 0) { 
              doubleBackRef.current=true; history.go(-2);

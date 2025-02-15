@@ -77,7 +77,30 @@ export default function Search({searchOpen, setSearchOpen}){
           if (global.deepLinkLastSource !== 'search')  return;
           
         
-          if (document.getElementById('navBar')?.contains(event.target)) return;
+          
+
+          const target = event.target;
+          const isInNavBar = document.getElementById('navBar')?.contains(target);
+          const isInCart = document.getElementById('cart').contains(target);
+          const isInLogo = document.getElementById('logo').contains(target);
+
+
+
+          if(isInNavBar){
+            if(isInCart){
+              event.stopPropagation();
+              event.preventDefault();
+              nextLink.current = '/cart';
+              router.back();
+           
+            }
+
+            else if(isInLogo){
+              event.stopPropagation();
+              event.preventDefault();
+              nextLink.current = '/';
+              router.back();
+            }
         
           event.stopPropagation();
           event.preventDefault();
@@ -200,7 +223,7 @@ export default function Search({searchOpen, setSearchOpen}){
             {filteredcollections.map((collection, index) => (
               <Link key={index} className={styles.resultItem} 
               onClick={(event)=>{
-                if (global.deepLinkLastSource !== "search")  return;
+            
                 event.preventDefault();
                 event.stopPropagation();
             nextLink.current=`/collection/${collection.name.toLowerCase().replace(/ /g, '-')}/page/1`;
