@@ -56,10 +56,10 @@ export default function Search({searchOpen, setSearchOpen}){
         const handlePopState = ()=>{
          
           
+          console.log('deepstate', global.deepLinkLastSource)
          
     if(!global.executeNextLink && global.deepLinkLastSource !== 'search') return;
     
-          console.log('deepstate', global.deepLinkLastSource)
 
           
           setSearchOpen(false);
@@ -74,11 +74,8 @@ export default function Search({searchOpen, setSearchOpen}){
 
            
         const handleClickOutside = (event) => {
-          if (global.deepLinkLastSource !== 'search') {
-            event.stopPropagation();
-            event.preventDefault();
-            return;
-          }
+          if (global.deepLinkLastSource !== 'search')  return;
+          
         
           if (document.getElementById('navBar')?.contains(event.target)) return;
         

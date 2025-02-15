@@ -93,11 +93,10 @@ export default function MobileMenu({ isMenuOpen, setIsMenuOpen, subMenu, setSubM
 
       
         const handleClickOutside = (event) => {
-          if (global.deepLinkLastSource !== "mobile_menu") {
-            event.stopPropagation();
-            event.preventDefault();
-            return;
-          }
+
+          
+          if (global.deepLinkLastSource !== "mobile_menu")  return;
+          
         
           const target = event.target;
           const isInNavBar = document.getElementById('navBar')?.contains(target);
