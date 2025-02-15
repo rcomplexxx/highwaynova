@@ -51,8 +51,6 @@ export default function Search({searchOpen, setSearchOpen}){
 
 
 
-      history.pushState(null, null, router.asPath);
-  
      
 
         const handlePopState = ()=>{
