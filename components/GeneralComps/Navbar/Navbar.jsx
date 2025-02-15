@@ -105,7 +105,7 @@ const NavBar = () => {
           
             
           
-            <Link href="/" className={styles.logoLink}>
+            <Link id='logo' href="/" className={styles.logoLink}>
          
              
              
