@@ -101,11 +101,14 @@ export default function Search({searchOpen, setSearchOpen}){
               nextLink.current = '/';
               router.back();
             }
+            return;
+          }
         
           event.stopPropagation();
           event.preventDefault();
           router.back();
         };
+      
 
 
 
