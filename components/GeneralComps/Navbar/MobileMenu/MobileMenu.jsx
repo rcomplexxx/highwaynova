@@ -257,6 +257,7 @@ export default function MobileMenu({ isMenuOpen, setIsMenuOpen, subMenu, setSubM
        
         className={`${styles.linkStyle} ${styles.subMenuPortal} `}
         onClick={() => {
+          if(global.deepLinkLastSource !== 'mobile_menu') return;
           setSubMenu(2);
        
         }}
@@ -270,6 +271,7 @@ export default function MobileMenu({ isMenuOpen, setIsMenuOpen, subMenu, setSubM
        
         className={`${styles.linkStyle} ${styles.subMenuPortal} `}
         onClick={() => {
+          if(global.deepLinkLastSource !== 'mobile_menu') return;
           setSubMenu(1);
           
         }}
