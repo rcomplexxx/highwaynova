@@ -200,7 +200,7 @@ export default function Search({searchOpen, setSearchOpen}){
             {filteredcollections.map((collection, index) => (
               <Link key={index} className={styles.resultItem} 
               onClick={(event)=>{
-            
+                if (global.deepLinkLastSource !== "search")  return;
                 event.preventDefault();
                 event.stopPropagation();
             nextLink.current=`/collection/${collection.name.toLowerCase().replace(/ /g, '-')}/page/1`;

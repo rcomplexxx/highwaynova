@@ -168,7 +168,7 @@ export default function MobileMenu({ isMenuOpen, setIsMenuOpen, subMenu, setSubM
       const handleLinkExecution = (url) => {
        
           
-
+        if (global.deepLinkLastSource !== "mobile_menu")  return;
             nextLink.current=url;
             if(subMenu !== 0) { 
              doubleBackRef.current=true; history.go(-2);
