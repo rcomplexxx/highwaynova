@@ -72,23 +72,30 @@ useEffect(()=>{
 
 
   const handleClick = (event) => {
+
     if (global.deepLinkLastSource !== 'pop_cart')  return;
+
     
   
     const target = event.target;
     const isInNavBar = document.getElementById('navBar').contains(target);
     const isInCart = document.getElementById('cart').contains(target);
-  
-    if (isInNavBar && isInCart) {
-      event.stopPropagation();
-      event.preventDefault();
-      nextLink.current = '/cart';
-      router.back();
-    } else if(!isInNavBar) {
-      event.stopPropagation();
-      event.preventDefault();
-      router.back();
+
+    if(isInNavBar){
+      if(isInCart){
+        event.stopPropagation();
+        event.preventDefault();
+        nextLink.current = '/cart';
+        router.back();
+     
+      }
+     return;
     }
+ 
+      event.stopPropagation();
+      event.preventDefault();
+      router.back();
+    
   };
      
 
