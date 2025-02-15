@@ -257,7 +257,12 @@ export default function Search({searchOpen, setSearchOpen}){
           {searchOpen && 
           
           <CancelIcon color={`var(--search-cancel-icon-color)`} styleClassName={styles.searchCancel} 
-         
+            handleClick={(event)=>{
+           
+              
+              
+         router.back();
+            }}
           />
         }
         </div>
