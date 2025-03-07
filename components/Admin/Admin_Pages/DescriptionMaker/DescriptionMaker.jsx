@@ -9,6 +9,7 @@ import productsData from "@/data/products.json";
 import { adminAlert } from '@/utils/utils-client/utils-admin/adminAlert';
 import { adminConfirm } from '@/utils/utils-client/utils-admin/adminConfirm';
 import { adminCopycat } from '@/utils/utils-client/utils-admin/adminCopycat';
+import InstructionsWrapper from '../Admin_Home/InstructionsWrapper/InstructionsWrapper';
 
 
 export default function DescriptionMaker() {
@@ -146,16 +147,27 @@ export default function DescriptionMaker() {
   <>
   <h1>Description Maker</h1>
   <div className={styles.mainDiv}>
-    <div className={styles.descriptionMakerInstructions}>
-      <p>1. Link product and get current description</p>
-      <p>2. Write description using HTML and CSS.</p>
-      <p>3. Use preview to parse written code and check for any errors in final design.</p>
-      <p>4. Store description images in /public/images/description/product_$productId.</p>
-    </div>
 
-    <div className={styles.getCurrentDescriptionWrapper}>
+
+ 
+
+
+
+
+    <div className={styles.descriptionMakerInterface}>
+
+      <div className ={styles.descriptionMakerInterfaceColumn}>
+
+      <InstructionsWrapper instructionButtonText="description maker instructions">
+    <span>1. Link product and get current description</span>
+      <span>2. Write description using HTML and CSS.</span>
+      <span>3. Use preview to parse written code and check for any errors in final design.</span>
+      <span>4. Store description images in /public/images/description/product_$productId.</span>
+    </InstructionsWrapper>
+
+
       {productId === "" ? (
-        <>
+        <div className={styles.linkProductWrapper}>
           <input
             className={styles.inputProductId}
             value={descriptionGetterProductId}
@@ -165,9 +177,9 @@ export default function DescriptionMaker() {
           <button onClick={getCurrentDescription} >
             Link product and get description
           </button>
-        </>
+        </div>
       ) : (
-        <>
+        <div className={styles.linkProductWrapper}>
           <span>New description will affect product ID: {descriptionGetterProductId}</span>
           <button
             onClick={async()=>{ if (!await adminConfirm("Unsaved changes will be lost. Continue?")) return; cleanDescriptionMaker();}}
@@ -175,8 +187,12 @@ export default function DescriptionMaker() {
           >
             Unlink product ID
           </button>
-        </>
+          </div>
       )}
+
+
+</div>
+
 
       <div className={styles.featuresWrapper}>
         <span>Handy options</span>

@@ -5,6 +5,16 @@
 
 
 
+.interfaceDiv{
+
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin: var(--size-6) 0;
+
+}
+
+
 .backToEditorButton{
     align-self: flex-start;
 }
@@ -13,22 +23,6 @@
 
 
 
-.instructionsWrapper{
-    display: flex;
-    flex-direction: column;
-
-    padding: var(--size-5) 0;
-    margin-bottom: var(--size-3);
-    align-self: flex-start;
-}
-
-.instructionsWrapper > span{
-    
-    align-self: flex-start;
-    margin-bottom: var(--size-5);
-   
-    font-size: var(--font-size-3);
-}
 
 
 

@@ -16,10 +16,12 @@
 }
 
 
-.instructionSpan{
-    align-self: flex-start;
+.instructionsWrapperModifier{
     margin-bottom: var(--size-5);
 }
+
+
+
 
 
 

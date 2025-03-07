@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import styles from "./writereview.module.css";
 import StarRatings from "react-star-ratings";
 import Link from "next/link";
-import Image from "next/image";
+
 import { useRouter } from "next/router";
 import { ErrorIcon, STARPATH } from "@/public/images/svgs/svgImages";
 import { BackIcon, CancelIcon } from "@/public/images/svgs/svgImages";
@@ -26,6 +26,10 @@ export default function WriteReview({ setWriteReviewOpen }) {
   }));
 
 
+
+  
+  const nextLink= useRef();
+
   
   const router = useRouter();
  
@@ -40,7 +44,7 @@ export default function WriteReview({ setWriteReviewOpen }) {
 
     const handlePopState=()=>{  
       
-      if(global.deepLinkLastSource !== 'write_review') return;
+      if(!global.executeNextLink && global.deepLinkLastSource !== 'write_review') return;
       window?.removeEventListener("popstate", handlePopState);
       setWriteReviewOpen(false);
     
@@ -60,7 +64,7 @@ export default function WriteReview({ setWriteReviewOpen }) {
     window?.removeEventListener("popstate", handlePopState);
     
     document.documentElement.classList.remove("hideScroll");
-    decreaseDeepLink();
+    decreaseDeepLink(nextLink.current);
    }
   },[])
 
@@ -496,7 +500,7 @@ const handleBack = useCallback(() => {
               <div
                 className={`${styles.writeReviewFooter}`}
               >
-                <Link href="/products" className={`${styles.continueLink}`}>
+                <Link onClick={(event)=>{ event.preventDefault();nextLink.current='/products'; router.back();}} href="/products" className={`${styles.continueLink}`}>
                   Continue
                 </Link>
               </div>

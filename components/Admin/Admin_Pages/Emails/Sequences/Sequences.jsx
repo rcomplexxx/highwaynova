@@ -3,6 +3,7 @@ import styles from './sequences.module.css'
 import EmailCard from '../EmailCard/EmailCard'
 import { adminConfirm } from '@/utils/utils-client/utils-admin/adminConfirm'
 import { useAdminStore } from '@/components/Admin/AdminZustand';
+import { adminAlert } from '@/utils/utils-client/utils-admin/adminAlert';
 
 export default function Sequences() {
 
@@ -126,8 +127,14 @@ Emails
 {showEmailInfo && <EmailCard id={showEmailInfo.id} title={showEmailInfo.title} text={showEmailInfo.text} 
 
 
-handleUpdateEmail = {async (id, emailTitle, emailTextHtml) => {
-  const emailData = [{ id, title: emailTitle, text: emailTextHtml }];
+handleUpdateEmail = {async (id, title, text) => {
+
+
+
+  
+  if(!await adminConfirm('Changes are irreversible. Are you sure you want to continue?')) return;
+
+  const emailData = [{ id, title, text}];
 
   try {
     const response = await fetch("/api/admincheck", {
@@ -138,11 +145,11 @@ handleUpdateEmail = {async (id, emailTitle, emailTextHtml) => {
       body: JSON.stringify({ dataType: "update_email_data", data: emailData }),
     });
 
-    if (response.ok) {
-      console.log(response);
+    if (!response.ok) throw new Error("Network response was not ok.");
+
       setShowEmailInfo(false);
       return adminAlert('success', 'Email data updated.', 'Email data has been sucessfully updated')
-    }
+    
   } catch (error) {
     console.log(error);
     return adminAlert('error', `Can't update email data`, 'Server error occured.');

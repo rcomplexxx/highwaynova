@@ -9,6 +9,7 @@
 import  { useEffect } from 'react'
 import { useAdminStore } from '../../AdminZustand';
 import { useRouter } from 'next/router';
+import { adminAlert } from '@/utils/utils-client/utils-admin/adminAlert';
 
 export default function EmailsPageWrapper({children}) {
 
@@ -20,19 +21,26 @@ export default function EmailsPageWrapper({children}) {
 
     useEffect(()=>{
 
-        console.log('hello!', router.asPath)
+      
     
-        if(!isAdmin || !emailDataUpdate)return;
+      console.log('hello', isAdmin, emailDataUpdate.shouldUpdate)
+        if(!isAdmin || !emailDataUpdate.shouldUpdate)return;
 
-        console.log("hello, ", router.asPath)
+        
     
-        if(!router.asPath!=='/admin/emails')router.push('/admin/emails');
+        if(emailDataUpdate.swapToEmailRootPage && !router.asPath!=='/admin/emails')router.push('/admin/emails');
     
         const fetchAdminData = async () => {
+
     
-          if(!emailData)return;
+          if(!emailDataUpdate.shouldUpdate)return;
+
         
           try {
+
+
+            
+
             const response = await fetch("/api/admincheck", {
               method: "POST",
               headers: {
@@ -54,10 +62,11 @@ export default function EmailsPageWrapper({children}) {
               ) || [];
         
             setEmailData({ ...data, unsequencedEmails });
-            setEmailDataUpdate(false);
+            setEmailDataUpdate(false, false);
           } catch (error) {
             console.error("There has been a problem with your fetch operation:", error);
-            setEmailDataUpdate(false);
+            setEmailDataUpdate(false, false);
+            adminAlert('error', 'Server error', 'Email data could not be fetched');
           }
         };
     
@@ -65,7 +74,7 @@ export default function EmailsPageWrapper({children}) {
     
     
     
-      },[isAdmin, emailDataUpdate])
+      },[isAdmin, emailDataUpdate.shouldUpdate])
 
 
 

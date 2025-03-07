@@ -2,7 +2,6 @@ import { useRouter } from "next/router";
 import styles from "./mobilemenu.module.css";
 import {  useEffect, useLayoutEffect, useRef } from "react";
 import collections from '@/data/collections.json'
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowDown, CancelIcon } from "@/public/images/svgs/svgImages";
 import { useGlobalStore } from "@/contexts/AppContext";

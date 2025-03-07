@@ -179,14 +179,16 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: var(--size-7);
 
     margin-top: var(--size-3);
 }
 
 
 .revealInstructionsButton{
-   
+
   
+  width: fit-content;
     
     margin-bottom: var(--size-3);
       
@@ -196,15 +198,13 @@
     font-weight: 400;
 
     align-self: flex-start;
+
+    white-space: nowrap;
    
     
 }
 
 
-.statsReadingInstructionsDiv span{
-  line-height: var(--size-7);
-  
-}
 
 
 

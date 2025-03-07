@@ -17,7 +17,7 @@
 
 .descriptionMakerInstructions{
 
-    align-self: flex-start;
+    
     margin-top: var(--size-5);
 }
 
@@ -27,19 +27,33 @@
 
 
 
-.getCurrentDescriptionWrapper{
+.descriptionMakerInterface{
     width: 100%;
     display: flex;
     justify-content: flex-start;
-    align-items: center;
+    align-items: flex-end;
     gap: var(--size-5);
 
-    
+    margin-top: var(--size-5);
 
 
 
+}
 
+.descriptionMakerInterfaceColumn {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: var(--size-3);
+}
 
+.linkProductWrapper{
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    gap: var(--size-5);
 }
 
 

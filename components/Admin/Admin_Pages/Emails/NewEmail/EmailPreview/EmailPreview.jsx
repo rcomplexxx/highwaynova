@@ -12,6 +12,7 @@ import ReactHtmlParser from "react-html-parser";
 import styles from './emailpreview.module.css'
 import { adminConfirm } from '@/utils/utils-client/utils-admin/adminConfirm';
 import { useAdminStore } from '@/components/Admin/AdminZustand';
+import InstructionsWrapper from '../../../Admin_Home/InstructionsWrapper/InstructionsWrapper';
 
 
 const EmailPreview = ({previewHtml, setPreviewHtml}) => {
@@ -86,20 +87,29 @@ const EmailPreview = ({previewHtml, setPreviewHtml}) => {
 
    return <>
    
-   <button onClick={backToEditor} className={styles.backToEditorButton}>Back to editor</button>
+
+   <div className={styles.interfaceDiv}>
+  
+ 
+
+ <InstructionsWrapper>
+
+ <span>{`1. You can manually change email here.`}</span>
+ <span>{`2. You can code fixed width or height where needed(e.g. buttons).`} </span>
+
+<span>{`3. You can code additional css properties(e.g. box-shadow).`} </span>
+
+<span>{`4. You can code additional support for different @media screen sizes(e.g. font-size).`}</span>
+
+<span className={styles.instructionSpan}>{`4. Shortcut '[orderId]' can be typed as html text content, and will be replaced with customer's personalized order id on back-end before sending the email. ⚠️Works only for thank you sequence emails.`}</span>
+
+<span className={styles.instructionSpan}>{`5. Click on Save Email to finally save it. Next step is to create new sequence(more details on '/emails/new-sequence').`}</span>
+  </InstructionsWrapper>
+
+  <button onClick={backToEditor} className={styles.backToEditorButton}>Back to editor</button>
  
  
-    <div className={styles.instructionsWrapper}>
-
-
-    <span>{`- You can code fixed width or height where needed(like on buttons).`} </span>
-
-   <span>{`- You can code additional css properties like box-shadow.`} </span>
-
-   <span>{`- You can code additional support for different @media screen sizes(like font-size).`}</span>
-
-
-   </div>
+  </div>
 
   
      

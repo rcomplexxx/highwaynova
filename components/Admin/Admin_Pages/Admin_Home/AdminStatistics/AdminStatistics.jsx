@@ -5,13 +5,14 @@ import "react-multi-date-picker/styles/backgrounds/bg-dark.css"
 import coupons from "@/data/coupons.json"
 import Charts from './Charts/Charts';
 import { CorrectIcon } from '@/public/images/svgs/svgImages';
+import InstructionsWrapper from '../InstructionsWrapper/InstructionsWrapper';
 
 
 export default function AdminStatistics(){
   
     const [cashData, setCashData] = useState([]);
     const [returnCashData, setReturnCashData] = useState([]);
-    const [revealStatsReadingInstructions, setRevealStatsReadingInstructions] = useState(false);
+    
     const [showCharts, setShowCharts] = useState(true);
     const [customDateRange, setCustomDateRange] = useState([]);
     
@@ -279,11 +280,22 @@ ${shouldUseOnlyFulfilledOrders && styles.onlyFulfilledOrdersChecked}`}
       </div>
 
     <div className={styles.adminHomeControlsWrapper}>
-          <button 
-          onClick={()=>{setRevealStatsReadingInstructions(!revealStatsReadingInstructions)}}
-          className={styles.revealInstructionsButton}>
-            {revealStatsReadingInstructions?"Hide stats reading instructions":"Reveal stats reading instructions"}
-            </button>
+
+
+        <InstructionsWrapper>
+        <span>PERIOD - Period is specified time in which metrics are measured.</span>
+    <span>TO - Total orders is the number of orders placed.</span>
+    <span>SR - Sales revenue is the money obtained just from sales(product costs minus discounts, excluding tips).</span>
+    <span>LID - Lost in discounts is money lost in discounts. Ps. Discounts let you get more customers, and more long-term value.</span>
+    <span>TIPS - Tips is money generously donated by customers.</span>
+    <span>SC - Supplier costs is the money spent on suppliers to purchase products to fulfill orders.</span>
+    <span>LIR - Lost in returns is money lost in product returns. It affect profit metric, but it is not set to affect revenue,discounts, tips for now.</span>
+    <span>AOV - Average order value is the average profit per order.</span>
+    
+    <span>PROFIT - Profit is the amount of money remaining after deducting Supplier costs from Revenue, and adding tips.</span>
+    </InstructionsWrapper>
+
+
 
             <button 
             className={styles.revealInstructionsButton}
@@ -295,19 +307,9 @@ ${shouldUseOnlyFulfilledOrders && styles.onlyFulfilledOrdersChecked}`}
             </div>
 
 
-            {revealStatsReadingInstructions && <div className={styles.statsReadingInstructionsDiv}> 
-    <span>PERIOD - Period is specified time in which metrics are measured.</span>
-    <span>TO - Total orders is the number of orders placed.</span>
-    <span>SR - Sales revenue is the money obtained just from sales(product costs minus discounts, excluding tips).</span>
-    <span>LID - Lost in discounts is money lost in discounts. Ps. Discounts let you get more customers, and more long-term value.</span>
-    <span>TIPS - Tips is money generously donated by customers.</span>
-    <span>SC - Supplier costs is the money spent on suppliers to purchase products to fulfill orders.</span>
-    <span>LIR - Lost in returns is money lost in product returns. It affect profit metric, but it is not set to affect revenue,discounts, tips for now.</span>
-    <span>AOV - Average order value is the average profit per order.</span>
-    
-    <span>PROFIT - Profit is the amount of money remaining after deducting Supplier costs from Revenue, and adding tips.</span>
-    </div>
-}
+          
+          
+
 
 {showCharts && <>
 

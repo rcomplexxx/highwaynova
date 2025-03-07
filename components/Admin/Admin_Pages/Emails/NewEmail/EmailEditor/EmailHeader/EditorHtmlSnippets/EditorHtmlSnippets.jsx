@@ -1,7 +1,7 @@
 
 
 import { adminCopycat } from '@/utils/utils-client/utils-admin/adminCopycat';
-import CustomOptionsCard from '../CustomOptionsCard/CustomOptionsCard'
+import CustomOptionsCard from '@/components/Admin/Admin_Pages/Emails/NewEmail/EmailEditor/CustomOptionsCard/CustomOptionsCard'
 import styles from './editorhtmlsnippets.module.css'
 
 export default function EditorHtmlSnippets() {

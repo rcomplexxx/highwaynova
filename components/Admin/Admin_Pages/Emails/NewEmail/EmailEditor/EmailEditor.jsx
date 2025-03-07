@@ -3,118 +3,32 @@ import React, { useRef, useEffect, useState } from 'react';
 import EmailEditor from 'react-email-editor';
 
 import styles from './emaileditor.module.css'
-import ColorPicker from './ColorPicker/ColorPicker';
-import LoadTemplate from './TemplateManipulation/LoadTemplate';
-import SaveTemplate from './TemplateManipulation/SaveTemplate';
-import EditorHtmlSnippets from './EditorHtmlSnippets/EditorHtmlSnippets';
+
 import { transformColorToHex } from '@/utils/utils-client/transformColorToRgba';
 import { adminConfirm } from '@/utils/utils-client/utils-admin/adminConfirm';
+import InstructionsWrapper from '../../../Admin_Home/InstructionsWrapper/InstructionsWrapper';
+import EmailHeader from './EmailHeader/EmailHeader';
+import { useNewEmailStore } from '../NewEmailZustand';
 
 
 
 
-const EasyEmailEditor = ({setPreviewHtml, setEditorDesign, editorDesign, emailFontValue, setEmailFontValue, emailWidthMode, setEmailWidthMode, mainBackgroundColor, setMainBackgroundColor}) => {
+const EasyEmailEditor = () => {
 
+
+    const { generalFontSize, setGeneralFontSize, setPreviewHtml, editorDesign, setEditorDesign, emailFontValue, setEmailFontValue,
+       emailWidthMode, setEmailWidthMode, mainBackgroundColor, setMainBackgroundColor } = useNewEmailStore();
+    
  
-  const [websiteFontWarning, setWebsiteFontWarning] = useState('not_website_font');
 
-  const [generalFontSize, setGeneralFontSize] = useState(16);
+       
 
 
 const emailEditorRef = useRef();
 
-useEffect(()=>{
-
-
-  const globalFont = getComputedStyle(document.documentElement).getPropertyValue('--font-neutral').trim()?.toLowerCase();
 
 
 
-  const notWebsiteFontCheckButtonDisplay = ()=>{
-    if(Array.from(document.getElementById('font_email_select'))
-      .find(o=>{return o.value!=="" && globalFont.includes(o.value.toLowerCase())})){
-
-        setWebsiteFontWarning('not_website_font_show_button')
-    } 
-    else{
-      
-
-    
-      
-      setWebsiteFontWarning('not_website_font')
-
-    }
-  }
-
-
-  if(emailFontValue===""){
-    
-    notWebsiteFontCheckButtonDisplay();
-    return;
-  }
-
-
- 
-      
-  
-    
-
-    if(globalFont.includes(emailFontValue.toLowerCase()))
-      setWebsiteFontWarning('is_website_font')
-    else notWebsiteFontCheckButtonDisplay();
-
-    
-
- 
-    
-
-},[emailFontValue])
-
-
-
-const handleSaveTemplate = async(templateType) => {
-
-
-
-  await emailEditorRef.current?.editor?.exportHtml(async(data) => {
-
-
-    
-
-    if (!await adminConfirm('Current main template will be overriden. Proceed?')) return;
-
- 
-    
-
-
-    const { design } = data;
-if (!design) return;
-
-try {
-  const response = await fetch("/api/admincheck", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      dataType: 'update_new_email_template',
-      data: {
-        designJson: JSON.stringify(design),
-        emailFontValue,
-        emailFontSize: generalFontSize,
-        emailWidthModeValue: emailWidthMode,
-        mainBackgroundColor,
-        templateType,
-      },
-    }),
-  });
-
-  if (response.ok) console.log(response);
-} catch (error) {
-  console.log(error);
-}
-
-})
-
-};
 
 
 
@@ -269,123 +183,28 @@ optimizedHtml = optimizedHtml.replace(/(body\s*{)([^}]*)(})/, (match, p1, p2, p3
       
      
 
-        const changeEmailFontValue = (event)=>{
-
-          const newEmailFontValue = event.target.value;
-          
-          setEmailFontValue(newEmailFontValue);
       
-       
-      
-          
-          
-          }
 
 
 
    return <>
 
- <div className={styles.editorBar}>
+<InstructionsWrapper wrapperCssClassModifier={styles.instructionsWrapperModifier}>
 
- 
+<span className={styles.instructionSpan}>1. Set options in custom header above Email maker to complement your brand design(main email bg, font, general font size, etc.).</span>
+<span className={styles.instructionSpan}>2. Main template will be loaded in Email maker. You can change template on Load template button.</span>
 
-  {websiteFontWarning==='is_website_font' && <span className={styles.fontmatchesSpan}>Email font matches website font</span>}
-
-{websiteFontWarning.includes('not_website_font') &&  <span className={styles.fontWarningSpan}>Warning! Email font does not match site main font.</span>}
-
-
- {websiteFontWarning === 'not_website_font_show_button' && 
- <button onClick={()=>{
-
-
-  const globalFont = getComputedStyle(document.documentElement).getPropertyValue('--font-neutral').trim()?.toLowerCase();
-
-  const matchingFont = Array.from(document.getElementById('font_email_select'))
-    .find(o=>{return o.value!=="" && globalFont.includes(o.value.toLowerCase())})
-
-   
-
-     setEmailFontValue(matchingFont.value);
-  
-
- }}>Use website font</button>}
-
-
-
-< ColorPicker mainBackgroundColor={mainBackgroundColor} setMainBackgroundColor={setMainBackgroundColor}/>
-
-<EditorHtmlSnippets/>
-
-  </div>
+<span className={styles.instructionSpan}>3. Create email with Email maker.</span>
+<span className={styles.instructionSpan}>4. For more(custom made) html elements, you can click on 'Editor html snippets', and by clicking, copy any of provided snippets. You can use coppied snippet on Email maker element 'html'.</span>
+<span className={styles.instructionSpan}>5. You can save as main(or any other) template on Save template button.</span>
+<span className={styles.instructionSpan}>6. Click continue to Email preview(below Email maker) when done.</span>
 
 
 
 
+</InstructionsWrapper>
 
-  
-
-
-   
-   <div className={styles.editorBar}>
-
-   <select id='font_email_select' value={emailFontValue} onChange={changeEmailFontValue} className={styles.emailFontValueSelect}>
-        
-        
-        <option value="">Use editor's default font</option>
-        <option value="Inter">Use Inter</option>
-        <option value="Arial">Use Ariel</option>
-        <option value="Helvetica">Use Helvatica</option>
-        <option value="Verdana">Use Verdana</option>
-        <option value="Calibri">Use Calibri</option>
-        <option value="Palatino">Use Palatino</option>
-        <option value="'Trebuchet MS'">Use Trebuchet</option>
-        <option value="Geneva">Use Geneva</option>
-       
-        
-        <option value="Tahoma">Use Tahoma</option>
-        <option value="Roboto">Use Roboto</option>
-        <option value="Montserrat">Use Montserrat</option>
-        <option value="'Open Sans'">Use Open Sans</option>
-        <option value="'Source Sans Pro'">Use Source Sans Pro</option>
-
-
-        <option value="'Times New Roman', serif">Use Times New Roman</option>
-        <option value="Georgia, serif">Use Georgia</option>
-
-    </select>
-
-    <div className={styles.fontSizeDiv}>
-<input className={styles.fontSizeInput} type='number' min={8} max={72}
-
-value={generalFontSize}
-onChange={(event)=>{
-  const value = event.target.value;
-
-  if(value<1 || value >72) return;
-
-  setGeneralFontSize(value);
-
-}}
-/>
-<span className={styles.fontSizeLabel}>General font size</span>
-<span className={styles.fontSizePxLabel}>px</span>
-</div>
-
-    <select
-    value={emailWidthMode}
-    onChange={(event)=>{setEmailWidthMode(event.target.value)}}
-    className={styles.emailFontValueSelect}>
-    <option value={'clear_all_width'}>Clear any width/max-width</option>
-    <option value={'clear_max_width'}>Clear max-width - recommended</option>
-        <option value="">Clear no width</option>
-       
-
-
-        </select>
-    
-    <SaveTemplate handleSaveTemplate={handleSaveTemplate}/>
-    <LoadTemplate handleLoadTemplate={handleLoadTemplate}/>
-   </div>
+ <EmailHeader handleLoadTemplate={handleLoadTemplate}/>
    <EmailEditor style={{ maxWidth:"none", minHeight: '980px', border: '1px solid #ccc' }} ref={emailEditorRef} 
 
   onReady={()=>{

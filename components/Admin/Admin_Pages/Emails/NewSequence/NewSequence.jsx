@@ -6,6 +6,7 @@ import styles from './newsequence.module.css'
 import EmailList from './EmailList/EmailList';
 import { useAdminStore } from '@/components/Admin/AdminZustand';
 
+
 export default function NewSequence() {
 
 
@@ -116,8 +117,7 @@ const filteredEmails = emailData?.unsequencedEmails?.filter(
     <div className={styles.mainDiv}>
       <h1>New email sequence</h1>
 
-      <span className={styles.instructionSpan}>You can use [orderId] in thank you sequence, and it will be replaced with actualy orderId</span>
-
+     
 
 
 

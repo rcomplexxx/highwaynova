@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 import { Atom } from '@/public/images/svgs/svgImages';
 import styles from './templatemanipulation.module.css'
-import CustomOptionsCard from '../CustomOptionsCard/CustomOptionsCard';
+import CustomOptionsCard from '@/components/Admin/Admin_Pages/Emails/NewEmail/EmailEditor/CustomOptionsCard/CustomOptionsCard'
 
 export default function LoadTemplate({handleLoadTemplate}) {
 

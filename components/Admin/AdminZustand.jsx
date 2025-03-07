@@ -10,17 +10,19 @@ import { create } from "zustand";
 
 // Create the store with Zustand
 export const useAdminStore = create((set, get) => ({
-  isAdmin: undefined,
+  isAdminMounted: false,
+  isAdmin: false,
   customers: [],
   orders: [],
   messages: [],
   reviews: [],
   emailData: {emails: [], unsequencedEmails: [], sequences:[], campaigns: []},
   setEmailData : (data) => set({emailData: data}),
-  emailDataUpdate: true,
-  setEmailDataUpdate:(shouldUpdate)=> set({emailDataUpdate: shouldUpdate}),
+  emailDataUpdate: {shouldUpdate:true, swapToEmailRootPage: false},
+  setEmailDataUpdate:(shouldUpdate, swapToEmailRootPage=true)=> set({emailDataUpdate: {shouldUpdate, swapToEmailRootPage:swapToEmailRootPage}}),
   
   
+  setisAdminMounted: (isMounted)=>{set({isAdminMounted:isMounted})},
   
   // Setter functions to update states
   setIsAdmin: (newIsAdmin) => {
@@ -76,6 +78,9 @@ export const useAdminStore = create((set, get) => ({
     } catch (error) {
       get().setIsAdmin(false); // Handle error
       console.error("Error checking admin status:", error);
+    }
+    finally{
+     get().setisAdminMounted(true);
     }
   },
 }));

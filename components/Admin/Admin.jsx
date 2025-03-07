@@ -39,7 +39,7 @@ export default function Admin() {
 
 
 
-  const { isAdmin, setIsAdmin, checkAdminStatus } = useAdminStore();
+  const {isAdminMounted, isAdmin, setIsAdmin, checkAdminStatus } = useAdminStore();
 
 
   const router = useRouter();
@@ -67,7 +67,7 @@ export default function Admin() {
   
   
 
-  if (isAdmin === undefined) return <div className={styles.adminMainDiv}>
+  if (!isAdminMounted) return <div className={styles.adminMainDiv}>
      
      <div className={styles.loadingDiv}>
      <Spinner2 style={{justifySelf: 'flex-start'}}/>
