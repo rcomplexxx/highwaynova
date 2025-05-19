@@ -16,83 +16,11 @@ import { useNewEmailStore } from '../NewEmailZustand';
 const EasyEmailEditor = () => {
 
 
-    const { generalFontSize, setGeneralFontSize, setPreviewHtml, editorDesign, setEditorDesign, emailFontValue, setEmailFontValue,
-       emailWidthMode, setEmailWidthMode, mainBackgroundColor, setMainBackgroundColor } = useNewEmailStore();
+    const { mainEmailFontSize, setPreviewHtml, editorDesign, setEditorDesign, emailFontValue,
+       emailWidthMode,  mainBackgroundColor, emailEditor, setEmailEditor, handleLoadTemplate } = useNewEmailStore();
     
- 
 
        
-
-
-const emailEditorRef = useRef();
-
-
-
-
-
-
-
-const handleLoadTemplate = async(displayWarning, templateType) => {
-
-
-  if(displayWarning && !await adminConfirm('Current progress will be lost. Proceed?'))return;
-
- 
-
-
-
-try{
-
- const response = await fetch("/api/admincheck", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ dataType: 'get_email_templates'}),
-  })
-
-  if(response.ok){
-    console.log(response);
-    const data = await response.json();
-
-   
-
-    const templateData= templateType==='main'?(data?.data[0]):(data?.data[1]);
-
-    console.log('data', templateData)
-    
-
-    const editorDesign = templateData.designJson && JSON.parse(templateData.designJson);
-
-    emailEditorRef.current?.editor.loadDesign(editorDesign);
-
-    setGeneralFontSize(templateData.emailFontSize)
-    setEmailFontValue(templateData.emailFontValue);
-    setEmailWidthMode(templateData.emailWidthModeValue);
-    setMainBackgroundColor(templateData.mainBackgroundColor)
-  }
-  
-
-
-}
-
-catch(error){
-  console.log('Main email tamplate loading unsuccessful.', error)
-}
-
-
-
-
-
-
-};
-
-
-
-
-
-
-
 
 
 
@@ -100,7 +28,7 @@ catch(error){
     const handleUploadHTML = () => {
         
         
-        emailEditorRef.current?.editor?.exportHtml((data) => {
+        emailEditor?.exportHtml((data) => {
             const { design, html } = data;
 
             if(!html) return;
@@ -166,10 +94,10 @@ catch(error){
 
             }
 
-            if(generalFontSize){
+            if(mainEmailFontSize){
           
 optimizedHtml = optimizedHtml.replace(/(body\s*{)([^}]*)(})/, (match, p1, p2, p3) => {
-    const addedContent = `${p1}${p2}  font-size: ${generalFontSize};\n ${p3}`;
+    const addedContent = `${p1}${p2}  font-size: ${mainEmailFontSize};\n ${p3}`;
     return addedContent;
 });
 
@@ -204,15 +132,18 @@ optimizedHtml = optimizedHtml.replace(/(body\s*{)([^}]*)(})/, (match, p1, p2, p3
 
 </InstructionsWrapper>
 
- <EmailHeader handleLoadTemplate={handleLoadTemplate}/>
-   <EmailEditor style={{ maxWidth:"none", minHeight: '980px', border: '1px solid #ccc' }} ref={emailEditorRef} 
-
-  onReady={()=>{
 
 
 
+ <EmailHeader/>
+   <EmailEditor style={{ maxWidth:"none", minHeight: '980px', border: '1px solid #ccc' }}  
 
-    emailEditorRef.current.editor.registerCallback('image', async(file, done) => {
+  onReady={(editor)=>{
+
+    setEmailEditor(editor);
+
+
+    editor.registerCallback('image', async(file, done) => {
       // Handle file upload here
 
       console.log('uploading picture!', file)
@@ -275,15 +206,21 @@ optimizedHtml = optimizedHtml.replace(/(body\s*{)([^}]*)(})/, (match, p1, p2, p3
 
 
 
-    if(editorDesign){
-        emailEditorRef.current?.editor.loadDesign(editorDesign)
-        
+    if(editorDesign) {
+      console.log('hello', editor);
+      editor.loadDesign(editorDesign)
     }
-
-    else{
-      handleLoadTemplate(false, 'main');
-    }
+    else handleLoadTemplate(false, 'main');
+    
+  
+  
+  
   }}
+
+
+
+
+  
 
     options={
       {

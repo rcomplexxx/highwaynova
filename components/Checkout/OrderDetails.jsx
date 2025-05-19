@@ -16,7 +16,7 @@ import InputField from "./Input/InputField";
   export default function OrderDetails() {
     const [showAnswer, setShowAnswer] = useState(false);
 
-    const [tempCouponCode, setTemptempCouponCode] = useState("");
+    const [tempCouponCode, setTempCouponCode] = useState("");
     const [couponError, setCouponError] = useState();
     
 
@@ -30,7 +30,7 @@ import InputField from "./Input/InputField";
 
   
     
-
+    useEffect(()=>{console.log('new coupon code', tempCouponCode)},[tempCouponCode])
 
 
 
@@ -86,7 +86,7 @@ const handleCouponApply = () => {
     const couponActivated = setAndValidateCoupon(tempCouponCode);
     if(!couponActivated.error){
       setCouponError();
-          setTemptempCouponCode("");
+          setTempCouponCode("");
     }
     else if(couponActivated.error === 'Incorrect coupon code')setCouponError('Incorrect coupon code');
 
@@ -205,7 +205,7 @@ const handleCouponApply = () => {
                   id="coupon_code"
                   placeHolder="Coupon code"
                   type="text"
-                  handleChange={(event) => {setTemptempCouponCode(event.target.value);}}
+                  handleChange={(event) => {setTempCouponCode(event.target.value);}}
                   handleKeyUp = {(e) => e.key === 'Enter' && handleCouponApply()}
                   error={couponError ==='Incorrect coupon code' && "Enter a valid discount code."}
                 />

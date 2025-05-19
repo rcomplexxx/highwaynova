@@ -32,10 +32,11 @@ export default function Search({searchOpen, setSearchOpen}){
 
   
 
-    const {increaseDeepLink, decreaseDeepLink } = useGlobalStore((state) => ({
-      deepLink: state.deepLink,
+    const {increaseDeepLink, decreaseDeepLink, shouldDeepLinkSurvivePopState } = useGlobalStore((state) => ({
+     
       increaseDeepLink: state.increaseDeepLink,
       decreaseDeepLink: state.decreaseDeepLink,
+      shouldDeepLinkSurvivePopState: state.shouldDeepLinkSurvivePopState
     }));
 
 
@@ -58,7 +59,7 @@ export default function Search({searchOpen, setSearchOpen}){
           
           console.log('deepstate', global.deepLinkLastSource)
          
-    if(!global.executeNextLink && global.deepLinkLastSource !== 'search') return;
+   if(shouldDeepLinkSurvivePopState('search'))return;
     
 
           

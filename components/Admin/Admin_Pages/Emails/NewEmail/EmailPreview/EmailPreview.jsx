@@ -13,6 +13,8 @@ import styles from './emailpreview.module.css'
 import { adminConfirm } from '@/utils/utils-client/utils-admin/adminConfirm';
 import { useAdminStore } from '@/components/Admin/AdminZustand';
 import InstructionsWrapper from '../../../Admin_Home/InstructionsWrapper/InstructionsWrapper';
+import { useNewEmailStore } from '../NewEmailZustand';
+import { adminAlert } from '@/utils/utils-client/utils-admin/adminAlert';
 
 
 const EmailPreview = ({previewHtml, setPreviewHtml}) => {
@@ -26,6 +28,8 @@ const EmailPreview = ({previewHtml, setPreviewHtml}) => {
 
 
   const {setEmailDataUpdate} = useAdminStore();
+
+  const {setIsEmailFinished} = useNewEmailStore();
 
   
 
@@ -48,7 +52,10 @@ const EmailPreview = ({previewHtml, setPreviewHtml}) => {
     const handleSaveEmail = async()=>{
 
 
-      if (!emailTitle || !emailTextRef.current.value) return;
+      if(!emailTitle) return adminAlert('error', 'No email title', 'Please provide email title.');
+
+
+      if (!emailTextRef.current.value) return adminAlert('error', 'No email text', 'Please provide email text.');
 
       const newEmailData = { title: emailTitle, text: emailTextRef.current.value };
 
@@ -61,27 +68,27 @@ const EmailPreview = ({previewHtml, setPreviewHtml}) => {
           body: JSON.stringify({ dataType: "insert_new_email", data: newEmailData }),
         });
     
-        if (response.ok) setEmailDataUpdate(true);
+        if (response.ok) {
+          setIsEmailFinished(true);
+          setEmailDataUpdate(true);
+        
+        }
       } catch (error) {
         console.log(error);
       }
     }
 
 
+
+
     const backToEditor = async()=>{
-
-
        if (!await adminConfirm('Manual changes will be lost. Proceed?')) return;
-  
-       
-       
-       
-  setPreviewHtml(prev => ({...prev, final: false}));
-
-  
+      setPreviewHtml(prev => ({...prev, final: false}));
 
     }
   
+
+    
     
 
 

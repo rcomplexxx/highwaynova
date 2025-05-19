@@ -20,9 +20,10 @@ export default function WriteReview({ setWriteReviewOpen }) {
   });
   const [errors, setErrors] = useState({  email: false, images5: false });
   
-  const { increaseDeepLink, decreaseDeepLink } = useGlobalStore((state) => ({
+  const { increaseDeepLink, decreaseDeepLink, shouldDeepLinkSurvivePopState } = useGlobalStore((state) => ({
     increaseDeepLink: state.increaseDeepLink,
     decreaseDeepLink: state.decreaseDeepLink,
+    shouldDeepLinkSurvivePopState: state.shouldDeepLinkSurvivePopState,
   }));
 
 
@@ -44,7 +45,7 @@ export default function WriteReview({ setWriteReviewOpen }) {
 
     const handlePopState=()=>{  
       
-      if(!global.executeNextLink && global.deepLinkLastSource !== 'write_review') return;
+     if(shouldDeepLinkSurvivePopState('write_review'))return;
       window?.removeEventListener("popstate", handlePopState);
       setWriteReviewOpen(false);
     

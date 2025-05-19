@@ -23,8 +23,12 @@
 }
 
 .instructionsDiv{
-
+max-height: 0;
     margin-top: var(--size-3);
+      transform-origin: top;
+      transition: all 0.3s ease;
+      
+      overflow-y: hidden;
 }
 
 
@@ -33,3 +37,7 @@
     line-height: var(--size-7);
     
   }
+
+
+
+ 

@@ -4,13 +4,13 @@
 //Za ostale slucajeve mi je bolje da ih gledam od najnovijih ka najstarijim da bih lakse nasao ako mi treba nesto
 //Ovo je podlozno promenama.
 const getDataTypeConfig = {
-  "get_order_cash_info": {
+  "get_finance_data": {
     table: "orders",
     queryCondition: "approved = 1",
     selectVariables: "createdDate, total, supplyCost, tip, couponCode"
   },
   //Ovde approved
-  "get_order_cash_info_only_fulfilled_orders": {
+  "get_finance_data_only_fulfilled_orders": {
     table: "orders",
     queryCondition: "packageStatus != 0",
     selectVariables: "createdDate, total, supplyCost, tip, couponCode"
@@ -157,7 +157,7 @@ const wipeDataTypeConfig = {
 
 
 
-const obtainGetDbQueryParams = (dataType, data) => {
+const getGetDbQueryParams = (dataType, data) => {
   const config = getDataTypeConfig[dataType];
 
   if (!config) {
@@ -175,7 +175,7 @@ const obtainGetDbQueryParams = (dataType, data) => {
   };
 };
 
-const obtainDbQueryParams = (dataType)=>{
+const getDbQueryParams = (dataType)=>{
 
   
 
@@ -197,5 +197,5 @@ const obtainDbQueryParams = (dataType)=>{
 
 
   
-module.exports = {obtainGetDbQueryParams, obtainDbQueryParams};
+module.exports = {getGetDbQueryParams, getDbQueryParams};
 

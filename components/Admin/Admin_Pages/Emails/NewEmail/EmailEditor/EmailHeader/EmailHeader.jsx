@@ -10,10 +10,10 @@ import EditorHtmlSnippets from './EditorHtmlSnippets/EditorHtmlSnippets';
 import styles from './emailheader.module.css'
 import { useNewEmailStore } from '../../NewEmailZustand';
 
-export default function EmailHeader({handleLoadTemplate}) {
+export default function EmailHeader() {
 
-   const { generalFontSize, setGeneralFontSize, emailFontValue, setEmailFontValue,
-       emailWidthMode, setEmailWidthMode, mainBackgroundColor, setMainBackgroundColor } = useNewEmailStore();
+   const { mainEmailFontSize, setMainEmailFontSize, emailFontValue, setEmailFontValue,
+       emailWidthMode, setEmailWidthMode, mainBackgroundColor, setMainBackgroundColor, handleLoadTemplate} = useNewEmailStore();
 
   const [websiteFontWarning, setWebsiteFontWarning] = useState('not_website_font');
 
@@ -68,49 +68,7 @@ export default function EmailHeader({handleLoadTemplate}) {
 
       
 
-const handleSaveTemplate = async(templateType) => {
 
-
-
-    await emailEditorRef.current?.editor?.exportHtml(async(data) => {
-  
-  
-      
-  
-      if (!await adminConfirm('Current main template will be overriden. Proceed?')) return;
-  
-   
-      
-  
-  
-      const { design } = data;
-  if (!design) return;
-  
-  try {
-    const response = await fetch("/api/admincheck", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        dataType: 'update_new_email_template',
-        data: {
-          designJson: JSON.stringify(design),
-          emailFontValue,
-          emailFontSize: generalFontSize,
-          emailWidthModeValue: emailWidthMode,
-          mainBackgroundColor,
-          templateType,
-        },
-      }),
-    });
-  
-    if (response.ok) console.log(response);
-  } catch (error) {
-    console.log(error);
-  }
-  
-  })
-  
-  };
 
 
   const changeEmailFontValue = (event)=>{
@@ -206,13 +164,13 @@ const handleSaveTemplate = async(templateType) => {
       <div className={styles.fontSizeDiv}>
   <input className={styles.fontSizeInput} type='number' min={8} max={72}
   
-  value={generalFontSize}
+  value={mainEmailFontSize}
   onChange={(event)=>{
     const value = event.target.value;
   
     if(value<1 || value >72) return;
   
-    setGeneralFontSize(value);
+    setMainEmailFontSize(value);
   
   }}
   />
@@ -232,7 +190,7 @@ const handleSaveTemplate = async(templateType) => {
   
           </select>
       
-      <SaveTemplate handleSaveTemplate={handleSaveTemplate}/>
+      <SaveTemplate/>
       <LoadTemplate handleLoadTemplate={handleLoadTemplate}/>
      </div>
 

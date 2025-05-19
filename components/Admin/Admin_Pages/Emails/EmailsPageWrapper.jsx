@@ -14,7 +14,7 @@ import { adminAlert } from '@/utils/utils-client/utils-admin/adminAlert';
 export default function EmailsPageWrapper({children}) {
 
 
-     const { isAdmin, emailData, setEmailData , emailDataUpdate, setEmailDataUpdate } = useAdminStore();
+     const { isAdmin,  setEmailData , emailDataUpdate, setEmailDataUpdate } = useAdminStore();
 
      const router = useRouter();
 
@@ -23,7 +23,10 @@ export default function EmailsPageWrapper({children}) {
 
       
     
-      console.log('hello', isAdmin, emailDataUpdate.shouldUpdate)
+      
+
+
+
         if(!isAdmin || !emailDataUpdate.shouldUpdate)return;
 
         

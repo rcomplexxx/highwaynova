@@ -39,6 +39,10 @@ export default function EmailCard({id,title, text, handleUpdateEmail, setEmailDa
 
 
     const handlePreviewEmail = ()=>{
+
+
+      if(previewEmailContent)return setPreviewEmailContent(undefined);
+
         try {
           
 
@@ -135,7 +139,7 @@ export default function EmailCard({id,title, text, handleUpdateEmail, setEmailDa
 
 
         <div className={styles.buttonBar}>
-        <button onClick={handlePreviewEmail}>Preview Email</button>
+        <button onClick={handlePreviewEmail}>{previewEmailContent?'Hide email':'Preview Email'}</button>
         {handleUpdateEmail && <button onClick={async()=>{await handleUpdateEmail(id, emailTitle, emailTextHtml)}}>Update Email</button> }
         <button className={styles.deleteEmail} onClick={handleDeleteEmail}>Delete Email</button>
        

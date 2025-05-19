@@ -5,7 +5,7 @@
     margin-right: var(--size-3);
 }
 
-.templateManipulationWrapper{
+.customOptionsWrapper{
 
     position: fixed;
     left: 0;
@@ -22,10 +22,12 @@
     
    margin-left: auto;
 
+   z-index: 999;
+
 }
 
 
-.templateManipulationWrapper2{
+.customOptionsWrapper2{
 
     position: relative;
 

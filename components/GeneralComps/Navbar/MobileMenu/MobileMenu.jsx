@@ -28,10 +28,11 @@ export default function MobileMenu({ isMenuOpen, setIsMenuOpen, subMenu, setSubM
     
 
 
-    const {  increaseDeepLink, decreaseDeepLink } = useGlobalStore((state) => ({
+    const {  increaseDeepLink, decreaseDeepLink, shouldDeepLinkSurvivePopState } = useGlobalStore((state) => ({
      
       increaseDeepLink: state.increaseDeepLink,
       decreaseDeepLink: state.decreaseDeepLink,
+      shouldDeepLinkSurvivePopState: state.shouldDeepLinkSurvivePopState,
     }));
 
 
@@ -72,7 +73,7 @@ export default function MobileMenu({ isMenuOpen, setIsMenuOpen, subMenu, setSubM
 
         const handlePopState = () => {
         
-          if(!global.executeNextLink && global.deepLinkLastSource !== 'mobile_menu') return;
+          if(shouldDeepLinkSurvivePopState('mobile_menu')) return;
 
 
           subMenu !== 0 ? (doubleBackRef.current?closeMenu():setSubMenu(0)) : closeMenu();

@@ -10,7 +10,7 @@ export default function InputField({
   placeHolder,
   type,
   handleKeyUp,
-  
+  handleChange,
   children,
 }) {
 
@@ -18,13 +18,13 @@ export default function InputField({
 
 
 
-  const handleChange = () => {
+  const handleChangeNow = handleChange || (() => {
     if (errors[id]) {
       const newErrors = { ...errors };
       delete newErrors[id];
       setErrors(newErrors);
     }
-  };
+  });
 
 
 
@@ -35,7 +35,7 @@ export default function InputField({
         type={type}
         id={id}
         placeholder=" "
-        onChange={handleChange}
+        onChange={ handleChangeNow}
         onKeyUp={handleKeyUp}
         maxLength={127}
         autoComplete={autocomplete}

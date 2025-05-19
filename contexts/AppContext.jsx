@@ -111,6 +111,12 @@ export const useGlobalStore = create((set, get) => {
     },
     emailPopupOn: false,
     changeEmailPopupOn: () => set((state) => { return { emailPopupOn: !state.emailPopupOn }}),
+    shouldDeepLinkSurvivePopState: (deepLinkReference)=>{
+  if(!global.executeNextLink && global.deepLinkLastSource !== deepLinkReference) return true;
+  return false;
+
+    
+    },
     router: null, // initially null
     setRouter: (router) => set({ router }),
     pathname: '/',

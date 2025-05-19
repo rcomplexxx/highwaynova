@@ -37,3 +37,110 @@
     margin-bottom: var(--size-7);
     border: 2px dashed var(--admin-home-sector-borderLine-color);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+.coolImagesFlexbox{
+    width: 100%;
+    height: max-content;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: var(--size-7);
+
+    margin-top: var(--size-8);
+    
+    margin-bottom: var(--size-6);
+
+    
+}
+
+
+
+
+
+.coolImageWrapper{
+
+    
+    position: relative;
+
+    height: fit-content;
+    
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    flex: 9;
+   
+}
+
+.coolImageWrapper img{
+
+    
+    height: 100%;
+    width: 100%;
+   
+   
+    
+
+    
+  
+    
+    user-select: none;
+    
+    filter: brightness(70%);
+
+    transition: filter 0.3s ease-in-out;
+    object-fit: contain;
+}
+
+
+.guardianWrapper img{
+    filter: brightness(80%);
+}
+
+
+
+.hackermanWrapper{
+    flex: 16;
+
+
+  
+
+    overflow: hidden;
+
+   
+    border-radius: 100%;
+
+    
+   
+    
+}
+
+.hackermanWrapper img{
+    filter: brightness(70%);
+    cursor: pointer;
+}
+
+
+
+.hackermanWrapper img:hover{
+    filter: brightness(100%);
+    
+}
+
+
+

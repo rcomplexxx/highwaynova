@@ -8,14 +8,16 @@ import styles from './newemail.module.css'
 import { useRouter } from 'next/router';
 import { adminConfirm } from '@/utils/utils-client/utils-admin/adminConfirm';
 import { useNewEmailStore } from './NewEmailZustand';
+import { useAdminStore } from '@/components/Admin/AdminZustand';
 
 
 export default function NewEmail() {
 
 
   
-    const {previewHtml, setPreviewHtml, editorDesign, setEditorDesign, emailFontValue, setEmailFontValue, emailWidthMode, setEmailWidthMode, mainBackgroundColor, setMainBackgroundColor } = useNewEmailStore();
+    const {previewHtml, setPreviewHtml, initializeGlobalFont, isEmailFinished, zustandDataCleaning } = useNewEmailStore();
   
+    const {emailDataUpdate} = useAdminStore();
 
     
 
@@ -26,14 +28,23 @@ export default function NewEmail() {
 
  const router = useRouter();
 
+
+ useEffect(()=>{ initializeGlobalFont();
+
+  return ()=>{
+    zustandDataCleaning();
+  }
+ },[])
+
+
   useEffect(() => {
     const handleRouteChange = (url) => {
 
-    
       
-        if(!previewHtml.html)return;
+        if(isEmailFinished || routerConfirmPassedRef.current)  return;
+        
+      
      
-        if(!routerConfirmPassedRef.current){
 
           adminConfirm("Your progress will be lost. Leave anyway?").then((confirmed)=>{
             if(confirmed) {
@@ -44,7 +55,10 @@ export default function NewEmail() {
 
         router.events.emit('routeChangeError');
         throw 'Route change aborted.';
-        }
+        
+
+       
+        
         
 
 
@@ -56,7 +70,7 @@ export default function NewEmail() {
     return () => {
       router.events.off('routeChangeStart', handleRouteChange);
     };
-  }, [router]);
+  }, [isEmailFinished]);
 
   
   
@@ -71,12 +85,9 @@ export default function NewEmail() {
       {previewHtml.final?
       <EmailPreview previewHtml={previewHtml} setPreviewHtml={setPreviewHtml} />
       :
-      <EasyEmailEditor  setPreviewHtml={ setPreviewHtml} 
-      editorDesign={editorDesign} setEditorDesign={setEditorDesign} 
-      emailFontValue={emailFontValue} setEmailFontValue={setEmailFontValue}
-      emailWidthMode={emailWidthMode} setEmailWidthMode={setEmailWidthMode}
-      mainBackgroundColor={mainBackgroundColor} setMainBackgroundColor={setMainBackgroundColor}
-      />}
+      <EasyEmailEditor/>
+      
+      }
       
     
 

@@ -24,10 +24,11 @@ const nextLink = useRef();
 
 
 
-const { increaseDeepLink, decreaseDeepLink } = useGlobalStore((state) => ({
-  deepLink: state.deepLink,
+const { increaseDeepLink, decreaseDeepLink, shouldDeepLinkSurvivePopState } = useGlobalStore((state) => ({
+
   increaseDeepLink: state.increaseDeepLink,
   decreaseDeepLink: state.decreaseDeepLink,
+  shouldDeepLinkSurvivePopState: state.shouldDeepLinkSurvivePopState,
 }));
 
 
@@ -57,7 +58,7 @@ useEffect(()=>{
     
 
     
-    if(!global.executeNextLink && global.deepLinkLastSource !== 'pop_cart')return;
+    if(shouldDeepLinkSurvivePopState('pop_cart'))return;
 
     console.log('proso ovo sranje')
     

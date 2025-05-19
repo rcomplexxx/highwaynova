@@ -13,9 +13,9 @@ export default function CustomOptionsCard({children, mainButtonName, pushToRight
     <>
       <button className={pushToRightStyle && styles.pushToRightStyle} onClick={()=>{setActivateOptions(true)}}>{mainButtonName}</button>
 
-     { activateOptions && <div onClick={()=>{ setActivateOptions(false)}} className={styles.templateManipulationWrapper}>
+     { activateOptions && <div onClick={()=>{ setActivateOptions(false)}} className={styles.customOptionsWrapper}>
 
-        <div className={styles.templateManipulationWrapper2}>
+        <div className={styles.customOptionsWrapper2}>
 
    
     {children}

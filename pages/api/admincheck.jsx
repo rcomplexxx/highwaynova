@@ -12,7 +12,7 @@ import updateDb from '@/utils/utils-server/utils-admin/adminUpdateDb'
 import getFromDb from '@/utils/utils-server/utils-admin/adminGetFromDb';
 import wipeData from '@/utils/utils-server/utils-admin/adminDataWiper'
 import deleteRow from '@/utils/utils-server/utils-admin/adminDbRowDeleter';
-import {obtainDbQueryParams, obtainGetDbQueryParams} from "@/utils/utils-server/utils-admin/obtainAdminDbQueryParmas";
+import {getDbQueryParams, getGetDbQueryParams} from "@/utils/utils-server/utils-admin/obtainAdminDbQueryParmas";
 import products from '@/data/products.json'
 
 
@@ -106,7 +106,7 @@ const revalidateReviews = async()=>{
         if(dataType.startsWith("get_")){
 
 
-         const {table, queryCondition, selectVariables} = obtainGetDbQueryParams(dataType, data);
+         const {table, queryCondition, selectVariables} = getGetDbQueryParams(dataType, data);
         return await getFromDb(dbConnection, resReturn, table, queryCondition, selectVariables ); 
 
 
@@ -119,7 +119,7 @@ const revalidateReviews = async()=>{
 
 
       
-        const table = obtainDbQueryParams(dataType);
+        const table = getDbQueryParams(dataType);
 
 
 
@@ -173,7 +173,7 @@ const revalidateReviews = async()=>{
 
 
       
-        const table = obtainDbQueryParams(dataType);
+        const table = getDbQueryParams(dataType);
 
        
 
@@ -200,7 +200,7 @@ const revalidateReviews = async()=>{
 
       
     
-        const table = obtainDbQueryParams(dataType);
+        const table = getDbQueryParams(dataType);
 
        
 
@@ -219,7 +219,7 @@ const revalidateReviews = async()=>{
 
       
         
-        const table = obtainDbQueryParams(dataType);
+        const table = getDbQueryParams(dataType);
         
         
       
