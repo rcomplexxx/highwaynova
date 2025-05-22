@@ -110,7 +110,8 @@ useEffect(()=>{
   
   
   increaseDeepLink('pop_cart');
-
+document.documentElement.classList.add("hideScroll");
+ 
 
   window?.addEventListener("popstate", handlePopState);
   document.addEventListener('click', handleClick, true);
@@ -122,6 +123,7 @@ useEffect(()=>{
    
     window?.removeEventListener("popstate", handlePopState);
     document.removeEventListener('click', handleClick, true);
+    document.documentElement.classList.remove("hideScroll");
     decreaseDeepLink(nextLink.current);
 
    

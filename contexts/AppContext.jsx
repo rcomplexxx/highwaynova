@@ -58,6 +58,8 @@ export const useGlobalStore = create((set, get) => {
 
     decreaseDeepLink: (executeNextLink) => {
 
+
+      //gygyb
       const executeLink = (isFirstCall) => {
 
 
@@ -110,7 +112,7 @@ export const useGlobalStore = create((set, get) => {
       
     },
     emailPopupOn: false,
-    changeEmailPopupOn: () => set((state) => { return { emailPopupOn: !state.emailPopupOn }}),
+    setEmailPopupOn: (enabled) => set((state) => { return { emailPopupOn: enabled }}),
     shouldDeepLinkSurvivePopState: (deepLinkReference)=>{
   if(!global.executeNextLink && global.deepLinkLastSource !== deepLinkReference) return true;
   return false;

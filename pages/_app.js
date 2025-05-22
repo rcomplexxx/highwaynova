@@ -39,10 +39,10 @@ export default function App({ Component, pageProps }) {
 
 
 
-  const {  emailPopupOn, changeEmailPopupOn,cartProducts, setCartProducts, setCartProductsInitialized, setRouter, setPathname} = useGlobalStore((state) => ({
+  const {  emailPopupOn, setEmailPopupOn,cartProducts, setCartProducts, setCartProductsInitialized, setRouter, setPathname} = useGlobalStore((state) => ({
     
     emailPopupOn: state.emailPopupOn,
-    changeEmailPopupOn: state.changeEmailPopupOn,
+    setEmailPopupOn: state.setEmailPopupOn,
     cartProducts: state.cartProducts,
     setCartProducts: state.setCartProducts,
     setCartProductsInitialized: state.setCartProductsInitialized,
@@ -81,7 +81,7 @@ export default function App({ Component, pageProps }) {
 
   useEffect(()=>{
     setPathname(pathname)
-  },[pathname ])
+  },[pathname])
   
  
   
@@ -100,32 +100,37 @@ export default function App({ Component, pageProps }) {
 
     const handleRouteChangeStart = (url) => {
 
+
+
       clearTimeout(popupTimeout); 
 
-   
 
       const handlePopupTurning = () => {
         
         
       
-        const validUrls = ['/', '/our-story', '/faq'];
-        if (url !== '/404' && (validUrls.includes(url) || url.includes('/products') || url.includes('/collection'))) {
+        const validUrls = ['/', '/our-story', '/faq'], validUrlPrefix = ['/products', '/collection'];
+        if (!(validUrls.includes(url) || validUrlPrefix.some((prefix) => url.startsWith(prefix)))) return;
 
           //Ako je deepLink 0 ili je mobile_menu ili search, i ne procesuira se ni jedna ruta,  prikazati popup. U suprotnom, cekati 7 sekundi radi ponovne provere. 
           
+         
           const showPopup = () => {
-            if ((!global.deepLinkLastSource || global.deepLinkLastSource==='mobile_menu' || global.deepLinkLastSource==='search') && !global.isRouteProcessing) {
-              changeEmailPopupOn();
-              localStorage.setItem("popupShownDateInDays", Math.floor(Date.now() / 86400000));
+
+             const isEmailPopupAllowed = (!global.deepLinkLastSource || global.deepLinkLastSource==='mobile_menu' || global.deepLinkLastSource==='search') && !global.isRouteProcessing
+
+
+            if (isEmailPopupAllowed) {
+              setEmailPopupOn(true); 
+              localStorage.setItem("lastPopupTriggerDateInDays", Math.floor(Date.now() / 86400000));
               router.events.off('routeChangeStart', handleRouteChangeStart);
-            } else {
-              
-              popupTimeout = setTimeout(showPopup, 7000);
-            }
+            } 
+            else popupTimeout = setTimeout(showPopup, 7000);
+            
           };
       
           showPopup();
-        } 
+        
       };
         //Funkcija se moze aktivirati tek nakon 30 sekunde od ulaska u link.
         popupTimeout = setTimeout(handlePopupTurning, 30000);
@@ -135,15 +140,16 @@ export default function App({ Component, pageProps }) {
 
 
 
-      const daysBetweenEmailPopups = 14;
+      const lastPopupTriggerDateInDays = localStorage.getItem("lastPopupTriggerDateInDays"), daysBetweenEmailPopups = 14;
+    
 
-      const popupShownDate = localStorage.getItem("popupShownDateInDays");
-      const emailPopupTimeChecker = popupShownDate ? Math.floor(Date.now() / 86400000) - popupShownDate : null;
-      
-      if (!popupShownDate || emailPopupTimeChecker >= daysBetweenEmailPopups) {
+      if (lastPopupTriggerDateInDays && Math.floor(Date.now() / 86400000) - lastPopupTriggerDateInDays < daysBetweenEmailPopups) return;
+
+
+
         handleRouteChangeStart(router.pathname);
         router.events.on('routeChangeStart', handleRouteChangeStart);
-      }
+      
 
   
 
@@ -166,22 +172,15 @@ export default function App({ Component, pageProps }) {
     NProgress.configure({ showSpinner: false });
 
     const handleStart = () => {
-      if (!global.deepLinkLastSource) {
-          NProgress.start();
-      }
-
+      if (!global.deepLinkLastSource)  NProgress.start();
       global.isRouteProcessing = true;
   };
 
   const handleComplete = () => {
-      if (!global.deepLinkLastSource) {
-          NProgress.done();
-      }
-
-      global.isRouteProcessing=false;
-
+      if (!global.deepLinkLastSource)  NProgress.done();
+       global.isRouteProcessing=false;
       
-  };
+      };
 
     router.events.on('routeChangeStart', handleStart);
     router.events.on('routeChangeComplete', handleComplete);

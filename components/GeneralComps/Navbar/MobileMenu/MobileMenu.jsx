@@ -43,14 +43,18 @@ export default function MobileMenu({ isMenuOpen, setIsMenuOpen, subMenu, setSubM
     useEffect(()=>{
 
 
-      
+     
       increaseDeepLink('mobile_menu');
-
+document.documentElement.classList.add("hideScroll");
 
     
       
      
-      return ()=>{ decreaseDeepLink(nextLink.current);}
+      return ()=>{ 
+        
+            document.documentElement.classList.remove("hideScroll");
+        decreaseDeepLink(nextLink.current);
+      }
          
        },[])
 
