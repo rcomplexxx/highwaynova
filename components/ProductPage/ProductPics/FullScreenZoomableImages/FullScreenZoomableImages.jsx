@@ -102,9 +102,8 @@ const FullScreenZoomableImage = ({
   
 
     
-    return ()=>{
-      document.documentElement.classList.remove("hideScroll");
-    }
+   
+    
   }, []);
  
 

@@ -28,6 +28,12 @@ export default function AdminStatistics(){
     
       const fetchData = async () => {
         try {
+
+
+
+
+
+          
           const fetchApi = async (dataType) => {
             const response = await fetch("/api/admincheck", {
               method: "POST",
@@ -66,6 +72,14 @@ export default function AdminStatistics(){
     
           setFinanceData(financeData);
           console.log("cash info", financeData);
+
+
+
+
+
+
+
+
         } catch (error) {
           console.error("Fetch error:", error);
         }
