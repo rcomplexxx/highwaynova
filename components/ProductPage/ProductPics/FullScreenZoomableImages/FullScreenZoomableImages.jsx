@@ -140,9 +140,8 @@ const FullScreenZoomableImage = ({
       global.toastMessageNotShowable = true;
     }
   
-    setTimeout(() => {
-      document.documentElement.classList.add("hideScroll");
-    }, 280);
+  
+    
   
   }, [imageLoaded]);
 

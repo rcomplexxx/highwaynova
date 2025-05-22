@@ -43,8 +43,7 @@ export const useGlobalStore = create((set, get) => {
       console.log('curr user path', get().pathname)
 
 
-      //productZoom je izbacen zbog rucno radjene animacije, pa je posebno namontiran na fulLScreenZoomableImages nakon 280 sekundi.
-      if(global.deepLinkLevel===0 && source!=='productZoom')document.documentElement.classList.add("hideScroll");
+      if(global.deepLinkLevel===0 )document.documentElement.classList.add("hideScroll");
 
        history.pushState(null, null, `${get().pathname}${sourceTag?`#${sourceTag}`:''}`);
 
