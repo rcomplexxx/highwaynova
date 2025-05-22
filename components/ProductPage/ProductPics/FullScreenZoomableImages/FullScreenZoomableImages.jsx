@@ -154,7 +154,7 @@ const FullScreenZoomableImage = ({
   useEffect(() => {
     const handlePopState = () => {
 
-      if(global.deepLinkLastSource !== 'zoom') return;
+      if(global.deepLinkLastSource !== 'productZoom') return;
       
       window.removeEventListener("popstate", handlePopState);
      
