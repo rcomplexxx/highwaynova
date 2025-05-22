@@ -60,7 +60,7 @@ useEffect(()=>{
 
 
   window?.addEventListener("popstate", handlePopState);
-  document.documentElement.classList.add("hideScroll");
+  
   
 
 
@@ -69,7 +69,7 @@ useEffect(()=>{
 
    
     window?.removeEventListener("popstate", handlePopState);
-    document.documentElement.classList.remove("hideScroll");
+    
     
     decreaseDeepLink();
    

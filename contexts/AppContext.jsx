@@ -42,6 +42,8 @@ export const useGlobalStore = create((set, get) => {
 
       console.log('curr user path', get().pathname)
 
+      if(source!=='productZoom')document.documentElement.classList.add("hideScroll");
+
        history.pushState(null, null, `${get().pathname}${sourceTag?`#${sourceTag}`:''}`);
 
       global.deepLinkLastSource = source;
@@ -60,24 +62,27 @@ export const useGlobalStore = create((set, get) => {
 
 
       //gygyb
-      const executeLink = (isFirstCall) => {
+      const executeLink = () => {
 
 
-        if(global.deepLinkLevel===0){
-         
+        if(global.deepLinkLevel !== 0) {
+          window.history.go(-global.deepLinkLevel);
+          return global.deepLinkLevel =  0;
+       }
+
+
           if(global.executeNextLink !== get().pathname)get().router.push(global.executeNextLink);
 
 
           set((state)=> ({deepLink: []}))
           global.deepLinkLastSource=undefined;
           global.executeNextLink=undefined;
-          return;
+          
        
-        }
+      
+          
 
-        if(isFirstCall)window.history.go(-global.deepLinkLevel);
-
-        global.deepLinkLevel =  0;
+       
 
       }
 
@@ -85,28 +90,31 @@ export const useGlobalStore = create((set, get) => {
       
 
 
-      
+      if(!global.executeNextLink)global.deepLinkLevel--;
 
 
-      if(global.executeNextLink) return executeLink();
-
-
-      
-      global.deepLinkLevel =  global.deepLinkLevel - 1;
-
-     
-      if(executeNextLink){
-        global.executeNextLink = executeNextLink;
-        executeLink(true);
-       
+      if(executeNextLink || global.executeNextLink) {
+        if(executeNextLink)global.executeNextLink = executeNextLink;
+        return executeLink();
       }
 
-      else{
+        
       
-      set((state) => { const newDeepLink = state.deepLink.slice(0, -1); 
+      
+      set((state) => { 
+        
+
+        const previousDeepLinkLastSource = global.deepLinkLastSource;
+
+        const newDeepLink = state.deepLink.slice(0, -1); 
         global.deepLinkLastSource = newDeepLink?.at(-1);
+
+         if(global.deepLinkLevel===0 && previousDeepLinkLastSource!=='productZoom')document.documentElement.classList.remove("hideScroll");
+
         return { deepLink: newDeepLink }})
-      }
+      
+
+
 
 
       

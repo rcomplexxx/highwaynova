@@ -59,13 +59,13 @@ export default function SubscribePopup(){
             
 
          window?.addEventListener("popstate", handlePopState);
-         document.documentElement.classList.add("hideScroll");
+         
   
 
 
         return () => {
 
-          document.documentElement.classList.remove("hideScroll");
+          
           window?.removeEventListener("popstate", handlePopState);
           decreaseDeepLink()
 

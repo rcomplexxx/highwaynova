@@ -124,7 +124,7 @@ export default function Search({searchOpen, setSearchOpen}){
        
         
         increaseDeepLink('search');
- document.documentElement.classList.add("hideScroll");
+        
 
         document.addEventListener('click', handleClickOutside, true);
         window?.addEventListener("popstate", handlePopState);
@@ -142,7 +142,7 @@ export default function Search({searchOpen, setSearchOpen}){
             document.removeEventListener('click', handleClickOutside, true);
             window?.removeEventListener("popstate", handlePopState);
              
-  document.documentElement.classList.remove("hideScroll");
+            
              decreaseDeepLink(nextLink.current);
              nextLink.current=undefined;
           }

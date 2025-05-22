@@ -54,7 +54,7 @@ export default function WriteReview({ setWriteReviewOpen }) {
  
     
      increaseDeepLink('write_review', 'write-review');
- document.documentElement.classList.add("hideScroll");
+ 
     window?.addEventListener("popstate", handlePopState);
     
     
@@ -64,7 +64,7 @@ export default function WriteReview({ setWriteReviewOpen }) {
    return ()=>{
     window?.removeEventListener("popstate", handlePopState);
     
-    document.documentElement.classList.remove("hideScroll");
+    
     decreaseDeepLink(nextLink.current);
    }
   },[])

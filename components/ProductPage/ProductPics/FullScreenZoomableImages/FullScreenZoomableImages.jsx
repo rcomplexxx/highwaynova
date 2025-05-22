@@ -164,7 +164,7 @@ const FullScreenZoomableImage = ({
     
    
     
-    increaseDeepLink('zoom', 'zoom');
+    increaseDeepLink('productZoom', 'zoom');
     
     window.addEventListener("popstate", handlePopState);
     return () => {
