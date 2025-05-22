@@ -124,7 +124,7 @@ export default function Search({searchOpen, setSearchOpen}){
        
         
         increaseDeepLink('search');
- document.addEventListener('click', handleClick, true);
+ document.documentElement.classList.add("hideScroll");
 
         document.addEventListener('click', handleClickOutside, true);
         window?.addEventListener("popstate", handlePopState);

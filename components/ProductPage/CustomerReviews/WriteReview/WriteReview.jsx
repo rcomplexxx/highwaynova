@@ -54,11 +54,11 @@ export default function WriteReview({ setWriteReviewOpen }) {
  
     
      increaseDeepLink('write_review', 'write-review');
-
+ document.documentElement.classList.add("hideScroll");
     window?.addEventListener("popstate", handlePopState);
     
     
-    document.documentElement.classList.add("hideScroll");
+   
    
 
    return ()=>{
