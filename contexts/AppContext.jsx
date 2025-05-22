@@ -77,7 +77,7 @@ export const useGlobalStore = create((set, get) => {
           set((state)=> ({deepLink: []}))
           global.deepLinkLastSource=undefined;
           global.executeNextLink=undefined;
-          
+          document.documentElement.classList.remove("hideScroll");
        
       
           
