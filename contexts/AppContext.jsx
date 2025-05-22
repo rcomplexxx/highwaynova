@@ -42,7 +42,7 @@ export const useGlobalStore = create((set, get) => {
 
       console.log('curr user path', get().pathname)
 
-      if(source!=='productZoom')document.documentElement.classList.add("hideScroll");
+      if(global.deepLinkLevel===0 && source!=='productZoom')document.documentElement.classList.add("hideScroll");
 
        history.pushState(null, null, `${get().pathname}${sourceTag?`#${sourceTag}`:''}`);
 
