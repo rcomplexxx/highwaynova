@@ -106,7 +106,7 @@ useEffect(()=>{
             event.stopPropagation();
               event.preventDefault();
               
-              navigateCloseMenu(url);
+              navigateClosePopupCart(url);
           }
    
           
