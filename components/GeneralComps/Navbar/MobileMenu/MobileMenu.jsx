@@ -20,7 +20,7 @@ export default function MobileMenu({ isMenuOpen, setIsMenuOpen, subMenu, setSubM
 
     const nextLink= useRef();
 
-    const doubleBackRef = useRef(false);
+    const completelyCloseMenuRef = useRef(false);
     
 
 
@@ -34,6 +34,12 @@ export default function MobileMenu({ isMenuOpen, setIsMenuOpen, subMenu, setSubM
       decreaseDeepLink: state.decreaseDeepLink,
       shouldDeepLinkSurvivePopState: state.shouldDeepLinkSurvivePopState,
     }));
+
+
+
+
+
+
 
 
 
@@ -69,28 +75,23 @@ export default function MobileMenu({ isMenuOpen, setIsMenuOpen, subMenu, setSubM
       
         const closeMenu = () => {
          
-          mobileMenuRef.current.classList.add(styles.menuClosed);
+          // mobileMenuRef.current.classList.add(styles.menuClosed);
           // window.removeEventListener("popstate", handlePopState);
           // setTimeout(() => setIsMenuOpen(false), 500);
           setIsMenuOpen(false);
         };
 
+
+
+
+
         const handlePopState = () => {
         
           if(shouldDeepLinkSurvivePopState('mobile_menu')) return;
 
+          (subMenu===0 || (subMenu!==0 && completelyCloseMenuRef.current))?closeMenu():setSubMenu(0);
 
-          subMenu !== 0 ? (doubleBackRef.current?closeMenu():setSubMenu(0)) : closeMenu();
-
-          // console.log('asas',global.deepLinkLevel)
-          // if(global.deepLinkLevel >0) history.back();
           
-     
-          
-        
-          
-
-
 
         };
 
@@ -103,34 +104,31 @@ export default function MobileMenu({ isMenuOpen, setIsMenuOpen, subMenu, setSubM
           
         
           const target = event.target;
-          const isInNavBar = document.getElementById('navBar')?.contains(target);
-          const isInCart = document.getElementById('cart').contains(target);
-          const isInLogo = document.getElementById('logo').contains(target);
+          const clickedNavBar = document.getElementById('navBar')?.contains(target);
+          const clickedCart = document.getElementById('cart').contains(target);
+          const clickedLogo = document.getElementById('logo').contains(target);
 
 
+          const handleClickAction = (nextLinkArg) =>{
 
-          if(isInNavBar){
-            if(isInCart){
-              event.stopPropagation();
+            event.stopPropagation();
               event.preventDefault();
-              nextLink.current = '/cart';
-              router.back();
-           
-            }
+              if(nextLinkArg) nextLink.current = nextLinkArg;
+              subMenu !== 0 ? (completelyCloseMenuRef.current = true, history.go(-2)) : router.back();
+          }
 
-            else if(isInLogo){
-              event.stopPropagation();
-              event.preventDefault();
-              nextLink.current = '/';
-              router.back();
-            }
+
+
+          if(clickedNavBar){
+
+            if(clickedCart)handleClickAction('/cart');
+            else if(clickedLogo)handleClickAction('/');
            return;
+
           }
         
         
-            event.stopPropagation();
-            event.preventDefault();
-            subMenu !== 0 ? (doubleBackRef.current = true, history.go(-2)) : router.back();
+           handleClickAction();
           
         };
 
@@ -138,16 +136,15 @@ export default function MobileMenu({ isMenuOpen, setIsMenuOpen, subMenu, setSubM
 
 
 
-
-
-      
        
 
       
-        if(subMenu !== 0) {  
-          history.pushState(null, null, router.asPath);
+        if(subMenu !== 0)  history.pushState(null, null, router.asPath);
           
-        }
+        
+
+
+
         
         window.addEventListener("popstate", handlePopState);
         document.addEventListener('click', handleClickOutside, true);
@@ -162,10 +159,17 @@ export default function MobileMenu({ isMenuOpen, setIsMenuOpen, subMenu, setSubM
 
 
 
+
+
+
+
+
+
+
       useLayoutEffect(()=>{
 
         if(isLargeScreen && isMenuOpen){
-          if(subMenu !== 0) { doubleBackRef.current=true; history.go(-2);}
+          if(subMenu !== 0) { completelyCloseMenuRef.current=true; history.go(-2);}
           else router.back();
         };
       
@@ -185,7 +189,7 @@ export default function MobileMenu({ isMenuOpen, setIsMenuOpen, subMenu, setSubM
 
             nextLink.current=url;
             if(subMenu !== 0) { 
-             doubleBackRef.current=true; history.go(-2);
+             completelyCloseMenuRef.current=true; history.go(-2);
             }
 
            else router.back();
@@ -207,7 +211,7 @@ export default function MobileMenu({ isMenuOpen, setIsMenuOpen, subMenu, setSubM
     >
     
    <CancelIcon color={`var(--mobile-nav-cancel-icon-color)`} styleClassName={styles.menuItem_x_button} handleClick={()=>{
-          if(subMenu !== 0) { doubleBackRef.current=true; history.go(-2);}
+          if(subMenu !== 0) { completelyCloseMenuRef.current=true; history.go(-2);}
           else router.back();
          
           
