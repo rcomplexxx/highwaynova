@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import styles from './popupcart.module.css'
 import Image from 'next/image';
-import { useEffect, useLayoutEffect, useRef } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 import { CorrectIcon } from '@/public/images/svgs/svgImages';
 import { useGlobalStore } from '@/contexts/AppContext';
@@ -30,6 +30,19 @@ const { increaseDeepLink, decreaseDeepLink, shouldDeepLinkSurvivePopState } = us
   decreaseDeepLink: state.decreaseDeepLink,
   shouldDeepLinkSurvivePopState: state.shouldDeepLinkSurvivePopState,
 }));
+
+
+ const navigateClosePopupCart = useCallback((nextLinkArg) => {
+
+      if(nextLinkArg) nextLink.current = nextLinkArg;
+      router.back();
+    }, [router]);
+
+
+    const handleLinkExecution = (event, url) => {
+          event.preventDefault();
+         navigateClosePopupCart(url);
+        }
 
 
 
@@ -79,30 +92,33 @@ useEffect(()=>{
     
   
     const target = event.target;
-    const isInNavBar = document.getElementById('navBar').contains(target);
-    const isInCart = document.getElementById('cart').contains(target);
-    const isInLogo = document.getElementById('logo').contains(target);
+    const clickedNavBar = document.getElementById('navBar').contains(target);
+    const clickedCart = document.getElementById('cart').contains(target);
+    const clickedLogo = document.getElementById('logo').contains(target);
 
-    if(isInNavBar){
-      if(isInCart){
-        event.stopPropagation();
-        event.preventDefault();
-        nextLink.current = '/cart';
-        router.back();
+
+
      
-      }
-      else if(isInLogo){
-        event.stopPropagation();
-        event.preventDefault();
-        nextLink.current = '/';
-        router.back();
-      }
-     return;
+    
+
+   const handleClickAction = (url) =>{
+
+            event.stopPropagation();
+              event.preventDefault();
+              
+              navigateCloseMenu(url);
+          }
+   
+          
+
+    if(clickedNavBar){
+      if(clickedCart) handleClickAction('/cart')
+      else if(clickedLogo) handleClickAction('/')
+      return;
     }
- 
-      event.stopPropagation();
-      event.preventDefault();
-      router.back();
+
+      handleClickAction();
+
     
   };
      
@@ -129,18 +145,13 @@ useEffect(()=>{
    
 
   }
-},[])
+},[navigateClosePopupCart])
 
 
 
 
-const handlePopCartLinkClick=(url)=>{
-  
- 
-    nextLink.current= url;
-  router.back();
 
-}
+
 
 
 
@@ -187,9 +198,7 @@ const handlePopCartLinkClick=(url)=>{
 
   <Link href='/cart'  className={`${styles.viewCartButton} mainButton`}
   onClick={(event)=>{
-    event.preventDefault();
-   
-    handlePopCartLinkClick('/cart')
+    handleLinkExecution(event, '/cart')
   }}
      >
 
@@ -199,9 +208,7 @@ const handlePopCartLinkClick=(url)=>{
 
     <Link href='/checkout' className={styles.checkoutButton} 
      onClick={(event)=>{
-      event.preventDefault();
-  
-      handlePopCartLinkClick('/checkout')
+      handleLinkExecution(event, '/checkout')
     }}
     >
     
@@ -209,7 +216,7 @@ const handlePopCartLinkClick=(url)=>{
   
     </Link>
     
-    <span className={styles.continue_shopping}  onClick={()=>{ router.back();}}>Continue shopping</span>
+    <span className={styles.continue_shopping}  onClick={()=>{navigateClosePopupCart()}}>Continue shopping</span>
     
 
  

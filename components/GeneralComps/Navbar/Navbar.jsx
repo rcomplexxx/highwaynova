@@ -318,7 +318,7 @@ const NavBar = () => {
           {isMenuOpen && (
         <MobileMenu
         
-        isMenuOpen={isMenuOpen}
+        
           subMenu={subMenu}
           setSubMenu={setSubMenu}
           setIsMenuOpen={setIsMenuOpen}

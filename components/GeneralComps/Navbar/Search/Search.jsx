@@ -1,5 +1,5 @@
 
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import styles from './search.module.css';
 import collections from '@/data/collections.json'
 import products from '@/data/products.json'
@@ -41,7 +41,20 @@ export default function Search({searchOpen, setSearchOpen}){
 
 
     
+const navigateCloseSearch = useCallback((nextLinkArg) => {
 
+      if(nextLinkArg) nextLink.current = nextLinkArg;
+      router.back();
+    }, [router]);
+
+
+    const handleLinkExecution = (event, url) => {
+           event.preventDefault();
+            event.stopPropagation();
+         navigateCloseSearch(url);
+
+         setSearchTerm('');
+        }
     
    
 
@@ -81,34 +94,39 @@ export default function Search({searchOpen, setSearchOpen}){
           
 
           const target = event.target;
-          const isInNavBar = document.getElementById('navBar')?.contains(target);
-          const isInCart = document.getElementById('cart').contains(target);
-          const isInLogo = document.getElementById('logo').contains(target);
+          const clickedNavBar = document.getElementById('navBar')?.contains(target);
+          const clickedCart = document.getElementById('cart').contains(target);
+          const clickedLogo = document.getElementById('logo').contains(target);
 
 
 
-          if(isInNavBar){
-            if(isInCart){
+
+             const handleClickAction = (url) =>{
               event.stopPropagation();
               event.preventDefault();
-              nextLink.current = '/cart';
-              router.back();
-           
-            }
-
-            else if(isInLogo){
-              event.stopPropagation();
-              event.preventDefault();
-              nextLink.current = '/';
-              router.back();
-            }
-            return;
+              
+             navigateCloseSearch(url)
           }
-        
-          event.stopPropagation();
-          event.preventDefault();
-          router.back();
+
+
+       
+   
+          
+
+    if(clickedNavBar){
+      if(clickedCart) handleClickAction('/cart')
+      else if(clickedLogo) handleClickAction('/')
+      return;
+    }
+
+      handleClickAction();
+
+
+
         };
+
+
+
       
 
 
@@ -159,7 +177,7 @@ export default function Search({searchOpen, setSearchOpen}){
 
 
    
-
+    
    
 
 
@@ -171,9 +189,7 @@ export default function Search({searchOpen, setSearchOpen}){
 
 
 
-    const handleSearch = (term) => {
-      setSearchTerm(term);
-    };
+   
   
     const filteredProducts = products.filter((product) =>
       searchTerm!=='' && product.name.toLowerCase().includes(searchTerm.toLowerCase()));
@@ -194,7 +210,7 @@ export default function Search({searchOpen, setSearchOpen}){
             placeholder="Search products..."
             value={searchTerm}
             onFocus={()=>{setSearchOpen(true)}}
-            onChange={(e) => handleSearch(e.target.value)}
+            onChange={(e) => setSearchTerm(e.target.value)}
 
             autoCapitalize="off"
           
@@ -208,9 +224,7 @@ export default function Search({searchOpen, setSearchOpen}){
 
             if(searchOpen){
               
-             
-
-              router.back();
+             navigateCloseSearch()
 
             }
             else{
@@ -227,18 +241,12 @@ export default function Search({searchOpen, setSearchOpen}){
           {filteredcollections.length>0 && <div className={styles.resultProductsLabel}>Collections</div>}
             {filteredcollections.map((collection, index) => (
               <Link key={index} className={styles.resultItem} 
+               href={`/collection/${collection.name.toLowerCase().replace(/ /g, '-')}/page/1`}
               onClick={(event)=>{
-            
-                event.preventDefault();
-                event.stopPropagation();
-            nextLink.current=`/collection/${collection.name.toLowerCase().replace(/ /g, '-')}/page/1`;
-           router.back();
-              
-          setSearchTerm('');
-              
+                handleLinkExecution(event,`/collection/${collection.name.toLowerCase().replace(/ /g, '-')}/page/1`);    
               }}
 
-              href={`/collection/${collection.name.toLowerCase().replace(/ /g, '-')}/page/1`}
+             
               onMouseDown={(event)=>{event.preventDefault()}}
            
               >
@@ -255,20 +263,12 @@ export default function Search({searchOpen, setSearchOpen}){
             {filteredProducts.length>0 && <div className={styles.resultProductsLabel}>Products</div>}
             {filteredProducts.map((product, index) => (
               <Link key={index} className={styles.resultItem} 
+              href={`/products/${product.name.toLowerCase().replace(/\s+/g, "-")}`}
+
               onClick={(event)=>{
-            
-                event.preventDefault();
-                event.stopPropagation();
-            nextLink.current=`/products/${product.name.toLowerCase().replace(/\s+/g, "-")}`;
-           router.back();
-        
-           
-          setSearchTerm('');
-              
+            handleLinkExecution(event,`/products/${product.name.toLowerCase().replace(/\s+/g, "-")}`) 
               }}
 
-              href={`/products/${product.name.toLowerCase().replace(/\s+/g, "-")}`}
-              
               >
                 
                 <Image height={36} width={64} src={`/images/${product.images[0]}`} className={styles.searchItemImg}/>
@@ -282,12 +282,7 @@ export default function Search({searchOpen, setSearchOpen}){
           {searchOpen && 
           
           <CancelIcon color={`var(--search-cancel-icon-color)`} styleClassName={styles.searchCancel} 
-            handleClick={(event)=>{
-           
-              
-              
-         router.back();
-            }}
+            handleClick={navigateCloseSearch}
           />
         }
         </div>
