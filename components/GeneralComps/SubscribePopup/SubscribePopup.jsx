@@ -45,7 +45,7 @@ export default function SubscribePopup(){
         const handlePopState = ()=>{
           
           setEmailPopupOn(false);
-          window?.removeEventListener("popstate", handlePopState);
+          
         }
 
        
@@ -145,7 +145,8 @@ export default function SubscribePopup(){
     
 
 
-              <CancelIcon handleClick={()=>{router.back()}} color={"var(--email-cancel-icon-color)"} styleClassName={styles.cancelIcon}/>
+              <CancelIcon handleClick={()=>{router.back()}} color={"var(--email-cancel-icon-color)"} 
+              styleClassName={styles.cancelIcon}/>
 
         
            

@@ -34,7 +34,8 @@ export default function ReviewsCard({
  
   return (
     <div className={styles.imgController}>
-      {!deleted && <CancelIcon handleClick={handleImgCancelClick} color={'var(--admin-error-color)'} styleClassName={styles.cancelImage}/>}
+      {!deleted && <CancelIcon handleClick={handleImgCancelClick} color={'var(--admin-error-color)'} 
+      styleClassName={styles.cancelImage}/>}
       {/* {deleted && <CorrectIcon handleClick={handleImgCancelClick} color={'var(--admin-success-color)'} styleClassName={`${styles.cancelImage} ${styles.correctImage}`}/>} */}
     <Image
       src={`/images/review_images/productId_${productId}/${imageName}`}

@@ -17,24 +17,24 @@ const router = useRouter();
 
 const popCartRef=useRef();
 
-const nextLink = useRef();
 
 
 
 
 
 
-const { increaseDeepLink, decreaseDeepLink, shouldDeepLinkSurvivePopState } = useGlobalStore((state) => ({
+
+const { increaseDeepLink, decreaseDeepLink, shouldRetainDeepLink } = useGlobalStore((state) => ({
 
   increaseDeepLink: state.increaseDeepLink,
   decreaseDeepLink: state.decreaseDeepLink,
-  shouldDeepLinkSurvivePopState: state.shouldDeepLinkSurvivePopState,
+  shouldRetainDeepLink: state.shouldRetainDeepLink,
 }));
 
 
  const navigateClosePopupCart = useCallback((nextLinkArg) => {
 
-      if(nextLinkArg) nextLink.current = nextLinkArg;
+      if(nextLinkArg) global.executeNextLink = nextLinkArg;
       router.back();
     }, [router]);
 
@@ -71,12 +71,12 @@ useEffect(()=>{
     
 
     
-    if(shouldDeepLinkSurvivePopState('pop_cart'))return;
+    if(shouldRetainDeepLink('pop_cart'))return;
 
     console.log('proso ovo sranje')
     
     setNewProducts([]);
-    window?.removeEventListener("popstate", handlePopState);
+    
 
    
    
@@ -135,12 +135,12 @@ useEffect(()=>{
 
   return ()=>{
 
-    console.log('end of this shit!', nextLink.current)
+    
    
     window?.removeEventListener("popstate", handlePopState);
     document.removeEventListener('click', handleClick, true);
     
-    decreaseDeepLink(nextLink.current);
+    decreaseDeepLink();
 
    
 

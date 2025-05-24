@@ -23,7 +23,7 @@ export default function Search({searchOpen, setSearchOpen}){
     const searchInputRef = useRef();
 
     
-    const nextLink= useRef();
+    
 
 
 
@@ -32,18 +32,18 @@ export default function Search({searchOpen, setSearchOpen}){
 
   
 
-    const {increaseDeepLink, decreaseDeepLink, shouldDeepLinkSurvivePopState } = useGlobalStore((state) => ({
+    const {increaseDeepLink, decreaseDeepLink, shouldRetainDeepLink } = useGlobalStore((state) => ({
      
       increaseDeepLink: state.increaseDeepLink,
       decreaseDeepLink: state.decreaseDeepLink,
-      shouldDeepLinkSurvivePopState: state.shouldDeepLinkSurvivePopState
+      shouldRetainDeepLink: state.shouldRetainDeepLink
     }));
 
 
     
 const navigateCloseSearch = useCallback((nextLinkArg) => {
 
-      if(nextLinkArg) nextLink.current = nextLinkArg;
+      if(nextLinkArg) global.executeNextLink = nextLinkArg;
       router.back();
     }, [router]);
 
@@ -72,12 +72,12 @@ const navigateCloseSearch = useCallback((nextLinkArg) => {
           
           console.log('deepstate', global.deepLinkLastSource)
          
-   if(shouldDeepLinkSurvivePopState('search'))return;
+   if(shouldRetainDeepLink('search'))return;
     
 
           
           setSearchOpen(false);
-          window?.removeEventListener("popstate", handlePopState);
+          
 
       
           
@@ -161,8 +161,7 @@ const navigateCloseSearch = useCallback((nextLinkArg) => {
             window?.removeEventListener("popstate", handlePopState);
              
             
-             decreaseDeepLink(nextLink.current);
-             nextLink.current=undefined;
+             decreaseDeepLink();
           }
         };
     
@@ -282,7 +281,7 @@ const navigateCloseSearch = useCallback((nextLinkArg) => {
           {searchOpen && 
           
           <CancelIcon color={`var(--search-cancel-icon-color)`} styleClassName={styles.searchCancel} 
-            handleClick={navigateCloseSearch}
+            handleClick={()=>{navigateCloseSearch()}}
           />
         }
         </div>

@@ -20,16 +20,16 @@ export default function WriteReview({ setWriteReviewOpen }) {
   });
   const [errors, setErrors] = useState({  email: false, images5: false });
   
-  const { increaseDeepLink, decreaseDeepLink, shouldDeepLinkSurvivePopState } = useGlobalStore((state) => ({
+  const { increaseDeepLink, decreaseDeepLink, shouldRetainDeepLink } = useGlobalStore((state) => ({
     increaseDeepLink: state.increaseDeepLink,
     decreaseDeepLink: state.decreaseDeepLink,
-    shouldDeepLinkSurvivePopState: state.shouldDeepLinkSurvivePopState,
+    shouldRetainDeepLink: state.shouldRetainDeepLink,
   }));
 
 
 
   
-  const nextLink= useRef();
+  
 
   
   const router = useRouter();
@@ -45,8 +45,7 @@ export default function WriteReview({ setWriteReviewOpen }) {
 
     const handlePopState=()=>{  
       
-     if(shouldDeepLinkSurvivePopState('write_review'))return;
-      window?.removeEventListener("popstate", handlePopState);
+     if(shouldRetainDeepLink('write_review'))return;
       setWriteReviewOpen(false);
     
     }
@@ -65,7 +64,7 @@ export default function WriteReview({ setWriteReviewOpen }) {
     window?.removeEventListener("popstate", handlePopState);
     
     
-    decreaseDeepLink(nextLink.current);
+    decreaseDeepLink();
    }
   },[])
 
@@ -359,10 +358,7 @@ const handleBack = useCallback(() => {
               
 
               <CancelIcon color={"var(--cancel-write-review-color)"}
-              styleClassName={styles.closeButton} handleClick={() => {
-                router.back();
-             
-              }}
+              styleClassName={styles.closeButton} handleClick={() => { router.back();}}
               />
              
                
@@ -501,7 +497,7 @@ const handleBack = useCallback(() => {
               <div
                 className={`${styles.writeReviewFooter}`}
               >
-                <Link onClick={(event)=>{ event.preventDefault();nextLink.current='/products'; router.back();}} href="/products" className={`${styles.continueLink}`}>
+                <Link onClick={(event)=>{ event.preventDefault();global.executeNextLink='/products'; router.back();}} href="/products" className={`${styles.continueLink}`}>
                   Continue
                 </Link>
               </div>

@@ -237,7 +237,8 @@ const handleCouponApply = () => {
                  
               {couponError && couponError.includes( "couldn't be used with your current discounts.") && (
                     <span className={styles.weakCouponError}>
-                      {couponError}  <CancelIcon color={`var(--weak-coupon-cancel-color)`} styleClassName={styles.weakCouponCacel} handleClick={()=>{setCouponError()}}
+                      {couponError}  <CancelIcon color={`var(--weak-coupon-cancel-color)`} styleClassName={styles.weakCouponCacel} 
+                      handleClick={()=>{setCouponError()}}
                     />
                     </span>
                   )}

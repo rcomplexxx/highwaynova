@@ -59,7 +59,7 @@ export const useGlobalStore = create((set, get) => {
     
     },
 
-    decreaseDeepLink: (executeNextLink) => {
+    decreaseDeepLink: () => {
 
 
       //gygyb
@@ -78,6 +78,7 @@ export const useGlobalStore = create((set, get) => {
           set((state)=> ({deepLink: []}))
           global.deepLinkLastSource=undefined;
           global.executeNextLink=undefined;
+          global.executeNextLinkProcessing = false;
           document.documentElement.classList.remove("hideScroll");
        
       
@@ -91,11 +92,12 @@ export const useGlobalStore = create((set, get) => {
       
 
 
-      if(!global.executeNextLink)global.deepLinkLevel--;
+      if(!global.executeNextLinkProcessing)global.deepLinkLevel--;
 
 
-      if(executeNextLink || global.executeNextLink) {
-        if(executeNextLink)global.executeNextLink = executeNextLink;
+      if(global.executeNextLink || global.executeNextLinkProcessing) {
+        if(global.executeNextLink) global.executeNextLinkProcessing = true;
+        
         return executeLink();
       }
 
@@ -122,8 +124,8 @@ export const useGlobalStore = create((set, get) => {
     },
     emailPopupOn: false,
     setEmailPopupOn: (enabled) => set((state) => { return { emailPopupOn: enabled }}),
-    shouldDeepLinkSurvivePopState: (deepLinkReference)=>{
-  if(!global.executeNextLink && global.deepLinkLastSource !== deepLinkReference) return true;
+    shouldRetainDeepLink: (deepLinkReference)=>{
+  if(!global.executeNextLinkProcessing && global.deepLinkLastSource !== deepLinkReference) return true;
   return false;
 
     

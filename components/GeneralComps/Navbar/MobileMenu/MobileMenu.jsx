@@ -18,7 +18,6 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
     const mobileMenuRef= useRef();
     
 
-    const nextLink= useRef();
 
     const completelyCloseMenuRef = useRef(false);
     
@@ -28,11 +27,11 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
     
 
 
-    const {  increaseDeepLink, decreaseDeepLink, shouldDeepLinkSurvivePopState } = useGlobalStore((state) => ({
+    const {  increaseDeepLink, decreaseDeepLink, shouldRetainDeepLink } = useGlobalStore((state) => ({
      
       increaseDeepLink: state.increaseDeepLink,
       decreaseDeepLink: state.decreaseDeepLink,
-      shouldDeepLinkSurvivePopState: state.shouldDeepLinkSurvivePopState,
+      shouldRetainDeepLink: state.shouldRetainDeepLink,
     }));
 
 
@@ -40,7 +39,7 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
 
     const navigateCloseMenu = useCallback((nextLinkArg) => {
 
-      if(nextLinkArg) nextLink.current = nextLinkArg;
+      if(nextLinkArg) global.executeNextLink = nextLinkArg;
 
       subMenu !== 0
         ? (completelyCloseMenuRef.current = true, history.go(-2))
@@ -69,7 +68,7 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
       return ()=>{ 
         
         
-        decreaseDeepLink(nextLink.current);
+        decreaseDeepLink();
       }
          
        },[])
@@ -97,7 +96,7 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
 
         const handlePopState = () => {
         
-          if(shouldDeepLinkSurvivePopState('mobile_menu')) return;
+          if(shouldRetainDeepLink('mobile_menu')) return;
 
 
           (subMenu===0 || (subMenu!==0 && completelyCloseMenuRef.current))?closeMenu():setSubMenu(0);
@@ -204,7 +203,8 @@ export default function MobileMenu({ setIsMenuOpen, subMenu, setSubMenu}){
       
     >
     
-   <CancelIcon color={`var(--mobile-nav-cancel-icon-color)`} styleClassName={styles.menuItem_x_button} handleClick={navigateCloseMenu}/>
+   <CancelIcon color={`var(--mobile-nav-cancel-icon-color)`} styleClassName={styles.menuItem_x_button} 
+   handleClick={()=>{navigateCloseMenu()}}/>
                       
                     
 

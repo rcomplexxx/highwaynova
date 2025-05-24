@@ -118,7 +118,8 @@ useLayoutEffect(()=>{
 <div onClick={(event)=>{event.stopPropagation()}} className={`${styles.mainDiv} 
 ${(imageSrc?imageLoaded:true) && styles.spawnFullScreenReview}`}>
 
-<CancelIcon color={"var(--fullscreen-customer-cancel-icon-color)"} styleClassName={`${styles.closeFullScreen} ${!imageSrc && styles.closeFullScreenNoImg}`}  handleClick={()=>{router.back();}}
+<CancelIcon color={"var(--fullscreen-customer-cancel-icon-color)"} styleClassName={`${styles.closeFullScreen} ${!imageSrc && styles.closeFullScreenNoImg}`}  
+handleClick={()=>{router.back();}}
    />
    {imageSrc && <div className={styles.reviewImageDiv}>
 
