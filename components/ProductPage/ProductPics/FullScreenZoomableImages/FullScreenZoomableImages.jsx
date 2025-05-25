@@ -41,6 +41,7 @@ const FullScreenZoomableImage = ({
   const [closingFullscreen, setClosingFullscreen] = useState(false);
  
   
+  const [swipeYLock, setSwipeYLock] = useState(false);
  const mouseStartingPointRef=useRef({x:0, y:0})
 
 
@@ -285,7 +286,7 @@ const FullScreenZoomableImage = ({
     getComputedStyle(document.documentElement).getPropertyValue('--bg-color'), opacity
   );
 
-  let timeoutId, swipeYLock = false, multiTouchDetected = false;
+  let timeoutId, multiTouchDetected = false;
   let startingTouchCoordinates = { x: 0, y: 0 }, currX = 0, currY = 0;
 
   const handleUserInteraction = () => {
@@ -325,7 +326,7 @@ const FullScreenZoomableImage = ({
         fixedZoomDiv.style.backgroundColor = getRgbValues(1);
 
         currX = event.touches[0].clientX - startingTouchCoordinates.x;
-        if (Math.abs(currX) > 5) swipeYLock = true;
+        if (Math.abs(currX) > 5) setSwipeYLock(true)
 
        
       }
@@ -358,7 +359,7 @@ const FullScreenZoomableImage = ({
         return;
       }
       multiTouchDetected=false;
-      swipeYLock = false;
+      setSwipeYLock(false);
 
         const lastTouch = event.changedTouches[0];
         if (Math.abs(currY) > 128) {
@@ -492,7 +493,7 @@ const FullScreenZoomableImage = ({
         touchStartPreventDefault={false}
         touchAngle={35}
             zoom={{
-              enabled: !closingFullscreen,
+              enabled: !closingFullscreen && !swipeYLock,
               minRatio: 1,
               maxRatio: 2,
               toggle: !matchMedia("(pointer:fine)").matches,
