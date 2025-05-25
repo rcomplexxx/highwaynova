@@ -501,7 +501,7 @@ const FullScreenZoomableImage = ({
 
               
 
-              setZoomed(scale>1);
+              setZoomed(scale!=1);
              
              
               swiper.allowTouchMove= scale<=1;
