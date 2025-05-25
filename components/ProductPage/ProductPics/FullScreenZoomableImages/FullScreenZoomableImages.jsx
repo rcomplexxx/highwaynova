@@ -149,6 +149,107 @@ const FullScreenZoomableImage = ({
 
 
 
+
+  const killFullScreen = useCallback(() => {
+
+
+  
+    
+    if (zoomed) swiperRef.current.zoom.toggle();
+
+    setClosingFullscreen(true);
+
+    
+    if (!global.toastMessageNotShowable) {
+      setShowToastMessage((finalYDistance.current && finalYDistance.current !== 0) ? 2 : 3);
+  }
+
+
+
+    setTimeout(
+      function () {
+
+
+        const fullImg = fullImageRef.current;
+        if(!fullImg)return;
+
+
+        
+        setNavActive(false);
+
+        const mainImg = mainImageRef.current;
+
+        const fullImgRect = fullImg.getBoundingClientRect();
+        const mainImgRect = mainImg.getBoundingClientRect();
+
+
+          
+        const isBiggerWidth = (window.innerHeight - 48) / window.innerWidth > fullImg.naturalHeight / fullImg.naturalWidth;
+
+       
+
+
+
+
+
+
+
+          
+        const scaleRatio = isBiggerWidth
+            ? mainImgRect.width / fullImgRect.width
+            : mainImgRect.height / fullImgRect.height;
+
+
+       
+
+     
+            const distanceX = mainImgRect.left - fullImgRect.left;
+            const distanceY = mainImgRect.top - fullImgRect.top;
+
+
+            const XTr = isBiggerWidth
+            ? distanceX - (fullImgRect.width * (1 - scaleRatio)) / 2
+            : mainImgRect.left - (window.innerWidth - (fullImgRect.height / fullImg.naturalHeight) * fullImg.naturalWidth * scaleRatio) / 2;
+
+
+            const YTr = isBiggerWidth
+            ? mainImgRect.top - 48 - ((window.innerHeight - 48 - (window.innerWidth * fullImg.naturalHeight) / fullImg.naturalWidth) / 2) * scaleRatio - (finalYDistance.current || 0) 
+            : distanceY;
+
+           
+                    
+    
+                    
+
+
+
+       
+      
+      
+
+                    fullImg.style.transform = `translateX(${XTr}px) translateY(${YTr}px) scale(${scaleRatio})`;
+                    fixedZoomDivRef.current.style.transition = "background-color 0.2s 0.01s ease";
+                    fixedZoomDivRef.current.style.backgroundColor = "rgba(0, 0, 0, 0)";
+
+       
+       
+        
+
+        setTimeout(function () {
+          setFullScreenOn(false);
+        
+      
+        }, 300);
+
+       
+      },
+      zoomed ? 300 : 0
+    );
+  },[zoomed,swiperRef.current?.activeIndex]);
+
+
+
+
   useEffect(() => {
     const handlePopState = () => {
 
@@ -171,7 +272,7 @@ const FullScreenZoomableImage = ({
       window.removeEventListener("popstate", handlePopState);
       decreaseDeepLink();
     }
-  }, []);
+  }, [killFullScreen]);
 
   
 
@@ -320,102 +421,7 @@ const FullScreenZoomableImage = ({
 
   
 
-  const killFullScreen = useCallback(() => {
-
-
   
-   
-    if (zoomed) swiperRef.current.zoom.toggle();
-
-    setClosingFullscreen(true);
-
-    
-    if (!global.toastMessageNotShowable) {
-      setShowToastMessage((finalYDistance.current && finalYDistance.current !== 0) ? 2 : 3);
-  }
-
-
-
-    setTimeout(
-      function () {
-
-
-        const fullImg = fullImageRef.current;
-        if(!fullImg)return;
-
-
-        
-        setNavActive(false);
-
-        const mainImg = mainImageRef.current;
-
-        const fullImgRect = fullImg.getBoundingClientRect();
-        const mainImgRect = mainImg.getBoundingClientRect();
-
-
-          
-        const isBiggerWidth = (window.innerHeight - 48) / window.innerWidth > fullImg.naturalHeight / fullImg.naturalWidth;
-
-       
-
-
-
-
-
-
-
-          
-        const scaleRatio = isBiggerWidth
-            ? mainImgRect.width / fullImgRect.width
-            : mainImgRect.height / fullImgRect.height;
-
-
-       
-
-     
-            const distanceX = mainImgRect.left - fullImgRect.left;
-            const distanceY = mainImgRect.top - fullImgRect.top;
-
-
-            const XTr = isBiggerWidth
-            ? distanceX - (fullImgRect.width * (scaleRatio<1?(1 - scaleRatio):(scaleRatio - 1))) / 2
-            : mainImgRect.left - (window.innerWidth - (fullImgRect.height / fullImg.naturalHeight) * fullImg.naturalWidth * scaleRatio) / 2;
-
-
-            const YTr = isBiggerWidth
-            ? mainImgRect.top - 48 - ((window.innerHeight - 48 - (window.innerWidth * fullImg.naturalHeight) / fullImg.naturalWidth) / 2) * scaleRatio - (finalYDistance.current || 0) 
-            : distanceY;
-
-           
-                    
-    
-                    
-
-
-
-       
-      
-      
-
-                    fullImg.style.transform = `translateX(${XTr}px) translateY(${YTr}px) scale(${scaleRatio})`;
-                    fixedZoomDivRef.current.style.transition = "background-color 0.2s 0.01s ease";
-                    fixedZoomDivRef.current.style.backgroundColor = "rgba(0, 0, 0, 0)";
-
-       
-       
-        
-
-        setTimeout(function () {
-          setFullScreenOn(false);
-        
-      
-        }, 300);
-
-       
-      },
-      zoomed ? 300 : 0
-    );
-  },[zoomed,swiperRef.current?.activeIndex]);
 
 
  
@@ -492,6 +498,9 @@ const FullScreenZoomableImage = ({
               toggle: !matchMedia("(pointer:fine)").matches,
             }}
             onZoomChange={(swiper, scale) => {
+
+              
+
               setZoomed(scale>1);
              
              
