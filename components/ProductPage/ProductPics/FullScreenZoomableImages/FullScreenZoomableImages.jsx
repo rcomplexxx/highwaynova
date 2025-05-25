@@ -378,7 +378,7 @@ const FullScreenZoomableImage = ({
 
 
             const XTr = isBiggerWidth
-            ? distanceX - (fullImgRect.width * (scaleRatio>1?(1 - scaleRatio):(scaleRatio - 1))) / 2
+            ? distanceX - (fullImgRect.width * (scaleRatio<1?(1 - scaleRatio):(scaleRatio - 1))) / 2
             : mainImgRect.left - (window.innerWidth - (fullImgRect.height / fullImg.naturalHeight) * fullImg.naturalWidth * scaleRatio) / 2;
 
 
