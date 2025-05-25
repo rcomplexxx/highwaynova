@@ -323,11 +323,11 @@ const FullScreenZoomableImage = ({
   const killFullScreen = useCallback(() => {
 
 
+    setClosingFullscreen(true);
   
    
     if (zoomed) swiperRef.current.zoom.toggle();
 
-    setClosingFullscreen(true);
 
     
     if (!global.toastMessageNotShowable) {
