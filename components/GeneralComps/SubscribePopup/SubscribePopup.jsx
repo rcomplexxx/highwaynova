@@ -10,7 +10,7 @@ import { useGlobalStore } from '@/contexts/AppContext';
 
 export default function SubscribePopup(){
     const [error, setError] = useState();
-    const [successfullySignedUp, setSuccessfullySugnedUp] = useState(false);
+    const [emailCaptured, setEmailCaptured] = useState(false);
     const [subscribeLoading, setSubscribeLoading] = useState(false);
 
     const emailFieldRef = useRef();
@@ -39,9 +39,6 @@ export default function SubscribePopup(){
 
 
 
-  
-      
-
         const handlePopState = ()=>{
           
           setEmailPopupOn(false);
@@ -49,20 +46,10 @@ export default function SubscribePopup(){
         }
 
        
-       
-  
-       
-         
         increaseDeepLink('subscribe_popup');
-
-
-            
-
-         window?.addEventListener("popstate", handlePopState);
+        window?.addEventListener("popstate", handlePopState);
          
   
-
-
         return () => {
 
           
@@ -80,10 +67,10 @@ export default function SubscribePopup(){
 
  
 
-      const handleSusbscribe = async () => {
+      const handleSubscribe = async () => {
         if (subscribeLoading) return;
       
-        const email = emailFieldRef.current.value;
+        const email = emailFieldRef.current?.value?.trim();
         if (!/^\w+@\w+\.\w+$/.test(email)) return setError("Please enter a valid email address.");
       
         setSubscribeLoading(true);
@@ -93,7 +80,7 @@ export default function SubscribePopup(){
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ type: "subscribe", email, source: "popUp10%" }),
           });
-          response.ok ? setSuccessfullySugnedUp(true) : setError("Server error");
+          response.ok ? setEmailCaptured(true) : setError("Server error");
         } catch {
           setError("Server error");
         } finally {
@@ -106,9 +93,9 @@ export default function SubscribePopup(){
 
       const popupSubscribeContent= ()=>{
         return <> 
-        <span className={styles.signUpText}>Sign up and get</span> 
-        <span className={styles.discountText}>10% OFF!</span> 
-        <span className={styles.signUpText}>your first order</span> 
+        <span className={styles.neutralText}>Sign up and get</span> 
+        <span className={styles.calloutText}>10% OFF!</span> 
+        <span className={styles.neutralText}>your first order</span> 
         {/* <span>SIGN UP BELOW!</span>  */}
         <div className={styles.provideEmailDiv}>
           
@@ -117,7 +104,7 @@ export default function SubscribePopup(){
           onKeyDown={(event)=>{
    
               if (event.key === 'Enter') {
-                handleSusbscribe();
+                handleSubscribe();
               }
            
           }}
@@ -125,23 +112,23 @@ export default function SubscribePopup(){
           {error && <span className={styles.emailError}><ErrorIcon/>{error}</span>}
           
          
-          <button className={`${styles.sendEmailButton} ${subscribeLoading && styles.emailButtonLoading}`} onClick={handleSusbscribe}>Sign up</button>
+          <button className={`${styles.sendEmailButton} ${subscribeLoading && styles.emailButtonLoading}`} onClick={handleSubscribe}>Sign up</button>
            </div>
         
            </>
       }
 
       const thankYouContent=()=>{
-        return  <span className={styles.thankYouMessage2}>Thank you for signing up!</span>
+        return  <span className={styles.thankYouMessage}>Thank you for signing up!</span>
      
        
       }
 
 
-    return <div className={styles.popupMainWrapper}>
+    return <div className={styles.popupBackDiv}>
          <div className={styles.popupWrapper}>
 
-      <Image src ="/images/emailPopupBg3.jpeg" className={styles.emailPopupBg} height={0} width={0} sizes='(max-width: 428px) calc(100vw - 32px), 384px' loading='eager' priority={true}/>
+      <Image src ="/images/emailPopupBg3.jpeg" className={styles.emailPopupCover} height={0} width={0} sizes='(max-width: 428px) calc(100vw - 32px), 384px' loading='eager' priority={true}/>
     
 
 
@@ -150,7 +137,7 @@ export default function SubscribePopup(){
 
         
            
-               { !successfullySignedUp ?popupSubscribeContent():thankYouContent()}
+               { !emailCaptured ?popupSubscribeContent():thankYouContent()}
 
 
                

@@ -2,7 +2,7 @@
 
 
 
-.popupMainWrapper{
+.popupBackDiv{
     position: fixed;
     top: 0;
     left: 0;
@@ -58,7 +58,7 @@
 
 
 
-.emailPopupBg{
+.emailPopupCover{
     position: absolute;
     top: 0;
     left: 0;
@@ -95,14 +95,14 @@
 }
 
 
-.signUpText{
+.neutralText{
 
     font-size: var(--font-size-4);
     font-weight: 500;
 
 }
 
-.discountText{
+.calloutText{
   
     margin-top: var(--size-2);
     margin-bottom: var(--size-2);
@@ -227,29 +227,15 @@
 
 
 
-.thankYouTitle{
-    margin-top: var(--size-2);
-    margin-bottom: var(--size-2);
-    font-size: var(--font-size-9);
-    font-weight: 700;
-}
-
 .thankYouMessage{
 
-    color: var(--email-popup-thank-you-msg-color);
-  
-    margin-bottom: var(--size-7);
-
-    font-size: var(--font-size-3);
+    color: var(--email-popup-thank-you-msg-color-2);
+    font-size: var(--font-size-5);
     font-weight: 500;
     
 }
 
-.thankYouMessage2{
-    color: var(--email-popup-thank-you-msg-color-2);
-    font-size: var(--font-size-5);
-    font-weight: 500;
-}
+
 
 
 
@@ -274,7 +260,7 @@
 }
 
 @media (max-width: 380px) {
-    .thankYouMessage2{
+    .thankYouMessage{
         font-size: var(--font-size-4);
     }
     

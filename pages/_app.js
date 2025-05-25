@@ -104,23 +104,23 @@ export default function App({ Component, pageProps }) {
 
       clearTimeout(popupTimeout); 
 
-
-      const handlePopupTurning = () => {
-        
-        
-      
-        const validUrls = ['/', '/our-story', '/faq'], validUrlPrefix = ['/products', '/collection'];
+       const validUrls = ['/', '/our-story', '/faq'], validUrlPrefix = ['/products', '/collection'];
         if (!(validUrls.includes(url) || validUrlPrefix.some((prefix) => url.startsWith(prefix)))) return;
+        
 
-          //Ako je deepLink 0 ili je mobile_menu ili search, i ne procesuira se ni jedna ruta,  prikazati popup. U suprotnom, cekati 7 sekundi radi ponovne provere. 
-          
-         
+
+    
+        
+       
+
+        
+         //Ako je deepLink 0 i ne procesuira se ni jedna ruta,  prikazati popup. U suprotnom, cekati 7 sekundi radi ponovne provere. 
           const showPopup = () => {
 
-             const isEmailPopupAllowed = (!global.deepLinkLastSource || global.deepLinkLastSource==='mobile_menu' || global.deepLinkLastSource==='search') && !global.isRouteProcessing
+              
+             const isSubscribePopupAllowed = (!global.deepLinkLastSource) && !global.isRouteProcessing
 
-
-            if (isEmailPopupAllowed) {
+            if (isSubscribePopupAllowed) {
               setEmailPopupOn(true); 
               localStorage.setItem("lastPopupTriggerDateInDays", Math.floor(Date.now() / 86400000));
               router.events.off('routeChangeStart', handleRouteChangeStart);
@@ -129,11 +129,10 @@ export default function App({ Component, pageProps }) {
             
           };
       
-          showPopup();
-        
-      };
+    
+          
         //Funkcija se moze aktivirati tek nakon 30 sekunde od ulaska u link.
-        popupTimeout = setTimeout(handlePopupTurning, 30000);
+        popupTimeout = setTimeout(showPopup, 30000);
       
     
     }
@@ -225,7 +224,7 @@ export default function App({ Component, pageProps }) {
           <div id="hronika" className="hronika">
             <Component {...pageProps} />
           </div>
-          {shouldShowLayout && <Footer />}
-      </>
+          {shouldShowLayout && <Footer/>}
+    </>
   );
 }
