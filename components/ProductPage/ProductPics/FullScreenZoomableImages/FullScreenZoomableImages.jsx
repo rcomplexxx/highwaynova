@@ -363,8 +363,10 @@ const FullScreenZoomableImage = ({
 
         const lastTouch = event.changedTouches[0];
         if (Math.abs(currY) > 128) {
+           if (!zoomed) {
           finalYDistance.current = currY;
           router.back();
+           }
         } else if (Math.abs(currY) > 16) {//
           
             if (!zoomed) {
