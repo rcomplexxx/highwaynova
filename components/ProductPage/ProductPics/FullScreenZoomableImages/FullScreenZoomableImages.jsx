@@ -486,7 +486,7 @@ const FullScreenZoomableImage = ({
         touchStartPreventDefault={false}
         touchAngle={35}
             zoom={{
-              enabled: true,
+              enabled: !closingFullscreen,
               minRatio: 1,
               maxRatio: 2,
               toggle: !matchMedia("(pointer:fine)").matches,
